@@ -1,0 +1,182 @@
+
+<style>
+.strata { display: flex; flex-direction: column; gap: 0; }
+.layer { border-radius: 0; border: 0.5px solid var(--color-border-tertiary); border-bottom: none; padding: 0; overflow: hidden; }
+.layer:first-child { border-radius: var(--border-radius-lg) var(--border-radius-lg) 0 0; }
+.layer:last-child { border-radius: 0 0 var(--border-radius-lg) var(--border-radius-lg); border-bottom: 0.5px solid var(--color-border-tertiary); }
+.layer-header { display: flex; align-items: center; gap: 10px; padding: 9px 14px; cursor: pointer; user-select: none; }
+.layer-header:hover { background: var(--color-background-secondary); }
+.layer.open .layer-header { border-bottom: 0.5px solid var(--color-border-tertiary); }
+.layer-title { font-size: 13px; font-weight: 500; color: var(--color-text-primary); flex: 1; }
+.layer-sub { font-size: 11px; color: var(--color-text-tertiary); }
+.layer-chevron { font-size: 10px; color: var(--color-text-tertiary); transition: transform .2s; flex-shrink: 0; }
+.layer.open .layer-chevron { transform: rotate(90deg); }
+.layer-body { display: none; padding: 12px 14px; background: var(--color-background-primary); }
+.layer.open .layer-body { display: block; }
+.bar { height: 6px; border-radius: 3px; margin-bottom: 12px; }
+.tags { display: flex; flex-wrap: wrap; gap: 5px; margin-bottom: 10px; }
+.tag { font-size: 11px; font-weight: 500; padding: 2px 7px; border-radius: 3px; }
+.tg-lum { background: #FAEEDA; color: #633806; }
+.tg-folk { background: #EAF3DE; color: #27500A; }
+.tg-prop { background: #F1EFE8; color: #5F5E5A; border: 0.5px solid var(--color-border-secondary); }
+.tg-arc { background: #FCEBEB; color: #791F1F; }
+.tg-zel { background: #E6F1FB; color: #0C447C; }
+.tg-nyx { background: #EEEDFE; color: #3C3489; }
+.sect { margin-bottom: 8px; }
+.sect-label { font-size: 10px; font-weight: 500; color: var(--color-text-secondary); text-transform: none; margin-bottom: 3px; letter-spacing: 0.02em; }
+.sect-text { font-size: 12px; color: var(--color-text-secondary); line-height: 1.6; }
+.hook { font-size: 11px; color: var(--color-text-info); background: var(--color-background-info); border-radius: 4px; padding: 5px 9px; margin-top: 8px; }
+.depth-label { font-size: 10px; color: var(--color-text-tertiary); margin-bottom: 6px; display: flex; justify-content: space-between; }
+</style>
+
+<div style="padding: 0.5rem 0;">
+  <div class="depth-label"><span>Imperial core — Luminastra total</span><span>Imperial frontier — folk tradition dominant</span></div>
+  <div style="height: 8px; border-radius: 4px; background: linear-gradient(to right, #EF9F27, #B5D4F4, #EAF3DE); margin-bottom: 14px; opacity: 0.7;"></div>
+
+  <div class="strata">
+
+    <div class="layer" id="l0">
+      <div class="layer-header" onclick="tog('l0')">
+        <div style="width:10px;height:10px;border-radius:50%;background:#EF9F27;flex-shrink:0;"></div>
+        <div class="layer-title">The Imperial Family</div>
+        <div class="layer-sub">Emperor · Empress · Blood heirs</div>
+        <div class="layer-chevron">▶</div>
+      </div>
+      <div class="layer-body">
+        <div class="tags">
+          <span class="tag tg-lum">Luminastra — divine vessel</span>
+        </div>
+        <div class="sect"><div class="sect-label">What they publicly profess</div>
+        <div class="sect-text">The Imperial bloodline carries Luminastra's light. The Emperor does not pray to her — the Emperor embodies her will for the age. Coronation rites include the Radiance Rite, in which the aurora must appear in the sky at the moment of crowning. If it does not, the Council of Light interprets the weather. It has always been interpreted in favour of the heir.</div></div>
+        <div class="sect"><div class="sect-label">What they actually believe</div>
+        <div class="sect-text">Varies enormously by individual Emperor. Some are genuinely devout and feel the connection as a real pressure — an atmospheric sense that certain decisions are wrong, that certain moments carry weight. Others are entirely cynical and manage the spectacle with the Council as political partners. The dangerous ones are those who are neither: who believe sincerely in a Luminastra that tells them specifically what they want to hear.</div></div>
+        <div class="sect"><div class="sect-label">Relationship with folk tradition</div>
+        <div class="sect-text">Officially: none. The Imperial family does not propitiate lesser gods. Privately: the Imperial kitchens have had an Elaria threshold mark on the cook's door for three dynasties running. No one mentions it. No one removes it.</div></div>
+        <div class="hook">Hook: An heir who receives the divine connection more strongly than any Emperor in living memory — but whose claim to the throne is legally disputed. The aurora appeared at their birth. The Council of Light is having an argument it cannot have publicly.</div>
+      </div>
+    </div>
+
+    <div class="layer" id="l1">
+      <div class="layer-header" onclick="tog('l1')">
+        <div style="width:10px;height:10px;border-radius:50%;background:#FAC775;flex-shrink:0;"></div>
+        <div class="layer-title">The Council of Light</div>
+        <div class="layer-sub">High Seers · Doctrinal Interpreters · The real theological power</div>
+        <div class="layer-chevron">▶</div>
+      </div>
+      <div class="layer-body">
+        <div class="tags">
+          <span class="tag tg-lum">Luminastra — doctrine</span>
+          <span class="tag tg-prop">Other gods — managed</span>
+        </div>
+        <div class="sect"><div class="sect-label">Function</div>
+        <div class="sect-text">The Council interprets Luminastra's will. Since Luminastra does not speak directly, this is an enormous power — they define what the divine means in every legal, political, and social context. They have ruled on succession, on war, on whether a treaty is theologically permissible. Their rulings are not infallible, but no mechanism exists to overrule them except the Emperor, and Emperors who overrule the Council tend to have turbulent reigns.</div></div>
+        <div class="sect"><div class="sect-label">Relationship with folk tradition</div>
+        <div class="sect-text">Sophisticated and largely cynical. The Council knows folk polytheism cannot be suppressed — every attempt in Imperial history produced martyrs and made the old practices more tenacious. Current policy is co-option: the harvest festival is now also the Yield of Luminastra's Bounty. The spring planting rites are blessed in Luminastra's name. The coin tossed at market is described as an offering to the divine light rather than to Zelos. The folk practices continue exactly as before. The labels change.</div></div>
+        <div class="sect"><div class="sect-label">What they actually fear</div>
+        <div class="sect-text">A cleric of Luminastra receiving direct divine communication that contradicts a Council ruling. This has happened twice in recorded Imperial history. Neither case ended well for anyone involved.</div></div>
+        <div class="hook">Hook: A Council member approaches the players privately — not officially. A Dawnsinger in a frontier province is performing miracles the Council cannot explain and did not sanction. They need it investigated without creating a saint.</div>
+      </div>
+    </div>
+
+    <div class="layer" id="l2">
+      <div class="layer-header" onclick="tog('l2')">
+        <div style="width:10px;height:10px;border-radius:50%;background:#B5D4F4;flex-shrink:0;"></div>
+        <div class="layer-title">The Luminous Order</div>
+        <div class="layer-sub">Elite guard · Spiritual enforcers · Paladins and senior clergy combined</div>
+        <div class="layer-chevron">▶</div>
+      </div>
+      <div class="layer-body">
+        <div class="tags">
+          <span class="tag tg-lum">Luminastra — oath</span>
+          <span class="tag tg-arc">Arcturius — practice</span>
+        </div>
+        <div class="sect"><div class="sect-label">The dual nature problem</div>
+        <div class="sect-text">The Luminous Order is simultaneously the Empire's spiritual leadership and its elite military force. This creates a persistent theological tension that is never formally acknowledged: Luminastra governs light, life, and peace. Arcturius governs honourable war. Members of the Order swear to Luminastra. They fight by Arcturius's principles. The two are never in direct conflict — the Order fights in defence of light, which is Luminastra's mandate — but veterans of serious campaigns often speak of Luminastra in the present tense and Arcturius in the past tense. She is who they serve. He is who they are.</div></div>
+        <div class="sect"><div class="sect-label">Relationship with folk tradition</div>
+        <div class="sect-text">Inconsistent. Individual members range from rigidly doctrinal (folk propitiation of Ba'haal before battle is heresy and must be corrected) to quietly permissive (if a soldier needs to press his thumb to the earth before a charge, that is between him and whatever he believes in, and it is not the Order's business provided they also keep their oath to Luminastra). The Order's official position is the former. Its actual practice is heavily the latter.</div></div>
+        <div class="sect"><div class="sect-label">What ordinary people see</div>
+        <div class="sect-text">Gold and white armour. The aurora motif on every surface. A presence that is both protective and inspecting — they are the Empire's light, which means they both illuminate and expose. Communities with a Luminous Order garrison feel watched. They are not wrong.</div></div>
+        <div class="hook">Hook: An Order commander has been quietly permitting folk propitiation practices in her garrison town for years, because it keeps the peace and she's not sure she disagrees with the theology. The Council has noticed the town's unusually low incidence of religious complaints — which means its unusually high incidence of suppressed practices — and has sent an Inspector.</div>
+      </div>
+    </div>
+
+    <div class="layer" id="l3">
+      <div class="layer-header" onclick="tog('l3')">
+        <div style="width:10px;height:10px;border-radius:50%;background:#97C459;flex-shrink:0;"></div>
+        <div class="layer-title">Dawnsingers</div>
+        <div class="layer-sub">Common clergy · Parish priests of the Empire</div>
+        <div class="layer-chevron">▶</div>
+      </div>
+      <div class="layer-body">
+        <div class="tags">
+          <span class="tag tg-lum">Luminastra — vocation</span>
+          <span class="tag tg-folk">Folk traditions — tolerated</span>
+        </div>
+        <div class="sect"><div class="sect-label">The ground-level reality</div>
+        <div class="sect-text">Dawnsingers are the face of the Luminastra faith that ordinary Aurorans interact with daily. They lead the dawn prayers at the local Luminous Spire or parish shrine. They bless births, officiate marriages, and speak at funerals. In doing all of these things, they constantly encounter folk tradition — because the people bringing their babies and their dead are also the people with Elaria's mark on their kitchen wall and a habit of glancing at the shadows when they say something private.</div></div>
+        <div class="sect"><div class="sect-label">The theological compromise</div>
+        <div class="sect-text">Most Dawnsingers work out a personal position somewhere between the Council's official doctrine and the reality of their parish. The official position: Luminastra encompasses all good things, so the folk acknowledgment of Elaria at planting is really an acknowledgment of Luminastra's life-giving aspect under a traditional name. This reframing allows the Dawnsinger to bless the planting rite without suppressing the folk practice, while technically maintaining doctrinal compliance. Everyone understands this is a fiction. It is a useful fiction that nobody has an interest in dismantling.</div></div>
+        <div class="sect"><div class="sect-label">What they cannot tolerate</div>
+        <div class="sect-text">Explicit propitiation of the dark gods. A family that quietly keeps an Elaria mark can be reframed. A family that leaves coins at the crossroads for Charon can be told they are honouring Luminastra's mercy. A household that performs the Ba'haal blood offering before a soldier's deployment cannot be reframed, and a Dawnsinger who looks the other way risks their position. Most Dawnsingers do look the other way. This is the knowledge they carry quietly.</div></div>
+        <div class="hook">Hook: A Dawnsinger has been performing a modified version of Charon's Laments of the River festival every Moradir, reframed as a Luminastra memorial rite. It works — the community's dead seem properly settled, the rite feels right to everyone who attends. She has no idea why. Charon has apparently decided co-option is acceptable provided the function is maintained.</div>
+      </div>
+    </div>
+
+    <div class="layer" id="l4">
+      <div class="layer-header" onclick="tog('l4')">
+        <div style="width:10px;height:10px;border-radius:50%;background:#B4B2A9;flex-shrink:0;"></div>
+        <div class="layer-title">Urban Aurorans</div>
+        <div class="layer-sub">Merchants · Craftspeople · City folk · The Empire's visible middle</div>
+        <div class="layer-chevron">▶</div>
+      </div>
+      <div class="layer-body">
+        <div class="tags">
+          <span class="tag tg-lum">Luminastra — public life</span>
+          <span class="tag tg-zel">Zelos — commercial life</span>
+          <span class="tag tg-folk">Elaria, Charon — private life</span>
+          <span class="tag tg-nyx">Nyx — acknowledged, never named</span>
+        </div>
+        <div class="sect"><div class="sect-label">The split life</div>
+        <div class="sect-text">Urban Aurorans maintain two simultaneous religious identities without experiencing them as contradictory. In public — at the dawn prayer, at the market's Luminastra shrine, at the festival ceremonies the Order attends — they are Luminastra's people. In private — the kitchen mark, the coin tossed before a deal, the quiet acknowledgment at the bedroom threshold — they are their grandparents' people. The two identities do not interact. This is not hypocrisy; it is the natural adaptation of a folk religion to a state religion that is too large to fight and too useful to entirely abandon.</div></div>
+        <div class="sect"><div class="sect-label">What Luminastra means to them</div>
+        <div class="sect-text">The aurora. The Empire. The reassurance that the world has a structure that is basically benevolent. The festivals. The sense that being Auroran is being part of something larger than your city or trade. Luminastra is not someone they have a personal relationship with — she is the texture of the Empire itself, the gold in the architecture, the light at the top of the Spire. This is not nothing. It is simply different from what the Council means when it says devotion.</div></div>
+        <div class="sect"><div class="sect-label">The Shimmerfen specificity</div>
+        <div class="sect-text">In the capital, the Luminastra presence is heavier and more genuine. The Luminous Spire catches dawn light in ways that feel deliberately miraculous. The Imperial family's visible connection to the aurora — appearing at festivals, moving through public space with an atmospheric quality that is hard to explain — makes the state religion feel less theoretical. Shimmerfen is the one place in the Empire where the divide between public and private faith noticeably narrows, because the evidence for Luminastra's presence is visible to anyone who looks up.</div></div>
+        <div class="hook">Hook: A merchant guild in a major city has been conducting its significant contract signings in Astaroth's hearing — the folk propitiation practice of invoking the Arch-Devil as witness to ensure binding. The Council has discovered this. The guild argues it is a secular legal tradition, not worship. The Council disagrees. The contracts involved are worth enough that several Imperial officials have a stake in the outcome.</div>
+      </div>
+    </div>
+
+    <div class="layer" id="l5">
+      <div class="layer-header" onclick="tog('l5')">
+        <div style="width:10px;height:10px;border-radius:50%;background:#5DCAA5;flex-shrink:0;"></div>
+        <div class="layer-title">Rural Aurorans</div>
+        <div class="layer-sub">Farmers · Villagers · The Empire's invisible majority</div>
+        <div class="layer-chevron">▶</div>
+      </div>
+      <div class="layer-body">
+        <div class="tags">
+          <span class="tag tg-folk">Elaria — primary</span>
+          <span class="tag tg-folk">Nalakei — harvest and joy</span>
+          <span class="tag tg-folk">Charon — death</span>
+          <span class="tag tg-lum">Luminastra — the Empire</span>
+        </div>
+        <div class="sect"><div class="sect-label">The true shape of rural faith</div>
+        <div class="sect-text">In the villages at the Empire's interior, Luminastra is real but abstract — the religion of officials, of tax assessors, of the Dawnsinger who arrives from the town once a month and says words over things that would have been fine without them. She is the Empire's god, and the Empire is a fact of life like weather: you arrange yourself around it. The gods that actually govern daily life — the ones with kitchen shrines and harvest prayers and coins tossed at crossroads — are Elaria and Nalakei and Charon. No one denies Luminastra. No one builds her a shrine next to the hearth.</div></div>
+        <div class="sect"><div class="sect-label">The co-opted calendar in practice</div>
+        <div class="sect-text">The Dawnsinger calls the spring festival the Blessing of Luminastra's Renewal. The village calls it the Greening. The Dawnsinger calls the harvest celebration Luminastra's Bounty. The village calls it Erathir's Yield. The ceremonies are identical except for the name used at the beginning and end. In between, it is simply the festival they have always held. The village considers this arrangement satisfactory. The Dawnsinger considers it a work in progress.</div></div>
+        <div class="sect"><div class="sect-label">At the frontier edge</div>
+        <div class="sect-text">In villages at the Empire's frontier — where the Luminous Order garrison is a day's ride away and the Dawnsinger visits quarterly — the Luminastra layer is almost entirely formal. People fly the aurora banner. They pay the temple tithe to whoever comes to collect it. They use the official calendar month names. And then, in all other respects, they practise the faith their grandparents practised, in the way their grandparents practised it, propitiation and all. The dark gods are acknowledged here with far less anxiety than in the cities, because there is no one to report it to who would care.</div></div>
+        <div class="hook">Hook: A frontier village has been practising an extended version of Midwinter's Watch that involves something older than the Luminastra faith — something the Dawnsinger doesn't recognise and the oldest villagers can't explain fully, only that it must be done and that the years it wasn't were bad ones. An Inspector has arrived to determine whether this constitutes heresy. The village is frightened. The players arrive in the middle of it.</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+function tog(id){
+  const el=document.getElementById(id);
+  el.classList.toggle('open');
+}
+document.getElementById('l0').classList.add('open');
+</script>
