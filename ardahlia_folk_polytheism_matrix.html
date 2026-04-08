@@ -1,0 +1,152 @@
+
+<style>
+:root {
+  --cp: #1D9E75; --cs: #9FE1CB; --cx: #E1F5EE;
+  --ct: #085041; --cu: #5DCAA5;
+}
+@media (prefers-color-scheme: dark) {
+  :root { --cp: #0F6E56; --cs: #085041; --cx: #04342C; --ct: #9FE1CB; --cu: #1D9E75; }
+}
+table { width: 100%; border-collapse: collapse; }
+th { font-size: 10px; font-weight: 500; color: var(--color-text-secondary); padding: 5px 2px; text-align: center; border-bottom: 0.5px solid var(--color-border-secondary); white-space: nowrap; }
+th.dc { text-align: left; padding-left: 8px; font-size: 11px; min-width: 80px; }
+td { padding: 5px 2px; text-align: center; border-bottom: 0.5px solid var(--color-border-tertiary); }
+td.dn { text-align: left; padding-left: 8px; font-size: 12px; color: var(--color-text-primary); font-weight: 500; cursor: pointer; white-space: nowrap; }
+td.dnd { text-align: left; padding-left: 8px; font-size: 12px; color: var(--color-text-secondary); font-weight: 400; font-style: italic; cursor: pointer; white-space: nowrap; }
+td.dn:hover, td.dnd:hover { color: var(--color-text-info); }
+tr.active-row td { background-color: var(--color-background-info) !important; }
+tr.active-row td.p, tr.active-row td.s, tr.active-row td.x { opacity: 1; }
+td.p { background: var(--cp); }
+td.s { background: var(--cs); }
+td.x { background: var(--cx); border: 0.5px solid var(--cu); }
+td.e { background: transparent; }
+.col-group { font-size: 10px; font-weight: 500; color: var(--color-text-tertiary); padding: 3px 0 0; text-align: center; }
+#di { background: var(--color-background-secondary); border-radius: var(--border-radius-md); padding: 10px 14px; margin-top: 10px; font-size: 12px; color: var(--color-text-secondary); line-height: 1.6; min-height: 52px; border-left: 3px solid var(--color-border-secondary); }
+#di strong { color: var(--color-text-primary); font-weight: 500; display: block; margin-bottom: 3px; }
+.legend { display: flex; gap: 18px; margin-bottom: 12px; font-size: 11px; color: var(--color-text-secondary); flex-wrap: wrap; align-items: center; }
+.li { display: flex; align-items: center; gap: 5px; }
+.ld { width: 14px; height: 14px; border-radius: 2px; flex-shrink: 0; }
+.lp { background: var(--cp); }
+.ls { background: var(--cs); }
+.lx { background: var(--cx); border: 0.5px solid var(--cu); }
+.col-divider { border-left: 1px solid var(--color-border-tertiary); }
+</style>
+
+<div style="padding: 0.5rem 0;">
+  <div class="legend">
+    <div class="li"><div class="ld lp"></div> Primary devotion</div>
+    <div class="li"><div class="ld ls"></div> Secondary devotion</div>
+    <div class="li"><div class="ld lx"></div> Propitiation only</div>
+    <div style="margin-left: auto; font-size: 11px; color: var(--color-text-tertiary);">Click a row for folk notes</div>
+  </div>
+
+  <table>
+    <thead>
+      <tr>
+        <th class="dc">Deity</th>
+        <th colspan="6" style="border-bottom:0.5px solid var(--color-border-tertiary); font-size:10px; color:var(--color-text-tertiary);">Life stages</th>
+        <th colspan="6" style="border-bottom:0.5px solid var(--color-border-tertiary); font-size:10px; color:var(--color-text-tertiary); border-left:1px solid var(--color-border-secondary);">Occupations</th>
+      </tr>
+      <tr>
+        <th class="dc"></th>
+        <th>Birth</th><th>Child</th><th>Adult</th><th>Wed</th><th>Ill</th><th>Death</th>
+        <th class="col-divider">Farm</th><th>Sea</th><th>War</th><th>Craft</th><th>Trade</th><th>Heal</th>
+      </tr>
+    </thead>
+    <tbody id="tb">
+      <tr onclick="hi(this,'Elaria','The most universally present deity in folk life. Every household shrine begins with her. She governs the domestic cycle — birth, family, the tending of living things, and love that sustains rather than consumes. Farmers invoke her at planting; midwives invoke her at birth; communities invoke her at weddings. Her secondary presence at illness and death reflects the folk understanding that all of life\'s transitions are part of her cycle. In many regions she has absorbed the role of a hearth-and-family deity simply because no other god fills it.')">
+        <td class="dn">Elaria</td>
+        <td class="p"></td><td class="p"></td><td class="s"></td><td class="p"></td><td class="s"></td><td class="s"></td>
+        <td class="p col-divider"></td><td class="e"></td><td class="e"></td><td class="e"></td><td class="e"></td><td class="s"></td>
+      </tr>
+      <tr onclick="hi(this,'Charon','Folk practice treats Charon with respectful wariness rather than fear. He is present at birth (acknowledging the soul\'s crossing from wherever it came) and always at death. Sailors acknowledge him before every voyage as basic seamanship. The sick propitiate him — placing a coin outside the sickroom door — not to invite him but to defer him. The folk gesture is explicit: This coin for you, ferryman. The rest later. He is perhaps the most universally acknowledged deity in Ardahlia, if not the most prayed to.')">
+        <td class="dn">Charon</td>
+        <td class="s"></td><td class="e"></td><td class="e"></td><td class="e"></td><td class="s"></td><td class="p"></td>
+        <td class="e col-divider"></td><td class="s"></td><td class="e"></td><td class="e"></td><td class="e"></td><td class="s"></td>
+      </tr>
+      <tr onclick="hi(this,'Nalakei','Nalakei governs the joyful ends of the folk calendar — harvest festivals, weddings, communal feasts, the games of childhood, the relief after a hard season. Her worship is communal and almost always involves food and drink. She has essentially no private shrine culture because she has no interest in solitary prayer. The folk saying: Nalakei doesn\'t hear you when you\'re alone. She hears you when you laugh. In harvest communities she is second only to Elaria in folk importance.')">
+        <td class="dn">Nalakei</td>
+        <td class="e"></td><td class="s"></td><td class="s"></td><td class="p"></td><td class="e"></td><td class="e"></td>
+        <td class="p col-divider"></td><td class="e"></td><td class="e"></td><td class="e"></td><td class="e"></td><td class="e"></td>
+      </tr>
+      <tr onclick="hi(this,'Solariel','The primary deity of healing prayer across almost all cultures. When someone is ill, Solariel is addressed first — folk logic: she governs life and light, and illness is both a dimming of life and a retreat from light. Her rites are morning-facing. The sick are placed to catch first light through a window; prayers are timed to sunrise. The folk understanding is that her influence travels with the sun, so dawn prayers reach her most easily.')">
+        <td class="dn">Solariel</td>
+        <td class="e"></td><td class="e"></td><td class="s"></td><td class="e"></td><td class="p"></td><td class="e"></td>
+        <td class="e col-divider"></td><td class="e"></td><td class="e"></td><td class="e"></td><td class="e"></td><td class="p"></td>
+      </tr>
+      <tr onclick="hi(this,'Zelos','The merchant deity, the gambler\'s patron, and the god of any endeavour whose outcome is genuinely uncertain. His folk presence in trading culture is substantial — markets often have a small Zelos shrine near the entrance. Merchants toss a coin before significant transactions; the specific gesture is a flick that lets the coin fall where it will and is then deliberately left there. You give the coin to fate. He is also acknowledged at weddings in many communities, because marriage is understood as the most important uncertain wager a person makes.')">
+        <td class="dn">Zelos</td>
+        <td class="e"></td><td class="e"></td><td class="s"></td><td class="s"></td><td class="e"></td><td class="e"></td>
+        <td class="e col-divider"></td><td class="e"></td><td class="e"></td><td class="e"></td><td class="p"></td><td class="e"></td>
+      </tr>
+      <tr onclick="hi(this,'Zephyrion','Among coastal and seafaring communities, Zephyrion is as present as Elaria is inland. He is addressed before every voyage, and keeping his rites is considered basic seamanship rather than religion. The folk relationship with Zephyrion is notably transactional and non-personal — he is a force to be respected and correctly navigated, not a being to be loved. Coastal communities acknowledge him at significant life events too, because the sea touches everything in their world. He does not listen; he permits.')">
+        <td class="dn">Zephyrion</td>
+        <td class="s"></td><td class="e"></td><td class="e"></td><td class="e"></td><td class="e"></td><td class="s"></td>
+        <td class="e col-divider"></td><td class="p"></td><td class="e"></td><td class="e"></td><td class="e"></td><td class="e"></td>
+      </tr>
+      <tr onclick="hi(this,'Arcturius','Arcturius has almost no folk presence outside military culture and knightly communities. Within those worlds, his presence is total. Young warriors make their coming-of-age dedication to him; soldiers invoke him before battle; military communities celebrate his festivals as the most important of the year. His folk rites tend toward endurance over prayer — the long vigil, the fast, the cold watch — because he honours those who persist rather than those who ask. In his communities, prayer without sacrifice is considered no prayer at all.')">
+        <td class="dn">Arcturius</td>
+        <td class="e"></td><td class="e"></td><td class="s"></td><td class="e"></td><td class="e"></td><td class="e"></td>
+        <td class="e col-divider"></td><td class="e"></td><td class="p"></td><td class="e"></td><td class="e"></td><td class="e"></td>
+      </tr>
+      <tr onclick="hi(this,'Thalara','Thalara\'s folk presence is strongest in dwarven communities but extends to craftspeople of all races. The workshop shrine is her domain — a small hammer or anvil symbol near the forge or workbench. Her rites are embedded in the craft process itself: a smith who skips the ritual cooling gesture, a carpenter who doesn\'t dedicate a new tool — these are understood as inviting poor work rather than divine punishment. The distinction is important: Thalara doesn\'t punish sloppiness. She simply isn\'t present when you need her.')">
+        <td class="dn">Thalara</td>
+        <td class="e"></td><td class="e"></td><td class="s"></td><td class="e"></td><td class="e"></td><td class="e"></td>
+        <td class="e col-divider"></td><td class="e"></td><td class="e"></td><td class="p"></td><td class="e"></td><td class="e"></td>
+      </tr>
+      <tr onclick="hi(this,'Anarion','Anarion\'s folk presence is strongest in rural, wilderness, and hunting communities. Children are understood to live in his domain — closer to animals, closer to nature, not yet shaped by civilization\'s demands. Farmers invoke him for the land itself as a wild thing that must be coaxed. Hunters pray to him before setting out. He is almost never invoked in cities, where his domain feels distant and slightly alien. Folk tradition holds that Anarion doesn\'t hear prayers spoken indoors.')">
+        <td class="dn">Anarion</td>
+        <td class="e"></td><td class="s"></td><td class="e"></td><td class="e"></td><td class="e"></td><td class="e"></td>
+        <td class="s col-divider"></td><td class="e"></td><td class="s"></td><td class="e"></td><td class="e"></td><td class="e"></td>
+      </tr>
+      <tr onclick="hi(this,'Nymue','Nymue has a specific but thin folk presence in scholarly, magical, and elven communities. The coming-of-age moment for young people entering arcane study often involves a Nymue rite — a moonlit vigil, a first casting performed under the full moon rather than by candlelight. She is the deity of the moment when someone crosses from ordinary to arcane, which is understood as irreversible. Her folk saying: You can unlearn a spell. You cannot unmake the person who learned it.')">
+        <td class="dn">Nymue</td>
+        <td class="e"></td><td class="e"></td><td class="s"></td><td class="e"></td><td class="e"></td><td class="e"></td>
+        <td class="e col-divider"></td><td class="e"></td><td class="e"></td><td class="s"></td><td class="e"></td><td class="e"></td>
+      </tr>
+      <tr onclick="hi(this,'Aeonius','Aeonius has thin but significant folk presence around times of ending and transition. He is addressed quietly at deathbeds — the dying are sometimes asked "what do you remember?" as a rite of offering accumulated knowledge back to the cosmic record before the soul\'s thread closes. Scholars and timekeepers invoke him. His folk rites almost always involve stillness: the held breath, the stopped clock, the moment of complete silence before the ceremony begins. Folk saying: Aeonius doesn\'t move; everything else moves past him.')">
+        <td class="dn">Aeonius</td>
+        <td class="e"></td><td class="e"></td><td class="s"></td><td class="e"></td><td class="e"></td><td class="s"></td>
+        <td class="e col-divider"></td><td class="e"></td><td class="e"></td><td class="s"></td><td class="e"></td><td class="e"></td>
+      </tr>
+      <tr onclick="hi(this,'Lyriana','Lyriana\'s folk presence is primarily among artists, bards, and those for whom beauty is a vocation. The coming-of-age ceremony for a young artist often includes a Lyriana element — a first public performance, the completion of a first work. Her folk rites are performative rather than contemplative: you don\'t pray to Lyriana in silence. You pray through the act of making. The folk understanding is that she hears music and speech and story more clearly than intention.')">
+        <td class="dn">Lyriana</td>
+        <td class="e"></td><td class="e"></td><td class="s"></td><td class="e"></td><td class="e"></td><td class="e"></td>
+        <td class="e col-divider"></td><td class="e"></td><td class="e"></td><td class="s"></td><td class="e"></td><td class="e"></td>
+      </tr>
+      <tr style="border-top: 1px solid var(--color-border-secondary);" onclick="hi(this,'Abaddon — propitiation','Abaddon appears in folk practice as a force to be named before it names you. Experienced healers acknowledge that understanding pain is necessary to relieving it — some quietly recognise his domain as a professional reality, not a devotion. Soldiers acknowledge him before battle in a specific rite: they name their fear aloud to the ground. The folk logic: if you offer Abaddon your fear voluntarily, he has less use for what fear is supposed to do to you. Folk saying: Name your pain to Abaddon before he names it to you.')">
+        <td class="dnd">Abaddon</td>
+        <td class="e"></td><td class="e"></td><td class="e"></td><td class="e"></td><td class="x"></td><td class="e"></td>
+        <td class="e col-divider"></td><td class="e"></td><td class="x"></td><td class="e"></td><td class="e"></td><td class="x"></td>
+      </tr>
+      <tr onclick="hi(this,'Ba\'haal — propitiation','Ba\'haal is propitiated before serious battle — not worshipped, but fed. The folk rite involves a small cut to the thumb and a press of blood against the earth or the weapon\'s pommel. The meaning is explicit: here is blood freely given; take this and find your hunger answered elsewhere. Soldiers who skip this rite are considered reckless by their peers, in the same way that a sailor who doesn\'t acknowledge Zephyrion before departure is considered naive. It is practical theology, not faith.')">
+        <td class="dnd">Ba'haal</td>
+        <td class="e"></td><td class="e"></td><td class="e"></td><td class="e"></td><td class="e"></td><td class="e"></td>
+        <td class="e col-divider"></td><td class="e"></td><td class="x"></td><td class="e"></td><td class="e"></td><td class="e"></td>
+      </tr>
+      <tr onclick="hi(this,'Nyx — propitiation','Nyx is acknowledged in almost every context as a background presence. She already knows your secrets; the folk custom is a small gesture of acknowledgment when speaking anything private or significant — a touch to the lips, a glance toward shadow, a slight lowering of the voice. You are not informing her. You are acknowledging that she already knows, which is considered basic courtesy toward an entity whose attention is permanent. Folk saying: Nyx doesn\'t need your secret. She already has it. But she notices when you forget that.')">
+        <td class="dnd">Nyx</td>
+        <td class="x"></td><td class="x"></td><td class="x"></td><td class="x"></td><td class="x"></td><td class="x"></td>
+        <td class="x col-divider"></td><td class="x"></td><td class="x"></td><td class="x"></td><td class="x"></td><td class="x"></td>
+      </tr>
+      <tr onclick="hi(this,'Astaroth — propitiation in commerce','Astaroth\'s folk presence in the merchant world reflects practical theology: his infernal contracts are understood to be absolutely binding, which makes him useful as a witness to oaths. Some merchants swear significant contracts "in the hearing of the Arch-Devil" — not worshipping him, but invoking his attention as a cosmic guarantee of binding. This is considered dangerous and effective. Legal scholars debate whether it constitutes worship. Most merchants simply note that deals sworn this way don\'t break.')">
+        <td class="dnd">Astaroth</td>
+        <td class="e"></td><td class="e"></td><td class="e"></td><td class="e"></td><td class="e"></td><td class="e"></td>
+        <td class="e col-divider"></td><td class="e"></td><td class="e"></td><td class="e"></td><td class="x"></td><td class="e"></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div id="di">Click any row to see folk practice notes for that deity.</div>
+</div>
+
+<script>
+let activeRow = null;
+function hi(row, name, text) {
+  if (activeRow) activeRow.classList.remove('active-row');
+  if (activeRow === row) { activeRow = null; document.getElementById('di').innerHTML = 'Click any row to see folk practice notes for that deity.'; return; }
+  activeRow = row;
+  row.classList.add('active-row');
+  document.getElementById('di').innerHTML = '<strong>' + name + '</strong>' + text;
+}
+</script>
