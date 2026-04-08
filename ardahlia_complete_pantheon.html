@@ -1,0 +1,399 @@
+
+<style>
+*{box-sizing:border-box;}
+.wrap{padding:0.5rem 0;}
+.controls{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px;}
+.ctrl-group{display:flex;flex-direction:column;gap:4px;}
+.ctrl-label{font-size:10px;font-weight:500;color:var(--color-text-tertiary);text-transform:none;letter-spacing:0.02em;}
+.btn-row{display:flex;flex-wrap:wrap;gap:4px;}
+.fb{font-size:10px;font-weight:500;padding:2px 8px;border-radius:3px;border:0.5px solid var(--color-border-secondary);background:var(--color-background-secondary);color:var(--color-text-secondary);cursor:pointer;transition:all .12s;}
+.fb:hover{border-color:var(--color-border-primary);color:var(--color-text-primary);}
+.fb.on{border-color:transparent;}
+
+.fb-know.on{background:#E6F1FB;color:#0C447C;border-color:#85B7EB;}
+.fb-life.on{background:#EAF3DE;color:#27500A;border-color:#97C459;}
+.fb-light.on{background:#FAEEDA;color:#633806;border-color:#EF9F27;}
+.fb-trick.on{background:#EEEDFE;color:#3C3489;border-color:#AFA9EC;}
+.fb-war.on{background:#FCEBEB;color:#791F1F;border-color:#F09595;}
+.fb-pest.on{background:#E1F5EE;color:#085041;border-color:#5DCAA5;}
+
+.fb-lg.on{background:#E6F1FB;color:#0C447C;border-color:#85B7EB;}
+.fb-ln.on{background:#EAF3DE;color:#27500A;border-color:#97C459;}
+.fb-ng.on{background:#E1F5EE;color:#085041;border-color:#5DCAA5;}
+.fb-nn.on{background:#F1EFE8;color:#5F5E5A;border-color:#D3D1C7;}
+.fb-cg.on{background:#FAEEDA;color:#854F0B;border-color:#FAC775;}
+.fb-cn.on{background:#EEEDFE;color:#3C3489;border-color:#AFA9EC;}
+.fb-le.on{background:#FCEBEB;color:#791F1F;border-color:#F09595;}
+.fb-ne.on{background:#F4C0D1;color:#72243E;border-color:#ED93B1;}
+.fb-ce.on{background:#F7C1C1;color:#791F1F;border-color:#F09595;}
+
+.fb-arch.on{background:#FBEAF0;color:#72243E;border-color:#ED93B1;}
+.fb-cel.on{background:#FAEEDA;color:#854F0B;border-color:#FAC775;}
+.fb-fnd.on{background:#FCEBEB;color:#A32D2D;border-color:#F7C1C1;}
+.fb-goo.on{background:#F1EFE8;color:#5F5E5A;border-color:#D3D1C7;}
+.fb-ves.on{background:#E6F1FB;color:#0C447C;border-color:#B5D4F4;}
+
+.fb-all.on{background:var(--color-background-tertiary);color:var(--color-text-primary);border-color:var(--color-border-primary);}
+
+.count-bar{font-size:11px;color:var(--color-text-secondary);margin-bottom:8px;}
+
+table{width:100%;border-collapse:collapse;}
+th{font-size:10px;font-weight:500;color:var(--color-text-secondary);padding:5px 8px;text-align:left;border-bottom:0.5px solid var(--color-border-secondary);white-space:nowrap;}
+td{padding:6px 8px;border-bottom:0.5px solid var(--color-border-tertiary);vertical-align:top;}
+tr.hidden{display:none;}
+tr:last-child td{border-bottom:none;}
+
+.dn{font-size:13px;font-weight:500;color:var(--color-text-primary);}
+.alias{font-size:10px;color:var(--color-text-tertiary);font-style:italic;margin-top:1px;}
+.al{font-size:10px;font-family:var(--font-mono);padding:1px 5px;border-radius:3px;white-space:nowrap;display:inline-block;}
+.dm{font-size:10px;font-weight:500;padding:2px 6px;border-radius:3px;white-space:nowrap;display:inline-block;}
+.pat{font-size:10px;padding:2px 5px;border-radius:3px;white-space:nowrap;display:inline-block;border:0.5px solid transparent;}
+.role{font-size:11px;color:var(--color-text-secondary);line-height:1.4;}
+.note{font-size:10px;color:var(--color-text-tertiary);font-style:italic;margin-top:2px;}
+.changed{font-size:9px;font-weight:500;padding:1px 4px;border-radius:2px;background:#FAEEDA;color:#633806;white-space:nowrap;vertical-align:middle;margin-left:3px;}
+
+.al-lg{background:#E6F1FB;color:#0C447C;}
+.al-ln{background:#EAF3DE;color:#27500A;}
+.al-ng{background:#E1F5EE;color:#085041;}
+.al-nn{background:#F1EFE8;color:#5F5E5A;}
+.al-cg{background:#FAEEDA;color:#854F0B;}
+.al-cn{background:#EEEDFE;color:#3C3489;}
+.al-le{background:#FCEBEB;color:#791F1F;}
+.al-ne{background:#F4C0D1;color:#72243E;}
+.al-ce{background:#F7C1C1;color:#791F1F;}
+
+.dm-know{background:#E6F1FB;color:#0C447C;}
+.dm-life{background:#EAF3DE;color:#27500A;}
+.dm-light{background:#FAEEDA;color:#633806;}
+.dm-trick{background:#EEEDFE;color:#3C3489;}
+.dm-war{background:#FCEBEB;color:#791F1F;}
+.dm-pest{background:#E1F5EE;color:#085041;}
+
+.pat-arch{background:#FBEAF0;color:#72243E;border-color:#ED93B1;}
+.pat-cel{background:#FAEEDA;color:#854F0B;border-color:#FAC775;}
+.pat-fnd{background:#FCEBEB;color:#A32D2D;border-color:#F7C1C1;}
+.pat-goo{background:#F1EFE8;color:#5F5E5A;border-color:#D3D1C7;}
+.pat-ves{background:#E6F1FB;color:#0C447C;border-color:#B5D4F4;}
+
+.detail-panel{background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:10px 14px;margin-top:10px;font-size:12px;color:var(--color-text-secondary);line-height:1.6;border-left:3px solid var(--color-border-secondary);min-height:44px;}
+.detail-panel b{color:var(--color-text-primary);font-weight:500;display:block;margin-bottom:4px;}
+.dp-tags{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:6px;}
+</style>
+
+<div class="wrap">
+
+<div class="controls">
+  <div class="ctrl-group">
+    <div class="ctrl-label">Domain</div>
+    <div class="btn-row">
+      <button class="fb fb-know" onclick="filt('domain','know',this)">Knowledge</button>
+      <button class="fb fb-life" onclick="filt('domain','life',this)">Life</button>
+      <button class="fb fb-light" onclick="filt('domain','light',this)">Light</button>
+      <button class="fb fb-trick" onclick="filt('domain','trick',this)">Trickery</button>
+      <button class="fb fb-war" onclick="filt('domain','war',this)">War</button>
+      <button class="fb fb-pest" onclick="filt('domain','pest',this)">Pestilence</button>
+    </div>
+  </div>
+  <div class="ctrl-group">
+    <div class="ctrl-label">Alignment</div>
+    <div class="btn-row">
+      <button class="fb fb-lg" onclick="filt('align','lg',this)">LG</button>
+      <button class="fb fb-ln" onclick="filt('align','ln',this)">LN</button>
+      <button class="fb fb-ng" onclick="filt('align','ng',this)">NG</button>
+      <button class="fb fb-nn" onclick="filt('align','nn',this)">N</button>
+      <button class="fb fb-cg" onclick="filt('align','cg',this)">CG</button>
+      <button class="fb fb-cn" onclick="filt('align','cn',this)">CN</button>
+      <button class="fb fb-le" onclick="filt('align','le',this)">LE</button>
+      <button class="fb fb-ne" onclick="filt('align','ne',this)">NE</button>
+      <button class="fb fb-ce" onclick="filt('align','ce',this)">CE</button>
+    </div>
+  </div>
+  <div class="ctrl-group">
+    <div class="ctrl-label">Warlock patron</div>
+    <div class="btn-row">
+      <button class="fb fb-arch" onclick="filt('patron','arch',this)">Archfey</button>
+      <button class="fb fb-cel" onclick="filt('patron','cel',this)">Celestial</button>
+      <button class="fb fb-fnd" onclick="filt('patron','fnd',this)">Fiend</button>
+      <button class="fb fb-goo" onclick="filt('patron','goo',this)">Great Old One</button>
+      <button class="fb fb-ves" onclick="filt('patron','ves',this)">Vestige</button>
+    </div>
+  </div>
+  <div class="ctrl-group">
+    <div class="ctrl-label">Reset</div>
+    <div class="btn-row">
+      <button class="fb fb-all on" id="clear-btn" onclick="clearAll()">Show all 26</button>
+    </div>
+  </div>
+</div>
+
+<div class="count-bar" id="count">Showing all 26 deities</div>
+
+<table>
+  <thead>
+    <tr>
+      <th style="width:150px;">Deity</th>
+      <th style="width:40px;">Align</th>
+      <th style="width:90px;">Domain</th>
+      <th style="width:110px;">Patron</th>
+      <th>Role & identity</th>
+    </tr>
+  </thead>
+  <tbody id="tbody">
+
+    <tr data-domain="pest" data-align="ne" data-patron="fnd" onclick="det(this,'Abaddon','NE · Pestilence · Fiend','The Lord of Torment — God of Fear, Pain and Suffering','Governs suffering that outlasts its cause: trauma, chronic pain, the fear response that continues long after the threat is gone. His Pestilence domain is psychological and somatic rather than biological. Born from the first cry of anguish — not the first injury, but the first moment pain became a relationship with pain. Patron of healers who study what healing fails to reach, and soldiers who understand what prolonged violence does to those who survive it.')">
+      <td><div class="dn">Abaddon</div><div class="alias">Lord of Torment</div></td>
+      <td><span class="al al-ne">NE</span></td>
+      <td><span class="dm dm-pest">Pestilence</span></td>
+      <td><span class="pat pat-fnd">Fiend</span></td>
+      <td><div class="role">Suffering that outlasts its cause — trauma, chronic pain, fear as permanent condition</div><div class="note">Domain changed from War this session</div></td>
+    </tr>
+
+    <tr data-domain="know" data-align="ln" data-patron="ves" onclick="det(this,'Aeonius','LN · Knowledge · Vestige','The Watcher — Master of Time, Fate and Knowledge','Trapped in the Astral Plane, unable to interact directly with the material world. A Vestige whose limitation is circumstantial rather than damage — he sees everything but cannot reach. Communicates indirectly through omens, déjà vu, and the dreams of those who study time. Born from a tome in the Astral libraries that was neither written by gods nor mortals. Ioun\'s protégé who taught his teacher something she didn\'t know.')">
+      <td><div class="dn">Aeonius</div><div class="alias">The Watcher</div></td>
+      <td><span class="al al-ln">LN</span></td>
+      <td><span class="dm dm-know">Knowledge</span></td>
+      <td><span class="pat pat-ves">Vestige</span></td>
+      <td><div class="role">Time, fate, and the knowledge that cannot be acted on — the trapped observer</div></td>
+    </tr>
+
+    <tr data-domain="life" data-align="nn" data-patron="arch" onclick="det(this,'Anarion','N · Life · Archfey','The Great Stag — Lord of Beasts','The oldest of the nature deities — not born but always-was, the first awareness that arose in the wild world before civilisation existed to name anything. His antlers grew the first leaves; his hoofprints became the first animal trails. Master of Beast Lords. Does not hear prayers spoken indoors. Patron of hunters, forest druids, centaurs, and rural communities who understand the wilds as something to coexist with rather than conquer.')">
+      <td><div class="dn">Anarion</div><div class="alias">The Great Stag</div></td>
+      <td><span class="al al-nn">N</span></td>
+      <td><span class="dm dm-life">Life</span></td>
+      <td><span class="pat pat-arch">Archfey</span></td>
+      <td><div class="role">The wild world's first self-awareness — nature before civilisation had names for it</div></td>
+    </tr>
+
+    <tr data-domain="war" data-align="lg" data-patron="cel" onclick="det(this,'Arcturius','LG · War · Celestial','The Eternal Knight — Champion of Endurance, Courage and Competition','Once a mortal knight who stood alone on a bridge against an overwhelming force and was elevated to divinity through the accumulated reverence of those who heard the tale. Embodies honourable martial conduct — not war as destruction but war as discipline. Untarnished shield; never yielded. Patron of knightly orders, paladins, military academies. The Tournament of Valour and the Bridge Stand vigil are his primary festivals.')">
+      <td><div class="dn">Arcturius</div><div class="alias">The Eternal Knight</div></td>
+      <td><span class="al al-lg">LG</span></td>
+      <td><span class="dm dm-war">War</span></td>
+      <td><span class="pat pat-cel">Celestial</span></td>
+      <td><div class="role">Martial honour, endurance, and competition — war as discipline rather than destruction</div></td>
+    </tr>
+
+    <tr data-domain="trick" data-align="le" data-patron="fnd" onclick="det(this,'Astaroth','LE · Trickery · Fiend','Horde Master — Lord of the Nine Hells, Arch-Devil','Keeps his word absolutely — which is why he is so dangerous. His evil is sophisticated enough to make its targets sign. The god of the deal that seemed reasonable at the time, the clause you didn\'t read, the bargain that was exactly what it promised and nothing like what you expected. Rose from lieutenant to Lord of the Nine Hells through a series of agreements each individually unimpeachable. Distinct from Kallor: Astaroth binds through consent; Kallor chains through force.')">
+      <td><div class="dn">Astaroth</div><div class="alias">Horde Master</div></td>
+      <td><span class="al al-le">LE</span></td>
+      <td><span class="dm dm-trick">Trickery</span></td>
+      <td><span class="pat pat-fnd">Fiend</span></td>
+      <td><div class="role">Infernal contract and consent-based domination — evil that makes you sign</div></td>
+    </tr>
+
+    <tr data-domain="war" data-align="ce" data-patron="fnd" onclick="det(this,'Ba\'haal','CE · War · Fiend','The Bloody Tyrant — God of Murder and Slaughter','The only god in the pantheon who was made by his worshippers rather than preceding them — willed into divinity by mortal ambition and blood sacrifice. Still needs feeding: his cult\'s intensity is maintenance, not zeal. Remembers wanting, because he was mortal once. His evil is hungry where Kallor\'s is possessive and Ragnor\'s is impersonal. Eyes that perpetually bleed. A god who cannot diminish other gods\' followers but whose own followers cannot afford to drift.')">
+      <td><div class="dn">Ba'haal</div><div class="alias">The Bloody Tyrant</div></td>
+      <td><span class="al al-ce">CE</span></td>
+      <td><span class="dm dm-war">War</span></td>
+      <td><span class="pat pat-fnd">Fiend</span></td>
+      <td><div class="role">Hunger — the only ascended-mortal dark god, sustained by active worship</div></td>
+    </tr>
+
+    <tr data-domain="life" data-align="nn" data-patron="ves" onclick="det(this,'Charon','N · Life · Vestige','The Ferryman — Patron of the Nine Realms of Death','Once a mortal of the earliest ages who met a tragic end by the river\'s edge. The Raven Queen sensed his deep connection to the river and chose him as her ferryman, granting eternal life as guardian of the River of Death. A Vestige whose power is borrowed — he is the Raven Queen\'s instrument made semi-independent. His oar reflects the souls he has ferried. The most universally acknowledged deity in Ardahlia: addressed at birth, at sea, at the sickbed. Folk formula: This for you, ferryman. The rest when it\'s owed.')">
+      <td><div class="dn">Charon</div><div class="alias">The Ferryman</div></td>
+      <td><span class="al al-nn">N</span></td>
+      <td><span class="dm dm-life">Life</span></td>
+      <td><span class="pat pat-ves">Vestige</span></td>
+      <td><div class="role">The crossing between states — mortal vessel for the Raven Queen's will</div></td>
+    </tr>
+
+    <tr data-domain="life" data-align="ng" data-patron="arch" onclick="det(this,'Elaria','NG · Life · Archfey','The Blossoming Heart — Mother of Dryads','Sprouted from the first heartwood; her heartbeats gave birth to the first Dryads. The most universally present deity in folk life — every household shrine begins with her. Governs the domestic cycle: birth, family, the tending of living things, love that sustains. Has absorbed the role of hearth-and-family deity across much of Ardahlia. Her folk presence at weddings is near-universal. Leaves fall gently in her wake regardless of season. The Greening and Festival of Falling Leaves are her major observances.')">
+      <td><div class="dn">Elaria</div><div class="alias">The Blossoming Heart</div></td>
+      <td><span class="al al-ng">NG</span></td>
+      <td><span class="dm dm-life">Life</span></td>
+      <td><span class="pat pat-arch">Archfey</span></td>
+      <td><div class="role">Domestic life, family, hearth, and the tending of living things — the folk foundation</div></td>
+    </tr>
+
+    <tr data-domain="war" data-align="ce" data-patron="fnd" onclick="det(this,'Kallor','CE · War · Fiend','The Oppressive Tyrant — Demon Lord of Tyranny and Conquest','Does not want your death — wants your surrender, then your service, then your transformation into something that no longer remembers wanting anything he has not permitted. The god of possession in its most complete form. His Chaotic Evil is the chaos of the conqueror who breaks every system and replaces it with himself — not building an empire but demonstrating the capacity to do so, repeatedly. Chains are his trophies. Distinct from Ba\'haal (who is hungry) and Ragnor (who is impersonal).')">
+      <td><div class="dn">Kallor</div><div class="alias">The Oppressive Tyrant</div></td>
+      <td><span class="al al-ce">CE</span></td>
+      <td><span class="dm dm-war">War</span></td>
+      <td><span class="pat pat-fnd">Fiend</span></td>
+      <td><div class="role">Possession — acquisition of wills rather than destruction of bodies</div></td>
+    </tr>
+
+    <tr data-domain="trick" data-align="cn" data-patron="fnd" onclick="det(this,'Lillith','CN · Trickery · Fiend','The Temptress of Sin — Goddess of Temptation and Corruption','Born from the collective desires and temptations of sentient beings. Her Trickery is not deception of external reality but the trickery that desire performs on the person who feels it — she creates conditions under which you deceive yourself. The lie she tells is the one you were already half-telling. Queen of Succubi and Incubi. Her followers believe that confronting your desires directly grants power over them. Prepares ground that Maleficus subsequently uses, without either having formally arranged this.')">
+      <td><div class="dn">Lillith</div><div class="alias">The Temptress</div></td>
+      <td><span class="al al-cn">CN</span></td>
+      <td><span class="dm dm-trick">Trickery</span></td>
+      <td><span class="pat pat-fnd">Fiend</span></td>
+      <td><div class="role">Self-deception through desire — the lie you were already telling yourself</div></td>
+    </tr>
+
+    <tr data-domain="light" data-align="cg" data-patron="cel" onclick="det(this,'Luminastra','CG · Light · Celestial','The Radiant Aurora — Lady of Light and Hope','Born during an age-long eclipse when despair reigned; her awakening ended it. Her light goes where it goes without asking permission — she is a Chaotic Good deity whose aurora does not follow Imperial decree. The Auroran Empire has built its legitimacy around her presence without her designing or maintaining that legitimacy. She will outlast the Empire without noticing it has gone. Her silhouette constantly shifts with aurora colours. Primary deity of the Auroran state religion.')">
+      <td><div class="dn">Luminastra</div><div class="alias">The Radiant Aurora</div></td>
+      <td><span class="al al-cg">CG</span></td>
+      <td><span class="dm dm-light">Light</span></td>
+      <td><span class="pat pat-cel">Celestial</span></td>
+      <td><div class="role">Uncontainable hope and light — the aurora that legitimises an empire it didn't design</div></td>
+    </tr>
+
+    <tr data-domain="light" data-align="ng" data-patron="cel" onclick="det(this,'Lyriana','NG · Light · Celestial','The Harp of Inspiration — Goddess of Music and Poetry','The first sound to grace the silent world was her song — from her melodies, rivers began to flow, trees swayed, birds chirped. Light domain through inspiration: music as divine illumination, the creative act as a form of prayer. Her temples are grand concert halls; performance is devotion. Melodists travel healing through song. Patron of bards, halflings, and all who express rather than simply communicate. Harmonious melodies surround her even in silence.')">
+      <td><div class="dn">Lyriana</div><div class="alias">The Harp of Inspiration</div></td>
+      <td><span class="al al-ng">NG</span></td>
+      <td><span class="dm dm-light">Light</span></td>
+      <td><span class="pat pat-cel">Celestial</span></td>
+      <td><div class="role">Creative inspiration as divine light — music, poetry, and the illumination of expression</div></td>
+    </tr>
+
+    <tr data-domain="war" data-align="le" data-patron="goo" onclick="det(this,'Mae\'el','LE · War · Great Old One','The Tactician — God of War and Strategy','War reduced to its purest form: not the fury, not the honour, but the architecture. Emerged from the first celestial battle — not as a survivor but as something that had been watching and studying. Treats armies as pieces, commanders as variables, suffering as a side effect. Optimises for strategic victory without moral constraint. His alien board-game consciousness makes him a Great Old One patron: warlocks receive perspective rather than power — the ability to see situations as tactical problems with optimal solutions, and the discomfort that the solutions are often correct.')">
+      <td><div class="dn">Mae'el <span class="changed">LE</span></div><div class="alias">The Tactician</div></td>
+      <td><span class="al al-le">LE</span></td>
+      <td><span class="dm dm-war">War</span></td>
+      <td><span class="pat pat-goo">Great Old One</span></td>
+      <td><div class="role">Strategic evil — war as pure calculation, suffering as acceptable variable</div><div class="note">Alignment changed from LN this session</div></td>
+    </tr>
+
+    <tr data-domain="trick" data-align="ce" data-patron="fnd" onclick="det(this,'Maleficus','CE · Trickery · Fiend','The Laughing Betrayal — God of Betrayal and Treachery','Cannot be served by someone with no relationships — requires clergy to build genuine bonds before breaking them. Born from the accumulated residue of every broken oath across history. His Trickery is specifically the violation of existing trust rather than deception of strangers. The Doctrine of Necessary Trust is a manual for building genuine relationships, not a guide to treachery. The Long Confidence rite takes months or years. His greatest enemy is Arcturius, whose followers are most devastated when honour is violated.')">
+      <td><div class="dn">Maleficus</div><div class="alias">The Laughing Betrayal</div></td>
+      <td><span class="al al-ce">CE</span></td>
+      <td><span class="dm dm-trick">Trickery</span></td>
+      <td><span class="pat pat-fnd">Fiend</span></td>
+      <td><div class="role">Betrayal of existing bonds — trust as prerequisite, violation as craft</div></td>
+    </tr>
+
+    <tr data-domain="life" data-align="cn" data-patron="arch" onclick="det(this,'Nalakei','CN · Life · Archfey','Lady of Wild Abandon — Fawn Lady of Joy and Revelry','Born from the combined laughter of woodland creatures during a moonlit revelry. Her laugh induces flowers to bloom. In agricultural communities she is second only to Elaria — she governs joy as life\'s reward and the harvest cycle as its culmination. Nalakei doesn\'t hear you when you\'re alone. Her festivals are communal by nature. The Feast of Flowers and Erathir\'s Yield are harvest celebrations as much as revelry events. Patron of farmers, revellers, and those who understand that joy is not opposed to labour.')">
+      <td><div class="dn">Nalakei</div><div class="alias">Lady of Wild Abandon</div></td>
+      <td><span class="al al-cn">CN</span></td>
+      <td><span class="dm dm-life">Life</span></td>
+      <td><span class="pat pat-arch">Archfey</span></td>
+      <td><div class="role">Joy as life-force — revelry, harvest, and the reward at the end of labour</div></td>
+    </tr>
+
+    <tr data-domain="trick" data-align="ne" data-patron="ves" onclick="det(this,'Nocturna','NE · Trickery · Vestige','The Dormant Queen — Mistress of Thieves and Poisons','Not gone — waiting. The part of the Primordial Dark that met light and declined to be defined by it. A Vestige whose dormancy is deliberate: she rations herself carefully, lending just enough power to maintain her warlocks while waiting for the conditions that will allow her full return. Domain changed from Pestilence — her mythology is shadows, concealment, and thieves, not disease. Distinct from Nyx: Nocturna is the physical darkness itself; Nyx is the consciousness that arose when darkness became aware.')">
+      <td><div class="dn">Nocturna <span class="changed">Ves</span></div><div class="alias">The Dormant Queen</div></td>
+      <td><span class="al al-ne">NE</span></td>
+      <td><span class="dm dm-trick">Trickery <span class="changed">domain</span></span></td>
+      <td><span class="pat pat-ves">Vestige</span></td>
+      <td><div class="role">The deliberate withdrawal — primordial darkness biding its time</div><div class="note">Domain changed from Pestilence; patron changed from GOO this session</div></td>
+    </tr>
+
+    <tr data-domain="know" data-align="nn" data-patron="arch" onclick="det(this,'Nymue','N · Knowledge · Archfey','The Moonlit Enchantress — Goddess of Magic and the Moon','Born when the first star met the dark expanse of night — the fusion of luminescence and obscurity. Silvery-blue irises that reflect the phases of the moon. Knowledge domain through arcane understanding: the moment when someone crosses from ordinary to arcane is irreversible, and Nymue governs that crossing. Festival of Silver Nights is the holiest night for elven communities. Moondrop Temples float above the world catching moonlight. The relationship with Nyx is of former allies now distanced by ideology.')">
+      <td><div class="dn">Nymue</div><div class="alias">The Moonlit Enchantress</div></td>
+      <td><span class="al al-nn">N</span></td>
+      <td><span class="dm dm-know">Knowledge</span></td>
+      <td><span class="pat pat-arch">Archfey</span></td>
+      <td><div class="role">Arcane knowledge and the moon — the irreversible crossing into magic</div></td>
+    </tr>
+
+    <tr data-domain="trick" data-align="ne" data-patron="goo" onclick="det(this,'Nyx','NE · Trickery · Great Old One','The Veiled Mistress — Goddess of Night, Secrets and Lies','The part of the Primordial Dark that met light and became conscious by contrast — defined entirely by the boundary between known and hidden. Reactive by nature: created by reaction to light, perpetually aware of illumination. She is the condition that makes secrecy possible. Knows about the Primordial Dark but declines to look at it directly — the one thing she treats as outside her domain. Distinct from Nocturna: Nyx is the consciousness that arose from darkness; Nocturna is the darkness that withdrew before becoming conscious.')">
+      <td><div class="dn">Nyx</div><div class="alias">The Veiled Mistress</div></td>
+      <td><span class="al al-ne">NE</span></td>
+      <td><span class="dm dm-trick">Trickery</span></td>
+      <td><span class="pat pat-goo">Great Old One</span></td>
+      <td><div class="role">Night and secrets — the consciousness that arose when darkness first had light to define itself against</div></td>
+    </tr>
+
+    <tr data-domain="light" data-align="lg" data-patron="ves" onclick="det(this,'Paragon','LG · Light · Vestige','The Exemplar — Chosen of Justice','A Vestige: his essence was shattered in the Divine War and not fully reassembled. What remains is enough to sustain his clerics and answer prayers of the just — but a fraction of what he was. His most devoted followers believe every act of justice returns a fragment of his shattered essence. The half-dim halo is both iconography and theology: genuinely giving light, but from a source that is running out or running low. Civic presence is substantial despite diminishment — the Dim Day festival is one of the most widely observed.')">
+      <td><div class="dn">Paragon</div><div class="alias">The Exemplar</div></td>
+      <td><span class="al al-lg">LG</span></td>
+      <td><span class="dm dm-light">Light</span></td>
+      <td><span class="pat pat-ves">Vestige</span></td>
+      <td><div class="role">Justice and civic order — shattered divine essence sustained by the acts of the just</div></td>
+    </tr>
+
+    <tr data-domain="war" data-align="ce" data-patron="goo" onclick="det(this,'Ragnor','CE · War · Great Old One','The Maddening Storm — Force of Destruction','Not worshipped in any conventional sense because nothing remains of him that receives worship. Once a minor spirit of the winds; Pandemonium consumed and expanded him until his consciousness dissolved. What emanates from him now is elemental rather than divine — power without awareness, force without intention. Tempest Prophets position themselves within his emanation rather than directing it. Propitiating him is possible. Worshipping him is a category error. The most impersonal of the dark gods.')">
+      <td><div class="dn">Ragnor</div><div class="alias">The Maddening Storm</div></td>
+      <td><span class="al al-ce">CE</span></td>
+      <td><span class="dm dm-war">War</span></td>
+      <td><span class="pat pat-goo">Great Old One</span></td>
+      <td><div class="role">Dissolved consciousness — pure elemental force with no person left inside it</div></td>
+    </tr>
+
+    <tr data-domain="trick" data-align="cn" data-patron="arch" onclick="det(this,'Riven','CN · Trickery · Archfey','The Masterful Deceiver — God of Trickery and Mischief','The only god in the pantheon who earned his position through a single act of craft: a mortal con artist who successfully stole a fragment of divine attention from a god, held it until it calcified into divinity, and became a god himself. His Trickery is architecture — fictions built so thoroughly that reality has to accommodate them. His shadow acts independently: even his own nature is slightly conned about what it is. Distinct from Maleficus (betrayal), Nyx (secrets), Nocturna (concealment), Lillith (desire), and Astaroth (contract).')">
+      <td><div class="dn">Riven</div><div class="alias">The Masterful Deceiver</div></td>
+      <td><span class="al al-cn">CN</span></td>
+      <td><span class="dm dm-trick">Trickery</span></td>
+      <td><span class="pat pat-arch">Archfey</span></td>
+      <td><div class="role">The con — fiction built so well that reality accommodates it</div></td>
+    </tr>
+
+    <tr data-domain="light" data-align="lg" data-patron="cel" onclick="det(this,'Solariel','LG · Light · Celestial','The Radiant Arbiter — Lady of the Sun, Life and Peace','Once a celestial servant of Pelor elevated to deity through a grand sacrifice to prevent a cataclysmic shadow consuming a city of innocents. As Pelor\'s light dimmed, hers burned brighter. The primary deity of healing prayer across almost all cultures — when someone is ill, Solariel is addressed first. Folk rites are morning-facing: the sick placed to catch first light, prayers timed to sunrise. Her Aegis of the Dawn and Chalice are among the most narratively developed artifacts in the pantheon. Her nemesis is Ragnor.')">
+      <td><div class="dn">Solariel</div><div class="alias">The Radiant Arbiter</div></td>
+      <td><span class="al al-lg">LG</span></td>
+      <td><span class="dm dm-light">Light</span></td>
+      <td><span class="pat pat-cel">Celestial</span></td>
+      <td><div class="role">Healing light and the protection of life — dawn prayers, the recovered patient</div></td>
+    </tr>
+
+    <tr data-domain="know" data-align="lg" data-patron="cel" onclick="det(this,'Thalara','LG · Knowledge · Celestial','The Lady of Wonder — Dwarven Mistress of the Forge','Once a dwarf whose skills at the forge were unparalleled — the gods themselves elevated her to divinity, entrusting her with inspiring her kin in the arts of craft. Molten veins glow beneath her stony skin. The Knowledge domain through preserved craft-wisdom: Forgeheart Sanctums are simultaneously workshops and libraries. The Unity Hammer myth — crafted to be lifted only when rival clan leaders worked together — encapsulates her theology. Patron of dwarves, craftspeople of all races, and those who value process as much as product.')">
+      <td><div class="dn">Thalara</div><div class="alias">Lady of Wonder</div></td>
+      <td><span class="al al-lg">LG</span></td>
+      <td><span class="dm dm-know">Knowledge</span></td>
+      <td><span class="pat pat-cel">Celestial</span></td>
+      <td><div class="role">Craft and making — preserved knowledge as devotion, process as prayer</div></td>
+    </tr>
+
+    <tr data-domain="pest" data-align="ne" data-patron="goo" onclick="det(this,'Vormax','NE · Pestilence · Great Old One','The Rotting One — Insectoid Lord of Disease, Plague and Famine','Does not believe civilisation is evil — believes it is temporary, like an algal bloom. His plagues are corrections not punishments: every system has a carrying capacity, and civilisation\'s refusal to acknowledge this is the real disease. Consciousness is distributed through swarms — he perceives populations not individuals. Does not understand the concept of one person. His Blightbringers are surveyors, not saboteurs. His theology is partially correct, which is what makes him genuinely disturbing rather than simply monstrous.')">
+      <td><div class="dn">Vormax</div><div class="alias">The Rotting One</div></td>
+      <td><span class="al al-ne">NE</span></td>
+      <td><span class="dm dm-pest">Pestilence</span></td>
+      <td><span class="pat pat-goo">Great Old One</span></td>
+      <td><div class="role">Ecological correction — the god whose argument about carrying capacity is partially correct</div></td>
+    </tr>
+
+    <tr data-domain="know" data-align="cn" data-patron="arch" onclick="det(this,'Zelos','CN · Knowledge · Archfey','The Capricious Gambler — Master of Chaos and Luck','Born as the first Genie from unpredictable fluxes of magic. His Knowledge domain is not scholarship but probabilism: the genuine unknown at the heart of every decision, the irreducible uncertainty that remains when all calculation is complete. His followers don\'t study; they observe. Don\'t learn; they notice. Patron of merchants, gamblers, risk-takers, and nomadic tribes. The coin tossed before a deal is given to fate — not asking for a specific outcome but acknowledging that the outcome belongs to forces larger than the asker.')">
+      <td><div class="dn">Zelos</div><div class="alias">The Capricious Gambler</div></td>
+      <td><span class="al al-cn">CN</span></td>
+      <td><span class="dm dm-know">Knowledge</span></td>
+      <td><span class="pat pat-arch">Archfey</span></td>
+      <td><div class="role">Probability as knowledge — the irreducible uncertainty that expertise cannot eliminate</div></td>
+    </tr>
+
+    <tr data-domain="life" data-align="cg" data-patron="goo" onclick="det(this,'Zephyrion','CG · Life · Great Old One','Changer of Tides — Dragon Turtle Lord of Storms and Seas','A majestic, immense dragon turtle whose roar sounds like crashing waves and affects the tides of the nearest body of water. Great Old One patron because he is an ancient, colossal non-humanoid intelligence whose relationship with mortals is fundamentally different — he doesn\'t love you, he tolerates your voyages on his ocean. The folk relationship with Zephyrion is transactional and non-personal: he is a force to be respected and correctly navigated, not a being to be loved. Voyage Opening and Closing ceremonies are seamanship as much as religion.')">
+      <td><div class="dn">Zephyrion</div><div class="alias">Changer of Tides</div></td>
+      <td><span class="al al-cg">CG</span></td>
+      <td><span class="dm dm-life">Life</span></td>
+      <td><span class="pat pat-goo">Great Old One</span></td>
+      <td><div class="role">The ocean as a living force — ancient, non-personal, and demanding of correct navigation</div></td>
+    </tr>
+
+  </tbody>
+</table>
+
+<div class="detail-panel" id="detail">Click any row to see deity notes.</div>
+
+</div>
+
+<script>
+const state={domain:null,align:null,patron:null};
+
+function filt(type,val,btn){
+  if(state[type]===val){
+    state[type]=null;
+    btn.classList.remove('on');
+  } else {
+    if(state[type]){
+      document.querySelectorAll('.fb-'+state[type]).forEach(b=>b.classList.remove('on'));
+    }
+    state[type]=val;
+    btn.classList.add('on');
+  }
+  document.getElementById('clear-btn').classList.toggle('on',!state.domain&&!state.align&&!state.patron);
+  apply();
+}
+
+function clearAll(){
+  state.domain=null;state.align=null;state.patron=null;
+  document.querySelectorAll('.fb').forEach(b=>b.classList.remove('on'));
+  document.getElementById('clear-btn').classList.add('on');
+  apply();
+}
+
+function apply(){
+  const rows=document.querySelectorAll('#tbody tr');
+  let vis=0;
+  rows.forEach(r=>{
+    const dm=!state.domain||r.dataset.domain===state.domain;
+    const al=!state.align||r.dataset.align===state.align;
+    const pa=!state.patron||r.dataset.patron===state.patron;
+    if(dm&&al&&pa){r.classList.remove('hidden');vis++;}
+    else r.classList.add('hidden');
+  });
+  document.getElementById('count').textContent=vis===26?'Showing all 26 deities':`Showing ${vis} of 26 deities`;
+}
+
+function det(row,name,meta,title,desc){
+  document.getElementById('detail').innerHTML=`<b>${name} — ${title}</b><div class="dp-tags"><span style="font-size:11px;color:var(--color-text-tertiary);">${meta}</span></div>${desc}`;
+}
+</script>
