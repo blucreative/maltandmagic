@@ -5,6 +5,183 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Auroran Religious Strata</title>
   <style>
+  /* ── base reset ── */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  /* ── font ── */
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=swap');
+
+  body {
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 1.7;
+    background: #ffffff;
+    color: #1a1a1a;
+    padding: 1.5rem;
+  }
+
+  /* ── css variables — light mode ── */
+  :root {
+    --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+    --font-serif: Georgia, serif;
+    --font-mono: 'Courier New', monospace;
+
+    --color-text-primary: #1a1a1a;
+    --color-text-secondary: #4a4a4a;
+    --color-text-tertiary: #6b6b6b;
+    --color-text-info: #0c447c;
+    --color-text-success: #27500a;
+    --color-text-warning: #633806;
+    --color-text-danger: #791f1f;
+
+    --color-background-primary: #ffffff;
+    --color-background-secondary: #f5f4f0;
+    --color-background-tertiary: #eeedea;
+    --color-background-info: #e6f1fb;
+    --color-background-success: #eaf3de;
+    --color-background-warning: #faeeda;
+    --color-background-danger: #fcebeb;
+
+    --color-border-tertiary: rgba(0,0,0,0.12);
+    --color-border-secondary: rgba(0,0,0,0.22);
+    --color-border-primary: rgba(0,0,0,0.35);
+    --color-border-info: #85b7eb;
+    --color-border-success: #97c459;
+    --color-border-warning: #ef9f27;
+    --color-border-danger: #f09595;
+
+    --border-radius-md: 8px;
+    --border-radius-lg: 12px;
+    --border-radius-xl: 16px;
+  }
+
+  /* ── dark mode ── */
+  @media (prefers-color-scheme: dark) {
+    body {
+      background: #1a1917;
+      color: #e8e6e0;
+    }
+    :root {
+      --color-text-primary: #e8e6e0;
+      --color-text-secondary: #b0ada6;
+      --color-text-tertiary: #7a7872;
+      --color-text-info: #85b7eb;
+      --color-text-success: #97c459;
+      --color-text-warning: #ef9f27;
+      --color-text-danger: #f09595;
+
+      --color-background-primary: #242320;
+      --color-background-secondary: #2c2b28;
+      --color-background-tertiary: #333230;
+      --color-background-info: #0c2a4a;
+      --color-background-success: #162c06;
+      --color-background-warning: #2e1e02;
+      --color-background-danger: #2e0808;
+
+      --color-border-tertiary: rgba(255,255,255,0.10);
+      --color-border-secondary: rgba(255,255,255,0.18);
+      --color-border-primary: rgba(255,255,255,0.28);
+    }
+  }
+
+  /* ── svg widget classes ── */
+  svg text { font-family: var(--font-sans); fill: var(--color-text-primary); }
+  svg text.t  { font-size: 14px; font-weight: 400; fill: var(--color-text-primary); }
+  svg text.ts { font-size: 12px; font-weight: 400; fill: var(--color-text-secondary); }
+  svg text.th { font-size: 14px; font-weight: 500; fill: var(--color-text-primary); }
+  svg rect.box, svg .box rect {
+    fill: var(--color-background-secondary);
+    stroke: var(--color-border-secondary);
+  }
+  svg .arr {
+    stroke: var(--color-text-secondary);
+    stroke-width: 1.5px;
+    fill: none;
+  }
+  svg .leader {
+    stroke: var(--color-border-tertiary);
+    stroke-width: 0.5px;
+    stroke-dasharray: 4 3;
+    fill: none;
+  }
+  svg .node { cursor: pointer; }
+  svg .node:hover { opacity: 0.82; }
+
+  /* colour ramps for svg nodes */
+  svg .c-purple rect, svg .c-purple circle, svg .c-purple ellipse { fill: #EEEDFE; stroke: #534AB7; }
+  svg .c-purple text.t, svg .c-purple text.th { fill: #3C3489; }
+  svg .c-purple text.ts { fill: #534AB7; }
+
+  svg .c-teal rect, svg .c-teal circle, svg .c-teal ellipse { fill: #E1F5EE; stroke: #0F6E56; }
+  svg .c-teal text.t, svg .c-teal text.th { fill: #085041; }
+  svg .c-teal text.ts { fill: #0F6E56; }
+
+  svg .c-coral rect, svg .c-coral circle, svg .c-coral ellipse { fill: #FAECE7; stroke: #993C1D; }
+  svg .c-coral text.t, svg .c-coral text.th { fill: #712B13; }
+  svg .c-coral text.ts { fill: #993C1D; }
+
+  svg .c-pink rect, svg .c-pink circle, svg .c-pink ellipse { fill: #FBEAF0; stroke: #993556; }
+  svg .c-pink text.t, svg .c-pink text.th { fill: #72243E; }
+  svg .c-pink text.ts { fill: #993556; }
+
+  svg .c-gray rect, svg .c-gray circle, svg .c-gray ellipse { fill: #F1EFE8; stroke: #5F5E5A; }
+  svg .c-gray text.t, svg .c-gray text.th { fill: #444441; }
+  svg .c-gray text.ts { fill: #5F5E5A; }
+
+  svg .c-blue rect, svg .c-blue circle, svg .c-blue ellipse { fill: #E6F1FB; stroke: #185FA5; }
+  svg .c-blue text.t, svg .c-blue text.th { fill: #0C447C; }
+  svg .c-blue text.ts { fill: #185FA5; }
+
+  svg .c-green rect, svg .c-green circle, svg .c-green ellipse { fill: #EAF3DE; stroke: #3B6D11; }
+  svg .c-green text.t, svg .c-green text.th { fill: #27500A; }
+  svg .c-green text.ts { fill: #3B6D11; }
+
+  svg .c-amber rect, svg .c-amber circle, svg .c-amber ellipse { fill: #FAEEDA; stroke: #854F0B; }
+  svg .c-amber text.t, svg .c-amber text.th { fill: #633806; }
+  svg .c-amber text.ts { fill: #854F0B; }
+
+  svg .c-red rect, svg .c-red circle, svg .c-red ellipse { fill: #FCEBEB; stroke: #A32D2D; }
+  svg .c-red text.t, svg .c-red text.th { fill: #791F1F; }
+  svg .c-red text.ts { fill: #A32D2D; }
+
+  @media (prefers-color-scheme: dark) {
+    svg .c-purple rect, svg .c-purple circle, svg .c-purple ellipse { fill: #3C3489; stroke: #AFA9EC; }
+    svg .c-purple text.t, svg .c-purple text.th { fill: #CECBF6; }
+    svg .c-purple text.ts { fill: #AFA9EC; }
+
+    svg .c-teal rect, svg .c-teal circle, svg .c-teal ellipse { fill: #085041; stroke: #5DCAA5; }
+    svg .c-teal text.t, svg .c-teal text.th { fill: #9FE1CB; }
+    svg .c-teal text.ts { fill: #5DCAA5; }
+
+    svg .c-coral rect, svg .c-coral circle, svg .c-coral ellipse { fill: #712B13; stroke: #F0997B; }
+    svg .c-coral text.t, svg .c-coral text.th { fill: #F5C4B3; }
+    svg .c-coral text.ts { fill: #F0997B; }
+
+    svg .c-pink rect, svg .c-pink circle, svg .c-pink ellipse { fill: #72243E; stroke: #ED93B1; }
+    svg .c-pink text.t, svg .c-pink text.th { fill: #F4C0D1; }
+    svg .c-pink text.ts { fill: #ED93B1; }
+
+    svg .c-gray rect, svg .c-gray circle, svg .c-gray ellipse { fill: #444441; stroke: #B4B2A9; }
+    svg .c-gray text.t, svg .c-gray text.th { fill: #D3D1C7; }
+    svg .c-gray text.ts { fill: #B4B2A9; }
+
+    svg .c-blue rect, svg .c-blue circle, svg .c-blue ellipse { fill: #0C447C; stroke: #85B7EB; }
+    svg .c-blue text.t, svg .c-blue text.th { fill: #B5D4F4; }
+    svg .c-blue text.ts { fill: #85B7EB; }
+
+    svg .c-green rect, svg .c-green circle, svg .c-green ellipse { fill: #27500A; stroke: #97C459; }
+    svg .c-green text.t, svg .c-green text.th { fill: #C0DD97; }
+    svg .c-green text.ts { fill: #97C459; }
+
+    svg .c-amber rect, svg .c-amber circle, svg .c-amber ellipse { fill: #633806; stroke: #EF9F27; }
+    svg .c-amber text.t, svg .c-amber text.th { fill: #FAC775; }
+    svg .c-amber text.ts { fill: #EF9F27; }
+
+    svg .c-red rect, svg .c-red circle, svg .c-red ellipse { fill: #791F1F; stroke: #F09595; }
+    svg .c-red text.t, svg .c-red text.th { fill: #F7C1C1; }
+    svg .c-red text.ts { fill: #F09595; }
+  }
     .strata { display: flex; flex-direction: column; gap: 0; }
     .layer { border-radius: 0; border: 0.5px solid var(--color-border-tertiary); border-bottom: none; padding: 0; overflow: hidden; }
     .layer:first-child { border-radius: var(--border-radius-lg) var(--border-radius-lg) 0 0; }
