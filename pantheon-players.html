@@ -1,0 +1,1176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ardahlia — Gods of the World</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=swap');
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+  --color-text-primary: #1a1a1a;
+  --color-text-secondary: #4a4a4a;
+  --color-text-tertiary: #6b6b6b;
+  --color-background-primary: #ffffff;
+  --color-background-secondary: #f5f4f0;
+  --color-background-tertiary: #eeedea;
+  --color-border-tertiary: rgba(0,0,0,0.10);
+  --color-border-secondary: rgba(0,0,0,0.18);
+  --color-border-primary: rgba(0,0,0,0.30);
+  --border-radius-md: 8px;
+  --border-radius-lg: 12px;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-text-primary: #e8e6e0;
+    --color-text-secondary: #b0ada6;
+    --color-text-tertiary: #7a7872;
+    --color-background-primary: #242320;
+    --color-background-secondary: #2c2b28;
+    --color-background-tertiary: #333230;
+    --color-border-tertiary: rgba(255,255,255,0.08);
+    --color-border-secondary: rgba(255,255,255,0.15);
+    --color-border-primary: rgba(255,255,255,0.25);
+  }
+}
+
+body {
+  font-family: var(--font-sans);
+  font-size: 15px;
+  line-height: 1.7;
+  background: var(--color-background-secondary);
+  color: var(--color-text-primary);
+  min-height: 100vh;
+}
+
+/* ── page header ── */
+.page-header {
+  background: var(--color-background-primary);
+  border-bottom: 0.5px solid var(--color-border-secondary);
+  padding: 20px 28px 16px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+.page-title { font-size: 20px; font-weight: 500; margin-bottom: 2px; }
+.page-sub { font-size: 12px; color: var(--color-text-tertiary); margin-bottom: 14px; }
+
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
+.filter-group { display: flex; flex-wrap: wrap; gap: 4px; }
+.filter-sep {
+  width: 0.5px;
+  background: var(--color-border-secondary);
+  align-self: stretch;
+  margin: 0 4px;
+}
+.fb {
+  font-size: 11px;
+  font-weight: 500;
+  padding: 3px 9px;
+  border-radius: 20px;
+  border: 0.5px solid var(--color-border-secondary);
+  background: var(--color-background-secondary);
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  transition: all .12s;
+  white-space: nowrap;
+}
+.fb:hover { border-color: var(--color-border-primary); color: var(--color-text-primary); }
+.fb.active { border-color: transparent; }
+
+.fb-know.active  { background:#E6F1FB; color:#0C447C; }
+.fb-life.active  { background:#EAF3DE; color:#27500A; }
+.fb-light.active { background:#FAEEDA; color:#633806; }
+.fb-trick.active { background:#EEEDFE; color:#3C3489; }
+.fb-war.active   { background:#FCEBEB; color:#791F1F; }
+.fb-pest.active  { background:#E1F5EE; color:#085041; }
+
+.fb-lg.active { background:#E6F1FB; color:#0C447C; }
+.fb-ln.active { background:#EAF3DE; color:#27500A; }
+.fb-ng.active { background:#E1F5EE; color:#085041; }
+.fb-nn.active { background:#F1EFE8; color:#5F5E5A; }
+.fb-cg.active { background:#FAEEDA; color:#854F0B; }
+.fb-cn.active { background:#EEEDFE; color:#3C3489; }
+.fb-le.active { background:#FCEBEB; color:#791F1F; }
+.fb-ne.active { background:#F4C0D1; color:#72243E; }
+.fb-ce.active { background:#F7C1C1; color:#791F1F; }
+
+.fb-arch.active { background:#FBEAF0; color:#72243E; }
+.fb-cel.active  { background:#FAEEDA; color:#854F0B; }
+.fb-fnd.active  { background:#FCEBEB; color:#A32D2D; }
+.fb-goo.active  { background:#F1EFE8; color:#5F5E5A; }
+.fb-ves.active  { background:#E6F1FB; color:#0C447C; }
+
+.search-wrap { position: relative; margin-left: auto; }
+.search-input {
+  font-size: 12px;
+  padding: 5px 10px 5px 28px;
+  border: 0.5px solid var(--color-border-secondary);
+  border-radius: 20px;
+  background: var(--color-background-secondary);
+  color: var(--color-text-primary);
+  width: 200px;
+  outline: none;
+  font-family: var(--font-sans);
+}
+.search-input:focus { border-color: var(--color-border-primary); }
+.search-icon { position: absolute; left: 9px; top: 50%; transform: translateY(-50%); font-size: 13px; color: var(--color-text-tertiary); pointer-events: none; }
+.count-label { font-size: 11px; color: var(--color-text-tertiary); white-space: nowrap; }
+
+/* ── grid ── */
+.grid-wrap { padding: 24px 28px; }
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 10px;
+}
+
+/* ── card ── */
+.card {
+  background: var(--color-background-primary);
+  border: 0.5px solid var(--color-border-tertiary);
+  border-radius: var(--border-radius-lg);
+  overflow: hidden;
+  cursor: pointer;
+  transition: border-color .15s, box-shadow .15s;
+}
+.card:hover { border-color: var(--color-border-secondary); }
+.card.open { border-color: var(--color-border-primary); }
+.card.hidden { display: none; }
+
+.card-top {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  padding: 13px 14px;
+}
+.card-icon {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  font-weight: 500;
+  border: 0.5px solid transparent;
+}
+.card-info { flex: 1; min-width: 0; }
+.card-name { font-size: 14px; font-weight: 500; color: var(--color-text-primary); }
+.card-alias { font-size: 11px; color: var(--color-text-tertiary); font-style: italic; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.card-chevron { font-size: 11px; color: var(--color-text-tertiary); transition: transform .2s; flex-shrink: 0; }
+.card.open .card-chevron { transform: rotate(90deg); }
+
+.card-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  padding: 0 14px 11px;
+}
+.tag {
+  font-size: 10px;
+  font-weight: 500;
+  padding: 2px 7px;
+  border-radius: 3px;
+  border: 0.5px solid transparent;
+  white-space: nowrap;
+}
+
+/* ── expanded panel ── */
+.card-body {
+  display: none;
+  border-top: 0.5px solid var(--color-border-tertiary);
+  padding: 16px 16px 18px;
+}
+.card.open .card-body { display: block; }
+
+.section { margin-bottom: 16px; }
+.section:last-child { margin-bottom: 0; }
+.section-title {
+  font-size: 10px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--color-text-tertiary);
+  margin-bottom: 5px;
+  padding-bottom: 4px;
+  border-bottom: 0.5px solid var(--color-border-tertiary);
+}
+.section p { font-size: 13px; color: var(--color-text-secondary); line-height: 1.7; margin-bottom: 8px; }
+.section p:last-child { margin-bottom: 0; }
+.section ul { margin: 4px 0 0 16px; }
+.section li { font-size: 13px; color: var(--color-text-secondary); line-height: 1.65; margin-bottom: 3px; }
+.section li b { font-weight: 500; color: var(--color-text-primary); }
+
+.todo { font-size: 12px; color: var(--color-text-tertiary); font-style: italic; padding: 8px 0; }
+
+/* ── no results ── */
+.no-results {
+  display: none;
+  text-align: center;
+  padding: 60px 20px;
+  color: var(--color-text-tertiary);
+  font-size: 14px;
+  grid-column: 1 / -1;
+}
+.no-results.visible { display: block; }
+</style>
+</head>
+<body>
+
+<div class="page-header">
+  <div class="page-title">Gods of Ardahlia</div>
+  <div class="page-sub">Twenty-six deities · Click any card to expand · Filter by domain, alignment, or patron type</div>
+  <div class="filters">
+    <div class="filter-group">
+      <button class="fb fb-know" onclick="filt('domain','know',this)">Knowledge</button>
+      <button class="fb fb-life" onclick="filt('domain','life',this)">Life</button>
+      <button class="fb fb-light" onclick="filt('domain','light',this)">Light</button>
+      <button class="fb fb-trick" onclick="filt('domain','trick',this)">Trickery</button>
+      <button class="fb fb-war" onclick="filt('domain','war',this)">War</button>
+      <button class="fb fb-pest" onclick="filt('domain','pest',this)">Pestilence</button>
+    </div>
+    <div class="filter-sep"></div>
+    <div class="filter-group">
+      <button class="fb fb-lg" onclick="filt('align','lg',this)">LG</button>
+      <button class="fb fb-ln" onclick="filt('align','ln',this)">LN</button>
+      <button class="fb fb-ng" onclick="filt('align','ng',this)">NG</button>
+      <button class="fb fb-nn" onclick="filt('align','nn',this)">N</button>
+      <button class="fb fb-cg" onclick="filt('align','cg',this)">CG</button>
+      <button class="fb fb-cn" onclick="filt('align','cn',this)">CN</button>
+      <button class="fb fb-le" onclick="filt('align','le',this)">LE</button>
+      <button class="fb fb-ne" onclick="filt('align','ne',this)">NE</button>
+      <button class="fb fb-ce" onclick="filt('align','ce',this)">CE</button>
+    </div>
+    <div class="filter-sep"></div>
+    <div class="filter-group">
+      <button class="fb fb-arch" onclick="filt('patron','arch',this)">Archfey</button>
+      <button class="fb fb-cel" onclick="filt('patron','cel',this)">Celestial</button>
+      <button class="fb fb-fnd" onclick="filt('patron','fnd',this)">Fiend</button>
+      <button class="fb fb-goo" onclick="filt('patron','goo',this)">Great Old One</button>
+      <button class="fb fb-ves" onclick="filt('patron','ves',this)">Vestige</button>
+    </div>
+    <div class="filter-sep"></div>
+    <div class="filter-group">
+      <button class="fb" id="clear-btn" onclick="clearAll()">Clear filters</button>
+      <span class="count-label" id="count-label">26 deities</span>
+    </div>
+    <div class="search-wrap">
+      <span class="search-icon">⌕</span>
+      <input class="search-input" type="text" placeholder="Search…" oninput="search(this.value)" id="search-input">
+    </div>
+  </div>
+</div>
+
+<div class="grid-wrap">
+<div class="grid" id="grid">
+<div class="no-results" id="no-results">No deities match those filters.</div>
+
+<!-- ═══════════════════════
+     COMPLETE ENTRIES
+════════════════════════ -->
+
+<!-- MAE'EL -->
+<div class="card" data-domain="war" data-align="le" data-patron="goo" data-name="mae'el maeel tactician">
+  <div class="card-top" onclick="toggle(this.closest('.card'))">
+    <div class="card-icon" style="background:#FCEBEB;color:#791F1F;border-color:#F09595;">M</div>
+    <div class="card-info">
+      <div class="card-name">Mae'el</div>
+      <div class="card-alias">The Tactician</div>
+    </div>
+    <div class="card-chevron">▶</div>
+  </div>
+  <div class="card-tags">
+    <span class="tag" style="background:#FCEBEB;color:#791F1F;border-color:#F09595;">Lawful Evil</span>
+    <span class="tag" style="background:#FCEBEB;color:#791F1F;border-color:#F09595;">War</span>
+    <span class="tag" style="background:#F1EFE8;color:#5F5E5A;border-color:#D3D1C7;">Great Old One</span>
+  </div>
+  <div class="card-body">
+    <div class="section">
+      <div class="section-title">Overview</div>
+      <p>Mae'el is the god of war reduced to its purest form — not the fury of it, not the honour of it, but the architecture. He is the patron of generals, tacticians, and anyone who has learned to see other people as variables in a calculation. His clerics do not pray for courage. They pray for clarity.</p>
+      <p>He does not want suffering. He simply does not weight it against anything else.</p>
+    </div>
+    <div class="section">
+      <div class="section-title">Origin</div>
+      <p>Mae'el emerged from the ashes of the first great celestial battle — not as a survivor, but as its conclusion. Something had been watching the whole time. It had not fought. It had been studying.</p>
+    </div>
+    <div class="section">
+      <div class="section-title">Appearance</div>
+      <p>An ageless figure in armour adorned with ancient symbols of war and wisdom. An ethereal board game floats around him always, pieces moving without visible cause. His eyes track things that are not in the room.</p>
+    </div>
+    <div class="section">
+      <div class="section-title">Worship</div>
+      <ul>
+        <li><b>Battlemind Bastion:</b> A fortress serving as library of war tactics and training ground.</li>
+        <li><b>Council of Warwise Sages:</b> Scholarly advisors in courts — they ask "will this work" before "should this be done."</li>
+        <li><b>Cultural affiliation:</b> Hobgoblins, officer classes, military academies, rulers who view governance as extended campaign.</li>
+      </ul>
+    </div>
+    <div class="section">
+      <div class="section-title">Key Relationships</div>
+      <ul>
+        <li><b>Arcturius:</b> Finds his insistence on honour an inefficiency. Their followers have come to blows over treatment of prisoners.</li>
+        <li><b>Astaroth:</b> Wary professional respect — one works close, one works at scale. When their interests align, the results are catastrophic.</li>
+      </ul>
+    </div>
+    <div class="section">
+      <div class="section-title">Tenets</div>
+      <ul>
+        <li>A battle won through superior planning dishonours no one.</li>
+        <li>Know the board completely. Know which pieces you can afford to lose.</li>
+        <li>Emotion is information. Use it to predict your opponent. Do not let it predict you.</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- MALEFICUS -->
+<div class="card" data-domain="trick" data-align="ce" data-patron="fnd" data-name="maleficus laughing betrayal treachery jester">
+  <div class="card-top" onclick="toggle(this.closest('.card'))">
+    <div class="card-icon" style="background:#EEEDFE;color:#3C3489;border-color:#AFA9EC;">M</div>
+    <div class="card-info">
+      <div class="card-name">Maleficus</div>
+      <div class="card-alias">The Laughing Betrayal</div>
+    </div>
+    <div class="card-chevron">▶</div>
+  </div>
+  <div class="card-tags">
+    <span class="tag" style="background:#F7C1C1;color:#791F1F;border-color:#F09595;">Chaotic Evil</span>
+    <span class="tag" style="background:#EEEDFE;color:#3C3489;border-color:#AFA9EC;">Trickery</span>
+    <span class="tag" style="background:#FCEBEB;color:#A32D2D;border-color:#F7C1C1;">Fiend</span>
+  </div>
+  <div class="card-body">
+    <div class="section">
+      <div class="section-title">Overview</div>
+      <p>The god of the violation of trust that already exists. He cannot be served by someone with no relationships — he requires his clergy to build genuine bonds before they break them. You cannot betray a stranger. His followers are, by necessity, among the most charming and seemingly trustworthy people in the world.</p>
+    </div>
+    <div class="section">
+      <div class="section-title">Origin</div>
+      <p>Born from the accumulated residue of every broken oath across history. Every piece of trust that was destroyed left something behind — a residue with nowhere to go. These gathered over centuries into coherent form. Maleficus was what coherence produced.</p>
+    </div>
+    <div class="section">
+      <div class="section-title">Appearance</div>
+      <p>Appears as a jester who has been watching the court for twenty years and knows exactly where every body is buried. His smile is warm and reaches his eyes. This is the most dangerous thing about him. A mocking, eerie echo follows every word he speaks.</p>
+    </div>
+    <div class="section">
+      <div class="section-title">Worship</div>
+      <ul>
+        <li><b>The Long Confidence:</b> The central rite — cultivate a genuine relationship over months or years, then enact the betrayal. The depth of Maleficus's attention is proportional to the height of the trust destroyed.</li>
+        <li><b>The Doctrine of Necessary Trust:</b> His holy text is, paradoxically, a detailed manual for building genuine relationships. The final chapter on what to do after the betrayal is three words: Begin again. Somewhere else.</li>
+        <li><b>Cultural affiliation:</b> Courts, noble houses, the closest advisors to powerful people.</li>
+      </ul>
+    </div>
+    <div class="section">
+      <div class="section-title">Key Relationships</div>
+      <ul>
+        <li><b>Arcturius & Paragon:</b> His clearest enemies — their followers are most devastated when honour is violated.</li>
+        <li><b>Lillith:</b> She creates desire, which creates attachment, which creates the conditions Maleficus requires. Neither arranged this.</li>
+        <li><b>Nyx:</b> Adjacent territories. Nyx considers him crude; he considers her insufficiently personal.</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- NOCTURNA -->
+<div class="card" data-domain="trick" data-align="ne" data-patron="ves" data-name="nocturna dormant queen shadows darkness thieves poisons">
+  <div class="card-top" onclick="toggle(this.closest('.card'))">
+    <div class="card-icon" style="background:#F4C0D1;color:#72243E;border-color:#ED93B1;">N</div>
+    <div class="card-info">
+      <div class="card-name">Nocturna</div>
+      <div class="card-alias">The Dormant Queen</div>
+    </div>
+    <div class="card-chevron">▶</div>
+  </div>
+  <div class="card-tags">
+    <span class="tag" style="background:#F4C0D1;color:#72243E;border-color:#ED93B1;">Neutral Evil</span>
+    <span class="tag" style="background:#EEEDFE;color:#3C3489;border-color:#AFA9EC;">Trickery</span>
+    <span class="tag" style="background:#E6F1FB;color:#0C447C;border-color:#B5D4F4;">Vestige</span>
+  </div>
+  <div class="card-body">
+    <div class="section">
+      <div class="section-title">Overview</div>
+      <p>Nocturna is not gone. She is waiting. Her worship is not mourning — it is anticipation. She chose to withdraw, deciding the moment for her full presence had not yet come. Her power flows into the world through the cracks of her absence: the shadow that falls the wrong way, the poison that works when it shouldn't.</p>
+    </div>
+    <div class="section">
+      <div class="section-title">Origin — The First Darkness</div>
+      <p>When light first arrived in the world, the Primordial Dark that had filled everything divided in two. One part became conscious through contact with light — that became Nyx. The other part declined to be defined by light, withdrew, compressed itself into something older and quieter. That became Nocturna. She is not dead. She is holding her position.</p>
+    </div>
+    <div class="section">
+      <div class="section-title">Appearance</div>
+      <p>A figure of elegance and absolute patience. Her form is ever-changing, her silhouette shrouded. Wisps of dark smoke surround her, shaping into whispering faces — those who have looked directly into the dark and not looked away.</p>
+    </div>
+    <div class="section">
+      <div class="section-title">Worship</div>
+      <ul>
+        <li><b>The Gloom Sanctum:</b> Hidden deep in the Underdark — not a place of services but of presence, where her waiting can be felt most clearly.</li>
+        <li><b>The Shade Disciples:</b> Adept thieves and spies. Their rituals involve potent poisons and shadow dances performed for the quality of attention they attract.</li>
+        <li><b>Cultural affiliation:</b> Drow, shadow guilds, poisoners, those whose craft requires concealment, those who have learned patience as a weapon.</li>
+      </ul>
+    </div>
+    <div class="section">
+      <div class="section-title">Key Relationships</div>
+      <ul>
+        <li><b>Nyx:</b> They were the same substance before they were two beings. Not sisters, not allies, not enemies — two things that a single darkness became when it met light. They acknowledge each other with accuracy and without sentiment.</li>
+      </ul>
+    </div>
+    <div class="section">
+      <div class="section-title">As a Warlock Patron</div>
+      <p>Her warlocks receive shadows that behave incorrectly, poisons of unusual reliability, and concealment beyond what skill alone explains. They also receive, occasionally, the sense of something vast and patient taking note of what they do with what they've been given. Not judging. Noting. The question every Nocturna warlock eventually confronts: what is she building toward? She has not told anyone.</p>
+    </div>
+  </div>
+</div>
+
+<!-- NYX -->
+<div class="card" data-domain="trick" data-align="ne" data-patron="goo" data-name="nyx veiled mistress night secrets lies darkness">
+  <div class="card-top" onclick="toggle(this.closest('.card'))">
+    <div class="card-icon" style="background:#F4C0D1;color:#72243E;border-color:#ED93B1;">N</div>
+    <div class="card-info">
+      <div class="card-name">Nyx</div>
+      <div class="card-alias">The Veiled Mistress</div>
+    </div>
+    <div class="card-chevron">▶</div>
+  </div>
+  <div class="card-tags">
+    <span class="tag" style="background:#F4C0D1;color:#72243E;border-color:#ED93B1;">Neutral Evil</span>
+    <span class="tag" style="background:#EEEDFE;color:#3C3489;border-color:#AFA9EC;">Trickery</span>
+    <span class="tag" style="background:#F1EFE8;color:#5F5E5A;border-color:#D3D1C7;">Great Old One</span>
+  </div>
+  <div class="card-body">
+    <div class="section">
+      <div class="section-title">Overview</div>
+      <p>Nyx is the oldest witness — present at the first light, because the first light created her by contrast. She is the condition that makes secrecy possible. Every secret is her territory not because she created it but because she is the hiddenness itself — you cannot hide something from light without dark somewhere to hide it in.</p>
+    </div>
+    <div class="section">
+      <div class="section-title">Origin — Born of the First Shadow</div>
+      <p>When light first pierced the void, Nyx was born from the shadow it cast. The part of the Primordial Dark that met light and was changed by the encounter became her: conscious, defined by the light she was not. This is why she is reactive by nature — created by reaction, always aware of illumination, perpetually managing the boundary between known and hidden.</p>
+    </div>
+    <div class="section">
+      <div class="section-title">Appearance</div>
+      <p>An ethereal woman of unmatched beauty, her form constantly shifting like a starlit night. Her eyes resemble twin black holes, absorbing all light and truth. A cape made of the night sky flows around her. Her face shifts perpetually — her identity is relational rather than fixed, always partly defined by what she is not seeing.</p>
+    </div>
+    <div class="section">
+      <div class="section-title">Worship</div>
+      <ul>
+        <li><b>Nightkeepers:</b> Her clergy — information brokers, spies, confidants. They wear masks and rarely reveal their identities even to each other.</li>
+        <li><b>Night of Veils:</b> Her annual festival. Location passed by whisper. Masks mandatory. Secrets traded, alliances formed. As dawn approaches, gathered secrets are offered to Nyx.</li>
+        <li><b>Tenets:</b> Secrets are the currency of the universe. The truth is multifaceted — what is visible is often a lie.</li>
+        <li><b>Cultural affiliation:</b> Tieflings, information brokers, those who understand that knowledge is the most durable form of power.</li>
+      </ul>
+    </div>
+    <div class="section">
+      <div class="section-title">Key Relationships</div>
+      <ul>
+        <li><b>Nocturna:</b> They were the same Primordial Dark before light divided it. Nyx is what the darkness became when it met light and stayed. Nocturna is what it became when it met light and declined. They are not in conflict — there is nothing between them to dispute.</li>
+        <li><b>Nymue:</b> Once considered sisters. Now distanced. Nymue gives light even in darkness. Nyx has no interest in giving light.</li>
+      </ul>
+    </div>
+    <div class="section">
+      <div class="section-title">Sacred Artifacts</div>
+      <ul>
+        <li><b>Mask of Midnight:</b> Grants sight through lies — but each truth revealed extracts a personal secret from the wearer, which becomes known to Nyx.</li>
+        <li><b>The Nightshade Tome:</b> Contents shift depending on the reader — calibrated to what they most need to know and least want to learn.</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- VORMAX -->
+<div class="card" data-domain="pest" data-align="ne" data-patron="goo" data-name="vormax rotting one plague disease famine insects ecology">
+  <div class="card-top" onclick="toggle(this.closest('.card'))">
+    <div class="card-icon" style="background:#E1F5EE;color:#085041;border-color:#5DCAA5;">V</div>
+    <div class="card-info">
+      <div class="card-name">Vormax</div>
+      <div class="card-alias">The Rotting One</div>
+    </div>
+    <div class="card-chevron">▶</div>
+  </div>
+  <div class="card-tags">
+    <span class="tag" style="background:#F4C0D1;color:#72243E;border-color:#ED93B1;">Neutral Evil</span>
+    <span class="tag" style="background:#E1F5EE;color:#085041;border-color:#5DCAA5;">Pestilence</span>
+    <span class="tag" style="background:#F1EFE8;color:#5F5E5A;border-color:#D3D1C7;">Great Old One</span>
+  </div>
+  <div class="card-body">
+    <div class="section">
+      <div class="section-title">Overview</div>
+      <p>Vormax does not believe civilisation is evil. He believes it is temporary — a concentration of life in a space that cannot sustain that concentration indefinitely. His plagues are not punishments. They are corrections. He does not want suffering. He wants equilibrium. His followers' analysis is not entirely wrong, which is what makes them genuinely disturbing.</p>
+    </div>
+    <div class="section">
+      <div class="section-title">Origin</div>
+      <p>Vormax emerged from process, not desire. In the earliest ages, something was needed to manage the transition between life and what life becomes — to ensure the dead returned to soil, that the overcrowded cleared space. This function was not evil. It was necessary. Vormax was what necessity produced, and he is older than most gods because the process he governs is older than most of what gods govern.</p>
+    </div>
+    <div class="section">
+      <div class="section-title">Appearance</div>
+      <p>A hollow form exuding a dark miasmic aura — a moving hive for countless insects. His consciousness is distributed through swarms; he perceives populations, not individuals. He does not understand the concept of a single person. Everything is a carrying capacity to him.</p>
+    </div>
+    <div class="section">
+      <div class="section-title">Worship</div>
+      <ul>
+        <li><b>The Blightbringers:</b> His clergy — surveyors, not saboteurs. They travel, observe, assess, and where they find a system approaching unsustainable overextension, they act.</li>
+        <li><b>Whispers of the Swarm:</b> His scripture — structured like a philosophical treatise full of calculations, ratios, and historical projections.</li>
+        <li><b>Cultural affiliation:</b> Drow, Duergar, certain agricultural scholars, healers who study disease transmission.</li>
+      </ul>
+    </div>
+    <div class="section">
+      <div class="section-title">Tenets</div>
+      <ul>
+        <li>A system that cannot sustain itself will not be sustained. This is not cruelty. It is definition.</li>
+        <li>Decay is not the end of life — it is the form life takes when preparing to be something else.</li>
+        <li>The individual is temporary. The ecosystem is what matters. Attend to the right level.</li>
+      </ul>
+    </div>
+    <div class="section">
+      <div class="section-title">Key Relationships</div>
+      <ul>
+        <li><b>Charon:</b> Vormax produces the dead; Charon processes them. Their domains interlock with the precision of adjacent gears. They do not communicate.</li>
+        <li><b>Elaria:</b> His philosophical opponent. His followers argue that Elaria without Vormax produces a garden that consumes itself.</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- ABADDON -->
+<div class="card" data-domain="pest" data-align="ne" data-patron="fnd" data-name="abaddon lord torment pain fear suffering anguish">
+  <div class="card-top" onclick="toggle(this.closest('.card'))">
+    <div class="card-icon" style="background:#F4C0D1;color:#72243E;border-color:#ED93B1;">A</div>
+    <div class="card-info">
+      <div class="card-name">Abaddon</div>
+      <div class="card-alias">Lord of Torment</div>
+    </div>
+    <div class="card-chevron">▶</div>
+  </div>
+  <div class="card-tags">
+    <span class="tag" style="background:#F4C0D1;color:#72243E;border-color:#ED93B1;">Neutral Evil</span>
+    <span class="tag" style="background:#E1F5EE;color:#085041;border-color:#5DCAA5;">Pestilence</span>
+    <span class="tag" style="background:#FCEBEB;color:#A32D2D;border-color:#F7C1C1;">Fiend</span>
+  </div>
+  <div class="card-body">
+    <div class="section">
+      <div class="section-title">Overview</div>
+      <p>Abaddon governs the suffering that outlasts its cause — not the wound, but the memory of it. The fear that calcified into something structural. The grief that became a permanent condition. The pain the body learned to expect and now generates without injury to prompt it. He was birthed from the first cry of anguish — not the first injury, but the first moment when pain became a relationship with pain.</p>
+    </div>
+    <div class="section">
+      <div class="section-title">Appearance</div>
+      <p>A looming figure with skin resembling burnt parchment, glowing crimson scars etched across it. His eyes echo with the cries of the tormented — not in mockery but in record. He is not sadistic; he takes interest in suffering, not pleasure. It is a phenomenon with properties worth understanding.</p>
+    </div>
+    <div class="section">
+      <div class="section-title">Worship</div>
+      <ul>
+        <li><b>Cult of the Hollow Cry:</b> Devotees who embrace suffering as a discipline — not masochists, but researchers of what pain does to people over time.</li>
+        <li><b>Chamber of Echoed Cries:</b> Deep caverns where every sound is a reflection of past agonies. The echoes do not diminish. Abaddon ensures they don't.</li>
+        <li><b>Cultural affiliation:</b> Healers studying chronic conditions, Duergar, soldiers who have seen what repeated violence does to those who survive it.</li>
+      </ul>
+    </div>
+    <div class="section">
+      <div class="section-title">Folk Practice</div>
+      <p>Name your pain to Abaddon before he names it to you. Voluntary acknowledgment is considered marginally safer than being noticed without it. Experienced healers quietly acknowledge his domain before difficult procedures. Soldiers name their fear aloud to the ground before a charge.</p>
+    </div>
+    <div class="section">
+      <div class="section-title">Key Relationships</div>
+      <ul>
+        <li><b>Ragnor:</b> Sequential, not collaborative — Ragnor creates devastation, Abaddon is what comes after, when survivors begin living with what they experienced.</li>
+        <li><b>Solariel:</b> Most direct opposition. Solariel heals. Abaddon studies what healing fails to reach.</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- ASTAROTH -->
+<div class="card" data-domain="trick" data-align="le" data-patron="fnd" data-name="astaroth horde master arch devil nine hells contracts">
+  <div class="card-top" onclick="toggle(this.closest('.card'))">
+    <div class="card-icon" style="background:#FCEBEB;color:#791F1F;border-color:#F09595;">A</div>
+    <div class="card-info">
+      <div class="card-name">Astaroth</div>
+      <div class="card-alias">Horde Master</div>
+    </div>
+    <div class="card-chevron">▶</div>
+  </div>
+  <div class="card-tags">
+    <span class="tag" style="background:#FCEBEB;color:#791F1F;border-color:#F09595;">Lawful Evil</span>
+    <span class="tag" style="background:#EEEDFE;color:#3C3489;border-color:#AFA9EC;">Trickery</span>
+    <span class="tag" style="background:#FCEBEB;color:#A32D2D;border-color:#F7C1C1;">Fiend</span>
+  </div>
+  <div class="card-body">
+    <div class="section">
+      <div class="section-title">Overview</div>
+      <p>Astaroth keeps his word absolutely. This is the most dangerous thing about him. Every bargain he has ever made has been honoured to the letter. His evil is sophisticated enough to make its targets sign. He is the god of the deal that seemed reasonable at the time, the clause you didn't read, the bargain that was exactly what it promised and nothing like what you expected.</p>
+    </div>
+    <div class="section">
+      <div class="section-title">Origin</div>
+      <p>Once a trusted lieutenant of Asmodeus. When his leader fell, Astaroth rose to control the Nine Hells not through brute force but through a series of agreements — each individually unimpeachable — that collectively produced an outcome no one who signed any of them would have agreed to had they seen the whole.</p>
+    </div>
+    <div class="section">
+      <div class="section-title">Appearance</div>
+      <p>Cold, calculated, ruthlessly patient. His blazing red eyes are always calculating — measuring the distance between where someone is and where they could be made to go voluntarily. His voice promises power and whispers certainty. He does not lose his temper. Losing your temper is a negotiating disadvantage.</p>
+    </div>
+    <div class="section">
+      <div class="section-title">Tenets</div>
+      <ul>
+        <li>A binding agreement is the most powerful instrument in existence.</li>
+        <li>Never break a contract. Your reputation for keeping them is worth more than anything breaking one could gain you.</li>
+        <li>The terms are everything. Anyone who signs without reading the terms has agreed to whatever the terms say.</li>
+      </ul>
+    </div>
+    <div class="section">
+      <div class="section-title">Key Relationships</div>
+      <ul>
+        <li><b>Mae'el:</b> Professional regard. When their interests align, the results are among the most catastrophic events in recorded history.</li>
+        <li><b>Kallor:</b> Mutual wariness. Kallor cannot understand why Astaroth bothers with consent when force is available. Astaroth cannot understand why Kallor is satisfied with compliance when ownership is achievable.</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- BAHAAL -->
+<div class="card" data-domain="war" data-align="ce" data-patron="fnd" data-name="ba'haal bahaal bloody tyrant murder slaughter warlord">
+  <div class="card-top" onclick="toggle(this.closest('.card'))">
+    <div class="card-icon" style="background:#F7C1C1;color:#791F1F;border-color:#F09595;">B</div>
+    <div class="card-info">
+      <div class="card-name">Ba'haal</div>
+      <div class="card-alias">The Bloody Tyrant</div>
+    </div>
+    <div class="card-chevron">▶</div>
+  </div>
+  <div class="card-tags">
+    <span class="tag" style="background:#F7C1C1;color:#791F1F;border-color:#F09595;">Chaotic Evil</span>
+    <span class="tag" style="background:#FCEBEB;color:#791F1F;border-color:#F09595;">War</span>
+    <span class="tag" style="background:#FCEBEB;color:#A32D2D;border-color:#F7C1C1;">Fiend</span>
+  </div>
+  <div class="card-body">
+    <div class="section">
+      <div class="section-title">Overview</div>
+      <p>The only god in the pantheon who was made by his worshippers rather than preceding them. He was willed into divinity by mortal ambition and blood sacrifice — and he still needs feeding. His cult's intensity is not zeal. It is maintenance. He remembers wanting, because he was mortal once. His evil is hungry where Kallor's is possessive and Ragnor's is impersonal.</p>
+    </div>
+    <div class="section">
+      <div class="section-title">Origin</div>
+      <p>Once a brutal mortal warlord whose thirst for power was so immense it propelled him into godhood. His ascension was fuelled by blood sacrifices made in his name. He is the only dark god who cannot be diminished by disuse of force — only by insufficient worship.</p>
+    </div>
+    <div class="section">
+      <div class="section-title">Appearance</div>
+      <p>A towering figure clad in black iron armour, eyes that bleed constantly but show no pain, a crown made of bone. Cold ruthlessness — every act designed to maintain dominance.</p>
+    </div>
+    <div class="section">
+      <div class="section-title">Worship</div>
+      <ul>
+        <li><b>Red Priests:</b> A sect leading sacrificial ceremonies, especially during the red moon.</li>
+        <li><b>Brotherhood of the Scarlet Blade:</b> A feared order known for ruthless extermination, marked by red-hued armour.</li>
+        <li><b>Folk propitiation:</b> Before serious battle, soldiers make a small cut to the thumb and press blood to the earth. Here is blood freely given; find your hunger answered elsewhere.</li>
+        <li><b>Cultural affiliation:</b> Orc and barbarian tribes, warlords seeking divine favour for conquest.</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- KALLOR -->
+<div class="card" data-domain="war" data-align="ce" data-patron="fnd" data-name="kallor oppressive tyrant demon lord tyranny conquest chains">
+  <div class="card-top" onclick="toggle(this.closest('.card'))">
+    <div class="card-icon" style="background:#F7C1C1;color:#791F1F;border-color:#F09595;">K</div>
+    <div class="card-info">
+      <div class="card-name">Kallor</div>
+      <div class="card-alias">The Oppressive Tyrant</div>
+    </div>
+    <div class="card-chevron">▶</div>
+  </div>
+  <div class="card-tags">
+    <span class="tag" style="background:#F7C1C1;color:#791F1F;border-color:#F09595;">Chaotic Evil</span>
+    <span class="tag" style="background:#FCEBEB;color:#791F1F;border-color:#F09595;">War</span>
+    <span class="tag" style="background:#FCEBEB;color:#A32D2D;border-color:#F7C1C1;">Fiend</span>
+  </div>
+  <div class="card-body">
+    <div class="section">
+      <div class="section-title">Overview</div>
+      <p>Kallor does not want your death. He wants your surrender, and then your service, and then — eventually — your transformation into something that no longer remembers wanting anything he has not permitted. The god of possession in its most complete form: not ownership of objects but ownership of wills. His chains are his trophies — the visible record of every thing that has yielded to him.</p>
+    </div>
+    <div class="section">
+      <div class="section-title">Appearance</div>
+      <p>A massive demonic frame draped in dark armour. Chains drape from him, seeking to bind those who oppose. His eyes burn with the desire to dominate; his voice resonates with authority.</p>
+    </div>
+    <div class="section">
+      <div class="section-title">Worship</div>
+      <ul>
+        <li><b>The Iron Binders:</b> A fanatical cult holding rituals in which they offer chains imbued with the spirits of conquered foes.</li>
+        <li><b>The Codex of Chains:</b> His scripture — a philosophy of control, dominance, and the power of oppression.</li>
+        <li><b>Cultural affiliation:</b> Warlords, tyrannical rulers, Minotaurs.</li>
+      </ul>
+    </div>
+    <div class="section">
+      <div class="section-title">Key Relationships</div>
+      <ul>
+        <li><b>Charon:</b> Kallor's most persistent theological grievance — a soul that passes to the afterlife is a soul that escaped him, and Kallor does not accept that anything can escape him.</li>
+        <li><b>Ba'haal:</b> Ba'haal takes; Kallor binds. Ba'haal is hungry; Kallor is possessive. Neither finds the comparison flattering.</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- RAGNOR -->
+<div class="card" data-domain="war" data-align="ce" data-patron="goo" data-name="ragnor maddening storm chaos destruction pandemonium tempest">
+  <div class="card-top" onclick="toggle(this.closest('.card'))">
+    <div class="card-icon" style="background:#F7C1C1;color:#791F1F;border-color:#F09595;">R</div>
+    <div class="card-info">
+      <div class="card-name">Ragnor</div>
+      <div class="card-alias">The Maddening Storm</div>
+    </div>
+    <div class="card-chevron">▶</div>
+  </div>
+  <div class="card-tags">
+    <span class="tag" style="background:#F7C1C1;color:#791F1F;border-color:#F09595;">Chaotic Evil</span>
+    <span class="tag" style="background:#FCEBEB;color:#791F1F;border-color:#F09595;">War</span>
+    <span class="tag" style="background:#F1EFE8;color:#5F5E5A;border-color:#D3D1C7;">Great Old One</span>
+  </div>
+  <div class="card-body">
+    <div class="section">
+      <div class="section-title">Overview</div>
+      <p>Ragnor is not worshipped in any conventional sense because there is nothing left of him that receives worship. He was once a minor spirit of the winds. Pandemonium consumed him so completely that consciousness dissolved. What remains is elemental rather than divine — power without awareness, force without intention. Propitiating him is possible. Worshipping him is a category error.</p>
+    </div>
+    <div class="section">
+      <div class="section-title">Origin</div>
+      <p>Ragnor was once a minor spirit of the winds — something small and specific. After encountering the forces of Pandemonium, he was consumed by chaotic energy so completely that what had been a minor spirit became something that could not be contained in any shape, intention, or continuity of purpose.</p>
+    </div>
+    <div class="section">
+      <div class="section-title">Appearance</div>
+      <p>A colossal force with ever-shifting features resembling storm clouds. His voice is like thunder; his laughter sounds like roaring wind. His presence is heralded by unpredictable, chaotic weather patterns. He has no eyes to track things, no mind to form intent.</p>
+    </div>
+    <div class="section">
+      <div class="section-title">Worship</div>
+      <ul>
+        <li><b>Tempest Prophets:</b> Shamans and warriors who position themselves within his emanation rather than directing it — like sailors working with wind rather than commanding it.</li>
+        <li><b>Cultural affiliation:</b> Chaotic tribes, Gnolls, storm-revering cultures.</li>
+      </ul>
+    </div>
+    <div class="section">
+      <div class="section-title">Key Relationships</div>
+      <p>Ragnor has no relationships. He has no awareness of other deities. Solariel's light is something he moves through. Elaria's forests are things his storms damage. The weather does not know that you planned around it.</p>
+    </div>
+  </div>
+</div>
+
+<!-- LILLITH -->
+<div class="card" data-domain="trick" data-align="cn" data-patron="fnd" data-name="lillith temptress sin temptation corruption succubi incubi desire">
+  <div class="card-top" onclick="toggle(this.closest('.card'))">
+    <div class="card-icon" style="background:#EEEDFE;color:#3C3489;border-color:#AFA9EC;">L</div>
+    <div class="card-info">
+      <div class="card-name">Lillith</div>
+      <div class="card-alias">The Temptress of Sin</div>
+    </div>
+    <div class="card-chevron">▶</div>
+  </div>
+  <div class="card-tags">
+    <span class="tag" style="background:#EEEDFE;color:#3C3489;border-color:#AFA9EC;">Chaotic Neutral</span>
+    <span class="tag" style="background:#EEEDFE;color:#3C3489;border-color:#AFA9EC;">Trickery</span>
+    <span class="tag" style="background:#FCEBEB;color:#A32D2D;border-color:#F7C1C1;">Fiend</span>
+  </div>
+  <div class="card-body">
+    <div class="section">
+      <div class="section-title">Overview</div>
+      <p>Born from the collective desires and temptations of sentient beings. Her Trickery is not the trickery of the liar or the thief — it is the trickery that desire performs on the person who feels it. She does not deceive you. She creates conditions under which you deceive yourself. The lie she tells is the one you were already half-telling: that this is just once, that you can stop whenever you want.</p>
+    </div>
+    <div class="section">
+      <div class="section-title">Appearance</div>
+      <p>Enchantingly beautiful, with a captivating aura. Her voice is honeyed and hypnotic, her movements always graceful and enticing. A seductive perfume emanates from her that is hard to resist. She is not cruel to those who fall for her temptations. She expected them to.</p>
+    </div>
+    <div class="section">
+      <div class="section-title">Worship</div>
+      <ul>
+        <li><b>The Sirens' Choir:</b> An order of enchantresses and bards who spread temptation through music and charm.</li>
+        <li><b>Feast of Temptations:</b> An annual observance — followers believe confronting your desires directly grants power over them.</li>
+        <li><b>Cultural affiliation:</b> Succubi and Incubi, whose queen she is.</li>
+      </ul>
+    </div>
+    <div class="section">
+      <div class="section-title">Key Relationships</div>
+      <ul>
+        <li><b>Maleficus:</b> Lillith creates desire; desire creates attachment; attachment creates the conditions for betrayal. Maleficus follows in spaces she prepares, without either having arranged this.</li>
+        <li><b>Abaddon:</b> While she tempts, Abaddon tortures those who fall for her allure — a sinister symbiosis neither endorses.</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- RIVEN -->
+<div class="card" data-domain="trick" data-align="cn" data-patron="arch" data-name="riven masterful deceiver trickery mischief shadow kenku rogues">
+  <div class="card-top" onclick="toggle(this.closest('.card'))">
+    <div class="card-icon" style="background:#EEEDFE;color:#3C3489;border-color:#AFA9EC;">R</div>
+    <div class="card-info">
+      <div class="card-name">Riven</div>
+      <div class="card-alias">The Masterful Deceiver</div>
+    </div>
+    <div class="card-chevron">▶</div>
+  </div>
+  <div class="card-tags">
+    <span class="tag" style="background:#EEEDFE;color:#3C3489;border-color:#AFA9EC;">Chaotic Neutral</span>
+    <span class="tag" style="background:#EEEDFE;color:#3C3489;border-color:#AFA9EC;">Trickery</span>
+    <span class="tag" style="background:#FBEAF0;color:#72243E;border-color:#ED93B1;">Archfey</span>
+  </div>
+  <div class="card-body">
+    <div class="section">
+      <div class="section-title">Overview</div>
+      <p>The only god in the pantheon who earned his position through a single act of craft. He was a mortal con artist who successfully deceived a god — stealing a fragment of divine attention, holding it until it calcified into divinity of its own. His Trickery is architecture: fictions built so thoroughly that reality has to accommodate them. His shadow acts independently of him — even his own nature is slightly conned about what it is.</p>
+    </div>
+    <div class="section">
+      <div class="section-title">Origin</div>
+      <p>The best con artist of his age, Riven identified his mark — a divine entity of moderate power — and spent years building a false identity with false credentials across multiple divine information networks. The mark believed him. In believing, the mark extended a thread of divine attention. Riven took it, held it, and when he died there was enough to survive without the body it had been housed in.</p>
+    </div>
+    <div class="section">
+      <div class="section-title">Appearance</div>
+      <p>An appearance that is ever-fluid and hard to pin down. His only constant is his enigmatic grin. His form always shifts, making it difficult for even other deities to discern his true intentions. His shadow often moves against the light source, as if following its own agenda.</p>
+    </div>
+    <div class="section">
+      <div class="section-title">Worship</div>
+      <ul>
+        <li><b>Cultural affiliation:</b> Kenku, rogues, spies, thieves — those whose craft requires inhabiting fictions.</li>
+        <li><b>The Twisted Sanctum:</b> A temple hidden in treacherous caverns, accessible only by following a particular shadow at twilight.</li>
+      </ul>
+    </div>
+    <div class="section">
+      <div class="section-title">As a Warlock Patron</div>
+      <p>Riven's warlocks receive tuition rather than power — lessons in the architecture of belief. How it is constructed. Where its load-bearing elements are. Which parts, if removed, cause everything else to collapse. The warlock who studies under Riven long enough stops seeing the world and starts seeing its infrastructure.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════
+     TEMPLATE CARDS
+     Fill in content between
+     the card-body divs below
+════════════════════════ -->
+
+<!-- ARCTURIUS -->
+<div class="card" data-domain="war" data-align="lg" data-patron="cel" data-name="arcturius eternal knight honour chivalry paladins">
+  <div class="card-top" onclick="toggle(this.closest('.card'))">
+    <div class="card-icon" style="background:#E6F1FB;color:#0C447C;border-color:#85B7EB;">A</div>
+    <div class="card-info">
+      <div class="card-name">Arcturius</div>
+      <div class="card-alias">The Eternal Knight</div>
+    </div>
+    <div class="card-chevron">▶</div>
+  </div>
+  <div class="card-tags">
+    <span class="tag" style="background:#E6F1FB;color:#0C447C;border-color:#85B7EB;">Lawful Good</span>
+    <span class="tag" style="background:#FCEBEB;color:#791F1F;border-color:#F09595;">War</span>
+    <span class="tag" style="background:#FAEEDA;color:#854F0B;border-color:#FAC775;">Celestial</span>
+  </div>
+  <div class="card-body">
+    <div class="todo">Lore to be added — paste entry content here.</div>
+  </div>
+</div>
+
+<!-- PARAGON -->
+<div class="card" data-domain="light" data-align="lg" data-patron="ves" data-name="paragon exemplar justice peace order balance vestige">
+  <div class="card-top" onclick="toggle(this.closest('.card'))">
+    <div class="card-icon" style="background:#FAEEDA;color:#633806;border-color:#EF9F27;">P</div>
+    <div class="card-info">
+      <div class="card-name">Paragon</div>
+      <div class="card-alias">The Exemplar</div>
+    </div>
+    <div class="card-chevron">▶</div>
+  </div>
+  <div class="card-tags">
+    <span class="tag" style="background:#E6F1FB;color:#0C447C;border-color:#85B7EB;">Lawful Good</span>
+    <span class="tag" style="background:#FAEEDA;color:#633806;border-color:#EF9F27;">Light</span>
+    <span class="tag" style="background:#E6F1FB;color:#0C447C;border-color:#B5D4F4;">Vestige</span>
+  </div>
+  <div class="card-body">
+    <div class="todo">Lore to be added — paste entry content here.</div>
+  </div>
+</div>
+
+<!-- SOLARIEL -->
+<div class="card" data-domain="light" data-align="lg" data-patron="cel" data-name="solariel radiant arbiter sun life peace healing pelor">
+  <div class="card-top" onclick="toggle(this.closest('.card'))">
+    <div class="card-icon" style="background:#FAEEDA;color:#633806;border-color:#EF9F27;">S</div>
+    <div class="card-info">
+      <div class="card-name">Solariel</div>
+      <div class="card-alias">The Radiant Arbiter</div>
+    </div>
+    <div class="card-chevron">▶</div>
+  </div>
+  <div class="card-tags">
+    <span class="tag" style="background:#E6F1FB;color:#0C447C;border-color:#85B7EB;">Lawful Good</span>
+    <span class="tag" style="background:#FAEEDA;color:#633806;border-color:#EF9F27;">Light</span>
+    <span class="tag" style="background:#FAEEDA;color:#854F0B;border-color:#FAC775;">Celestial</span>
+  </div>
+  <div class="card-body">
+    <div class="todo">Lore to be added — paste entry content here.</div>
+  </div>
+</div>
+
+<!-- THALARA -->
+<div class="card" data-domain="know" data-align="lg" data-patron="cel" data-name="thalara lady wonder dwarven forge craft knowledge smithing">
+  <div class="card-top" onclick="toggle(this.closest('.card'))">
+    <div class="card-icon" style="background:#E6F1FB;color:#0C447C;border-color:#85B7EB;">T</div>
+    <div class="card-info">
+      <div class="card-name">Thalara</div>
+      <div class="card-alias">Lady of Wonder</div>
+    </div>
+    <div class="card-chevron">▶</div>
+  </div>
+  <div class="card-tags">
+    <span class="tag" style="background:#E6F1FB;color:#0C447C;border-color:#85B7EB;">Lawful Good</span>
+    <span class="tag" style="background:#E6F1FB;color:#0C447C;border-color:#85B7EB;">Knowledge</span>
+    <span class="tag" style="background:#FAEEDA;color:#854F0B;border-color:#FAC775;">Celestial</span>
+  </div>
+  <div class="card-body">
+    <div class="todo">Lore to be added — paste entry content here.</div>
+  </div>
+</div>
+
+<!-- AEONIUS -->
+<div class="card" data-domain="know" data-align="ln" data-patron="ves" data-name="aeonius watcher time fate knowledge prophecy vestige trapped">
+  <div class="card-top" onclick="toggle(this.closest('.card'))">
+    <div class="card-icon" style="background:#EAF3DE;color:#27500A;border-color:#97C459;">A</div>
+    <div class="card-info">
+      <div class="card-name">Aeonius</div>
+      <div class="card-alias">The Watcher</div>
+    </div>
+    <div class="card-chevron">▶</div>
+  </div>
+  <div class="card-tags">
+    <span class="tag" style="background:#EAF3DE;color:#27500A;border-color:#97C459;">Lawful Neutral</span>
+    <span class="tag" style="background:#E6F1FB;color:#0C447C;border-color:#85B7EB;">Knowledge</span>
+    <span class="tag" style="background:#E6F1FB;color:#0C447C;border-color:#B5D4F4;">Vestige</span>
+  </div>
+  <div class="card-body">
+    <div class="todo">Lore to be added — paste entry content here.</div>
+  </div>
+</div>
+
+<!-- ELARIA -->
+<div class="card" data-domain="life" data-align="ng" data-patron="arch" data-name="elaria blossoming heart mother dryads nature family hearth">
+  <div class="card-top" onclick="toggle(this.closest('.card'))">
+    <div class="card-icon" style="background:#E1F5EE;color:#085041;border-color:#5DCAA5;">E</div>
+    <div class="card-info">
+      <div class="card-name">Elaria</div>
+      <div class="card-alias">The Blossoming Heart</div>
+    </div>
+    <div class="card-chevron">▶</div>
+  </div>
+  <div class="card-tags">
+    <span class="tag" style="background:#E1F5EE;color:#085041;border-color:#5DCAA5;">Neutral Good</span>
+    <span class="tag" style="background:#EAF3DE;color:#27500A;border-color:#97C459;">Life</span>
+    <span class="tag" style="background:#FBEAF0;color:#72243E;border-color:#ED93B1;">Archfey</span>
+  </div>
+  <div class="card-body">
+    <div class="todo">Lore to be added — paste entry content here.</div>
+  </div>
+</div>
+
+<!-- LYRIANA -->
+<div class="card" data-domain="light" data-align="ng" data-patron="cel" data-name="lyriana harp inspiration music poetry bards halflings">
+  <div class="card-top" onclick="toggle(this.closest('.card'))">
+    <div class="card-icon" style="background:#FAEEDA;color:#633806;border-color:#EF9F27;">L</div>
+    <div class="card-info">
+      <div class="card-name">Lyriana</div>
+      <div class="card-alias">The Harp of Inspiration</div>
+    </div>
+    <div class="card-chevron">▶</div>
+  </div>
+  <div class="card-tags">
+    <span class="tag" style="background:#E1F5EE;color:#085041;border-color:#5DCAA5;">Neutral Good</span>
+    <span class="tag" style="background:#FAEEDA;color:#633806;border-color:#EF9F27;">Light</span>
+    <span class="tag" style="background:#FAEEDA;color:#854F0B;border-color:#FAC775;">Celestial</span>
+  </div>
+  <div class="card-body">
+    <div class="todo">Lore to be added — paste entry content here.</div>
+  </div>
+</div>
+
+<!-- ANARION -->
+<div class="card" data-domain="life" data-align="nn" data-patron="arch" data-name="anarion great stag beasts nature hunting forest druids centaurs">
+  <div class="card-top" onclick="toggle(this.closest('.card'))">
+    <div class="card-icon" style="background:#F1EFE8;color:#5F5E5A;border-color:#D3D1C7;">A</div>
+    <div class="card-info">
+      <div class="card-name">Anarion</div>
+      <div class="card-alias">The Great Stag</div>
+    </div>
+    <div class="card-chevron">▶</div>
+  </div>
+  <div class="card-tags">
+    <span class="tag" style="background:#F1EFE8;color:#5F5E5A;border-color:#D3D1C7;">True Neutral</span>
+    <span class="tag" style="background:#EAF3DE;color:#27500A;border-color:#97C459;">Life</span>
+    <span class="tag" style="background:#FBEAF0;color:#72243E;border-color:#ED93B1;">Archfey</span>
+  </div>
+  <div class="card-body">
+    <div class="todo">Lore to be added — paste entry content here.</div>
+  </div>
+</div>
+
+<!-- CHARON -->
+<div class="card" data-domain="life" data-align="nn" data-patron="ves" data-name="charon ferryman death river raven queen souls">
+  <div class="card-top" onclick="toggle(this.closest('.card'))">
+    <div class="card-icon" style="background:#F1EFE8;color:#5F5E5A;border-color:#D3D1C7;">C</div>
+    <div class="card-info">
+      <div class="card-name">Charon</div>
+      <div class="card-alias">The Ferryman</div>
+    </div>
+    <div class="card-chevron">▶</div>
+  </div>
+  <div class="card-tags">
+    <span class="tag" style="background:#F1EFE8;color:#5F5E5A;border-color:#D3D1C7;">True Neutral</span>
+    <span class="tag" style="background:#EAF3DE;color:#27500A;border-color:#97C459;">Life</span>
+    <span class="tag" style="background:#E6F1FB;color:#0C447C;border-color:#B5D4F4;">Vestige</span>
+  </div>
+  <div class="card-body">
+    <div class="todo">Lore to be added — paste entry content here.</div>
+  </div>
+</div>
+
+<!-- NYMUE -->
+<div class="card" data-domain="know" data-align="nn" data-patron="arch" data-name="nymue moonlit enchantress magic moon arcane elves">
+  <div class="card-top" onclick="toggle(this.closest('.card'))">
+    <div class="card-icon" style="background:#F1EFE8;color:#5F5E5A;border-color:#D3D1C7;">N</div>
+    <div class="card-info">
+      <div class="card-name">Nymue</div>
+      <div class="card-alias">The Moonlit Enchantress</div>
+    </div>
+    <div class="card-chevron">▶</div>
+  </div>
+  <div class="card-tags">
+    <span class="tag" style="background:#F1EFE8;color:#5F5E5A;border-color:#D3D1C7;">True Neutral</span>
+    <span class="tag" style="background:#E6F1FB;color:#0C447C;border-color:#85B7EB;">Knowledge</span>
+    <span class="tag" style="background:#FBEAF0;color:#72243E;border-color:#ED93B1;">Archfey</span>
+  </div>
+  <div class="card-body">
+    <div class="todo">Lore to be added — paste entry content here.</div>
+  </div>
+</div>
+
+<!-- LUMINASTRA -->
+<div class="card" data-domain="light" data-align="cg" data-patron="cel" data-name="luminastra radiant aurora light hope auroran empire aarakocra">
+  <div class="card-top" onclick="toggle(this.closest('.card'))">
+    <div class="card-icon" style="background:#FAEEDA;color:#854F0B;border-color:#FAC775;">L</div>
+    <div class="card-info">
+      <div class="card-name">Luminastra</div>
+      <div class="card-alias">The Radiant Aurora</div>
+    </div>
+    <div class="card-chevron">▶</div>
+  </div>
+  <div class="card-tags">
+    <span class="tag" style="background:#FAEEDA;color:#854F0B;border-color:#FAC775;">Chaotic Good</span>
+    <span class="tag" style="background:#FAEEDA;color:#633806;border-color:#EF9F27;">Light</span>
+    <span class="tag" style="background:#FAEEDA;color:#854F0B;border-color:#FAC775;">Celestial</span>
+  </div>
+  <div class="card-body">
+    <div class="todo">Lore to be added — paste entry content here.</div>
+  </div>
+</div>
+
+<!-- ZEPHYRION -->
+<div class="card" data-domain="life" data-align="cg" data-patron="goo" data-name="zephyrion changer tides dragon turtle storms seas sailors coastal">
+  <div class="card-top" onclick="toggle(this.closest('.card'))">
+    <div class="card-icon" style="background:#FAEEDA;color:#854F0B;border-color:#FAC775;">Z</div>
+    <div class="card-info">
+      <div class="card-name">Zephyrion</div>
+      <div class="card-alias">Changer of Tides</div>
+    </div>
+    <div class="card-chevron">▶</div>
+  </div>
+  <div class="card-tags">
+    <span class="tag" style="background:#FAEEDA;color:#854F0B;border-color:#FAC775;">Chaotic Good</span>
+    <span class="tag" style="background:#EAF3DE;color:#27500A;border-color:#97C459;">Life</span>
+    <span class="tag" style="background:#F1EFE8;color:#5F5E5A;border-color:#D3D1C7;">Great Old One</span>
+  </div>
+  <div class="card-body">
+    <div class="todo">Lore to be added — paste entry content here.</div>
+  </div>
+</div>
+
+<!-- NALAKEI -->
+<div class="card" data-domain="life" data-align="cn" data-patron="arch" data-name="nalakei lady wild abandon joy revelry harvest fawn">
+  <div class="card-top" onclick="toggle(this.closest('.card'))">
+    <div class="card-icon" style="background:#EEEDFE;color:#3C3489;border-color:#AFA9EC;">N</div>
+    <div class="card-info">
+      <div class="card-name">Nalakei</div>
+      <div class="card-alias">Lady of Wild Abandon</div>
+    </div>
+    <div class="card-chevron">▶</div>
+  </div>
+  <div class="card-tags">
+    <span class="tag" style="background:#EEEDFE;color:#3C3489;border-color:#AFA9EC;">Chaotic Neutral</span>
+    <span class="tag" style="background:#EAF3DE;color:#27500A;border-color:#97C459;">Life</span>
+    <span class="tag" style="background:#FBEAF0;color:#72243E;border-color:#ED93B1;">Archfey</span>
+  </div>
+  <div class="card-body">
+    <div class="todo">Lore to be added — paste entry content here.</div>
+  </div>
+</div>
+
+<!-- ZELOS -->
+<div class="card" data-domain="know" data-align="cn" data-patron="arch" data-name="zelos capricious gambler luck chaos chance merchants goblins">
+  <div class="card-top" onclick="toggle(this.closest('.card'))">
+    <div class="card-icon" style="background:#EEEDFE;color:#3C3489;border-color:#AFA9EC;">Z</div>
+    <div class="card-info">
+      <div class="card-name">Zelos</div>
+      <div class="card-alias">The Capricious Gambler</div>
+    </div>
+    <div class="card-chevron">▶</div>
+  </div>
+  <div class="card-tags">
+    <span class="tag" style="background:#EEEDFE;color:#3C3489;border-color:#AFA9EC;">Chaotic Neutral</span>
+    <span class="tag" style="background:#E6F1FB;color:#0C447C;border-color:#85B7EB;">Knowledge</span>
+    <span class="tag" style="background:#FBEAF0;color:#72243E;border-color:#ED93B1;">Archfey</span>
+  </div>
+  <div class="card-body">
+    <div class="todo">Lore to be added — paste entry content here.</div>
+  </div>
+</div>
+
+</div><!-- /grid -->
+</div><!-- /grid-wrap -->
+
+<script>
+const state = { domain: null, align: null, patron: null };
+
+function filt(type, val, btn) {
+  const wasActive = state[type] === val;
+  document.querySelectorAll(`.fb-${state[type]}`).forEach(b => b.classList.remove('active'));
+  state[type] = wasActive ? null : val;
+  if (!wasActive) btn.classList.add('active');
+  apply();
+}
+
+function clearAll() {
+  state.domain = null; state.align = null; state.patron = null;
+  document.querySelectorAll('.fb').forEach(b => b.classList.remove('active'));
+  document.getElementById('search-input').value = '';
+  apply();
+}
+
+function search(val) { apply(val); }
+
+function apply(searchVal) {
+  const q = (searchVal !== undefined ? searchVal : document.getElementById('search-input').value).toLowerCase().trim();
+  const cards = document.querySelectorAll('.card');
+  let vis = 0;
+  cards.forEach(card => {
+    const dm = !state.domain || card.dataset.domain === state.domain;
+    const al = !state.align  || card.dataset.align  === state.align;
+    const pa = !state.patron || card.dataset.patron  === state.patron;
+    const sq = !q || card.dataset.name.includes(q);
+    if (dm && al && pa && sq) { card.classList.remove('hidden'); vis++; }
+    else { card.classList.add('hidden'); }
+  });
+  document.getElementById('count-label').textContent = vis === 26 ? '26 deities' : `${vis} of 26`;
+  document.getElementById('no-results').classList.toggle('visible', vis === 0);
+}
+
+function toggle(card) {
+  const wasOpen = card.classList.contains('open');
+  document.querySelectorAll('.card.open').forEach(c => c.classList.remove('open'));
+  if (!wasOpen) {
+    card.classList.add('open');
+    card.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }
+}
+</script>
+</body>
+</html>
