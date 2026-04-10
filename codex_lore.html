@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lore of the Codex</title>
+  <style>
+  /* ── base reset ── */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  /* ── font ── */
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=swap');
+
+  body {
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 1.7;
+    background: #ffffff;
+    color: #1a1a1a;
+    padding: 1.5rem;
+  }
+
+  /* ── css variables — light mode ── */
+  :root {
+    --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+    --font-serif: Georgia, serif;
+    --font-mono: 'Courier New', monospace;
+
+    --color-text-primary: #1a1a1a;
+    --color-text-secondary: #4a4a4a;
+    --color-text-tertiary: #6b6b6b;
+    --color-text-info: #0c447c;
+    --color-text-success: #27500a;
+    --color-text-warning: #633806;
+    --color-text-danger: #791f1f;
+
+    --color-background-primary: #ffffff;
+    --color-background-secondary: #f5f4f0;
+    --color-background-tertiary: #eeedea;
+    --color-background-info: #e6f1fb;
+    --color-background-success: #eaf3de;
+    --color-background-warning: #faeeda;
+    --color-background-danger: #fcebeb;
+
+    --color-border-tertiary: rgba(0,0,0,0.12);
+    --color-border-secondary: rgba(0,0,0,0.22);
+    --color-border-primary: rgba(0,0,0,0.35);
+    --color-border-info: #85b7eb;
+    --color-border-success: #97c459;
+    --color-border-warning: #ef9f27;
+    --color-border-danger: #f09595;
+
+    --border-radius-md: 8px;
+    --border-radius-lg: 12px;
+    --border-radius-xl: 16px;
+  }
+
+  /* ── dark mode ── */
+  @media (prefers-color-scheme: dark) {
+    body {
+      background: #1a1917;
+      color: #e8e6e0;
+    }
+    :root {
+      --color-text-primary: #e8e6e0;
+      --color-text-secondary: #b0ada6;
+      --color-text-tertiary: #7a7872;
+      --color-text-info: #85b7eb;
+      --color-text-success: #97c459;
+      --color-text-warning: #ef9f27;
+      --color-text-danger: #f09595;
+
+      --color-background-primary: #242320;
+      --color-background-secondary: #2c2b28;
+      --color-background-tertiary: #333230;
+      --color-background-info: #0c2a4a;
+      --color-background-success: #162c06;
+      --color-background-warning: #2e1e02;
+      --color-background-danger: #2e0808;
+
+      --color-border-tertiary: rgba(255,255,255,0.10);
+      --color-border-secondary: rgba(255,255,255,0.18);
+      --color-border-primary: rgba(255,255,255,0.28);
+    }
+  }
+
+  /* ── svg widget classes ── */
+  svg text { font-family: var(--font-sans); fill: var(--color-text-primary); }
+  svg text.t  { font-size: 14px; font-weight: 400; fill: var(--color-text-primary); }
+  svg text.ts { font-size: 12px; font-weight: 400; fill: var(--color-text-secondary); }
+  svg text.th { font-size: 14px; font-weight: 500; fill: var(--color-text-primary); }
+  svg rect.box, svg .box rect {
+    fill: var(--color-background-secondary);
+    stroke: var(--color-border-secondary);
+  }
+  svg .arr {
+    stroke: var(--color-text-secondary);
+    stroke-width: 1.5px;
+    fill: none;
+  }
+  svg .leader {
+    stroke: var(--color-border-tertiary);
+    stroke-width: 0.5px;
+    stroke-dasharray: 4 3;
+    fill: none;
+  }
+  svg .node { cursor: pointer; }
+  svg .node:hover { opacity: 0.82; }
+
+  /* colour ramps for svg nodes */
+  svg .c-purple rect, svg .c-purple circle, svg .c-purple ellipse { fill: #EEEDFE; stroke: #534AB7; }
+  svg .c-purple text.t, svg .c-purple text.th { fill: #3C3489; }
+  svg .c-purple text.ts { fill: #534AB7; }
+
+  svg .c-teal rect, svg .c-teal circle, svg .c-teal ellipse { fill: #E1F5EE; stroke: #0F6E56; }
+  svg .c-teal text.t, svg .c-teal text.th { fill: #085041; }
+  svg .c-teal text.ts { fill: #0F6E56; }
+
+  svg .c-coral rect, svg .c-coral circle, svg .c-coral ellipse { fill: #FAECE7; stroke: #993C1D; }
+  svg .c-coral text.t, svg .c-coral text.th { fill: #712B13; }
+  svg .c-coral text.ts { fill: #993C1D; }
+
+  svg .c-pink rect, svg .c-pink circle, svg .c-pink ellipse { fill: #FBEAF0; stroke: #993556; }
+  svg .c-pink text.t, svg .c-pink text.th { fill: #72243E; }
+  svg .c-pink text.ts { fill: #993556; }
+
+  svg .c-gray rect, svg .c-gray circle, svg .c-gray ellipse { fill: #F1EFE8; stroke: #5F5E5A; }
+  svg .c-gray text.t, svg .c-gray text.th { fill: #444441; }
+  svg .c-gray text.ts { fill: #5F5E5A; }
+
+  svg .c-blue rect, svg .c-blue circle, svg .c-blue ellipse { fill: #E6F1FB; stroke: #185FA5; }
+  svg .c-blue text.t, svg .c-blue text.th { fill: #0C447C; }
+  svg .c-blue text.ts { fill: #185FA5; }
+
+  svg .c-green rect, svg .c-green circle, svg .c-green ellipse { fill: #EAF3DE; stroke: #3B6D11; }
+  svg .c-green text.t, svg .c-green text.th { fill: #27500A; }
+  svg .c-green text.ts { fill: #3B6D11; }
+
+  svg .c-amber rect, svg .c-amber circle, svg .c-amber ellipse { fill: #FAEEDA; stroke: #854F0B; }
+  svg .c-amber text.t, svg .c-amber text.th { fill: #633806; }
+  svg .c-amber text.ts { fill: #854F0B; }
+
+  svg .c-red rect, svg .c-red circle, svg .c-red ellipse { fill: #FCEBEB; stroke: #A32D2D; }
+  svg .c-red text.t, svg .c-red text.th { fill: #791F1F; }
+  svg .c-red text.ts { fill: #A32D2D; }
+
+  @media (prefers-color-scheme: dark) {
+    svg .c-purple rect, svg .c-purple circle, svg .c-purple ellipse { fill: #3C3489; stroke: #AFA9EC; }
+    svg .c-purple text.t, svg .c-purple text.th { fill: #CECBF6; }
+    svg .c-purple text.ts { fill: #AFA9EC; }
+
+    svg .c-teal rect, svg .c-teal circle, svg .c-teal ellipse { fill: #085041; stroke: #5DCAA5; }
+    svg .c-teal text.t, svg .c-teal text.th { fill: #9FE1CB; }
+    svg .c-teal text.ts { fill: #5DCAA5; }
+
+    svg .c-coral rect, svg .c-coral circle, svg .c-coral ellipse { fill: #712B13; stroke: #F0997B; }
+    svg .c-coral text.t, svg .c-coral text.th { fill: #F5C4B3; }
+    svg .c-coral text.ts { fill: #F0997B; }
+
+    svg .c-pink rect, svg .c-pink circle, svg .c-pink ellipse { fill: #72243E; stroke: #ED93B1; }
+    svg .c-pink text.t, svg .c-pink text.th { fill: #F4C0D1; }
+    svg .c-pink text.ts { fill: #ED93B1; }
+
+    svg .c-gray rect, svg .c-gray circle, svg .c-gray ellipse { fill: #444441; stroke: #B4B2A9; }
+    svg .c-gray text.t, svg .c-gray text.th { fill: #D3D1C7; }
+    svg .c-gray text.ts { fill: #B4B2A9; }
+
+    svg .c-blue rect, svg .c-blue circle, svg .c-blue ellipse { fill: #0C447C; stroke: #85B7EB; }
+    svg .c-blue text.t, svg .c-blue text.th { fill: #B5D4F4; }
+    svg .c-blue text.ts { fill: #85B7EB; }
+
+    svg .c-green rect, svg .c-green circle, svg .c-green ellipse { fill: #27500A; stroke: #97C459; }
+    svg .c-green text.t, svg .c-green text.th { fill: #C0DD97; }
+    svg .c-green text.ts { fill: #97C459; }
+
+    svg .c-amber rect, svg .c-amber circle, svg .c-amber ellipse { fill: #633806; stroke: #EF9F27; }
+    svg .c-amber text.t, svg .c-amber text.th { fill: #FAC775; }
+    svg .c-amber text.ts { fill: #EF9F27; }
+
+    svg .c-red rect, svg .c-red circle, svg .c-red ellipse { fill: #791F1F; stroke: #F09595; }
+    svg .c-red text.t, svg .c-red text.th { fill: #F7C1C1; }
+    svg .c-red text.ts { fill: #F09595; }
+  }
+</style>
+</head>
+<body>
+  <div>
+    <h1>The Lore of the Codex</h1>
+  </div>
+  <div>
+    <h2>Intro</h2>
+    <p>They say the book was written when the world was still young enough to remember its first shadow.</p>
+    <p>Most of it is gone. Fire took some. Flood took more. The rest was erased on purpose.</p>
+    <p>What remains is a cracked spine and a handful of pages that smell of dust and stormlight. The script changes hand more than once, as if several scribes tried to preserve a truth that did not want to stay written.</p>
+    <p>This is the story those pages still tell.</p>
+  </div>
+  <div>
+    <h2>Chapter 1 – The First Ledger</h2>
+    <p>Before there were many gods, there were a few.</p>
+    <p>They were not wise, only early. They shaped seas and skies, carved mountains, lit the first stars in the dark. They were loud and clumsy and proud.</p>
+    <p>When their work began to tangle, they forged something to help them understand it.</p>
+    <p>They called it the Eclipse Codex.</p>
+    <p>It was not a holy book and not quite a weapon. It was a ledger of existence. It recorded every rise in power, every slackening, every place where the weave of reality pulled too tight or sagged too loose.</p>
+    <p>When fire grew too wild and stone began to melt in its sleep, the Codex marked the imbalance. When a kingdom cheated its ending and clung to life through necromancy and forbidden rites, the Codex darkened that page. When a god gave too much favour to one mortal or one nation, the ink flared to warn the others.</p>
+    <p>The elder gods could make mountains and storms, but they were not subtle. They felt that something had gone wrong, yet could not always see where to cut.</p>
+    <p>So they gave the Codex a keeper.</p>
+    <p>He did not begin as the Shrouded Lord. The book calls him by another title.</p>
+    <p>The Closer.</p>
+  </div>
+  <div>
+    <h2>Chapter 2 – The Closer</h2>
+    <p>The Closer walked where the Codex pointed.</p>
+    <p>He went to the bedsides of dying stars and watched as they folded into quiet. He stood in cities whose stories had run their course and eased them into ruins, not with plague or rage, but with a soft retreat of breath and purpose.</p>
+    <p>He sat with the last of broken peoples whose minds had been shattered by war and wild magic. He closed their story with kindness when everyone else demanded more suffering from them.</p>
+    <p>He sealed roads between planes when too much bled through. He opened them only long enough to ease the pressure and then laid them to rest again.</p>
+    <p>To him, mercy was not endless continuation. Mercy was an ending that came at the right time, clean and complete.</p>
+    <p>For a long age, the gods were grateful. They had wanted a butcher and found something gentler. They sent him to do what they did not like to watch.</p>
+    <p>He kept his quiet office at the edge of all things and did the work no one honoured.</p>
+  </div>
+  <div>
+    <h2>Chapter 3 – The Breaking Point</h2>
+    <p>Ages turned.</p>
+    <p>Mortals learned how to lean on the threads of the world. They stole souls back from beyond with diamond dust and sacred names. They built demiplanes like gilded cages where their lords could hide from consequence. They bound spirits in chains of law. They raised dead tyrants again and again, each time wrapped in slightly different flags, each time hungry in the same way.</p>
+    <p>The gods watched this and were pleased.</p>
+    <p>Worship tasted sweet. Faith soothed the loneliness between stars. They began to favour those who built high temples and loud choirs. They whispered secrets of preservation and prolonging to those who pleased them.</p>
+    <p>Exceptions piled upon exceptions.</p>
+    <p>The Codex blackened.</p>
+    <p>The Closer traced his finger down pages thick with ink. He saw wars that had ended, now fought again by resurrected generals. He saw bloodlines that should have faded, kept alive by divine favour despite the rot of their deeds. He saw spirits bound in armour and banners, marched out whenever a god wanted to see old glories replayed.</p>
+    <p>He went to the gods.</p>
+    <p>The book says he laid the Eclipse Codex at their feet. It opened itself and turned its own pages. They saw lines of script warped and heavy with unresolved endings.</p>
+    <p>“We were set to keep balance,” he said. “You have chosen to hoard it instead.”</p>
+    <p>Some looked away.</p>
+    <p>Some argued that mortals deserved another chance, and another, and another. Some admitted, without shame, that they had grown fond of being adored and did not want their favourites to fall.</p>
+    <p>The Closer listened.</p>
+    <p>Then he turned from them and began to study the Codex more deeply than even they had dared.</p>
+  </div>
+  <div>
+    <h2>Chapter 4 – The Plan to Reset</h2>
+    <p>The ledger showed him a pattern.</p>
+    <p>The planes pressed and pulled on one another like gears. The stars moved in long, slow paths. Magic ebbed and surged along currents older than gods.</p>
+    <p>If he could find the right alignment, if he could speak the right sequence through the Codex, he could loosen the whole knot at once. Not a wild unmaking that tore everything to shreds, but a controlled retreat.</p>
+    <p>Let tired stars end. Let stubborn kingdoms release their dead. Let gods who had fed too long on fear and worship fall quiet for a while.</p>
+    <p>There would be survivors. Seeds. Ashes. Enough for something new to grow without the weight of so many things that refused to rest.</p>
+    <p>In his mind, this was mercy widened to cover all creation.</p>
+    <p>In theirs, once they realised what he meant to do, it was a threat against everything that made them gods.</p>
+  </div>
+  <div>
+    <h2>Chapter 5 – The Betrayal</h2>
+    <p>The hand that writes the next pages is not the same. The letters grow sharper, like a voice bracing itself.</p>
+    <p>They could not destroy him. He was too tightly bound to the Codex and to the function they themselves had given him. Every attempt to erase his existence made the ledger scream with contradiction.</p>
+    <p>So they turned his work against him.</p>
+    <p>They altered the Codex. Deep in its spine they wove hidden runes, patterns that could, at a single spoken phrase, fold every page inward. No longer a ledger, but a lock.</p>
+    <p>Then they called him.</p>
+    <p>They told him they had relented. They agreed that the world had grown choked with unburied history. They offered to help him perform the great rebalancing that he had proposed, using the Codex as the anchor.</p>
+    <p>He came.</p>
+    <p>At the appointed place, under a sky held very still, he opened the Eclipse Codex. The pages shone like fresh stars. The gods spoke the ritual he had devised. Beneath their voices, like poison beneath water, they slipped in the hidden lines they had written without him.</p>
+    <p>The Chronicle does not give the sound of what followed.</p>
+    <p>It describes light with weight, pressing from every side. It describes letters leaving the pages and wrapping around him like chains. It describes the spine curling, pages closing like jaws.</p>
+    <p>Realisation came to him a breath too late.</p>
+    <p>He tried to speak his own name to anchor himself. The Codex flared and obeyed its new commands. The name was cut from him, from the air, from the memory of every god that watched.</p>
+    <p>The sound that had once meant him was sliced out of the story.</p>
+    <p>What remained was hurled past the rim of the known, into the deep Void between all things, where there is no time to count, only distance from meaning.</p>
+    <p>The elder gods stood in the silence afterwards. They closed the Codex and feared it. They agreed that it would never be opened whole again.</p>
+    <p>They told the world that the danger had passed.</p>
+    <p>They did not tell the world what it had cost.</p>
+  </div>
+  <div>
+    <h2>Chapter 6 - The Void</h2>
+    <p>The script grows uncertain, as if the scribe is guessing, or listening to a voice that does not always align with the ink.</p>
+    <p>The Void is not merely empty.</p>
+    <p>It is a place where stories cannot complete themselves. Thoughts begin and fall away. Causes have no effects. Nothing holds.</p>
+    <p>In that absence, his purpose eroded.</p>
+    <p>The care he once took to distinguish between a weary soul and a ruined one faded. His gentle pride in clean endings cracked. What endured was the conviction that things must end, no matter the cost.</p>
+    <p>He learned other things in that silence.</p>
+    <p>From his prison he felt the planes strain. He felt where mortals tore holes in the fabric to drag power through. He felt where gods stretched their reach too far. Wherever perception thinned, wherever no one watched and no one remembered, the Void pressed a little closer.</p>
+    <p>He also felt the Codex.</p>
+    <p>The lock that had bound him still hummed with connection. Every time a ward tied to it quivered, every time a fragment was touched, he sensed the tug.</p>
+    <p>He could not seize it, but he could listen along its spine, like a prisoner with his ear to the wall.</p>
+    <p>He listened like that for a very long time.</p>
+    <p>He came to understand that if he could not walk back through the bright centre of the world, he might still seep into its edges.</p>
+  </div>
+  <div>
+    <h2>Chapter 7 - The Shadowfell</h2>
+    <p>Here the writing becomes vivid, almost fevered, as if whoever wrote it had seen what they describe.</p>
+    <p>Imagine a village abandoned after plague. Houses stand, but colour has fled their wood. Wells hold water that never ripples. The air tastes of old smoke and unsaid apologies.</p>
+    <p>Now stretch that feeling until it covers a whole reflection of the world.</p>
+    <p>Wherever a place was forgotten, where ruins lay unmarked on any map, where grief went unspoken and shame went unrecorded, those impressions slipped sideways. The weight of what people refused to remember pooled in a thin mirror.</p>
+    <p>From that soil of neglect he shaped a realm of outlines.</p>
+    <p>This was the first true reach of his will since exile.</p>
+    <p>The Shadowfell.</p>
+    <p>It served him in three ways.</p>
+    <p>It gave him a foothold, close enough to touch the weave of reality, yet far enough that the gods did not feel his hand directly.</p>
+    <p>It became a siphon. Souls that lingered in sorrow, legends that slid out of common telling, histories that were quietly erased, all passed through its dim light. Their meaning did not vanish. It flowed to him.</p>
+    <p>It served as a model. In its half world he proved that a bright thing could be copied into a dull twin and left there. Once he had done this to enough places, he knew he could do it to everything.</p>
+    <p>If the work completed, the Shadow would not sit beside the world.</p>
+    <p>It would be the world.</p>
+  </div>
+  <div>
+    <h2>Chapter 8 - The Fracturing of the Codex</h2>
+    <p>At this point, another hand takes up the quill. The script is older, almost reverent.</p>
+    <p>The elder gods feared what they had wrought.</p>
+    <p>They had watched the Eclipse Codex twist into a lock. They had seen how it could rewrite the meaning of a name, how it could turn an arbiter into a prisoner and cast him into silence. They realised that any one of them might be next if another found the courage, or the cruelty, to speak the right lines.</p>
+    <p>So they broke it.</p>
+    <p>Not into simple pages and covers, but into living concepts, each hammered into a new shape and thrown into the keeping of a different ward.</p>
+    <p>They told the world they had unmade the Codex.</p>
+    <p>They lied.</p>
+  </div>
+  <div>
+    <h2>Chapter 9 - The Shrouded Lord</h2>
+    <p>Somewhere beyond sight, the one they had cast away listened.</p>
+    <p>He felt every tremor through the fragments. He felt mortals grow clever and desperate and proud. He felt the gods become quieter, either withdrawn or replaced by younger powers who did not know the whole truth.</p>
+    <p>He watched through the cracks that opened where no one was looking. A rift in the air of a forgotten canyon. A leak of wild magic beneath a city built on old bones. A tear where Shadowfell bled into waking light.</p>
+    <p>He learned that story is a ward as strong as any wall.</p>
+    <p>As long as people believe in something, name it, repeat it, that thing holds shape. It might not be accurate, but it is anchored.</p>
+    <p>So his influence does not always arrive as a shrieking void that tears stone. More often it arrives as forgetting.</p>
+    <p>A burned library whose loss no one mourns. A god whose name fades from prayer while the temple still stands. A martyr whose story is scrubbed from history because it is inconvenient. A land where people shrug at their own legends and say none of it really mattered.</p>
+    <p>Every oath broken without consequence, every record quietly altered, every act of courage that goes intentionally unremembered, loosens the weave that keeps the world coherent.</p>
+    <p>He does not beg for worship.</p>
+    <p>He invites exhaustion.</p>
+    <p>He wants people to stop caring whether anything has meaning, so that when he speaks again, there will be nothing in them that resists.</p>
+    <p>The Chronicle ends its steady hand here. The last part of the text reads like something else is holding the quill. The letters tilt, ink a little darker, as if a different weight presses on the page.</p>
+  </div>
+  <div>
+    <h2>Chapter 10 - The Voice in The Margin</h2>
+    <p>“You were taught that mercy is another sunrise.</p>
+    <p>You were taught that love is never letting go.</p>
+    <p>Look at what those teachings have made.</p>
+    <p>Kingdoms propped up on the bones of ten thousand years. Ghosts dragged from quiet to fight the same wars again. Gods drunk on prayers that taste of terror and habit.</p>
+    <p>You are tired.</p>
+    <p>Your gods are tired, though they will not admit it.</p>
+    <p>When I closed little stories, one life at a time, you called me kind.</p>
+    <p>When I ask to close the great story, you call me monster.</p>
+    <p>I have not changed as much as you think. Only the scale of the promise has grown.</p>
+    <p>Nothing was meant to endure forever. That was the vow at the first quiet.</p>
+    <p>You broke it.</p>
+    <p>You clung.</p>
+    <p>You nailed yourselves to a sky that no longer wants your weight.</p>
+    <p>So now I will keep the promise without you.</p>
+    <p>The pieces you scattered still remember the pattern. Mortal Keystone. Feywild Amulet. Celestial Shard. Abyssal Core. Elemental Seal. Bring them together and they will turn once more into the shape that cast me out.</p>
+    <p>Lock. Key. It was always both.</p>
+    <p>When that Eclipse is drawn across the heavens again, you will call it the end.</p>
+    <p>I will call it letting things rest.</p>
+    <p>I do not hate you.</p>
+    <p>I simply refuse to watch you suffer under how badly you fear to stop.”</p>
+    <p>The ink thins after that, as if the quill trembled or the hand that guided it was pulled away.</p>
+    <p>On the last torn strip of vellum, there are only four words, written in a smaller, older script.</p>
+    <p>“Remember how this began.”</p>
+  </div>
+</body>
+</html>
