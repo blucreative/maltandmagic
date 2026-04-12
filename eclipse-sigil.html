@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Eclipse Sigil</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=swap');
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --font: 'Inter', system-ui, sans-serif;
+  --bg: #0e0e10;
+  --surface: #17171a;
+  --surface2: #1f1f24;
+  --border: rgba(255,255,255,0.08);
+  --border2: rgba(255,255,255,0.14);
+  --text: #e8e6e0;
+  --muted: #7a7872;
+  --dim: #4a4846;
+
+  --light: #f5e97a;
+  --light-bg: rgba(245,233,122,0.07);
+  --light-border: rgba(245,233,122,0.22);
+
+  --matter: #8ab0d4;
+  --matter-bg: rgba(138,176,212,0.07);
+  --matter-border: rgba(138,176,212,0.22);
+
+  --energy: #e07a3a;
+  --energy-bg: rgba(224,122,58,0.07);
+  --energy-border: rgba(224,122,58,0.22);
+
+  --thought: #b48ee8;
+  --thought-bg: rgba(180,142,232,0.07);
+  --thought-border: rgba(180,142,232,0.22);
+
+  --time: #6ec4a8;
+  --time-bg: rgba(110,196,168,0.07);
+  --time-border: rgba(110,196,168,0.22);
+
+  --strain-low: #6ec4a8;
+  --strain-mid: #e07a3a;
+  --strain-high: #d45a5a;
+}
+
+body {
+  font-family: var(--font);
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  padding: 24px 16px 60px;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.page-title {
+  text-align: center;
+  margin-bottom: 6px;
+}
+.page-title h1 {
+  font-size: 22px;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  color: var(--text);
+}
+.page-title p {
+  font-size: 12px;
+  color: var(--muted);
+  font-style: italic;
+  margin-top: 4px;
+}
+
+/* ── strain tracker ── */
+.strain-section {
+  background: var(--surface);
+  border: 0.5px solid var(--border2);
+  border-radius: 14px;
+  padding: 18px 20px;
+  margin: 20px auto;
+  max-width: 680px;
+}
+.strain-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14px;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.strain-title {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.strain-count {
+  font-size: 18px;
+  font-weight: 500;
+  color: var(--text);
+  transition: color .3s;
+}
+.strain-pips {
+  display: flex;
+  gap: 5px;
+  flex-wrap: wrap;
+}
+.pip {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  border: 0.5px solid var(--border2);
+  background: var(--surface2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  font-weight: 500;
+  color: var(--dim);
+  cursor: pointer;
+  transition: all .15s;
+  user-select: none;
+}
+.pip:hover { border-color: rgba(255,255,255,0.3); }
+.pip.filled { background: var(--strain-low); border-color: var(--strain-low); color: #0e2a20; }
+.pip.filled.mid { background: var(--strain-mid); border-color: var(--strain-mid); color: #2a1500; }
+.pip.filled.high { background: var(--strain-high); border-color: var(--strain-high); color: #2a0000; }
+.pip.fatal { background: #8b1a1a; border-color: #c43030; color: #fca5a5; animation: pulse 1.5s ease-in-out infinite; }
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.65; }
+}
+
+.strain-effect {
+  margin-top: 12px;
+  padding: 10px 13px;
+  background: var(--surface2);
+  border-radius: 8px;
+  border-left: 2px solid var(--dim);
+  font-size: 12px;
+  color: var(--muted);
+  transition: border-color .3s, color .3s;
+  min-height: 38px;
+}
+.strain-effect.active {
+  color: var(--text);
+}
+.strain-effect .ef-label {
+  font-weight: 500;
+  margin-bottom: 2px;
+}
+.strain-effect .ef-mech {
+  color: var(--strain-high);
+  font-style: italic;
+}
+
+/* ── rings ── */
+.rings {
+  max-width: 680px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.ring-card {
+  background: var(--surface);
+  border: 0.5px solid var(--border);
+  border-radius: 14px;
+  overflow: hidden;
+  transition: border-color .2s;
+}
+
+.ring-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px 12px;
+  border-bottom: 0.5px solid var(--border);
+}
+.ring-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.ring-name {
+  flex: 1;
+}
+.ring-name .name {
+  font-size: 14px;
+  font-weight: 500;
+}
+.ring-name .subtitle {
+  font-size: 10px;
+  letter-spacing: 0.05em;
+  color: var(--muted);
+  text-transform: uppercase;
+}
+
+/* ── passive ── */
+.passive-row {
+  padding: 12px 16px;
+  border-bottom: 0.5px solid var(--border);
+  display: flex;
+  gap: 10px;
+}
+.passive-tag {
+  font-size: 9px;
+  font-weight: 500;
+  padding: 2px 7px;
+  border-radius: 3px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  background: rgba(255,255,255,0.06);
+  color: var(--muted);
+  white-space: nowrap;
+  align-self: flex-start;
+  margin-top: 2px;
+  flex-shrink: 0;
+}
+.passive-text {
+  font-size: 12px;
+  color: var(--muted);
+  line-height: 1.6;
+}
+.passive-text b { color: var(--text); font-weight: 500; }
+
+/* ── abilities ── */
+.ability-row {
+  padding: 12px 16px;
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  border-bottom: 0.5px solid var(--border);
+  transition: background .15s;
+  cursor: pointer;
+}
+.ability-row:last-child { border-bottom: none; }
+.ability-row:hover { background: rgba(255,255,255,0.02); }
+.ability-row.used { opacity: 0.45; }
+
+.ab-check {
+  width: 20px;
+  height: 20px;
+  border-radius: 4px;
+  border: 0.5px solid var(--border2);
+  background: var(--surface2);
+  flex-shrink: 0;
+  margin-top: 1px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all .15s;
+  pointer-events: none;
+}
+.ability-row.used .ab-check {
+  background: var(--surface2);
+  border-color: var(--dim);
+}
+.ab-check svg { display: none; }
+.ability-row.used .ab-check svg { display: block; }
+
+.ab-content { flex: 1; min-width: 0; }
+.ab-title-row {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  margin-bottom: 3px;
+  flex-wrap: wrap;
+}
+.ab-name { font-size: 13px; font-weight: 500; }
+.ab-badge {
+  font-size: 9px;
+  font-weight: 500;
+  padding: 1px 6px;
+  border-radius: 3px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+.badge-mod { background: rgba(224,122,58,0.15); color: #e07a3a; }
+.badge-maj { background: rgba(212,90,90,0.15); color: #d45a5a; }
+.badge-react { background: rgba(180,142,232,0.12); color: #b48ee8; font-size: 8px; }
+.badge-once { background: rgba(255,255,255,0.06); color: var(--muted); font-size: 8px; }
+
+.ab-desc {
+  font-size: 12px;
+  color: var(--muted);
+  line-height: 1.6;
+}
+.ab-desc b { color: var(--text); font-weight: 500; }
+
+/* ── long rest button ── */
+.rest-wrap {
+  max-width: 680px;
+  margin: 20px auto 0;
+  text-align: center;
+}
+.rest-btn {
+  font-family: var(--font);
+  font-size: 13px;
+  font-weight: 500;
+  padding: 10px 28px;
+  background: transparent;
+  color: var(--muted);
+  border: 0.5px solid var(--border2);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all .15s;
+  letter-spacing: 0.02em;
+}
+.rest-btn:hover { border-color: rgba(255,255,255,0.3); color: var(--text); }
+.rest-btn:active { transform: scale(0.98); }
+
+.rest-note {
+  font-size: 11px;
+  color: var(--dim);
+  margin-top: 8px;
+  font-style: italic;
+}
+
+/* ── strain note ── */
+.strain-note {
+  max-width: 680px;
+  margin: 14px auto 0;
+  font-size: 11px;
+  color: var(--dim);
+  text-align: center;
+  font-style: italic;
+}
+
+/* ── colour theming per ring ── */
+.ring-light  { border-color: var(--light-border); }
+.ring-matter { border-color: var(--matter-border); }
+.ring-energy { border-color: var(--energy-border); }
+.ring-thought{ border-color: var(--thought-border); }
+.ring-time   { border-color: var(--time-border); }
+
+.ring-light  .ring-header { border-bottom-color: var(--light-border); }
+.ring-matter .ring-header { border-bottom-color: var(--matter-border); }
+.ring-energy .ring-header { border-bottom-color: var(--energy-border); }
+.ring-thought.ring-header { border-bottom-color: var(--thought-border); }
+.ring-time   .ring-header { border-bottom-color: var(--time-border); }
+</style>
+</head>
+<body>
+
+<div class="page-title">
+  <h1>The Eclipse Sigil</h1>
+  <p>Wondrous Item · Artifact · Requires Attunement</p>
+</div>
+
+<!-- STRAIN TRACKER -->
+<div class="strain-section">
+  <div class="strain-header">
+    <span class="strain-title">Eclipse Strain</span>
+    <span class="strain-count" id="strain-count">0 / 10</span>
+  </div>
+  <div class="strain-pips" id="pips"></div>
+  <div class="strain-effect" id="strain-effect">
+    <div style="color:var(--dim);font-style:italic;font-size:12px;">No strain. Reality holds.</div>
+  </div>
+</div>
+
+<p class="strain-note">Strain cannot be reduced by any spell, effect, or rest. Tap a pip to add or remove strain.</p>
+
+<!-- RING I — LIGHT -->
+<div class="rings">
+<div class="ring-card ring-light">
+  <div class="ring-header">
+    <div class="ring-dot" style="background:var(--light);"></div>
+    <div class="ring-name">
+      <div class="name" style="color:var(--light);">I. Light — The Celestial Shard</div>
+      <div class="subtitle">The first light that burned away the Void</div>
+    </div>
+  </div>
+  <div class="passive-row">
+    <span class="passive-tag">Passive</span>
+    <div class="passive-text"><b>Veil of Truth —</b> You cannot be deceived by magical illusions, glamours, or void-born concealment. You see through any effect that obscures, replaces, or falsifies what is real — understanding that something is false, even if the true form remains uncertain.</div>
+  </div>
+  <div class="ability-row" id="ab-light-mod" onclick="toggle('ab-light-mod', 1)">
+    <div class="ab-check">
+      <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="var(--dim)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </div>
+    <div class="ab-content">
+      <div class="ab-title-row">
+        <span class="ab-name" style="color:var(--light);">Illumination</span>
+        <span class="ab-badge badge-mod">Moderate · 1 Strain</span>
+      </div>
+      <div class="ab-desc">All magical darkness, void concealment, and plane-shifted invisibility within <b>60 feet</b> fail for <b>1 minute</b>. Creatures relying on these effects become visible and lose any benefits they granted.</div>
+    </div>
+  </div>
+  <div class="ability-row" id="ab-light-maj" onclick="toggle('ab-light-maj', 2)">
+    <div class="ab-check">
+      <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="var(--dim)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </div>
+    <div class="ab-content">
+      <div class="ab-title-row">
+        <span class="ab-name" style="color:var(--light);">Sundering Revelation</span>
+        <span class="ab-badge badge-maj">Major · 2 Strain</span>
+        <span class="ab-badge badge-once">Once per Long Rest</span>
+      </div>
+      <div class="ab-desc">One creature within <b>60 feet</b> is stripped of every illusory, polymorph, or assumed form — forced into its true shape for <b>1 hour</b>. If the creature's true form is unknown to it, this effect instead deals <b>6d10 radiant damage</b> as reality asserts itself.</div>
+    </div>
+  </div>
+</div>
+
+<!-- RING II — MATTER -->
+<div class="ring-card ring-matter">
+  <div class="ring-header">
+    <div class="ring-dot" style="background:var(--matter);"></div>
+    <div class="ring-name">
+      <div class="name" style="color:var(--matter);">II. Matter — The Abyssal Core</div>
+      <div class="subtitle">The Unyielding Form. The first material essence.</div>
+    </div>
+  </div>
+  <div class="passive-row">
+    <span class="passive-tag">Passive</span>
+    <div class="passive-text"><b>Anchor of Form —</b> You cannot be unwillingly moved, teleported, banished, or displaced across planes while the Sigil is active. You are immune to the prone condition from non-physical sources. Forced movement from physical impacts still applies.</div>
+  </div>
+  <div class="ability-row" id="ab-matter-mod" onclick="toggle('ab-matter-mod', 1)">
+    <div class="ab-check">
+      <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="var(--dim)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </div>
+    <div class="ab-content">
+      <div class="ab-title-row">
+        <span class="ab-name" style="color:var(--matter);">Planar Seal</span>
+        <span class="ab-badge badge-mod">Moderate · 1 Strain</span>
+      </div>
+      <div class="ab-desc">Create a <b>Planar Anchor</b> in a <b>60-foot radius</b> for <b>10 minutes</b>. Within this area, teleportation, planar travel, summoning, banishment, and dimensional movement all fail unless you permit them. Void seams and planar breaches within the area are suppressed for the duration.</div>
+    </div>
+  </div>
+  <div class="ability-row" id="ab-matter-maj" onclick="toggle('ab-matter-maj', 2)">
+    <div class="ab-check">
+      <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="var(--dim)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </div>
+    <div class="ab-content">
+      <div class="ab-title-row">
+        <span class="ab-name" style="color:var(--matter);">Containment</span>
+        <span class="ab-badge badge-maj">Major · 2 Strain</span>
+        <span class="ab-badge badge-once">Once per Long Rest</span>
+      </div>
+      <div class="ab-desc">One creature of any size is forced into absolute material fixity — <b>restrained</b>, cannot use teleportation or planar movement, cannot shift form or phase until the start of your next turn. If the target is a void entity or partially non-material, the duration extends to <b>1 minute, no concentration required</b>. Ignores resistances and immunities to the restrained condition.</div>
+    </div>
+  </div>
+</div>
+
+<!-- RING III — ENERGY -->
+<div class="ring-card ring-energy">
+  <div class="ring-header">
+    <div class="ring-dot" style="background:var(--energy);"></div>
+    <div class="ring-name">
+      <div class="name" style="color:var(--energy);">III. Energy — The Elemental Seal</div>
+      <div class="subtitle">The Eternal Flow. The first motion.</div>
+    </div>
+  </div>
+  <div class="passive-row">
+    <span class="passive-tag">Passive</span>
+    <div class="passive-text"><b>Elemental Resilience —</b> Resistance to fire, cold, lightning, thunder, and acid damage. When you take elemental damage of any type, you may convert it to force damage instead — absorbed into the Sigil's constant motion rather than your body.</div>
+  </div>
+  <div class="ability-row" id="ab-energy-mod" onclick="toggle('ab-energy-mod', 1)">
+    <div class="ab-check">
+      <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="var(--dim)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </div>
+    <div class="ab-content">
+      <div class="ab-title-row">
+        <span class="ab-name" style="color:var(--energy);">Redirect</span>
+        <span class="ab-badge badge-mod">Moderate · 1 Strain</span>
+        <span class="ab-badge badge-react">Reaction</span>
+      </div>
+      <div class="ab-desc">Intercept one incoming elemental, force, or planar effect targeting yourself or an ally within <b>30 feet</b>. All damage from that effect is <b>halved</b> for all targets, and the remainder disperses harmlessly as force energy.</div>
+    </div>
+  </div>
+  <div class="ability-row" id="ab-energy-maj" onclick="toggle('ab-energy-maj', 2)">
+    <div class="ab-check">
+      <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="var(--dim)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </div>
+    <div class="ab-content">
+      <div class="ab-title-row">
+        <span class="ab-name" style="color:var(--energy);">Surge</span>
+        <span class="ab-badge badge-maj">Major · 2 Strain</span>
+        <span class="ab-badge badge-once">Once per Long Rest</span>
+      </div>
+      <div class="ab-desc">Release a single outward pulse. All creatures of your choice within <b>60 feet</b> — DC 20 Constitution save or take <b>8d8 force damage</b> and be pushed up to <b>30 feet</b> in a direction you choose. On a successful save, half damage and not pushed. You and excluded creatures are unaffected.</div>
+    </div>
+  </div>
+</div>
+
+<!-- RING IV — THOUGHT -->
+<div class="ring-card ring-thought">
+  <div class="ring-header">
+    <div class="ring-dot" style="background:var(--thought);"></div>
+    <div class="ring-name">
+      <div class="name" style="color:var(--thought);">IV. Thought — The Feywild Amulet</div>
+      <div class="subtitle">The Dreaming Reality. The first consciousness.</div>
+    </div>
+  </div>
+  <div class="passive-row">
+    <span class="passive-tag">Passive</span>
+    <div class="passive-text"><b>Warded Mind —</b> Immune to the charmed and frightened conditions. Cannot be detected by divination magic unless you choose to allow it. Any attempt to read, alter, or access your memories or emotions without consent automatically fails.</div>
+  </div>
+  <div class="ability-row" id="ab-thought-mod" onclick="toggle('ab-thought-mod', 1)">
+    <div class="ab-check">
+      <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="var(--dim)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </div>
+    <div class="ab-content">
+      <div class="ab-title-row">
+        <span class="ab-name" style="color:var(--thought);">Probability Shift</span>
+        <span class="ab-badge badge-mod">Moderate · 1 Strain</span>
+        <span class="ab-badge badge-react">Reaction</span>
+      </div>
+      <div class="ab-desc">Reroll one failed saving throw, attack roll, or ability check — your own or an ally's within <b>60 feet</b> — and take either result. Can be declared after seeing the original result but before the outcome is determined.</div>
+    </div>
+  </div>
+  <div class="ability-row" id="ab-thought-maj" onclick="toggle('ab-thought-maj', 2)">
+    <div class="ab-check">
+      <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="var(--dim)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </div>
+    <div class="ab-content">
+      <div class="ab-title-row">
+        <span class="ab-name" style="color:var(--thought);">Unwrite</span>
+        <span class="ab-badge badge-maj">Major · 2 Strain</span>
+        <span class="ab-badge badge-once">Once per Long Rest</span>
+      </div>
+      <div class="ab-desc">One mental, psychic, charm, or memory-based effect currently affecting any number of creatures within <b>60 feet</b> ends immediately for all affected creatures. Additionally, you may implant a single true statement into one creature's awareness — not a command, simply a fact the creature will know is accurate. The creature retains full autonomy in how they respond to it.</div>
+    </div>
+  </div>
+</div>
+
+<!-- RING V — TIME -->
+<div class="ring-card ring-time">
+  <div class="ring-header">
+    <div class="ring-dot" style="background:var(--time);"></div>
+    <div class="ring-name">
+      <div class="name" style="color:var(--time);">V. Time — The Mortal Keystone</div>
+      <div class="subtitle">The Measured Existence. The first moment.</div>
+    </div>
+  </div>
+  <div class="passive-row">
+    <span class="passive-tag">Passive</span>
+    <div class="passive-text"><b>Temporal Immunity —</b> Immune to forced time manipulation — Time Stop, magical aging, temporal stasis, and any effect that removes you from the normal flow of time without consent. You always act in the initiative order regardless of effects that would otherwise prevent it.</div>
+  </div>
+  <div class="ability-row" id="ab-time-mod" onclick="toggle('ab-time-mod', 1)">
+    <div class="ab-check">
+      <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="var(--dim)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </div>
+    <div class="ab-content">
+      <div class="ab-title-row">
+        <span class="ab-name" style="color:var(--time);">Foresight</span>
+        <span class="ab-badge badge-mod">Moderate · 1 Strain</span>
+      </div>
+      <div class="ab-desc">Advantage on all initiative rolls and Dexterity saving throws for <b>1 hour</b>. Once during this duration, you may declare you knew a particular attack or effect was coming and <b>automatically succeed</b> on the saving throw against it. Must be declared before the roll is made.</div>
+    </div>
+  </div>
+  <div class="ability-row" id="ab-time-maj" onclick="toggle('ab-time-maj', 2)">
+    <div class="ab-check">
+      <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="var(--dim)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </div>
+    <div class="ab-content">
+      <div class="ab-title-row">
+        <span class="ab-name" style="color:var(--time);">Consequence</span>
+        <span class="ab-badge badge-maj">Major · 2 Strain</span>
+        <span class="ab-badge badge-once">Once per Long Rest</span>
+      </div>
+      <div class="ab-desc">Force a reroll on any single die result that has just occurred — an enemy attack, a failed save, a missed spell, a critical hit — anywhere within <b>120 feet</b>. You do not choose which result stands. The second result stands regardless. Must be declared before any consequences of the original roll are described.</div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- LONG REST -->
+<div class="rest-wrap">
+  <button class="rest-btn" onclick="longRest()">Long Rest — Reset Abilities</button>
+  <div class="rest-note">Resets all once-per-long-rest abilities. Strain is permanent and does not reset.</div>
+</div>
+
+<script>
+const STRAIN_DATA = [
+  { label: "Shadow lag", mech: null },
+  { label: "Forgotten names whisper", mech: "Disadvantage on Perception checks in silence." },
+  { label: "Reality echoes your strongest emotion", mech: "Once per session, GM may call DC 14 Wisdom save or emotional state becomes visible to all nearby creatures." },
+  { label: "Glimpses of the Shrouded Lord's perspective", mech: "Advantage on Insight checks; disadvantage on saves against the Shrouded Lord's influence." },
+  { label: "Rings flicker with independent will", mech: "Once per episode, GM may trigger a Passive effect without your action." },
+  { label: "Void-adjacent phenomena", mech: "All creatures within 10 feet are aware of the Sigil's presence even if otherwise concealed." },
+  { label: "You speak words you did not choose", mech: "Once per session, GM may have you involuntarily speak one line of cosmic law aloud." },
+  { label: "The boundary between bearer and Sigil becomes uncertain", mech: "DC 16 Wisdom save at the start of each session or begin with disadvantage on Charisma checks until a short rest." },
+  { label: "Other creatures perceive you as something other than mortal", mech: "You cannot benefit from effects that target only mortals." },
+  { label: "You are the boundary. The Final Use is now inevitable.", mech: "The Sigil resolves at the end of the current arc whether you choose it or not." },
+];
+
+let strain = parseInt(localStorage.getItem('sigil-strain') || '0');
+let used = JSON.parse(localStorage.getItem('sigil-used') || '[]');
+
+function save() {
+  localStorage.setItem('sigil-strain', strain);
+  localStorage.setItem('sigil-used', JSON.stringify(used));
+}
+
+function renderPips() {
+  const container = document.getElementById('pips');
+  container.innerHTML = '';
+  for (let i = 1; i <= 10; i++) {
+    const pip = document.createElement('div');
+    pip.className = 'pip';
+    pip.textContent = i;
+    if (i <= strain) {
+      pip.classList.add('filled');
+      if (i >= 8) pip.classList.add('high');
+      else if (i >= 5) pip.classList.add('mid');
+      if (i === 10) pip.classList.add('fatal');
+    }
+    pip.onclick = () => setPip(i);
+    container.appendChild(pip);
+  }
+
+  const countEl = document.getElementById('strain-count');
+  countEl.textContent = `${strain} / 10`;
+  if (strain >= 8) countEl.style.color = 'var(--strain-high)';
+  else if (strain >= 5) countEl.style.color = 'var(--strain-mid)';
+  else countEl.style.color = 'var(--text)';
+
+  renderEffect();
+}
+
+function setPip(i) {
+  strain = (strain === i) ? i - 1 : i;
+  save();
+  renderPips();
+}
+
+function renderEffect() {
+  const el = document.getElementById('strain-effect');
+  if (strain === 0) {
+    el.innerHTML = '<div style="color:var(--dim);font-style:italic;font-size:12px;">No strain. Reality holds.</div>';
+    el.classList.remove('active');
+    el.style.borderLeftColor = 'var(--dim)';
+    return;
+  }
+  const d = STRAIN_DATA[strain - 1];
+  let color = strain >= 8 ? 'var(--strain-high)' : strain >= 5 ? 'var(--strain-mid)' : 'var(--strain-low)';
+  el.style.borderLeftColor = color;
+  el.classList.add('active');
+  let html = `<div class="ef-label" style="color:${color};">Strain ${strain} — ${d.label}</div>`;
+  if (d.mech) html += `<div class="ef-mech">${d.mech}</div>`;
+  el.innerHTML = html;
+}
+
+function toggle(id, strainCost) {
+  const row = document.getElementById(id);
+  const isUsed = row.classList.contains('used');
+  if (isUsed) {
+    row.classList.remove('used');
+    used = used.filter(x => x !== id);
+  } else {
+    row.classList.add('used');
+    used.push(id);
+    strain = Math.min(10, strain + strainCost);
+  }
+  save();
+  renderPips();
+}
+
+function longRest() {
+  const majors = ['ab-light-maj','ab-matter-maj','ab-energy-maj','ab-thought-maj','ab-time-maj'];
+  const mods = ['ab-light-mod','ab-matter-mod','ab-energy-mod','ab-thought-mod','ab-time-mod'];
+  [...majors, ...mods].forEach(id => {
+    document.getElementById(id).classList.remove('used');
+  });
+  used = [];
+  save();
+}
+
+function init() {
+  renderPips();
+  used.forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.classList.add('used');
+  });
+}
+
+init();
+</script>
+</body>
+</html>
