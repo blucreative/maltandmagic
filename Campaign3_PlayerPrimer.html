@@ -1,0 +1,880 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Campaign 3 — Player Primer</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #FAF7F0;
+    --cream-dark: #F0EBE0;
+    --cream-border: #DDD5C0;
+    --ink: #1E1B14;
+    --ink-soft: #2E2A20;
+    --aurora-1: #4AACAC;
+    --aurora-2: #2D7A8A;
+    --aurora-3: #7ED4C8;
+    --gold: #B8912A;
+    --gold-light: #D4AF5A;
+    --gold-pale: #F5EDD6;
+    --text: #2C2618;
+    --text-mid: #4A4030;
+    --text-light: #6B5E48;
+    --rule: #C8BCA8;
+    --highlight-bg: rgba(74, 172, 172, 0.07);
+    --highlight-border: rgba(74, 172, 172, 0.35);
+    --warn-bg: rgba(184, 145, 42, 0.08);
+    --warn-border: rgba(184, 145, 42, 0.35);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: #2A2520;
+    background-image: radial-gradient(ellipse at 30% 0%, rgba(74,172,172,0.06) 0%, transparent 60%),
+                      radial-gradient(ellipse at 70% 100%, rgba(184,145,42,0.05) 0%, transparent 60%);
+    font-family: 'Libre Baskerville', Georgia, serif;
+    color: var(--text);
+    font-size: 15.5px;
+    line-height: 1.78;
+    min-height: 100vh;
+  }
+
+  .page {
+    max-width: 820px;
+    margin: 2.5rem auto;
+    background: var(--cream);
+    box-shadow: 0 0 0 1px var(--cream-border),
+                0 0 0 5px #2A2520,
+                0 0 0 6px rgba(74,172,172,0.3),
+                0 30px 80px rgba(0,0,0,0.7);
+    position: relative;
+  }
+
+  /* Top aurora bar */
+  .aurora-bar {
+    height: 5px;
+    background: linear-gradient(90deg,
+      var(--aurora-2) 0%,
+      var(--aurora-1) 30%,
+      var(--aurora-3) 55%,
+      var(--aurora-1) 75%,
+      var(--aurora-2) 100%
+    );
+    position: relative;
+  }
+  .aurora-bar::after {
+    content: '';
+    position: absolute;
+    bottom: -6px;
+    left: 0; right: 0;
+    height: 6px;
+    background: linear-gradient(to bottom, rgba(74,172,172,0.15), transparent);
+  }
+
+  /* Header */
+  .header {
+    padding: 2.8rem 3.5rem 2.2rem;
+    border-bottom: 1px solid var(--rule);
+    position: relative;
+    background: linear-gradient(to bottom, rgba(74,172,172,0.04), transparent);
+  }
+
+  .header-eyebrow {
+    font-family: 'Cinzel', serif;
+    font-size: 10px;
+    letter-spacing: 0.3em;
+    color: var(--aurora-2);
+    text-transform: uppercase;
+    margin-bottom: 0.9rem;
+  }
+
+  .header-title {
+    font-family: 'Cinzel', serif;
+    font-size: 2.4rem;
+    font-weight: 700;
+    color: var(--ink);
+    line-height: 1.1;
+    margin-bottom: 0.3rem;
+  }
+
+  .header-sub {
+    font-family: 'Cinzel', serif;
+    font-size: 1rem;
+    font-weight: 400;
+    color: var(--gold);
+    letter-spacing: 0.06em;
+    margin-bottom: 1.4rem;
+  }
+
+  .header-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px;
+  }
+
+  .htag {
+    font-family: 'Cinzel', serif;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    padding: 3px 10px;
+    border-radius: 2px;
+    border: 1px solid;
+  }
+  .htag-aurora { border-color: rgba(74,172,172,0.5); color: var(--aurora-2); background: var(--highlight-bg); }
+  .htag-gold { border-color: rgba(184,145,42,0.4); color: var(--gold); background: var(--warn-bg); }
+  .htag-ink { border-color: var(--rule); color: var(--text-light); background: transparent; }
+
+  /* Navigation bar */
+  .nav-bar {
+    background: var(--ink-soft);
+    padding: 0.6rem 3.5rem;
+    display: flex;
+    gap: 1.8rem;
+    border-bottom: 2px solid var(--aurora-2);
+    flex-wrap: wrap;
+  }
+
+  .nav-item {
+    font-family: 'Cinzel', serif;
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    color: #8A8070;
+    text-transform: uppercase;
+    cursor: default;
+    transition: color 0.15s;
+  }
+  .nav-item:hover { color: var(--aurora-3); }
+
+  /* Body */
+  .body {
+    padding: 0;
+  }
+
+  /* Section */
+  .section {
+    padding: 2.2rem 3.5rem;
+    border-bottom: 1px solid var(--rule);
+  }
+  .section:last-child { border-bottom: none; }
+
+  .section-num {
+    font-family: 'Cinzel', serif;
+    font-size: 9px;
+    letter-spacing: 0.35em;
+    color: var(--aurora-2);
+    text-transform: uppercase;
+    margin-bottom: 0.3rem;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+  }
+  .section-num::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(to right, var(--highlight-border), transparent);
+  }
+
+  h2 {
+    font-family: 'Cinzel', serif;
+    font-size: 1.45rem;
+    font-weight: 700;
+    color: var(--ink);
+    margin-bottom: 1rem;
+    line-height: 1.25;
+  }
+
+  h3 {
+    font-family: 'Cinzel', serif;
+    font-size: 0.92rem;
+    font-weight: 600;
+    color: var(--gold);
+    margin: 1.6rem 0 0.5rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+
+  p {
+    margin-bottom: 0.9rem;
+    color: var(--text);
+  }
+  p:last-child { margin-bottom: 0; }
+
+  strong { color: var(--ink); }
+  em { color: var(--text-mid); }
+
+  /* Pull quote */
+  .pull {
+    border-left: 3px solid var(--aurora-1);
+    padding: 0.7rem 1.2rem;
+    margin: 1.2rem 0;
+    background: var(--highlight-bg);
+    font-style: italic;
+    color: var(--text-mid);
+    font-size: 15px;
+  }
+
+  /* Note box */
+  .note {
+    border: 1px solid var(--warn-border);
+    border-left: 3px solid var(--gold);
+    background: var(--warn-bg);
+    padding: 0.8rem 1.1rem;
+    margin: 1rem 0;
+    border-radius: 0 3px 3px 0;
+  }
+  .note-label {
+    font-family: 'Cinzel', serif;
+    font-size: 9px;
+    letter-spacing: 0.25em;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 0.35rem;
+  }
+  .note p { font-size: 14px; color: var(--text-mid); margin: 0; }
+
+  /* Highlight box */
+  .highlight {
+    border: 1px solid var(--highlight-border);
+    border-left: 3px solid var(--aurora-1);
+    background: var(--highlight-bg);
+    padding: 0.8rem 1.1rem;
+    margin: 1rem 0;
+    border-radius: 0 3px 3px 0;
+  }
+  .highlight-label {
+    font-family: 'Cinzel', serif;
+    font-size: 9px;
+    letter-spacing: 0.25em;
+    color: var(--aurora-2);
+    text-transform: uppercase;
+    margin-bottom: 0.35rem;
+  }
+  .highlight p { font-size: 14px; color: var(--text-mid); margin: 0; }
+
+  /* Two-column grid */
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin: 1rem 0; }
+
+  /* Cards */
+  .card {
+    border: 1px solid var(--cream-border);
+    padding: 1rem 1.1rem;
+    background: var(--cream-dark);
+  }
+  .card-title {
+    font-family: 'Cinzel', serif;
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: var(--ink);
+    margin-bottom: 0.2rem;
+  }
+  .card-sub {
+    font-size: 11px;
+    color: var(--aurora-2);
+    font-style: italic;
+    margin-bottom: 0.5rem;
+    font-family: 'Libre Baskerville', serif;
+  }
+  .card-body { font-size: 13.5px; color: var(--text-mid); }
+
+  /* God list */
+  .god-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.5rem;
+    margin: 0.8rem 0;
+  }
+  .god-entry {
+    padding: 0.5rem 0.7rem;
+    border: 1px solid var(--cream-border);
+    background: var(--cream-dark);
+  }
+  .god-name {
+    font-family: 'Cinzel', serif;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--ink);
+    margin-bottom: 1px;
+  }
+  .god-domain { font-size: 11.5px; color: var(--text-light); }
+
+  /* Chargen rules table */
+  .rules-list {
+    list-style: none;
+    padding: 0;
+    margin: 0.8rem 0;
+    display: grid;
+    gap: 0.4rem;
+  }
+  .rules-list li {
+    display: flex;
+    gap: 0.8rem;
+    align-items: baseline;
+    padding: 0.45rem 0.7rem;
+    background: var(--cream-dark);
+    border: 1px solid var(--cream-border);
+    font-size: 14.5px;
+  }
+  .rules-list li .rule-key {
+    font-family: 'Cinzel', serif;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    color: var(--gold);
+    white-space: nowrap;
+    min-width: 110px;
+    text-transform: uppercase;
+  }
+  .rules-list li .rule-val { color: var(--text); }
+
+  /* Questions */
+  .q-list {
+    list-style: none;
+    padding: 0;
+    margin: 0.8rem 0;
+    counter-reset: q;
+    display: grid;
+    gap: 0.5rem;
+  }
+  .q-list li {
+    counter-increment: q;
+    display: flex;
+    gap: 0.8rem;
+    align-items: baseline;
+    font-size: 14.5px;
+  }
+  .q-list li::before {
+    content: counter(q);
+    font-family: 'Cinzel', serif;
+    font-size: 11px;
+    color: var(--aurora-2);
+    min-width: 18px;
+    text-align: right;
+    opacity: 0.8;
+  }
+
+  /* Do/Don't */
+  .do-dont { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin: 1rem 0; }
+  .do-box, .dont-box {
+    padding: 0.9rem 1rem;
+    border: 1px solid;
+  }
+  .do-box { border-color: rgba(74,172,172,0.4); background: rgba(74,172,172,0.05); }
+  .dont-box { border-color: rgba(184,145,42,0.35); background: rgba(184,145,42,0.05); }
+  .do-label, .dont-label {
+    font-family: 'Cinzel', serif;
+    font-size: 9px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    margin-bottom: 0.6rem;
+  }
+  .do-label { color: var(--aurora-1); }
+  .dont-label { color: var(--gold); }
+  .do-box ul, .dont-box ul { list-style: none; padding: 0; }
+  .do-box li, .dont-box li { font-size: 13.5px; color: var(--text-mid); margin-bottom: 0.3rem; padding-left: 1rem; position: relative; }
+  .do-box li::before { content: '↗'; position: absolute; left: 0; color: var(--aurora-1); font-size: 11px; }
+  .dont-box li::before { content: '↘'; position: absolute; left: 0; color: var(--gold); font-size: 11px; }
+
+  /* Content flags */
+  .flag-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.5rem; margin: 0.8rem 0; }
+  .flag {
+    padding: 0.5rem 0.7rem;
+    font-size: 13px;
+    border: 1px solid;
+    text-align: center;
+  }
+  .flag-out { border-color: rgba(139,40,40,0.4); background: rgba(139,40,40,0.06); color: #6B1A1A; }
+  .flag-off { border-color: rgba(184,145,42,0.4); background: var(--warn-bg); color: #5C4010; }
+  .flag-warn { border-color: var(--rule); background: var(--cream-dark); color: var(--text-light); }
+  .flag-label { font-family: 'Cinzel', serif; font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase; display: block; margin-bottom: 3px; }
+
+  /* Bottom rule */
+  .bottom-bar {
+    height: 4px;
+    background: linear-gradient(90deg,
+      transparent 0%,
+      var(--aurora-2) 20%,
+      var(--aurora-1) 50%,
+      var(--aurora-2) 80%,
+      transparent 100%
+    );
+    opacity: 0.6;
+  }
+
+  .footer {
+    padding: 0.9rem 3.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: var(--ink-soft);
+  }
+  .footer-l { font-family: 'Cinzel', serif; font-size: 9px; letter-spacing: 0.2em; color: #5A5040; text-transform: uppercase; }
+  .footer-r { font-family: 'Libre Baskerville', serif; font-style: italic; font-size: 11px; color: rgba(74,172,172,0.5); }
+
+  ul { padding-left: 1.4rem; margin-bottom: 0.8rem; }
+  ul li { font-size: 15px; margin-bottom: 0.3rem; }
+  ul li::marker { color: var(--aurora-1); }
+
+  /* Starting city choice cards */
+  .choice-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.9rem;
+    margin: 1.2rem 0 0.5rem;
+  }
+
+  .choice-card {
+    border: 1px solid var(--cream-border);
+    background: var(--cream-dark);
+    padding: 1.1rem 1.2rem 0.9rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    transition: border-color 0.15s;
+  }
+  .choice-card:hover { border-color: var(--aurora-1); }
+
+  .choice-header { border-bottom: 1px solid var(--rule); padding-bottom: 0.5rem; }
+  .choice-name {
+    font-family: 'Cinzel', serif;
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--ink);
+    margin-bottom: 0.15rem;
+  }
+  .choice-region {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 11.5px;
+    font-style: italic;
+    color: var(--aurora-2);
+  }
+
+  .choice-mood {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+  .mood-pip {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    opacity: 0.8;
+  }
+  .mood-text {
+    font-family: 'Cinzel', serif;
+    font-size: 9.5px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--text-light);
+    margin-left: 3px;
+  }
+
+  .choice-body p {
+    font-size: 13.5px;
+    color: var(--text-mid);
+    margin-bottom: 0.5rem;
+  }
+  .choice-body p:last-child { margin-bottom: 0; }
+
+  .choice-feel {
+    border-top: 1px solid var(--rule);
+    padding-top: 0.5rem;
+    font-size: 12.5px;
+    color: var(--text-light);
+    font-style: italic;
+  }
+  .feel-label {
+    font-style: normal;
+    font-family: 'Cinzel', serif;
+    font-size: 9px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-right: 4px;
+  }
+
+  @media (max-width: 640px) {
+    .choice-grid { grid-template-columns: 1fr; }
+    .section { padding: 1.8rem 1.5rem; }
+    .two-col, .do-dont, .god-grid, .flag-grid { grid-template-columns: 1fr; }
+    .nav-bar { gap: 1rem; padding: 0.6rem 1.5rem; }
+    .header { padding: 2rem 1.5rem; }
+    .footer { padding: 0.9rem 1.5rem; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="aurora-bar"></div>
+
+  <!-- HEADER -->
+  <div class="header">
+    <div class="header-eyebrow">Player's Primer · Campaign 3 · Ardahlia</div>
+    <div class="header-title">The Auroran Empire</div>
+    <div class="header-sub">A Monster Hunting Campaign</div>
+    <div class="header-tags">
+      <span class="htag htag-aurora">D&amp;D 5.5e · Core + Expanded + Homebrew</span>
+      <span class="htag htag-gold">Starts at Level 1</span>
+      <span class="htag htag-ink">Arc-Based · Pen &amp; Paper</span>
+      <span class="htag htag-ink">Low Magic · Morally Grey</span>
+    </div>
+  </div>
+
+  <!-- NAV -->
+  <div class="nav-bar">
+    <span class="nav-item">The World</span>
+    <span class="nav-item">The Empire</span>
+    <span class="nav-item">The Gods</span>
+    <span class="nav-item">The Faction</span>
+    <span class="nav-item">Tone</span>
+    <span class="nav-item">Character Creation</span>
+    <span class="nav-item">Content</span>
+  </div>
+
+  <div class="body">
+
+    <!-- I: THE WORLD -->
+    <div class="section">
+      <div class="section-num">I — The World</div>
+      <h2>Where You Are in History</h2>
+
+      <p>Something ended, roughly 250 years ago. No one alive knows exactly what — only that the age before this one was different in ways that matter. The gods changed. The shape of divine power changed. The old stories — cosmic arbiters, world-shaking figures, a cosmology with the texture of active war — faded into myth, then into scholarly argument, then into the kind of thing priests invoke without quite believing.</p>
+
+      <p>You live in the age <em>after</em> that. The world is older and quieter now. The gods are real but they don't talk to you — you feel them as pressures, instincts, the sense that a crossroads at dusk means something, or that you shouldn't have done that thing without asking first. Magic is real but not common. History is long, and most of it is contested.</p>
+
+      <div class="pull">
+        "The gods withdrew. Or perhaps they were always withdrawn and we simply stopped pretending otherwise. Either way, the age of divine conversation is over. What remains is the age of consequences."
+      </div>
+
+      <p>You are on a continent that previous generations of your world's adventurers — legendary figures, now — never reached. What happened there is not your inheritance. This is a fresh start. The only history that matters here is the history this campaign makes.</p>
+    </div>
+
+    <!-- II: THE EMPIRE -->
+    <div class="section">
+      <div class="section-num">II — The Empire</div>
+      <h2>The Auroran Empire</h2>
+
+      <p>The Auroran Empire is not a conquest state. It is a <strong>confederation of accords</strong> — territories that agreed to join, bound by treaty and the personal authority of the <strong>Sorvaine family</strong>, whose bloodline was touched by a cosmological event called <em>the Aurora</em> roughly four generations ago. The current ruler is <strong>Empress Olira of Aurora</strong>. The Empire is, by most measures, a good empire. That is what makes its problems interesting.</p>
+
+      <h3>What the Aurora Did</h3>
+      <p>The Sorvaine family's gifts are not flashy. They are not fireballs. They are, in some ways, more frightening. <strong>The Clarity</strong> — knowing when you are being lied to. <strong>The Weight of Accord</strong> — oaths sworn to a Sorvaine carry real metaphysical gravity; the world notices when they are broken. <strong>The Resonance</strong> — in their presence, people feel, briefly and involuntarily, that things <em>matter</em>. The Empire was built near-bloodlessly on this foundation. People who stood before the early Sorvaine and felt the Resonance didn't feel compelled — they felt, for the first time, that saying yes was the honest thing to do.</p>
+
+      <h3>How the Empire Actually Works</h3>
+      <p>The <strong>Magistrate system</strong> keeps everything running. <strong>Accord Magistrates</strong> represent incorporated territories and have genuine legislative power. <strong>Crown Magistrates</strong> are the Empress's appointed agents — travelling auditors, judges, and enforcers, feared and resented in roughly equal measure. The tension between these two bodies is where most Imperial politics lives.</p>
+
+      <h3>The Major Cities</h3>
+      <div class="two-col">
+        <div class="card">
+          <div class="card-title">Shimmerfen</div>
+          <div class="card-sub">The Capital — built over a living fen</div>
+          <div class="card-body">Strange and beautiful. The fen water glows with aurora-light residue at night. The Luminous Spire catches dawn in ways that feel impossible. Seat of the Empress, the Magistrates, and the Council of Light. Cosmopolitan, layered, and deeply strange if you look closely enough.</div>
+        </div>
+        <div class="card">
+          <div class="card-title">Vareth</div>
+          <div class="card-sub">The Eastern Port — old money, sea-facing</div>
+          <div class="card-body">White stone and terraced harbour. Older than the Empire by centuries. Joined the Accord willingly for trade advantage and has never entirely forgiven itself. The merchant guild council governs in practice. Every generation, someone asks if the Accord could be renegotiated.</div>
+        </div>
+        <div class="card">
+          <div class="card-title">Cindral</div>
+          <div class="card-sub">The Grain City — heartland, military, unglamorous</div>
+          <div class="card-body">Flat, enormous, functional to the point of ugliness. The Empire's breadbasket and military staging ground. Wide streets, blunt people, deep contempt for Shimmerfen's aesthetics. The First Army garrisons here. Power, visibly, takes a different shape than it does in the capital.</div>
+        </div>
+        <div class="card">
+          <div class="card-title">Hollowhearth</div>
+          <div class="card-sub">The Old Power — academic, legal, quietly rebellious</div>
+          <div class="card-body">Pre-Empire power centre, now the Empire's intellectual heart. The Codex Halls archive is the largest on the continent. The Unlit Quarter — preserved pre-Aurora architecture, deliberately kept dark — is a civic statement no one has officially explained.</div>
+        </div>
+        <div class="card" style="grid-column: span 2;">
+          <div class="card-title">Thornwall</div>
+          <div class="card-sub">The Southern Frontier — the Empire's edge</div>
+          <div class="card-body">A fortress city built against a volcanic ridge, with a Rampart extending south until it simply stops. The garrison is stoic and doesn't discuss what they don't discuss. The Bitter South lies beyond. No one who asks about it in a Thornwall tavern gets a straight answer, but you'll notice the room gets quieter.</div>
+        </div>
+      </div>
+
+      <h3>Where Will You Begin?</h3>
+      <p>Arc One is set not in the Empire's great cities but in its smaller, less-watched corners — the places where the Empire's reach is felt but thin, and where a team of newly licensed Hunters is most likely to be handed their first contract and left to get on with it. You'll choose your starting settlement collectively at Session Zero. Each option gives the campaign a different opening texture.</p>
+
+      <div class="choice-grid">
+
+        <div class="choice-card">
+          <div class="choice-header">
+            <div class="choice-name">Cinder's Rest</div>
+            <div class="choice-region">The Ashfringe · Southern Frontier</div>
+          </div>
+          <div class="choice-mood">
+            <span class="mood-pip" style="background:var(--aurora-2)"></span>
+            <span class="mood-pip" style="background:var(--aurora-2)"></span>
+            <span class="mood-pip" style="background:var(--aurora-2)"></span>
+            <span class="mood-text">Frontier Strange</span>
+          </div>
+          <div class="choice-body">
+            <p>Built into a volcanic ridge above a cluster of thermal vents, Cinder's Rest smells of sulphur and produces the Empire's best ironwork. It sits in the Ashfringe — the scrubland that runs between the Grandbelt and the Bitter South — and the terrain here is hostile enough that the monsters don't need to be supernatural to be dangerous. A Hunter contract has been active in the region for some time. No one says what happened to the last team.</p>
+            <p>This is a campaign that starts at the edge of things, where the folk religion runs dark and the nearest Crown Magistrate is two days' ride away and doesn't visit often.</p>
+          </div>
+          <div class="choice-feel"><span class="feel-label">Feels like:</span> Hardscrabble frontier, earned trust, something wrong in the landscape</div>
+        </div>
+
+        <div class="choice-card">
+          <div class="choice-header">
+            <div class="choice-name">Harrowmouth</div>
+            <div class="choice-region">The Varethi Reach · River Delta</div>
+          </div>
+          <div class="choice-mood">
+            <span class="mood-pip" style="background:var(--gold)"></span>
+            <span class="mood-pip" style="background:var(--gold)"></span>
+            <span class="mood-pip" style="background:var(--gold)"></span>
+            <span class="mood-text">Political Tangle</span>
+          </div>
+          <div class="choice-body">
+            <p>Harrowmouth sits where a major river opens into the sea — a natural harbour that both Vareth's merchant interests and the Imperial Grandbelt faction have been quietly claiming for a generation. Two sets of officials, two sets of rules, and a local population that has become expert at playing them against each other. Nobody here gives you a straight answer the first time.</p>
+            <p>This is a campaign where the contract is the easy part and the politics surrounding it are the complication. The monsters are real, but so are the people with reasons to not want them found.</p>
+          </div>
+          <div class="choice-feel"><span class="feel-label">Feels like:</span> Scheming port, contested loyalties, nobody's hands are clean</div>
+        </div>
+
+        <div class="choice-card">
+          <div class="choice-header">
+            <div class="choice-name">Stockend</div>
+            <div class="choice-region">The Grandbelt · Drove Road's End</div>
+          </div>
+          <div class="choice-mood">
+            <span class="mood-pip" style="background:#8A6E2F"></span>
+            <span class="mood-pip" style="background:#8A6E2F"></span>
+            <span class="mood-pip" style="background:#8A6E2F"></span>
+            <span class="mood-text">Quietly Wrong</span>
+          </div>
+          <div class="choice-body">
+            <p>The end of the great drove roads that carry livestock across the Grandbelt, Stockend is a market town built entirely around the movement of animals — pens, weighhouses, tanneries, the permanent smell of cattle. Nalakei shrines on every corner. Elaria marks above every door. People here are practical, superstitious, and not given to drama. When the livestock started disappearing, they waited three weeks before sending for help. They are not given to drama.</p>
+            <p>This is a campaign grounded in ordinary life, where the horror is measured in economic ruin before it becomes something stranger, and where the folk religion is the texture of everything.</p>
+          </div>
+          <div class="choice-feel"><span class="feel-label">Feels like:</span> Rural dread, tight community, the world is normal until it isn't</div>
+        </div>
+
+        <div class="choice-card">
+          <div class="choice-header">
+            <div class="choice-name">Deepholm</div>
+            <div class="choice-region">The Ironspine · Deep Highland</div>
+          </div>
+          <div class="choice-mood">
+            <span class="mood-pip" style="background:#4A6A5A"></span>
+            <span class="mood-pip" style="background:#4A6A5A"></span>
+            <span class="mood-pip" style="background:#4A6A5A"></span>
+            <span class="mood-text">Old Roots</span>
+          </div>
+          <div class="choice-body">
+            <p>The Hunter chapter-house in Deepholm is the oldest institution in the city — older than the city, in fact. The settlement grew up around it. Deep in the Ironspine highlands, adjacent to an extensive cave system that the chapter-house has been mapping, cataloguing, and occasionally sealing for longer than the Empire has existed, Deepholm is where the faction's history lives. There are records here that predate Imperial licensing. There are sealed doors nobody opens.</p>
+            <p>This is a campaign that starts inside the faction's own mythology, where what you learn about the job is inseparable from what you learn about what the job has always actually been.</p>
+          </div>
+          <div class="choice-feel"><span class="feel-label">Feels like:</span> Institutional secrets, ancient territory, the profession has a history you weren't told</div>
+        </div>
+
+        <div class="choice-card" style="grid-column: span 2;">
+          <div class="choice-header">
+            <div class="choice-name">Mirehollow</div>
+            <div class="choice-region">The Fenreach · Fen-Edge</div>
+          </div>
+          <div class="choice-mood">
+            <span class="mood-pip" style="background:var(--aurora-1)"></span>
+            <span class="mood-pip" style="background:var(--aurora-1)"></span>
+            <span class="mood-pip" style="background:var(--aurora-1)"></span>
+            <span class="mood-text">Familiar and Fraying</span>
+          </div>
+          <div class="choice-body">
+            <p>Two days' ride from Shimmerfen, close enough that the capital feels present and distant enough that its authority arrives mostly in paperwork. Mirehollow sits at the edge of the deep fen — fog most mornings, strange light at dusk, the kind of landscape that has been shaping local folk practice for centuries. The Dawnsinger visits monthly. The fen does not wait for the Dawnsinger.</p>
+            <p>This is a campaign that shows you the gap between the Empire as it presents itself in Shimmerfen — gold and aurora light and the Empress's ordered confidence — and the Empire as it actually functions in a village that has been asking for a proper drainage survey for eleven years and received, in reply, a certificate of Imperial acknowledgement.</p>
+          </div>
+          <div class="choice-feel"><span class="feel-label">Feels like:</span> The world near power but unseen by it, fen-fog unease, bureaucratic neglect with teeth</div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- III: THE GODS -->
+    <div class="section">
+      <div class="section-num">III — The Gods</div>
+      <h2>Religion in the Auroran Empire</h2>
+
+      <p>There are two religious realities in the Empire, operating simultaneously. Most people live in both without experiencing them as contradictory.</p>
+
+      <h3>Luminastra — The State Religion</h3>
+      <p><strong>Luminastra</strong> is the official goddess of the Empire — light, order, the aurora itself. She is maintained by the <strong>Luminous Order</strong> and its local priests, the <strong>Dawnsingers</strong>. She does not speak to individuals. She speaks through the pattern of events, through the aurora's movements, through the general drift of history. The Council of Light interprets what this means. This is, theologically, very convenient — it cannot be disproved. Luminastra is real. Her presence in daily life is largely formal: the dawn prayer, the festival calendar, the gold on the architecture.</p>
+
+      <h3>The Folk Gods — What People Actually Believe</h3>
+      <p>Underneath Luminastra, a living polytheism operates at every level of society. Twenty-six gods, of varying temperament, worshipped through kitchen shrines, harvest prayers, coins tossed at crossroads, and propitiation rites that predate the Empire by centuries. The Luminous Order has absorbed most of these into official festival names. The practices survived intact underneath the new labels. This is not hypocrisy — it is how folk religion adapts to power.</p>
+
+      <p>At the frontier edge of the Empire, the Luminastra layer is almost entirely formal. People fly the aurora banner and pay the temple tithe. In all other respects, they practise what their grandparents practised.</p>
+
+      <div class="god-grid">
+        <div class="god-entry"><div class="god-name">Elaria</div><div class="god-domain">Home, hearth, threshold</div></div>
+        <div class="god-entry"><div class="god-name">Charon</div><div class="god-domain">Death, passage, the river</div></div>
+        <div class="god-entry"><div class="god-name">Zelos</div><div class="god-domain">Crossroads, commerce, luck</div></div>
+        <div class="god-entry"><div class="god-name">Nalakei</div><div class="god-domain">Harvest, joy, seasons</div></div>
+        <div class="god-entry"><div class="god-name">Anarion</div><div class="god-domain">Hunt, wild, beast-bond</div></div>
+        <div class="god-entry"><div class="god-name">Thalara</div><div class="god-domain">Stone, forge, mountain</div></div>
+        <div class="god-entry"><div class="god-name">Solariel</div><div class="god-domain">Justice, dawn, oaths</div></div>
+        <div class="god-entry"><div class="god-name">Arcturius</div><div class="god-domain">Martial honour, endurance</div></div>
+        <div class="god-entry"><div class="god-name">Zephyrion</div><div class="god-domain">Sea, wind, travel</div></div>
+        <div class="god-entry"><div class="god-name">Paragon</div><div class="god-domain">Balance, peace, discipline</div></div>
+        <div class="god-entry"><div class="god-name">Mae'el</div><div class="god-domain">War, strategy, sacrifice</div></div>
+        <div class="god-entry"><div class="god-name">Elyndra</div><div class="god-domain">Magic, knowledge, stars</div></div>
+        <div class="god-entry" style="border-color: rgba(139,40,40,0.25); background: rgba(139,40,40,0.03);">
+          <div class="god-name" style="color:#5C1A1A;">Ba'haal</div>
+          <div class="god-domain" style="color:#7A3030;">Blood, war-hunger — propitiated, not worshipped</div>
+        </div>
+        <div class="god-entry" style="border-color: rgba(139,40,40,0.25); background: rgba(139,40,40,0.03);">
+          <div class="god-name" style="color:#5C1A1A;">Nyx</div>
+          <div class="god-domain" style="color:#7A3030;">Night, secrets — acknowledged, never named aloud</div>
+        </div>
+        <div class="god-entry" style="border-color: rgba(139,40,40,0.25); background: rgba(139,40,40,0.03);">
+          <div class="god-name" style="color:#5C1A1A;">Astaroth</div>
+          <div class="god-domain" style="color:#7A3030;">Corruption — invoked only as witness</div>
+        </div>
+      </div>
+
+      <p style="font-size:13.5px; color: var(--text-light);">The full pantheon includes 26 deities. The above is a representative sample. A complete reference will be available at Session Zero.</p>
+
+      <div class="highlight">
+        <div class="highlight-label">For Character Builds</div>
+        <p>Clerics and Paladins can draw from this pantheon. Warlocks exist — pacts in this age are real but carry weight. Divine magic is notable in daily life; it is not wallpaper. If your character uses divine power, people will notice, and it will mean something about who you are and who you've made an agreement with.</p>
+      </div>
+    </div>
+
+    <!-- IV: THE FACTION -->
+    <div class="section">
+      <div class="section-num">IV — The Faction</div>
+      <h2>The Monster Hunting Faction</h2>
+
+      <p>You are members of an <strong>empire-wide monster hunting faction</strong>. You will name it collectively during Session Zero. This is your professional identity, your licence to operate across Accord borders, and your reason for being wherever the story needs you to be.</p>
+
+      <h3>Why This Job Exists</h3>
+      <p>The Imperial Army handles political force. When something comes out of the Ashfringe and starts taking livestock — and then people — sending a regiment of soldiers who don't understand what they're dealing with creates more problems than it solves, especially in territories whose Accord Magistrates don't want Imperial boots on their land.</p>
+      <p>The folk clergy help, sometimes. The gods are real and occasionally responsive. But the gods of this age don't intervene directly. When you need something found, understood, tracked, and dealt with, you need a Hunter.</p>
+      <p>Hunters carry no political weight. They cross Accord borders without incident. They serve Imperial interests without carrying the Imperial flag. They are licensed, contracted, and — especially at the start of their careers — largely on their own.</p>
+
+      <h3>How Contracts Work</h3>
+      <p>Contracts come from: Crown Magistrates (official, well-paid, politically complicated), local councils and Accord Magistrates (regional, more autonomy, more variable), and private parties — merchants, village elders, desperate individuals (unofficial, often stranger than expected).</p>
+      <p>A contract tells you what has been reported, where it was last seen, who is affected, and what they're offering. It does not tell you what is actually going on. The gap between the brief and the reality is where the story lives.</p>
+      <p>Not every contract ends in combat. Some end in negotiation. Some reveal that the monster is a symptom of something else. Some require a call the contract didn't ask for — and you live with that.</p>
+
+      <h3>Your Rank</h3>
+      <p>The party begins at the <strong>lowest rank</strong> — new licences, restricted jurisdiction, no one senior watching your methods too closely. The faction's upper echelons are distant authority at this stage: names on a warrant, a face seen once at licensing. You earn your way up through work and reputation.</p>
+
+      <div class="highlight">
+        <div class="highlight-label">Session Zero</div>
+        <p>The faction needs a name. The DM will give you a few tonal options to react to — something institutional, something older and folk-flavoured, something that sounds like a guild. Your choice will shape how the faction feels from the outside.</p>
+      </div>
+    </div>
+
+    <!-- V: TONE -->
+    <div class="section">
+      <div class="section-num">V — Tone</div>
+      <h2>What Kind of Campaign This Is</h2>
+
+      <p>The short version: <strong>anti-heroes, grudgingly making a bad world a little better, for reasons that are mostly personal.</strong> You are not saving the world. You are saving the things that matter to your characters — a region, a person, your own slice of something worth having. The world may incidentally benefit. Or it may not.</p>
+
+      <div class="do-dont">
+        <div class="do-box">
+          <div class="do-label">Expect This</div>
+          <ul>
+            <li>Moral weight — hard choices where both options cost something</li>
+            <li>Consequences that persist across sessions and arcs</li>
+            <li>A world that feels lived-in and politically real</li>
+            <li>Room to build something with the other characters</li>
+            <li>Contracts that are stranger than the brief suggested</li>
+            <li>Enemies with survival instincts and reasons for existing</li>
+            <li>Combat that matters and endings that land</li>
+          </ul>
+        </div>
+        <div class="dont-box">
+          <div class="dont-label">Not This Campaign</div>
+          <ul>
+            <li>Saving the world as the primary goal — keep it personal and regional</li>
+            <li>Unambiguous heroism — you can do good things, but you are not role models</li>
+            <li>One character's spotlight dominating the campaign</li>
+            <li>Red herrings that create confusion — information trails should be followable</li>
+            <li>Long travel or shopping scenes with no narrative purpose</li>
+            <li>Goofy-dominant tone — levity exists to break tension, not replace it</li>
+          </ul>
+        </div>
+      </div>
+
+      <h3>The Party Dynamic</h3>
+      <p>The survey said <em>professional crew with a job</em> — individuals with their own agendas, forced to cooperate because the work demands it, building something that starts to look like trust and sometimes breaks. Found family is earned through shared consequence, not assumed from session one. Internal friction is welcome. Internal destruction is not.</p>
+
+      <h3>The Arc Structure</h3>
+      <p>The campaign runs in arcs of roughly 6–10 sessions, separated by breaks where the group plays a different system. Each arc has its own shape — premise, escalation, resolution — while contributing to the longer story of the characters and the world. Arc One is self-contained and grounding. Backstory threads and larger implications come later, once you know who you're playing.</p>
+    </div>
+
+    <!-- VI: CHAR GEN -->
+    <div class="section">
+      <div class="section-num">VI — Character Creation</div>
+      <h2>Building Your Character</h2>
+
+      <ul class="rules-list">
+        <li><span class="rule-key">Rulebooks</span><span class="rule-val">Core 5.5e PHB + Expanded rules + approved Homebrew (check with the DM before Session Zero)</span></li>
+        <li><span class="rule-key">Starting Level</span><span class="rule-val">Level 1 — you are new and untested, not powerless</span></li>
+        <li><span class="rule-key">Character Sheets</span><span class="rule-val">Pen and paper only</span></li>
+        <li><span class="rule-key">Magic</span><span class="rule-val">Low and meaningful — if your character uses magic, it will be noticed and it will carry weight</span></li>
+        <li><span class="rule-key">Homebrew</span><span class="rule-val">Confirm with the DM — all homebrew needs sign-off before Session Zero</span></li>
+      </ul>
+
+      <h3>Things to Think About</h3>
+      <p>Your character doesn't have to be Auroran-born, but should have a reason to be operating inside the Empire — a contract, a debt, something they're looking for, something they're running from. The faction is the thread that connects you to the world.</p>
+
+      <p>Arc One is deliberately self-contained — the larger world won't start pressing on backstories until the second arc. That said, your backstory exists from session one. Build one with enough texture that it can be pulled on later, even if it sits quiet at first.</p>
+
+      <h3>Questions to Answer Before Session Zero</h3>
+      <ul class="q-list">
+        <li>What does your character want that the faction can help them get?</li>
+        <li>What does your character want that the faction <em>cannot</em> give them? (This is the tension.)</li>
+        <li>Name one person your character cares about — someone they'd take a risk for.</li>
+        <li>Name one thing your character owes — a debt, a promise, a reputation they're living up to or down from.</li>
+        <li>Does your character believe in the gods? Which ones, and how — formally, privately, superstitiously, or not at all?</li>
+        <li>What does your character think they are? And what are they actually?</li>
+      </ul>
+
+      <div class="note">
+        <div class="note-label">On Party Connections</div>
+        <p>You'll establish at Session Zero whether the party knows each other already or is being thrown together for the first time. Both work. The DM will facilitate a short round of connection-building either way — one tie between every pair of characters before play begins.</p>
+      </div>
+    </div>
+
+    <!-- VII: CONTENT -->
+    <div class="section">
+      <div class="section-num">VII — Content &amp; Safety</div>
+      <h2>What's On and Off the Table</h2>
+
+      <p>This campaign deals in dark and morally complex material. These are the agreed boundaries going in. These are not up for debate at the table — if something changes for you, speak to the DM privately and it will be handled without fuss.</p>
+
+      <div class="flag-grid">
+        <div class="flag flag-out">
+          <span class="flag-label">Hard Out</span>
+          Sexual assault · Child abuse · Transphobia · Homophobia
+        </div>
+        <div class="flag flag-off">
+          <span class="flag-label">Off-Screen Only</span>
+          Slavery · Explicit sexual content
+        </div>
+        <div class="flag flag-warn">
+          <span class="flag-label">Flag Before It Arrives</span>
+          Anything heading somewhere heavy — the DM will give a heads-up. X-card is always available.
+        </div>
+      </div>
+
+      <p style="margin-top: 1rem;">Everything else is in play. This is a campaign with moral weight, dark moments, and real consequences. The expectation is that everyone at the table is an adult who can communicate if something stops being fun. Do that.</p>
+    </div>
+
+  </div>
+
+  <div class="bottom-bar"></div>
+  <div class="footer">
+    <div class="footer-l">Campaign 3 · Player Primer · Pre-Session Zero</div>
+    <div class="footer-r">The aurora is visible. It has always been visible.</div>
+  </div>
+
+</div>
+</body>
+</html>
