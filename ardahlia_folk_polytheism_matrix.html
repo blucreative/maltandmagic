@@ -405,7 +405,9 @@ tbody td.div-left { border-left: 1px solid var(--border-mid); }
 
 
 .back-nav {
-  padding: 0.9rem 1.2rem 0;
+  max-width: 1060px;
+  margin: 0 auto 0.45rem;
+  padding: 0.85rem 1.2rem 0;
 }
 
 .back-link {
@@ -436,7 +438,7 @@ tbody td.div-left { border-left: 1px solid var(--border-mid); }
   outline-offset: 2px;
 }
 
- (max-width: 760px) {
+@media (max-width: 760px) {
   .back-nav {
     padding: 0.7rem 0.8rem 0;
   }
