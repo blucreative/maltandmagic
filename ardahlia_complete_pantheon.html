@@ -525,7 +525,7 @@ const DEITIES = [
    role:"Creative inspiration as divine light — music, poetry, and the illumination of expression",
    title:"The Harp of Inspiration — Goddess of Music and Poetry",
    desc:"The first sound to grace the silent world was her song — from her melodies, rivers began to flow, trees swayed, birds chirped. Light domain through inspiration: music as divine illumination, the creative act as a form of prayer. Her temples are grand concert halls; performance is devotion. Melodists travel healing through song. Patron of bards, halflings, and all who express rather than simply communicate. Harmonious melodies surround her even in silence."},
-  {name:"Mae'el",     alias:"The Tactician",         al:"le",dm:"war", pt:"goo",changed:["LE"],
+  {name:"Mae'el",     alias:"The Tactician",         al:"le",dm:"war", pt:"goo",
    role:"Strategic evil — war as pure calculation, suffering as acceptable variable",
    title:"The Tactician — God of War and Strategy",
    desc:"War reduced to its purest form: not the fury, not the honour, but the architecture. Emerged from the first celestial battle — not as a survivor but as something that had been watching and studying. Treats armies as pieces, commanders as variables, suffering as a side effect. Optimises for strategic victory without moral constraint. His alien board-game consciousness makes him a Great Old One patron: warlocks receive perspective rather than power — the ability to see situations as tactical problems with optimal solutions, and the discomfort that the solutions are often correct."},
@@ -537,7 +537,7 @@ const DEITIES = [
    role:"Joy as life-force — revelry, harvest, and the reward at the end of labour",
    title:"Lady of Wild Abandon — Fawn Lady of Joy and Revelry",
    desc:"Born from the combined laughter of woodland creatures during a moonlit revelry. Her laugh induces flowers to bloom. In agricultural communities she is second only to Elaria — she governs joy as life's reward and the harvest cycle as its culmination. Nalakei doesn't hear you when you're alone. Her festivals are communal by nature. The Feast of Flowers and Erathir's Yield are harvest celebrations as much as revelry events. Patron of farmers, revellers, and those who understand that joy is not opposed to labour."},
-  {name:"Nocturna",   alias:"The Dormant Queen",     al:"ne",dm:"trick",pt:"ves",changed:["Vestige","Domain"],
+  {name:"Nocturna",   alias:"The Dormant Queen",     al:"ne",dm:"trick",pt:"ves",
    role:"The deliberate withdrawal — primordial darkness biding its time",
    title:"The Dormant Queen — Mistress of Thieves and Poisons",
    desc:"Not gone — waiting. The part of the Primordial Dark that met light and declined to be defined by it. A Vestige whose dormancy is deliberate: she rations herself carefully, lending just enough power to maintain her warlocks while waiting for the conditions that will allow her full return. Domain changed from Pestilence — her mythology is shadows, concealment, and thieves, not disease. Distinct from Nyx: Nocturna is the physical darkness itself; Nyx is the consciousness that arose when darkness became aware."},
@@ -698,10 +698,7 @@ function App() {
               <tr key={d.name} className={sel?.name===d.name?'sel':''}
                 onClick={()=>setSel(s=>s?.name===d.name?null:d)}>
                 <td>
-                  <div className="dn">
-                    {d.name}
-                    {d.changed?.map(c=><span key={c} className="chtag">{c}</span>)}
-                  </div>
+                  <div className="dn">{d.name}</div>
                   <div className="dalias">{d.alias}</div>
                 </td>
                 <td><Badge type="al" id={d.al}/></td>
@@ -718,10 +715,7 @@ function App() {
             <div key={d.name}
               className={`card ${sel?.name===d.name?'sel':''}`}
               onClick={()=>setSel(s=>s?.name===d.name?null:d)}>
-              <div className="card-nm">
-                {d.name}
-                {d.changed?.map(c=><span key={c} className="chtag">{c}</span>)}
-              </div>
+              <div className="card-nm">{d.name}</div>
               <div className="card-alias">{d.alias}</div>
               <div className="card-badges">
                 <Badge type="al" id={d.al}/>
