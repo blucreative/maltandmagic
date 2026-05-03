@@ -5,23 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Auroran Religious Strata</title>
   <style>
-  /* ── base reset ── */
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-  /* ── font ── */
   @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=swap');
 
-  body {
-    font-family: 'Inter', system-ui, -apple-system, sans-serif;
-    font-size: 16px;
-    font-weight: 400;
-    line-height: 1.7;
-    background: #ffffff;
-    color: #1a1a1a;
-    padding: 1.5rem;
-  }
-
-  /* ── css variables — light mode ── */
   :root {
     --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
     --font-serif: Georgia, serif;
@@ -31,338 +18,491 @@
     --color-text-secondary: #4a4a4a;
     --color-text-tertiary: #6b6b6b;
     --color-text-info: #0c447c;
-    --color-text-success: #27500a;
-    --color-text-warning: #633806;
-    --color-text-danger: #791f1f;
 
     --color-background-primary: #ffffff;
     --color-background-secondary: #f5f4f0;
     --color-background-tertiary: #eeedea;
     --color-background-info: #e6f1fb;
-    --color-background-success: #eaf3de;
-    --color-background-warning: #faeeda;
-    --color-background-danger: #fcebeb;
 
-    --color-border-tertiary: rgba(0,0,0,0.12);
-    --color-border-secondary: rgba(0,0,0,0.22);
-    --color-border-primary: rgba(0,0,0,0.35);
-    --color-border-info: #85b7eb;
-    --color-border-success: #97c459;
-    --color-border-warning: #ef9f27;
-    --color-border-danger: #f09595;
+    --color-border-tertiary: rgba(0, 0, 0, 0.12);
+    --color-border-secondary: rgba(0, 0, 0, 0.22);
+    --color-border-primary: rgba(0, 0, 0, 0.35);
 
     --border-radius-md: 8px;
     --border-radius-lg: 12px;
     --border-radius-xl: 16px;
   }
 
-  /* ── dark mode ── */
+  body {
+    font-family: var(--font-sans);
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 1.7;
+    background: var(--color-background-secondary);
+    color: var(--color-text-primary);
+    padding: 1.5rem;
+  }
+
   @media (prefers-color-scheme: dark) {
     body {
       background: #1a1917;
       color: #e8e6e0;
     }
+
     :root {
       --color-text-primary: #e8e6e0;
       --color-text-secondary: #b0ada6;
       --color-text-tertiary: #7a7872;
       --color-text-info: #85b7eb;
-      --color-text-success: #97c459;
-      --color-text-warning: #ef9f27;
-      --color-text-danger: #f09595;
 
       --color-background-primary: #242320;
       --color-background-secondary: #2c2b28;
       --color-background-tertiary: #333230;
       --color-background-info: #0c2a4a;
-      --color-background-success: #162c06;
-      --color-background-warning: #2e1e02;
-      --color-background-danger: #2e0808;
 
-      --color-border-tertiary: rgba(255,255,255,0.10);
-      --color-border-secondary: rgba(255,255,255,0.18);
-      --color-border-primary: rgba(255,255,255,0.28);
+      --color-border-tertiary: rgba(255, 255, 255, 0.10);
+      --color-border-secondary: rgba(255, 255, 255, 0.18);
+      --color-border-primary: rgba(255, 255, 255, 0.28);
     }
   }
 
-  /* ── svg widget classes ── */
-  svg text { font-family: var(--font-sans); fill: var(--color-text-primary); }
-  svg text.t  { font-size: 14px; font-weight: 400; fill: var(--color-text-primary); }
-  svg text.ts { font-size: 12px; font-weight: 400; fill: var(--color-text-secondary); }
-  svg text.th { font-size: 14px; font-weight: 500; fill: var(--color-text-primary); }
-  svg rect.box, svg .box rect {
-    fill: var(--color-background-secondary);
-    stroke: var(--color-border-secondary);
+  .page {
+    max-width: 1080px;
+    margin: 0 auto;
+    border: 1px solid var(--color-border-tertiary);
+    border-radius: var(--border-radius-xl);
+    background: var(--color-background-primary);
+    overflow: hidden;
+    box-shadow: 0 10px 26px rgba(0, 0, 0, 0.05);
   }
-  svg .arr {
-    stroke: var(--color-text-secondary);
-    stroke-width: 1.5px;
-    fill: none;
+
+  .page-header {
+    padding: 1rem 1.2rem 0.7rem;
+    border-bottom: 1px solid var(--color-border-tertiary);
+    background: linear-gradient(
+      to bottom,
+      var(--color-background-primary),
+      var(--color-background-secondary)
+    );
   }
-  svg .leader {
-    stroke: var(--color-border-tertiary);
-    stroke-width: 0.5px;
-    stroke-dasharray: 4 3;
-    fill: none;
+
+  .title {
+    font-size: 1.1rem;
+    line-height: 1.25;
+    font-weight: 500;
+    margin-bottom: 0.2rem;
   }
-  svg .node { cursor: pointer; }
-  svg .node:hover { opacity: 0.82; }
 
-  /* colour ramps for svg nodes */
-  svg .c-purple rect, svg .c-purple circle, svg .c-purple ellipse { fill: #EEEDFE; stroke: #534AB7; }
-  svg .c-purple text.t, svg .c-purple text.th { fill: #3C3489; }
-  svg .c-purple text.ts { fill: #534AB7; }
+  .sub {
+    font-size: 0.78rem;
+    color: var(--color-text-tertiary);
+    margin-bottom: 0.7rem;
+  }
 
-  svg .c-teal rect, svg .c-teal circle, svg .c-teal ellipse { fill: #E1F5EE; stroke: #0F6E56; }
-  svg .c-teal text.t, svg .c-teal text.th { fill: #085041; }
-  svg .c-teal text.ts { fill: #0F6E56; }
+  .depth-label {
+    font-size: 0.7rem;
+    color: var(--color-text-tertiary);
+    margin-bottom: 0.38rem;
+    display: flex;
+    justify-content: space-between;
+    gap: 0.8rem;
+  }
 
-  svg .c-coral rect, svg .c-coral circle, svg .c-coral ellipse { fill: #FAECE7; stroke: #993C1D; }
-  svg .c-coral text.t, svg .c-coral text.th { fill: #712B13; }
-  svg .c-coral text.ts { fill: #993C1D; }
+  .depth-bar {
+    height: 8px;
+    border-radius: 999px;
+    background: linear-gradient(to right, #ef9f27, #b5d4f4, #97c459);
+    opacity: 0.72;
+  }
 
-  svg .c-pink rect, svg .c-pink circle, svg .c-pink ellipse { fill: #FBEAF0; stroke: #993556; }
-  svg .c-pink text.t, svg .c-pink text.th { fill: #72243E; }
-  svg .c-pink text.ts { fill: #993556; }
+  .strata {
+    display: flex;
+    flex-direction: column;
+  }
 
-  svg .c-gray rect, svg .c-gray circle, svg .c-gray ellipse { fill: #F1EFE8; stroke: #5F5E5A; }
-  svg .c-gray text.t, svg .c-gray text.th { fill: #444441; }
-  svg .c-gray text.ts { fill: #5F5E5A; }
+  .layer {
+    border-top: 1px solid var(--color-border-tertiary);
+  }
 
-  svg .c-blue rect, svg .c-blue circle, svg .c-blue ellipse { fill: #E6F1FB; stroke: #185FA5; }
-  svg .c-blue text.t, svg .c-blue text.th { fill: #0C447C; }
-  svg .c-blue text.ts { fill: #185FA5; }
+  .layer:first-child {
+    border-top: 0;
+  }
 
-  svg .c-green rect, svg .c-green circle, svg .c-green ellipse { fill: #EAF3DE; stroke: #3B6D11; }
-  svg .c-green text.t, svg .c-green text.th { fill: #27500A; }
-  svg .c-green text.ts { fill: #3B6D11; }
+  .layer-header {
+    width: 100%;
+    border: 0;
+    border-radius: 0;
+    text-align: left;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 0.72rem 1.15rem;
+    cursor: pointer;
+    background: transparent;
+    color: inherit;
+  }
 
-  svg .c-amber rect, svg .c-amber circle, svg .c-amber ellipse { fill: #FAEEDA; stroke: #854F0B; }
-  svg .c-amber text.t, svg .c-amber text.th { fill: #633806; }
-  svg .c-amber text.ts { fill: #854F0B; }
+  .layer-header:hover {
+    background: var(--color-background-secondary);
+  }
 
-  svg .c-red rect, svg .c-red circle, svg .c-red ellipse { fill: #FCEBEB; stroke: #A32D2D; }
-  svg .c-red text.t, svg .c-red text.th { fill: #791F1F; }
-  svg .c-red text.ts { fill: #A32D2D; }
+  .dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .layer-title {
+    font-size: 0.86rem;
+    font-weight: 500;
+    color: var(--color-text-primary);
+    flex: 1;
+  }
+
+  .layer-sub {
+    font-size: 0.71rem;
+    color: var(--color-text-tertiary);
+  }
+
+  .layer-chevron {
+    font-size: 0.68rem;
+    color: var(--color-text-tertiary);
+    transition: transform 0.2s;
+    flex-shrink: 0;
+  }
+
+  .layer.open .layer-chevron {
+    transform: rotate(90deg);
+  }
+
+  .layer-body {
+    padding: 0 1.15rem 0.95rem;
+  }
+
+  .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    margin-bottom: 0.64rem;
+  }
+
+  .tag {
+    font-size: 0.69rem;
+    font-weight: 500;
+    padding: 2px 7px;
+    border-radius: 4px;
+  }
+
+  .tg-lum { background: #faeeda; color: #633806; }
+  .tg-folk { background: #eaf3de; color: #27500a; }
+  .tg-prop { background: #f1efe8; color: #5f5e5a; border: 1px solid var(--color-border-secondary); }
+  .tg-arc { background: #fcebeb; color: #791f1f; }
+  .tg-zel { background: #e6f1fb; color: #0c447c; }
+  .tg-nyx { background: #eeedfe; color: #3c3489; }
+
+  .sect {
+    margin-bottom: 0.52rem;
+  }
+
+  .sect-label {
+    font-size: 0.68rem;
+    font-weight: 500;
+    color: var(--color-text-secondary);
+    margin-bottom: 3px;
+    letter-spacing: 0.02em;
+  }
+
+  .sect-text {
+    font-size: 0.78rem;
+    color: var(--color-text-secondary);
+    line-height: 1.56;
+  }
+
+  .hook {
+    margin-top: 0.55rem;
+    font-size: 0.72rem;
+    color: var(--color-text-info);
+    background: var(--color-background-info);
+    border: 1px solid var(--color-border-tertiary);
+    border-radius: 6px;
+    padding: 0.35rem 0.55rem;
+  }
+
+  .hint {
+    font-size: 0.7rem;
+    color: var(--color-text-tertiary);
+    border-top: 1px dashed var(--color-border-tertiary);
+    padding: 0.52rem 1.15rem 0.7rem;
+    background: var(--color-background-primary);
+  }
 
   @media (prefers-color-scheme: dark) {
-    svg .c-purple rect, svg .c-purple circle, svg .c-purple ellipse { fill: #3C3489; stroke: #AFA9EC; }
-    svg .c-purple text.t, svg .c-purple text.th { fill: #CECBF6; }
-    svg .c-purple text.ts { fill: #AFA9EC; }
-
-    svg .c-teal rect, svg .c-teal circle, svg .c-teal ellipse { fill: #085041; stroke: #5DCAA5; }
-    svg .c-teal text.t, svg .c-teal text.th { fill: #9FE1CB; }
-    svg .c-teal text.ts { fill: #5DCAA5; }
-
-    svg .c-coral rect, svg .c-coral circle, svg .c-coral ellipse { fill: #712B13; stroke: #F0997B; }
-    svg .c-coral text.t, svg .c-coral text.th { fill: #F5C4B3; }
-    svg .c-coral text.ts { fill: #F0997B; }
-
-    svg .c-pink rect, svg .c-pink circle, svg .c-pink ellipse { fill: #72243E; stroke: #ED93B1; }
-    svg .c-pink text.t, svg .c-pink text.th { fill: #F4C0D1; }
-    svg .c-pink text.ts { fill: #ED93B1; }
-
-    svg .c-gray rect, svg .c-gray circle, svg .c-gray ellipse { fill: #444441; stroke: #B4B2A9; }
-    svg .c-gray text.t, svg .c-gray text.th { fill: #D3D1C7; }
-    svg .c-gray text.ts { fill: #B4B2A9; }
-
-    svg .c-blue rect, svg .c-blue circle, svg .c-blue ellipse { fill: #0C447C; stroke: #85B7EB; }
-    svg .c-blue text.t, svg .c-blue text.th { fill: #B5D4F4; }
-    svg .c-blue text.ts { fill: #85B7EB; }
-
-    svg .c-green rect, svg .c-green circle, svg .c-green ellipse { fill: #27500A; stroke: #97C459; }
-    svg .c-green text.t, svg .c-green text.th { fill: #C0DD97; }
-    svg .c-green text.ts { fill: #97C459; }
-
-    svg .c-amber rect, svg .c-amber circle, svg .c-amber ellipse { fill: #633806; stroke: #EF9F27; }
-    svg .c-amber text.t, svg .c-amber text.th { fill: #FAC775; }
-    svg .c-amber text.ts { fill: #EF9F27; }
-
-    svg .c-red rect, svg .c-red circle, svg .c-red ellipse { fill: #791F1F; stroke: #F09595; }
-    svg .c-red text.t, svg .c-red text.th { fill: #F7C1C1; }
-    svg .c-red text.ts { fill: #F09595; }
+    .tg-lum { background: #633806; color: #f9cb82; }
+    .tg-folk { background: #27500a; color: #c2de98; }
+    .tg-prop { background: #444441; color: #d3d1c7; }
+    .tg-arc { background: #791f1f; color: #f7c1c1; }
+    .tg-zel { background: #0c447c; color: #b5d4f4; }
+    .tg-nyx { background: #3c3489; color: #cecbf6; }
   }
-    .strata { display: flex; flex-direction: column; gap: 0; }
-    .layer { border-radius: 0; border: 0.5px solid var(--color-border-tertiary); border-bottom: none; padding: 0; overflow: hidden; }
-    .layer:first-child { border-radius: var(--border-radius-lg) var(--border-radius-lg) 0 0; }
-    .layer:last-child { border-radius: 0 0 var(--border-radius-lg) var(--border-radius-lg); border-bottom: 0.5px solid var(--color-border-tertiary); }
-    .layer-header { display: flex; align-items: center; gap: 10px; padding: 9px 14px; cursor: pointer; user-select: none; }
-    .layer-header:hover { background: var(--color-background-secondary); }
-    .layer.open .layer-header { border-bottom: 0.5px solid var(--color-border-tertiary); }
-    .layer-title { font-size: 13px; font-weight: 500; color: var(--color-text-primary); flex: 1; }
-    .layer-sub { font-size: 11px; color: var(--color-text-tertiary); }
-    .layer-chevron { font-size: 10px; color: var(--color-text-tertiary); transition: transform .2s; flex-shrink: 0; }
-    .layer.open .layer-chevron { transform: rotate(90deg); }
-    .layer-body { display: none; padding: 12px 14px; background: var(--color-background-primary); }
-    .layer.open .layer-body { display: block; }
-    .bar { height: 6px; border-radius: 3px; margin-bottom: 12px; }
-    .tags { display: flex; flex-wrap: wrap; gap: 5px; margin-bottom: 10px; }
-    .tag { font-size: 11px; font-weight: 500; padding: 2px 7px; border-radius: 3px; }
-    .tg-lum { background: #FAEEDA; color: #633806; }
-    .tg-folk { background: #EAF3DE; color: #27500A; }
-    .tg-prop { background: #F1EFE8; color: #5F5E5A; border: 0.5px solid var(--color-border-secondary); }
-    .tg-arc { background: #FCEBEB; color: #791F1F; }
-    .tg-zel { background: #E6F1FB; color: #0C447C; }
-    .tg-nyx { background: #EEEDFE; color: #3C3489; }
-    .sect { margin-bottom: 8px; }
-    .sect-label { font-size: 10px; font-weight: 500; color: var(--color-text-secondary); text-transform: none; margin-bottom: 3px; letter-spacing: 0.02em; }
-    .sect-text { font-size: 12px; color: var(--color-text-secondary); line-height: 1.6; }
-    .hook { font-size: 11px; color: var(--color-text-info); background: var(--color-background-info); border-radius: 4px; padding: 5px 9px; margin-top: 8px; }
-    .depth-label { font-size: 10px; color: var(--color-text-tertiary); margin-bottom: 6px; display: flex; justify-content: space-between; }
+
+  @media (max-width: 760px) {
+    body {
+      padding: 0.8rem;
+    }
+
+    .page-header,
+    .layer-header,
+    .layer-body,
+    .hint {
+      padding-left: 0.8rem;
+      padding-right: 0.8rem;
+    }
+
+    .layer-sub {
+      display: none;
+    }
+
+    .title {
+      font-size: 1rem;
+    }
+  }
   </style>
 </head>
 <body>
+<div id="app"></div>
 
-<div style="padding: 0.5rem 0;">
-  <div class="depth-label"><span>Imperial core — Luminastra total</span><span>Imperial frontier — folk tradition dominant</span></div>
-  <div style="height: 8px; border-radius: 4px; background: linear-gradient(to right, #EF9F27, #B5D4F4, #EAF3DE); margin-bottom: 14px; opacity: 0.7;"></div>
+<script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+<script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+<script type="text/babel">
+const LAYERS = [
+  {
+    id: "l0",
+    color: "#EF9F27",
+    title: "The Imperial Family",
+    sub: "Emperor · Empress · Blood heirs",
+    tags: [{ cls: "tg-lum", text: "Luminastra - divine vessel" }],
+    sections: [
+      {
+        label: "What they publicly profess",
+        text: "The Imperial bloodline carries Luminastra's light. The Emperor does not pray to her - the Emperor embodies her will for the age. Coronation rites include the Radiance Rite, in which the aurora must appear in the sky at the moment of crowning. If it does not, the Council of Light interprets the weather. It has always been interpreted in favour of the heir."
+      },
+      {
+        label: "What they actually believe",
+        text: "Varies enormously by individual Emperor. Some are genuinely devout and feel the connection as a real pressure - an atmospheric sense that certain decisions are wrong, that certain moments carry weight. Others are entirely cynical and manage the spectacle with the Council as political partners. The dangerous ones are those who are neither: who believe sincerely in a Luminastra that tells them specifically what they want to hear."
+      },
+      {
+        label: "Relationship with folk tradition",
+        text: "Officially: none. The Imperial family does not propitiate lesser gods. Privately: the Imperial kitchens have had an Elaria threshold mark on the cook's door for three dynasties running. No one mentions it. No one removes it."
+      }
+    ],
+    hook: "An heir who receives the divine connection more strongly than any Emperor in living memory - but whose claim to the throne is legally disputed. The aurora appeared at their birth. The Council of Light is having an argument it cannot have publicly."
+  },
+  {
+    id: "l1",
+    color: "#FAC775",
+    title: "The Council of Light",
+    sub: "High Seers · Doctrinal Interpreters · The real theological power",
+    tags: [
+      { cls: "tg-lum", text: "Luminastra - doctrine" },
+      { cls: "tg-prop", text: "Other gods - managed" }
+    ],
+    sections: [
+      {
+        label: "Function",
+        text: "The Council interprets Luminastra's will. Since Luminastra does not speak directly, this is an enormous power - they define what the divine means in every legal, political, and social context. They have ruled on succession, on war, on whether a treaty is theologically permissible. Their rulings are not infallible, but no mechanism exists to overrule them except the Emperor, and Emperors who overrule the Council tend to have turbulent reigns."
+      },
+      {
+        label: "Relationship with folk tradition",
+        text: "Sophisticated and largely cynical. The Council knows folk polytheism cannot be suppressed - every attempt in Imperial history produced martyrs and made the old practices more tenacious. Current policy is co-option: the harvest festival is now also the Yield of Luminastra's Bounty. The spring planting rites are blessed in Luminastra's name. The coin tossed at market is described as an offering to the divine light rather than to Zelos. The folk practices continue exactly as before. The labels change."
+      },
+      {
+        label: "What they actually fear",
+        text: "A cleric of Luminastra receiving direct divine communication that contradicts a Council ruling. This has happened twice in recorded Imperial history. Neither case ended well for anyone involved."
+      }
+    ],
+    hook: "A Council member approaches the players privately - not officially. A Dawnsinger in a frontier province is performing miracles the Council cannot explain and did not sanction. They need it investigated without creating a saint."
+  },
+  {
+    id: "l2",
+    color: "#B5D4F4",
+    title: "The Luminous Order",
+    sub: "Elite guard · Spiritual enforcers · Paladins and senior clergy combined",
+    tags: [
+      { cls: "tg-lum", text: "Luminastra - oath" },
+      { cls: "tg-arc", text: "Arcturius - practice" }
+    ],
+    sections: [
+      {
+        label: "The dual nature problem",
+        text: "The Luminous Order is simultaneously the Empire's spiritual leadership and its elite military force. This creates a persistent theological tension that is never formally acknowledged: Luminastra governs light, life, and peace. Arcturius governs honourable war. Members of the Order swear to Luminastra. They fight by Arcturius's principles. The two are never in direct conflict - the Order fights in defence of light, which is Luminastra's mandate - but veterans of serious campaigns often speak of Luminastra in the present tense and Arcturius in the past tense. She is who they serve. He is who they are."
+      },
+      {
+        label: "Relationship with folk tradition",
+        text: "Inconsistent. Individual members range from rigidly doctrinal (folk propitiation of Ba'haal before battle is heresy and must be corrected) to quietly permissive (if a soldier needs to press his thumb to the earth before a charge, that is between him and whatever he believes in, and it is not the Order's business provided they also keep their oath to Luminastra). The Order's official position is the former. Its actual practice is heavily the latter."
+      },
+      {
+        label: "What ordinary people see",
+        text: "Gold and white armour. The aurora motif on every surface. A presence that is both protective and inspecting - they are the Empire's light, which means they both illuminate and expose. Communities with a Luminous Order garrison feel watched. They are not wrong."
+      }
+    ],
+    hook: "An Order commander has been quietly permitting folk propitiation practices in her garrison town for years, because it keeps the peace and she's not sure she disagrees with the theology. The Council has noticed the town's unusually low incidence of religious complaints - which means its unusually high incidence of suppressed practices - and has sent an Inspector."
+  },
+  {
+    id: "l3",
+    color: "#97C459",
+    title: "Dawnsingers",
+    sub: "Common clergy · Parish priests of the Empire",
+    tags: [
+      { cls: "tg-lum", text: "Luminastra - vocation" },
+      { cls: "tg-folk", text: "Folk traditions - tolerated" }
+    ],
+    sections: [
+      {
+        label: "The ground-level reality",
+        text: "Dawnsingers are the face of the Luminastra faith that ordinary Aurorans interact with daily. They lead the dawn prayers at the local Luminous Spire or parish shrine. They bless births, officiate marriages, and speak at funerals. In doing all of these things, they constantly encounter folk tradition - because the people bringing their babies and their dead are also the people with Elaria's mark on their kitchen wall and a habit of glancing at the shadows when they say something private."
+      },
+      {
+        label: "The theological compromise",
+        text: "Most Dawnsingers work out a personal position somewhere between the Council's official doctrine and the reality of their parish. The official position: Luminastra encompasses all good things, so the folk acknowledgment of Elaria at planting is really an acknowledgment of Luminastra's life-giving aspect under a traditional name. This reframing allows the Dawnsinger to bless the planting rite without suppressing the folk practice, while technically maintaining doctrinal compliance. Everyone understands this is a fiction. It is a useful fiction that nobody has an interest in dismantling."
+      },
+      {
+        label: "What they cannot tolerate",
+        text: "Explicit propitiation of the dark gods. A family that quietly keeps an Elaria mark can be reframed. A family that leaves coins at the crossroads for Charon can be told they are honouring Luminastra's mercy. A household that performs the Ba'haal blood offering before a soldier's deployment cannot be reframed, and a Dawnsinger who looks the other way risks their position. Most Dawnsingers do look the other way. This is the knowledge they carry quietly."
+      }
+    ],
+    hook: "A Dawnsinger has been performing a modified version of Charon's Laments of the River festival every Moradir, reframed as a Luminastra memorial rite. It works - the community's dead seem properly settled, the rite feels right to everyone who attends. She has no idea why. Charon has apparently decided co-option is acceptable provided the function is maintained."
+  },
+  {
+    id: "l4",
+    color: "#B4B2A9",
+    title: "Urban Aurorans",
+    sub: "Merchants · Craftspeople · City folk · The Empire's visible middle",
+    tags: [
+      { cls: "tg-lum", text: "Luminastra - public life" },
+      { cls: "tg-zel", text: "Zelos - commercial life" },
+      { cls: "tg-folk", text: "Elaria, Charon - private life" },
+      { cls: "tg-nyx", text: "Nyx - acknowledged, never named" }
+    ],
+    sections: [
+      {
+        label: "The split life",
+        text: "Urban Aurorans maintain two simultaneous religious identities without experiencing them as contradictory. In public - at the dawn prayer, at the market's Luminastra shrine, at the festival ceremonies the Order attends - they are Luminastra's people. In private - the kitchen mark, the coin tossed before a deal, the quiet acknowledgment at the bedroom threshold - they are their grandparents' people. The two identities do not interact. This is not hypocrisy; it is the natural adaptation of a folk religion to a state religion that is too large to fight and too useful to entirely abandon."
+      },
+      {
+        label: "What Luminastra means to them",
+        text: "The aurora. The Empire. The reassurance that the world has a structure that is basically benevolent. The festivals. The sense that being Auroran is being part of something larger than your city or trade. Luminastra is not someone they have a personal relationship with - she is the texture of the Empire itself, the gold in the architecture, the light at the top of the Spire. This is not nothing. It is simply different from what the Council means when it says devotion."
+      },
+      {
+        label: "The Shimmerfen specificity",
+        text: "In the capital, the Luminastra presence is heavier and more genuine. The Luminous Spire catches dawn light in ways that feel deliberately miraculous. The Imperial family's visible connection to the aurora - appearing at festivals, moving through public space with an atmospheric quality that is hard to explain - makes the state religion feel less theoretical. Shimmerfen is the one place in the Empire where the divide between public and private faith noticeably narrows, because the evidence for Luminastra's presence is visible to anyone who looks up."
+      }
+    ],
+    hook: "A merchant guild in a major city has been conducting its significant contract signings in Astaroth's hearing - the folk propitiation practice of invoking the Arch-Devil as witness to ensure binding. The Council has discovered this. The guild argues it is a secular legal tradition, not worship. The Council disagrees. The contracts involved are worth enough that several Imperial officials have a stake in the outcome."
+  },
+  {
+    id: "l5",
+    color: "#5DCAA5",
+    title: "Rural Aurorans",
+    sub: "Farmers · Villagers · The Empire's invisible majority",
+    tags: [
+      { cls: "tg-folk", text: "Elaria - primary" },
+      { cls: "tg-folk", text: "Nalakei - harvest and joy" },
+      { cls: "tg-folk", text: "Charon - death" },
+      { cls: "tg-lum", text: "Luminastra - the Empire" }
+    ],
+    sections: [
+      {
+        label: "The true shape of rural faith",
+        text: "In the villages at the Empire's interior, Luminastra is real but abstract - the religion of officials, of tax assessors, of the Dawnsinger who arrives from the town once a month and says words over things that would have been fine without them. She is the Empire's god, and the Empire is a fact of life like weather: you arrange yourself around it. The gods that actually govern daily life - the ones with kitchen shrines and harvest prayers and coins tossed at crossroads - are Elaria and Nalakei and Charon. No one denies Luminastra. No one builds her a shrine next to the hearth."
+      },
+      {
+        label: "The co-opted calendar in practice",
+        text: "The Dawnsinger calls the spring festival the Blessing of Luminastra's Renewal. The village calls it the Greening. The Dawnsinger calls the harvest celebration Luminastra's Bounty. The village calls it Erathir's Yield. The ceremonies are identical except for the name used at the beginning and end. In between, it is simply the festival they have always held. The village considers this arrangement satisfactory. The Dawnsinger considers it a work in progress."
+      },
+      {
+        label: "At the frontier edge",
+        text: "In villages at the Empire's frontier - where the Luminous Order garrison is a day's ride away and the Dawnsinger visits quarterly - the Luminastra layer is almost entirely formal. People fly the aurora banner. They pay the temple tithe to whoever comes to collect it. They use the official calendar month names. And then, in all other respects, they practise the faith their grandparents practised, in the way their grandparents practised it, propitiation and all. The dark gods are acknowledged here with far less anxiety than in the cities, because there is no one to report it to who would care."
+      }
+    ],
+    hook: "A frontier village has been practising an extended version of Midwinter's Watch that involves something older than the Luminastra faith - something the Dawnsinger doesn't recognise and the oldest villagers can't explain fully, only that it must be done and that the years it wasn't were bad ones. An Inspector has arrived to determine whether this constitutes heresy. The village is frightened. The players arrive in the middle of it."
+  }
+];
 
-  <div class="strata">
-
-    <div class="layer" id="l0">
-      <div class="layer-header" onclick="tog('l0')">
-        <div style="width:10px;height:10px;border-radius:50%;background:#EF9F27;flex-shrink:0;"></div>
-        <div class="layer-title">The Imperial Family</div>
-        <div class="layer-sub">Emperor · Empress · Blood heirs</div>
-        <div class="layer-chevron">▶</div>
-      </div>
-      <div class="layer-body">
-        <div class="tags">
-          <span class="tag tg-lum">Luminastra — divine vessel</span>
+function Layer({ layer, isOpen, onToggle }) {
+  return (
+    <article className={"layer" + (isOpen ? " open" : "")}>
+      <button className="layer-header" onClick={onToggle} aria-expanded={isOpen}>
+        <span className="dot" style={{ background: layer.color }}></span>
+        <span className="layer-title">{layer.title}</span>
+        <span className="layer-sub">{layer.sub}</span>
+        <span className="layer-chevron">▶</span>
+      </button>
+      {isOpen && (
+        <div className="layer-body">
+          <div className="tags">
+            {layer.tags.map((tag, i) => (
+              <span key={layer.id + "-tag-" + i} className={"tag " + tag.cls}>{tag.text}</span>
+            ))}
+          </div>
+          {layer.sections.map((section, i) => (
+            <div className="sect" key={layer.id + "-section-" + i}>
+              <div className="sect-label">{section.label}</div>
+              <div className="sect-text">{section.text}</div>
+            </div>
+          ))}
+          <div className="hook"><strong>Hook:</strong> {layer.hook}</div>
         </div>
-        <div class="sect"><div class="sect-label">What they publicly profess</div>
-        <div class="sect-text">The Imperial bloodline carries Luminastra's light. The Emperor does not pray to her — the Emperor embodies her will for the age. Coronation rites include the Radiance Rite, in which the aurora must appear in the sky at the moment of crowning. If it does not, the Council of Light interprets the weather. It has always been interpreted in favour of the heir.</div></div>
-        <div class="sect"><div class="sect-label">What they actually believe</div>
-        <div class="sect-text">Varies enormously by individual Emperor. Some are genuinely devout and feel the connection as a real pressure — an atmospheric sense that certain decisions are wrong, that certain moments carry weight. Others are entirely cynical and manage the spectacle with the Council as political partners. The dangerous ones are those who are neither: who believe sincerely in a Luminastra that tells them specifically what they want to hear.</div></div>
-        <div class="sect"><div class="sect-label">Relationship with folk tradition</div>
-        <div class="sect-text">Officially: none. The Imperial family does not propitiate lesser gods. Privately: the Imperial kitchens have had an Elaria threshold mark on the cook's door for three dynasties running. No one mentions it. No one removes it.</div></div>
-        <div class="hook">Hook: An heir who receives the divine connection more strongly than any Emperor in living memory — but whose claim to the throne is legally disputed. The aurora appeared at their birth. The Council of Light is having an argument it cannot have publicly.</div>
-      </div>
-    </div>
-
-    <div class="layer" id="l1">
-      <div class="layer-header" onclick="tog('l1')">
-        <div style="width:10px;height:10px;border-radius:50%;background:#FAC775;flex-shrink:0;"></div>
-        <div class="layer-title">The Council of Light</div>
-        <div class="layer-sub">High Seers · Doctrinal Interpreters · The real theological power</div>
-        <div class="layer-chevron">▶</div>
-      </div>
-      <div class="layer-body">
-        <div class="tags">
-          <span class="tag tg-lum">Luminastra — doctrine</span>
-          <span class="tag tg-prop">Other gods — managed</span>
-        </div>
-        <div class="sect"><div class="sect-label">Function</div>
-        <div class="sect-text">The Council interprets Luminastra's will. Since Luminastra does not speak directly, this is an enormous power — they define what the divine means in every legal, political, and social context. They have ruled on succession, on war, on whether a treaty is theologically permissible. Their rulings are not infallible, but no mechanism exists to overrule them except the Emperor, and Emperors who overrule the Council tend to have turbulent reigns.</div></div>
-        <div class="sect"><div class="sect-label">Relationship with folk tradition</div>
-        <div class="sect-text">Sophisticated and largely cynical. The Council knows folk polytheism cannot be suppressed — every attempt in Imperial history produced martyrs and made the old practices more tenacious. Current policy is co-option: the harvest festival is now also the Yield of Luminastra's Bounty. The spring planting rites are blessed in Luminastra's name. The coin tossed at market is described as an offering to the divine light rather than to Zelos. The folk practices continue exactly as before. The labels change.</div></div>
-        <div class="sect"><div class="sect-label">What they actually fear</div>
-        <div class="sect-text">A cleric of Luminastra receiving direct divine communication that contradicts a Council ruling. This has happened twice in recorded Imperial history. Neither case ended well for anyone involved.</div></div>
-        <div class="hook">Hook: A Council member approaches the players privately — not officially. A Dawnsinger in a frontier province is performing miracles the Council cannot explain and did not sanction. They need it investigated without creating a saint.</div>
-      </div>
-    </div>
-
-    <div class="layer" id="l2">
-      <div class="layer-header" onclick="tog('l2')">
-        <div style="width:10px;height:10px;border-radius:50%;background:#B5D4F4;flex-shrink:0;"></div>
-        <div class="layer-title">The Luminous Order</div>
-        <div class="layer-sub">Elite guard · Spiritual enforcers · Paladins and senior clergy combined</div>
-        <div class="layer-chevron">▶</div>
-      </div>
-      <div class="layer-body">
-        <div class="tags">
-          <span class="tag tg-lum">Luminastra — oath</span>
-          <span class="tag tg-arc">Arcturius — practice</span>
-        </div>
-        <div class="sect"><div class="sect-label">The dual nature problem</div>
-        <div class="sect-text">The Luminous Order is simultaneously the Empire's spiritual leadership and its elite military force. This creates a persistent theological tension that is never formally acknowledged: Luminastra governs light, life, and peace. Arcturius governs honourable war. Members of the Order swear to Luminastra. They fight by Arcturius's principles. The two are never in direct conflict — the Order fights in defence of light, which is Luminastra's mandate — but veterans of serious campaigns often speak of Luminastra in the present tense and Arcturius in the past tense. She is who they serve. He is who they are.</div></div>
-        <div class="sect"><div class="sect-label">Relationship with folk tradition</div>
-        <div class="sect-text">Inconsistent. Individual members range from rigidly doctrinal (folk propitiation of Ba'haal before battle is heresy and must be corrected) to quietly permissive (if a soldier needs to press his thumb to the earth before a charge, that is between him and whatever he believes in, and it is not the Order's business provided they also keep their oath to Luminastra). The Order's official position is the former. Its actual practice is heavily the latter.</div></div>
-        <div class="sect"><div class="sect-label">What ordinary people see</div>
-        <div class="sect-text">Gold and white armour. The aurora motif on every surface. A presence that is both protective and inspecting — they are the Empire's light, which means they both illuminate and expose. Communities with a Luminous Order garrison feel watched. They are not wrong.</div></div>
-        <div class="hook">Hook: An Order commander has been quietly permitting folk propitiation practices in her garrison town for years, because it keeps the peace and she's not sure she disagrees with the theology. The Council has noticed the town's unusually low incidence of religious complaints — which means its unusually high incidence of suppressed practices — and has sent an Inspector.</div>
-      </div>
-    </div>
-
-    <div class="layer" id="l3">
-      <div class="layer-header" onclick="tog('l3')">
-        <div style="width:10px;height:10px;border-radius:50%;background:#97C459;flex-shrink:0;"></div>
-        <div class="layer-title">Dawnsingers</div>
-        <div class="layer-sub">Common clergy · Parish priests of the Empire</div>
-        <div class="layer-chevron">▶</div>
-      </div>
-      <div class="layer-body">
-        <div class="tags">
-          <span class="tag tg-lum">Luminastra — vocation</span>
-          <span class="tag tg-folk">Folk traditions — tolerated</span>
-        </div>
-        <div class="sect"><div class="sect-label">The ground-level reality</div>
-        <div class="sect-text">Dawnsingers are the face of the Luminastra faith that ordinary Aurorans interact with daily. They lead the dawn prayers at the local Luminous Spire or parish shrine. They bless births, officiate marriages, and speak at funerals. In doing all of these things, they constantly encounter folk tradition — because the people bringing their babies and their dead are also the people with Elaria's mark on their kitchen wall and a habit of glancing at the shadows when they say something private.</div></div>
-        <div class="sect"><div class="sect-label">The theological compromise</div>
-        <div class="sect-text">Most Dawnsingers work out a personal position somewhere between the Council's official doctrine and the reality of their parish. The official position: Luminastra encompasses all good things, so the folk acknowledgment of Elaria at planting is really an acknowledgment of Luminastra's life-giving aspect under a traditional name. This reframing allows the Dawnsinger to bless the planting rite without suppressing the folk practice, while technically maintaining doctrinal compliance. Everyone understands this is a fiction. It is a useful fiction that nobody has an interest in dismantling.</div></div>
-        <div class="sect"><div class="sect-label">What they cannot tolerate</div>
-        <div class="sect-text">Explicit propitiation of the dark gods. A family that quietly keeps an Elaria mark can be reframed. A family that leaves coins at the crossroads for Charon can be told they are honouring Luminastra's mercy. A household that performs the Ba'haal blood offering before a soldier's deployment cannot be reframed, and a Dawnsinger who looks the other way risks their position. Most Dawnsingers do look the other way. This is the knowledge they carry quietly.</div></div>
-        <div class="hook">Hook: A Dawnsinger has been performing a modified version of Charon's Laments of the River festival every Moradir, reframed as a Luminastra memorial rite. It works — the community's dead seem properly settled, the rite feels right to everyone who attends. She has no idea why. Charon has apparently decided co-option is acceptable provided the function is maintained.</div>
-      </div>
-    </div>
-
-    <div class="layer" id="l4">
-      <div class="layer-header" onclick="tog('l4')">
-        <div style="width:10px;height:10px;border-radius:50%;background:#B4B2A9;flex-shrink:0;"></div>
-        <div class="layer-title">Urban Aurorans</div>
-        <div class="layer-sub">Merchants · Craftspeople · City folk · The Empire's visible middle</div>
-        <div class="layer-chevron">▶</div>
-      </div>
-      <div class="layer-body">
-        <div class="tags">
-          <span class="tag tg-lum">Luminastra — public life</span>
-          <span class="tag tg-zel">Zelos — commercial life</span>
-          <span class="tag tg-folk">Elaria, Charon — private life</span>
-          <span class="tag tg-nyx">Nyx — acknowledged, never named</span>
-        </div>
-        <div class="sect"><div class="sect-label">The split life</div>
-        <div class="sect-text">Urban Aurorans maintain two simultaneous religious identities without experiencing them as contradictory. In public — at the dawn prayer, at the market's Luminastra shrine, at the festival ceremonies the Order attends — they are Luminastra's people. In private — the kitchen mark, the coin tossed before a deal, the quiet acknowledgment at the bedroom threshold — they are their grandparents' people. The two identities do not interact. This is not hypocrisy; it is the natural adaptation of a folk religion to a state religion that is too large to fight and too useful to entirely abandon.</div></div>
-        <div class="sect"><div class="sect-label">What Luminastra means to them</div>
-        <div class="sect-text">The aurora. The Empire. The reassurance that the world has a structure that is basically benevolent. The festivals. The sense that being Auroran is being part of something larger than your city or trade. Luminastra is not someone they have a personal relationship with — she is the texture of the Empire itself, the gold in the architecture, the light at the top of the Spire. This is not nothing. It is simply different from what the Council means when it says devotion.</div></div>
-        <div class="sect"><div class="sect-label">The Shimmerfen specificity</div>
-        <div class="sect-text">In the capital, the Luminastra presence is heavier and more genuine. The Luminous Spire catches dawn light in ways that feel deliberately miraculous. The Imperial family's visible connection to the aurora — appearing at festivals, moving through public space with an atmospheric quality that is hard to explain — makes the state religion feel less theoretical. Shimmerfen is the one place in the Empire where the divide between public and private faith noticeably narrows, because the evidence for Luminastra's presence is visible to anyone who looks up.</div></div>
-        <div class="hook">Hook: A merchant guild in a major city has been conducting its significant contract signings in Astaroth's hearing — the folk propitiation practice of invoking the Arch-Devil as witness to ensure binding. The Council has discovered this. The guild argues it is a secular legal tradition, not worship. The Council disagrees. The contracts involved are worth enough that several Imperial officials have a stake in the outcome.</div>
-      </div>
-    </div>
-
-    <div class="layer" id="l5">
-      <div class="layer-header" onclick="tog('l5')">
-        <div style="width:10px;height:10px;border-radius:50%;background:#5DCAA5;flex-shrink:0;"></div>
-        <div class="layer-title">Rural Aurorans</div>
-        <div class="layer-sub">Farmers · Villagers · The Empire's invisible majority</div>
-        <div class="layer-chevron">▶</div>
-      </div>
-      <div class="layer-body">
-        <div class="tags">
-          <span class="tag tg-folk">Elaria — primary</span>
-          <span class="tag tg-folk">Nalakei — harvest and joy</span>
-          <span class="tag tg-folk">Charon — death</span>
-          <span class="tag tg-lum">Luminastra — the Empire</span>
-        </div>
-        <div class="sect"><div class="sect-label">The true shape of rural faith</div>
-        <div class="sect-text">In the villages at the Empire's interior, Luminastra is real but abstract — the religion of officials, of tax assessors, of the Dawnsinger who arrives from the town once a month and says words over things that would have been fine without them. She is the Empire's god, and the Empire is a fact of life like weather: you arrange yourself around it. The gods that actually govern daily life — the ones with kitchen shrines and harvest prayers and coins tossed at crossroads — are Elaria and Nalakei and Charon. No one denies Luminastra. No one builds her a shrine next to the hearth.</div></div>
-        <div class="sect"><div class="sect-label">The co-opted calendar in practice</div>
-        <div class="sect-text">The Dawnsinger calls the spring festival the Blessing of Luminastra's Renewal. The village calls it the Greening. The Dawnsinger calls the harvest celebration Luminastra's Bounty. The village calls it Erathir's Yield. The ceremonies are identical except for the name used at the beginning and end. In between, it is simply the festival they have always held. The village considers this arrangement satisfactory. The Dawnsinger considers it a work in progress.</div></div>
-        <div class="sect"><div class="sect-label">At the frontier edge</div>
-        <div class="sect-text">In villages at the Empire's frontier — where the Luminous Order garrison is a day's ride away and the Dawnsinger visits quarterly — the Luminastra layer is almost entirely formal. People fly the aurora banner. They pay the temple tithe to whoever comes to collect it. They use the official calendar month names. And then, in all other respects, they practise the faith their grandparents practised, in the way their grandparents practised it, propitiation and all. The dark gods are acknowledged here with far less anxiety than in the cities, because there is no one to report it to who would care.</div></div>
-        <div class="hook">Hook: A frontier village has been practising an extended version of Midwinter's Watch that involves something older than the Luminastra faith — something the Dawnsinger doesn't recognise and the oldest villagers can't explain fully, only that it must be done and that the years it wasn't were bad ones. An Inspector has arrived to determine whether this constitutes heresy. The village is frightened. The players arrive in the middle of it.</div>
-      </div>
-    </div>
-
-  </div>
-</div>
-
-<script>
-function tog(id){
-  const el=document.getElementById(id);
-  el.classList.toggle('open');
+      )}
+    </article>
+  );
 }
-document.getElementById('l0').classList.add('open');
+
+function App() {
+  const [openIds, setOpenIds] = React.useState(new Set(["l0"]));
+
+  const toggle = (id) => {
+    setOpenIds((prev) => {
+      const next = new Set(prev);
+      if (next.has(id)) {
+        next.delete(id);
+      } else {
+        next.add(id);
+      }
+      return next;
+    });
+  };
+
+  return (
+    <main className="page">
+      <header className="page-header">
+        <h1 className="title">Auroran Religious Strata</h1>
+        <p className="sub">State doctrine, lived faith, and pressure points across the imperial social order</p>
+        <div className="depth-label">
+          <span>Imperial core - Luminastra total</span>
+          <span>Imperial frontier - folk tradition dominant</span>
+        </div>
+        <div className="depth-bar"></div>
+      </header>
+
+      <section className="strata" aria-label="Religious layers">
+        {LAYERS.map((layer) => (
+          <Layer
+            key={layer.id}
+            layer={layer}
+            isOpen={openIds.has(layer.id)}
+            onToggle={() => toggle(layer.id)}
+          />
+        ))}
+      </section>
+
+      <footer className="hint">Tip: open multiple layers to compare doctrine and practice side by side.</footer>
+    </main>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById("app")).render(<App />);
 </script>
 </body>
 </html>
