@@ -1,0 +1,1632 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>DELTA GREEN // PLAYER PRIMER</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.23.2/babel.min.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Special+Elite&family=Share+Tech+Mono&family=Oswald:wght@300;400;600&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --green: #3d7a3d;
+    --green-bright: #5cb85c;
+    --green-dim: #2a5a2a;
+    --green-glow: rgba(92,184,92,0.15);
+    --bg: #0a0c0a;
+    --bg2: #0f120f;
+    --bg3: #141814;
+    --surface: #181d18;
+    --surface2: #1e251e;
+    --border: #2a352a;
+    --text: #c8d4c8;
+    --text-dim: #7a8f7a;
+    --text-bright: #e8f0e8;
+    --red: #8b2020;
+    --red-bright: #c0392b;
+    --amber: #b8860b;
+    --amber-bright: #d4a017;
+    --font-mono: 'Share Tech Mono', monospace;
+    --font-display: 'Oswald', sans-serif;
+    --font-type: 'Special Elite', cursive;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font-mono);
+    font-size: 13px;
+    line-height: 1.6;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.05) 2px, rgba(0,0,0,0.05) 4px);
+    pointer-events: none;
+    z-index: 9999;
+  }
+
+  /* HEADER */
+  .header {
+    background: var(--bg2);
+    border-bottom: 2px solid var(--green);
+    padding: 16px 24px 12px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.8);
+  }
+  .header-inner { max-width: 1100px; margin: 0 auto; }
+  .header-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .logo-mark {
+    width: 36px; height: 36px;
+    border: 2px solid var(--green);
+    display: flex; align-items: center; justify-content: center;
+    position: relative;
+    transform: rotate(45deg);
+  }
+  .logo-mark::after {
+    content: '';
+    width: 16px; height: 16px;
+    background: var(--green);
+    display: block;
+    transform: rotate(0deg);
+  }
+  .logo-text {
+    font-family: var(--font-display);
+    font-size: 22px;
+    font-weight: 600;
+    letter-spacing: 4px;
+    color: var(--green-bright);
+    text-shadow: 0 0 20px rgba(92,184,92,0.5);
+  }
+  .logo-sub {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 3px;
+    color: var(--text-dim);
+  }
+  .classification {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 2px;
+    color: var(--red-bright);
+    border: 1px solid var(--red);
+    padding: 3px 8px;
+    background: rgba(139,32,32,0.1);
+  }
+  .tutorial-btn {
+    background: var(--green-dim);
+    border: 1px solid var(--green);
+    color: var(--green-bright);
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 1px;
+    padding: 5px 12px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .tutorial-btn:hover { background: var(--green); color: #000; }
+
+  /* NAV TABS */
+  .nav-tabs {
+    display: flex;
+    gap: 2px;
+    overflow-x: auto;
+    scrollbar-width: none;
+    padding-bottom: 2px;
+  }
+  .nav-tabs::-webkit-scrollbar { display: none; }
+  .tab {
+    background: none;
+    border: 1px solid transparent;
+    border-bottom: none;
+    color: var(--text-dim);
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 1.5px;
+    padding: 6px 14px;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: all 0.15s;
+    position: relative;
+  }
+  .tab:hover { color: var(--green-bright); border-color: var(--border); }
+  .tab.active {
+    color: var(--green-bright);
+    border-color: var(--green);
+    background: var(--green-glow);
+  }
+  .tab.active::after {
+    content: '';
+    position: absolute;
+    bottom: -2px; left: 0; right: 0;
+    height: 2px;
+    background: var(--bg2);
+  }
+  .tab-num {
+    color: var(--text-dim);
+    margin-right: 5px;
+    font-size: 9px;
+  }
+  .tab.active .tab-num { color: var(--green); }
+
+  /* MAIN LAYOUT */
+  .main { max-width: 1100px; margin: 0 auto; padding: 24px 20px 60px; }
+
+  /* SECTION */
+  .section { animation: fadeIn 0.3s ease; }
+  @keyframes fadeIn { from { opacity:0; transform: translateY(8px); } to { opacity:1; transform: translateY(0); } }
+
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 24px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--border);
+  }
+  .section-num {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--green);
+    letter-spacing: 1px;
+  }
+  .section-title {
+    font-family: var(--font-display);
+    font-size: 20px;
+    font-weight: 600;
+    letter-spacing: 3px;
+    color: var(--text-bright);
+  }
+  .section-line {
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(to right, var(--border), transparent);
+  }
+
+  /* CARDS */
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    padding: 18px 20px;
+    margin-bottom: 16px;
+    position: relative;
+  }
+  .card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 3px; height: 100%;
+    background: var(--green-dim);
+  }
+  .card.accent::before { background: var(--green); }
+  .card.danger::before { background: var(--red); }
+  .card.warning::before { background: var(--amber); }
+  .card-title {
+    font-family: var(--font-display);
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    color: var(--green-bright);
+    margin-bottom: 10px;
+    text-transform: uppercase;
+  }
+  .card-title.red { color: #e05050; }
+  .card-title.amber { color: var(--amber-bright); }
+
+  /* GRID */
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+  @media(max-width:700px) { .grid-2, .grid-3 { grid-template-columns: 1fr; } }
+  @media(max-width:900px) { .grid-3 { grid-template-columns: 1fr 1fr; } }
+
+  /* TEXT ELEMENTS */
+  p { margin-bottom: 10px; color: var(--text); }
+  p:last-child { margin-bottom: 0; }
+  .lead {
+    font-family: var(--font-type);
+    font-size: 14px;
+    color: var(--text-bright);
+    line-height: 1.8;
+    border-left: 3px solid var(--green);
+    padding-left: 16px;
+    margin-bottom: 20px;
+  }
+  .rule-label {
+    font-size: 10px;
+    letter-spacing: 2px;
+    color: var(--green);
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+  .rule-value {
+    font-size: 18px;
+    color: var(--text-bright);
+    font-family: var(--font-display);
+    font-weight: 600;
+    letter-spacing: 1px;
+  }
+
+  /* STAT BLOCKS */
+  .stat-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 6px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 12px;
+  }
+  .stat-row:last-child { border-bottom: none; }
+  .stat-name { color: var(--text-dim); letter-spacing: 1px; }
+  .stat-detail { color: var(--green-bright); font-weight: bold; text-align: right; max-width: 60%; }
+
+  /* FORMULA BOX */
+  .formula {
+    background: var(--bg);
+    border: 1px solid var(--green-dim);
+    padding: 10px 14px;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--green-bright);
+    margin: 8px 0;
+    position: relative;
+  }
+  .formula::before {
+    content: '//';
+    position: absolute;
+    top: 10px; left: -20px;
+    color: var(--green-dim);
+    font-size: 10px;
+  }
+
+  /* PROFESSION SELECTOR */
+  .prof-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 20px; }
+  @media(max-width:700px) { .prof-grid { grid-template-columns: 1fr 1fr; } }
+  .prof-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    padding: 14px;
+    cursor: pointer;
+    transition: all 0.2s;
+    position: relative;
+  }
+  .prof-card:hover { border-color: var(--green); background: var(--surface2); }
+  .prof-card.selected { border-color: var(--green-bright); background: var(--green-glow); }
+  .prof-card.selected::before {
+    content: '▶ SELECTED';
+    position: absolute;
+    top: 4px; right: 6px;
+    font-size: 8px;
+    color: var(--green-bright);
+    letter-spacing: 1px;
+  }
+  .prof-name {
+    font-family: var(--font-display);
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-bright);
+    letter-spacing: 1px;
+    margin-bottom: 6px;
+  }
+  .prof-bonds {
+    font-size: 10px;
+    color: var(--amber-bright);
+    letter-spacing: 1px;
+    margin-bottom: 6px;
+  }
+  .prof-desc {
+    font-size: 11px;
+    color: var(--text-dim);
+    line-height: 1.5;
+  }
+
+  /* SKILL LIST */
+  .skill-list { columns: 2; gap: 10px; }
+  @media(max-width:600px) { .skill-list { columns: 1; } }
+  .skill-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 3px 0;
+    border-bottom: 1px dotted var(--border);
+    font-size: 11px;
+    break-inside: avoid;
+  }
+  .skill-name { color: var(--text); }
+  .skill-pct { color: var(--green-bright); font-weight: bold; min-width: 36px; text-align: right; }
+
+  /* STAT ARRAY TABLE */
+  .stat-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12px;
+    margin: 8px 0;
+  }
+  .stat-table th {
+    background: var(--bg);
+    color: var(--green);
+    letter-spacing: 1px;
+    font-size: 10px;
+    padding: 6px 10px;
+    text-align: center;
+    border: 1px solid var(--border);
+  }
+  .stat-table td {
+    text-align: center;
+    padding: 6px 10px;
+    border: 1px solid var(--border);
+    color: var(--text-bright);
+    font-size: 14px;
+    font-family: var(--font-display);
+  }
+  .stat-table tr:nth-child(even) td { background: var(--surface); }
+  .stat-table tr:nth-child(odd) td { background: var(--bg2); }
+
+  /* SANITY TABLE */
+  .san-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 11px;
+    margin: 8px 0;
+  }
+  .san-table th {
+    background: rgba(139,32,32,0.3);
+    color: #e05050;
+    letter-spacing: 1px;
+    font-size: 10px;
+    padding: 5px 8px;
+    text-align: left;
+    border: 1px solid rgba(139,32,32,0.4);
+  }
+  .san-table td {
+    padding: 4px 8px;
+    border: 1px solid var(--border);
+    color: var(--text);
+  }
+  .san-table td:last-child { color: var(--red-bright); text-align: right; font-family: var(--font-mono); }
+  .san-table tr:nth-child(even) td { background: var(--surface); }
+
+  /* COMBAT ACTIONS */
+  .action-list { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  @media(max-width:600px) { .action-list { grid-template-columns: 1fr; } }
+  .action-item {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    padding: 10px 12px;
+  }
+  .action-name {
+    font-family: var(--font-display);
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--green-bright);
+    letter-spacing: 1px;
+    margin-bottom: 4px;
+    text-transform: uppercase;
+  }
+  .action-desc { font-size: 11px; color: var(--text-dim); line-height: 1.5; }
+
+  /* BADGES */
+  .badge {
+    display: inline-block;
+    font-size: 9px;
+    letter-spacing: 1.5px;
+    padding: 2px 6px;
+    border: 1px solid;
+    text-transform: uppercase;
+    vertical-align: middle;
+    margin-left: 6px;
+  }
+  .badge-green { color: var(--green-bright); border-color: var(--green); background: var(--green-glow); }
+  .badge-red { color: #e05050; border-color: var(--red); background: rgba(139,32,32,0.1); }
+  .badge-amber { color: var(--amber-bright); border-color: var(--amber); background: rgba(184,134,11,0.1); }
+
+  /* CALLOUT */
+  .callout {
+    background: var(--bg);
+    border: 1px solid var(--green-dim);
+    border-left: 4px solid var(--green);
+    padding: 12px 16px;
+    margin: 12px 0;
+    font-family: var(--font-type);
+    font-size: 13px;
+    color: var(--text-bright);
+    line-height: 1.7;
+  }
+  .callout.danger {
+    border-left-color: var(--red-bright);
+    border-color: rgba(139,32,32,0.5);
+  }
+  .callout.warning {
+    border-left-color: var(--amber-bright);
+    border-color: rgba(184,134,11,0.5);
+  }
+
+  /* DIVIDER */
+  .divider {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 20px 0;
+    color: var(--green-dim);
+    font-size: 10px;
+    letter-spacing: 2px;
+  }
+  .divider::before, .divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  /* TUTORIAL OVERLAY */
+  .overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.85);
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+  }
+  .overlay-box {
+    background: var(--bg2);
+    border: 2px solid var(--green);
+    max-width: 560px;
+    width: 100%;
+    padding: 32px;
+    position: relative;
+    box-shadow: 0 0 60px rgba(92,184,92,0.2);
+  }
+  .overlay-stamp {
+    position: absolute;
+    top: -14px; right: 20px;
+    background: var(--bg2);
+    padding: 0 8px;
+    font-size: 9px;
+    letter-spacing: 3px;
+    color: var(--green);
+    border: 1px solid var(--green);
+  }
+  .overlay-title {
+    font-family: var(--font-display);
+    font-size: 18px;
+    font-weight: 600;
+    letter-spacing: 3px;
+    color: var(--green-bright);
+    margin-bottom: 6px;
+  }
+  .overlay-step {
+    font-size: 10px;
+    letter-spacing: 2px;
+    color: var(--text-dim);
+    margin-bottom: 20px;
+  }
+  .overlay-body {
+    font-family: var(--font-type);
+    font-size: 13px;
+    color: var(--text);
+    line-height: 1.8;
+    margin-bottom: 24px;
+  }
+  .overlay-body strong { color: var(--green-bright); font-family: var(--font-mono); font-style: normal; }
+  .overlay-dots {
+    display: flex;
+    gap: 6px;
+    justify-content: center;
+    margin-bottom: 20px;
+  }
+  .dot {
+    width: 8px; height: 8px;
+    border: 1px solid var(--green-dim);
+    border-radius: 50%;
+    transition: all 0.2s;
+  }
+  .dot.active { background: var(--green-bright); border-color: var(--green-bright); }
+  .overlay-btns { display: flex; gap: 10px; justify-content: flex-end; }
+  .btn {
+    background: none;
+    border: 1px solid var(--green);
+    color: var(--green-bright);
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 1px;
+    padding: 8px 18px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .btn:hover { background: var(--green); color: #000; }
+  .btn.secondary { border-color: var(--border); color: var(--text-dim); }
+  .btn.secondary:hover { background: var(--surface); color: var(--text); }
+
+  /* QUICK REF */
+  .quick-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px,1fr)); gap: 10px; }
+  .quick-item {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    padding: 12px;
+  }
+  .quick-label { font-size: 9px; letter-spacing: 2px; color: var(--text-dim); text-transform: uppercase; margin-bottom: 4px; }
+  .quick-val { font-family: var(--font-display); font-size: 16px; color: var(--green-bright); font-weight: 600; }
+  .quick-note { font-size: 10px; color: var(--text-dim); margin-top: 2px; }
+
+  /* SCROLL INDICATOR */
+  .scroll-tip {
+    text-align: center;
+    font-size: 10px;
+    letter-spacing: 2px;
+    color: var(--green-dim);
+    margin-top: 40px;
+    animation: pulse 2s ease infinite;
+  }
+  @keyframes pulse { 0%,100% { opacity: 0.4; } 50% { opacity: 1; } }
+
+  /* HIGHLIGHT */
+  .hl { color: var(--green-bright); }
+  .hl-red { color: #e05050; }
+  .hl-amber { color: var(--amber-bright); }
+
+  hr.thin { border: none; border-top: 1px solid var(--border); margin: 14px 0; }
+
+  ul.dg-list { list-style: none; padding: 0; }
+  ul.dg-list li {
+    padding: 4px 0 4px 16px;
+    border-bottom: 1px dotted var(--border);
+    font-size: 12px;
+    color: var(--text);
+    position: relative;
+  }
+  ul.dg-list li::before {
+    content: '»';
+    position: absolute;
+    left: 0;
+    color: var(--green);
+  }
+  ul.dg-list li:last-child { border-bottom: none; }
+
+  .tag {
+    display: inline-block;
+    font-size: 9px;
+    letter-spacing: 1.5px;
+    padding: 1px 5px;
+    border: 1px solid var(--green-dim);
+    color: var(--green);
+    margin-right: 4px;
+    vertical-align: middle;
+  }
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script type="text/babel">
+const { useState, useCallback } = React;
+
+// ── DATA ───────────────────────────────────────────────────────────────────────
+
+const PROFESSIONS = [
+  {
+    id:'anthropologist', name:'Anthropologist / Historian', bonds:4,
+    desc:'Field expert in strange cultures and ancient history. Strong in Occult, Persuade, and foreign languages.',
+    coreSkills:[
+      {n:'Anthropology or Archaeology',v:'50%'},{n:'Bureaucracy',v:'40%'},
+      {n:'Foreign Language ×1',v:'50%'},{n:'Foreign Language ×2',v:'30%'},
+      {n:'History',v:'60%'},{n:'Occult',v:'40%'},{n:'Persuade',v:'40%'},
+    ],
+    choose:{n:2,from:['Anthropology 40%','Archaeology 40%','HUMINT 50%','Navigate 50%','Ride 50%','Search 60%','Survival 50%']},
+    tips:'Best for investigation and NPC interaction. Four bonds keeps family ties strong — or makes their loss hurt more.'
+  },
+  {
+    id:'computer', name:'Computer Scientist / Engineer', bonds:3,
+    desc:'Tech specialist. Invaluable for digital investigations, communications intercepts, and equipment repair.',
+    coreSkills:[
+      {n:'Computer Science',v:'60%'},{n:'Craft (Electrician)',v:'30%'},
+      {n:'Craft (Mechanic)',v:'30%'},{n:'Craft (Microelectronics)',v:'40%'},
+      {n:'Science (Mathematics)',v:'40%'},{n:'SIGINT',v:'40%'},
+    ],
+    choose:{n:4,from:['Accounting 50%','Bureaucracy 50%','Craft (any) 40%','Foreign Language 40%','Heavy Machinery 50%','Law 40%','Science (any) 40%']},
+    tips:'Essential for modern investigations. Low bonds means less personal attachment — both a freedom and a liability.'
+  },
+  {
+    id:'federal', name:'Federal Agent', bonds:3,
+    desc:'Law enforcement professional. Balanced investigator with strong people skills and solid combat capability.',
+    coreSkills:[
+      {n:'Alertness',v:'50%'},{n:'Bureaucracy',v:'40%'},{n:'Criminology',v:'50%'},
+      {n:'Drive',v:'50%'},{n:'Firearms',v:'50%'},{n:'Forensics',v:'30%'},
+      {n:'HUMINT',v:'60%'},{n:'Law',v:'30%'},{n:'Persuade',v:'50%'},
+      {n:'Search',v:'50%'},{n:'Unarmed Combat',v:'60%'},
+    ],
+    choose:{n:1,from:['Accounting 60%','Computer Science 50%','Foreign Language 50%','Heavy Weapons 50%','Pharmacy 50%']},
+    tips:'The most well-rounded option. Excellent for new players. Bureau credentials open many doors — and attract attention.'
+  },
+  {
+    id:'physician', name:'Physician', bonds:3,
+    desc:'Medical expert. Keeps the team alive and can identify exactly what horrors do to human anatomy.',
+    coreSkills:[
+      {n:'Bureaucracy',v:'50%'},{n:'First Aid',v:'60%'},{n:'Medicine',v:'60%'},
+      {n:'Persuade',v:'40%'},{n:'Pharmacy',v:'50%'},{n:'Science (Biology)',v:'60%'},
+      {n:'Search',v:'40%'},
+    ],
+    choose:{n:2,from:['Forensics 50%','Psychotherapy 60%','Science (any) 50%','Surgery 50%']},
+    tips:'Critical for team survival. Surgery can keep a dying Agent alive. Psychotherapy helps restore SAN — but costs you yours.'
+  },
+  {
+    id:'scientist', name:'Scientist', bonds:4,
+    desc:'Research specialist. Best at understanding weird manifestations of the unnatural through rigorous analysis.',
+    coreSkills:[
+      {n:'Bureaucracy',v:'40%'},{n:'Computer Science',v:'40%'},
+      {n:'Science (primary)',v:'60%'},{n:'Science (secondary)',v:'50%'},{n:'Science (tertiary)',v:'50%'},
+    ],
+    choose:{n:3,from:['Accounting 50%','Craft (any) 40%','Foreign Language 40%','Forensics 40%','Law 40%','Pharmacy 40%']},
+    tips:'Four bonds means strong civilian ties. Science skills let you understand what others can only fear.'
+  },
+  {
+    id:'operator', name:'Special Operator', bonds:2,
+    desc:'Elite soldier turned civilian. Unmatched combat capability with specialized military training.',
+    coreSkills:[
+      {n:'Alertness',v:'60%'},{n:'Athletics',v:'60%'},{n:'Demolitions',v:'40%'},
+      {n:'Firearms',v:'60%'},{n:'Heavy Weapons',v:'50%'},{n:'Melee Weapons',v:'50%'},
+      {n:'Military Science (Land)',v:'60%'},{n:'Navigate',v:'50%'},{n:'Stealth',v:'50%'},
+      {n:'Survival',v:'50%'},{n:'Swim',v:'50%'},{n:'Unarmed Combat',v:'60%'},
+    ],
+    choose:null,
+    tips:'Only 2 bonds — the work has cost you almost everything already. When things go loud, no one is better.'
+  },
+];
+
+const STAT_ARRAYS = [
+  {label:'Balanced',vals:[13,13,12,12,11,11],desc:'Well-rounded. Good for Federal Agents and generalists.'},
+  {label:'Specialist',vals:[15,14,12,11,10,10],desc:'One standout strength. Good for Physicians (INT) or Operators (CON).'},
+  {label:'Exceptional',vals:[17,14,13,10,10,8],desc:'Elite in one area, weak in another. High risk, high reward.'},
+];
+
+const STATS = [
+  {id:'STR',name:'Strength',use:'Physical power — lifting, breaking, melee damage bonus'},
+  {id:'CON',name:'Constitution',use:'Determines HP (avg of STR+CON). Resists injuries and exhaustion'},
+  {id:'DEX',name:'Dexterity',use:'Initiative order in combat. Dodge, Athletics, physical finesse'},
+  {id:'INT',name:'Intelligence',use:'Clear reasoning tasks. Physicians and Scientists need this high'},
+  {id:'POW',name:'Power',use:'Sets WP and SAN (×5). Inner fortitude and will to resist'},
+  {id:'CHA',name:'Charisma',use:'Each Bond starts equal to CHA. Persuasion and social skills'},
+];
+
+const TUTORIAL_STEPS = [
+  {
+    title:'WELCOME TO DELTA GREEN',
+    body:`This primer covers everything you need to join a Delta Green session. Use the <strong>tabs at the top</strong> to navigate between sections.\n\nDelta Green is a horror roleplaying game about federal agents, soldiers, and scholars confronting Lovecraftian threats — and the personal cost of doing so.`
+  },
+  {
+    title:'SECTION 01 — OVERVIEW',
+    body:`Start here to understand the <strong>setting</strong>, your role as a player, and the basic flow of a session. The Handler presents threats; you describe your Agent's response; dice resolve uncertain outcomes.`
+  },
+  {
+    title:'SECTION 02 — CREATE YOUR AGENT',
+    body:`Character creation walks you through six steps: <strong>choose a profession → assign stats → calculate derived attributes → name your bonds → define motivations → pick bonus skills</strong>.\n\nThe interactive profession cards show you exactly what skills each role provides.`
+  },
+  {
+    title:'SECTION 03 — CORE RULES',
+    body:`The dice system is simple: roll <strong>percentile dice (2d10)</strong>. Roll equal to or under your skill to succeed. Critical successes occur on matching dice or a roll of 01. Critical failures on matching dice or 100.`
+  },
+  {
+    title:'SECTION 04 — COMBAT',
+    body:`Combat uses <strong>DEX order</strong> — highest DEX acts first. Each turn you take one action: attack, dodge, fight back, move, or aim. Hand-to-hand attackers can Fight Back as their action, countering while defending.`
+  },
+  {
+    title:'SECTION 05 — SANITY',
+    body:`SAN is your most precious resource. When you witness violence, helplessness, or the Unnatural, roll your current SAN or lower. Success = lower loss. Failure = higher loss. Hit your <strong>Breaking Point</strong> and gain a disorder.`
+  },
+  {
+    title:'SECTION 06 — QUICK REFERENCE',
+    body:`The final tab is a condensed reference sheet for mid-session play. Bookmark it — you'll be reaching for it when things go loud.\n\nGood luck, Agent. The mission is never over.`
+  },
+];
+
+// ── COMPONENTS ─────────────────────────────────────────────────────────────────
+
+function Tutorial({ onClose }) {
+  const [step, setStep] = useState(0);
+  const s = TUTORIAL_STEPS[step];
+  return (
+    <div className="overlay" onClick={onClose}>
+      <div className="overlay-box" onClick={e=>e.stopPropagation()}>
+        <div className="overlay-stamp">FIELD ORIENTATION</div>
+        <div className="overlay-title">{s.title}</div>
+        <div className="overlay-step">STEP {step+1} OF {TUTORIAL_STEPS.length}</div>
+        <div className="overlay-body">
+          {s.body.split('\n').map((l,i)=>(
+            <p key={i} style={{marginBottom:l===''?12:0}}
+               dangerouslySetInnerHTML={{__html:l.replace(/\n/g,'')}}/>
+          ))}
+        </div>
+        <div className="overlay-dots">
+          {TUTORIAL_STEPS.map((_,i)=>(
+            <div key={i} className={`dot${i===step?' active':''}`}
+                 onClick={()=>setStep(i)} style={{cursor:'pointer'}}/>
+          ))}
+        </div>
+        <div className="overlay-btns">
+          {step>0&&<button className="btn secondary" onClick={()=>setStep(step-1)}>← BACK</button>}
+          {step<TUTORIAL_STEPS.length-1
+            ?<button className="btn" onClick={()=>setStep(step+1)}>NEXT →</button>
+            :<button className="btn" onClick={onClose}>BEGIN →</button>
+          }
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function SectionHeader({num,title}) {
+  return (
+    <div className="section-header">
+      <span className="section-num">[{num}]</span>
+      <h2 className="section-title">{title}</h2>
+      <div className="section-line"/>
+    </div>
+  );
+}
+
+// ── SECTIONS ───────────────────────────────────────────────────────────────────
+
+function OverviewSection() {
+  return (
+    <div className="section">
+      <SectionHeader num="01" title="OVERVIEW"/>
+      <div className="lead">
+        Delta Green is a role-playing game about cosmic terror and deadly conspiracy. You are one of those who stand between humanity and forces beyond comprehension — at a shattering personal cost.
+      </div>
+      <div className="grid-2">
+        <div>
+          <div className="card accent">
+            <div className="card-title">YOUR ROLE AS A PLAYER</div>
+            <ul className="dg-list">
+              <li>Describe your Agent's actions in response to the Handler's descriptions</li>
+              <li>Speak in your Agent's voice — think like them, feel the horror with them</li>
+              <li>Roll dice when the Handler calls for it; succeed or fail, the story continues</li>
+              <li>Work with other players — Delta Green is a team game</li>
+              <li>Respond quickly. Keep momentum. Act on instinct.</li>
+            </ul>
+          </div>
+          <div className="card warning">
+            <div className="card-title amber">THE HANDLER</div>
+            <p>One player is the Handler — the narrator, referee, and voice of all NPCs. Trust them. They are presenting a mystery for you to investigate and a horror for you to confront.</p>
+            <p style={{marginTop:8}}>If you disagree with a ruling, let it slide and raise it after the session. Never bog down the game arguing rules mid-crisis.</p>
+          </div>
+        </div>
+        <div>
+          <div className="card">
+            <div className="card-title">WHAT YOU NEED</div>
+            <div className="stat-row"><span className="stat-name">PLAYERS</span><span className="stat-detail">2–6 (3–4 ideal)</span></div>
+            <div className="stat-row"><span className="stat-name">DICE SET</span><span className="stat-detail">D4, D6, D8, D10 ×2, D12, D20</span></div>
+            <div className="stat-row"><span className="stat-name">KEY MECHANIC</span><span className="stat-detail">1D100 (two D10s)</span></div>
+            <div className="stat-row"><span className="stat-name">CHARACTER SHEET</span><span className="stat-detail">Pencil. Change happens.</span></div>
+          </div>
+          <div className="card">
+            <div className="card-title">THE OPERATION STRUCTURE</div>
+            <ul className="dg-list">
+              <li>Handler briefs Agents on a task or threat</li>
+              <li>Agents investigate — NPCs, locations, clues</li>
+              <li>Crisis escalates — violence, horror, the Unnatural</li>
+              <li>Decisions are made, consequences unfold</li>
+              <li>Cover-up and debrief — protect the secret</li>
+            </ul>
+          </div>
+          <div className="callout danger">
+            Mood is everything. Bleak humor is welcome. But don't let laughs kill the tension. When the Handler describes something horrifying — feel it.
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function CreationSection() {
+  const [selProf, setSelProf] = useState(null);
+  const [selArray, setSelArray] = useState(null);
+  const prof = PROFESSIONS.find(p=>p.id===selProf);
+  return (
+    <div className="section">
+      <SectionHeader num="02" title="CREATE YOUR AGENT"/>
+      <div className="callout">
+        Creating an Agent takes only a few minutes. Follow these six steps in order. Most decisions are made in step one — choose your profession wisely.
+      </div>
+
+      {/* STEP 1 */}
+      <div className="divider">STEP 01 // CHOOSE YOUR PROFESSION</div>
+      <p style={{marginBottom:14,color:'var(--text-dim)',fontSize:12}}>
+        Your profession determines your core skills, your number of Bonds, and your role in an operation. Click a card to explore.
+      </p>
+      <div className="prof-grid">
+        {PROFESSIONS.map(p=>(
+          <div key={p.id} className={`prof-card${selProf===p.id?' selected':''}`} onClick={()=>setSelProf(selProf===p.id?null:p.id)}>
+            <div className="prof-name">{p.name}</div>
+            <div className="prof-bonds">⬡ {p.bonds} BONDS</div>
+            <div className="prof-desc">{p.desc}</div>
+          </div>
+        ))}
+      </div>
+      {prof && (
+        <div className="card accent" style={{marginTop:0}}>
+          <div className="card-title">{prof.name.toUpperCase()} — PROFESSIONAL SKILLS</div>
+          <div className="skill-list" style={{marginBottom:12}}>
+            {prof.coreSkills.map((s,i)=>(
+              <div key={i} className="skill-item">
+                <span className="skill-name">{s.n}</span>
+                <span className="skill-pct">{s.v}</span>
+              </div>
+            ))}
+          </div>
+          {prof.choose&&(
+            <p style={{fontSize:11,color:'var(--amber-bright)',marginBottom:8}}>
+              Choose any {prof.choose.n} of: {prof.choose.from.join(' · ')}
+            </p>
+          )}
+          <div className="callout" style={{margin:'0',fontSize:12}}>
+            <strong style={{color:'var(--green-bright)'}}>Handler's Tip:</strong> {prof.tips}
+          </div>
+        </div>
+      )}
+
+      {/* STEP 2 */}
+      <div className="divider">STEP 02 // CHOOSE STATISTICS</div>
+      <p style={{marginBottom:14,color:'var(--text-dim)',fontSize:12}}>
+        Pick one stat array and assign each number to one of the six stats (STR, CON, DEX, INT, POW, CHA). No two stats can share the same number.
+      </p>
+      <div className="grid-3" style={{marginBottom:16}}>
+        {STAT_ARRAYS.map((a,i)=>(
+          <div key={i} className={`card${selArray===i?' accent':''}`} style={{cursor:'pointer'}} onClick={()=>setSelArray(selArray===i?null:i)}>
+            <div className="card-title" style={{color:selArray===i?'var(--green-bright)':'var(--text-dim)'}}>{a.label}</div>
+            <div style={{display:'flex',gap:8,justifyContent:'center',margin:'10px 0'}}>
+              {a.vals.map((v,j)=>(
+                <span key={j} style={{fontFamily:'var(--font-display)',fontSize:18,fontWeight:600,color:'var(--text-bright)'}}>{v}</span>
+              ))}
+            </div>
+            <div style={{fontSize:11,color:'var(--text-dim)'}}>{a.desc}</div>
+          </div>
+        ))}
+      </div>
+      <div className="card">
+        <div className="card-title">THE SIX STATISTICS</div>
+        {STATS.map(s=>(
+          <div key={s.id} className="stat-row">
+            <span className="stat-name"><span className="hl">{s.id}</span> · {s.name}</span>
+            <span className="stat-detail" style={{color:'var(--text-dim)'}}>{s.use}</span>
+          </div>
+        ))}
+        <div style={{marginTop:12,fontSize:11,color:'var(--text-dim)'}}>
+          Each stat also has a ×5 rating — that's the % chance to use it raw in a crisis. INT 13 → INT×5 = 65%.
+        </div>
+      </div>
+
+      {/* STEP 3 */}
+      <div className="divider">STEP 03 // DERIVED ATTRIBUTES</div>
+      <div className="grid-2">
+        <div className="card accent">
+          <div className="card-title">CALCULATE FROM YOUR STATS</div>
+          <div className="formula">HP = (STR + CON) ÷ 2  <span style={{color:'var(--text-dim)',fontSize:10}}>round up</span></div>
+          <div className="formula">WP = POW</div>
+          <div className="formula">SAN = POW × 5</div>
+          <div className="formula">Breaking Point = SAN − POW</div>
+          <p style={{fontSize:11,color:'var(--text-dim)',marginTop:10}}>
+            Example: STR 11, CON 12, POW 13 → HP 12, WP 13, SAN 65, BP 52
+          </p>
+        </div>
+        <div>
+          <div className="card">
+            <div className="card-title">WHAT THEY MEAN</div>
+            <div className="stat-row"><span className="stat-name hl">HP</span><span className="stat-detail">Physical health. Reach 2 HP → unconscious. Reach 0 → likely dead.</span></div>
+            <div className="stat-row"><span className="stat-name hl">WP</span><span className="stat-detail">Willpower. Spent to reduce SAN loss. At 0 WP → collapse.</span></div>
+            <div className="stat-row"><span className="stat-name hl">SAN</span><span className="stat-detail">Sanity. Drops from horrors. Track it carefully — it's your lifeline.</span></div>
+            <div className="stat-row"><span className="stat-name hl-red">BP</span><span className="stat-detail">Breaking Point. If SAN drops to BP or below, gain a mental disorder.</span></div>
+          </div>
+          <div className="callout warning">
+            <strong style={{color:'var(--amber-bright)'}}>SAN Recovery:</strong> Therapy between operations can raise SAN back up to POW×5. Defeating unnatural threats can raise it higher.
+          </div>
+        </div>
+      </div>
+
+      {/* STEP 4 */}
+      <div className="divider">STEP 04 // NAME YOUR BONDS</div>
+      <div className="card">
+        <div className="card-title">BONDS — YOUR HUMAN CONNECTIONS</div>
+        <p>A Bond is a key relationship — a spouse, a child, a battle-buddy, a support group. Each Bond starts with a score equal to your CHA. When Bonds fall, relationships suffer. Losing all Bonds destroys that part of your Agent's humanity.</p>
+        <hr className="thin"/>
+        <div className="grid-2" style={{marginTop:10}}>
+          <div>
+            <div className="rule-label">Bond Examples</div>
+            <ul className="dg-list" style={{marginTop:6}}>
+              <li>Spouse or ex-spouse</li>
+              <li>Son or daughter</li>
+              <li>Best friend</li>
+              <li>Long-time coworker or partner</li>
+              <li>Psychologist or therapist</li>
+              <li>Siblings</li>
+              <li>Church or support group</li>
+              <li>Fellow survivors of shared trauma</li>
+            </ul>
+          </div>
+          <div>
+            <div className="rule-label">Bonds by Profession</div>
+            {PROFESSIONS.map(p=>(
+              <div key={p.id} className="stat-row" style={{fontSize:11}}>
+                <span className="stat-name">{p.name}</span>
+                <span className="stat-detail" style={{color:'var(--amber-bright)',fontWeight:'bold'}}>{p.bonds} BONDS</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* STEP 5 */}
+      <div className="divider">STEP 05 // DEFINE MOTIVATIONS</div>
+      <div className="grid-2">
+        <div className="card">
+          <div className="card-title">WHAT DRIVES YOUR AGENT?</div>
+          <p>Write up to five motivations — beliefs, drives, or obsessions that keep your Agent going when everything else falls apart. Unlike Bonds, motivations don't have scores.</p>
+          <p>Each time your Agent's SAN hits the Breaking Point, replace one motivation with a new mental disorder. The obsessions that gave you strength become scars.</p>
+          <ul className="dg-list" style={{marginTop:10}}>
+            <li>Protecting the American people</li>
+            <li>Rooting out dangerous conspiracies</li>
+            <li>Intellectual curiosity</li>
+            <li>Devotion to a child or loved one</li>
+            <li>Duty above personal cost</li>
+          </ul>
+        </div>
+        {/* STEP 6 */}
+        <div className="card accent">
+          <div className="card-title">STEP 06 // BONUS SKILLS</div>
+          <p>Pick any <strong style={{color:'var(--green-bright)'}}>eight skills</strong> and add <strong style={{color:'var(--green-bright)'}}>+20%</strong> to each. Rules:</p>
+          <ul className="dg-list" style={{marginTop:10}}>
+            <li>You can stack the bonus on the same skill more than once</li>
+            <li>No skill can exceed 80% at character creation</li>
+            <li>Put excess points elsewhere if a skill would go over 80%</li>
+          </ul>
+          <hr className="thin"/>
+          <div className="rule-label" style={{marginTop:10}}>Skill Rating Guide</div>
+          <div className="stat-row"><span className="stat-name">1%–19%</span><span className="stat-detail">Dabbler</span></div>
+          <div className="stat-row"><span className="stat-name">20%–39%</span><span className="stat-detail">Hobbyist / Basic Training</span></div>
+          <div className="stat-row"><span className="stat-name">40%–59%</span><span className="stat-detail">Years of experience / College major</span></div>
+          <div className="stat-row"><span className="stat-name">60%–79%</span><span className="stat-detail">Decades of experience / Grad degree</span></div>
+          <div className="stat-row"><span className="stat-name">80%–99%</span><span className="stat-detail">A lifetime's mastery</span></div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function RulesSection() {
+  return (
+    <div className="section">
+      <SectionHeader num="03" title="CORE RULES"/>
+      <div className="lead">
+        The rules are simple: the Handler describes the situation; you say what your Agent does; dice resolve uncertain outcomes.
+      </div>
+
+      <div className="divider">THE DICE SYSTEM</div>
+      <div className="grid-2">
+        <div className="card accent">
+          <div className="card-title">ROLLING 1D100 (PERCENTILE)</div>
+          <p>Roll two D10. Designate one as tens, one as units <em>before</em> you roll.</p>
+          <div className="formula">Tens=0, Units=3 → result: 03 (or 3)</div>
+          <div className="formula">Tens=3, Units=0 → result: 30</div>
+          <div className="formula">Tens=0, Units=0 → result: 100</div>
+          <hr className="thin"/>
+          <div className="stat-row"><span className="stat-name hl">SUCCESS</span><span className="stat-detail">Roll ≤ your skill or stat×5</span></div>
+          <div className="stat-row"><span className="stat-name hl">FAILURE</span><span className="stat-detail">Roll above your skill</span></div>
+          <div className="stat-row"><span className="stat-name hl-amber">CRITICAL SUCCESS</span><span className="stat-detail">Matching dice while succeeding, or roll 01</span></div>
+          <div className="stat-row"><span className="stat-name hl-red">CRITICAL FAILURE (FUMBLE)</span><span className="stat-detail">Matching dice while failing, or roll 100</span></div>
+        </div>
+        <div>
+          <div className="card">
+            <div className="card-title">WHEN DO YOU ROLL?</div>
+            <ul className="dg-list">
+              <li><strong style={{color:'var(--green-bright)'}}>No roll needed:</strong> Anyone could do it with effort, and the situation is calm</li>
+              <li><strong style={{color:'var(--amber-bright)'}}>Skill roll:</strong> Only someone with training could succeed</li>
+              <li><strong style={{color:'var(--amber-bright)'}}>Stat×5 roll:</strong> Effort not training — pure Strength, Power, etc.</li>
+              <li><strong style={{color:'var(--red-bright)'}}>Crisis roll:</strong> Things are spinning out of control — roll the dice</li>
+            </ul>
+          </div>
+          <div className="card">
+            <div className="card-title">LUCK ROLL</div>
+            <p>Sometimes the Handler calls a Luck roll — no skill involved. Roll percentile dice. You have exactly a <strong style={{color:'var(--green-bright)'}}>50% chance</strong> of success.</p>
+          </div>
+        </div>
+      </div>
+
+      <div className="divider">MODIFIERS</div>
+      <div className="card">
+        <div className="card-title">BONUSES AND PENALTIES</div>
+        <div className="grid-3">
+          <div>
+            <div className="rule-label">Exceptionally Dire</div>
+            <div className="rule-value hl-red">−20%</div>
+            <div style={{fontSize:11,color:'var(--text-dim)',marginTop:4}}>Circumstances strongly against you</div>
+          </div>
+          <div>
+            <div className="rule-label">Standard</div>
+            <div className="rule-value">Skill %</div>
+            <div style={{fontSize:11,color:'var(--text-dim)',marginTop:4}}>Most situations — roll your base rating</div>
+          </div>
+          <div>
+            <div className="rule-label">Exceptional Advantage</div>
+            <div className="rule-value hl">+20%</div>
+            <div style={{fontSize:11,color:'var(--text-dim)',marginTop:4}}>Circumstances strongly in your favour</div>
+          </div>
+        </div>
+        <div style={{marginTop:12,fontSize:11,color:'var(--text-dim)'}}>In truly extraordinary circumstances: ±40% is possible but rare.</div>
+      </div>
+
+      <div className="divider">OPPOSED ROLLS</div>
+      <div className="grid-2">
+        <div className="card">
+          <div className="card-title">HEAD-TO-HEAD CONTESTS</div>
+          <p>When two characters pit skills against each other (Stealth vs. Alertness, Drive vs. Drive), both roll. The <strong style={{color:'var(--green-bright)'}}>highest successful roll wins.</strong> A critical success beats any ordinary success.</p>
+          <p style={{marginTop:8}}>If both fail, the Handler decides: either keep trying, or the contest ends inconclusively.</p>
+        </div>
+        <div className="card">
+          <div className="card-title">PURSUITS</div>
+          <p>One opposed test = short chase. For a full pursuit, one side needs <strong style={{color:'var(--green-bright)'}}>two successes</strong> — wins cancel out.</p>
+          <ul className="dg-list" style={{marginTop:8}}>
+            <li>Quarry wins → increases lead</li>
+            <li>Pursuer wins once → reduces lead</li>
+            <li>Pursuer wins twice → catches up</li>
+            <li>Critical = 2 successes; Fumble = 2 failures</li>
+          </ul>
+        </div>
+      </div>
+
+      <div className="divider">SKILL IMPROVEMENT</div>
+      <div className="card accent">
+        <div className="card-title">LEARNING FROM FAILURE</div>
+        <p>Mark the checkbox next to a skill when you <strong style={{color:'var(--red-bright)'}}>attempt it and fail</strong> during the session. After the session ends, roll for each checked skill: if you roll above your current rating, add 1D4 to it. Then erase all checks.</p>
+        <p style={{marginTop:8,fontSize:11,color:'var(--text-dim)'}}>You don't improve by succeeding — you improve by failing and learning from it.</p>
+      </div>
+    </div>
+  );
+}
+
+function CombatSection() {
+  return (
+    <div className="section">
+      <SectionHeader num="04" title="COMBAT"/>
+      <div className="callout danger">
+        Combat can take your Agent out of the game quickly and permanently. Do not engage lightly. A dead Agent has no story left.
+      </div>
+
+      <div className="divider">TURN STRUCTURE</div>
+      <div className="grid-2">
+        <div className="card accent">
+          <div className="card-title">INITIATIVE — DEX ORDER</div>
+          <p>Each turn, characters act once in order of <strong style={{color:'var(--green-bright)'}}>DEX</strong> — highest goes first. If tied, the Handler decides (or both act simultaneously).</p>
+          <p style={{marginTop:8}}>Combat turns represent a few seconds of action — but the Handler may compress or expand them as needed.</p>
+        </div>
+        <div className="card">
+          <div className="card-title">ONE ACTION PER TURN</div>
+          <p>When your turn arrives, choose exactly one action from the list. You cannot split actions or reserve partial movements unless the action specifies it.</p>
+          <p style={{marginTop:8}}>You may, however, <strong style={{color:'var(--green-bright)'}}>Dodge or Fight Back</strong> against an incoming attack before your DEX order — but it then becomes your sole action for that turn.</p>
+        </div>
+      </div>
+
+      <div className="divider">COMBAT ACTIONS</div>
+      <div className="action-list">
+        {[
+          {name:'AIM',desc:'Take a turn to sight carefully. Adds +20% to your next attack roll.'},
+          {name:'ATTACK',desc:'Inflict damage on a target. Usually represents multiple blows or 2–3 shots. Includes self-defense in melee.'},
+          {name:'CALLED SHOT',desc:'Attack that ignores cover or armor at −20% penalty (−40% for a very hard shot).'},
+          {name:'DODGE',desc:'Roll Dodge to evade all hand-to-hand attacks that turn, or duck behind nearby cover vs. ranged attacks.'},
+          {name:'FIGHT BACK',desc:'Roll Melee or Unarmed to oppose a melee attack. If your roll beats theirs, your offensive action takes effect instead.'},
+          {name:'DISARM',desc:'Roll Unarmed Combat to force the target to drop a held weapon or object.'},
+          {name:'PIN',desc:'Hold someone down. They can only try to Escape. You can attack a pinned target at +20%.'},
+          {name:'ESCAPE',desc:'Get out of a pin. Roll STR×5 or Unarmed (whichever is better). Success = free; failure = stay pinned.'},
+          {name:'MOVE',desc:'Jog 10m, run 20m, or sprint 30m. You can move ~3m as part of another action.'},
+          {name:'WAIT',desc:'Delay your action to occur after someone else acts this turn.'},
+        ].map((a,i)=>(
+          <div key={i} className="action-item">
+            <div className="action-name">{a.name}</div>
+            <div className="action-desc">{a.desc}</div>
+          </div>
+        ))}
+      </div>
+
+      <div className="divider">DEFENSE ROLLS</div>
+      <div className="card">
+        <div className="card-title">DEFENDING YOURSELF</div>
+        <p>You can <strong style={{color:'var(--green-bright)'}}>Dodge or Fight Back</strong> against an incoming attack even before your DEX order — but it becomes your <em>only</em> action that turn.</p>
+        <hr className="thin"/>
+        <div className="stat-row">
+          <span className="stat-name hl">DODGING</span>
+          <span className="stat-detail">Opposes all melee attacks that turn + lets you duck ranged attacks behind nearby cover. Never inflicts damage.</span>
+        </div>
+        <div className="stat-row">
+          <span className="stat-name hl">FIGHTING BACK</span>
+          <span className="stat-detail">One roll defends against all melee attackers; your chosen offensive action affects one target. Cannot block ranged attacks.</span>
+        </div>
+        <div style={{marginTop:12,fontSize:11,color:'var(--text-dim)'}}>
+          <strong style={{color:'var(--red-bright)'}}>Cannot defend:</strong> Agents who are pinned or unaware of an incoming attack cannot Dodge or Fight Back.
+        </div>
+      </div>
+
+      <div className="divider">DAMAGE & DEATH</div>
+      <div className="grid-2">
+        <div>
+          <div className="card">
+            <div className="card-title">SAMPLE DAMAGE ROLLS</div>
+            <div className="stat-row"><span className="stat-name">Unarmed</span><span className="stat-detail">1D4−1</span></div>
+            <div className="stat-row"><span className="stat-name">Small knife / club</span><span className="stat-detail">1D4</span></div>
+            <div className="stat-row"><span className="stat-name">Large knife / club</span><span className="stat-detail">1D6</span></div>
+            <div className="stat-row"><span className="stat-name">Pistol</span><span className="stat-detail">1D10</span></div>
+            <div className="stat-row"><span className="stat-name">Rifle</span><span className="stat-detail">1D12</span></div>
+            <div className="stat-row"><span className="stat-name">Shotgun</span><span className="stat-detail">2D8 (half beyond range)</span></div>
+            <div className="stat-row"><span className="stat-name">SMG (short burst)</span><span className="stat-detail hl-red">Lethality 10%</span></div>
+            <div className="stat-row"><span className="stat-name">Hand grenade</span><span className="stat-detail hl-red">Lethality 15%, 10m radius</span></div>
+            <hr className="thin"/>
+            <div style={{fontSize:11,color:'var(--text-dim)'}}>
+              <strong style={{color:'var(--text)'}}>STR Bonus:</strong> STR 13–16 → +1; STR 17–18 → +2; STR 5–8 → −1; STR 3–4 → −2 (applies to melee and unarmed only)
+            </div>
+          </div>
+        </div>
+        <div>
+          <div className="card danger">
+            <div className="card-title red">HP THRESHOLDS</div>
+            <div className="stat-row"><span className="stat-name hl-amber">2 HP or below</span><span className="stat-detail">Unconscious for 1hr. Roll CON or lose stat points permanently.</span></div>
+            <div className="stat-row"><span className="stat-name hl-red">0 HP</span><span className="stat-detail">Dead — unless the Handler says prompt medical care can help.</span></div>
+            <hr className="thin"/>
+            <div className="card-title" style={{marginTop:10,fontSize:11}}>HEALING</div>
+            <div className="stat-row"><span className="stat-name">First Aid</span><span className="stat-detail">1D4 HP. Once per injury only.</span></div>
+            <div className="stat-row"><span className="stat-name">Daily rest (CON test)</span><span className="stat-detail">1 HP per day</span></div>
+            <div className="stat-row"><span className="stat-name">Medicine / Surgery</span><span className="stat-detail">1D4 HP per week</span></div>
+          </div>
+          <div className="card">
+            <div className="card-title amber">LETHALITY RATING</div>
+            <p style={{fontSize:12}}>Heavy weapons (machine guns, explosives) have a Lethality %. Roll that percentage — if you succeed, target drops to 0 HP instantly. If you fail, they still take damage equal to both dice added as individual D10s.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function SanitySection() {
+  const [tab, setTab] = useState('violence');
+  const tables = {
+    violence:{
+      label:'VIOLENCE',col:'TRIGGER',
+      rows:[
+        ['Ambushed or hit by gunfire','0 / 1'],
+        ['Surprised by a corpse','0 / 1'],
+        ['Corpse of someone you love','0 / 1D4'],
+        ['Unexpectedly stabbed or strangled','0 / 1D4'],
+        ['Reduced to 2 HP or less','0 / 1D6'],
+        ['Tortured','0 / 1D10'],
+        ['— INFLICTING —','—'],
+        ['Incapacitate or cripple an innocent','0 / 1D4'],
+        ['Kill in self-defense','0 / 1D4'],
+        ['Kill a murderous enemy in cold blood','0 / 1D6'],
+        ['Torture someone','0 / 1D8'],
+        ['Accidentally kill an innocent','0 / 1D8'],
+        ['Kill an innocent in cold blood','1 / 1D10'],
+      ]
+    },
+    helplessness:{
+      label:'HELPLESSNESS',col:'TRIGGER',
+      rows:[
+        ['Fired from your job','0 / 1'],
+        ['Friend suffers permanent harm','0 / 1'],
+        ['Bond\'s score drops to zero','0 / 1D4'],
+        ['Sentenced to prison','0 / 1D4'],
+        ['Wake up paralyzed or blind','0 / 1D4'],
+        ['Find a friend\'s remains','0 / 1D4'],
+        ['Bond suffers permanent harm / insanity','1 / 1D4'],
+        ['See a friend gruesomely killed','0 / 1D6'],
+        ['A Bond dies','1 / 1D6'],
+        ['See a Bond gruesomely killed','1 / 1D8'],
+      ]
+    },
+    unnatural:{
+      label:'THE UNNATURAL',col:'TRIGGER',
+      rows:[
+        ['Witnessing a benign supernatural effect','0 / 1'],
+        ['Witnessing a violent supernatural effect','0 / 1D6'],
+        ['Seeing a corpse walk','0 / 1D6'],
+        ['Subjected to an overtly supernatural effect','0 / 1D6'],
+        ['Suffering a violent supernatural assault','1 / 1D8+'],
+      ]
+    }
+  };
+  const t = tables[tab];
+  return (
+    <div className="section">
+      <SectionHeader num="05" title="SANITY"/>
+      <div className="lead">
+        SAN is your connection to humanity and reality. When it drops, you lose yourself. When it hits the Breaking Point, you gain a disorder. When it reaches 0, you are irretrievably lost.
+      </div>
+
+      <div className="divider">HOW SAN ROLLS WORK</div>
+      <div className="grid-2">
+        <div className="card accent">
+          <div className="card-title">THE SAN ROLL</div>
+          <p>When a threat triggers a SAN test, roll percentile dice against your <strong style={{color:'var(--green-bright)'}}>current SAN score</strong>:</p>
+          <hr className="thin"/>
+          <div className="stat-row"><span className="stat-name hl">CRITICAL SUCCESS (01)</span><span className="stat-detail">Minimum possible loss</span></div>
+          <div className="stat-row"><span className="stat-name hl">SUCCESS</span><span className="stat-detail">Lower loss (first number)</span></div>
+          <div className="stat-row"><span className="stat-name hl-red">FAILURE</span><span className="stat-detail">Higher loss (second number)</span></div>
+          <div className="stat-row"><span className="stat-name hl-red">CRITICAL FAILURE (100)</span><span className="stat-detail">Maximum possible loss</span></div>
+          <p style={{marginTop:12,fontSize:11,color:'var(--text-dim)'}}>Losses are shown as <strong style={{color:'var(--text)'}}>Success/Failure</strong> — e.g. 0/1D6 means 0 on success, 1D6 on failure.</p>
+        </div>
+        <div>
+          <div className="card danger">
+            <div className="card-title red">THREE TYPES OF INSANITY</div>
+            <div className="stat-row">
+              <span className="stat-name hl-amber">TEMPORARY</span>
+              <span className="stat-detail">Lose 5+ SAN from one event → fight/flight/freeze until source is gone</span>
+            </div>
+            <div className="stat-row">
+              <span className="stat-name hl-amber">DISORDER</span>
+              <span className="stat-detail">SAN hits Breaking Point → gain a long-term disorder (PTSD, phobia, etc.)</span>
+            </div>
+            <div className="stat-row">
+              <span className="stat-name hl-red">PERMANENT</span>
+              <span className="stat-detail">SAN reaches 0 → Agent becomes unplayable. Make a new character.</span>
+            </div>
+          </div>
+          <div className="card">
+            <div className="card-title amber">BREAKING POINT</div>
+            <p style={{fontSize:12}}>When SAN falls to your Breaking Point: gain a disorder matching the trauma type. Then recalculate your new Breaking Point:</p>
+            <div className="formula">New BP = current SAN − POW</div>
+            <p style={{fontSize:11,color:'var(--text-dim)',marginTop:8}}>Each breakdown resets the clock — but POW stays the same, so the gap narrows.</p>
+          </div>
+        </div>
+      </div>
+
+      <div className="divider">SAN LOSS TABLES</div>
+      <div style={{display:'flex',gap:8,marginBottom:14}}>
+        {Object.entries(tables).map(([k,v])=>(
+          <button key={k} className={`tab${tab===k?' active':''}`} style={{border:'1px solid var(--border)'}} onClick={()=>setTab(k)}>{v.label}</button>
+        ))}
+      </div>
+      <table className="san-table">
+        <thead><tr><th style={{width:'70%'}}>{t.col}</th><th>SAN LOSS (SUCCESS / FAIL)</th></tr></thead>
+        <tbody>
+          {t.rows.map((r,i)=>r[0].startsWith('—')
+            ?<tr key={i}><td colSpan={2} style={{color:'var(--green)',fontSize:10,letterSpacing:2,textAlign:'center',background:'var(--bg)',borderColor:'var(--green-dim)'}}>{r[0]}</td></tr>
+            :<tr key={i}><td>{r[0]}</td><td>{r[1]}</td></tr>
+          )}
+        </tbody>
+      </table>
+
+      <div className="divider">PRESERVING SANITY</div>
+      <div className="grid-2">
+        <div className="card accent">
+          <div className="card-title">REDUCING SAN LOSS — BONDS</div>
+          <p>When taking SAN loss, you may project the trauma onto a Bond relationship to reduce it:</p>
+          <ul className="dg-list" style={{marginTop:10}}>
+            <li>Spend 1D4 Willpower Points</li>
+            <li>If you still have at least 1 WP, reduce SAN loss by WP spent (minimum 0)</li>
+            <li>Reduce the chosen Bond's score by the same amount</li>
+            <li>Next interaction with that Bond: describe how the relationship has worsened</li>
+          </ul>
+        </div>
+        <div>
+          <div className="card">
+            <div className="card-title">REPRESSING INSANITY SYMPTOMS</div>
+            <p style={{fontSize:12}}>During temporary insanity or an acute disorder episode, you can try to hold it together:</p>
+            <ul className="dg-list" style={{marginTop:8}}>
+              <li>Spend 1D4 WP and reduce one Bond by the same amount</li>
+              <li>Attempt a SAN test</li>
+              <li>Success → you suppress the symptoms and keep control</li>
+              <li>Failure → the disorder manifests anyway</li>
+            </ul>
+          </div>
+          <div className="card">
+            <div className="card-title amber">ADAPTING TO TRAUMA</div>
+            <p style={{fontSize:12}}>Lose SAN from Violence or Helplessness three times without going insane → become <strong style={{color:'var(--amber-bright)'}}>adapted</strong>. SAN tests for that threat always succeed — but you permanently change:</p>
+            <div className="stat-row"><span className="stat-name">Adapted to Violence</span><span className="stat-detail hl-red">−1D6 CHA + each Bond</span></div>
+            <div className="stat-row"><span className="stat-name">Adapted to Helplessness</span><span className="stat-detail hl-red">−1D6 POW</span></div>
+            <p style={{fontSize:11,color:'var(--text-dim)',marginTop:6}}>No Agent can adapt to the Unnatural.</p>
+          </div>
+        </div>
+      </div>
+
+      <div className="divider">DISORDERS BY TRAUMA TYPE</div>
+      <div className="grid-3">
+        <div className="card">
+          <div className="card-title">FROM VIOLENCE</div>
+          <ul className="dg-list">
+            {['PTSD','Depression','Addiction','Sleep disorder','Paranoia','Intermittent explosive disorder','Ligyrophobia','Totemic compulsion'].map((d,i)=><li key={i}>{d}</li>)}
+          </ul>
+        </div>
+        <div className="card">
+          <div className="card-title">FROM HELPLESSNESS</div>
+          <ul className="dg-list">
+            {['Depression','Obsessive/compulsive disorder','Anxiety disorder','Addiction','Obsession','Enclosure-related phobia','Conversion disorder','Dissociative identity disorder'].map((d,i)=><li key={i}>{d}</li>)}
+          </ul>
+        </div>
+        <div className="card">
+          <div className="card-title">FROM THE UNNATURAL</div>
+          <ul className="dg-list">
+            {['Depersonalization disorder','Depression','Sleep disorder','Amnesia','Fugues','Paranoia','Megalomania','Dissociative identity disorder'].map((d,i)=><li key={i}>{d}</li>)}
+          </ul>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function WillpowerSection() {
+  return (
+    <div className="section">
+      <SectionHeader num="05b" title="WILLPOWER"/>
+      <div className="grid-2">
+        <div>
+          <div className="card accent">
+            <div className="card-title">WILLPOWER POINTS (WP)</div>
+            <p>WP fuels mental resistance — spending it to reduce SAN loss, resist interrogation, and power unnatural rituals. Your maximum WP equals your POW stat.</p>
+            <hr className="thin"/>
+            <div className="stat-row"><span className="stat-name hl-red">1–2 WP</span><span className="stat-detail">Emotional breakdown — −20% to all actions until WP rises above 2</span></div>
+            <div className="stat-row"><span className="stat-name hl-red">0 WP</span><span className="stat-detail">Collapse. Incapacitated. Cannot succeed at any tests — including SAN rolls.</span></div>
+          </div>
+          <div className="card">
+            <div className="card-title">REGAINING WP</div>
+            <div className="stat-row"><span className="stat-name">Full night's sleep</span><span className="stat-detail hl">+1D6 WP</span></div>
+            <div className="stat-row"><span className="stat-name">Fulfill a personal motivation</span><span className="stat-detail hl">+1 WP</span></div>
+            <div style={{marginTop:10,fontSize:11,color:'var(--text-dim)'}}>
+              The Handler must find your motivation fulfillment compelling for the +1 WP to apply.
+            </div>
+          </div>
+        </div>
+        <div>
+          <div className="card danger">
+            <div className="card-title red">EXHAUSTION</div>
+            <p>After temporary insanity or a Breaking Point, you must pass a SAN test the first time you try to sleep. If you fail, or if you work CON hours without rest:</p>
+            <ul className="dg-list" style={{marginTop:10}}>
+              <li>Lose 1D6 WP</li>
+              <li>Become exhausted: −20% to all skills, stats, and SAN rolls</li>
+              <li>A full night's rest removes the exhaustion penalty</li>
+            </ul>
+            <hr className="thin"/>
+            <div style={{fontSize:11,color:'var(--text-dim)'}}>
+              Liquor or sleeping pills → <span className="hl">+20%</span> to sleep SAN test.<br/>
+              Stimulants → offset −10% exhaustion penalty for 2D6 hours.<br/>
+              Frequent use → likely addiction disorder.
+            </div>
+          </div>
+          <div className="card">
+            <div className="card-title amber">BONDING WITH TEAMMATES</div>
+            <p style={{fontSize:12}}>After a teammate suffers catastrophic trauma, roll a SAN test. If you fail, emotional bonds form:</p>
+            <ul className="dg-list" style={{marginTop:8}}>
+              <li>No existing Bond → gain new Bond at CHA÷2. Lose 1D4 from another Bond.</li>
+              <li>Existing Bond → add 1D4 to it (max CHA). Subtract 1 from another Bond.</li>
+            </ul>
+            <p style={{fontSize:11,color:'var(--text-dim)',marginTop:6}}>This is how Delta Green agents become each other's last anchor to humanity.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function QuickRefSection() {
+  return (
+    <div className="section">
+      <SectionHeader num="06" title="QUICK REFERENCE"/>
+      <div className="lead" style={{fontSize:13}}>
+        Everything you need mid-session. At a glance. When the Handler says "roll for SAN" — breathe, find the number, pray for low dice.
+      </div>
+
+      <div className="divider">CORE DICE MECHANICS</div>
+      <div className="quick-grid">
+        <div className="quick-item">
+          <div className="quick-label">To Succeed</div>
+          <div className="quick-val">Roll ≤ Skill%</div>
+          <div className="quick-note">Roll 2D10 as percentile</div>
+        </div>
+        <div className="quick-item">
+          <div className="quick-label">Critical Success</div>
+          <div className="quick-val">01 or doubles ↓</div>
+          <div className="quick-note">Matching dice while succeeding</div>
+        </div>
+        <div className="quick-item">
+          <div className="quick-label">Critical Failure</div>
+          <div className="quick-val">100 or doubles ↑</div>
+          <div className="quick-note">Matching dice while failing</div>
+        </div>
+        <div className="quick-item">
+          <div className="quick-label">Luck Roll</div>
+          <div className="quick-val">50/50</div>
+          <div className="quick-note">No skill — pure chance</div>
+        </div>
+        <div className="quick-item">
+          <div className="quick-label">Bonus</div>
+          <div className="quick-val">+20%</div>
+          <div className="quick-note">Good circumstances</div>
+        </div>
+        <div className="quick-item">
+          <div className="quick-label">Penalty</div>
+          <div className="quick-val">−20%</div>
+          <div className="quick-note">Bad circumstances</div>
+        </div>
+      </div>
+
+      <div className="divider">DERIVED ATTRIBUTES AT A GLANCE</div>
+      <div className="quick-grid">
+        <div className="quick-item">
+          <div className="quick-label">Hit Points</div>
+          <div className="quick-val">(STR+CON)÷2</div>
+          <div className="quick-note">Round up</div>
+        </div>
+        <div className="quick-item">
+          <div className="quick-label">Willpower</div>
+          <div className="quick-val">= POW</div>
+          <div className="quick-note">Spend to reduce SAN loss</div>
+        </div>
+        <div className="quick-item">
+          <div className="quick-label">Sanity</div>
+          <div className="quick-val">= POW × 5</div>
+          <div className="quick-note">Drops from horror</div>
+        </div>
+        <div className="quick-item">
+          <div className="quick-label">Breaking Point</div>
+          <div className="quick-val">SAN − POW</div>
+          <div className="quick-note">Disorder threshold</div>
+        </div>
+        <div className="quick-item">
+          <div className="quick-label">Stat Check</div>
+          <div className="quick-val">Stat × 5</div>
+          <div className="quick-note">e.g. STR 12 → roll 60 or under</div>
+        </div>
+        <div className="quick-item">
+          <div className="quick-label">Bond Start</div>
+          <div className="quick-val">= CHA</div>
+          <div className="quick-note">Falls when you project SAN onto it</div>
+        </div>
+      </div>
+
+      <div className="divider">HP STATES</div>
+      <div className="card">
+        <div className="grid-3" style={{gap:14}}>
+          <div style={{textAlign:'center',padding:'12px'}}>
+            <div className="rule-label">FULL HEALTH</div>
+            <div className="rule-value hl">HP ≥ 3</div>
+            <div style={{fontSize:11,color:'var(--text-dim)',marginTop:6}}>Operating normally</div>
+          </div>
+          <div style={{textAlign:'center',padding:'12px',background:'rgba(184,134,11,0.08)',border:'1px solid rgba(184,134,11,0.3)'}}>
+            <div className="rule-label" style={{color:'var(--amber)'}}>CRITICAL</div>
+            <div className="rule-value hl-amber">HP ≤ 2</div>
+            <div style={{fontSize:11,color:'var(--text-dim)',marginTop:6}}>Unconscious 1hr. CON roll or lose stat points.</div>
+          </div>
+          <div style={{textAlign:'center',padding:'12px',background:'rgba(139,32,32,0.1)',border:'1px solid rgba(139,32,32,0.4)'}}>
+            <div className="rule-label" style={{color:'var(--red)'}}>DEAD</div>
+            <div className="rule-value hl-red">HP = 0</div>
+            <div style={{fontSize:11,color:'var(--text-dim)',marginTop:6}}>Unless medical care intervenes.</div>
+          </div>
+        </div>
+      </div>
+
+      <div className="divider">COMBAT QUICK REFERENCE</div>
+      <div className="grid-2">
+        <div className="card">
+          <div className="card-title">TURN ACTIONS (CHOOSE ONE)</div>
+          <ul className="dg-list">
+            <li><span className="tag">AIM</span> +20% to next attack</li>
+            <li><span className="tag">ATTACK</span> Inflict damage</li>
+            <li><span className="tag">CALLED SHOT</span> Ignore armor, −20% penalty</li>
+            <li><span className="tag">DODGE</span> Oppose all melee, evade ranged via cover</li>
+            <li><span className="tag">FIGHT BACK</span> Defend + counter in one roll</li>
+            <li><span className="tag">MOVE</span> Jog 10m / Run 20m / Sprint 30m</li>
+            <li><span className="tag">PIN</span> Hold target. They can only Escape.</li>
+            <li><span className="tag">WAIT</span> Act later in the turn order</li>
+          </ul>
+        </div>
+        <div className="card">
+          <div className="card-title">SANITY QUICK RULES</div>
+          <ul className="dg-list">
+            <li>Roll current SAN% or lower → pass (lower loss)</li>
+            <li>Lose 5+ SAN in one event → temporarily insane</li>
+            <li>SAN hits Breaking Point → gain a disorder</li>
+            <li>SAN = 0 → permanently insane (retire Agent)</li>
+            <li>Spend 1D4 WP + reduce a Bond → reduce SAN loss</li>
+            <li>Three exposures without insanity → adapted (Violence or Helplessness only)</li>
+            <li>No Agent ever adapts to the Unnatural</li>
+          </ul>
+        </div>
+      </div>
+
+      <div className="divider">STAT ARRAYS</div>
+      <div className="grid-3">
+        {STAT_ARRAYS.map((a,i)=>(
+          <div key={i} className="card">
+            <div className="card-title">{a.label.toUpperCase()}</div>
+            <div style={{display:'flex',gap:10,justifyContent:'center',margin:'8px 0'}}>
+              {a.vals.map((v,j)=>(
+                <span key={j} style={{fontFamily:'var(--font-display)',fontSize:20,fontWeight:700,color:'var(--text-bright)'}}>{v}</span>
+              ))}
+            </div>
+            <div style={{fontSize:11,color:'var(--text-dim)'}}>{a.desc}</div>
+          </div>
+        ))}
+      </div>
+
+      <div className="scroll-tip">// END OF TRANSMISSION — THE MISSION IS NEVER OVER //</div>
+    </div>
+  );
+}
+
+// ── MAIN APP ───────────────────────────────────────────────────────────────────
+
+const TABS = [
+  {id:'overview', label:'OVERVIEW'},
+  {id:'creation', label:'AGENT CREATION'},
+  {id:'rules', label:'CORE RULES'},
+  {id:'combat', label:'COMBAT'},
+  {id:'sanity', label:'SANITY & WP'},
+  {id:'quickref', label:'QUICK REF'},
+];
+
+function App() {
+  const [tab, setTab] = useState('overview');
+  const [showTutorial, setShowTutorial] = useState(true);
+
+  const renderSection = () => {
+    switch(tab) {
+      case 'overview': return <OverviewSection/>;
+      case 'creation': return <CreationSection/>;
+      case 'rules': return <RulesSection/>;
+      case 'combat': return <CombatSection/>;
+      case 'sanity': return <SanitySection/>;
+      case 'quickref': return <QuickRefSection/>;
+      default: return null;
+    }
+  };
+
+  return (
+    <>
+      {showTutorial && <Tutorial onClose={()=>setShowTutorial(false)}/>}
+      <div className="header">
+        <div className="header-inner">
+          <div className="header-top">
+            <div className="logo">
+              <div className="logo-mark"/>
+              <div>
+                <div className="logo-text">DELTA GREEN</div>
+                <div className="logo-sub">PLAYER RULES PRIMER // NEED TO KNOW</div>
+              </div>
+            </div>
+            <div style={{display:'flex',gap:10,alignItems:'center',flexWrap:'wrap'}}>
+              <div className="classification">TOP SECRET // ORCON</div>
+              <button className="tutorial-btn" onClick={()=>setShowTutorial(true)}>⊞ ORIENTATION</button>
+            </div>
+          </div>
+          <nav className="nav-tabs">
+            {TABS.map((t,i)=>(
+              <button key={t.id} className={`tab${tab===t.id?' active':''}`} onClick={()=>setTab(t.id)}>
+                <span className="tab-num">0{i+1}</span>{t.label}
+              </button>
+            ))}
+          </nav>
+        </div>
+      </div>
+      <main className="main">
+        {renderSection()}
+      </main>
+    </>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById('root')).render(<App/>);
+</script>
+</body>
+</html>
