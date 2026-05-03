@@ -7,37 +7,37 @@
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap" rel="stylesheet">
 <style>
   :root {
-    --cream: #FAF7F0;
-    --cream-dark: #F0EBE0;
-    --cream-border: #DDD5C0;
-    --ink: #1E1B14;
-    --ink-soft: #2E2A20;
+    --cream: #12151d;
+    --cream-dark: #181c27;
+    --cream-border: rgba(255,255,255,0.10);
+    --ink: #ede3cc;
+    --ink-soft: #0f1320;
     --aurora-1: #4AACAC;
     --aurora-2: #2D7A8A;
     --aurora-3: #7ED4C8;
     --gold: #B8912A;
     --gold-light: #D4AF5A;
-    --gold-pale: #F5EDD6;
-    --text: #2C2618;
-    --text-mid: #4A4030;
-    --text-light: #6B5E48;
-    --rule: #C8BCA8;
-    --highlight-bg: rgba(74, 172, 172, 0.07);
+    --gold-pale: #F0D99E;
+    --text: #d8cfb8;
+    --text-mid: #c8baa0;
+    --text-light: #a99a80;
+    --rule: rgba(255,255,255,0.10);
+    --highlight-bg: rgba(74, 172, 172, 0.12);
     --highlight-border: rgba(74, 172, 172, 0.35);
-    --warn-bg: rgba(184, 145, 42, 0.08);
+    --warn-bg: rgba(184, 145, 42, 0.14);
     --warn-border: rgba(184, 145, 42, 0.35);
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
 
   body {
-    background: #2A2520;
-    background-image: radial-gradient(ellipse at 30% 0%, rgba(74,172,172,0.06) 0%, transparent 60%),
-                      radial-gradient(ellipse at 70% 100%, rgba(184,145,42,0.05) 0%, transparent 60%);
+    background: #0b0d13;
+    background-image: radial-gradient(ellipse at 30% 0%, rgba(74,172,172,0.12) 0%, transparent 60%),
+                      radial-gradient(ellipse at 70% 100%, rgba(184,145,42,0.10) 0%, transparent 60%);
     font-family: 'Crimson Pro', Georgia, serif;
     color: var(--text);
-    font-size: 15.5px;
-    line-height: 1.78;
+    font-size: 16px;
+    line-height: 1.75;
     min-height: 100vh;
   }
 
@@ -46,8 +46,8 @@
     margin: 2.5rem auto;
     background: var(--cream);
     box-shadow: 0 0 0 1px var(--cream-border),
-                0 0 0 5px #2A2520,
-                0 0 0 6px rgba(74,172,172,0.3),
+                0 0 0 5px #0b0d13,
+                0 0 0 6px rgba(74,172,172,0.22),
                 0 30px 80px rgba(0,0,0,0.7);
     position: relative;
   }
@@ -78,14 +78,14 @@
     padding: 2.8rem 3.5rem 2.2rem;
     border-bottom: 1px solid var(--rule);
     position: relative;
-    background: linear-gradient(to bottom, rgba(74,172,172,0.04), transparent);
+    background: linear-gradient(to bottom, rgba(74,172,172,0.08), transparent);
   }
 
   .header-eyebrow {
     font-family: 'Cinzel', serif;
-    font-size: 10px;
+    font-size: 10.5px;
     letter-spacing: 0.3em;
-    color: var(--aurora-2);
+    color: #7ebbc8;
     text-transform: uppercase;
     margin-bottom: 0.9rem;
   }
@@ -101,9 +101,9 @@
 
   .header-sub {
     font-family: 'Cinzel', serif;
-    font-size: 1rem;
+    font-size: 1.02rem;
     font-weight: 400;
-    color: var(--gold);
+    color: var(--gold-pale);
     letter-spacing: 0.06em;
     margin-bottom: 1.4rem;
   }
@@ -123,8 +123,8 @@
     border: 1px solid;
   }
   .htag-aurora { border-color: rgba(74,172,172,0.5); color: var(--aurora-2); background: var(--highlight-bg); }
-  .htag-gold { border-color: rgba(184,145,42,0.4); color: var(--gold); background: var(--warn-bg); }
-  .htag-ink { border-color: var(--rule); color: var(--text-light); background: transparent; }
+  .htag-gold { border-color: rgba(184,145,42,0.45); color: var(--gold-pale); background: var(--warn-bg); }
+  .htag-ink { border-color: var(--rule); color: var(--text-light); background: rgba(255,255,255,0.02); }
 
   /* Navigation bar */
   .nav-bar {
@@ -132,32 +132,32 @@
     padding: 0.6rem 3.5rem;
     display: flex;
     gap: 1.8rem;
-    border-bottom: 2px solid var(--aurora-2);
+    border-bottom: 1px solid rgba(74,172,172,0.45);
     flex-wrap: wrap;
   }
 
   .nav-item {
     font-family: 'Cinzel', serif;
-    font-size: 10px;
+    font-size: 11px;
     letter-spacing: 0.18em;
-    color: #8A8070;
+    color: #b7aa92;
     text-transform: uppercase;
     cursor: default;
     transition: color 0.15s;
   }
-  .nav-item:hover { color: var(--aurora-3); }
+  .nav-item:hover { color: #b6e6db; }
 
   a {
     font-family: 'Cinzel', serif;
-    font-size: 10px;
+    font-size: 11px;
     letter-spacing: 0.18em;
-    color: #8A8070;
+    color: #b7aa92;
     text-transform: uppercase;
     cursor: default;
     transition: color 0.15s;
     text-decoration: none;
   }
-  a:hover { color: var(--aurora-3); }
+  a:hover { color: #b6e6db; }
   
   /* Body */
   .body {
@@ -173,9 +173,9 @@
 
   .section-num {
     font-family: 'Cinzel', serif;
-    font-size: 9px;
+    font-size: 9.5px;
     letter-spacing: 0.35em;
-    color: var(--aurora-2);
+    color: #8bc0cc;
     text-transform: uppercase;
     margin-bottom: 0.3rem;
     display: flex;
@@ -200,9 +200,9 @@
 
   h3 {
     font-family: 'Cinzel', serif;
-    font-size: 0.92rem;
+    font-size: 0.95rem;
     font-weight: 600;
-    color: var(--gold);
+    color: var(--gold-pale);
     margin: 1.6rem 0 0.5rem;
     letter-spacing: 0.05em;
     text-transform: uppercase;
@@ -224,7 +224,7 @@
     margin: 1.2rem 0;
     background: var(--highlight-bg);
     font-style: italic;
-    color: var(--text-mid);
+    color: #d5c8ae;
     font-size: 15px;
   }
 
@@ -283,8 +283,8 @@
     margin-bottom: 0.2rem;
   }
   .card-sub {
-    font-size: 11px;
-    color: var(--aurora-2);
+    font-size: 11.5px;
+    color: #8fc3ce;
     font-style: italic;
     margin-bottom: 0.5rem;
     font-family: 'Crimson Pro', serif;
@@ -305,7 +305,7 @@
   }
   .god-name {
     font-family: 'Cinzel', serif;
-    font-size: 12px;
+    font-size: 12.5px;
     font-weight: 600;
     color: var(--ink);
     margin-bottom: 1px;
@@ -327,7 +327,7 @@
     padding: 0.45rem 0.7rem;
     background: var(--cream-dark);
     border: 1px solid var(--cream-border);
-    font-size: 14.5px;
+    font-size: 15px;
   }
   .rules-list li .rule-key {
     font-family: 'Cinzel', serif;
@@ -354,7 +354,7 @@
     display: flex;
     gap: 0.8rem;
     align-items: baseline;
-    font-size: 14.5px;
+    font-size: 15px;
   }
   .q-list li::before {
     content: counter(q);
@@ -396,8 +396,8 @@
     border: 1px solid;
     text-align: center;
   }
-  .flag-out { border-color: rgba(139,40,40,0.4); background: rgba(139,40,40,0.06); color: #6B1A1A; }
-  .flag-off { border-color: rgba(184,145,42,0.4); background: var(--warn-bg); color: #5C4010; }
+  .flag-out { border-color: rgba(211,90,90,0.5); background: rgba(139,40,40,0.12); color: #efb3b3; }
+  .flag-off { border-color: rgba(184,145,42,0.5); background: var(--warn-bg); color: #f0d99e; }
   .flag-warn { border-color: var(--rule); background: var(--cream-dark); color: var(--text-light); }
   .flag-label { font-family: 'Cinzel', serif; font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase; display: block; margin-bottom: 3px; }
 
@@ -421,8 +421,8 @@
     align-items: center;
     background: var(--ink-soft);
   }
-  .footer-l { font-family: 'Cinzel', serif; font-size: 9px; letter-spacing: 0.2em; color: #5A5040; text-transform: uppercase; }
-  .footer-r { font-family: 'Crimson Pro', serif; font-style: italic; font-size: 11px; color: rgba(74,172,172,0.5); }
+  .footer-l { font-family: 'Cinzel', serif; font-size: 9.5px; letter-spacing: 0.2em; color: #a2957d; text-transform: uppercase; }
+  .footer-r { font-family: 'Crimson Pro', serif; font-style: italic; font-size: 11.5px; color: rgba(126,188,196,0.75); }
 
   ul { padding-left: 1.4rem; margin-bottom: 0.8rem; }
   ul li { font-size: 15px; margin-bottom: 0.3rem; }
@@ -523,31 +523,33 @@
   padding: 0.85rem 1.2rem 0;
 }
 
-.back-link {
+  .back-link {
   display: inline-flex;
   align-items: center;
   gap: 0.35rem;
-  font-family: inherit;
-  font-size: 0.78rem;
+    font-family: 'Cinzel', serif;
+    font-size: 0.66rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
   line-height: 1.2;
-  color: var(--color-text-secondary, var(--text-mid, var(--muted, inherit)));
+    color: #b7aa92;
   text-decoration: none;
-  border: 1px solid var(--color-border-tertiary, var(--border, var(--border2, currentColor)));
-  background: var(--color-background-primary, var(--surface, rgba(255,255,255,0.03)));
-  border-radius: 999px;
-  padding: 0.35rem 0.68rem;
+    border: 1px solid rgba(255,255,255,0.10);
+    background: rgba(255,255,255,0.02);
+    border-radius: 3px;
+    padding: 0.4rem 0.75rem;
   opacity: 0.92;
   transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease, opacity 0.2s ease;
 }
 
-.back-link:hover {
+  .back-link:hover {
   opacity: 1;
-  color: var(--color-text-primary, var(--text, inherit));
-  background: var(--color-background-secondary, var(--surface2, rgba(255,255,255,0.07)));
+    color: #ddd4bb;
+    background: rgba(255,255,255,0.05);
 }
 
 .back-link:focus-visible {
-  outline: 2px solid var(--color-text-info, var(--gold, var(--text-link, currentColor)));
+    outline: 2px solid rgba(126,188,196,0.8);
   outline-offset: 2px;
 }
 
