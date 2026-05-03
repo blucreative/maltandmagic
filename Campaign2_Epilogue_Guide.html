@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Campaign 2 Epilogue Guide</title>
+  <style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Crimson+Pro:ital,wght@0,300;0,400;0,500;1,400&display=swap');
+
+  :root {
+    --bg:       #0b0d13;
+    --surface:  #12151d;
+    --surface2: #181c27;
+    --border:   rgba(255,255,255,0.07);
+    --text:     #cec3aa;
+    --text-dim: rgba(180,168,146,0.55);
+    --text-faint: rgba(160,150,130,0.35);
+    --aurora-line: linear-gradient(90deg, transparent 0%, rgba(70,120,210,0.7) 25%, rgba(70,200,150,0.6) 55%, rgba(160,80,210,0.4) 80%, transparent 100%);
+  }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Crimson Pro', Palatino, Georgia, serif;
+    min-height: 100vh;
+    padding: 1.2rem;
+  }
+
+  .back-nav {
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 0.2rem 0 0.7rem;
+  }
+
+  .back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-family: 'Cinzel', Palatino, serif;
+    font-size: 10px;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+    line-height: 1.2;
+    color: rgba(195,185,162,0.72);
+    text-decoration: none;
+    border: 1px solid rgba(255,255,255,0.09);
+    background: rgba(255,255,255,0.02);
+    border-radius: 3px;
+    padding: 5px 11px;
+    transition: all 0.18s;
+  }
+
+  .back-link:hover {
+    background: rgba(255,255,255,0.05);
+    color: #ddd4bb;
+  }
+
+  .back-link:focus-visible {
+    outline: 2px solid rgba(160,150,130,0.5);
+    outline-offset: 2px;
+  }
+
+  .page {
+    max-width: 1080px;
+    margin: 0 auto;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    overflow: hidden;
+  }
+
+  .page-header {
+    position: relative;
+    text-align: center;
+    padding: 42px 24px 28px;
+    border-bottom: 1px solid var(--border);
+    background:
+      radial-gradient(ellipse 90% 65% at 50% -5%, rgba(45,85,190,0.2) 0%, transparent 70%),
+      radial-gradient(ellipse 55% 40% at 20% 0%,  rgba(70,180,120,0.09) 0%, transparent 60%),
+      radial-gradient(ellipse 45% 30% at 80% 0%,  rgba(150,70,210,0.07) 0%, transparent 55%);
+    overflow: hidden;
+  }
+
+  .page-header::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: var(--aurora-line);
+  }
+
+  .title {
+    font-family: 'Cinzel', Palatino, serif;
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    font-weight: 700;
+    color: #ede3cc;
+    letter-spacing: 1.2px;
+    text-shadow: 0 0 50px rgba(70,110,210,0.35);
+    margin-bottom: 7px;
+  }
+
+  .sub {
+    font-size: 13px;
+    color: var(--text-dim);
+    font-style: italic;
+    letter-spacing: 0.3px;
+  }
+
+  .guide {
+    padding: 18px 22px 20px;
+    background: linear-gradient(to bottom, rgba(255,255,255,0.01), transparent);
+  }
+
+  .lead {
+    font-size: 16px;
+    line-height: 1.72;
+    color: rgba(205,194,170,0.95);
+    margin-bottom: 14px;
+  }
+
+  .block {
+    border-top: 1px solid rgba(255,255,255,0.06);
+    padding-top: 14px;
+    margin-top: 14px;
+  }
+
+  .block h2 {
+    font-family: 'Cinzel', Palatino, serif;
+    font-size: 14px;
+    letter-spacing: 0.55px;
+    color: #ede3cc;
+    margin-bottom: 8px;
+  }
+
+  .block p {
+    font-size: 15px;
+    line-height: 1.7;
+    color: rgba(205,194,170,0.92);
+    margin-bottom: 10px;
+  }
+
+  .group-label {
+    font-family: 'Cinzel', Palatino, serif;
+    font-size: 10px;
+    letter-spacing: 0.7px;
+    text-transform: uppercase;
+    color: rgba(170,160,138,0.62);
+    margin: 10px 0 4px;
+  }
+
+  ul {
+    margin: 0 0 10px 20px;
+  }
+
+  li {
+    font-size: 15px;
+    line-height: 1.66;
+    color: rgba(205,194,170,0.92);
+    margin-bottom: 6px;
+  }
+
+  .note {
+    margin-top: 10px;
+    font-size: 14px;
+    color: rgba(205,194,170,0.9);
+    background: rgba(70,120,210,0.08);
+    border-left: 2px solid rgba(70,120,210,0.42);
+    border-radius: 0 4px 4px 0;
+    padding: 8px 11px;
+    line-height: 1.55;
+  }
+
+  .outro {
+    border-top: 1px solid rgba(255,255,255,0.06);
+    margin-top: 16px;
+    padding-top: 14px;
+    font-size: 16px;
+    line-height: 1.72;
+    color: rgba(205,194,170,0.95);
+  }
+
+  @media (max-width: 760px) {
+    body {
+      padding: 0.8rem;
+    }
+
+    .back-nav {
+      padding-bottom: 0.55rem;
+    }
+
+    .page-header,
+    .guide {
+      padding-left: 12px;
+      padding-right: 12px;
+    }
+
+    .title {
+      font-size: 1.22rem;
+    }
+  }
+  </style>
+</head>
+<body>
+<nav class="back-nav" aria-label="Page navigation">
+  <a class="back-link" href="index.html">&larr; Back to Index</a>
+</nav>
+
+<main class="page">
+  <header class="page-header">
+    <h1 class="title">Campaign 2 Epilogue Guide</h1>
+    <p class="sub">Epilogue Planning: A Guide for Players</p>
+  </header>
+
+  <section class="guide">
+    <p class="lead">As Campaign 2 draws to a close, we'll be holding an epilogue episode to honour your characters' journeys and close out their arcs. Here's how to think through what you want that to look like.</p>
+
+    <div class="block">
+      <h2>Start With the Arc, Not the Ending</h2>
+      <p>Before you think about what happens, think about what your character has been about. Ask yourself:</p>
+      <ul>
+        <li>What was the central wound, question, or drive that defined my character at the start?</li>
+        <li>How has that changed over the course of the campaign?</li>
+        <li>What did they gain, lose, or become that they couldn't have imagined at the beginning?</li>
+      </ul>
+      <p>Your epilogue should feel like the answer to those questions - not necessarily a happy answer, but a true one.</p>
+    </div>
+
+    <div class="block">
+      <h2>Questions to Help You Shape Your Epilogue</h2>
+      <div class="group-label">On resolution:</div>
+      <ul>
+        <li>Is there a relationship (ally, rival, loved one, enemy) that needs a final beat?</li>
+        <li>Is there a place your character would return to, or finally leave behind?</li>
+        <li>What does your character do with themselves now that it's over?</li>
+      </ul>
+
+      <div class="group-label">On tone:</div>
+      <ul>
+        <li>Do you want your epilogue to feel triumphant, bittersweet, quiet, or something else entirely?</li>
+        <li>Does your character get peace - or do they carry the weight forward?</li>
+      </ul>
+
+      <div class="group-label">On loose ends:</div>
+      <ul>
+        <li>Are there threads you'd rather leave open for a potential One Shot?</li>
+        <li>Are there things you don't want resolved - mysteries or tensions that feel right to leave unfinished?</li>
+      </ul>
+    </div>
+
+    <div class="block">
+      <h2>Practical Things to Bring to Me</h2>
+      <p>When you're ready, share:</p>
+      <ul>
+        <li>A short vision - even just a sentence or two of what you imagine for your character's ending</li>
+        <li>Any key NPCs you want present or acknowledged</li>
+        <li>The emotional note you want to end on</li>
+        <li>Anything you'd like kept open for future play</li>
+      </ul>
+      <p>You don't need a fully scripted scene - that's my job. Just give me the soul of it and I'll build around you.</p>
+    </div>
+
+    <div class="block">
+      <h2>A Few Gentle Reminders</h2>
+      <ul>
+        <li>Epilogues don't have to be long. Sometimes the most powerful endings are small and specific.</li>
+        <li>It's okay to grieve your character a little. That's part of closing something that mattered.</li>
+        <li>You've earned whatever ending feels right. Don't talk yourself out of the thing you actually want.</li>
+      </ul>
+    </div>
+
+    <p class="outro">Looking forward to giving these characters the send-off they deserve. Come with your ideas - no wrong answers.</p>
+  </section>
+</main>
+</body>
+</html>
