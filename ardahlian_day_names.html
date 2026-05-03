@@ -1,490 +1,551 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Auroran Day Names</title>
-  <style>
-  /* ── base reset ── */
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ardahlian Day Names</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Cinzel+Decorative:wght@700&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap" rel="stylesheet">
+<script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+<script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+<style>
+*,*::before,*::after { box-sizing:border-box; margin:0; padding:0; }
 
-  /* ── font ── */
-  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=swap');
+:root {
+  --bg:         #0b0d1b;
+  --surface:    #111426;
+  --surface2:   #191d35;
+  --surface3:   #20253f;
+  --border:     rgba(190,155,75,0.10);
+  --border-mid: rgba(190,155,75,0.22);
+  --border-hi:  rgba(190,155,75,0.45);
+  --gold:       #c4943a;
+  --gold-lt:    #ddb860;
+  --txt:        #e0d8c6;
+  --txt2:       #9a8f7a;
+  --txt3:       #52493e;
+  /* register colours */
+  --formal-bg:  rgba(72,120,188,0.18);
+  --formal-bdr: rgba(72,120,188,0.38);
+  --formal-txt: #7aaae0;
+  --common-bg:  rgba(184,138,40,0.18);
+  --common-bdr: rgba(184,138,40,0.38);
+  --common-txt: #c8a040;
+  /* anchor */
+  --anchor-bdr: rgba(196,148,58,0.55);
+  --anchor-glow:rgba(196,148,58,0.10);
 
-  body {
-    font-family: 'Inter', system-ui, -apple-system, sans-serif;
-    font-size: 16px;
-    font-weight: 400;
-    line-height: 1.7;
-    background: #ffffff;
-    color: #1a1a1a;
-    padding: 1.5rem;
-  }
+  --font-d: 'Cinzel Decorative', Georgia, serif;
+  --font-h: 'Cinzel', Georgia, serif;
+  --font-b: 'Crimson Pro', Georgia, serif;
+}
 
-  /* ── css variables — light mode ── */
-  :root {
-    --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
-    --font-serif: Georgia, serif;
-    --font-mono: 'Courier New', monospace;
+html { scroll-behavior: smooth; }
 
-    --color-text-primary: #1a1a1a;
-    --color-text-secondary: #4a4a4a;
-    --color-text-tertiary: #6b6b6b;
-    --color-text-info: #0c447c;
-    --color-text-success: #27500a;
-    --color-text-warning: #633806;
-    --color-text-danger: #791f1f;
+body {
+  background: var(--bg);
+  background-image:
+    radial-gradient(ellipse 80% 40% at 50% -5%, rgba(30,45,110,0.55) 0%, transparent 100%),
+    radial-gradient(ellipse 60% 50% at 100% 110%, rgba(55,15,55,0.25) 0%, transparent 100%);
+  background-attachment: fixed;
+  color: var(--txt);
+  font-family: var(--font-b);
+  font-size: 16px;
+  min-height: 100vh;
+}
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background-image:
+    radial-gradient(circle, rgba(255,255,240,.85) 1px, transparent 1px),
+    radial-gradient(circle, rgba(255,255,240,.55) 1px, transparent 1px),
+    radial-gradient(circle, rgba(255,255,240,.40) 1px, transparent 1px);
+  background-size: 400px 400px, 250px 250px, 170px 170px;
+  background-position: 23px 47px, 130px 200px, 60px 310px;
+  opacity: 0.18;
+}
 
-    --color-background-primary: #ffffff;
-    --color-background-secondary: #f5f4f0;
-    --color-background-tertiary: #eeedea;
-    --color-background-info: #e6f1fb;
-    --color-background-success: #eaf3de;
-    --color-background-warning: #faeeda;
-    --color-background-danger: #fcebeb;
+.page {
+  position: relative;
+  z-index: 1;
+  max-width: 1060px;
+  margin: 0 auto;
+  padding: 0 1.5rem 5rem;
+}
 
-    --color-border-tertiary: rgba(0,0,0,0.12);
-    --color-border-secondary: rgba(0,0,0,0.22);
-    --color-border-primary: rgba(0,0,0,0.35);
-    --color-border-info: #85b7eb;
-    --color-border-success: #97c459;
-    --color-border-warning: #ef9f27;
-    --color-border-danger: #f09595;
+/* ── header ── */
+.hdr {
+  text-align: center;
+  padding: 2.8rem 0 2rem;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 2.2rem;
+}
+.hdr-orn { display:block; font-size:11px; letter-spacing:0.5em; color:var(--gold); opacity:0.55; margin-bottom:0.9rem; }
+.hdr-title { font-family:var(--font-d); font-size:clamp(1.5rem,3.5vw,2.4rem); font-weight:700; color:var(--gold-lt); letter-spacing:0.04em; line-height:1.1; text-shadow:0 0 50px rgba(210,160,60,0.28); }
+.hdr-sub { font-style:italic; color:var(--txt2); margin-top:0.5rem; letter-spacing:0.05em; font-size:0.95rem; }
+.hdr-intro { max-width:680px; margin:1.1rem auto 0; font-size:0.95rem; color:var(--txt2); line-height:1.75; }
 
-    --border-radius-md: 8px;
-    --border-radius-lg: 12px;
-    --border-radius-xl: 16px;
-  }
+/* ── legend ── */
+.legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1.4rem;
+  margin-bottom: 1.8rem;
+  align-items: center;
+}
+.leg-item { display:flex; align-items:center; gap:0.5rem; }
+.leg-pip {
+  width: 20px; height: 20px;
+  border-radius: 4px;
+  border: 1px solid;
+  display: flex; align-items:center; justify-content:center;
+  font-size: 9px;
+  font-family: var(--font-h);
+  flex-shrink: 0;
+}
+.leg-pip-f { background:var(--formal-bg); border-color:var(--formal-bdr); color:var(--formal-txt); }
+.leg-pip-c { background:var(--common-bg); border-color:var(--common-bdr); color:var(--common-txt); }
+.leg-pip-a { background:var(--anchor-glow); border-color:var(--anchor-bdr); color:var(--gold); }
+.leg-txt { font-family:var(--font-b); font-size:13px; color:var(--txt2); }
+.leg-txt strong { font-family:var(--font-h); font-size:10px; letter-spacing:0.05em; font-weight:600; }
 
-  /* ── dark mode ── */
-  @media (prefers-color-scheme: dark) {
-    body {
-      background: #1a1917;
-      color: #e8e6e0;
-    }
-    :root {
-      --color-text-primary: #e8e6e0;
-      --color-text-secondary: #b0ada6;
-      --color-text-tertiary: #7a7872;
-      --color-text-info: #85b7eb;
-      --color-text-success: #97c459;
-      --color-text-warning: #ef9f27;
-      --color-text-danger: #f09595;
+/* ── week strip ── */
+.week-strip {
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
+  gap: 4px;
+  margin-bottom: 2.2rem;
+  padding: 1rem 1rem 0.9rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+}
+.ws-day {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 6px 2px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.15s;
+  border: 1px solid transparent;
+  text-decoration: none;
+}
+.ws-day:hover { background: var(--surface2); }
+.ws-day.ws-formal { border-color: var(--formal-bdr); background: var(--formal-bg); }
+.ws-day.ws-common { border-color: var(--common-bdr); background: var(--common-bg); }
+.ws-day.ws-anchor.ws-formal {
+  border-color: var(--anchor-bdr);
+  background: linear-gradient(to bottom, var(--anchor-glow), var(--formal-bg));
+  box-shadow: 0 0 12px rgba(196,148,58,0.12);
+}
+.ws-day.ws-anchor.ws-common {
+  border-color: var(--anchor-bdr);
+  background: linear-gradient(to bottom, var(--anchor-glow), var(--common-bg));
+  box-shadow: 0 0 12px rgba(196,148,58,0.12);
+}
+.ws-num {
+  font-family: var(--font-h);
+  font-size: 8px;
+  letter-spacing: 0.08em;
+  color: var(--txt3);
+  line-height: 1;
+}
+.ws-anchor .ws-num { color: var(--gold); }
+.ws-name {
+  font-family: var(--font-h);
+  font-size: 9.5px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-align: center;
+  line-height: 1.2;
+}
+.ws-formal .ws-name { color: var(--formal-txt); }
+.ws-common .ws-name { color: var(--common-txt); }
+.ws-anchor .ws-name { color: var(--gold-lt); }
+.ws-anchor-dot {
+  width: 4px; height: 4px;
+  border-radius: 50%;
+  background: var(--gold);
+  opacity: 0.8;
+}
 
-      --color-background-primary: #242320;
-      --color-background-secondary: #2c2b28;
-      --color-background-tertiary: #333230;
-      --color-background-info: #0c2a4a;
-      --color-background-success: #162c06;
-      --color-background-warning: #2e1e02;
-      --color-background-danger: #2e0808;
+/* ── card grid ── */
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(440px, 1fr));
+  gap: 0.85rem;
+}
 
-      --color-border-tertiary: rgba(255,255,255,0.10);
-      --color-border-secondary: rgba(255,255,255,0.18);
-      --color-border-primary: rgba(255,255,255,0.28);
-    }
-  }
+/* ── day card ── */
+.day-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  overflow: hidden;
+  transition: border-color 0.15s;
+  scroll-margin-top: 1rem;
+}
+.day-card:hover { border-color: var(--border-mid); }
+.day-card.anchor-card {
+  border-color: rgba(196,148,58,0.25);
+  box-shadow: 0 0 20px rgba(196,148,58,0.07);
+}
+.day-card.anchor-card:hover { border-color: rgba(196,148,58,0.45); }
 
-  /* ── svg widget classes ── */
-  svg text { font-family: var(--font-sans); fill: var(--color-text-primary); }
-  svg text.t  { font-size: 14px; font-weight: 400; fill: var(--color-text-primary); }
-  svg text.ts { font-size: 12px; font-weight: 400; fill: var(--color-text-secondary); }
-  svg text.th { font-size: 14px; font-weight: 500; fill: var(--color-text-primary); }
-  svg rect.box, svg .box rect {
-    fill: var(--color-background-secondary);
-    stroke: var(--color-border-secondary);
-  }
-  svg .arr {
-    stroke: var(--color-text-secondary);
-    stroke-width: 1.5px;
-    fill: none;
-  }
-  svg .leader {
-    stroke: var(--color-border-tertiary);
-    stroke-width: 0.5px;
-    stroke-dasharray: 4 3;
-    fill: none;
-  }
-  svg .node { cursor: pointer; }
-  svg .node:hover { opacity: 0.82; }
+/* card header */
+.card-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  padding: 1rem 1.1rem 0.75rem;
+  border-bottom: 1px solid var(--border);
+  gap: 0.8rem;
+}
+.card-num-name { display:flex; align-items:baseline; gap:0.6rem; flex:1; min-width:0; }
+.card-num {
+  font-family: var(--font-h);
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  color: var(--txt3);
+  flex-shrink: 0;
+  padding-top: 3px;
+}
+.anchor-card .card-num { color: var(--gold); }
+.card-name {
+  font-family: var(--font-h);
+  font-size: 19px;
+  font-weight: 700;
+  color: var(--txt);
+  letter-spacing: 0.04em;
+  line-height: 1.1;
+}
+.anchor-card .card-name { color: var(--gold-lt); }
+.card-pron {
+  font-family: var(--font-b);
+  font-size: 12.5px;
+  font-style: italic;
+  color: var(--txt3);
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+}
 
-  /* colour ramps for svg nodes */
-  svg .c-purple rect, svg .c-purple circle, svg .c-purple ellipse { fill: #EEEDFE; stroke: #534AB7; }
-  svg .c-purple text.t, svg .c-purple text.th { fill: #3C3489; }
-  svg .c-purple text.ts { fill: #534AB7; }
+.card-badges { display:flex; flex-wrap:wrap; gap:4px; align-items:center; flex-shrink:0; }
+.badge {
+  font-family: var(--font-h);
+  font-size: 8.5px;
+  letter-spacing: 0.09em;
+  padding: 2px 7px;
+  border-radius: 3px;
+  border: 1px solid;
+  white-space: nowrap;
+}
+.badge-f { background:var(--formal-bg); border-color:var(--formal-bdr); color:var(--formal-txt); }
+.badge-c { background:var(--common-bg); border-color:var(--common-bdr); color:var(--common-txt); }
+.badge-a { background:var(--anchor-glow); border-color:var(--anchor-bdr); color:var(--gold); }
+.badge-deity {
+  background: rgba(80,50,110,0.2);
+  border-color: rgba(120,80,160,0.3);
+  color: #a080d0;
+}
 
-  svg .c-teal rect, svg .c-teal circle, svg .c-teal ellipse { fill: #E1F5EE; stroke: #0F6E56; }
-  svg .c-teal text.t, svg .c-teal text.th { fill: #085041; }
-  svg .c-teal text.ts { fill: #0F6E56; }
+/* card body sections */
+.card-body { padding: 0 1.1rem; }
 
-  svg .c-coral rect, svg .c-coral circle, svg .c-coral ellipse { fill: #FAECE7; stroke: #993C1D; }
-  svg .c-coral text.t, svg .c-coral text.th { fill: #712B13; }
-  svg .c-coral text.ts { fill: #993C1D; }
+.card-section {
+  padding: 0.65rem 0;
+  border-bottom: 1px solid var(--border);
+}
+.card-section:last-child { border-bottom: none; padding-bottom: 0.85rem; }
 
-  svg .c-pink rect, svg .c-pink circle, svg .c-pink ellipse { fill: #FBEAF0; stroke: #993556; }
-  svg .c-pink text.t, svg .c-pink text.th { fill: #72243E; }
-  svg .c-pink text.ts { fill: #993556; }
+.sec-label {
+  font-family: var(--font-h);
+  font-size: 7.5px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--txt3);
+  margin-bottom: 4px;
+}
+.sec-text {
+  font-family: var(--font-b);
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--txt2);
+}
+.sec-text em {
+  font-style: italic;
+  color: var(--txt);
+}
+.sec-text.meaning { color: var(--txt); font-size: 14.5px; }
 
-  svg .c-gray rect, svg .c-gray circle, svg .c-gray ellipse { fill: #F1EFE8; stroke: #5F5E5A; }
-  svg .c-gray text.t, svg .c-gray text.th { fill: #444441; }
-  svg .c-gray text.ts { fill: #5F5E5A; }
+.usage-list {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  margin-top: 2px;
+}
+.usage-item {
+  font-family: var(--font-b);
+  font-size: 13px;
+  color: var(--txt3);
+  font-style: italic;
+  padding-left: 0.8rem;
+  position: relative;
+  line-height: 1.45;
+}
+.usage-item::before {
+  content: '"';
+  position: absolute;
+  left: 0;
+  color: var(--txt3);
+  font-style: normal;
+}
 
-  svg .c-blue rect, svg .c-blue circle, svg .c-blue ellipse { fill: #E6F1FB; stroke: #185FA5; }
-  svg .c-blue text.t, svg .c-blue text.th { fill: #0C447C; }
-  svg .c-blue text.ts { fill: #185FA5; }
-
-  svg .c-green rect, svg .c-green circle, svg .c-green ellipse { fill: #EAF3DE; stroke: #3B6D11; }
-  svg .c-green text.t, svg .c-green text.th { fill: #27500A; }
-  svg .c-green text.ts { fill: #3B6D11; }
-
-  svg .c-amber rect, svg .c-amber circle, svg .c-amber ellipse { fill: #FAEEDA; stroke: #854F0B; }
-  svg .c-amber text.t, svg .c-amber text.th { fill: #633806; }
-  svg .c-amber text.ts { fill: #854F0B; }
-
-  svg .c-red rect, svg .c-red circle, svg .c-red ellipse { fill: #FCEBEB; stroke: #A32D2D; }
-  svg .c-red text.t, svg .c-red text.th { fill: #791F1F; }
-  svg .c-red text.ts { fill: #A32D2D; }
-
-  @media (prefers-color-scheme: dark) {
-    svg .c-purple rect, svg .c-purple circle, svg .c-purple ellipse { fill: #3C3489; stroke: #AFA9EC; }
-    svg .c-purple text.t, svg .c-purple text.th { fill: #CECBF6; }
-    svg .c-purple text.ts { fill: #AFA9EC; }
-
-    svg .c-teal rect, svg .c-teal circle, svg .c-teal ellipse { fill: #085041; stroke: #5DCAA5; }
-    svg .c-teal text.t, svg .c-teal text.th { fill: #9FE1CB; }
-    svg .c-teal text.ts { fill: #5DCAA5; }
-
-    svg .c-coral rect, svg .c-coral circle, svg .c-coral ellipse { fill: #712B13; stroke: #F0997B; }
-    svg .c-coral text.t, svg .c-coral text.th { fill: #F5C4B3; }
-    svg .c-coral text.ts { fill: #F0997B; }
-
-    svg .c-pink rect, svg .c-pink circle, svg .c-pink ellipse { fill: #72243E; stroke: #ED93B1; }
-    svg .c-pink text.t, svg .c-pink text.th { fill: #F4C0D1; }
-    svg .c-pink text.ts { fill: #ED93B1; }
-
-    svg .c-gray rect, svg .c-gray circle, svg .c-gray ellipse { fill: #444441; stroke: #B4B2A9; }
-    svg .c-gray text.t, svg .c-gray text.th { fill: #D3D1C7; }
-    svg .c-gray text.ts { fill: #B4B2A9; }
-
-    svg .c-blue rect, svg .c-blue circle, svg .c-blue ellipse { fill: #0C447C; stroke: #85B7EB; }
-    svg .c-blue text.t, svg .c-blue text.th { fill: #B5D4F4; }
-    svg .c-blue text.ts { fill: #85B7EB; }
-
-    svg .c-green rect, svg .c-green circle, svg .c-green ellipse { fill: #27500A; stroke: #97C459; }
-    svg .c-green text.t, svg .c-green text.th { fill: #C0DD97; }
-    svg .c-green text.ts { fill: #97C459; }
-
-    svg .c-amber rect, svg .c-amber circle, svg .c-amber ellipse { fill: #633806; stroke: #EF9F27; }
-    svg .c-amber text.t, svg .c-amber text.th { fill: #FAC775; }
-    svg .c-amber text.ts { fill: #EF9F27; }
-
-    svg .c-red rect, svg .c-red circle, svg .c-red ellipse { fill: #791F1F; stroke: #F09595; }
-    svg .c-red text.t, svg .c-red text.th { fill: #F7C1C1; }
-    svg .c-red text.ts { fill: #F09595; }
-  }
-  /* ── base reset ── */
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-  /* ── font ── */
-  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=swap');
-
-  body {
-    font-family: 'Inter', system-ui, -apple-system, sans-serif;
-    font-size: 16px;
-    font-weight: 400;
-    line-height: 1.7;
-    background: #ffffff;
-    color: #1a1a1a;
-    padding: 1.5rem;
-  }
-
-  /* ── css variables — light mode ── */
-  :root {
-    --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
-    --font-serif: Georgia, serif;
-    --font-mono: 'Courier New', monospace;
-
-    --color-text-primary: #1a1a1a;
-    --color-text-secondary: #4a4a4a;
-    --color-text-tertiary: #6b6b6b;
-    --color-text-info: #0c447c;
-    --color-text-success: #27500a;
-    --color-text-warning: #633806;
-    --color-text-danger: #791f1f;
-
-    --color-background-primary: #ffffff;
-    --color-background-secondary: #f5f4f0;
-    --color-background-tertiary: #eeedea;
-    --color-background-info: #e6f1fb;
-    --color-background-success: #eaf3de;
-    --color-background-warning: #faeeda;
-    --color-background-danger: #fcebeb;
-
-    --color-border-tertiary: rgba(0,0,0,0.12);
-    --color-border-secondary: rgba(0,0,0,0.22);
-    --color-border-primary: rgba(0,0,0,0.35);
-    --color-border-info: #85b7eb;
-    --color-border-success: #97c459;
-    --color-border-warning: #ef9f27;
-    --color-border-danger: #f09595;
-
-    --border-radius-md: 8px;
-    --border-radius-lg: 12px;
-    --border-radius-xl: 16px;
-  }
-
-  /* ── dark mode ── */
-  @media (prefers-color-scheme: dark) {
-    body {
-      background: #1a1917;
-      color: #e8e6e0;
-    }
-    :root {
-      --color-text-primary: #e8e6e0;
-      --color-text-secondary: #b0ada6;
-      --color-text-tertiary: #7a7872;
-      --color-text-info: #85b7eb;
-      --color-text-success: #97c459;
-      --color-text-warning: #ef9f27;
-      --color-text-danger: #f09595;
-
-      --color-background-primary: #242320;
-      --color-background-secondary: #2c2b28;
-      --color-background-tertiary: #333230;
-      --color-background-info: #0c2a4a;
-      --color-background-success: #162c06;
-      --color-background-warning: #2e1e02;
-      --color-background-danger: #2e0808;
-
-      --color-border-tertiary: rgba(255,255,255,0.10);
-      --color-border-secondary: rgba(255,255,255,0.18);
-      --color-border-primary: rgba(255,255,255,0.28);
-    }
-  }
-
-  /* ── svg widget classes ── */
-  svg text { font-family: var(--font-sans); fill: var(--color-text-primary); }
-  svg text.t  { font-size: 14px; font-weight: 400; fill: var(--color-text-primary); }
-  svg text.ts { font-size: 12px; font-weight: 400; fill: var(--color-text-secondary); }
-  svg text.th { font-size: 14px; font-weight: 500; fill: var(--color-text-primary); }
-  svg rect.box, svg .box rect {
-    fill: var(--color-background-secondary);
-    stroke: var(--color-border-secondary);
-  }
-  svg .arr {
-    stroke: var(--color-text-secondary);
-    stroke-width: 1.5px;
-    fill: none;
-  }
-  svg .leader {
-    stroke: var(--color-border-tertiary);
-    stroke-width: 0.5px;
-    stroke-dasharray: 4 3;
-    fill: none;
-  }
-  svg .node { cursor: pointer; }
-  svg .node:hover { opacity: 0.82; }
-
-  /* colour ramps for svg nodes */
-  svg .c-purple rect, svg .c-purple circle, svg .c-purple ellipse { fill: #EEEDFE; stroke: #534AB7; }
-  svg .c-purple text.t, svg .c-purple text.th { fill: #3C3489; }
-  svg .c-purple text.ts { fill: #534AB7; }
-
-  svg .c-teal rect, svg .c-teal circle, svg .c-teal ellipse { fill: #E1F5EE; stroke: #0F6E56; }
-  svg .c-teal text.t, svg .c-teal text.th { fill: #085041; }
-  svg .c-teal text.ts { fill: #0F6E56; }
-
-  svg .c-coral rect, svg .c-coral circle, svg .c-coral ellipse { fill: #FAECE7; stroke: #993C1D; }
-  svg .c-coral text.t, svg .c-coral text.th { fill: #712B13; }
-  svg .c-coral text.ts { fill: #993C1D; }
-
-  svg .c-pink rect, svg .c-pink circle, svg .c-pink ellipse { fill: #FBEAF0; stroke: #993556; }
-  svg .c-pink text.t, svg .c-pink text.th { fill: #72243E; }
-  svg .c-pink text.ts { fill: #993556; }
-
-  svg .c-gray rect, svg .c-gray circle, svg .c-gray ellipse { fill: #F1EFE8; stroke: #5F5E5A; }
-  svg .c-gray text.t, svg .c-gray text.th { fill: #444441; }
-  svg .c-gray text.ts { fill: #5F5E5A; }
-
-  svg .c-blue rect, svg .c-blue circle, svg .c-blue ellipse { fill: #E6F1FB; stroke: #185FA5; }
-  svg .c-blue text.t, svg .c-blue text.th { fill: #0C447C; }
-  svg .c-blue text.ts { fill: #185FA5; }
-
-  svg .c-green rect, svg .c-green circle, svg .c-green ellipse { fill: #EAF3DE; stroke: #3B6D11; }
-  svg .c-green text.t, svg .c-green text.th { fill: #27500A; }
-  svg .c-green text.ts { fill: #3B6D11; }
-
-  svg .c-amber rect, svg .c-amber circle, svg .c-amber ellipse { fill: #FAEEDA; stroke: #854F0B; }
-  svg .c-amber text.t, svg .c-amber text.th { fill: #633806; }
-  svg .c-amber text.ts { fill: #854F0B; }
-
-  svg .c-red rect, svg .c-red circle, svg .c-red ellipse { fill: #FCEBEB; stroke: #A32D2D; }
-  svg .c-red text.t, svg .c-red text.th { fill: #791F1F; }
-  svg .c-red text.ts { fill: #A32D2D; }
-
-  @media (prefers-color-scheme: dark) {
-    svg .c-purple rect, svg .c-purple circle, svg .c-purple ellipse { fill: #3C3489; stroke: #AFA9EC; }
-    svg .c-purple text.t, svg .c-purple text.th { fill: #CECBF6; }
-    svg .c-purple text.ts { fill: #AFA9EC; }
-
-    svg .c-teal rect, svg .c-teal circle, svg .c-teal ellipse { fill: #085041; stroke: #5DCAA5; }
-    svg .c-teal text.t, svg .c-teal text.th { fill: #9FE1CB; }
-    svg .c-teal text.ts { fill: #5DCAA5; }
-
-    svg .c-coral rect, svg .c-coral circle, svg .c-coral ellipse { fill: #712B13; stroke: #F0997B; }
-    svg .c-coral text.t, svg .c-coral text.th { fill: #F5C4B3; }
-    svg .c-coral text.ts { fill: #F0997B; }
-
-    svg .c-pink rect, svg .c-pink circle, svg .c-pink ellipse { fill: #72243E; stroke: #ED93B1; }
-    svg .c-pink text.t, svg .c-pink text.th { fill: #F4C0D1; }
-    svg .c-pink text.ts { fill: #ED93B1; }
-
-    svg .c-gray rect, svg .c-gray circle, svg .c-gray ellipse { fill: #444441; stroke: #B4B2A9; }
-    svg .c-gray text.t, svg .c-gray text.th { fill: #D3D1C7; }
-    svg .c-gray text.ts { fill: #B4B2A9; }
-
-    svg .c-blue rect, svg .c-blue circle, svg .c-blue ellipse { fill: #0C447C; stroke: #85B7EB; }
-    svg .c-blue text.t, svg .c-blue text.th { fill: #B5D4F4; }
-    svg .c-blue text.ts { fill: #85B7EB; }
-
-    svg .c-green rect, svg .c-green circle, svg .c-green ellipse { fill: #27500A; stroke: #97C459; }
-    svg .c-green text.t, svg .c-green text.th { fill: #C0DD97; }
-    svg .c-green text.ts { fill: #97C459; }
-
-    svg .c-amber rect, svg .c-amber circle, svg .c-amber ellipse { fill: #633806; stroke: #EF9F27; }
-    svg .c-amber text.t, svg .c-amber text.th { fill: #FAC775; }
-    svg .c-amber text.ts { fill: #EF9F27; }
-
-    svg .c-red rect, svg .c-red circle, svg .c-red ellipse { fill: #791F1F; stroke: #F09595; }
-    svg .c-red text.t, svg .c-red text.th { fill: #F7C1C1; }
-    svg .c-red text.ts { fill: #F09595; }
-
-    td {
-      padding: 0.3rem !important;
-    }
-  }
+/* ── ornament ── */
+.orn {
+  text-align: center;
+  font-size: 10px;
+  letter-spacing: 0.35em;
+  color: var(--txt3);
+  padding: 2.5rem 0 1rem;
+  border-top: 1px solid var(--border);
+  margin-top: 1.5rem;
+}
 </style>
 </head>
 <body>
-<div style="padding: 0.5rem 0;">
-  <div style="display:flex;gap:14px;margin-bottom:12px;font-size:11px;color:var(--color-text-secondary);flex-wrap:wrap;">
-    <span style="display:flex;align-items:center;gap:5px;"><span style="width:10px;height:10px;border-radius:2px;background:#E6F1FB;border:0.5px solid #85B7EB;"></span> Formal / ancient register</span>
-    <span style="display:flex;align-items:center;gap:5px;"><span style="width:10px;height:10px;border-radius:2px;background:#EAF3DE;border:0.5px solid #97C459;"></span> Common / spoken register</span>
-    <span style="display:flex;align-items:center;gap:5px;"><span style="width:10px;height:10px;background:var(--color-background-secondary);border:0.5px solid var(--color-border-secondary);border-radius:2px;"></span> Anchor day</span>
-  </div>
+<div id="root"></div>
+<script type="text/babel">
 
-  <table>
-    <thead>
-      <tr>
-        <th style="width:28px;">#</th>
-        <th style="width:130px;">Name</th>
-        <th style="width:70px;">Register</th>
-        <th>Meaning & etymology</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr class="anchor">
-        <td class="num">1</td>
-        <td><div class="dn">Auren</div><div class="dp">OR-en</div></td>
-        <td><span class="reg rf">Formal</span></td>
-        <td>
-          <div class="dm">The opening day. Temple rites, shrine dedications, the week's first prayers.</div>
-          <div class="et">From <em>aur</em> — dawn-gold. Shares its root with aurora; in Auroran culture this is deliberate and unspoken.</div>
-          <div class="usage">In use: "First thing Auren." "We leave on Auren."</div>
-        </td>
-      </tr>
-      <tr>
-        <td class="num">2</td>
-        <td><div class="dn">Brem</div><div class="dp">BREM</div></td>
-        <td><span class="reg rc">Common</span></td>
-        <td>
-          <div class="dm">A short, blunt working day — the week's first full labour day, nothing ceremonial about it.</div>
-          <div class="et">From <em>brem</em> — a grinding sound, the sound of millstones. Old craft-guild slang that became the day's name.</div>
-          <div class="usage">In use: "Brem already and the order's not done." "Back by Brem."</div>
-        </td>
-      </tr>
-      <tr>
-        <td class="num">3</td>
-        <td><div class="dn">Thaelon</div><div class="dp">THAY-lon</div></td>
-        <td><span class="reg rf">Formal</span></td>
-        <td>
-          <div class="dm">A longer, older name — feels like it belongs to a different era. Used in formal records and legal dating.</div>
-          <div class="et">From <em>thael</em> (thread) + <em>on</em> (forward) — the threading of time onward. Aeonius's fingerprint, never acknowledged.</div>
-          <div class="usage">In use: "Dated the third Thaelon of Corendar." Rarely used in speech — people say "third day."</div>
-        </td>
-      </tr>
-      <tr>
-        <td class="num">4</td>
-        <td><div class="dn">Keld</div><div class="dp">KELD</div></td>
-        <td><span class="reg rc">Common</span></td>
-        <td>
-          <div class="dm">The week's midpoint approach — market prep, travel day, the day people move between towns.</div>
-          <div class="et">From <em>kel</em> — a ford, a crossing. The day you cross toward the middle of the week.</div>
-          <div class="usage">In use: "I'll be on the road Keld." "Keld prices are always worse" (market prep markup).</div>
-        </td>
-      </tr>
-      <tr class="anchor">
-        <td class="num">5</td>
-        <td><div class="dn">Narven</div><div class="dp">NAR-ven</div></td>
-        <td><span class="reg rc">Common</span></td>
-        <td>
-          <div class="dm">Market day. The week's social and commercial centre. Debts settled, deals made, news exchanged.</div>
-          <div class="et">From <em>narn</em> (midpoint, exchange) + <em>ven</em> (meeting, gathering). Retains the familiar <em>Narn</em> root from the existing calendar.</div>
-          <div class="usage">In use: "See you Narven." "Narven prices." "Wait until Narven and ask around."</div>
-        </td>
-      </tr>
-      <tr>
-        <td class="num">6</td>
-        <td><div class="dn">Glaer</div><div class="dp">GLAIR</div></td>
-        <td><span class="reg rc">Common</span></td>
-        <td>
-          <div class="dm">The week turns. Work continues but the second half has begun — a subtle shift in folk mood.</div>
-          <div class="et">From <em>glae</em> — a glint, a turning of light. Nymue's faint fingerprint — the day the moon begins its count toward the next phase in old lunar reckoning.</div>
-          <div class="usage">In use: "Past Glaer already." "Glaer and I'm still not done."</div>
-        </td>
-      </tr>
-      <tr>
-        <td class="num">7</td>
-        <td><div class="dn">Solveth</div><div class="dp">SOL-veth</div></td>
-        <td><span class="reg rf">Formal</span></td>
-        <td>
-          <div class="dm">The easing day — not a rest day, but the pace lightens. Apprentices given shorter hours in many trades.</div>
-          <div class="et">From <em>sol</em> (sun, warmth) + <em>veth</em> (breath, ease). Solariel's subtle mark — the day named for the sun's pause before it begins its descent toward dusk.</div>
-          <div class="usage">In use: "Solveth hours" (shorter working day). "At least it's Solveth."</div>
-        </td>
-      </tr>
-      <tr>
-        <td class="num">8</td>
-        <td><div class="dn">Pelk</div><div class="dp">PELK</div></td>
-        <td><span class="reg rc">Common</span></td>
-        <td>
-          <div class="dm">The push day — the week's hardest working day by folk custom, the last full labour day before rest approaches.</div>
-          <div class="et">From <em>pelk</em> — a shove, a final effort. Purely working-class in origin, no cosmic etymology. The day has no dignity and everyone knows it.</div>
-          <div class="usage">In use: "Pelk again." "Don't schedule anything important on Pelk." "A real Pelk of a day."</div>
-        </td>
-      </tr>
-      <tr>
-        <td class="num">9</td>
-        <td><div class="dn">Seradel</div><div class="dp">ser-AH-del</div></td>
-        <td><span class="reg rf">Formal</span></td>
-        <td>
-          <div class="dm">The settling day — accounts closed, work finished, preparation for rest. Formal and slightly solemn in character.</div>
-          <div class="et">From <em>ser</em> (settling, closing) + <em>adel</em> (toward the hearth). Charon's quiet fingerprint — the day you settle what is owed before the week closes.</div>
-          <div class="usage">In use: "Seradel accounts" (closing the books). "Pay by Seradel." Rarely shortened.</div>
-        </td>
-      </tr>
-      <tr class="anchor">
-        <td class="num">10</td>
-        <td><div class="dn">Kaelden</div><div class="dp">KAY-den</div></td>
-        <td><span class="reg rf">Formal</span></td>
-        <td>
-          <div class="dm">Rest day. Hearth and home. The week's close. Formally observed — most trades closed, travel discouraged.</div>
-          <div class="et">From <em>kael</em> (completion, wholeness) + <em>den</em> (hearth, rest). Solves the Degeth/Daudeth collision entirely. No pantheon echo — rest belongs to no god specifically, which is itself a theological position.</div>
-          <div class="usage">In use: "Kaelden, finally." "Kaelden hours" (nothing's open). "See you next Auren."</div>
-        </td>
-      </tr>
-    </tbody>
-  </table>
-</div>
+const DAYS = [
+  {
+    num: 1,
+    name: "Auren",
+    pron: "OR-en",
+    register: "formal",
+    anchor: true,
+    deity: null,
+    meaning: "The opening day. Temple rites, shrine dedications, the week's first prayers.",
+    etymology: <>From <em>aur</em> — dawn-gold. Shares its root with aurora; in Auroran culture this is deliberate and unspoken.</>,
+    usage: ["First thing Auren.", "We leave on Auren."],
+  },
+  {
+    num: 2,
+    name: "Brem",
+    pron: "BREM",
+    register: "common",
+    anchor: false,
+    deity: null,
+    meaning: "A short, blunt working day — the week's first full labour day, nothing ceremonial about it.",
+    etymology: <>From <em>brem</em> — a grinding sound, the sound of millstones. Old craft-guild slang that became the day's name.</>,
+    usage: ["Brem already and the order's not done.", "Back by Brem."],
+  },
+  {
+    num: 3,
+    name: "Thaelon",
+    pron: "THAY-lon",
+    register: "formal",
+    anchor: false,
+    deity: "Aeonius",
+    meaning: "A longer, older name — feels like it belongs to a different era. Used in formal records and legal dating.",
+    etymology: <>From <em>thael</em> (thread) + <em>on</em> (forward) — the threading of time onward. Aeonius's fingerprint, never acknowledged.</>,
+    usage: ["Dated the third Thaelon of Corendar.", "Rarely used in speech — people say 'third day.'"],
+  },
+  {
+    num: 4,
+    name: "Keld",
+    pron: "KELD",
+    register: "common",
+    anchor: false,
+    deity: null,
+    meaning: "The week's midpoint approach — market prep, travel day, the day people move between towns.",
+    etymology: <>From <em>kel</em> — a ford, a crossing. The day you cross toward the middle of the week.</>,
+    usage: ["I'll be on the road Keld.", "Keld prices are always worse."],
+  },
+  {
+    num: 5,
+    name: "Narven",
+    pron: "NAR-ven",
+    register: "common",
+    anchor: true,
+    deity: null,
+    meaning: "Market day. The week's social and commercial centre. Debts settled, deals made, news exchanged.",
+    etymology: <>From <em>narn</em> (midpoint, exchange) + <em>ven</em> (meeting, gathering). Retains the familiar <em>Narn</em> root from the existing calendar.</>,
+    usage: ["See you Narven.", "Narven prices.", "Wait until Narven and ask around."],
+  },
+  {
+    num: 6,
+    name: "Glaer",
+    pron: "GLAIR",
+    register: "common",
+    anchor: false,
+    deity: "Nymue",
+    meaning: "The week turns. Work continues but the second half has begun — a subtle shift in folk mood.",
+    etymology: <>From <em>glae</em> — a glint, a turning of light. Nymue's faint fingerprint: in old lunar reckoning, the day the moon begins its count toward the next phase.</>,
+    usage: ["Past Glaer already.", "Glaer and I'm still not done."],
+  },
+  {
+    num: 7,
+    name: "Solveth",
+    pron: "SOL-veth",
+    register: "formal",
+    anchor: false,
+    deity: "Solariel",
+    meaning: "The easing day — not a rest day, but the pace lightens. Apprentices given shorter hours in many trades.",
+    etymology: <>From <em>sol</em> (sun, warmth) + <em>veth</em> (breath, ease). Solariel's subtle mark — the day named for the sun's pause before its descent toward dusk.</>,
+    usage: ["Solveth hours.", "At least it's Solveth."],
+  },
+  {
+    num: 8,
+    name: "Pelk",
+    pron: "PELK",
+    register: "common",
+    anchor: false,
+    deity: null,
+    meaning: "The push day — the week's hardest working day by folk custom, the last full labour day before rest approaches.",
+    etymology: <>From <em>pelk</em> — a shove, a final effort. Purely working-class in origin, no cosmic etymology. The day has no dignity and everyone knows it.</>,
+    usage: ["Pelk again.", "Don't schedule anything important on Pelk.", "A real Pelk of a day."],
+  },
+  {
+    num: 9,
+    name: "Seradel",
+    pron: "ser-AH-del",
+    register: "formal",
+    anchor: false,
+    deity: "Charon",
+    meaning: "The settling day — accounts closed, work finished, preparation for rest. Formal and slightly solemn in character.",
+    etymology: <>From <em>ser</em> (settling, closing) + <em>adel</em> (toward the hearth). Charon's quiet fingerprint — the day you settle what is owed before the week closes.</>,
+    usage: ["Seradel accounts.", "Pay by Seradel."],
+  },
+  {
+    num: 10,
+    name: "Kaelden",
+    pron: "KAY-den",
+    register: "formal",
+    anchor: true,
+    deity: null,
+    meaning: "Rest day. Hearth and home. The week's close. Formally observed — most trades closed, travel discouraged.",
+    etymology: <>From <em>kael</em> (completion, wholeness) + <em>den</em> (hearth, rest). No pantheon echo — rest belongs to no god specifically, which is itself a theological position.</>,
+    usage: ["Kaelden, finally.", "Kaelden hours.", "See you next Auren."],
+  },
+];
+
+function WeekStrip() {
+  function scrollTo(id) {
+    document.getElementById(`day-${id}`)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+  return (
+    <div className="week-strip">
+      {DAYS.map(d => {
+        const cls = [
+          'ws-day',
+          `ws-${d.register}`,
+          d.anchor ? 'ws-anchor' : '',
+        ].filter(Boolean).join(' ');
+        return (
+          <div key={d.num} className={cls} onClick={() => scrollTo(d.num)} title={`Day ${d.num} — ${d.name}`}>
+            <span className="ws-num">{d.num}</span>
+            <span className="ws-name">{d.name}</span>
+            {d.anchor && <span className="ws-anchor-dot" />}
+          </div>
+        );
+      })}
+    </div>
+  );
+}
+
+function DayCard({ day }) {
+  const isAnchor = day.anchor;
+  const isFormal = day.register === 'formal';
+
+  return (
+    <div id={`day-${day.num}`} className={`day-card ${isAnchor ? 'anchor-card' : ''}`}>
+      <div className="card-head">
+        <div className="card-num-name">
+          <span className="card-num">Day {day.num}</span>
+          <div>
+            <div className="card-name">{day.name}</div>
+            <div className="card-pron">{day.pron}</div>
+          </div>
+        </div>
+        <div className="card-badges">
+          {isAnchor && <span className="badge badge-a">Anchor</span>}
+          <span className={`badge ${isFormal ? 'badge-f' : 'badge-c'}`}>
+            {isFormal ? 'Formal' : 'Common'}
+          </span>
+          {day.deity && <span className="badge badge-deity">{day.deity}</span>}
+        </div>
+      </div>
+
+      <div className="card-body">
+        <div className="card-section">
+          <div className="sec-label">Meaning</div>
+          <div className="sec-text meaning">{day.meaning}</div>
+        </div>
+        <div className="card-section">
+          <div className="sec-label">Etymology</div>
+          <div className="sec-text">{day.etymology}</div>
+        </div>
+        <div className="card-section">
+          <div className="sec-label">In use</div>
+          <div className="usage-list">
+            {day.usage.map((u, i) => (
+              <div key={i} className="usage-item">{u}</div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function App() {
+  return (
+    <div className="page">
+      <header className="hdr">
+        <span className="hdr-orn">✦  ·  ✦  ·  ✦</span>
+        <div className="hdr-title">The Ardahlian Week</div>
+        <div className="hdr-sub">Day names, registers, and their folk meanings</div>
+        <p className="hdr-intro">
+          The Ardahlian week runs ten days. Three are anchor days — structurally significant
+          points that shape the rhythm of commerce, worship, and rest. Day names exist in two
+          registers: formal names used in records and ceremony, and common names used in speech.
+          Several carry the faint fingerprint of a deity who influenced their naming.
+        </p>
+      </header>
+
+      <div className="legend">
+        <div className="leg-item">
+          <div className="leg-pip leg-pip-f">F</div>
+          <span className="leg-txt"><strong>Formal</strong> — used in records, ceremony, legal dates</span>
+        </div>
+        <div className="leg-item">
+          <div className="leg-pip leg-pip-c">C</div>
+          <span className="leg-txt"><strong>Common</strong> — everyday speech, folk usage</span>
+        </div>
+        <div className="leg-item">
+          <div className="leg-pip leg-pip-a">✦</div>
+          <span className="leg-txt"><strong>Anchor Day</strong> — structurally significant: Auren (open), Narven (market), Kaelden (rest)</span>
+        </div>
+      </div>
+
+      <WeekStrip />
+
+      <div className="card-grid">
+        {DAYS.map(d => <DayCard key={d.num} day={d} />)}
+      </div>
+
+      <div className="orn">✦ · ✦ · ✦</div>
+    </div>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+</script>
 </body>
 </html>
