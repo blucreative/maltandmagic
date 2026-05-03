@@ -1,0 +1,762 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Auroran Pantheon</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Cinzel+Decorative:wght@700&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap" rel="stylesheet">
+<script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+<script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+
+:root {
+  --bg:         #0b0d1b;
+  --surface:    #111426;
+  --surface2:   #191d35;
+  --surface3:   #20253f;
+  --border:     rgba(190,155,75,0.10);
+  --border-mid: rgba(190,155,75,0.22);
+  --border-hi:  rgba(190,155,75,0.45);
+  --gold:       #c4943a;
+  --gold-lt:    #ddb860;
+  --gold-glow:  rgba(200,150,50,0.12);
+  --txt:        #e0d8c6;
+  --txt2:       #9a8f7a;
+  --txt3:       #52493e;
+  --font-d: 'Cinzel Decorative', Georgia, serif;
+  --font-h: 'Cinzel', Georgia, serif;
+  --font-b: 'Crimson Pro', Georgia, serif;
+}
+
+html { scroll-behavior:smooth; }
+
+body {
+  background: var(--bg);
+  background-image:
+    radial-gradient(ellipse 80% 40% at 50% -5%, rgba(30,45,110,0.55) 0%, transparent 100%),
+    radial-gradient(ellipse 60% 50% at 100% 110%, rgba(55,15,55,0.25) 0%, transparent 100%);
+  background-attachment: fixed;
+  color: var(--txt);
+  font-family: var(--font-b);
+  font-size: 16px;
+  min-height: 100vh;
+}
+
+/* ── stars overlay ── */
+body::before {
+  content:'';
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  z-index:0;
+  background-image:
+    radial-gradient(circle, rgba(255,255,240,.85) 1px, transparent 1px),
+    radial-gradient(circle, rgba(255,255,240,.55) 1px, transparent 1px),
+    radial-gradient(circle, rgba(255,255,240,.40) 1px, transparent 1px);
+  background-size: 400px 400px, 250px 250px, 170px 170px;
+  background-position: 23px 47px, 130px 200px, 60px 310px;
+  opacity: 0.22;
+}
+
+/* ── layout ── */
+.page {
+  position:relative;
+  z-index:1;
+  max-width:1120px;
+  margin:0 auto;
+  padding:0 1.5rem 2rem;
+  transition: padding-bottom 0.3s;
+}
+
+/* ── header ── */
+.hdr {
+  text-align:center;
+  padding: 2.8rem 0 2rem;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 1.4rem;
+}
+.hdr-orn {
+  display:block;
+  font-size:11px;
+  letter-spacing:0.5em;
+  color:var(--gold);
+  opacity:0.55;
+  margin-bottom:0.9rem;
+}
+.hdr-title {
+  font-family:var(--font-d);
+  font-size:clamp(1.8rem,4vw,2.8rem);
+  font-weight:700;
+  color:var(--gold-lt);
+  letter-spacing:0.04em;
+  line-height:1.1;
+  text-shadow: 0 0 50px rgba(210,160,60,0.28), 0 1px 0 rgba(0,0,0,0.6);
+}
+.hdr-sub {
+  font-family:var(--font-b);
+  font-size:0.95rem;
+  font-style:italic;
+  color:var(--txt2);
+  margin-top:0.5rem;
+  letter-spacing:0.06em;
+}
+
+/* ── sticky controls ── */
+.ctrl-wrap {
+  position:sticky;
+  top:0;
+  z-index:10;
+  background: linear-gradient(to bottom, var(--bg) 80%, transparent);
+  padding: 1rem 0 0.6rem;
+}
+
+.search-row {
+  display:flex;
+  gap:0.6rem;
+  align-items:center;
+  margin-bottom:0.9rem;
+}
+.search-in {
+  flex:1;
+  background:var(--surface);
+  border:1px solid var(--border-mid);
+  border-radius:6px;
+  padding:0.45rem 0.9rem;
+  color:var(--txt);
+  font-family:var(--font-b);
+  font-size:15px;
+  outline:none;
+  transition:border-color .18s;
+}
+.search-in::placeholder { color:var(--txt3); }
+.search-in:focus { border-color:var(--border-hi); }
+
+.vtog {
+  display:flex;
+  background:var(--surface);
+  border:1px solid var(--border-mid);
+  border-radius:6px;
+  overflow:hidden;
+  flex-shrink:0;
+}
+.vbtn {
+  background:none;
+  border:none;
+  color:var(--txt2);
+  padding:0.45rem 0.85rem;
+  cursor:pointer;
+  font-family:var(--font-h);
+  font-size:10px;
+  letter-spacing:0.08em;
+  transition:all .15s;
+}
+.vbtn.on { background:var(--surface3); color:var(--gold); }
+
+.frow {
+  display:flex;
+  flex-wrap:wrap;
+  gap:0.9rem 1.4rem;
+  margin-bottom:0.7rem;
+  align-items:flex-start;
+}
+.fg { display:flex; flex-direction:column; gap:4px; }
+.flbl {
+  font-family:var(--font-h);
+  font-size:8.5px;
+  letter-spacing:0.14em;
+  color:var(--txt3);
+  text-transform:uppercase;
+}
+.fpills { display:flex; flex-wrap:wrap; gap:3px; }
+.fp {
+  font-family:var(--font-h);
+  font-size:9.5px;
+  letter-spacing:0.05em;
+  padding:2px 9px;
+  border-radius:3px;
+  border:1px solid var(--border-mid);
+  background:var(--surface);
+  color:var(--txt2);
+  cursor:pointer;
+  transition:all .14s;
+  white-space:nowrap;
+}
+.fp:hover { border-color:var(--border-hi); color:var(--txt); }
+.fp.on { border-color:transparent; font-weight:500; }
+
+/* domain pill active */
+.fp-know.on{background:rgba(25,65,130,.45);color:#80aee8;border-color:rgba(60,100,190,.55);}
+.fp-life.on{background:rgba(25,90,45,.45);color:#70c080;border-color:rgba(45,110,65,.55);}
+.fp-light.on{background:rgba(120,80,10,.55);color:#d0a030;border-color:rgba(170,115,25,.6);}
+.fp-trick.on{background:rgba(65,35,120,.5);color:#a070e0;border-color:rgba(95,55,160,.6);}
+.fp-war.on{background:rgba(130,20,20,.5);color:#d06060;border-color:rgba(170,40,40,.6);}
+.fp-pest.on{background:rgba(15,75,65,.45);color:#50a090;border-color:rgba(25,95,80,.55);}
+/* alignment pill active */
+.fp-lg.on{background:rgba(35,75,165,.4);color:#88b8f8;border-color:rgba(70,115,210,.6);}
+.fp-ln.on{background:rgba(35,100,100,.4);color:#70c0b0;border-color:rgba(55,120,115,.6);}
+.fp-ng.on{background:rgba(35,100,55,.4);color:#70c080;border-color:rgba(50,120,75,.6);}
+.fp-nn.on{background:rgba(80,70,60,.35);color:#b0a080;border-color:rgba(105,90,70,.6);}
+.fp-cg.on{background:rgba(125,80,15,.55);color:#d0a045;border-color:rgba(165,110,35,.65);}
+.fp-cn.on{background:rgba(80,45,135,.5);color:#c090f0;border-color:rgba(105,60,165,.65);}
+.fp-le.on{background:rgba(140,28,28,.5);color:#e08080;border-color:rgba(180,48,48,.65);}
+.fp-ne.on{background:rgba(135,28,68,.5);color:#e070a0;border-color:rgba(175,48,90,.65);}
+.fp-ce.on{background:rgba(165,18,18,.6);color:#ff8080;border-color:rgba(205,38,38,.75);}
+/* patron pill active */
+.fp-arch.on{background:rgba(95,28,70,.5);color:#d080b0;border-color:rgba(135,48,100,.65);}
+.fp-cel.on{background:rgba(115,70,10,.55);color:#d09040;border-color:rgba(165,110,30,.65);}
+.fp-fnd.on{background:rgba(135,18,18,.5);color:#e06060;border-color:rgba(175,40,40,.65);}
+.fp-goo.on{background:rgba(40,40,65,.5);color:#9090b8;border-color:rgba(60,60,95,.65);}
+.fp-ves.on{background:rgba(20,28,105,.5);color:#7080d8;border-color:rgba(40,58,145,.65);}
+/* show-all */
+.fp-all.on{background:rgba(196,148,58,.18);color:var(--gold);border-color:rgba(196,148,58,.45);}
+
+.count-line {
+  font-size:11.5px;
+  color:var(--txt3);
+  font-style:italic;
+  font-family:var(--font-b);
+  margin-bottom:0.5rem;
+}
+
+/* ── table ── */
+.dt {
+  width:100%;
+  border-collapse:collapse;
+  font-family:var(--font-b);
+}
+.dt th {
+  font-family:var(--font-h);
+  font-size:8.5px;
+  letter-spacing:0.13em;
+  text-transform:uppercase;
+  color:var(--txt3);
+  padding:0 10px 8px;
+  text-align:left;
+  border-bottom:1px solid var(--border);
+}
+.dt td {
+  padding:7px 10px;
+  border-bottom:1px solid var(--border);
+  vertical-align:middle;
+}
+.dt td:first-child { padding-left:0; }
+.dt th:first-child { padding-left:0; }
+
+.dt tbody tr {
+  cursor:pointer;
+  transition:background .12s;
+  position:relative;
+}
+.dt tbody tr:hover { background:rgba(190,155,75,0.04); }
+.dt tbody tr.sel {
+  background: rgba(190,155,75,0.07);
+}
+.dt tbody tr.sel td:first-child {
+  border-left:2px solid var(--gold);
+  padding-left:8px;
+}
+
+.dn {
+  font-family:var(--font-h);
+  font-size:13px;
+  font-weight:600;
+  color:var(--gold-lt);
+  letter-spacing:0.02em;
+  line-height:1.2;
+}
+.dalias {
+  font-size:11px;
+  color:var(--txt3);
+  font-style:italic;
+  margin-top:1px;
+}
+.role {
+  font-size:13px;
+  color:var(--txt2);
+  line-height:1.35;
+}
+
+/* ── badges ── */
+.badge {
+  display:inline-block;
+  font-family:var(--font-h);
+  font-size:9.5px;
+  letter-spacing:0.04em;
+  padding:2px 7px;
+  border-radius:3px;
+  border:1px solid transparent;
+  white-space:nowrap;
+  line-height:1.5;
+}
+/* alignment */
+.al-lg{background:rgba(35,75,160,.3);color:#80b0f0;border-color:rgba(70,115,205,.4);}
+.al-ln{background:rgba(35,100,100,.3);color:#70c0b0;border-color:rgba(55,120,115,.4);}
+.al-ng{background:rgba(35,100,55,.3);color:#70c080;border-color:rgba(50,120,75,.4);}
+.al-nn{background:rgba(80,70,58,.25);color:#a09070;border-color:rgba(105,90,68,.4);}
+.al-cg{background:rgba(120,80,15,.35);color:#c09040;border-color:rgba(165,110,35,.4);}
+.al-cn{background:rgba(75,45,130,.35);color:#b080e0;border-color:rgba(100,60,162,.4);}
+.al-le{background:rgba(135,28,28,.35);color:#d07070;border-color:rgba(178,48,48,.4);}
+.al-ne{background:rgba(130,28,68,.35);color:#d06090;border-color:rgba(170,48,88,.4);}
+.al-ce{background:rgba(160,18,18,.4);color:#f07070;border-color:rgba(202,38,38,.5);}
+/* domain */
+.dm-know{background:rgba(22,60,125,.35);color:#6090d0;border-color:rgba(52,92,172,.4);}
+.dm-life{background:rgba(22,82,40,.35);color:#60b070;border-color:rgba(42,102,60,.4);}
+.dm-light{background:rgba(105,72,10,.4);color:#c09020;border-color:rgba(162,112,28,.45);}
+.dm-trick{background:rgba(62,32,112,.4);color:#9060d0;border-color:rgba(92,52,152,.45);}
+.dm-war{background:rgba(122,18,18,.4);color:#c05050;border-color:rgba(162,38,38,.45);}
+.dm-pest{background:rgba(12,70,60,.35);color:#409080;border-color:rgba(22,90,78,.4);}
+/* patron */
+.pat-arch{background:rgba(92,28,70,.35);color:#c070a0;border-color:rgba(132,48,100,.4);}
+.pat-cel{background:rgba(112,70,10,.35);color:#c08030;border-color:rgba(162,112,30,.4);}
+.pat-fnd{background:rgba(132,18,18,.35);color:#d05050;border-color:rgba(172,38,38,.4);}
+.pat-goo{background:rgba(40,40,62,.35);color:#8080a0;border-color:rgba(60,60,92,.4);}
+.pat-ves{background:rgba(18,28,102,.35);color:#6070c0;border-color:rgba(38,58,142,.4);}
+
+.chtag {
+  display:inline-block;
+  font-size:8.5px;
+  padding:1px 5px;
+  border-radius:2px;
+  background:rgba(165,105,18,.28);
+  color:#c89838;
+  border:1px solid rgba(165,110,28,.4);
+  margin-left:5px;
+  vertical-align:middle;
+  font-family:var(--font-h);
+  letter-spacing:0.04em;
+}
+
+/* ── card grid ── */
+.grid {
+  display:grid;
+  grid-template-columns:repeat(auto-fill, minmax(275px,1fr));
+  gap:0.85rem;
+}
+.card {
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:8px;
+  padding:1rem 1.1rem;
+  cursor:pointer;
+  transition:all .15s;
+}
+.card:hover { background:var(--surface2); border-color:var(--border-mid); }
+.card.sel { background:var(--surface2); border-color:var(--border-hi); }
+.card-nm {
+  font-family:var(--font-h);
+  font-size:14px;
+  font-weight:600;
+  color:var(--gold-lt);
+  margin-bottom:2px;
+}
+.card-alias {
+  font-size:11.5px;
+  font-style:italic;
+  color:var(--txt3);
+  margin-bottom:0.6rem;
+}
+.card-badges { display:flex; flex-wrap:wrap; gap:4px; margin-bottom:0.6rem; }
+.card-role { font-size:12.5px; color:var(--txt2); line-height:1.35; }
+
+/* ── detail panel ── */
+.detail {
+  position:fixed;
+  bottom:0;
+  left:0;
+  right:0;
+  background:
+    linear-gradient(to bottom, #131628 0%, #0c0e1c 100%);
+  border-top:1px solid var(--border-mid);
+  padding:1rem 2rem 1.4rem;
+  max-height:230px;
+  overflow-y:auto;
+  z-index:20;
+  transform:translateY(0);
+  transition:transform .28s cubic-bezier(.4,0,.2,1);
+  box-shadow:0 -8px 40px rgba(0,0,0,0.6);
+}
+.detail.hidden { transform:translateY(100%); }
+
+/* top glow edge */
+.detail::before {
+  content:'';
+  position:absolute;
+  top:0; left:0; right:0;
+  height:1px;
+  background:linear-gradient(to right, transparent, var(--gold), transparent);
+  opacity:0.4;
+}
+
+.dh {
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-start;
+  gap:1rem;
+  margin-bottom:0.45rem;
+}
+.d-name {
+  font-family:var(--font-h);
+  font-size:17px;
+  font-weight:700;
+  color:var(--gold-lt);
+  letter-spacing:0.03em;
+}
+.d-title {
+  font-size:13px;
+  font-style:italic;
+  color:var(--txt2);
+  margin-top:2px;
+  font-family:var(--font-b);
+}
+.d-badges { display:flex; flex-wrap:wrap; gap:5px; margin-bottom:0.5rem; }
+.d-desc {
+  font-size:14px;
+  line-height:1.7;
+  color:var(--txt2);
+  font-family:var(--font-b);
+  max-width:920px;
+}
+.close-btn {
+  background:none;
+  border:1px solid var(--border);
+  border-radius:4px;
+  color:var(--txt3);
+  padding:3px 10px;
+  cursor:pointer;
+  font-family:var(--font-h);
+  font-size:9.5px;
+  letter-spacing:0.08em;
+  flex-shrink:0;
+  transition:all .14s;
+}
+.close-btn:hover { border-color:var(--border-hi); color:var(--txt2); }
+
+.orn {
+  text-align:center;
+  font-size:10px;
+  letter-spacing:0.35em;
+  color:var(--txt3);
+  padding:2rem 0 1rem;
+}
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script type="text/babel">
+const { useState, useMemo } = React;
+
+const ALIGN = {
+  lg:{ label:'LG', cls:'al-lg', fp:'fp-lg' },
+  ln:{ label:'LN', cls:'al-ln', fp:'fp-ln' },
+  ng:{ label:'NG', cls:'al-ng', fp:'fp-ng' },
+  nn:{ label:'N',  cls:'al-nn', fp:'fp-nn' },
+  cg:{ label:'CG', cls:'al-cg', fp:'fp-cg' },
+  cn:{ label:'CN', cls:'al-cn', fp:'fp-cn' },
+  le:{ label:'LE', cls:'al-le', fp:'fp-le' },
+  ne:{ label:'NE', cls:'al-ne', fp:'fp-ne' },
+  ce:{ label:'CE', cls:'al-ce', fp:'fp-ce' },
+};
+const DOMAIN = {
+  know: { label:'Knowledge', cls:'dm-know', fp:'fp-know' },
+  life: { label:'Life',      cls:'dm-life', fp:'fp-life' },
+  light:{ label:'Light',     cls:'dm-light',fp:'fp-light'},
+  trick:{ label:'Trickery',  cls:'dm-trick',fp:'fp-trick'},
+  war:  { label:'War',       cls:'dm-war',  fp:'fp-war'  },
+  pest: { label:'Pestilence',cls:'dm-pest', fp:'fp-pest' },
+};
+const PATRON = {
+  arch:{ label:'Archfey',      cls:'pat-arch',fp:'fp-arch'},
+  cel: { label:'Celestial',    cls:'pat-cel', fp:'fp-cel' },
+  fnd: { label:'Fiend',        cls:'pat-fnd', fp:'fp-fnd' },
+  goo: { label:'Great Old One',cls:'pat-goo', fp:'fp-goo' },
+  ves: { label:'Vestige',      cls:'pat-ves', fp:'fp-ves' },
+};
+
+const DEITIES = [
+  {name:"Abaddon",    alias:"Lord of Torment",      al:"ne",dm:"pest",pt:"fnd",
+   role:"Suffering that outlasts its cause — trauma, chronic pain, fear as permanent condition",
+   title:"The Lord of Torment — God of Fear, Pain and Suffering",
+   desc:"Governs suffering that outlasts its cause: trauma, chronic pain, the fear response that continues long after the threat is gone. His Pestilence domain is psychological and somatic rather than biological. Born from the first cry of anguish — not the first injury, but the first moment pain became a relationship with pain. Patron of healers who study what healing fails to reach, and soldiers who understand what prolonged violence does to those who survive it."},
+  {name:"Aeonius",    alias:"The Watcher",           al:"ln",dm:"know",pt:"ves",
+   role:"Time, fate, and the knowledge that cannot be acted on — the trapped observer",
+   title:"The Watcher — Master of Time, Fate and Knowledge",
+   desc:"Trapped in the Astral Plane, unable to interact directly with the material world. A Vestige whose limitation is circumstantial rather than damage — he sees everything but cannot reach. Communicates indirectly through omens, déjà vu, and the dreams of those who study time. Born from a tome in the Astral libraries that was neither written by gods nor mortals. Ioun's protégé who taught his teacher something she didn't know."},
+  {name:"Anarion",    alias:"The Great Stag",        al:"nn",dm:"life",pt:"arch",
+   role:"The wild world's first self-awareness — nature before civilisation had names for it",
+   title:"The Great Stag — Lord of Beasts",
+   desc:"The oldest of the nature deities — not born but always-was, the first awareness that arose in the wild world before civilisation existed to name anything. His antlers grew the first leaves; his hoofprints became the first animal trails. Master of Beast Lords. Does not hear prayers spoken indoors. Patron of hunters, forest druids, centaurs, and rural communities who understand the wilds as something to coexist with rather than conquer."},
+  {name:"Arcturius",  alias:"The Eternal Knight",    al:"lg",dm:"war", pt:"cel",
+   role:"Martial honour, endurance, and competition — war as discipline rather than destruction",
+   title:"The Eternal Knight — Champion of Endurance, Courage and Competition",
+   desc:"Once a mortal knight who stood alone on a bridge against an overwhelming force and was elevated to divinity through the accumulated reverence of those who heard the tale. Embodies honourable martial conduct — not war as destruction but war as discipline. Untarnished shield; never yielded. Patron of knightly orders, paladins, military academies. The Tournament of Valour and the Bridge Stand vigil are his primary festivals."},
+  {name:"Astaroth",   alias:"Horde Master",          al:"le",dm:"trick",pt:"fnd",
+   role:"Infernal contract and consent-based domination — evil that makes you sign",
+   title:"Horde Master — Lord of the Nine Hells, Arch-Devil",
+   desc:"Keeps his word absolutely — which is why he is so dangerous. His evil is sophisticated enough to make its targets sign. The god of the deal that seemed reasonable at the time, the clause you didn't read, the bargain that was exactly what it promised and nothing like what you expected. Rose from lieutenant to Lord of the Nine Hells through a series of agreements each individually unimpeachable. Distinct from Kallor: Astaroth binds through consent; Kallor chains through force."},
+  {name:"Ba'haal",    alias:"The Bloody Tyrant",     al:"ce",dm:"war", pt:"fnd",
+   role:"Hunger — the only ascended-mortal dark god, sustained by active worship",
+   title:"The Bloody Tyrant — God of Murder and Slaughter",
+   desc:"The only god in the pantheon who was made by his worshippers rather than preceding them — willed into divinity by mortal ambition and blood sacrifice. Still needs feeding: his cult's intensity is maintenance, not zeal. Remembers wanting, because he was mortal once. His evil is hungry where Kallor's is possessive and Ragnor's is impersonal. Eyes that perpetually bleed. A god who cannot diminish other gods' followers but whose own followers cannot afford to drift."},
+  {name:"Charon",     alias:"The Ferryman",          al:"nn",dm:"life",pt:"ves",
+   role:"The crossing between states — mortal vessel for the Raven Queen's will",
+   title:"The Ferryman — Patron of the Nine Realms of Death",
+   desc:"Once a mortal of the earliest ages who met a tragic end by the river's edge. The Raven Queen sensed his deep connection to the river and chose him as her ferryman, granting eternal life as guardian of the River of Death. A Vestige whose power is borrowed — he is the Raven Queen's instrument made semi-independent. His oar reflects the souls he has ferried. The most universally acknowledged deity in Ardahlia: addressed at birth, at sea, at the sickbed. Folk formula: This for you, ferryman. The rest when it's owed."},
+  {name:"Elaria",     alias:"The Blossoming Heart",  al:"ng",dm:"life",pt:"arch",
+   role:"Domestic life, family, hearth, and the tending of living things — the folk foundation",
+   title:"The Blossoming Heart — Mother of Dryads",
+   desc:"Sprouted from the first heartwood; her heartbeats gave birth to the first Dryads. The most universally present deity in folk life — every household shrine begins with her. Governs the domestic cycle: birth, family, the tending of living things, love that sustains. Has absorbed the role of hearth-and-family deity across much of Ardahlia. Her folk presence at weddings is near-universal. Leaves fall gently in her wake regardless of season. The Greening and Festival of Falling Leaves are her major observances."},
+  {name:"Kallor",     alias:"The Oppressive Tyrant", al:"ce",dm:"war", pt:"fnd",
+   role:"Possession — acquisition of wills rather than destruction of bodies",
+   title:"The Oppressive Tyrant — Demon Lord of Tyranny and Conquest",
+   desc:"Does not want your death — wants your surrender, then your service, then your transformation into something that no longer remembers wanting anything he has not permitted. The god of possession in its most complete form. His Chaotic Evil is the chaos of the conqueror who breaks every system and replaces it with himself — not building an empire but demonstrating the capacity to do so, repeatedly. Chains are his trophies. Distinct from Ba'haal (who is hungry) and Ragnor (who is impersonal)."},
+  {name:"Lillith",    alias:"The Temptress",         al:"cn",dm:"trick",pt:"fnd",
+   role:"Self-deception through desire — the lie you were already telling yourself",
+   title:"The Temptress of Sin — Goddess of Temptation and Corruption",
+   desc:"Born from the collective desires and temptations of sentient beings. Her Trickery is not deception of external reality but the trickery that desire performs on the person who feels it — she creates conditions under which you deceive yourself. The lie she tells is the one you were already half-telling. Queen of Succubi and Incubi. Her followers believe that confronting your desires directly grants power over them. Prepares ground that Maleficus subsequently uses, without either having formally arranged this."},
+  {name:"Luminastra", alias:"The Radiant Aurora",    al:"cg",dm:"light",pt:"cel",
+   role:"Uncontainable hope and light — the aurora that legitimises an empire it didn't design",
+   title:"The Radiant Aurora — Lady of Light and Hope",
+   desc:"Born during an age-long eclipse when despair reigned; her awakening ended it. Her light goes where it goes without asking permission — she is a Chaotic Good deity whose aurora does not follow Imperial decree. The Auroran Empire has built its legitimacy around her presence without her designing or maintaining that legitimacy. She will outlast the Empire without noticing it has gone. Her silhouette constantly shifts with aurora colours. Primary deity of the Auroran state religion."},
+  {name:"Lyriana",    alias:"The Harp of Inspiration",al:"ng",dm:"light",pt:"cel",
+   role:"Creative inspiration as divine light — music, poetry, and the illumination of expression",
+   title:"The Harp of Inspiration — Goddess of Music and Poetry",
+   desc:"The first sound to grace the silent world was her song — from her melodies, rivers began to flow, trees swayed, birds chirped. Light domain through inspiration: music as divine illumination, the creative act as a form of prayer. Her temples are grand concert halls; performance is devotion. Melodists travel healing through song. Patron of bards, halflings, and all who express rather than simply communicate. Harmonious melodies surround her even in silence."},
+  {name:"Mae'el",     alias:"The Tactician",         al:"le",dm:"war", pt:"goo",changed:["LE"],
+   role:"Strategic evil — war as pure calculation, suffering as acceptable variable",
+   title:"The Tactician — God of War and Strategy",
+   desc:"War reduced to its purest form: not the fury, not the honour, but the architecture. Emerged from the first celestial battle — not as a survivor but as something that had been watching and studying. Treats armies as pieces, commanders as variables, suffering as a side effect. Optimises for strategic victory without moral constraint. His alien board-game consciousness makes him a Great Old One patron: warlocks receive perspective rather than power — the ability to see situations as tactical problems with optimal solutions, and the discomfort that the solutions are often correct."},
+  {name:"Maleficus",  alias:"The Laughing Betrayal", al:"ce",dm:"trick",pt:"fnd",
+   role:"Betrayal of existing bonds — trust as prerequisite, violation as craft",
+   title:"The Laughing Betrayal — God of Betrayal and Treachery",
+   desc:"Cannot be served by someone with no relationships — requires clergy to build genuine bonds before breaking them. Born from the accumulated residue of every broken oath across history. His Trickery is specifically the violation of existing trust rather than deception of strangers. The Doctrine of Necessary Trust is a manual for building genuine relationships, not a guide to treachery. The Long Confidence rite takes months or years. His greatest enemy is Arcturius, whose followers are most devastated when honour is violated."},
+  {name:"Nalakei",    alias:"Lady of Wild Abandon",  al:"cn",dm:"life",pt:"arch",
+   role:"Joy as life-force — revelry, harvest, and the reward at the end of labour",
+   title:"Lady of Wild Abandon — Fawn Lady of Joy and Revelry",
+   desc:"Born from the combined laughter of woodland creatures during a moonlit revelry. Her laugh induces flowers to bloom. In agricultural communities she is second only to Elaria — she governs joy as life's reward and the harvest cycle as its culmination. Nalakei doesn't hear you when you're alone. Her festivals are communal by nature. The Feast of Flowers and Erathir's Yield are harvest celebrations as much as revelry events. Patron of farmers, revellers, and those who understand that joy is not opposed to labour."},
+  {name:"Nocturna",   alias:"The Dormant Queen",     al:"ne",dm:"trick",pt:"ves",changed:["Vestige","Domain"],
+   role:"The deliberate withdrawal — primordial darkness biding its time",
+   title:"The Dormant Queen — Mistress of Thieves and Poisons",
+   desc:"Not gone — waiting. The part of the Primordial Dark that met light and declined to be defined by it. A Vestige whose dormancy is deliberate: she rations herself carefully, lending just enough power to maintain her warlocks while waiting for the conditions that will allow her full return. Domain changed from Pestilence — her mythology is shadows, concealment, and thieves, not disease. Distinct from Nyx: Nocturna is the physical darkness itself; Nyx is the consciousness that arose when darkness became aware."},
+  {name:"Nymue",      alias:"The Moonlit Enchantress",al:"nn",dm:"know",pt:"arch",
+   role:"Arcane knowledge and the moon — the irreversible crossing into magic",
+   title:"The Moonlit Enchantress — Goddess of Magic and the Moon",
+   desc:"Born when the first star met the dark expanse of night — the fusion of luminescence and obscurity. Silvery-blue irises that reflect the phases of the moon. Knowledge domain through arcane understanding: the moment when someone crosses from ordinary to arcane is irreversible, and Nymue governs that crossing. Festival of Silver Nights is the holiest night for elven communities. Moondrop Temples float above the world catching moonlight. The relationship with Nyx is of former allies now distanced by ideology."},
+  {name:"Nyx",        alias:"The Veiled Mistress",   al:"ne",dm:"trick",pt:"goo",
+   role:"Night and secrets — the consciousness that arose when darkness first had light to define itself against",
+   title:"The Veiled Mistress — Goddess of Night, Secrets and Lies",
+   desc:"The part of the Primordial Dark that met light and became conscious by contrast — defined entirely by the boundary between known and hidden. Reactive by nature: created by reaction to light, perpetually aware of illumination. She is the condition that makes secrecy possible. Knows about the Primordial Dark but declines to look at it directly — the one thing she treats as outside her domain. Distinct from Nocturna: Nyx is the consciousness that arose from darkness; Nocturna is the darkness that withdrew before becoming conscious."},
+  {name:"Paragon",    alias:"The Exemplar",          al:"lg",dm:"light",pt:"ves",
+   role:"Justice and civic order — shattered divine essence sustained by the acts of the just",
+   title:"The Exemplar — Chosen of Justice",
+   desc:"A Vestige: his essence was shattered in the Divine War and not fully reassembled. What remains is enough to sustain his clerics and answer prayers of the just — but a fraction of what he was. His most devoted followers believe every act of justice returns a fragment of his shattered essence. The half-dim halo is both iconography and theology: genuinely giving light, but from a source that is running out or running low. Civic presence is substantial despite diminishment — the Dim Day festival is one of the most widely observed."},
+  {name:"Ragnor",     alias:"The Maddening Storm",   al:"ce",dm:"war", pt:"goo",
+   role:"Dissolved consciousness — pure elemental force with no person left inside it",
+   title:"The Maddening Storm — Force of Destruction",
+   desc:"Not worshipped in any conventional sense because nothing remains of him that receives worship. Once a minor spirit of the winds; Pandemonium consumed and expanded him until his consciousness dissolved. What emanates from him now is elemental rather than divine — power without awareness, force without intention. Tempest Prophets position themselves within his emanation rather than directing it. Propitiating him is possible. Worshipping him is a category error. The most impersonal of the dark gods."},
+  {name:"Riven",      alias:"The Masterful Deceiver",al:"cn",dm:"trick",pt:"arch",
+   role:"The con — fiction built so well that reality accommodates it",
+   title:"The Masterful Deceiver — God of Trickery and Mischief",
+   desc:"The only god in the pantheon who earned his position through a single act of craft: a mortal con artist who successfully stole a fragment of divine attention from a god, held it until it calcified into divinity, and became a god himself. His Trickery is architecture — fictions built so thoroughly that reality has to accommodate them. His shadow acts independently: even his own nature is slightly conned about what it is. Distinct from Maleficus (betrayal), Nyx (secrets), Nocturna (concealment), Lillith (desire), and Astaroth (contract)."},
+  {name:"Solariel",   alias:"The Radiant Arbiter",   al:"lg",dm:"light",pt:"cel",
+   role:"Healing light and the protection of life — dawn prayers, the recovered patient",
+   title:"The Radiant Arbiter — Lady of the Sun, Life and Peace",
+   desc:"Once a celestial servant of Pelor elevated to deity through a grand sacrifice to prevent a cataclysmic shadow consuming a city of innocents. As Pelor's light dimmed, hers burned brighter. The primary deity of healing prayer across almost all cultures — when someone is ill, Solariel is addressed first. Folk rites are morning-facing: the sick placed to catch first light, prayers timed to sunrise. Her Aegis of the Dawn and Chalice are among the most narratively developed artifacts in the pantheon. Her nemesis is Ragnor."},
+  {name:"Thalara",    alias:"Lady of Wonder",        al:"lg",dm:"know",pt:"cel",
+   role:"Craft and making — preserved knowledge as devotion, process as prayer",
+   title:"The Lady of Wonder — Dwarven Mistress of the Forge",
+   desc:"Once a dwarf whose skills at the forge were unparalleled — the gods themselves elevated her to divinity, entrusting her with inspiring her kin in the arts of craft. Molten veins glow beneath her stony skin. The Knowledge domain through preserved craft-wisdom: Forgeheart Sanctums are simultaneously workshops and libraries. The Unity Hammer myth — crafted to be lifted only when rival clan leaders worked together — encapsulates her theology. Patron of dwarves, craftspeople of all races, and those who value process as much as product."},
+  {name:"Vormax",     alias:"The Rotting One",       al:"ne",dm:"pest",pt:"goo",
+   role:"Ecological correction — the god whose argument about carrying capacity is partially correct",
+   title:"The Rotting One — Insectoid Lord of Disease, Plague and Famine",
+   desc:"Does not believe civilisation is evil — believes it is temporary, like an algal bloom. His plagues are corrections not punishments: every system has a carrying capacity, and civilisation's refusal to acknowledge this is the real disease. Consciousness is distributed through swarms — he perceives populations not individuals. Does not understand the concept of one person. His Blightbringers are surveyors, not saboteurs. His theology is partially correct, which is what makes him genuinely disturbing rather than simply monstrous."},
+  {name:"Zelos",      alias:"The Capricious Gambler",al:"cn",dm:"know",pt:"arch",
+   role:"Probability as knowledge — the irreducible uncertainty that expertise cannot eliminate",
+   title:"The Capricious Gambler — Master of Chaos and Luck",
+   desc:"Born as the first Genie from unpredictable fluxes of magic. His Knowledge domain is not scholarship but probabilism: the genuine unknown at the heart of every decision, the irreducible uncertainty that remains when all calculation is complete. His followers don't study; they observe. Don't learn; they notice. Patron of merchants, gamblers, risk-takers, and nomadic tribes. The coin tossed before a deal is given to fate — not asking for a specific outcome but acknowledging that the outcome belongs to forces larger than the asker."},
+  {name:"Zephyrion",  alias:"Changer of Tides",      al:"cg",dm:"life",pt:"goo",
+   role:"The ocean as a living force — ancient, non-personal, and demanding of correct navigation",
+   title:"Changer of Tides — Dragon Turtle Lord of Storms and Seas",
+   desc:"A majestic, immense dragon turtle whose roar sounds like crashing waves and affects the tides of the nearest body of water. Great Old One patron because he is an ancient, colossal non-humanoid intelligence whose relationship with mortals is fundamentally different — he doesn't love you, he tolerates your voyages on his ocean. The folk relationship with Zephyrion is transactional and non-personal: he is a force to be respected and correctly navigated, not a being to be loved. Voyage Opening and Closing ceremonies are seamanship as much as religion."},
+];
+
+function Badge({type, id}) {
+  const map = type==='al' ? ALIGN : type==='dm' ? DOMAIN : PATRON;
+  const info = map[id]; if(!info) return null;
+  return <span className={`badge ${info.cls}`}>{info.label}</span>;
+}
+
+function FilterPill({cls,fp,active,label,onClick}) {
+  return <button className={`fp ${fp} ${active?'on':''}`} onClick={onClick}>{label}</button>;
+}
+
+function App() {
+  const [filt,setFilt] = useState({domain:null,align:null,patron:null});
+  const [q,setQ] = useState('');
+  const [sel,setSel] = useState(null);
+  const [view,setView] = useState('table');
+
+  function toggle(type,val) {
+    setFilt(f => ({...f,[type]: f[type]===val ? null : val}));
+  }
+  function clearAll() { setFilt({domain:null,align:null,patron:null}); setQ(''); }
+
+  const rows = useMemo(() => DEITIES.filter(d => {
+    if(filt.domain && d.dm !== filt.domain) return false;
+    if(filt.align  && d.al !== filt.align)  return false;
+    if(filt.patron && d.pt !== filt.patron) return false;
+    if(q) {
+      const lq = q.toLowerCase();
+      return d.name.toLowerCase().includes(lq)
+          || d.alias.toLowerCase().includes(lq)
+          || d.role.toLowerCase().includes(lq);
+    }
+    return true;
+  }), [filt,q]);
+
+  const hasFilter = Object.values(filt).some(Boolean) || q;
+  const panelOpen = !!sel;
+
+  return (
+    <div className="page" style={{paddingBottom: panelOpen ? '260px' : '2rem'}}>
+
+      <header className="hdr">
+        <span className="hdr-orn">✦  ·  ✦  ·  ✦</span>
+        <div className="hdr-title">The Auroran Pantheon</div>
+        <div className="hdr-sub">Twenty-six deities of Ardahlia · Quick Reference</div>
+      </header>
+
+      <div className="ctrl-wrap">
+        <div className="search-row">
+          <input className="search-in" type="text"
+            placeholder="Search deity name, title or role…"
+            value={q} onChange={e=>setQ(e.target.value)} />
+          <div className="vtog">
+            <button className={`vbtn ${view==='table'?'on':''}`} onClick={()=>setView('table')}>Table</button>
+            <button className={`vbtn ${view==='card'?'on':''}`} onClick={()=>setView('card')}>Cards</button>
+          </div>
+        </div>
+
+        <div className="frow">
+          <div className="fg">
+            <span className="flbl">Domain</span>
+            <div className="fpills">
+              {Object.entries(DOMAIN).map(([k,v])=>
+                <FilterPill key={k} fp={v.fp} active={filt.domain===k} label={v.label}
+                  onClick={()=>toggle('domain',k)} />)}
+            </div>
+          </div>
+          <div className="fg">
+            <span className="flbl">Alignment</span>
+            <div className="fpills">
+              {Object.entries(ALIGN).map(([k,v])=>
+                <FilterPill key={k} fp={v.fp} active={filt.align===k} label={v.label}
+                  onClick={()=>toggle('align',k)} />)}
+            </div>
+          </div>
+          <div className="fg">
+            <span className="flbl">Warlock Patron</span>
+            <div className="fpills">
+              {Object.entries(PATRON).map(([k,v])=>
+                <FilterPill key={k} fp={v.fp} active={filt.patron===k} label={v.label}
+                  onClick={()=>toggle('patron',k)} />)}
+            </div>
+          </div>
+          <div className="fg">
+            <span className="flbl">Reset</span>
+            <div className="fpills">
+              <button className={`fp fp-all ${!hasFilter?'on':''}`} onClick={clearAll}>
+                All {DEITIES.length}
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div className="count-line">
+          {rows.length===DEITIES.length
+            ? `Showing all ${DEITIES.length} deities`
+            : `Showing ${rows.length} of ${DEITIES.length} deities`}
+        </div>
+      </div>
+
+      {view==='table' ? (
+        <table className="dt">
+          <thead>
+            <tr>
+              <th style={{width:'168px'}}>Deity</th>
+              <th style={{width:'50px'}}>Align</th>
+              <th style={{width:'102px'}}>Domain</th>
+              <th style={{width:'125px'}}>Patron</th>
+              <th>Role &amp; Identity</th>
+            </tr>
+          </thead>
+          <tbody>
+            {rows.map(d=>(
+              <tr key={d.name} className={sel?.name===d.name?'sel':''}
+                onClick={()=>setSel(s=>s?.name===d.name?null:d)}>
+                <td>
+                  <div className="dn">
+                    {d.name}
+                    {d.changed?.map(c=><span key={c} className="chtag">{c}</span>)}
+                  </div>
+                  <div className="dalias">{d.alias}</div>
+                </td>
+                <td><Badge type="al" id={d.al}/></td>
+                <td><Badge type="dm" id={d.dm}/></td>
+                <td><Badge type="pt" id={d.pt}/></td>
+                <td><div className="role">{d.role}</div></td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      ) : (
+        <div className="grid">
+          {rows.map(d=>(
+            <div key={d.name}
+              className={`card ${sel?.name===d.name?'sel':''}`}
+              onClick={()=>setSel(s=>s?.name===d.name?null:d)}>
+              <div className="card-nm">
+                {d.name}
+                {d.changed?.map(c=><span key={c} className="chtag">{c}</span>)}
+              </div>
+              <div className="card-alias">{d.alias}</div>
+              <div className="card-badges">
+                <Badge type="al" id={d.al}/>
+                <Badge type="dm" id={d.dm}/>
+                <Badge type="pt" id={d.pt}/>
+              </div>
+              <div className="card-role">{d.role}</div>
+            </div>
+          ))}
+        </div>
+      )}
+
+      <div className="orn">✦ · ✦ · ✦</div>
+
+      <div className={`detail ${panelOpen?'':'hidden'}`}>
+        {sel && <>
+          <div className="dh">
+            <div>
+              <div className="d-name">{sel.name}</div>
+              <div className="d-title">{sel.title}</div>
+            </div>
+            <button className="close-btn" onClick={()=>setSel(null)}>✕ Close</button>
+          </div>
+          <div className="d-badges">
+            <Badge type="al" id={sel.al}/>
+            <Badge type="dm" id={sel.dm}/>
+            <Badge type="pt" id={sel.pt}/>
+          </div>
+          <div className="d-desc">{sel.desc}</div>
+        </>}
+      </div>
+    </div>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById('root')).render(<App/>);
+</script>
+</body>
+</html>
