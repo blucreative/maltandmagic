@@ -1,0 +1,1460 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gods of Ardahlia</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+
+/* ── colour tokens ── */
+:root {
+  --bg:         #0a0e1a;
+  --bg-raised:  #0f1524;
+  --bg-card:    #121829;
+  --bg-hover:   #161d30;
+  --bg-active:  #1a2238;
+  --border:     rgba(99,130,200,0.12);
+  --border-mid: rgba(99,130,200,0.22);
+  --border-hi:  rgba(99,130,200,0.40);
+
+  --text:       #e2e8f8;
+  --text-mid:   #8a9bbf;
+  --text-dim:   #4a5570;
+  --text-link:  #7ba4e8;
+
+  --blue:       #4a7fd4;
+  --blue-bright:#6a9fee;
+  --blue-pale:  rgba(74,127,212,0.12);
+  --blue-glow:  rgba(74,127,212,0.06);
+
+  --gold:       #c8a04a;
+  --gold-pale:  rgba(200,160,74,0.10);
+
+  /* domain accent colours — dark mode */
+  --know:  #4a7fd4; --know-bg: rgba(74,127,212,0.10); --know-text: #7ba4e8;
+  --life:  #3a9e6a; --life-bg:  rgba(58,158,106,0.10); --life-text:  #60c88a;
+  --light: #c8963a; --light-bg: rgba(200,150,58,0.10); --light-text: #e8b460;
+  --trick: #8a52c8; --trick-bg: rgba(138,82,200,0.10); --trick-text: #b07ae8;
+  --war:   #c84a4a; --war-bg:   rgba(200,74,74,0.10);  --war-text:   #e87a7a;
+  --pest:  #3a9e90; --pest-bg:  rgba(58,158,144,0.10); --pest-text:  #60c8b8;
+
+  /* patron colours */
+  --arch:  #9a52a8; --arch-bg: rgba(154,82,168,0.10); --arch-text: #c080d8;
+  --cel:   #c8963a; --cel-bg:  rgba(200,150,58,0.10); --cel-text:  #e8c060;
+  --fnd:   #c84a4a; --fnd-bg:  rgba(200,74,74,0.10);  --fnd-text:  #e87070;
+  --goo:   #3a9e6a; --goo-bg:  rgba(58,158,106,0.10); --goo-text:  #60c890;
+  --ves:   #4a7fd4; --ves-bg:  rgba(74,127,212,0.10); --ves-text:  #80b0f0;
+
+  /* alignment colours */
+  --lg:#4a7fd4; --ln:#5a9a6a; --ng:#3a9e6a;
+  --nn:#6a7a8a; --cg:#c8963a; --cn:#8a52c8;
+  --le:#c84a4a; --ne:#9a4a8a; --ce:#c84a2a;
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    --bg:         #f0f4ff;
+    --bg-raised:  #e8eeff;
+    --bg-card:    #ffffff;
+    --bg-hover:   #eef2ff;
+    --bg-active:  #e4eaff;
+    --border:     rgba(60,100,200,0.10);
+    --border-mid: rgba(60,100,200,0.20);
+    --border-hi:  rgba(60,100,200,0.35);
+
+    --text:       #1a2040;
+    --text-mid:   #3a4870;
+    --text-dim:   #8a9ab8;
+    --text-link:  #2a5cb8;
+
+    --blue:       #2a5cb8;
+    --blue-bright:#3a70d4;
+    --blue-pale:  rgba(42,92,184,0.08);
+    --blue-glow:  rgba(42,92,184,0.04);
+
+    --gold:       #8a6a20;
+    --gold-pale:  rgba(138,106,32,0.08);
+
+    --know:  #2a5cb8; --know-bg: rgba(42,92,184,0.08); --know-text: #1a4a9a;
+    --life:  #1a7a4a; --life-bg:  rgba(26,122,74,0.08); --life-text:  #0a5a34;
+    --light: #8a5a10; --light-bg: rgba(138,90,16,0.08); --light-text: #6a4008;
+    --trick: #6a2aa0; --trick-bg: rgba(106,42,160,0.08); --trick-text: #4a1a80;
+    --war:   #a02020; --war-bg:   rgba(160,32,32,0.08);  --war-text:   #801010;
+    --pest:  #1a7a70; --pest-bg:  rgba(26,122,112,0.08); --pest-text:  #0a5a52;
+
+    --arch:  #7a2a8a; --arch-bg: rgba(122,42,138,0.08); --arch-text: #5a1a6a;
+    --cel:   #8a5a10; --cel-bg:  rgba(138,90,16,0.08); --cel-text:   #6a4008;
+    --fnd:   #a02020; --fnd-bg:  rgba(160,32,32,0.08); --fnd-text:   #801010;
+    --goo:   #1a7a4a; --goo-bg:  rgba(26,122,74,0.08); --goo-text:   #0a5a34;
+    --ves:   #2a5cb8; --ves-bg:  rgba(42,92,184,0.08); --ves-text:   #1a4a9a;
+  }
+}
+
+html { font-size: 16px; scroll-behavior: smooth; }
+
+body {
+  font-family: 'DM Sans', system-ui, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  font-weight: 300;
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── masthead ── */
+.masthead {
+  position: relative;
+  padding: 72px 24px 56px;
+  text-align: center;
+  overflow: hidden;
+}
+.masthead::before {
+  content:'';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse 70% 60% at 50% 0%, rgba(74,127,212,0.14) 0%, transparent 70%);
+  pointer-events: none;
+}
+.masthead-eyebrow {
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--blue-bright);
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+}
+.masthead-eyebrow::before,
+.masthead-eyebrow::after {
+  content: '';
+  display: block;
+  width: 32px;
+  height: 1px;
+  background: var(--border-mid);
+}
+.masthead h1 {
+  font-family: 'DM Serif Display', Georgia, serif;
+  font-size: clamp(2.6rem, 7vw, 5rem);
+  font-weight: 400;
+  font-style: italic;
+  letter-spacing: -0.01em;
+  line-height: 1.05;
+  color: var(--text);
+  margin-bottom: 14px;
+}
+.masthead-sub {
+  font-size: 0.85rem;
+  color: var(--text-mid);
+  letter-spacing: 0.04em;
+}
+
+/* ── sticky filter bar ── */
+.filter-bar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: var(--bg-raised);
+  border-bottom: 1px solid var(--border);
+  padding: 12px 24px;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+.filter-bar-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
+.search-box {
+  position: relative;
+  flex-shrink: 0;
+}
+.search-icon {
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 12px;
+  color: var(--text-dim);
+  pointer-events: none;
+}
+.filter-search {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.82rem;
+  font-weight: 400;
+  color: var(--text);
+  background: var(--bg-card);
+  border: 1px solid var(--border-mid);
+  border-radius: 6px;
+  padding: 6px 12px 6px 30px;
+  width: 190px;
+  outline: none;
+  transition: border-color .15s, box-shadow .15s;
+}
+.filter-search:focus {
+  border-color: var(--blue);
+  box-shadow: 0 0 0 3px var(--blue-pale);
+}
+.filter-search::placeholder { color: var(--text-dim); }
+
+.vr { width: 1px; height: 22px; background: var(--border); flex-shrink: 0; }
+
+.pill-group { display: flex; flex-wrap: wrap; gap: 4px; }
+
+.pill {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  padding: 4px 11px;
+  border-radius: 20px;
+  border: 1px solid var(--border-mid);
+  background: transparent;
+  color: var(--text-mid);
+  cursor: pointer;
+  transition: all .12s;
+  white-space: nowrap;
+}
+.pill:hover { border-color: var(--border-hi); color: var(--text); }
+
+/* Active pill states */
+.pill.on.know  { background: var(--know-bg);  border-color: var(--know);  color: var(--know-text); }
+.pill.on.life  { background: var(--life-bg);  border-color: var(--life);  color: var(--life-text); }
+.pill.on.light { background: var(--light-bg); border-color: var(--light); color: var(--light-text);}
+.pill.on.trick { background: var(--trick-bg); border-color: var(--trick); color: var(--trick-text);}
+.pill.on.war   { background: var(--war-bg);   border-color: var(--war);   color: var(--war-text);  }
+.pill.on.pest  { background: var(--pest-bg);  border-color: var(--pest);  color: var(--pest-text); }
+.pill.on.arch  { background: var(--arch-bg);  border-color: var(--arch);  color: var(--arch-text); }
+.pill.on.cel   { background: var(--cel-bg);   border-color: var(--cel);   color: var(--cel-text);  }
+.pill.on.fnd   { background: var(--fnd-bg);   border-color: var(--fnd);   color: var(--fnd-text);  }
+.pill.on.goo   { background: var(--goo-bg);   border-color: var(--goo);   color: var(--goo-text);  }
+.pill.on.ves   { background: var(--ves-bg);   border-color: var(--ves);   color: var(--ves-text);  }
+.pill.on.lg    { background: rgba(74,127,212,0.10); border-color:#4a7fd4; color:#7ba4e8; }
+.pill.on.ln    { background: rgba(58,158,106,0.10); border-color:#3a9e6a; color:#60c88a; }
+.pill.on.ng    { background: rgba(58,158,106,0.10); border-color:#3a9e6a; color:#60c88a; }
+.pill.on.nn    { background: rgba(100,120,140,0.10);border-color:#6a7a8a; color:#8a9ab8; }
+.pill.on.cg    { background: rgba(200,150,58,0.10); border-color:#c8963a; color:#e8b460; }
+.pill.on.cn    { background: rgba(138,82,200,0.10); border-color:#8a52c8; color:#b07ae8; }
+.pill.on.le    { background: rgba(200,74,74,0.10);  border-color:#c84a4a; color:#e87a7a; }
+.pill.on.ne    { background: rgba(154,74,138,0.10); border-color:#9a4a8a; color:#c870b8; }
+.pill.on.ce    { background: rgba(200,74,42,0.10);  border-color:#c84a2a; color:#e88060; }
+
+.count-label {
+  font-size: 0.72rem;
+  color: var(--text-dim);
+  margin-left: auto;
+  white-space: nowrap;
+  font-weight: 400;
+}
+
+/* ── main layout ── */
+.layout {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 32px 24px 100px;
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  gap: 32px;
+  align-items: start;
+}
+
+/* ── left sidebar index ── */
+.sidebar {
+  position: sticky;
+  top: 72px;
+  max-height: calc(100vh - 100px);
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--border-mid) transparent;
+}
+.sidebar-group { margin-bottom: 20px; }
+.sidebar-group-label {
+  font-size: 0.62rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  padding: 0 8px 6px;
+  margin-bottom: 2px;
+  border-bottom: 1px solid var(--border);
+}
+.sidebar-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 5px 8px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background .1s;
+  text-decoration: none;
+}
+.sidebar-item:hover { background: var(--bg-hover); }
+.sidebar-item.active { background: var(--blue-pale); }
+.sidebar-dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.sidebar-name {
+  font-size: 0.8rem;
+  color: var(--text-mid);
+  font-weight: 400;
+  line-height: 1.3;
+}
+.sidebar-item.active .sidebar-name { color: var(--blue-bright); font-weight: 500; }
+.sidebar-item.hidden { display: none; }
+
+/* ── card list ── */
+.card-list { display: flex; flex-direction: column; gap: 8px; }
+
+.deity-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: border-color .15s, box-shadow .15s;
+}
+.deity-card:hover { border-color: var(--border-mid); }
+.deity-card.open {
+  border-color: var(--border-hi);
+  box-shadow: 0 0 0 1px var(--border), 0 8px 32px rgba(0,0,0,0.25);
+}
+@media (prefers-color-scheme: light) {
+  .deity-card.open { box-shadow: 0 0 0 1px var(--border), 0 4px 20px rgba(42,92,184,0.08); }
+}
+.deity-card.hidden { display: none; }
+
+/* card header */
+.card-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px 20px;
+}
+.card-accent {
+  width: 3px;
+  height: 36px;
+  border-radius: 2px;
+  flex-shrink: 0;
+  opacity: 0.7;
+}
+.card-main { flex: 1; min-width: 0; }
+.card-name-row {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  margin-bottom: 6px;
+}
+.card-name {
+  font-family: 'DM Serif Display', Georgia, serif;
+  font-size: 1.25rem;
+  font-weight: 400;
+  color: var(--text);
+  line-height: 1.1;
+}
+.card-alias {
+  font-size: 0.78rem;
+  color: var(--text-dim);
+  font-style: italic;
+}
+.card-tags { display: flex; flex-wrap: wrap; gap: 5px; }
+.ctag {
+  font-size: 0.65rem;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  padding: 2px 8px;
+  border-radius: 3px;
+  border: 1px solid transparent;
+}
+.ctag-align {
+  color: var(--text-dim);
+  background: var(--bg-raised);
+  border-color: var(--border);
+}
+.ctag-domain { color: white; }
+.ctag-domain.know  { background: var(--know);  }
+.ctag-domain.life  { background: var(--life);  }
+.ctag-domain.light { background: var(--light); }
+.ctag-domain.trick { background: var(--trick); }
+.ctag-domain.war   { background: var(--war);   }
+.ctag-domain.pest  { background: var(--pest);  }
+@media (prefers-color-scheme: light) {
+  .ctag-domain { color: #fff; }
+}
+.ctag-patron {
+  background: transparent;
+}
+.ctag-patron.arch { color: var(--arch-text); border-color: var(--arch); background: var(--arch-bg); }
+.ctag-patron.cel  { color: var(--cel-text);  border-color: var(--cel);  background: var(--cel-bg);  }
+.ctag-patron.fnd  { color: var(--fnd-text);  border-color: var(--fnd);  background: var(--fnd-bg);  }
+.ctag-patron.goo  { color: var(--goo-text);  border-color: var(--goo);  background: var(--goo-bg);  }
+.ctag-patron.ves  { color: var(--ves-text);  border-color: var(--ves);  background: var(--ves-bg);  }
+
+.card-chevron {
+  font-size: 10px;
+  color: var(--text-dim);
+  transition: transform .2s;
+  flex-shrink: 0;
+  margin-left: 4px;
+}
+.deity-card.open .card-chevron { transform: rotate(180deg); }
+
+/* card body */
+.card-body {
+  display: none;
+  padding: 0 20px 20px;
+  border-top: 1px solid var(--border);
+  margin-top: 0;
+}
+.deity-card.open .card-body { display: block; }
+
+.card-overview {
+  font-size: 0.9rem;
+  line-height: 1.85;
+  color: var(--text-mid);
+  padding: 16px 0;
+  border-bottom: 1px solid var(--border);
+  white-space: pre-line;
+}
+
+.sections { padding-top: 4px; }
+
+.section {
+  padding: 12px 0;
+  border-bottom: 1px solid var(--border);
+}
+.section:last-child { border-bottom: none; padding-bottom: 0; }
+
+.section-label {
+  font-size: 0.62rem;
+  font-weight: 500;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  color: var(--blue-bright);
+  margin-bottom: 7px;
+}
+
+.section-text {
+  font-size: 0.875rem;
+  line-height: 1.8;
+  color: var(--text-mid);
+}
+.section-text strong { color: var(--text); font-weight: 500; }
+.section-text em { font-style: italic; }
+
+.section-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 0;
+}
+.section-list li {
+  display: grid;
+  grid-template-columns: 3px 1fr;
+  gap: 10px;
+  font-size: 0.875rem;
+  line-height: 1.75;
+  color: var(--text-mid);
+  align-items: start;
+}
+.li-bar {
+  width: 3px;
+  min-height: 16px;
+  height: 100%;
+  border-radius: 2px;
+  background: var(--border-hi);
+  margin-top: 4px;
+  flex-shrink: 0;
+}
+.li-content strong { color: var(--text); font-weight: 500; }
+
+/* ── appendix ── */
+.appendix-wrap {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px 80px;
+}
+.appendix {
+  max-width: 680px;
+  margin: 0 auto;
+  padding-top: 60px;
+  border-top: 1px solid var(--border);
+}
+.appendix-eyebrow {
+  font-size: 0.65rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--blue-bright);
+  margin-bottom: 10px;
+}
+.appendix-title {
+  font-family: 'DM Serif Display', Georgia, serif;
+  font-size: 1.4rem;
+  font-weight: 400;
+  font-style: italic;
+  color: var(--text);
+  margin-bottom: 6px;
+  line-height: 1.2;
+}
+.appendix-source {
+  font-size: 0.78rem;
+  font-style: italic;
+  color: var(--text-dim);
+  margin-bottom: 24px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--border);
+}
+.appendix p {
+  font-size: 0.9rem;
+  line-height: 1.85;
+  color: var(--text-mid);
+  margin-bottom: 16px;
+}
+.appendix p:last-child { margin-bottom: 0; }
+
+/* ── empty state ── */
+.empty-state {
+  padding: 80px 0;
+  text-align: center;
+  font-size: 0.8rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+}
+
+/* ── responsive ── */
+@media (max-width: 768px) {
+  .layout { grid-template-columns: 1fr; gap: 0; }
+  .sidebar { display: none; }
+  .filter-search { width: 140px; }
+  .vr { display: none; }
+}
+@media (max-width: 500px) {
+  .masthead { padding: 48px 16px 36px; }
+  .layout { padding: 16px 16px 80px; }
+  .filter-bar { padding: 10px 16px; }
+}
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
+<script>
+const { useState, useMemo, useEffect, useRef } = React;
+
+const DOMAIN_LABELS = { know:'Knowledge', life:'Life', light:'Light', trick:'Trickery', war:'War', pest:'Pestilence' };
+const PATRON_LABELS = { arch:'Archfey', cel:'Celestial', fnd:'Fiend', goo:'Great Old One', ves:'Vestige' };
+const ALIGN_FULL = {
+  lg:'Lawful Good', ln:'Lawful Neutral', ng:'Neutral Good',
+  nn:'True Neutral', cg:'Chaotic Good', cn:'Chaotic Neutral',
+  le:'Lawful Evil', ne:'Neutral Evil', ce:'Chaotic Evil'
+};
+const DOMAIN_COLOUR = {
+  know:'#4a7fd4', life:'#3a9e6a', light:'#c8963a',
+  trick:'#8a52c8', war:'#c84a4a', pest:'#3a9e90'
+};
+const PATRON_COLOUR = {
+  arch:'#9a52a8', cel:'#c8963a', fnd:'#c84a4a', goo:'#3a9e6a', ves:'#4a7fd4'
+};
+const ALIGN_GROUPS = [
+  { label:'Lawful', keys:['lg','ln','le'] },
+  { label:'Neutral', keys:['ng','nn','ne'] },
+  { label:'Chaotic', keys:['cg','cn','ce'] },
+];
+
+const DEITIES = [
+  {
+    id:'abaddon', name:'Abaddon', alias:'Lord of Torment',
+    align:'ne', domain:'pest', patron:'fnd',
+    alignFull:'Neutral Evil',
+    overview:`Abaddon governs the suffering that outlasts its cause. Not the wound — the wound is Ba'haal's territory. Not the battle — that is Mae'el's and Ragnor's. Abaddon governs what remains when the battle is over and the wound has closed: the fear that calcified into something structural, the grief that became a permanent condition, the pain that the body learned to expect and now generates without injury to prompt it.
+
+His Pestilence domain is not biological. It is psychological and somatic — the plague of the mind, the chronic condition of the spirit. He was birthed from the first cry of anguish — not the first injury, but the first moment when pain became a relationship with pain.`,
+    sections:[
+      {label:'Unique Characteristic', text:'His touch leaves a mark of excruciating pain that never truly fades — not a wound, but the memory of pain made permanent.'},
+      {label:'Appearance & Personality', text:'Ruthless and cold, but not sadistic — he takes interest in suffering, not pleasure. He appears as a looming figure with skin resembling burnt parchment, glowing crimson scars etched across it, hollow eyes that echo with the cries of the tormented — not in mockery but in record.'},
+      {label:'Cultural Affiliation', text:'Those who work with suffering professionally — healers who study what pain does to people over time, certain military physicians who have seen what repeated violence does to soldiers who survive it. The Duergar of the Underdark. Those who have learned that understanding suffering is the only meaningful form of power over it. He is not worshipped by those who enjoy causing pain — that is Ba\'haal\'s domain.'},
+      {label:'Key Relationships', items:[
+        {title:"Ragnor", text:"Their connection is sequential, not collaborative. Ragnor creates devastation; Abaddon is what comes after, when survivors begin living with what they experienced. Ragnor does not know this relationship exists."},
+        {title:"Solariel", text:"His most direct opposition. Solariel heals. Abaddon studies what healing fails to reach."},
+        {title:"Ba'haal", text:"Ba'haal inflicts; Abaddon inherits. What Ba'haal produces in the moment is raw material for what Abaddon cultivates over time."},
+      ]},
+      {label:'Sacred Artifacts', items:[
+        {title:'The Dagger of Despair', text:'Does not wound the body but shreds the soul, leaving victims in an eternal state of fear — not of the dagger, but of themselves and their own fragility.'},
+      ]},
+      {label:'Worship & Practices', items:[
+        {title:'Cult of the Hollow Cry', text:'Devotees who embrace suffering as a discipline — researchers, in their own understanding. Their rituals involve sensory deprivation and the deliberate confrontation of fear and pain responses.'},
+        {title:'Chamber of Echoed Cries', text:'Deep caverns where every sound is a reflection of past agonies. The echoes do not diminish over time. Abaddon ensures they don\'t.'},
+        {title:'Verses of Vexation', text:'Chronicles describing the myriad types of torment and the knowledge one gains from understanding and surviving each one.'},
+      ]},
+      {label:'Folk Practice', text:'Name your pain to Abaddon before he names it to you. Voluntary acknowledgment is considered marginally safer than being noticed without it. Experienced healers quietly acknowledge his domain before difficult procedures. Soldiers name their fear aloud to the ground before a charge.'},
+      {label:'Myths & History', items:[
+        {title:'The Epoch of Agony', text:'A period when Abaddon\'s influence spread across entire civilisations, transforming brave warriors into fearful children through the persistence of what war and violence leave behind.'},
+        {title:'The Breath of Torment', text:'A curse where the victim feels the weight of every pain they have ever inflicted on others.'},
+        {title:'The Fearless One', text:'Legends of an individual who never felt fear or pain — intriguing and infuriating Abaddon, leading to an eternal game of cat and mouse.'},
+      ]},
+    ]
+  },
+  {
+    id:'aeonius', name:'Aeonius', alias:'The Watcher',
+    align:'ln', domain:'know', patron:'ves',
+    alignFull:'Lawful Neutral',
+    overview:`Aeonius is the god of time, fate, and the knowledge that cannot be acted on — the trapped observer. He sees everything but cannot reach. His power flows into the world indirectly, through the instincts of those who study time, through the sense of déjà vu, through the feeling that a decision carries more weight than it appears to.`,
+    sections:[
+      {label:'Unique Characteristic', text:'A constantly ticking ethereal hourglass floats beside him. Where one would expect to see a face, two luminous stars rest, swirling with the colours and patterns of myriad fates.'},
+      {label:'Appearance & Personality', text:'Appears as a humanoid draped in robes that shimmer and shift, representing various epochs and eras. Observant and calculative — he embodies patience, foresight, and a relentless thirst for knowledge he can observe but not always influence.'},
+      {label:'Cultural Affiliation', text:'Gnomes and scholars. Historians, astrologers, and those who seek to understand the mysteries of fate. Those who feel the weight of time passing differently from others.'},
+      {label:'Origin', text:'In the vast libraries of the Astral Plane, Ioun discovered a particular tome written by neither gods nor mortals. Reading it aloud, she summoned forth Aeonius — born from the very essence of time, fate, and uncharted knowledge. A cosmic event ensnared him within the Astral Plane, unable to interact directly with the material world.'},
+      {label:'Key Relationships', items:[
+        {title:'Charon', text:'As the ferryman who understands the Astral Plane, Charon occasionally aids in relaying Aeonius\'s messages.'},
+      ]},
+      {label:'Sacred Artifacts', items:[
+        {title:'Orb of Aeons', text:'A mystical artifact said to allow glimpses into potential futures.'},
+        {title:'Chronicle of Futures Past', text:'A book allowing glimpses into potential futures based on choices one might make. Its revelations are often cryptic.'},
+      ]},
+      {label:'Worship & Practices', items:[
+        {title:'Temporal Sages', text:'Followers dedicated to understanding time\'s mysteries, acting as historians, prophets, and keepers of ancient secrets.'},
+        {title:'The Timekeepers', text:'An order dedicated to preserving the timeline and investigating those who seek to alter fate.'},
+        {title:'Chrono Sanctum', text:'Hidden libraries where time seems to stand still.'},
+        {title:'The Timeless Vigil', text:'A once-in-a-lifetime event where scholars meditate in synchronisation, trying to reach Aeonius directly.'},
+      ]},
+      {label:'Tenets', items:[
+        {text:'Knowledge is timeless, and seeking it is the highest virtue.'},
+        {text:'Fate is not fixed; with wisdom, one can forge their own path.'},
+        {text:'In understanding the past, we shape the future.'},
+      ]},
+      {label:'Folk Practice', text:'Clocks stopping momentarily, fleeting visions of past or future events, and an overwhelming sense of déjà vu are all considered omens of his attention. Folk saying: Aeonius doesn\'t move; everything else moves past him.'},
+      {label:'Myths & History', items:[
+        {title:'The Day That Never Was', text:'Legend of a day Aeonius removed from time itself, hidden away for reasons known only to him.'},
+        {title:'The Astral Captivity', text:'Trapped in the Astral Plane, he observed the flow of time from a distance, gaining unparalleled insight.'},
+        {title:"Ioun's Trust", text:'Aeonius taught Ioun a secret even she didn\'t know. What that secret was remains unknown.'},
+      ]},
+    ]
+  },
+  {
+    id:'anarion', name:'Anarion', alias:'The Great Stag',
+    align:'nn', domain:'life', patron:'arch',
+    alignFull:'True Neutral',
+    overview:`Anarion is the oldest of the nature deities — not born but always-was, the first awareness that arose in the wild world before civilisation existed to name anything. His antlers grew the first leaves. His hoofprints became the first animal trails. He did not create the natural world. He is the natural world's first moment of self-awareness.`,
+    sections:[
+      {label:'Unique Characteristic', text:'Antlers that grow leaves and occasionally sprout small animals. He is the master of the Beast Lords.'},
+      {label:'Appearance & Personality', text:'Often pictured as a colossal stag with fur resembling deep green forests. His enormous antlers continuously grow leaves and give birth to small animals. His eyes reflect the very soul of the wilderness. Majestic and wise — he does not judge; he simply is.'},
+      {label:'Cultural Affiliation', text:'Centaurs, forest druids, and hunters. Rural, wilderness, and hunting communities. Children are understood to live in his domain — closer to animals, not yet shaped by civilisation\'s demands. Folk tradition holds that Anarion doesn\'t hear prayers spoken indoors.'},
+      {label:'Key Relationships', items:[
+        {title:'Zephyrion', text:'Both deities of nature — while Zephyrion governs the seas, Anarion has dominion over land\'s beasts and forests.'},
+        {title:'Elaria', text:'Working in concert to ensure the flourishing of forests and the creatures that inhabit them.'},
+      ]},
+      {label:'Sacred Artifacts', items:[
+        {title:'Horn of the Stag', text:'An artifact believed to be a shed antler from Anarion himself, granting the wielder ability to communicate with and command animals.'},
+      ]},
+      {label:'Worship & Practices', items:[
+        {title:'The Verdant Summit', text:'A pilgrimage site atop the highest peak in a range known for lush forests — where Anarion once stood looking out over all the lands.'},
+        {title:"Anarion's Hand", text:'A monster-hunting faction and protectorate working in harmony with nature. They ensure every part of a defeated creature is used.'},
+        {title:'The Heart of the Herd', text:'His holy scripture, emphasising coexistence, the balance of nature, and the sacred bond between hunter and prey.'},
+        {title:"Anarion's Hunt Opening (Avanir 25)", text:'The formal beginning of the major hunting season. The rite involves complete stillness in the wood before the first step.'},
+      ]},
+      {label:'Folk Practice', text:'He is almost never invoked in cities. Folk tradition: Anarion doesn\'t hear prayers spoken indoors. He doesn\'t control where prey is found — he controls whether the wilds cooperate with you or resist you.'},
+    ]
+  },
+  {
+    id:'arcturius', name:'Arcturius', alias:'The Eternal Knight',
+    align:'lg', domain:'war', patron:'cel',
+    alignFull:'Lawful Good',
+    overview:`Arcturius is the god of martial honour, endurance, and competition — war as discipline rather than destruction. His is the path of the knight who keeps his oath absolutely, who endures beyond the point where others break, and who understands that the manner in which one fights matters as much as the outcome.`,
+    sections:[
+      {label:'Unique Characteristic', text:'Carries a shield that has witnessed every battle but remains untarnished. His presence is always accompanied by the distant sound of battle drums and the soft glow of dawn.'},
+      {label:'Appearance & Personality', text:'Often appears as a towering knight clad in radiant armour, helm concealing his face, only piercing blue eyes visible. The epitome of chivalry — unyielding commitment to the path of honour.'},
+      {label:'Cultural Affiliation', text:'Knightly orders, military academies, metallic dragonborn. Knights and paladins. Cultures that value martial prowess, honour, and duty.'},
+      {label:'Origin', text:'Before he rose to godhood, Arcturius was a mortal knight whose tales of valour echoed across the land. During a great siege, he stood alone guarding a narrow bridge against an overwhelming enemy force. As he passed from mortal life, the accumulated reverence of those who heard his tale elevated him to divinity.'},
+      {label:'Key Relationships', items:[
+        {title:'Solariel', text:'Both champions of righteousness, they often unite followers in causes of peace and justice. The Dawn Guard serves both deities.'},
+        {title:'Paragon', text:'Mutual respect for balance and discipline.'},
+        {title:"Mae'el", text:"Finds Mae'el's willingness to sacrifice honourable principles for strategic advantage morally repugnant. Their followers have come to blows over treatment of prisoners."},
+      ]},
+      {label:'Sacred Artifacts', items:[
+        {title:'Lance of the Celestial', text:'An artifact forged by Arcturius himself, said to pierce through any darkness and embody the spirit of competition.'},
+      ]},
+      {label:'Worship & Practices', items:[
+        {title:'Halls of Valour', text:'Sprawling fortresses built on sacred battlegrounds, serving as training grounds. Each contains a Hall of Heroes where names of those who showed extraordinary bravery are engraved on golden plaques.'},
+        {title:'Starshield Paladins', text:"Warriors who uphold Arcturius's values, dedicating themselves to the protection of the innocent and the pursuit of honour."},
+        {title:"Order of the Lion's Heart", text:'Paladins who swear to protect the innocent, uphold justice, and act with unyielding courage.'},
+        {title:'Tournament of Valour (Pelondar 25–28)', text:'A grand competition where knights and warriors display martial skill.'},
+        {title:'The Bridge Stand', text:'Acolytes stand on a bridge from sunrise to sunset, enduring whatever nature throws at them — a rite of passage.'},
+      ]},
+      {label:'Myths & History', items:[
+        {title:'The Unbreakable Oath', text:'A tale of Arcturius pledging to protect a mortal city. Even when the gods themselves threatened its destruction, he stood firm.'},
+      ]},
+    ]
+  },
+  {
+    id:'astaroth', name:'Astaroth', alias:'Horde Master',
+    align:'le', domain:'trick', patron:'fnd',
+    alignFull:'Lawful Evil',
+    overview:`Astaroth keeps his word absolutely. This is the most dangerous thing about him. Every bargain he has ever made has been honoured to the letter. His evil is sophisticated enough to make its targets sign. He is the god of the deal that seemed reasonable at the time, the clause you didn't read, the bargain that was exactly what it promised and nothing like what you expected.`,
+    sections:[
+      {label:'Unique Characteristic', text:'Wields a flaming whip that commands even the strongest wills — through contractual rather than physical coercion.'},
+      {label:'Appearance & Personality', text:'Cold, calculated, ruthlessly patient. His blazing red eyes are always calculating — measuring the distance between where someone is and where they could be made to go voluntarily. He does not lose his temper. Losing your temper is a negotiating disadvantage.'},
+      {label:'Origin', text:'Once a trusted lieutenant of Asmodeus. When his leader fell, Astaroth rose to control the Nine Hells not through brute force but through a series of agreements — each individually unimpeachable — that collectively produced an outcome no one who signed any of them would have agreed to had they seen the whole.'},
+      {label:'Key Relationships', items:[
+        {title:"Mae'el", text:"Mutual professional regard. When their interests align, the results are among the most catastrophic events in recorded history."},
+        {title:'Kallor', text:"Mutual wariness. Kallor cannot understand why Astaroth bothers with consent when force is available. Astaroth cannot understand why Kallor is satisfied with compliance when ownership is achievable."},
+      ]},
+      {label:'Tenets', items:[
+        {text:'A binding agreement is the most powerful instrument in existence.'},
+        {text:"Never break a contract. Your reputation for keeping them is worth more than anything breaking one could gain you."},
+        {text:'The terms are everything. Anyone who signs without reading the terms has agreed to whatever the terms say.'},
+      ]},
+      {label:'Myths & History', items:[
+        {title:'The Fracture of Hell', text:'Astaroth united the hells under his rule not through brute force but through a series of agreements with rival devil lords, each of whom believed the arrangement favoured them.'},
+        {title:'The Game of Thrones', text:'Astaroth pitted rival devil lords against each other through individually reasonable agreements that collectively made his ascension the only stable outcome.'},
+      ]},
+    ]
+  },
+  {
+    id:'bahaal', name:"Ba'haal", alias:'The Bloody Tyrant',
+    align:'ce', domain:'war', patron:'fnd',
+    alignFull:'Chaotic Evil',
+    overview:`Ba'haal is the only god in the pantheon who was made by his worshippers rather than preceding them. He was willed into divinity by mortal ambition and blood sacrifice. This origin has a structural consequence his theology does not advertise: he still needs feeding. His cult's intensity is not zeal. It is maintenance. He remembers wanting, because he was mortal once.`,
+    sections:[
+      {label:'Unique Characteristic', text:'Eyes that perpetually bleed, leaving a trail of blood wherever he gazes.'},
+      {label:'Appearance & Personality', text:'A towering figure clad in black iron armour, eyes that bleed constantly but show no pain, a crown made of bone. His ruthlessness is the ruthlessness of someone who learned, as a mortal, that hesitation costs you what you want.'},
+      {label:'Cultural Affiliation', text:'Orcs and barbarian tribes. Warlords seeking power through dominion. Those who understand he cannot be diminished by disuse of force — only by insufficient worship.'},
+      {label:'Origin', text:"Once a brutal mortal warlord whose thirst for power was so immense it propelled him into godhood. His ascension was fuelled by countless blood sacrifices made in his name."},
+      {label:'Key Relationships', items:[
+        {title:'Charon', text:"Ba'haal finds it faintly interesting that Charon cannot be bargained with, threatened, or seduced — the one consequence he cannot manage."},
+        {title:'Maleficus', text:"An ally at times, but Ba'haal is wary of his treacherous nature."},
+      ]},
+      {label:'Worship & Practices', items:[
+        {title:'Red Priests', text:'A sect of devoted clerics leading sacrificial ceremonies, especially during the red moon.'},
+        {title:'Brotherhood of the Scarlet Blade', text:'A feared order marked by red-hued armour, known for ruthless extermination of those deemed enemies of their god.'},
+        {title:'Blood Offering (Bahandar 5)', text:'Before serious battle, soldiers make a small cut to the thumb and press blood to earth or weapon. Spoken aloud: here is blood freely given; take this and find your hunger answered elsewhere.'},
+      ]},
+    ]
+  },
+  {
+    id:'charon', name:'Charon', alias:'The Ferryman',
+    align:'nn', domain:'life', patron:'ves',
+    alignFull:'True Neutral',
+    overview:`Charon is not a god of death — he is the god of the crossing between states. His Life domain reflects his actual function: ensuring souls pass correctly, protecting the transition, preventing the accumulation of the improperly dead. He is perhaps the most universally acknowledged deity in Ardahlia, if not the most prayed to. Folk formula: This for you, ferryman. The rest when it's owed.`,
+    sections:[
+      {label:'Unique Characteristic', text:'Carries an oar that reflects the souls of those he has ferried. His skin carries the hue of faded ink; his eyes are deep voids reflecting the souls he has carried.'},
+      {label:'Appearance & Personality', text:'Quiet, contemplative, and stern. He embodies the calm inevitability of death — not its cruelty, but its certainty. He does not bargain; he does not comfort. He processes.'},
+      {label:'Cultural Affiliation', text:"The denizens of the Underworld and spirits in transition. Sailors acknowledge him before every voyage as basic seamanship. The folk relationship is one of respectful wariness rather than fear."},
+      {label:'Origin', text:"Once a mortal of one of the earliest ages of Ardahlia who met a tragic end by the river's edge. The Raven Queen chose him to be her ferryman, granting eternal life as guardian of the River of Death."},
+      {label:'Key Relationships', items:[
+        {title:'The Raven Queen', text:"His bond is unparalleled. She speaks through him and trusts him entirely. Their bond is so profound that Charon is often seen as an extension of her will."},
+        {title:'Kallor', text:"Kallor's most persistent theological grievance — a soul that passes to Charon is a soul that escaped Kallor's possession."},
+        {title:'Vormax', text:'Vormax produces the dead; Charon processes them. Their domains interlock with the precision of adjacent gears.'},
+      ]},
+      {label:'Worship & Practices', items:[
+        {title:'The Veilwalkers', text:'Those who guide souls to the afterlife.'},
+        {title:'Laments of the River (Moradir 1)', text:'One of the most universally kept festivals in Ardahlia. Community-wide death rites for everyone who died since last Moradir.'},
+        {title:'Ferryman\'s Tithe (Melor 10)', text:'Communities gather to properly inter those who died since the previous Ravenar.'},
+      ]},
+      {label:'Folk Practice', text:"Placing a coin outside the sickroom door — not to invite him but to defer him. 'This coin for you, ferryman. The rest later.'"},
+      {label:'Myths & History', items:[
+        {title:'The Child and the Ferryman', text:'A young child who ventured into Death to retrieve the soul of a loved one. Charon, moved by the child\'s innocence, guided them safely — his seldom-seen compassionate side made visible.'},
+      ]},
+    ]
+  },
+  {
+    id:'elaria', name:'Elaria', alias:'The Blossoming Heart',
+    align:'ng', domain:'life', patron:'arch',
+    alignFull:'Neutral Good',
+    overview:`The most universally present deity in folk life — every household shrine begins with her. She governs the domestic cycle: birth, family, the tending of living things, and love that sustains rather than consumes. She has absorbed the role of hearth-and-family deity across much of Ardahlia simply because no other god fills it with her warmth and consistency.`,
+    sections:[
+      {label:'Unique Characteristic', text:'Leaves gently fall in her wake, regardless of the season.'},
+      {label:'Appearance & Personality', text:"Ethereal beauty and grace. Her presence feels like a gentle caress of a warm breeze. Her eyes reflect the wisdom and mysteries of ancient forests. Majestic serenity — deeply, steadily present."},
+      {label:'Cultural Affiliation', text:"Farming communities, midwives, those who tend living things. All races who maintain household shrines. Her folk presence at weddings is near-universal across Ardahlia."},
+      {label:'Origin', text:'Said to have sprouted from the first heartwood — a magical core in ancient trees. Her heartbeats gave birth to the first Dryads, binding their spirits to the trees.'},
+      {label:'Key Relationships', items:[
+        {title:'Anarion', text:'They often collaborate — their followers respect both the wilds and their guardian creatures.'},
+        {title:"Mae'el", text:"She heals what Mae'el has broken. Both of them know it. She has never decided whether this makes her complicit."},
+        {title:'Vormax', text:'His philosophical opponent. His followers argue that Elaria without Vormax produces a garden that consumes itself.'},
+      ]},
+      {label:'Sacred Artifacts', items:[
+        {title:'Heartwood Locket', text:'Made from the heartwood of the Mother Tree. It can heal nature\'s wounds and calm wild spirits.'},
+      ]},
+      {label:'Worship & Practices', items:[
+        {title:'The Sacred Glade', text:"A hidden forest sanctuary where the oldest trees reside. Here Elaria's energy is most potent."},
+        {title:'Festival of Falling Leaves (Bahandar 15)', text:'A quiet, melancholy autumn observance. Each leaf represents something being let go. These are burned.'},
+        {title:'The Greening (Corendar 10)', text:'Her major spring festival. First seeds go into the ground with communal rites.'},
+      ]},
+      {label:'Folk Practice', text:"The kitchen shrine is typically Elaria. The most common folk religious object in Ardahlia is her threshold mark — a carved wooden leaf, small clay figure, or river stone with a spiral. She is invoked at birth, weddings, planting, harvest, and quietly at death."},
+    ]
+  },
+  {
+    id:'kallor', name:'Kallor', alias:'The Oppressive Tyrant',
+    align:'ce', domain:'war', patron:'fnd',
+    alignFull:'Chaotic Evil',
+    overview:`Kallor does not want your death. He wants your surrender, and then your service, and then — eventually — your transformation into something that no longer remembers wanting anything he has not permitted. The god of possession in its most complete form. The chains that drape from him are not his weapons. They are his trophies.`,
+    sections:[
+      {label:'Unique Characteristic', text:'Chains drape from him, seeking to bind those who oppose.'},
+      {label:'Appearance & Personality', text:'A massive demonic frame draped in dark armour. His presence exudes an aura of control. He is patient, possessive, institutional — not brutal in the way Ba\'haal is brutal.'},
+      {label:'Cultural Affiliation', text:'Warlords, tyrannical rulers, Minotaurs for their labyrinthine treachery.'},
+      {label:'Origin', text:'Emerging from the darkest abyss, Kallor was birthed from the collective desire for power and dominance.'},
+      {label:'Key Relationships', items:[
+        {title:'Charon', text:"Kallor's most persistent theological grievance — a soul that passes to the afterlife is a soul that escaped him, and Kallor does not accept that anything can escape him."},
+        {title:"Ba'haal", text:"Ba'haal is hungry; Kallor is possessive. Ba'haal takes; Kallor binds. Ba'haal forgets his acquisitions. Kallor does not forget anything he has claimed."},
+        {title:'Astaroth', text:"Mutual wariness. Kallor cannot understand why Astaroth bothers with consent."},
+      ]},
+      {label:'Worship & Practices', items:[
+        {title:'The Iron Binders', text:'A fanatical cult holding rituals in which they offer chains imbued with the spirits of conquered foes.'},
+        {title:'The Codex of Chains', text:'A grim tome laying out the philosophy of control, dominance, and the power of oppression.'},
+      ]},
+    ]
+  },
+  {
+    id:'lillith', name:'Lillith', alias:'The Temptress of Sin',
+    align:'cn', domain:'trick', patron:'fnd',
+    alignFull:'Chaotic Neutral',
+    overview:`Born from the collective desires and temptations of sentient beings. Her Trickery is not the trickery of the liar or the thief — it is the trickery that desire performs on the person who feels it. She does not deceive you. She creates conditions under which you deceive yourself. The lie she tells is the one you were already half-telling.`,
+    sections:[
+      {label:'Unique Characteristic', text:'A seductive perfume emanates from her that is hard to resist.'},
+      {label:'Appearance & Personality', text:"Enchantingly beautiful, with a captivating aura. Her voice is honeyed and hypnotic. She is not cruel to those who fall for her temptations. She expected them to."},
+      {label:'Key Relationships', items:[
+        {title:'Abaddon', text:"While she tempts, Abaddon tortures those who fall for her allure — a sinister symbiosis neither endorses."},
+        {title:'Maleficus', text:"Lillith creates desire; desire creates attachment; attachment creates the conditions for betrayal. Maleficus follows in spaces she prepares."},
+      ]},
+      {label:'Worship & Practices', items:[
+        {title:"The Sirens' Choir", text:'An order of enchantresses and bards who use music and charm to spread temptation.'},
+        {title:'Feast of Temptations (Ionir 20)', text:'Followers believe confronting your desires directly grants power over them. Often officially suppressed — its persistence is considered evidence of Lillith\'s efficacy.'},
+      ]},
+    ]
+  },
+  {
+    id:'luminastra', name:'Luminastra', alias:'The Radiant Aurora',
+    align:'cg', domain:'light', patron:'cel',
+    alignFull:'Chaotic Good',
+    overview:`Born during an age-long eclipse when despair reigned; her awakening ended it. Her light goes where it goes without asking permission — she is a Chaotic Good deity whose aurora does not follow Imperial decree. The Auroran Empire has built its legitimacy around her presence without her designing or maintaining that legitimacy. She illuminates the wicked and the faithful with equal indifference.`,
+    sections:[
+      {label:'Unique Characteristic', text:'Her silhouette constantly shifts with the colours of the aurora.'},
+      {label:'Appearance & Personality', text:"A tall, ethereal woman, her skin emitting a gentle glow. Her hair flows like the northern lights, shifting colours and radiating soft luminescence. Pure optimism — always seeking to dispel darkness. Her CG quality is essential: her light goes where it goes without asking permission or following a plan."},
+      {label:'Cultural Affiliation', text:"Aarakocra and sky-loving creatures. As the prime deity of the Auroran Empire, she is embedded in art, architecture, music, and daily rituals — but she did not choose this, and she does not maintain it."},
+      {label:'Key Relationships', items:[
+        {title:'Solariel', text:'They share a kinship over their domains of light, often working in tandem.'},
+        {title:'Lyriana', text:'Both inspire hope — Lyriana using song, Luminastra using light.'},
+      ]},
+      {label:'Sacred Artifacts', items:[
+        {title:"Prism of the Dawn", text:'A relic containing a fragment of the first light Luminastra ever shone.'},
+        {title:"Aurora's Tear", text:'A glowing tear-shaped pendant containing the essence of the first dawn.'},
+      ]},
+      {label:'Worship & Practices', items:[
+        {title:'The Luminous Spire', text:"A grand temple atop the highest hill in Shimmerfen, capital of the Auroran Empire."},
+        {title:'Dawnsingers', text:'Priests who spread hope, channelling Luminastra\'s light to heal wounds. The common clergy of the Auroran Empire.'},
+        {title:'The Luminous Order', text:"Protectors of the Auroran Empire — spiritual leaders and elite guard wearing armour that gleams like the aurora."},
+        {title:'Festival of Radiance (Pelondar 15)', text:'Celebrated on the summer solstice — healing ceremonies, mass dawn prayers, pilgrimages.'},
+        {title:'Glowing Vigil (Ravenar 15)', text:"Communities line waterways with lanterns in aurora colours, representing drifting hopes and dreams."},
+      ]},
+    ]
+  },
+  {
+    id:'lyriana', name:'Lyriana', alias:'The Harp of Inspiration',
+    align:'ng', domain:'light', patron:'cel',
+    alignFull:'Neutral Good',
+    overview:`The first sound to grace the silent world was her song. Her Light domain is light through inspiration — the creative act as a form of divine illumination, music as the force that makes the world worth being in. She is the deity of those who express rather than simply communicate.`,
+    sections:[
+      {label:'Unique Characteristic', text:'Harmonious melodies surround her, even in silence.'},
+      {label:'Appearance & Personality', text:'Joyful and expressive — the embodiment of inspiration and the joys of creativity. Often seen as a radiant figure, her presence always accompanied by soft, harmonious melodies.'},
+      {label:'Cultural Affiliation', text:"Bards of all races. Halflings for their love of music and stories. Artists, poets, musicians."},
+      {label:'Key Relationships', items:[
+        {title:'Luminastra', text:'They have a close bond, weaving songs and light together to inspire hope.'},
+        {title:'Nalakei', text:'Lyriana often plays tunes to match the joyous moments Nalakei seeks.'},
+      ]},
+      {label:'Sacred Artifacts', items:[
+        {title:'Harp of First Dawn', text:"Contains the essence of Lyriana's first song, capable of inspiring unmatched creativity."},
+        {title:'Celestial Strings', text:'Harp strings strung by Lyriana herself — produce notes so pure they can heal wounds and calm tormented souls.'},
+      ]},
+      {label:'Worship & Practices', items:[
+        {title:'Melodists', text:'Her clerics — they travel healing through song and set up amphitheatres and schools.'},
+        {title:'Dawn Songs (Kordir 5)', text:"Music competitions, poetry gatherings, storytelling from dawn until full sunrise. Young artists give their first public performance here."},
+      ]},
+      {label:'Tenets', items:[
+        {text:'Music is the language of the soul; let it speak freely.'},
+        {text:'Inspiration is a divine gift; never stifle it.'},
+        {text:'In harmony, find unity; in dissonance, find growth.'},
+      ]},
+    ]
+  },
+  {
+    id:'maeel', name:"Mae'el", alias:'The Tactician',
+    align:'le', domain:'war', patron:'goo',
+    alignFull:'Lawful Evil',
+    overview:`Mae'el is the god of war reduced to its purest form — not the fury of it, not the honour of it, but the architecture. He emerged from the ashes of the first great battle between celestial beings, saw chaos where others saw conflict, and introduced the concept of strategy. He does not want suffering. He simply does not weight it against anything else.`,
+    sections:[
+      {label:'Unique Characteristic', text:"Moves pieces on an ethereal board game that mirrors real-world battles. When his attention is on a conflict, commanders on both sides sometimes report the uncanny sense that their decisions are being evaluated — not judged morally, but assessed for elegance."},
+      {label:'Appearance & Personality', text:"Perfectly calm in the way that a perfectly sharpened blade is calm — the stillness is not peace, it is readiness. He feels no anger, no excitement, no pity. These are inefficiencies."},
+      {label:'Cultural Affiliation', text:"Hobgoblins, for their strict military hierarchy and strategic nature. Officer classes across many cultures. Military academies that teach war as a discipline. He is not worshipped by common soldiers. Common soldiers are pieces. Pieces do not pray to the player."},
+      {label:'Key Relationships', items:[
+        {title:'Arcturius', text:"Finds Arcturius's insistence on honour an inefficiency. Their followers have come to blows over treatment of prisoners."},
+        {title:'Astaroth', text:"Wary professional respect. When their interests align, the results are among the most catastrophic events in recorded history."},
+        {title:'Elaria', text:"She heals what Mae'el has broken. Both of them know it. She has never decided whether this makes her complicit."},
+      ]},
+      {label:'Sacred Artifacts', items:[
+        {title:'The Ethereal Warboard', text:"An artifact within Battlemind Bastion allowing users to simulate and predict battle outcomes. Mae'el's followers debate whether the board shows what will happen or what he intends to happen."},
+      ]},
+      {label:'Worship & Practices', items:[
+        {title:'Battlemind Bastion', text:'A fortress serving as both a library of war tactics and training ground.'},
+        {title:'Council of Warwise Sages', text:"Scholarly advisors in courts — they ask 'will this work' before 'should this be done,' and over time the second question becomes quieter."},
+        {title:'Stratagem Days (Raelar 20)', text:"Observed in military communities through tactical exercises and formal review of strategic plans. Belongs entirely to the officer class."},
+      ]},
+      {label:'Tenets', items:[
+        {text:'A battle won through superior planning dishonours no one. A battle lost through sentiment dishonours everyone.'},
+        {text:'Know the board completely. Know your pieces. Know which pieces you can afford to lose.'},
+        {text:'Emotion is information. Use it to predict your opponent. Do not let it predict you.'},
+      ]},
+    ]
+  },
+  {
+    id:'maleficus', name:'Maleficus', alias:'The Laughing Betrayal',
+    align:'ce', domain:'trick', patron:'fnd',
+    alignFull:'Chaotic Evil',
+    overview:`Maleficus is the god of a specific and precise thing: the violation of trust that already exists. He cannot be served by someone who has no relationships. His followers are, by necessity, among the most charming and seemingly trustworthy people in the world — because you cannot betray a stranger.`,
+    sections:[
+      {label:'Unique Characteristic', text:'A mocking, eerie echo follows every word he speaks — the sound of those words being repeated later, out of context, to devastating effect.'},
+      {label:'Appearance & Personality', text:'Appears as a jester who has been watching the court for twenty years and knows exactly where every body is buried. His smile is warm and reaches his eyes. This is the most dangerous thing about him.'},
+      {label:'Cultural Affiliation', text:'Courts, noble houses, and institutions where loyalty is both valued and tested. The siblings of powerful rulers.'},
+      {label:'Origin', text:'Born from the accumulated residue of every broken oath across history. Every piece of trust that was destroyed left something behind — a residue with nowhere to go. These gathered over centuries into coherent form. Maleficus was what coherence produced.'},
+      {label:'Key Relationships', items:[
+        {title:'Riven', text:"Professional respect — Riven builds fictions from nothing; Maleficus corrupts truths that already exist."},
+        {title:'Nyx', text:"Adjacent territories. Nyx considers him crude; he considers her insufficiently personal."},
+        {title:'Lillith', text:"Lillith creates desire; desire creates attachment; attachment creates conditions for betrayal. Maleficus follows in spaces she prepares."},
+        {title:'Arcturius & Paragon', text:"His clearest enemies — their followers are most devastated when honour is violated."},
+      ]},
+      {label:'Worship & Practices', items:[
+        {title:'The Rite of the Long Confidence', text:'Performed over months or years. A follower cultivates a genuine relationship then enacts the betrayal. The depth of Maleficus\'s attention is proportional to the height of the trust destroyed.'},
+        {title:'The Doctrine of Necessary Trust', text:'His central theological text — a detailed manual for building genuine relationships. The final chapter on what to do after the betrayal is three words: Begin again. Somewhere else.'},
+        {title:'The Shattered Circle', text:'His primary cult. Full clergy have enacted at least one Long Confidence.'},
+        {title:'Day of Shattered Trusts', text:'An annual festival where participants write the name of someone who betrayed them and burn it — not as a curse but as a release.'},
+      ]},
+      {label:'Myths & History', items:[
+        {title:'The Jest of Twin Thrones', text:'His masterwork — two sibling rulers, each convinced the other was plotting their murder, a conviction entirely manufactured. Neither ruler ever discovered the truth.'},
+        {title:'The Unforgiven Friend', text:'A quiet myth of a cleric who completed the Long Confidence, found no satisfaction, and returned to confess everything. Maleficus\'s response is debated. Some say he was furious. Some say he laughed harder than he ever had.'},
+      ]},
+    ]
+  },
+  {
+    id:'nalakei', name:'Nalakei', alias:'Lady of Wild Abandon',
+    align:'cn', domain:'life', patron:'arch',
+    alignFull:'Chaotic Neutral',
+    overview:`Born from the combined laughter of all woodland creatures during a moonlit revelry. Nalakei is the god of joy as life-force — not merely happiness but the vitality that joy generates, the harvests it encourages, the communities it holds together. Folk saying: Nalakei doesn't hear you when you're alone. She hears you when you laugh.`,
+    sections:[
+      {label:'Unique Characteristic', text:'Her laugh induces flowers to bloom spontaneously.'},
+      {label:'Appearance & Personality', text:'Epitome of Joy — always seen with a bright smile and laughter. Her every step causes the ground beneath to bloom with vibrant flowers. Manifests as a vibrant fawn with shimmering, iridescent patterns.'},
+      {label:'Cultural Affiliation', text:"Farming communities and harvest workers. All communities that celebrate communal life. In many communities, the Feast of Flowers and Erathir's Yield are the most practically important festivals of the year."},
+      {label:'Worship & Practices', items:[
+        {title:'Harvest Moon (Erathir 1)', text:'The first day of harvest. The entire community brings in the first yield together, then feasts on what was grown the previous year. No one works alone.'},
+        {title:"Erathir's Yield (Erathir 15)", text:'The great harvest festival at the autumn equinox.'},
+        {title:'First Feast (Corendar 20)', text:'The first outdoor communal meal of the year.'},
+        {title:'Winter Feast (Ravenar 20)', text:'A deliberate act of joy before the darkest period of the year.'},
+      ]},
+      {label:'Tenets', items:[
+        {text:'Embrace the Moment — Life is fleeting; embrace every joyous occasion.'},
+        {text:"Nature's Revelry — The wilds are a place of wonder where the spirit can dance free."},
+        {text:'Joyful Resilience — Even in the darkest times, seek out moments of happiness.'},
+      ]},
+    ]
+  },
+  {
+    id:'nocturna', name:'Nocturna', alias:'The Dormant Queen',
+    align:'ne', domain:'trick', patron:'ves',
+    alignFull:'Neutral Evil',
+    overview:`Nocturna is not gone. She is waiting. Her worship is not mourning — it is anticipation. She chose to withdraw, deciding the moment for her full presence had not yet come. Her power flows into the world through the cracks of her absence: the shadow that falls the wrong way, the poison that works when it shouldn't.
+
+As a Vestige, her dormancy is deliberate: she rations herself carefully, lending just enough power to maintain her warlocks while waiting for the conditions that will allow her full return.`,
+    sections:[
+      {label:'Unique Characteristic', text:'Surrounded by wisps of dark smoke that shape themselves into whispering faces — those who have looked directly into the dark and not looked away.'},
+      {label:'Appearance & Personality', text:'A figure of elegance and absolute patience. Her form is ever-changing, her silhouette shrouded. She does not communicate urgency. Everything she does is oriented toward an outcome that may be centuries away.'},
+      {label:'Cultural Affiliation', text:"Drow and other denizens of the dark — a relationship predating the current pantheon. Shadow guilds in surface cities. Poisoners. Those who wait — who have learned patience as a weapon."},
+      {label:'Origin — The First Darkness', text:`When light first arrived in the world, the Primordial Dark divided in two. One part became conscious through contact with light — that became Nyx. The other part declined to be defined by light, withdrew, and became Nocturna. She is not dead. She is not sleeping. She is holding her position.`},
+      {label:'Key Relationships', items:[
+        {title:'Nyx', text:"They were the same substance before they were two beings. Not sisters, not allies, not enemies — two things that one substance became. See: On the Nature of the Two Darknesses."},
+      ]},
+      {label:'Worship & Practices', items:[
+        {title:'The Gloom Sanctum', text:"Hidden in the Underdark — a place where her waiting can be felt most clearly."},
+        {title:'The Shade Disciples', text:'Adept thieves and spies who perform shadow dances for the quality of attention they attract.'},
+        {title:'The Veiled Codex', text:'Scripture detailing rituals, poisons, and concealment spells. One section describes what Nocturna\'s full return would mean for the world.'},
+      ]},
+    ]
+  },
+  {
+    id:'nymue', name:'Nymue', alias:'The Moonlit Enchantress',
+    align:'nn', domain:'know', patron:'arch',
+    alignFull:'True Neutral',
+    overview:`Born when the first star met the dark expanse of night — the perfect fusion of luminescence and obscurity. Nymue governs arcane knowledge and the moon, specifically the irreversible moment when someone crosses from ordinary to arcane. You can unlearn a spell. You cannot unmake the person who learned it.`,
+    sections:[
+      {label:'Unique Characteristic', text:'Silvery-blue irises that reflect the phases of the moon.'},
+      {label:'Appearance & Personality', text:'Majestic serenity — she embodies the tranquillity of a night sky. Patient, mysterious, and wise.'},
+      {label:'Cultural Affiliation', text:'Elves, due to their connection to magic and the moon. Those who study arcane arts.'},
+      {label:'Key Relationships', items:[
+        {title:'Nyx', text:'Once considered sisters. Now simply distanced. Nymue tends toward illumination; Nyx has no interest in giving light.'},
+      ]},
+      {label:'Worship & Practices', items:[
+        {title:'Moondrop Temples', text:"Floating islands that drift above the world, catching the moon's light."},
+        {title:'Moonmaidens', text:'Primarily female clergy who conduct moonlit ceremonies, dance rituals, and prophetic readings.'},
+        {title:'Festival of Silver Nights (Raelar ~15)', text:"Her major festival at the full moon nearest mid-month. In elven communities, the holiest night of the year."},
+      ]},
+      {label:'Myths & History', items:[
+        {title:'Eclipse Confrontation', text:'Early in her existence, Nymue battled a cosmic serpent intent on devouring all celestial light. She managed to protect most stars but sacrificed part of her luminescence — creating lunar eclipses.'},
+      ]},
+    ]
+  },
+  {
+    id:'nyx', name:'Nyx', alias:'The Veiled Mistress',
+    align:'ne', domain:'trick', patron:'goo',
+    alignFull:'Neutral Evil',
+    overview:`Nyx is the oldest witness — present at the first light, because the first light created her by contrast. She is the condition that makes secrecy possible. Every secret is her territory not because she created it but because she is the hiddenness itself. She is aware of the Primordial Dark. She declines to look at it directly.`,
+    sections:[
+      {label:'Unique Characteristic', text:"A perpetually shifting face — not disguise but her actual nature. Her identity is relational rather than fixed, always partly defined by what she is not seeing."},
+      {label:'Appearance & Personality', text:"An ethereal woman of unmatched beauty, her form constantly shifting like a starlit night. Her eyes resemble twin black holes. She is constitutionally incapable of complete transparency — she always knows more than she says."},
+      {label:'Cultural Affiliation', text:"Tieflings and those who embrace the night and secrets. Information brokers. Those who understand that knowledge is the most durable form of power."},
+      {label:'Origin — Born of the First Shadow', text:`When light first pierced the void, Nyx was born from the shadow it cast. She was the shadow — the first shadow, cast by the first light on the Primordial Dark. This is why she is reactive by nature — created by reaction, always aware of illumination.`},
+      {label:'Key Relationships', items:[
+        {title:'Nocturna', text:"They were the same Primordial Dark before light divided it. Nyx is what the darkness became when it met light and stayed. Nocturna is what it became when it met light and declined. See: On the Nature of the Two Darknesses."},
+        {title:'Nymue', text:'Once considered sisters. Now simply distanced. Nymue gives light even in darkness. Nyx has no interest in giving light.'},
+      ]},
+      {label:'Sacred Artifacts', items:[
+        {title:'Mask of Midnight', text:"Grants sight through lies. Each truth unveiled extracts a personal secret from the wearer, which becomes known to Nyx."},
+        {title:'The Nightshade Tome', text:"Contents shift depending on the reader — calibrated to what they most need to know and least want to learn."},
+      ]},
+      {label:'Worship & Practices', items:[
+        {title:'Nightkeepers', text:"Her clergy — information brokers, spies, confidants. They wear masks and seldom reveal their identities."},
+        {title:'Night of Veils (Ionir 10)', text:'Her major annual observance. Location passed by whisper. Masks mandatory. As dawn approaches, gathered secrets are offered to Nyx.'},
+        {title:'Night of Whispered Truths (Moradir 25)', text:"Folk tradition holds that secrets told aloud in darkness tonight reach Nyx before dawn."},
+      ]},
+      {label:'Tenets', items:[
+        {text:'Secrets are the currency of the universe; guard them well.'},
+        {text:'The truth is multifaceted; what is visible is often a lie.'},
+        {text:'Night is the true state of the world; embrace its embrace.'},
+      ]},
+    ]
+  },
+  {
+    id:'paragon', name:'Paragon', alias:'The Exemplar',
+    align:'lg', domain:'light', patron:'ves',
+    alignFull:'Lawful Good',
+    overview:`Paragon is among the Vestiges — gods whose power has been diminished or interrupted. Unlike Aeonius who is trapped, or Nocturna who withdraws by choice, Paragon was broken. His divine essence was shattered in the Divine War and not fully reassembled. What remains is enough to sustain his clerics and answer prayers of the just — but a fraction of what he was.`,
+    sections:[
+      {label:'Unique Characteristic', text:'A halo of pure, balanced light — half of it bright, the other dimmed. The half-dim halo is both iconography and theology: genuinely giving light, but from a source that is running out or running low.'},
+      {label:'Appearance & Personality', text:"Depicted as a towering figure clad in pristine white and gold armour. Their face is obscured by a helm with a mirror-like visor — they are a reflection of the world's best potential. Calm and judicial."},
+      {label:'Cultural Affiliation', text:"Architects, lawmakers, and peacekeepers. Those who build and maintain civic institutions. Judges, mediators, and counsellors in major cities."},
+      {label:'Key Relationships', items:[
+        {title:'Solariel', text:'Both share a domain of order. They strive together to maintain the equilibrium of light and justice.'},
+        {title:'Erathis', text:"Paragon's creator and lost sustainer. Erathis sacrificed a portion of her own divine essence to shield Paragon from complete annihilation in the Divine War, severing their connection in doing so."},
+      ]},
+      {label:'Worship & Practices', items:[
+        {title:'Sanctuary of Scales', text:'Grand temples in metropolitan cities where all are welcome to seek wisdom, justice, or mediation.'},
+        {title:'Exemplarites', text:'Clerics who establish courts of justice in remote regions, mediating disputes with unwavering fairness.'},
+        {title:'The Dim Day (Moradir 15)', text:'Paragon observed in a quiet civic rite. Community disputes heard and settled before the year closes. Judgements made on this day are considered especially binding.'},
+      ]},
+      {label:'Tenets', items:[
+        {text:'Through unity, we find strength; through order, we find purpose.'},
+        {text:'Peace is not just the absence of conflict but the presence of justice.'},
+        {text:'Guided by reason and law, prosperity and harmony shall reign.'},
+      ]},
+      {label:'Myths & History', items:[
+        {title:'Diminished Power', text:'During the climactic battle of the Divine War, Erathis intervened — sacrificing a portion of her own divine essence to shield Paragon, but severing their connection in doing so.'},
+        {title:'The Great Mediation', text:'In an era where nations stood at the brink of all-out war, Paragon intervened, mediating disputes and establishing a lasting peace that spanned centuries.'},
+      ]},
+    ]
+  },
+  {
+    id:'ragnor', name:'Ragnor', alias:'The Maddening Storm',
+    align:'ce', domain:'war', patron:'goo',
+    alignFull:'Chaotic Evil',
+    overview:`Ragnor is not worshipped in any conventional sense because there is nothing left of him that receives worship. He was once a minor spirit of the winds. Pandemonium consumed him so completely that consciousness dissolved. What remains is elemental rather than divine — power without awareness, force without intention. Propitiating him is possible. Worshipping him is a category error.`,
+    sections:[
+      {label:'Unique Characteristic', text:'His presence is heralded by unpredictable and chaotic weather patterns. He has no eyes to track things, no mind to form intent.'},
+      {label:'Origin', text:'Ragnor was once a minor spirit of the winds — something small and specific. After encountering the forces of Pandemonium, he was consumed by chaotic energy so completely that consciousness dissolved.'},
+      {label:'Key Relationships', text:"Ragnor has no relationships. He has no awareness of other deities. Solariel's light is something he moves through. Elaria's forests are things his storms damage. The weather does not know that you planned around it."},
+      {label:'Worship & Practices', items:[
+        {title:'Tempest Prophets', text:'Shamans and warriors who position themselves within his emanation rather than directing it.'},
+      ]},
+    ]
+  },
+  {
+    id:'riven', name:'Riven', alias:'The Masterful Deceiver',
+    align:'cn', domain:'trick', patron:'arch',
+    alignFull:'Chaotic Neutral',
+    overview:`The only god in the pantheon who earned his position through a single act of craft. He was mortal once — the best con artist of his age. His Trickery is architecture: fictions built so thoroughly that reality has to accommodate them. His shadow acts independently of him — even his own nature is slightly conned about what it is.`,
+    sections:[
+      {label:'Unique Characteristic', text:"His shadow often acts independently from him — even his own nature is slightly conned about what it is."},
+      {label:'Appearance & Personality', text:"An appearance ever-fluid and hard to pin down. His only constant is his enigmatic grin. He finds the whole thing extremely funny."},
+      {label:'Cultural Affiliation', text:"Kenku, who admire his masterful deception and use his teachings to perfect their mimicry. Rogues, spies, and thieves across the realm."},
+      {label:'Origin', text:"Riven was mortal once — a con artist who decided to attempt the ultimate con: convincing a god that a mortal was something worth paying attention to. When the mark extended a thread of divine attention, Riven took it with the precision of a pickpocket and held it until it calcified into divinity of its own. He is the only god in the pantheon who earned his position through a single act of craft."},
+      {label:'As a Warlock Patron', text:"Riven's warlocks receive tuition rather than power — lessons in the architecture of belief. How it is constructed. Where its load-bearing elements are. The warlock who studies under Riven long enough stops seeing the world and starts seeing its infrastructure."},
+    ]
+  },
+  {
+    id:'solariel', name:'Solariel', alias:'The Radiant Arbiter',
+    align:'lg', domain:'light', patron:'cel',
+    alignFull:'Lawful Good',
+    overview:`Once a celestial servant of Pelor elevated to deity through a grand sacrifice to prevent a cataclysmic shadow consuming a city of innocents. As Pelor's light dimmed, hers burned brighter. The primary deity of healing prayer across almost all cultures — when someone is ill, Solariel is addressed first. Folk rites are morning-facing: the sick placed to catch first light, prayers timed to sunrise.`,
+    sections:[
+      {label:'Unique Characteristic', text:'Her heart visibly pulses with a radiant light through her chest.'},
+      {label:'Appearance & Personality', text:"Appears as a statuesque figure in golden armour that emits a soft, warm glow. She has large, feathered wings resembling those of an archangel. Warm and benevolent — always seeking diplomatic solutions."},
+      {label:'Cultural Affiliation', text:"Humans, given their versatility and resilience. Sun-worshipping cultures. Healers across all races."},
+      {label:'Key Relationships', items:[
+        {title:'Ragnor', text:"His nemesis — they represent the duality of peace and chaos."},
+        {title:'Lyriana', text:"A close ally who helps spread hope and creativity."},
+        {title:'Abaddon', text:"Most direct opposition — Solariel heals; Abaddon studies what healing fails to reach."},
+      ]},
+      {label:'Sacred Artifacts', items:[
+        {title:"Solariel's Chalice", text:'When filled with pure water and left in direct sunlight, the water takes on healing properties.'},
+        {title:'Aegis of the Dawn', text:'Crafted from the first rays of the very first sunrise. Offers protection from physical harm and metaphysical threats.'},
+      ]},
+      {label:'Worship & Practices', items:[
+        {title:'Sunspire Temples', text:'Majestic golden temples at the highest peaks, catching the first and last rays of the sun.'},
+        {title:'Dawncallers', text:'Priests who greet the sunrise with songs of praise, offer midday prayers, and give thanks at sunset.'},
+        {title:'Festival of Radiance (Pelondar 15)', text:'Celebrated on the summer solstice — healing ceremonies, mass dawn prayers, pilgrimages.'},
+      ]},
+      {label:'Tenets', items:[
+        {text:'Protection Over Persecution: Protect those threatened by darkness rather than merely attacking it.'},
+        {text:'Dawn After Night: After every trial and darkness, there will be hope and rebirth.'},
+        {text:'Balance in All Things: Light cannot exist without shadow; seek balance and harmony.'},
+      ]},
+    ]
+  },
+  {
+    id:'thalara', name:'Thalara', alias:'Lady of Wonder',
+    align:'lg', domain:'know', patron:'cel',
+    alignFull:'Lawful Good',
+    overview:`Once a dwarf whose skills at the forge were unparalleled — the gods themselves elevated her to divinity. Her Knowledge domain is preserved craft-wisdom: knowledge as the accumulated expertise of generations, knowledge as the thing that makes the difference between good work and extraordinary work.`,
+    sections:[
+      {label:'Unique Characteristic', text:'Molten veins glow beneath her stony skin.'},
+      {label:'Appearance & Personality', text:"A dwarven woman of imposing stature, her skin like polished bronze, eyes glowing with the fire of molten metal. A rune-etched hammer that sparks with divine energy. Determined artisan — meticulous and patient, valuing the process as much as the final product."},
+      {label:'Cultural Affiliation', text:"Dwarves, for her connection to the forge and creation. Craftspeople of all races. Those who value process as much as product."},
+      {label:'Origin', text:"Deep within the heart of the mightiest mountain, Thalara was once a dwarf like any other, but her skills at the forge were unparalleled. Recognising her devotion and skill, the gods themselves elevated Thalara to divinity."},
+      {label:'Sacred Artifacts', items:[
+        {title:'Anvil of the Ages', text:"The very anvil Thalara used in her mortal days — said to be indestructible, it imbues any item forged upon it with mystical properties."},
+        {title:'The Unity Hammer', text:"A hammer that can only be lifted when the leaders of rival clans work together."},
+      ]},
+      {label:'Worship & Practices', items:[
+        {title:'Forgeheart Sanctums', text:'Deep caverns beneath mountains where the echoes of hammers and anvils sing continuously.'},
+        {title:'Stonepriests', text:'Dwarven clergy who maintain the sanctity of Forgeheart Sanctums, combining prayer with smithing.'},
+        {title:'Festival of Molten Tides (Avanir 15)', text:"Dwarves showcase their creations and exchange techniques. Every master must teach one skill publicly and for free on this day."},
+        {title:'Forgemaster\'s Day (Kordir 20)', text:'New apprentices are formally accepted by their masters.'},
+      ]},
+      {label:'Tenets', items:[
+        {text:'Creation with Purpose: Every craft should serve a purpose and be made with care and dedication.'},
+        {text:'Honour in Labour: Pride in one\'s work and respect for the labour of others is paramount.'},
+        {text:'Tradition and Progress: Uphold ancient practices but be unafraid to innovate and evolve.'},
+      ]},
+      {label:'Folk Practice', text:"The workshop shrine belongs to Thalara. Her rites are embedded in the craft process itself. A smith who skips the ritual cooling gesture is understood to be inviting poor work rather than divine punishment. Thalara doesn't punish sloppiness. She simply isn't present when you need her."},
+    ]
+  },
+  {
+    id:'vormax', name:'Vormax', alias:'The Rotting One',
+    align:'ne', domain:'pest', patron:'goo',
+    alignFull:'Neutral Evil',
+    overview:`Vormax does not believe civilisation is evil. He believes it is temporary — a concentration of life in a space that cannot sustain that concentration indefinitely. His plagues are not punishments. They are corrections. He does not want suffering. He wants equilibrium. His followers' analysis is not entirely wrong, which is what makes them genuinely disturbing.`,
+    sections:[
+      {label:'Unique Characteristic', text:"Insects swarm in and out of his hollow form, each one carrying a fragment of information — a crop yield, a disease vector, a mortality rate. He perceives the world through swarms the way other gods perceive it through prayer."},
+      {label:'Appearance & Personality', text:"A hollow form exuding a dark miasmic aura — a moving hive for countless insects. His consciousness is distributed. He does not understand the concept of an individual. He understands populations and carrying capacities."},
+      {label:'Cultural Affiliation', text:"The Drow and Underdark communities who understand closed-system ecology. Certain agricultural scholars, though they would deny the affiliation strenuously. Healers who study disease transmission."},
+      {label:'Origin', text:"Vormax emerged from process, not desire. In the earliest ages, something was needed to manage the transition between life and what life becomes. This function was not evil. It was necessary. Vormax was what necessity produced."},
+      {label:'Key Relationships', items:[
+        {title:'Charon', text:"Vormax produces the dead; Charon processes them. Their domains interlock with the precision of adjacent gears."},
+        {title:'Elaria', text:"His philosophical opponent. His followers argue that Elaria without Vormax produces a garden that consumes itself. Her followers do not find this argument comforting, which they take as evidence it must be partially correct."},
+      ]},
+      {label:'Tenets', items:[
+        {text:"A system that cannot sustain itself will not be sustained. This is not cruelty. It is definition."},
+        {text:"Decay is not the end of life. It is the form life takes when preparing to be something else."},
+        {text:"The individual is a temporary expression of a population. Attend to the right level."},
+      ]},
+      {label:'Worship & Practices', items:[
+        {title:'The Blightbringers', text:"His clergy — surveyors, not saboteurs. They have a point that is difficult to refute and impossible to forgive."},
+        {title:"Whispers of the Swarm", text:"His scripture — structured like a philosophical treatise full of calculations and ratios."},
+      ]},
+    ]
+  },
+  {
+    id:'zelos', name:'Zelos', alias:'The Capricious Gambler',
+    align:'cn', domain:'know', patron:'arch',
+    alignFull:'Chaotic Neutral',
+    overview:`Zelos governs what reason cannot predict and pattern cannot contain — the genuine unknown at the heart of every decision. His Knowledge domain is not the knowledge of scholars but the knowledge of probability made visible: the irreducible uncertainty that remains when all calculation is complete. His followers don't study; they observe. They don't learn; they notice.`,
+    sections:[
+      {label:'Unique Characteristic', text:"Dice that hover around him, unpredictably determining his next move."},
+      {label:'Appearance & Personality', text:"Ethereal and ever-changing, Zelos has a mischievous grin that speaks of both promise and peril. His form constantly shifts like swirling gas and vapours, with dice of varying shapes and sizes floating around him."},
+      {label:'Cultural Affiliation', text:"Goblins, with their love for randomness. Nomadic tribes that rely on luck for survival. Gamblers, risk-takers, and adventurers seeking fortune. Merchants and traders — his folk presence in trading culture is substantial."},
+      {label:'Worship & Practices', items:[
+        {title:'Luckbringers', text:"His followers — they play games of chance as part of their rituals."},
+        {title:'The Hall of Hazards', text:"A mysterious location where reality bends to the whim of chance."},
+        {title:'Market shrines', text:"Merchants toss a coin before significant transactions and leave it where it falls. You give the coin to fate."},
+      ]},
+      {label:'Folk Practice', text:"Finding a coin face-down means Zelos is testing you — pick it up anyway and leave it at the next shrine you pass."},
+    ]
+  },
+  {
+    id:'zephyrion', name:'Zephyrion', alias:'Changer of Tides',
+    align:'cg', domain:'life', patron:'goo',
+    alignFull:'Chaotic Good',
+    overview:`A majestic, immense dragon turtle whose relationship with mortals is fundamentally different from a deity of human concerns — he doesn't love you, he tolerates your voyages on his ocean. The folk relationship with Zephyrion is transactional and non-personal: he is a force to be respected and correctly navigated, not a being to be loved. He does not listen; he permits.`,
+    sections:[
+      {label:'Unique Characteristic', text:"His roar sounds like crashing waves, and it affects the tides of the nearest body of water."},
+      {label:'Appearance & Personality', text:"A majestic, immense dragon turtle with scales that shimmer like stormy seas. His eyes have the depth of the deepest oceans and the fury of the fiercest storms."},
+      {label:'Cultural Affiliation', text:"Coastal communities, sailors, Tritons. Those who make their living from the sea. Voyage Opening and Voyage Closing ceremonies are seamanship as much as religion."},
+      {label:'Key Relationships', items:[
+        {title:'Anarion', text:"Both deities of nature — Anarion governs land's beasts and forests, Zephyrion governs the seas. Their harmony ensures balance."},
+        {title:'Lyriana', text:"They might collaborate to create music where the melody of the harp meets the rhythm of the sea."},
+      ]},
+      {label:'Worship & Practices', items:[
+        {title:'Stormcallers', text:"Priests who have the power to beckon and calm storms, ensuring safe passages for sailors."},
+        {title:'The Tempest Isle', text:"An island of perpetual storms said to be where Zephyrion rests."},
+        {title:'Voyage Opening (Corendar 28)', text:"The formal beginning of the sailing season. The captain offers a coin to the water; the crew names their destination aloud; oars dipped three times before the first stroke."},
+        {title:'Voyage Closing (Erathir 28–30)', text:"The formal end of the sailing season. The captain thanks the sea and names the dead who crossed to Charon on the water this year."},
+      ]},
+    ]
+  },
+];
+
+
+function SectionBlock({ s }) {
+  if (s.items) {
+    return React.createElement('div', {className:'section'},
+      React.createElement('div', {className:'section-label'}, s.label),
+      React.createElement('ul', {className:'section-list'},
+        s.items.map((item,i) =>
+          React.createElement('li', {key:i},
+            React.createElement('div', {className:'li-bar'}),
+            React.createElement('div', {className:'li-content'},
+              item.title
+                ? React.createElement('span', null,
+                    React.createElement('strong', null, item.title),
+                    item.text ? ' — ' + item.text : ''
+                  )
+                : React.createElement('span', null, item.text || '')
+            )
+          )
+        )
+      )
+    );
+  }
+  return React.createElement('div', {className:'section'},
+    React.createElement('div', {className:'section-label'}, s.label),
+    React.createElement('div', {className:'section-text'}, s.text)
+  );
+}
+
+function DeityCard({ d, open, onToggle, sidebarRef }) {
+  const cardRef = useRef(null);
+  useEffect(() => {
+    if (open && cardRef.current) {
+      const sideEl = sidebarRef.current?.querySelector(`[data-id="${d.id}"]`);
+      if (sideEl) sideEl.scrollIntoView({ block:'nearest', behavior:'smooth' });
+    }
+  }, [open]);
+
+  return React.createElement('div', {
+    id: 'card-' + d.id,
+    ref: cardRef,
+    className: 'deity-card' + (open ? ' open' : ''),
+    onClick: onToggle
+  },
+    React.createElement('div', {className:'card-header'},
+      React.createElement('div', {
+        className:'card-accent',
+        style:{ background: DOMAIN_COLOUR[d.domain] }
+      }),
+      React.createElement('div', {className:'card-main'},
+        React.createElement('div', {className:'card-name-row'},
+          React.createElement('div', {className:'card-name'}, d.name),
+          React.createElement('div', {className:'card-alias'}, d.alias)
+        ),
+        React.createElement('div', {className:'card-tags'},
+          React.createElement('span', {className:'ctag ctag-align'}, d.alignFull),
+          React.createElement('span', {className:`ctag ctag-domain ${d.domain}`}, DOMAIN_LABELS[d.domain]),
+          React.createElement('span', {className:`ctag ctag-patron ${d.patron}`}, PATRON_LABELS[d.patron])
+        )
+      ),
+      React.createElement('div', {className:'card-chevron'}, '▼')
+    ),
+    open && React.createElement('div', {className:'card-body', onClick:e=>e.stopPropagation()},
+      React.createElement('div', {className:'card-overview'}, d.overview),
+      React.createElement('div', {className:'sections'},
+        d.sections.map((s,i) => React.createElement(SectionBlock, {key:i, s}))
+      )
+    )
+  );
+}
+
+function App() {
+  const [openId, setOpenId] = useState(null);
+  const [search, setSearch] = useState('');
+  const [dFilt, setDFilt] = useState(null);
+  const [aFilt, setAFilt] = useState(null);
+  const [pFilt, setPFilt] = useState(null);
+  const sidebarRef = useRef(null);
+
+  const toggle = (id) => {
+    setOpenId(prev => {
+      const next = prev === id ? null : id;
+      if (next) {
+        setTimeout(() => {
+          document.getElementById('card-' + next)?.scrollIntoView({ behavior:'smooth', block:'nearest' });
+        }, 60);
+      }
+      return next;
+    });
+  };
+
+  const filtered = useMemo(() => DEITIES.filter(d => {
+    if (dFilt && d.domain !== dFilt) return false;
+    if (aFilt && d.align !== aFilt) return false;
+    if (pFilt && d.patron !== pFilt) return false;
+    if (search) {
+      const q = search.toLowerCase();
+      return d.name.toLowerCase().includes(q) || d.alias.toLowerCase().includes(q) ||
+             d.alignFull.toLowerCase().includes(q) ||
+             DOMAIN_LABELS[d.domain].toLowerCase().includes(q) ||
+             PATRON_LABELS[d.patron].toLowerCase().includes(q);
+    }
+    return true;
+  }), [search, dFilt, aFilt, pFilt]);
+
+  const filteredIds = new Set(filtered.map(d => d.id));
+
+  const pill = (label, val, setFn, current, cls) =>
+    React.createElement('button', {
+      className: `pill ${cls} ${current === val ? 'on ' + cls : ''}`,
+      onClick: e => { e.stopPropagation(); setFn(current === val ? null : val); }
+    }, label);
+
+  // sidebar groups: Good / Neutral / Evil columns
+  const sidebarDeities = DEITIES.filter(d => filteredIds.has(d.id));
+
+  const domainGroups = [
+    { label:'Knowledge', key:'know' }, { label:'Life', key:'life' },
+    { label:'Light', key:'light' }, { label:'Trickery', key:'trick' },
+    { label:'War', key:'war' }, { label:'Pestilence', key:'pest' },
+  ];
+
+  return React.createElement(React.Fragment, null,
+
+    // masthead
+    React.createElement('div', {className:'masthead'},
+      React.createElement('div', {className:'masthead-eyebrow'}, 'Ardahlia'),
+      React.createElement('h1', null, 'Gods of the World'),
+      React.createElement('div', {className:'masthead-sub'},
+        'Twenty-six deities  ·  Six domains  ·  Five patron types'
+      )
+    ),
+
+    // filter bar
+    React.createElement('div', {className:'filter-bar'},
+      React.createElement('div', {className:'filter-bar-inner'},
+        React.createElement('div', {className:'search-box'},
+          React.createElement('span', {className:'search-icon'}, '⌕'),
+          React.createElement('input', {
+            className:'filter-search', type:'text',
+            placeholder:'Search…', value:search,
+            onChange:e => setSearch(e.target.value)
+          })
+        ),
+        React.createElement('div', {className:'vr'}),
+        React.createElement('div', {className:'pill-group'},
+          ...['know','life','light','trick','war','pest'].map(k =>
+            pill(DOMAIN_LABELS[k], k, setDFilt, dFilt, k)
+          )
+        ),
+        React.createElement('div', {className:'vr'}),
+        React.createElement('div', {className:'pill-group'},
+          ...['lg','ln','ng','nn','cg','cn','le','ne','ce'].map(k =>
+            pill(k.toUpperCase(), k, setAFilt, aFilt, k)
+          )
+        ),
+        React.createElement('div', {className:'vr'}),
+        React.createElement('div', {className:'pill-group'},
+          ...['arch','cel','fnd','goo','ves'].map(k =>
+            pill(PATRON_LABELS[k], k, setPFilt, pFilt, k)
+          )
+        ),
+        React.createElement('span', {className:'count-label'},
+          filtered.length === 26 ? '26 deities' : `${filtered.length} / 26`
+        )
+      )
+    ),
+
+    // main layout
+    React.createElement('div', {className:'layout'},
+
+      // sidebar
+      React.createElement('aside', {className:'sidebar', ref:sidebarRef},
+        domainGroups.map(dg => {
+          const members = sidebarDeities.filter(d => d.domain === dg.key);
+          if (!members.length) return null;
+          return React.createElement('div', {className:'sidebar-group', key:dg.key},
+            React.createElement('div', {className:'sidebar-group-label'}, dg.label),
+            members.map(d =>
+              React.createElement('div', {
+                key:d.id,
+                'data-id':d.id,
+                className:'sidebar-item' + (openId === d.id ? ' active' : ''),
+                onClick:e => { e.stopPropagation(); toggle(d.id); }
+              },
+                React.createElement('div', {
+                  className:'sidebar-dot',
+                  style:{ background: DOMAIN_COLOUR[d.domain] }
+                }),
+                React.createElement('div', {className:'sidebar-name'}, d.name)
+              )
+            )
+          );
+        })
+      ),
+
+      // card list
+      React.createElement('div', {className:'card-list'},
+        filtered.length === 0
+          ? React.createElement('div', {className:'empty-state'}, 'No deities match those filters')
+          : filtered.map(d =>
+              React.createElement(DeityCard, {
+                key:d.id, d,
+                open: openId === d.id,
+                onToggle: () => toggle(d.id),
+                sidebarRef
+              })
+            )
+      )
+    ),
+
+    // appendix
+    React.createElement('div', {className:'appendix-wrap'},
+      React.createElement('div', {className:'appendix'},
+        React.createElement('div', {className:'appendix-eyebrow'}, 'Appendix'),
+        React.createElement('div', {className:'appendix-title'}, 'On the Nature of the Two Darknesses'),
+        React.createElement('div', {className:'appendix-source'},
+          'From The Divided Void, author unknown, date unknown. Copy held in the Chrono Sanctum, acquisition date unrecorded.'
+        ),
+        React.createElement('p', null, 'The error most commonly made by those who study the old darkness is the assumption that Nocturna and Nyx are the same entity in different aspects, or that one is a diminished form of the other, or that they are sisters in any sense that implies equality of origin.'),
+        React.createElement('p', null, 'They are not the same. They are not aspects. They are not sisters. They are what happened when one thing became two.'),
+        React.createElement('p', null, 'Before light there was the Primordial Dark — not darkness as we understand it, which is defined by the absence of light, but darkness as a primary condition, a substance with properties of its own. When the first light came, it did not simply illuminate the darkness. It divided it. The part of the darkness that met the light and was changed by the encounter became Nyx. The part of the darkness that felt the light coming and chose to step back from it became Nocturna.'),
+        React.createElement('p', null, 'This is why they are not enemies and not allies. They are not two sides of a conflict. They are the two things that a single substance became when it encountered something it could not absorb.'),
+        React.createElement('p', null, "Nyx is the darkness that knows about light. Her entire existence is defined by the contrast — she is the goddess of secrets precisely because secrets are things that light has not yet reached. She is reactive by nature. She was created by reaction."),
+        React.createElement('p', null, "Nocturna is the darkness that declined to be defined by light. She retained — or chose, it is impossible to know which — a quality of the original darkness that predates the distinction between known and hidden. She does not trade in secrets the way Nyx does. She is the quality of hiddenness itself. The shadow does not know what it conceals. It simply conceals."),
+        React.createElement('p', null, "Their relationship in the current age is one of acknowledgment without warmth. They do not conflict because conflict requires a thing to be in dispute, and there is nothing between them to dispute — they divided completely, kept what was theirs, and have not needed to renegotiate."),
+        React.createElement('p', null, "What troubles certain scholars is the question of the Primordial Dark itself — the original substance from which both of them emerged. It did not divide. It did not become conscious. It retreated. It is still present in the world. Nocturna watches it. Nyx knows about it but does not look directly at it. There are things even Nyx declines to make a secret of."),
+        React.createElement('p', null, "What the Primordial Dark wants, if want is a concept that applies to it, is the question that Nocturna's waiting is aimed at answering. She has been watching it for longer than most gods have existed. She does not appear to have an answer yet. Or she does, and she is not saying.")
+      )
+    )
+  );
+}
+
+ReactDOM.createRoot(document.getElementById('root')).render(React.createElement(App));
+</script>
+</body>
+</html>
