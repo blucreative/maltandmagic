@@ -402,9 +402,52 @@ tbody td.div-left { border-left: 1px solid var(--border-mid); }
   border-top: 1px solid var(--border);
   margin-top: 1.5rem;
 }
+
+
+.back-nav {
+  padding: 0.9rem 1.2rem 0;
+}
+
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-family: inherit;
+  font-size: 0.78rem;
+  line-height: 1.2;
+  color: var(--color-text-secondary, var(--text-mid, var(--muted, inherit)));
+  text-decoration: none;
+  border: 1px solid var(--color-border-tertiary, var(--border, var(--border2, currentColor)));
+  background: var(--color-background-primary, var(--surface, rgba(255,255,255,0.03)));
+  border-radius: 999px;
+  padding: 0.35rem 0.68rem;
+  opacity: 0.92;
+  transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease, opacity 0.2s ease;
+}
+
+.back-link:hover {
+  opacity: 1;
+  color: var(--color-text-primary, var(--text, inherit));
+  background: var(--color-background-secondary, var(--surface2, rgba(255,255,255,0.07)));
+}
+
+.back-link:focus-visible {
+  outline: 2px solid var(--color-text-info, var(--gold, var(--text-link, currentColor)));
+  outline-offset: 2px;
+}
+
+ (max-width: 760px) {
+  .back-nav {
+    padding: 0.7rem 0.8rem 0;
+  }
+}
+
 </style>
 </head>
 <body>
+<nav class="back-nav" aria-label="Page navigation">
+  <a class="back-link" href="index.html">&larr; Back to Index</a>
+</nav>
 <div id="root"></div>
 <script type="text/babel">
 const { useState } = React;
