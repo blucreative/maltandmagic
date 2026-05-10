@@ -1126,7 +1126,7 @@ return (
 You are an investigator of the unknown — a scholar, detective, or adventurer standing against forces that should not exist. The world is wider, darker, and more ancient than anyone suspects.
 </p>
 
-```
+
   <div className="grid-2 mb-6">
     <div className="card gold">
       <div className="card-title">What is Call of Cthulhu?</div>
@@ -1219,7 +1219,7 @@ You are an investigator of the unknown — a scholar, detective, or adventurer s
     <p className="mt-4 small muted">Roll <em>equal to or under</em> your skill to succeed. Lower rolls are better. A roll of <span className="red">01</span> is always an Extreme Success. A roll of <span className="red">96–100</span> is always a Fumble (disastrous failure).</p>
   </div>
 </div>
-```
+
 
 );
 }
@@ -1245,7 +1245,7 @@ return (
 Five steps transform blank paper into a living, breathing investigator. Work through them together as a group — a balanced party survives longer than a collection of lone wolves.
 </p>
 
-```
+
   <div className="steps mb-6">
     {steps.map((s,i) => (
       <div key={i} className={`step-item${i===creStep?' active':''}`} onClick={()=>setCreStep(i)}>
@@ -1527,7 +1527,7 @@ Five steps transform blank paper into a living, breathing investigator. Work thr
     </div>
   )}
 </div>
-```
+
 
 );
 }
@@ -1542,7 +1542,7 @@ return (
 Every meaningful action resolves with a D100. Roll <em>equal to or under</em> your skill. Three thresholds, two special dice, one crucial option: push the roll.
 </p>
 
-```
+
   <div className="card gold mb-6">
     <div className="card-title">The Fundamental Rule</div>
     <div className="grid-2">
@@ -1690,7 +1690,7 @@ Every meaningful action resolves with a D100. Roll <em>equal to or under</em> yo
     </div>
   </div>
 </div>
-```
+
 
 );
 }
@@ -1709,7 +1709,7 @@ return (
 Sanity is the currency of survival. Every encounter with the Mythos chips away at the mind. The question is not <em>whether</em> you will be changed — but how much of yourself you will lose before the end.
 </p>
 
-```
+
   <div className="card gold mb-6">
     <div className="card-title">The Sanity System — Overview</div>
     <div className="grid-2">
@@ -1833,7 +1833,7 @@ Sanity is the currency of survival. Every encounter with the Mythos chips away a
     </table>
   </div>
 </div>
-```
+
 
 );
 }
@@ -1848,7 +1848,7 @@ return (
 Violence is brutal, fast, and often fatal. The wisest investigators avoid combat — but sometimes the monsters come to you. Know the rules, and know when to run.
 </p>
 
-```
+
   <div className="card red mb-6">
     <div className="card-title">The Golden Rule of Combat</div>
     <p>Call of Cthulhu is not a game that rewards combat. Investigators are <span className="red">not action heroes</span>. A single lucky shot can kill. A major wound can incapacitate. Running, hiding, and negotiating are always valid strategies — often the only ones that work against Mythos creatures.</p>
@@ -1965,7 +1965,7 @@ Violence is brutal, fast, and often fatal. The wisest investigators avoid combat
     <span className="pull-attr">— Call of Cthulhu 7th Edition, Investigator Handbook</span>
   </div>
 </div>
-```
+
 
 );
 }
@@ -1980,7 +1980,7 @@ return (
 Everything you need at the table, distilled. When the Keeper says “Make a SAN roll” — breathe, find your number, and hope the dice are kind.
 </p>
 
-```
+
   <div className="deco-divider"><span>Characteristics & Derived Attributes</span></div>
   <div className="qr-grid mb-6">
     {[
@@ -2102,7 +2102,7 @@ Everything you need at the table, distilled. When the Keeper says “Make a SAN 
     </div>
   </div>
 </div>
-```
+
 
 );
 }
@@ -2129,7 +2129,7 @@ return (
 <>
 {showTutorial && <Tutorial onClose={()=>setShowTutorial(false)}/>}
 
-```
+
   <div className="header">
     <div className="header-top">
       <span className="cthulhu-eye">🐙</span>
@@ -2158,7 +2158,7 @@ return (
     {renderSection()}
   </main>
 </>
-```
+
 
 );
 }
