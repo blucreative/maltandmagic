@@ -1,0 +1,1093 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Auroran Empire — A Traveller's Guide</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=EB+Garamond:ital,wght@0,400;0,500;1,400;1,500&display=swap');
+
+  :root {
+    --deep: #0a1218;
+    --surface: #0f1e28;
+    --raised: #162636;
+    --border: #1e3a4a;
+    --border-light: #2a5060;
+    --teal: #4ab8a0;
+    --teal-dim: #2a7060;
+    --teal-faint: #16403a;
+    --gold: #c9a84c;
+    --gold-bright: #e8c876;
+    --gold-faint: #8a6a2a;
+    --cream: #c8d8d4;
+    --muted: #6a8880;
+    --faint: #2a4040;
+
+    --heartfen: #3a7a5a;
+    --heartfen-dim: #1e4a36;
+    --varethi: #2a6a9a;
+    --varethi-dim: #163a5a;
+    --ironspine: #7a6a4a;
+    --ironspine-dim: #4a3e2a;
+    --grandbelt: #9a8030;
+    --grandbelt-dim: #5a4a18;
+    --ashfringe: #8a4a30;
+    --ashfringe-dim: #4a2818;
+    --corsala: #2a9a8a;
+    --corsala-dim: #165048;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background-color: var(--deep);
+    color: var(--cream);
+    font-family: 'EB Garamond', Georgia, serif;
+    font-size: 16px;
+    line-height: 1.75;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* Aurora background effect */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 80% 40% at 15% 10%, rgba(74,184,160,0.06) 0%, transparent 60%),
+      radial-gradient(ellipse 60% 50% at 85% 80%, rgba(74,184,160,0.04) 0%, transparent 60%),
+      radial-gradient(ellipse 100% 30% at 50% 50%, rgba(201,168,76,0.02) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .page-wrap {
+    position: relative;
+    z-index: 1;
+    max-width: 1040px;
+    margin: 0 auto;
+    padding: 56px 40px 100px;
+  }
+
+  /* ── HEADER ── */
+  .page-header {
+    text-align: center;
+    margin-bottom: 64px;
+    position: relative;
+  }
+
+  .header-ornament {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    justify-content: center;
+    margin-bottom: 24px;
+  }
+
+  .ornament-line {
+    flex: 1;
+    max-width: 120px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--teal-dim), transparent);
+  }
+
+  .ornament-glyph {
+    color: var(--teal);
+    font-size: 18px;
+    letter-spacing: 8px;
+  }
+
+  .page-eyebrow {
+    font-family: 'Cinzel', serif;
+    font-size: 10px;
+    color: var(--teal);
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+
+  .page-title {
+    font-family: 'Cinzel', serif;
+    font-size: 32px;
+    font-weight: 700;
+    color: var(--gold-bright);
+    letter-spacing: 2px;
+    line-height: 1.2;
+    margin-bottom: 10px;
+  }
+
+  .page-subtitle {
+    font-family: 'Cinzel', serif;
+    font-size: 12px;
+    color: var(--muted);
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 28px;
+  }
+
+  .header-intro {
+    max-width: 620px;
+    margin: 0 auto;
+    font-size: 15.5px;
+    color: var(--cream);
+    opacity: 0.75;
+    font-style: italic;
+    line-height: 1.8;
+  }
+
+  /* ── WORLD OVERVIEW ── */
+  .world-overview {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 56px;
+  }
+
+  .overview-card {
+    background: var(--raised);
+    border: 1px solid var(--border);
+    border-top: 2px solid var(--teal-dim);
+    border-radius: 3px;
+    padding: 16px 18px;
+  }
+
+  .overview-label {
+    font-family: 'Cinzel', serif;
+    font-size: 9px;
+    color: var(--teal);
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+
+  .overview-value {
+    font-size: 14px;
+    color: var(--cream);
+    opacity: 0.85;
+    line-height: 1.5;
+  }
+
+  /* ── SECTION HEADERS ── */
+  .section {
+    margin-bottom: 56px;
+  }
+
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 24px;
+    padding-bottom: 14px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .section-title {
+    font-family: 'Cinzel', serif;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--gold);
+    letter-spacing: 3px;
+    text-transform: uppercase;
+  }
+
+  .section-line {
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, var(--border), transparent);
+  }
+
+  /* ── REGION FILTER ── */
+  .filter-bar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 32px;
+    align-items: center;
+  }
+
+  .filter-label {
+    font-family: 'Cinzel', serif;
+    font-size: 10px;
+    color: var(--muted);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-right: 4px;
+  }
+
+  .filter-btn {
+    font-family: 'Cinzel', serif;
+    font-size: 10px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    padding: 6px 14px;
+    border-radius: 2px;
+    border: 1px solid;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    background: transparent;
+  }
+
+  .filter-btn.all {
+    border-color: var(--teal-dim);
+    color: var(--teal);
+  }
+  .filter-btn.all.active,
+  .filter-btn.all:hover {
+    background: var(--teal-faint);
+    border-color: var(--teal);
+    color: var(--teal);
+  }
+
+  .filter-btn.heartfen { border-color: var(--heartfen-dim); color: var(--heartfen); }
+  .filter-btn.heartfen.active, .filter-btn.heartfen:hover { background: rgba(58,122,90,0.15); border-color: var(--heartfen); }
+
+  .filter-btn.varethi { border-color: var(--varethi-dim); color: var(--varethi); }
+  .filter-btn.varethi.active, .filter-btn.varethi:hover { background: rgba(42,106,154,0.15); border-color: var(--varethi); }
+
+  .filter-btn.ironspine { border-color: var(--ironspine-dim); color: var(--ironspine); }
+  .filter-btn.ironspine.active, .filter-btn.ironspine:hover { background: rgba(122,106,74,0.15); border-color: var(--ironspine); }
+
+  .filter-btn.grandbelt { border-color: var(--grandbelt-dim); color: var(--grandbelt); }
+  .filter-btn.grandbelt.active, .filter-btn.grandbelt:hover { background: rgba(154,128,48,0.15); border-color: var(--grandbelt); }
+
+  .filter-btn.ashfringe { border-color: var(--ashfringe-dim); color: var(--ashfringe); }
+  .filter-btn.ashfringe.active, .filter-btn.ashfringe:hover { background: rgba(138,74,48,0.15); border-color: var(--ashfringe); }
+
+  .filter-btn.corsala { border-color: var(--corsala-dim); color: var(--corsala); }
+  .filter-btn.corsala.active, .filter-btn.corsala:hover { background: rgba(42,154,138,0.15); border-color: var(--corsala); }
+
+  /* ── REGION BANNER ── */
+  .region-banner {
+    border-radius: 3px;
+    padding: 20px 24px;
+    margin-bottom: 20px;
+    border: 1px solid;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 16px;
+    align-items: start;
+  }
+
+  .region-banner.heartfen { background: rgba(58,122,90,0.1); border-color: var(--heartfen-dim); }
+  .region-banner.varethi { background: rgba(42,106,154,0.1); border-color: var(--varethi-dim); }
+  .region-banner.ironspine { background: rgba(122,106,74,0.1); border-color: var(--ironspine-dim); }
+  .region-banner.grandbelt { background: rgba(154,128,48,0.1); border-color: var(--grandbelt-dim); }
+  .region-banner.ashfringe { background: rgba(138,74,48,0.1); border-color: var(--ashfringe-dim); }
+  .region-banner.corsala { background: rgba(42,154,138,0.1); border-color: var(--corsala-dim); }
+
+  .region-banner-name {
+    font-family: 'Cinzel', serif;
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 4px;
+  }
+
+  .heartfen .region-banner-name { color: var(--heartfen); }
+  .varethi .region-banner-name { color: var(--varethi); }
+  .ironspine .region-banner-name { color: var(--ironspine); }
+  .grandbelt .region-banner-name { color: var(--grandbelt); }
+  .ashfringe .region-banner-name { color: var(--ashfringe); }
+  .corsala .region-banner-name { color: var(--corsala); }
+
+  .region-banner-biome {
+    font-size: 13px;
+    color: var(--muted);
+    font-style: italic;
+    margin-bottom: 10px;
+  }
+
+  .region-banner-desc {
+    font-size: 14.5px;
+    color: var(--cream);
+    opacity: 0.8;
+    line-height: 1.65;
+  }
+
+  .region-banner-meta {
+    text-align: right;
+    flex-shrink: 0;
+  }
+
+  .region-city-count {
+    font-family: 'Cinzel', serif;
+    font-size: 22px;
+    font-weight: 700;
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+
+  .heartfen .region-city-count { color: var(--heartfen); }
+  .varethi .region-city-count { color: var(--varethi); }
+  .ironspine .region-city-count { color: var(--ironspine); }
+  .grandbelt .region-city-count { color: var(--grandbelt); }
+  .ashfringe .region-city-count { color: var(--ashfringe); }
+  .corsala .region-city-count { color: var(--corsala); }
+
+  .region-city-label {
+    font-family: 'Cinzel', serif;
+    font-size: 9px;
+    color: var(--muted);
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+  }
+
+  /* ── CITY CARDS ── */
+  .city-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 40px;
+  }
+
+  .city-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    padding: 18px 20px;
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.2s ease, transform 0.2s ease;
+  }
+
+  .city-card:hover {
+    transform: translateY(-1px);
+  }
+
+  .city-card.major {
+    grid-column: span 2;
+    border-color: var(--border-light);
+  }
+
+  .city-card::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+  }
+
+  .city-card.heartfen::before { background: var(--heartfen); }
+  .city-card.varethi::before { background: var(--varethi); }
+  .city-card.ironspine::before { background: var(--ironspine); }
+  .city-card.grandbelt::before { background: var(--grandbelt); }
+  .city-card.ashfringe::before { background: var(--ashfringe); }
+  .city-card.corsala::before { background: var(--corsala); }
+
+  .city-card-header {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    margin-bottom: 8px;
+  }
+
+  .city-card-name {
+    font-family: 'Cinzel', serif;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--gold-bright);
+  }
+
+  .city-card.major .city-card-name {
+    font-size: 16px;
+  }
+
+  .city-card-status {
+    font-family: 'Cinzel', serif;
+    font-size: 9px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    padding: 2px 8px;
+    border-radius: 2px;
+  }
+
+  .status-major {
+    color: var(--gold);
+    border: 1px solid var(--gold-faint);
+    background: rgba(201,168,76,0.08);
+  }
+
+  .status-minor {
+    color: var(--muted);
+    border: 1px solid var(--faint);
+  }
+
+  .status-port {
+    color: var(--corsala);
+    border: 1px solid var(--corsala-dim);
+    background: rgba(42,154,138,0.08);
+  }
+
+  .status-inland {
+    color: var(--grandbelt);
+    border: 1px solid var(--grandbelt-dim);
+    background: rgba(154,128,48,0.08);
+  }
+
+  .city-card-desc {
+    font-size: 14px;
+    color: var(--cream);
+    opacity: 0.78;
+    line-height: 1.65;
+  }
+
+  .city-card.major .city-card-desc {
+    font-size: 14.5px;
+    opacity: 0.82;
+  }
+
+  /* ── HIDDEN REGION ── */
+  .region-group {
+    transition: opacity 0.2s ease;
+  }
+
+  .region-group.hidden {
+    display: none;
+  }
+
+  /* ── WATERWAYS ── */
+  .waterways-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+
+  .waterway-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-top: 2px solid var(--teal-dim);
+    border-radius: 3px;
+    padding: 16px 18px;
+  }
+
+  .waterway-type {
+    font-family: 'Cinzel', serif;
+    font-size: 9px;
+    color: var(--teal);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+
+  .waterway-name {
+    font-family: 'Cinzel', serif;
+    font-size: 13px;
+    color: var(--gold-bright);
+    margin-bottom: 6px;
+  }
+
+  .waterway-desc {
+    font-size: 13px;
+    color: var(--cream);
+    opacity: 0.75;
+    line-height: 1.55;
+  }
+
+  /* ── BEYOND THE EMPIRE ── */
+  .beyond-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+
+  .beyond-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    padding: 18px 20px;
+  }
+
+  .beyond-name {
+    font-family: 'Cinzel', serif;
+    font-size: 13px;
+    color: var(--gold-bright);
+    margin-bottom: 4px;
+  }
+
+  .beyond-tag {
+    font-family: 'Cinzel', serif;
+    font-size: 9px;
+    color: var(--muted);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+
+  .beyond-card p {
+    font-size: 13.5px;
+    color: var(--cream);
+    opacity: 0.78;
+    line-height: 1.6;
+    margin-bottom: 0;
+  }
+
+  /* ── DIVIDER ── */
+  .divider {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 48px 0;
+    position: relative;
+  }
+
+  .divider::after {
+    content: '✦';
+    position: absolute;
+    top: -9px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--deep);
+    padding: 0 14px;
+    color: var(--teal-dim);
+    font-size: 12px;
+  }
+
+  /* ── FOOTER ── */
+  .page-footer {
+    text-align: center;
+    margin-top: 72px;
+    padding-top: 24px;
+    border-top: 1px solid var(--border);
+    font-family: 'Cinzel', serif;
+    font-size: 10px;
+    color: var(--faint);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 720px) {
+    .page-wrap { padding: 32px 20px 60px; }
+    .world-overview { grid-template-columns: 1fr; }
+    .city-grid { grid-template-columns: 1fr; }
+    .city-card.major { grid-column: span 1; }
+    .waterways-grid { grid-template-columns: 1fr; }
+    .beyond-grid { grid-template-columns: 1fr; }
+    .region-banner { grid-template-columns: 1fr; }
+    .region-banner-meta { text-align: left; }
+    .filter-bar { gap: 6px; }
+  }
+</style>
+</head>
+<body>
+<div class="page-wrap">
+
+  <!-- HEADER -->
+  <header class="page-header">
+    <div class="header-ornament">
+      <div class="ornament-line"></div>
+      <div class="ornament-glyph">✦ ✦ ✦</div>
+      <div class="ornament-line"></div>
+    </div>
+    <div class="page-eyebrow">A Traveller's Guide to</div>
+    <h1 class="page-title">The Auroran Empire</h1>
+    <div class="page-subtitle">Regions, Cities & Settlements</div>
+    <p class="header-intro">Five regions. Twenty-nine cities. One empire, held together by accords and the long memory of its founding. What follows is a guide for those who travel its roads, cross its passes, and sleep in its inns — or plan to.</p>
+  </header>
+
+  <!-- WORLD OVERVIEW -->
+  <div class="world-overview">
+    <div class="overview-card">
+      <div class="overview-label">Capital</div>
+      <div class="overview-value">Shimmerfen, the Heartfen</div>
+    </div>
+    <div class="overview-card">
+      <div class="overview-label">Regions</div>
+      <div class="overview-value">Five mainland · one tributary island</div>
+    </div>
+    <div class="overview-card">
+      <div class="overview-label">Government</div>
+      <div class="overview-value">Empress Olira Sorvaine · Confederation of Accords</div>
+    </div>
+    <div class="overview-card">
+      <div class="overview-label">Tributary State</div>
+      <div class="overview-value">Corsala — island, east-southeast</div>
+    </div>
+    <div class="overview-card">
+      <div class="overview-label">Principal Pass</div>
+      <div class="overview-value">The Pass of Dernavar, the Ironspine</div>
+    </div>
+    <div class="overview-card">
+      <div class="overview-label">Principal Port</div>
+      <div class="overview-value">Vareth, the Varethi Reach</div>
+    </div>
+  </div>
+
+  <!-- SETTLEMENTS -->
+  <section class="section">
+    <div class="section-header">
+      <h2 class="section-title">Cities & Settlements</h2>
+      <div class="section-line"></div>
+    </div>
+
+    <!-- FILTER -->
+    <div class="filter-bar">
+      <span class="filter-label">Filter:</span>
+      <button class="filter-btn all active" onclick="filterRegion('all', this)">All Regions</button>
+      <button class="filter-btn heartfen" onclick="filterRegion('heartfen', this)">The Heartfen</button>
+      <button class="filter-btn varethi" onclick="filterRegion('varethi', this)">Varethi Reach</button>
+      <button class="filter-btn ironspine" onclick="filterRegion('ironspine', this)">The Ironspine</button>
+      <button class="filter-btn grandbelt" onclick="filterRegion('grandbelt', this)">The Grandbelt</button>
+      <button class="filter-btn ashfringe" onclick="filterRegion('ashfringe', this)">The Ashfringe</button>
+      <button class="filter-btn corsala" onclick="filterRegion('corsala', this)">Corsala</button>
+    </div>
+
+    <!-- THE HEARTFEN -->
+    <div class="region-group" data-region="heartfen">
+      <div class="region-banner heartfen">
+        <div>
+          <div class="region-banner-name">The Heartfen</div>
+          <div class="region-banner-biome">Temperate plains · fens and marshland · upland forest</div>
+          <p class="region-banner-desc">The imperial heartland. Flat terrain traps water across much of the north, producing the marshland that defines the region. The Fen Roads — an elevated stone network built over generations — made trade and military movement possible where nature intended neither. Cities here are old and know it.</p>
+        </div>
+        <div class="region-banner-meta">
+          <div class="region-city-count">8</div>
+          <div class="region-city-label">Settlements</div>
+        </div>
+      </div>
+      <div class="city-grid">
+        <div class="city-card heartfen major">
+          <div class="city-card-header">
+            <span class="city-card-name">Shimmerfen</span>
+            <span class="city-card-status status-major">Imperial Capital</span>
+          </div>
+          <p class="city-card-desc">Built on platforms and stilts over the fen, Shimmerfen is the seat of Empress Olira Sorvaine and the centre of Imperial life. At night the water beneath the city glows with Aurora iridescence that has no visible source — a sight so familiar to residents that they rarely look down anymore. Five distinct districts run from the ancient stone of the Old Boreal Quarter to the gilded upper city around the Luminous Spire. The Accord Gallery on Magisters' Row holds the founding documents of every territory that joined the Empire. The Brightfen district, at the water's edge, is where the Aurora first touched the world.</p>
+        </div>
+        <div class="city-card heartfen major">
+          <div class="city-card-header">
+            <span class="city-card-name">Hollowhearth</span>
+            <span class="city-card-status status-major">Major City</span>
+          </div>
+          <p class="city-card-desc">The Empire's academic and legal heart. Home to the Codex Halls and the College of Primes, where Imperial law is interpreted and debated. Hollowhearth was the last city to sign the Accord — after twelve days of negotiation — and its residents have never fully let anyone forget that distinction. The Unlit Quarter preserves pre-Aurora architecture without fen-lanterns, a deliberate statement whose meaning different people will tell you differently.</p>
+        </div>
+        <div class="city-card heartfen">
+          <div class="city-card-header">
+            <span class="city-card-name">Duskport</span>
+            <span class="city-card-status status-minor">Minor City</span>
+          </div>
+          <p class="city-card-desc">Fishing and naval city on the Kedmere Sea, known for its lighthouse chain built after a generation of catastrophic winter losses. The Imperial garrison and the fishing fleet maintain a careful, well-practised distance from each other. Nobody explains this to visitors. Visitors generally work it out.</p>
+        </div>
+        <div class="city-card heartfen">
+          <div class="city-card-header">
+            <span class="city-card-name">Coldhaven</span>
+            <span class="city-card-status status-minor">Minor City</span>
+          </div>
+          <p class="city-card-desc">Salt production and cold-water fishing on the Sea of Lost Souls. The northeastern gateway for overland travellers entering the Empire from the north. The city stopped asking long ago whether arrivals are lost or running. Both are welcome, neither is pressed.</p>
+        </div>
+        <div class="city-card heartfen">
+          <div class="city-card-header">
+            <span class="city-card-name">Reedmere</span>
+            <span class="city-card-status status-minor">Minor City</span>
+          </div>
+          <p class="city-card-desc">Fen-edge agricultural town on the road between Shimmerfen and Hollowhearth. Peat, eel farming, and reed production. The most deliberately unremarkable city in the Empire — a distinction its residents consider a form of dignity, and will tell you so unprompted.</p>
+        </div>
+        <div class="city-card heartfen">
+          <div class="city-card-header">
+            <span class="city-card-name">Greywood</span>
+            <span class="city-card-status status-minor">Minor City</span>
+          </div>
+          <p class="city-card-desc">Upland forest town at the Heartfen's southern edge. Timber and charcoal. The only Heartfen city that negotiated the right to maintain armed foresters independent of the Imperial garrison — the reason Shimmerfen agreed to this has never been publicly explained, and the foresters do not invite questions.</p>
+        </div>
+        <div class="city-card heartfen">
+          <div class="city-card-header">
+            <span class="city-card-name">Ferngate</span>
+            <span class="city-card-status status-minor">Minor City</span>
+          </div>
+          <p class="city-card-desc">River crossing controlling the north-south trade artery through the Heartfen. A Crown Magistrate is permanently stationed here. If you need to cross the Heartfen, you pass through Ferngate. Ferngate knows this, and prices accordingly.</p>
+        </div>
+        <div class="city-card heartfen">
+          <div class="city-card-header">
+            <span class="city-card-name">Shimmer's Edge</span>
+            <span class="city-card-status status-minor">Minor City · Pilgrimage Site</span>
+          </div>
+          <p class="city-card-desc">A deep fen settlement where Aurora phenomena are more intense than anywhere outside the capital. The water glows. On certain nights a vertical shimmer appears over the fen that locals have developed elaborate explanations for and visitors simply stare at. Pilgrims come from across the Empire. The locals have stopped looking.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- THE VARETHI REACH -->
+    <div class="region-group" data-region="varethi">
+      <div class="region-banner varethi">
+        <div>
+          <div class="region-banner-name">The Varethi Reach</div>
+          <div class="region-banner-biome">Mediterranean · rocky coast · warm and dry · cliff towns and natural harbours</div>
+          <p class="region-banner-desc">The Empire's eastern seaboard, facing the Ocean of Ophidra. Warm coastal air, white limestone, terraced cliff towns descending to natural harbours. The Reach is trade-facing, cosmopolitan, and deeply stratified — Vareth's merchant families have more practical power than most Imperial magistrates, and everyone knows it.</p>
+        </div>
+        <div class="region-banner-meta">
+          <div class="region-city-count">8</div>
+          <div class="region-city-label">Settlements</div>
+        </div>
+      </div>
+      <div class="city-grid">
+        <div class="city-card varethi major">
+          <div class="city-card-header">
+            <span class="city-card-name">Vareth</span>
+            <span class="city-card-status status-major">Major City · Principal Port</span>
+          </div>
+          <p class="city-card-desc">The Empire's great trading port. White cliff-rock descends in terraces to a natural harbour on the Ocean of Ophidra, and the city has grown upward from that harbour for centuries. Governed in practice by the merchant Tideborne Assembly, whose authority over maritime commerce complicates the Crown Magistrate's position in ways the Assembly finds amusing. Every generation, someone raises the question of whether Vareth's Accord could be renegotiated. Every generation, nothing comes of it.</p>
+        </div>
+        <div class="city-card varethi">
+          <div class="city-card-header">
+            <span class="city-card-name">Salcova</span>
+            <span class="city-card-status status-minor">Minor City</span>
+          </div>
+          <p class="city-card-desc">Older than Vareth by a century. Salt production and deeply entrenched merchant families. Professionally resentful of its larger neighbour — a resentment expressed through elaborate, impeccable formal courtesy that fools no one.</p>
+        </div>
+        <div class="city-card varethi">
+          <div class="city-card-header">
+            <span class="city-card-name">Whitecliff</span>
+            <span class="city-card-status status-minor">Minor City</span>
+          </div>
+          <p class="city-card-desc">Built of and upon white limestone. The Empire's primary source of architectural stone. The cliff the city stands on is measurably shorter than a century ago — a fact the quarry owners acknowledge in the abstract and decline to address in practice.</p>
+        </div>
+        <div class="city-card varethi">
+          <div class="city-card-header">
+            <span class="city-card-name">Verano</span>
+            <span class="city-card-status status-minor">Minor City</span>
+          </div>
+          <p class="city-card-desc">Inland valley wine and olive town on the Tessil, seasonally cut off when the river becomes unnavigable in summer. Has its own festival calendar and a mild suspicion of anyone who arrives by road rather than river. The wine is excellent and the locals know it.</p>
+        </div>
+        <div class="city-card varethi">
+          <div class="city-card-header">
+            <span class="city-card-name">Harrowmouth</span>
+            <span class="city-card-status status-minor">Minor City</span>
+          </div>
+          <p class="city-card-desc">Where the Vaeli meets the Ocean of Ophidra. Perpetually contested between Varethi coastal merchants and Grandbelt river traders, each of whom considers the city rightfully theirs. The city itself professes neutrality and charges both sides for the harbour.</p>
+        </div>
+        <div class="city-card varethi">
+          <div class="city-card-header">
+            <span class="city-card-name">Breakwater</span>
+            <span class="city-card-status status-minor">Minor City</span>
+          </div>
+          <p class="city-card-desc">Significant coastal harbour where Imperial maritime code and deeply entrenched local custom disagree on jurisdiction in ways that have never been formally resolved. Both sides have been amenable to discussing this indefinitely. In the meantime the harbour operates.</p>
+        </div>
+        <div class="city-card varethi">
+          <div class="city-card-header">
+            <span class="city-card-name">Crestwater</span>
+            <span class="city-card-status status-minor">Minor City</span>
+          </div>
+          <p class="city-card-desc">Small southern harbour town at the end of the Reach's coastal trade chain. Small enough that Vareth's guilds don't bother with it directly, which suits Crestwater fine. Fishing, small-boat repair, and modest trade in preserved goods moving between the mainland and Corsala.</p>
+        </div>
+        <div class="city-card varethi">
+          <div class="city-card-header">
+            <span class="city-card-name">Dawnshore</span>
+            <span class="city-card-status status-minor">Minor City</span>
+          </div>
+          <p class="city-card-desc">Faces east into open water and catches the light before anywhere else on the mainland. Less known for what it produces than for what it watches — the sea traffic between the Varethi coast and Corsala passes through its sight lines daily. The fishermen here are the best-informed people in the southern Reach.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- THE IRONSPINE -->
+    <div class="region-group" data-region="ironspine">
+      <div class="region-banner ironspine">
+        <div>
+          <div class="region-banner-name">The Ironspine</div>
+          <div class="region-banner-biome">Highland · passes · mineral-rich valleys · cave systems in the deep interior</div>
+          <p class="region-banner-desc">The continental spine — a north-south highland ridge running through the Empire's interior. Deeply self-governing. Cities sit in passes and at mineral seam convergences, and they negotiate their Accord obligations with more precision than the capital would prefer. The Ironspine has never been conquered. It was persuaded, expensively, and on its own terms.</p>
+        </div>
+        <div class="region-banner-meta">
+          <div class="region-city-count">4</div>
+          <div class="region-city-label">Settlements</div>
+        </div>
+      </div>
+      <div class="city-grid">
+        <div class="city-card ironspine">
+          <div class="city-card-header">
+            <span class="city-card-name">Ironpass</span>
+            <span class="city-card-status status-minor">Minor City</span>
+          </div>
+          <p class="city-card-desc">Controls the Pass of Dernavar — the primary east-west cleft through the Ironspine, connecting the Heartfen to the Varethi Reach. The city takes its name from the pass. The most strategically significant Ironspine settlement, simply by virtue of being unavoidable. Has been negotiating a toll reduction with Shimmerfen for sixty years and shows no sign of concluding.</p>
+        </div>
+        <div class="city-card ironspine">
+          <div class="city-card-header">
+            <span class="city-card-name">Stonekneid</span>
+            <span class="city-card-status status-minor">Minor City</span>
+          </div>
+          <p class="city-card-desc">The Ironspine's de facto capital, built where three major mineral seams converge. Deeply self-governing. The Accord provisions that brought it into the Empire have never been fully interpreted, and the city's very good legal scholars have not volunteered clarification. The mines run deep and the city runs deeper.</p>
+        </div>
+        <div class="city-card ironspine">
+          <div class="city-card-header">
+            <span class="city-card-name">Coppergate</span>
+            <span class="city-card-status status-minor">Minor City</span>
+          </div>
+          <p class="city-card-desc">Pass town on the Ironspine's western slope, facing the Grandbelt. The highland region's cultural centre — its only significant library, its best market, and the only inn in the Ironspine that visitors reliably describe as comfortable. A good place to resupply before going deeper.</p>
+        </div>
+        <div class="city-card ironspine">
+          <div class="city-card-header">
+            <span class="city-card-name">Deepholm</span>
+            <span class="city-card-status status-minor">Minor City</span>
+          </div>
+          <p class="city-card-desc">Built adjacent to an extensive cave system in the Ironspine's deep interior. Mining, primarily — though the caves extend considerably further than the active levels, and not all of what has been found in them has been discussed publicly. The Hunter chapter-house here is the Ironspine's oldest institution and may predate the city itself.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- THE GRANDBELT -->
+    <div class="region-group" data-region="grandbelt">
+      <div class="region-banner grandbelt">
+        <div>
+          <div class="region-banner-name">The Grandbelt</div>
+          <div class="region-banner-biome">Subtropical interior · flat · hot · seasonal · river-watered grain plains</div>
+          <p class="region-banner-desc">The Empire's agricultural engine. Flat, vast, and underappreciated by the capital. Three rivers — the Arrath, the Davan, and the Sorn — drain the Ironspine highlands westward across plains that feed the Empire and have considerable contempt for Shimmerfen's accountants. The Grandbelt does not produce poets. It produces grain, cattle, soldiers, and invoices.</p>
+        </div>
+        <div class="region-banner-meta">
+          <div class="region-city-count">7</div>
+          <div class="region-city-label">Settlements</div>
+        </div>
+      </div>
+      <div class="city-grid">
+        <div class="city-card grandbelt major">
+          <div class="city-card-header">
+            <span class="city-card-name">Cindral</span>
+            <span class="city-card-status status-major">Major City · Military Seat</span>
+          </div>
+          <p class="city-card-desc">The grain city — flat, windswept, enormous, and unpretentious. Where the Arrath, the Davan, and the Sorn converge at the centre of the Grandbelt plains. Seat of the First Army and the Empire's military logistics. Feeds the Empire and has considerable contempt for Shimmerfen's accountants. Cindral is not beautiful, but it is indispensable, and everyone who has spent time there knows the difference matters more.</p>
+        </div>
+        <div class="city-card grandbelt">
+          <div class="city-card-header">
+            <span class="city-card-name">Millhaven</span>
+            <span class="city-card-status status-minor">Minor City</span>
+          </div>
+          <p class="city-card-desc">Where the Arrath flattens out at the base of the Ironspine — the first real town for travellers descending from the highlands. Milling, smelting, and the kind of rough hospitality that comes from being the arrival point in either direction. Neither fully Grandbelt nor properly Ironspine. Both regions claim it when convenient.</p>
+        </div>
+        <div class="city-card grandbelt">
+          <div class="city-card-header">
+            <span class="city-card-name">Goldfield</span>
+            <span class="city-card-status status-minor">Minor City</span>
+          </div>
+          <p class="city-card-desc">The wealthiest minor city in the Grandbelt by livestock value, and the most vocal about what that wealth costs in Imperial tithes. The current Accord Magistrate has submitted seventeen formal taxation grievances to Shimmerfen. Sixteen have received no response. The seventeenth is understood to be comprehensive.</p>
+        </div>
+        <div class="city-card grandbelt">
+          <div class="city-card-header">
+            <span class="city-card-name">Dryford</span>
+            <span class="city-card-status status-minor">Minor City</span>
+          </div>
+          <p class="city-card-desc">A ford town on the Davan that exists because the river is crossable here and nowhere sensible for forty miles in either direction. Every road in the central Grandbelt eventually passes through Dryford. The inn is adequate. The crossing fee is not.</p>
+        </div>
+        <div class="city-card grandbelt">
+          <div class="city-card-header">
+            <span class="city-card-name">Stockend</span>
+            <span class="city-card-status status-minor">Minor City</span>
+          </div>
+          <p class="city-card-desc">The last significant settlement before the Grandbelt gives way to Ashfringe scrubland. Everything heading south — cattle, grain, soldiers, refugees — passes through Stockend's yards. The smell is permanent and the residents have stopped noticing. The market here sets livestock prices for the entire southern Empire.</p>
+        </div>
+        <div class="city-card grandbelt">
+          <div class="city-card-header">
+            <span class="city-card-name">Redwater</span>
+            <span class="city-card-status status-minor">Minor City</span>
+          </div>
+          <p class="city-card-desc">Named for the iron-rich runoff from the ridge above, which stains the Sorn a dull rust year-round. The tanneries made use of the acidic water before anyone thought too hard about it. The leather that comes out of Redwater is the best quality and worst smelling in the Empire. The tanners live upstream.</p>
+        </div>
+        <div class="city-card grandbelt">
+          <div class="city-card-header">
+            <span class="city-card-name">Sojourn</span>
+            <span class="city-card-status status-minor">Minor City</span>
+          </div>
+          <p class="city-card-desc">Southernmost Grandbelt city, where the plains begin giving way to Ashfringe scrubland. A waystation town for people making decisions slowly — refugees from the south pausing before going north, northerners pausing before going further south. Its economy runs on that indecision. No one is rushed here. Everyone eventually leaves.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- THE ASHFRINGE -->
+    <div class="region-group" data-region="ashfringe">
+      <div class="region-banner ashfringe">
+        <div>
+          <div class="region-banner-name">The Ashfringe</div>
+          <div class="region-banner-biome">Transitional scrubland · pale ashy soil · volcanic influence · frontier</div>
+          <p class="region-banner-desc">Named for the pale, ash-tinged quality of its soil where mineral influence bleeds northward from the volcanic ridge. The Empire's southern frontier — where imperial control thins, the roads grow quieter, and Thornwall waits at the end of everything. People who live here are either from here or came from further south and stopped. Both kinds tend to be direct about it.</p>
+        </div>
+        <div class="region-banner-meta">
+          <div class="region-city-count">4</div>
+          <div class="region-city-label">Settlements</div>
+        </div>
+      </div>
+      <div class="city-grid">
+        <div class="city-card ashfringe major">
+          <div class="city-card-header">
+            <span class="city-card-name">Thornwall</span>
+            <span class="city-card-status status-major">Major City · Southern Fortress</span>
+          </div>
+          <p class="city-card-desc">The Empire's southernmost fortress, built into a volcanic ridge that predates the Empire itself. A city of soldiers, refugees, and the stubborn — people who came from further south or chose not to leave. Livestock won't face south. Wells run black for a day and then clear. The garrison says there is nothing to worry about, in the way that garrisons do when they have decided that saying so is more useful than the alternative. The Rampart extends south of the city and ends at a gate that opens onto nothing. The hinges are kept oiled.</p>
+        </div>
+        <div class="city-card ashfringe">
+          <div class="city-card-header">
+            <span class="city-card-name">Ashford</span>
+            <span class="city-card-status status-minor">Minor City</span>
+          </div>
+          <p class="city-card-desc">A supply depot town that predates Thornwall by two generations. It was the frontier's edge before the fortress was built further south. Now it sits mid-route, processing everything the garrison needs. The permanent population is small. The transient population — soldiers rotating, merchants resupplying, refugees deciding — is considerable and unreliable.</p>
+        </div>
+        <div class="city-card ashfringe">
+          <div class="city-card-header">
+            <span class="city-card-name">Cinder's Rest</span>
+            <span class="city-card-status status-minor">Minor City</span>
+          </div>
+          <p class="city-card-desc">Volcanic ridge mining settlement where thermal vents power manufacturing processes unavailable elsewhere in the Empire. The metalwork that comes out of Cinder's Rest is exceptional. The conditions under which it is produced are something the official records address carefully. The Hunter guild has a permanent contract here.</p>
+        </div>
+        <div class="city-card ashfringe">
+          <div class="city-card-header">
+            <span class="city-card-name">Waymark</span>
+            <span class="city-card-status status-minor">Minor City</span>
+          </div>
+          <p class="city-card-desc">Road town midway between Cindral and Thornwall. No ambitions beyond this, and no pretence of any. The journey south is too long in one push; Waymark exists because that was always going to be true. Very good beds. A reliable meal. People here ask fewer questions than you might expect, which is either reassuring or not depending on your situation.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- CORSALA -->
+    <div class="region-group" data-region="corsala">
+      <div class="region-banner corsala">
+        <div>
+          <div class="region-banner-name">Corsala</div>
+          <div class="region-banner-biome">Mediterranean island · Tributary State · east-southeast of the mainland</div>
+          <p class="region-banner-desc">A Mediterranean island sitting across the Ocean of Ophidra from the southern Varethi Reach. Corsala was never conquered — it was negotiated into the Empire's economic orbit and has maintained its own identity throughout. It pays tribute, tolerates an Accord Magistrate in Velara, and continues to manage its own affairs in ways that are not technically in violation of the Accord and never quite aren't. The island has a long memory and uses it.</p>
+        </div>
+        <div class="region-banner-meta">
+          <div class="region-city-count">3</div>
+          <div class="region-city-label">Settlements</div>
+        </div>
+      </div>
+      <div class="city-grid">
+        <div class="city-card corsala major">
+          <div class="city-card-header">
+            <span class="city-card-name">Velara</span>
+            <span class="city-card-status status-port">Main Port · Accord Magistrate</span>
+          </div>
+          <p class="city-card-desc">The trade-facing port and the version of Corsala the Empire deals with. The Accord Magistrate is based here, the harbour handles the island's formal commerce, and the architecture — a layered mix of Corsalan and Imperial influences — reflects two centuries of managed coexistence. What Velara shows the Empire is not exactly what Corsala is. Both sides understand this and find the arrangement workable.</p>
+        </div>
+        <div class="city-card corsala">
+          <div class="city-card-header">
+            <span class="city-card-name">Tormessa</span>
+            <span class="city-card-status status-minor">Fishing Town</span>
+          </div>
+          <p class="city-card-desc">Fishing and boat-building on a different stretch of coastline from Velara. Proudly Corsalan, minimal Imperial presence, and no particular interest in acquiring any. The boats built here are among the best-made on either side of the Ocean of Ophidra. The people who build them will tell you this, and they will be right.</p>
+        </div>
+        <div class="city-card corsala">
+          <div class="city-card-header">
+            <span class="city-card-name">Alvenor</span>
+            <span class="city-card-status status-inland">Inland · Cultural Heart</span>
+          </div>
+          <p class="city-card-desc">The oldest settlement on the island, sitting in the agricultural interior — wine, oil, timber. Alvenor predates the tributary arrangement entirely and has a long, intact sense of what Corsala actually is, distinct from what Velara presents to the mainland. Festivals here follow a calendar the Empire does not recognise. Visitors are welcome. Certain questions are not.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- WATERWAYS -->
+  <section class="section">
+    <div class="section-header">
+      <h2 class="section-title">Rivers & Surrounding Waters</h2>
+      <div class="section-line"></div>
+    </div>
+
+    <div class="waterways-grid">
+      <div class="waterway-card">
+        <div class="waterway-type">Grandbelt River</div>
+        <div class="waterway-name">The Arrath</div>
+        <p class="waterway-desc">The highland river — fast and clear out of the northern Ironspine. Millhaven sits where it flattens onto the Grandbelt plains. Converges with the Davan and Sorn at Cindral.</p>
+      </div>
+      <div class="waterway-card">
+        <div class="waterway-type">Grandbelt River</div>
+        <div class="waterway-name">The Davan</div>
+        <p class="waterway-desc">The broad plains river. Slow and wide across the central Grandbelt. Dryford sits at its most navigable crossing point. Joins the Arrath and Sorn at Cindral.</p>
+      </div>
+      <div class="waterway-card">
+        <div class="waterway-type">Grandbelt River</div>
+        <div class="waterway-name">The Sorn</div>
+        <p class="waterway-desc">The southern river. Picks up iron mineral content near the volcanic ridge, running dark year-round. Redwater sits on it. Joins the Arrath and Davan at Cindral.</p>
+      </div>
+      <div class="waterway-card">
+        <div class="waterway-type">Varethi River</div>
+        <div class="waterway-name">The Vaeli</div>
+        <p class="waterway-desc">The larger of the Varethi rivers, draining the eastern Ironspine slope to the Ocean of Ophidra. Forms the estuary at Harrowmouth. Clear and fast in winter.</p>
+      </div>
+      <div class="waterway-card">
+        <div class="waterway-type">Varethi River</div>
+        <div class="waterway-name">The Tessil</div>
+        <p class="waterway-desc">The inland valley river at Verano. Seasonal — navigable in winter, shallow and sluggish by summer's end. Runs over pale limestone. The valley it carves is the best wine country in the Reach.</p>
+      </div>
+      <div class="waterway-card">
+        <div class="waterway-type">Ocean</div>
+        <div class="waterway-name">Ocean of Conflux</div>
+        <p class="waterway-desc">West coast of the Empire. Also wraps the southern edge of the continent. The primary body of water separating the Empire from the western world.</p>
+      </div>
+      <div class="waterway-card">
+        <div class="waterway-type">Ocean</div>
+        <div class="waterway-name">Ocean of Ophidra</div>
+        <p class="waterway-desc">East coast of the Empire. The Varethi Reach faces this sea. Trade routes to Corsala and beyond the known world run through these waters.</p>
+      </div>
+      <div class="waterway-card">
+        <div class="waterway-type">Sea</div>
+        <div class="waterway-name">Kedmere Sea</div>
+        <p class="waterway-desc">North coast sea. Duskport's lighthouse chain was built to protect fishing fleets from its winter storms. Cold and reliable in its unpredictability.</p>
+      </div>
+      <div class="waterway-card">
+        <div class="waterway-type">Sea</div>
+        <div class="waterway-name">Sea of Lost Souls</div>
+        <p class="waterway-desc">Northeast coast sea, facing Coldhaven. The name predates the Empire. Nobody currently living agrees on where it came from, and the sea does not explain itself.</p>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- BEYOND THE EMPIRE -->
+  <section class="section">
+    <div class="section-header">
+      <h2 class="section-title">Beyond the Empire</h2>
+      <div class="section-line"></div>
+    </div>
+    <div class="beyond-grid">
+      <div class="beyond-card">
+        <div class="beyond-name">Haelenthor Island</div>
+        <div class="beyond-tag">Independent · Between Continents</div>
+        <p>A neutral island sitting between the Auroran Empire and the continent of Enoeth across the Ocean of Ophidra. Home to two gate cities — Thaelyssa in the north, Enoeth-facing and Grecian in character; Jaesa in the south, substantially shaped by Imperial culture. Trade between the two continents passes through Haelenthor. The island governs itself and intends to continue doing so.</p>
+      </div>
+      <div class="beyond-card">
+        <div class="beyond-name">Enoeth</div>
+        <div class="beyond-tag">Separate Continent · Trade Partner</div>
+        <p>The continent to the east, across the Ocean of Ophidra. The Empire maintains trade agreements with Enoeth — no mutual defence obligations, no formal alliance. An understood arrangement that both sides find worth maintaining. What lies in Enoeth's interior is not common knowledge in the Empire.</p>
+      </div>
+      <div class="beyond-card">
+        <div class="beyond-name">The Bitter South</div>
+        <div class="beyond-tag">Southern Frontier · Restricted</div>
+        <p>Beyond Thornwall and the volcanic ridge lies territory the Empire controls in name only, and beyond that, something it does not control at all. The garrison at Thornwall manages a southern border. The Empire refers to the situation as a containment measure. Travellers are advised to take Thornwall's guidance on this subject seriously. The garrison has earned its opinions.</p>
+      </div>
+      <div class="beyond-card">
+        <div class="beyond-name">Ophidran</div>
+        <div class="beyond-tag">Southwest Continent · Distant</div>
+        <p>The southwestern continent, on the far side of the Ocean of Conflux. Known to exist. Known to be distant. Beyond that, knowledge grows thin quickly — Ophidran is not a destination that most Imperial travellers reach, and those who have are not always forthcoming about what they found.</p>
+      </div>
+    </div>
+  </section>
+
+  <footer class="page-footer">
+    The Auroran Empire · Traveller's Guide · Player Document
+  </footer>
+
+</div>
+
+<script>
+  function filterRegion(region, btn) {
+    // Update button states
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+
+    // Show/hide region groups
+    const groups = document.querySelectorAll('.region-group');
+    groups.forEach(group => {
+      if (region === 'all' || group.dataset.region === region) {
+        group.classList.remove('hidden');
+      } else {
+        group.classList.add('hidden');
+      }
+    });
+  }
+</script>
+</body>
+</html>
