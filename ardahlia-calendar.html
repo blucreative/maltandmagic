@@ -11,14 +11,14 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --bg:       #0b0d13;
-      --surface:  #12151d;
-      --surface2: #181c27;
-      --border:   rgba(255,255,255,0.07);
-      --text:     #cec3aa;
-      --text-dim: rgba(180,168,146,0.55);
-      --text-faint: rgba(160,150,130,0.35);
-      --aurora-line: linear-gradient(90deg, transparent 0%, rgba(70,120,210,0.7) 25%, rgba(70,200,150,0.6) 55%, rgba(160,80,210,0.4) 80%, transparent 100%);
+      --bg:       #0a0c14;
+      --surface:  #0f1219;
+      --surface2: #151920;
+      --border:   rgba(168,128,80,0.12);
+      --text:     #d8cfb8;
+      --text-dim: rgba(180,168,146,0.65);
+      --text-faint: rgba(150,140,120,0.45);
+      --empire-line: linear-gradient(90deg, transparent 0%, rgba(74,106,138,0.6) 25%, rgba(168,128,80,0.5) 55%, rgba(184,104,58,0.4) 80%, transparent 100%);
     }
 
     body { background: var(--bg); color: var(--text); font-family: 'Crimson Pro', Palatino, Georgia, serif; min-height: 100vh; }
@@ -30,22 +30,22 @@
       padding: 46px 24px 32px;
       border-bottom: 1px solid var(--border);
       background:
-        radial-gradient(ellipse 90% 65% at 50% -5%, rgba(45,85,190,0.2) 0%, transparent 70%),
-        radial-gradient(ellipse 55% 40% at 20% 0%,  rgba(70,180,120,0.09) 0%, transparent 60%),
-        radial-gradient(ellipse 45% 30% at 80% 0%,  rgba(150,70,210,0.07) 0%, transparent 55%);
+        radial-gradient(ellipse 90% 65% at 50% -5%, rgba(60,90,140,0.15) 0%, transparent 70%),
+        radial-gradient(ellipse 55% 40% at 20% 0%,  rgba(168,128,80,0.08) 0%, transparent 60%),
+        radial-gradient(ellipse 45% 30% at 80% 0%,  rgba(184,104,58,0.06) 0%, transparent 55%);
       overflow: hidden;
     }
     .cal-header::before {
       content: '';
       position: absolute;
       top: 0; left: 0; right: 0; height: 2px;
-      background: var(--aurora-line);
+      background: var(--empire-line);
     }
     .cal-eyebrow {
       font-family: 'Cinzel', Palatino, serif;
       font-size: 10px;
       letter-spacing: 4px;
-      color: rgba(140,165,210,0.6);
+      color: rgba(168,128,80,0.6);
       text-transform: uppercase;
       margin-bottom: 10px;
     }
@@ -53,9 +53,9 @@
       font-family: 'Cinzel', Palatino, serif;
       font-size: 32px;
       font-weight: 700;
-      color: #ede3cc;
+      color: #e8dcc8;
       letter-spacing: 2px;
-      text-shadow: 0 0 50px rgba(70,110,210,0.35);
+      text-shadow: 0 0 50px rgba(74,106,138,0.25);
       margin-bottom: 6px;
     }
     .cal-sub {
@@ -86,14 +86,14 @@
       letter-spacing: 0.8px;
       padding: 5px 13px;
       border-radius: 3px;
-      border: 1px solid rgba(255,255,255,0.09);
+      border: 1px solid rgba(168,128,80,0.15);
       background: transparent;
-      color: rgba(195,185,162,0.65);
+      color: rgba(180,150,100,0.65);
       cursor: pointer;
       transition: all 0.18s;
     }
-    .s-btn:hover { background: rgba(255,255,255,0.05); color: #ddd4bb; }
-    .s-btn.active { color: #f0e8d5; border-color: var(--s-accent); background: var(--s-badge); box-shadow: 0 0 14px var(--s-glow); }
+    .s-btn:hover { background: rgba(168,128,80,0.08); color: #d4b890; }
+    .s-btn.active { color: #e8dcc8; border-color: var(--s-accent); background: var(--s-badge); box-shadow: 0 0 14px var(--s-glow); }
 
     /* ── WEEK BANNER ────────────────────────────── */
     .week-banner {

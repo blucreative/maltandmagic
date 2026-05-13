@@ -14,18 +14,20 @@
 *,*::before,*::after { box-sizing:border-box; margin:0; padding:0; }
 
 :root {
-  --bg:         #0b0d1b;
-  --surface:    #111426;
-  --surface2:   #191d35;
-  --surface3:   #20253f;
-  --border:     rgba(190,155,75,0.10);
-  --border-mid: rgba(190,155,75,0.22);
-  --border-hi:  rgba(190,155,75,0.45);
-  --gold:       #c4943a;
-  --gold-lt:    #ddb860;
-  --txt:        #e0d8c6;
-  --txt2:       #9a8f7a;
-  --txt3:       #52493e;
+  --bg:         #0a0c14;
+  --surface:    #0f1219;
+  --surface2:   #151920;
+  --surface3:   #1a1f2b;
+  --border:     rgba(180,100,80,0.12);
+  --border-mid: rgba(180,100,80,0.24);
+  --border-hi:  rgba(180,100,80,0.48);
+  --gold:       #a88050;
+  --gold-lt:    #c9a070;
+  --copper:     #b8683a;
+  --copper-dim: #8b4a25;
+  --txt:        #e8dcc8;
+  --txt2:       #a89878;
+  --txt3:       #5a4a38;
   --font-d: 'Cinzel Decorative', Georgia, serif;
   --font-h: 'Cinzel', Georgia, serif;
   --font-b: 'Crimson Pro', Georgia, serif;
@@ -36,8 +38,8 @@ html { scroll-behavior: smooth; }
 body {
   background: var(--bg);
   background-image:
-    radial-gradient(ellipse 80% 40% at 50% -5%, rgba(30,45,110,0.55) 0%, transparent 100%),
-    radial-gradient(ellipse 60% 50% at 100% 110%, rgba(55,15,55,0.25) 0%, transparent 100%);
+    radial-gradient(ellipse 80% 40% at 50% -5%, rgba(60,90,140,0.35) 0%, transparent 100%),
+    radial-gradient(ellipse 60% 50% at 100% 110%, rgba(120,60,40,0.20) 0%, transparent 100%);
   background-attachment: fixed;
   color: var(--txt);
   font-family: var(--font-b);
@@ -148,15 +150,72 @@ body::before {
 
 /* section accent themes */
 .sec-world  .sec-title { color: var(--gold); }
-.sec-world  .sec-rule  { background: linear-gradient(to right, rgba(196,148,58,0.3), transparent); }
+.sec-world  .sec-rule  { background: linear-gradient(to right, rgba(168,128,80,0.3), transparent); }
 
-.sec-c2     .sec-title { color: #d4804a; }
-.sec-c2     .sec-rule  { background: linear-gradient(to right, rgba(212,128,74,0.3), transparent); }
-.sec-c2     .sec-tag   { background: rgba(212,128,74,0.12); color: #d4804a; border-color: rgba(212,128,74,0.3); }
+.sec-c2     .sec-title { color: #9a7a6a; }
+.sec-c2     .sec-rule  { background: linear-gradient(to right, rgba(154,122,106,0.3), transparent); }
+.sec-c2     .sec-tag   { background: rgba(154,122,106,0.12); color: #b8967a; border-color: rgba(154,122,106,0.3); }
 
-.sec-c3     .sec-title { color: #80aed8; }
-.sec-c3     .sec-rule  { background: linear-gradient(to right, rgba(128,174,216,0.3), transparent); }
-.sec-c3     .sec-tag   { background: rgba(128,174,216,0.12); color: #80aed8; border-color: rgba(128,174,216,0.3); }
+.sec-c3     .sec-title { color: #b8a080; }
+.sec-c3     .sec-rule  { background: linear-gradient(to right, rgba(184,160,128,0.3), transparent); }
+.sec-c3     .sec-tag   { background: rgba(184,160,128,0.12); color: #d4b890; border-color: rgba(184,160,128,0.3); }
+
+/* archive section */
+.archive-toggle {
+  display: flex;
+  align-items: baseline;
+  gap: 0.9rem;
+  margin-bottom: 1.25rem;
+  padding-bottom: 0.7rem;
+  border-bottom: 1px solid var(--border);
+  background: transparent;
+  border: none;
+  color: inherit;
+  font-family: inherit;
+  cursor: pointer;
+  width: 100%;
+  transition: opacity 0.2s ease;
+}
+
+.archive-toggle:hover {
+  opacity: 0.8;
+}
+
+.archive-title {
+  font-family: var(--font-h);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--txt2);
+}
+
+.archive-rule {
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+
+.archive-chevron {
+  font-size: 11px;
+  color: var(--txt2);
+  transition: transform 0.2s ease;
+  flex-shrink: 0;
+}
+
+.archive-toggle.open .archive-chevron {
+  transform: rotate(90deg);
+}
+
+.archive-content {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease;
+}
+
+.archive-toggle.open ~ .archive-content {
+  max-height: 1200px;
+}
 
 /* ── card grid ── */
 .card-grid {
@@ -195,15 +254,15 @@ body::before {
 /* world card accent */
 .card-world { border-color: var(--border); }
 .card-world::before { background: linear-gradient(to right, transparent, var(--gold), transparent); }
-.card-world:hover { border-color: rgba(196,148,58,0.3); box-shadow: 0 6px 30px rgba(196,148,58,0.08); }
+.card-world:hover { border-color: rgba(168,128,80,0.3); box-shadow: 0 6px 30px rgba(168,128,80,0.08); }
 
 /* c2 card accent */
-.card-c2::before { background: linear-gradient(to right, transparent, #d4804a, transparent); }
-.card-c2:hover { border-color: rgba(212,128,74,0.3); box-shadow: 0 6px 30px rgba(212,128,74,0.1); }
+.card-c2::before { background: linear-gradient(to right, transparent, #9a7a6a, transparent); }
+.card-c2:hover { border-color: rgba(154,122,106,0.3); box-shadow: 0 6px 30px rgba(154,122,106,0.08); }
 
 /* c3 card accent */
-.card-c3::before { background: linear-gradient(to right, transparent, #80aed8, transparent); }
-.card-c3:hover { border-color: rgba(128,174,216,0.3); box-shadow: 0 6px 30px rgba(128,174,216,0.1); }
+.card-c3::before { background: linear-gradient(to right, transparent, #c9a070, transparent); }
+.card-c3:hover { border-color: rgba(201,160,112,0.3); box-shadow: 0 6px 30px rgba(201,160,112,0.1); }
 
 /* card innards */
 .card-top {
@@ -246,8 +305,8 @@ body::before {
 }
 /* accent on hover per section */
 .card-world:hover .card-title { color: var(--gold-lt); }
-.card-c2:hover    .card-title { color: #e8a070; }
-.card-c3:hover    .card-title { color: #a0c8e8; }
+.card-c2:hover    .card-title { color: #b8967a; }
+.card-c3:hover    .card-title { color: #d4b890; }
 
 .card-desc {
   font-family: var(--font-b);
@@ -313,38 +372,6 @@ const SECTIONS = [
     ],
   },
   {
-    id: 'c2',
-    label: 'Campaign 2',
-    tag: 'Finale Arc',
-    theme: 'c2',
-    docs: [
-      {
-        icon: '⬡',
-        title: 'The Lore of the Codex',
-        desc: 'The history and significance of the Codex — what it is, where it came from, and why it sits at the heart of Campaign 2.',
-        href: 'codex_lore.html',
-      },
-      {
-        icon: '◈',
-        title: 'The Eclipse Sigil',
-        desc: 'Mechanics and mythology of the Eclipse Sigil artifact: its five principles, the Eclipse Strain, and the burden it carries.',
-        href: 'eclipse-sigil.html',
-      },
-      {
-        icon: '⊕',
-        title: 'The Final Use',
-        desc: 'Lore for the three resolution paths of the Eclipse Sigil — The Seal, The Banishment, and The Restoration.',
-        href: 'the-eclipse-sigil-final-use.html',
-      },
-      {
-        icon: '✧',
-        title: 'Campaign 2 Epilogue Guide',
-        desc: 'A planning guide for player epilogues: arc reflection prompts, closing tone choices, and what to bring for final character send-offs.',
-        href: 'Campaign2_Epilogue_Guide.html',
-      },
-    ],
-  },
-  {
     id: 'c3',
     label: 'Campaign 3',
     tag: 'Upcoming',
@@ -361,6 +388,41 @@ const SECTIONS = [
         title: 'Auroran Religious Strata',
         desc: 'The layered religious culture of the Auroran Empire: the state faith, hidden folk devotions, and the faultlines between them.',
         href: 'auroran_religious_strata.html',
+      },
+    ],
+  },
+];
+
+const ARCHIVED_SECTIONS = [
+  {
+    id: 'c2',
+    label: 'Campaign 2',
+    tag: 'Closed',
+    theme: 'c2',
+    docs: [
+      {
+        icon: '⬡',
+        title: 'The Lore of the Codex',
+        desc: 'The history and significance of the Codex — what it is, where it came from, and why it sits at the heart of Campaign 2.',
+        href: 'archive/campaign2/codex_lore.html',
+      },
+      {
+        icon: '◈',
+        title: 'The Eclipse Sigil',
+        desc: 'Mechanics and mythology of the Eclipse Sigil artifact: its five principles, the Eclipse Strain, and the burden it carries.',
+        href: 'archive/campaign2/eclipse-sigil.html',
+      },
+      {
+        icon: '⊕',
+        title: 'The Final Use',
+        desc: 'Lore for the three resolution paths of the Eclipse Sigil — The Seal, The Banishment, and The Restoration.',
+        href: 'archive/campaign2/the-eclipse-sigil-final-use.html',
+      },
+      {
+        icon: '✧',
+        title: 'Campaign 2 Epilogue Guide',
+        desc: 'A planning guide for player epilogues: arc reflection prompts, closing tone choices, and what to bring for final character send-offs.',
+        href: 'archive/campaign2/Campaign2_Epilogue_Guide.html',
       },
     ],
   },
@@ -396,6 +458,30 @@ function Section({ section }) {
   );
 }
 
+function Archive({ sections }) {
+  const [isOpen, setIsOpen] = React.useState(false);
+  
+  return (
+    <div className="section">
+      <button 
+        className={`archive-toggle${isOpen ? ' open' : ''}`}
+        onClick={() => setIsOpen(!isOpen)}
+      >
+        <span className="archive-title">Archived Campaigns</span>
+        <span className="archive-rule" />
+        <span className="archive-chevron">▶</span>
+      </button>
+      {isOpen && (
+        <div className="archive-content">
+          {sections.map(section => (
+            <Section key={section.id} section={section} />
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
 function App() {
   return (
     <div className="page">
@@ -410,6 +496,8 @@ function App() {
       </header>
 
       {SECTIONS.map(s => <Section key={s.id} section={s} />)}
+      
+      <Archive sections={ARCHIVED_SECTIONS} />
 
       <div className="orn">✦ · ✦ · ✦</div>
     </div>

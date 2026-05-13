@@ -1,15 +1,17 @@
+<<<<<<< HEAD
 ﻿<!DOCTYPE html>
 
+=======
+<!DOCTYPE html>
+>>>>>>> 9980147fee64c7a91ce0650de3a4ae29b32a1dd2
 <html lang="en">
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Call of Cthulhu — Investigator Primer</title>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.23.2/babel.min.js"></script>
-<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Cinzel+Decorative:wght@400;700&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Courier+Prime:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet"/>
+<title>Call of Cthulhu — Investigator's Primer</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Crimson+Text:ital,wght@0,400;0,600;1,400;1,600&family=Special+Elite&display=swap" rel="stylesheet"/>
 <style>
+<<<<<<< HEAD
 :root {
   --bg:        #100d08;
   --bg2:       #160f09;
@@ -926,10 +928,133 @@ text-transform: uppercase;
 /* Animations */
 @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
 .fade-in { animation: fadeIn 0.3s ease both; }
+=======
+:root{--parchment:#f0e8d5;--parchment-dark:#e0d0b0;--parchment-deep:#c8b890;--ink:#1a120a;--ink-faded:#3d2e1e;--ink-mid:#5a4030;--crimson:#8b1a1a;--crimson-dark:#5c0f0f;--crimson-bright:#b52020;--gold:#8b6914;--gold-bright:#c49a1e;--fd:'Cinzel',serif;--fb:'Crimson Text',serif;--ft:'Special Elite',cursive}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{background:#100a04;font-family:var(--fb);font-size:16px;color:var(--ink);min-height:100vh;overflow-x:hidden}
+.masthead{background:var(--ink);border-bottom:3px solid var(--gold);position:sticky;top:0;z-index:200;box-shadow:0 4px 24px rgba(0,0,0,.9)}
+.mh-inner{max-width:1160px;margin:0 auto}
+.mh-top{display:flex;align-items:center;justify-content:space-between;padding:10px 24px 8px;border-bottom:1px solid #3a2a14}
+.mh-title{font-family:var(--fd);font-size:20px;font-weight:700;color:var(--gold-bright);letter-spacing:.14em;text-transform:uppercase}
+.mh-sub{font-family:var(--ft);font-size:11px;color:var(--parchment-deep);letter-spacing:.1em;margin-top:2px}
+.ob{background:var(--crimson);border:1px solid var(--crimson-bright);color:var(--parchment);font-family:var(--fd);font-size:10px;font-weight:600;letter-spacing:.1em;padding:6px 14px;cursor:pointer;text-transform:uppercase;transition:background .2s}
+.ob:hover{background:var(--crimson-bright)}
+.nav{display:flex;overflow-x:auto;scrollbar-width:none}
+.nav::-webkit-scrollbar{display:none}
+.nt{background:transparent;border:none;border-right:1px solid #2a1808;color:var(--parchment-deep);font-family:var(--fd);font-size:10px;font-weight:600;letter-spacing:.09em;text-transform:uppercase;padding:9px 18px;cursor:pointer;white-space:nowrap;transition:all .2s;position:relative}
+.nt:hover{background:#2a1808;color:var(--gold-bright)}
+.nt.active{background:var(--parchment-dark);color:var(--ink)}
+.nt.active::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:var(--crimson)}
+.canvas{max-width:1160px;margin:0 auto;padding:28px 18px 60px}
+.page{background:var(--parchment);border:1px solid var(--parchment-deep);box-shadow:0 8px 40px rgba(0,0,0,.7);padding:40px 44px}
+@media(max-width:700px){.page{padding:22px 18px}}
+.ch{text-align:center;border-bottom:2px solid var(--gold);padding-bottom:18px;margin-bottom:30px}
+.cn{font-family:var(--fd);font-size:10px;font-weight:600;letter-spacing:.25em;color:var(--crimson);text-transform:uppercase;margin-bottom:6px}
+.corn{display:flex;align-items:center;justify-content:center;gap:14px;margin-bottom:8px}
+.ol{flex:1;max-width:120px;height:1px}.ol.l{background:linear-gradient(to right,transparent,var(--gold))}.ol.r{background:linear-gradient(to left,transparent,var(--gold))}
+.od{width:8px;height:8px;background:var(--gold);transform:rotate(45deg)}
+.ct{font-family:var(--fd);font-size:26px;font-weight:700;color:var(--ink);letter-spacing:.04em}
+.cbl{font-family:var(--ft);font-size:13px;color:var(--ink-mid);margin-top:8px;font-style:italic}
+.c2{display:grid;grid-template-columns:1fr 1fr;gap:28px}
+@media(max-width:720px){.c2{grid-template-columns:1fr}}
+.sl{font-family:var(--fd);font-size:12px;font-weight:700;letter-spacing:.12em;color:var(--crimson);text-transform:uppercase;border-bottom:1px solid var(--parchment-deep);padding-bottom:5px;margin:0 0 12px}
+.sl.g{color:var(--gold)}
+.pr{font-size:15px;line-height:1.75;color:var(--ink-faded)}.pr+.pr{margin-top:8px}
+.blk{margin-bottom:26px}
+.co{background:rgba(139,105,20,.07);border-left:3px solid var(--gold);padding:13px 16px;margin:14px 0;font-size:14px;line-height:1.65;color:var(--ink-faded)}
+.co.red{background:rgba(139,26,26,.06);border-left-color:var(--crimson)}
+.cot{font-family:var(--fd);font-size:11px;font-weight:600;letter-spacing:.1em;color:var(--crimson);text-transform:uppercase;margin-bottom:5px}
+.cot.g{color:var(--gold)}
+table.rt{width:100%;border-collapse:collapse;font-size:14px;margin:12px 0}
+table.rt th{background:var(--ink);color:var(--gold-bright);font-family:var(--fd);font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;padding:7px 11px;text-align:left;border:1px solid #3a2a14}
+table.rt td{padding:7px 11px;border:1px solid var(--parchment-deep);color:var(--ink-faded);vertical-align:top;line-height:1.5}
+table.rt tr:nth-child(even) td{background:rgba(200,168,100,.07)}
+.sg{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:9px;margin:12px 0}
+.sc{background:var(--ink);border:1px solid var(--gold);padding:11px 13px;text-align:center}
+.sn{font-family:var(--fd);font-size:10px;font-weight:700;letter-spacing:.1em;color:var(--gold-bright);text-transform:uppercase}
+.sr{font-family:var(--ft);font-size:13px;color:var(--parchment);margin:4px 0 2px}
+.sd{font-family:var(--fb);font-size:11px;font-style:italic;color:var(--parchment-deep);line-height:1.4}
+.dbr{display:flex;border:1px solid var(--parchment-deep);margin-bottom:3px;font-size:13px}
+.dbrange{background:var(--ink);color:var(--gold-bright);font-family:var(--ft);padding:5px 10px;min-width:86px;display:flex;align-items:center}
+.dbval{color:var(--ink-faded);padding:5px 12px;border-left:1px solid var(--parchment-deep);flex:1;display:flex;align-items:center}
+.og{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:10px;margin:12px 0}
+.oc{background:var(--ink);border:1px solid #3a2a14;cursor:pointer;transition:border-color .2s;overflow:hidden}
+.oc:hover{border-color:var(--gold)}.oc.open{border-color:var(--crimson)}
+.och{display:flex;justify-content:space-between;align-items:center;padding:11px 13px}
+.ocn{font-family:var(--fd);font-size:10px;font-weight:700;letter-spacing:.08em;color:var(--gold-bright);text-transform:uppercase}
+.ocp{font-family:var(--ft);font-size:10px;color:var(--parchment-deep);margin-top:2px}
+.oca{color:var(--parchment-deep);font-size:10px}
+.ocb{display:none;padding:0 13px 11px;border-top:1px solid #2a1808}
+.oc.open .ocb{display:block}
+.ocs{font-family:var(--ft);font-size:11px;color:var(--parchment-deep);line-height:1.7;margin-top:8px}
+.occr{font-family:var(--fd);font-size:10px;color:var(--crimson);letter-spacing:.06em;margin-top:5px}
+.sbrow{display:flex;gap:2px;margin:12px 0}
+.sb{flex:1;padding:13px 8px;text-align:center}
+.sb.ex{background:var(--crimson-dark)}.sb.ha{background:#3a2010}.sb.re{background:var(--ink)}.sb.fa{background:#160804}
+.sbl{font-family:var(--fd);font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;margin-bottom:4px}
+.sb.ex .sbl{color:var(--gold-bright)}.sb.ha .sbl,.sb.re .sbl{color:var(--parchment-deep)}.sb.fa .sbl{color:#5a3030}
+.sbv{font-family:var(--ft);font-size:11px}
+.sb.ex .sbv,.sb.ha .sbv{color:var(--parchment)}.sb.re .sbv{color:#8a7060}.sb.fa .sbv{color:#3a1818}
+.sam{background:var(--ink);border:1px solid var(--gold);padding:18px 20px;margin:14px 0}
+.saml{font-family:var(--fd);font-size:10px;letter-spacing:.15em;color:var(--gold);text-transform:uppercase;margin-bottom:10px;text-align:center}
+.sapt{display:flex;flex-wrap:wrap;gap:2px;justify-content:center;margin-top:10px}
+.sapp{width:13px;height:13px;border:1px solid #3a2a14;background:#1e0e04;transition:background .15s}
+.sapp.hi{background:var(--gold)}.sapp.mi{background:var(--crimson)}.sapp.lo{background:#4a0a0a}
+.sast{text-align:center;font-family:var(--ft);font-size:12px;color:var(--parchment-deep);margin-top:8px}
+input[type=range]{width:100%;accent-color:var(--crimson)}
+.bq{border-left:3px solid var(--crimson);padding:12px 18px;margin:20px 0;background:rgba(139,26,26,.04)}
+.bq p{font-style:italic;font-size:15px;color:var(--ink-mid);line-height:1.7}
+.bq cite{display:block;margin-top:6px;font-size:11px;color:var(--crimson);font-family:var(--fd);font-weight:600;letter-spacing:.06em;text-transform:uppercase;font-style:normal}
+.deco{display:flex;align-items:center;gap:12px;margin:22px 0;color:var(--gold)}
+.deco::before,.deco::after{content:'';flex:1;height:1px}
+.deco::before{background:linear-gradient(to right,transparent,var(--parchment-deep))}
+.deco::after{background:linear-gradient(to left,transparent,var(--parchment-deep))}
+.cl{list-style:none}
+.cl li{display:flex;gap:12px;padding:9px 0;border-bottom:1px solid var(--parchment-deep);font-size:14px;color:var(--ink-faded);line-height:1.5}
+.cl li:last-child{border-bottom:none}
+.cnum{font-family:var(--fd);font-size:9px;font-weight:700;color:var(--crimson);min-width:20px;padding-top:2px}
+.cterm{font-family:var(--fd);font-size:11px;font-weight:600;color:var(--ink);min-width:100px;padding-top:2px;letter-spacing:.03em}
+.qrg{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+@media(max-width:620px){.qrg{grid-template-columns:1fr}}
+.qrb{background:var(--ink);border:1px solid #3a2a14;padding:13px 15px}
+.qrt{font-family:var(--fd);font-size:10px;font-weight:700;letter-spacing:.14em;color:var(--gold-bright);text-transform:uppercase;border-bottom:1px solid #3a2a14;padding-bottom:6px;margin-bottom:9px}
+.qri{display:flex;justify-content:space-between;font-size:12px;padding:3px 0;border-bottom:1px solid #221208;color:var(--parchment-deep);gap:10px}
+.qri:last-child{border-bottom:none}
+.ql{color:var(--parchment);font-family:var(--fb);flex:1}
+.qv{font-family:var(--ft);color:var(--crimson);white-space:nowrap}
+.stgs{display:flex;flex-wrap:wrap;gap:5px;margin-top:6px}
+.stg{background:var(--ink);color:var(--parchment-deep);font-family:var(--ft);font-size:11px;padding:3px 8px;border:1px solid #3a2a14}
+.stg .base{color:var(--crimson);margin-left:3px}
+.scat{margin-bottom:14px}
+.scn{font-family:var(--fd);font-size:10px;font-weight:700;letter-spacing:.12em;color:var(--gold);text-transform:uppercase}
+.movt{width:100%;border-collapse:collapse;font-size:13px;margin:10px 0}
+.movt td{padding:5px 10px;border:1px solid var(--parchment-deep);color:var(--ink-faded)}
+.movt td:first-child{background:rgba(139,105,20,.1);font-family:var(--ft)}
+.sbadge{background:var(--ink);color:var(--parchment);font-family:var(--fd);font-size:10px;font-weight:600;padding:5px 11px;letter-spacing:.06em;border:1px solid #4a3010;display:inline-block;margin:3px}
+.ov{display:none;position:fixed;inset:0;background:rgba(8,4,1,.93);z-index:1000;align-items:center;justify-content:center;padding:20px}
+.ov.show{display:flex}
+.ovc{background:var(--parchment);border:2px solid var(--gold);max-width:540px;width:100%;box-shadow:0 20px 80px rgba(0,0,0,.9);position:relative;overflow:hidden}
+.ovc::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(to right,var(--crimson),var(--gold),var(--crimson))}
+.ovst{background:var(--ink);text-align:center;padding:14px 20px;font-family:var(--fd);font-size:10px;font-weight:600;letter-spacing:.22em;color:var(--gold);text-transform:uppercase}
+.ovb{padding:26px 30px 18px}
+.ovti{font-family:var(--fd);font-size:19px;font-weight:700;color:var(--ink);margin-bottom:13px}
+.ovtx{font-family:var(--fb);font-size:15px;line-height:1.75;color:var(--ink-faded)}
+.ovtx p+p{margin-top:9px}
+.ovsp{font-family:var(--ft);font-size:11px;color:var(--ink-mid);text-align:center;margin-top:10px}
+.ovf{display:flex;justify-content:space-between;align-items:center;padding:14px 30px 22px;border-top:1px solid var(--parchment-deep)}
+.ovd{display:flex;gap:6px}
+.ovdot{width:8px;height:8px;border:1px solid var(--parchment-deep);background:transparent;cursor:pointer;transition:all .2s}
+.ovdot.active{background:var(--crimson);border-color:var(--crimson)}
+.ovbts{display:flex;gap:9px}
+.bp{background:var(--crimson);border:1px solid var(--crimson-bright);color:var(--parchment);font-family:var(--fd);font-size:10px;font-weight:600;letter-spacing:.1em;padding:8px 17px;cursor:pointer;text-transform:uppercase;transition:background .2s}
+.bp:hover{background:var(--crimson-bright)}
+.bs{background:transparent;border:1px solid var(--parchment-deep);color:var(--ink-mid);font-family:var(--fd);font-size:10px;font-weight:600;letter-spacing:.1em;padding:8px 17px;cursor:pointer;text-transform:uppercase;transition:all .2s}
+.bs:hover{border-color:var(--gold);color:var(--ink)}
+>>>>>>> 9980147fee64c7a91ce0650de3a4ae29b32a1dd2
 </style>
-
 </head>
 <body>
+<<<<<<< HEAD
 <div id="root"></div>
 <script type="text/babel">
 const { useState, useCallback } = React;
@@ -1101,129 +1226,130 @@ return (
 </div>
 </div>
 );
-}
-
-/* ─────────────────────────── SECTION HEADER ─────────────────────────── */
-
-function SectionHead({ num, title }) {
-return (
-<div className="sec-header">
-<span className="sec-ornament">✦</span>
-<span className="sec-num">Part {num}</span>
-<h2 className="sec-title">{title}</h2>
-<div className="sec-rule"><div className="sec-diamond"/></div>
-</div>
-);
-}
-
-/* ─────────────────────────── INTRO SECTION ─────────────────────────── */
-
-function IntroSection() {
-return (
-<div className="fade-in">
-<SectionHead num="I" title="Introduction"/>
-<p className="lead">
-You are an investigator of the unknown — a scholar, detective, or adventurer standing against forces that should not exist. The world is wider, darker, and more ancient than anyone suspects.
-</p>
-
-
-  <div className="grid-2 mb-6">
-    <div className="card gold">
-      <div className="card-title">What is Call of Cthulhu?</div>
-      <p>A horror roleplaying game based on the writings of <span className="gold">H. P. Lovecraft</span>. Players take the roles of <em>investigators</em> — ordinary people drawn into extraordinary and terrifying events.</p>
-      <p className="mt-4">The game is set primarily in the <span className="gold">1920s</span> — an era of jazz, prohibition, and the first stirrings of cosmic dread. Players cooperate to unravel mysteries, uncover conspiracies, and — if they survive — confront the unspeakable.</p>
-    </div>
-    <div className="card teal">
-      <div className="card-title">The Keeper of Arcane Lore</div>
-      <p>One person serves as the <span className="teal">Keeper</span> — the narrator, referee, and voice of every non-player character. The Keeper prepares the scenario and describes the world.</p>
-      <ul className="coc-list mt-4">
-        <li>Trust the Keeper's descriptions — they paint the world</li>
-        <li>The Keeper adjudicates all rules questions</li>
-        <li>Raise disagreements <em>after</em> the session, not during</li>
-        <li>The Keeper is not your enemy — the Mythos is</li>
-      </ul>
-    </div>
-  </div>
-
-  <div className="pull-quote">
-    "The oldest and strongest emotion of mankind is fear, and the oldest and strongest kind of fear is fear of the unknown."
-    <span className="pull-attr">— H. P. Lovecraft</span>
-  </div>
-
-  <div className="deco-divider"><span>✦ ✦ ✦</span></div>
-
-  <div className="grid-3 mb-6">
-    <div className="card">
-      <div className="card-title">Your Role as a Player</div>
-      <ul className="coc-list">
-        <li>Describe what your investigator <em>does</em></li>
-        <li>Speak in your investigator's voice</li>
-        <li>Roll dice when the Keeper calls for it</li>
-        <li>Cooperate — you are a team</li>
-        <li>Embrace failure — it creates stories</li>
-      </ul>
-    </div>
-    <div className="card">
-      <div className="card-title">Winning & Losing</div>
-      <p>There is no "winning" in the traditional sense. Success means the investigators <span className="gold">solved the mystery</span> and survived. Failure means something terrible has been unleashed, or your investigator has been driven mad — or worse.</p>
-      <p className="mt-4 muted small">Investigators will gain skills and knowledge over time — if they survive long enough.</p>
-    </div>
-    <div className="card">
-      <div className="card-title">The Tone</div>
-      <p>Call of Cthulhu is <span className="gold">horror</span>. Not gore for its own sake, but <em>creeping dread</em> — the sense that the world is stranger and more dangerous than you ever imagined.</p>
-      <p className="mt-4 muted small">Discuss with your Keeper before play: how dark, how graphic, and what topics to avoid. Safety matters.</p>
-    </div>
-  </div>
-
-  <div className="card mb-6">
-    <div className="card-title">What You Need to Play</div>
-    <div className="grid-2">
-      <ul className="coc-list">
-        <li>The <span className="gold">Keeper Rulebook</span> (Keeper only)</li>
-        <li>This Investigator Handbook (players)</li>
-        <li>An <span className="gold">investigator sheet</span> for each player</li>
-        <li>Pencils and an eraser</li>
-      </ul>
-      <ul className="coc-list">
-        <li>A <span className="gold">D100</span> (two 10-sided dice, one for tens)</li>
-        <li>Additional dice: D4, D6, D8, D10, D12, D20</li>
-        <li>Notepaper for clues and notes</li>
-        <li>Friends and a few hours of free time</li>
-      </ul>
-    </div>
-  </div>
-
-  <div className="card red">
-    <div className="card-title">The D100 — How it Works</div>
-    <p>Most rolls in Call of Cthulhu use a <span className="red">D100</span> (percentile dice). Roll two 10-sided dice — one designated as the <em>tens digit</em>, one as the <em>units digit</em>.</p>
-    <div className="stat-block" style={{gridTemplateColumns:'repeat(3,1fr)',marginTop:12}}>
-      <div className="stat-item">
-        <span className="stat-name">Tens die shows</span>
-        <span className="stat-abbr" style={{color:'var(--red-bright)'}}>40</span>
-        <span className="stat-desc">Units die shows <strong className="gold">7</strong></span>
-        <span className="stat-desc">Result = <strong className="teal">47</strong></span>
+=======
+<div class="masthead">
+  <div class="mh-inner">
+    <div class="mh-top">
+      <div>
+        <div class="mh-title">Call of Cthulhu</div>
+        <div class="mh-sub">Investigator's Primer &middot; 7th Edition &middot; Player's Reference</div>
       </div>
-      <div className="stat-item">
-        <span className="stat-name">Tens die shows</span>
-        <span className="stat-abbr" style={{color:'var(--red-bright)'}}>00</span>
-        <span className="stat-desc">Units die shows <strong className="gold">0</strong></span>
-        <span className="stat-desc">Result = <strong className="teal">100</strong></span>
-      </div>
-      <div className="stat-item">
-        <span className="stat-name">Tens die shows</span>
-        <span className="stat-abbr" style={{color:'var(--red-bright)'}}>00</span>
-        <span className="stat-desc">Units die shows <strong className="gold">5</strong></span>
-        <span className="stat-desc">Result = <strong className="teal">05</strong></span>
-      </div>
+      <button class="ob" id="briefBtn">&#8853; Keeper's Briefing</button>
     </div>
-    <p className="mt-4 small muted">Roll <em>equal to or under</em> your skill to succeed. Lower rolls are better. A roll of <span className="red">01</span> is always an Extreme Success. A roll of <span className="red">96–100</span> is always a Fumble (disastrous failure).</p>
+    <div class="nav" id="navBar"></div>
   </div>
 </div>
+<div class="canvas" id="canvas"></div>
+<div class="ov" id="overlay">
+  <div class="ovc">
+    <div class="ovst">Call of Cthulhu &middot; Keeper's Welcome &middot; 7th Edition</div>
+    <div class="ovb">
+      <div class="ovti" id="ovT"></div>
+      <div class="ovtx" id="ovX"></div>
+      <div class="ovsp" id="ovS"></div>
+    </div>
+    <div class="ovf">
+      <div class="ovd" id="ovDots"></div>
+      <div class="ovbts">
+        <button class="bs" id="ovBack">&#8592; Back</button>
+        <button class="bp" id="ovNext">Next &#8594;</button>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+var TABS=[{id:'intro',label:'I. Introduction'},{id:'create',label:'II. Creation'},{id:'rules',label:'III. Core Rules'},{id:'combat',label:'IV. Combat'},{id:'sanity',label:'V. Sanity'},{id:'qr',label:'VI. Quick Ref'}];
+var TUT=[
+  {t:"Investigator's Briefing",x:"<p>Welcome to the <strong>Call of Cthulhu Investigator's Primer</strong>. Use the tabs at the top to navigate the six chapters.</p><p>Call of Cthulhu is a horror roleplaying game set in H.P. Lovecraft's universe. You portray an <strong>Investigator</strong> drawn into mysteries touching cosmic terror.</p>"},
+  {t:"Chapter I — Introduction",x:"<p>The Introduction covers the setting, your role as a player, what the <strong>Keeper of Arcane Lore</strong> does, and the core premise of every session.</p><p>Investigators are <strong>ordinary people</strong>. Knowledge, wit, and cooperation matter more than combat prowess.</p>"},
+  {t:"Chapter II — Creation",x:"<p>Character creation follows <strong>five steps</strong>: roll characteristics, choose occupation, allocate skill points, write a backstory, and equip your investigator.</p><p>Occupation cards are <strong>interactive</strong> — click any card to expand its skill list.</p>"},
+  {t:"Chapter III — Core Rules",x:"<p>Call of Cthulhu uses <strong>percentile dice (D100)</strong>. Roll equal to or under your skill value to succeed. Three levels of success: Regular, Hard, and Extreme.</p><p>Learn Bonus and Penalty dice, Pushed Rolls, and the golden rule: <strong>don't roll unless the Keeper asks</strong>.</p>"},
+  {t:"Chapter IV — Combat",x:"<p>Combat is dangerous and lethal. Investigators are human beings — they <strong>get hurt</strong>. This chapter covers initiative, all combat actions, major wounds, and healing.</p>"},
+  {t:"Chapter V — Sanity",x:"<p><strong>Sanity</strong> is your most precious resource. The interactive track lets you visualise your investigator's state.</p><p>Learn SAN rolls, temporary and indefinite insanity, and how Mythos knowledge permanently lowers your maximum SAN.</p>"},
+  {t:"Chapter VI — Quick Reference",x:"<p>Eight compact reference blocks for mid-session play: success thresholds, damage tables, movement rates, sanity checkpoints, and skill base values.</p><p><strong>Good luck, Investigator.</strong></p>"}
+];
+var CHARS=[
+  {a:'STR',n:'Strength',r:'3D6 × 5',d:'Muscle power; melee damage, carrying capacity.'},
+  {a:'CON',n:'Constitution',r:'3D6 × 5',d:'Health & vitality; contributes to Hit Points.'},
+  {a:'SIZ',n:'Size',r:'(2D6+6) × 5',d:'Height & mass; affects Hit Points & Damage Bonus.'},
+  {a:'DEX',n:'Dexterity',r:'3D6 × 5',d:'Speed & nimbleness. Highest DEX acts first in combat.'},
+  {a:'APP',n:'Appearance',r:'3D6 × 5',d:'Charm & looks. Useful in social encounters.'},
+  {a:'INT',n:'Intelligence',r:'(2D6+6) × 5',d:'Learning & analysis. Drives Personal Interest points.'},
+  {a:'POW',n:'Power',r:'3D6 × 5',d:'Willpower & magic. Starting Sanity equals POW.'},
+  {a:'EDU',n:'Education',r:'(2D6+6) × 5',d:'Formal knowledge. Drives Occupation skill points.'}
+];
+var OCCS=[
+  {n:'Antiquarian',p:'EDU × 4',cr:'30–50',s:'Appraise, Art/Craft (any), History, Library Use, Other Language, one interpersonal skill, Spot Hidden, one personal choice.'},
+  {n:'Author',p:'EDU × 4',cr:'9–30',s:'Art/Craft (Writing), History, Library Use, Natural World or Occult, Other Language, Own Language, Psychology, one other.'},
+  {n:'Dilettante',p:'EDU×2 + APP×2',cr:'50–99',s:'Art/Craft (any), Firearms, Other Language, Ride, one interpersonal skill, Spot Hidden, two personal choices.'},
+  {n:'Doctor of Medicine',p:'EDU × 4',cr:'30–60',s:'First Aid, Medicine, Other Language (Latin), Pharmacy, Psychology, Science (Biology), Science (Pharmacy), two others.'},
+  {n:'Journalist',p:'EDU × 4',cr:'9–30',s:'Art/Craft (Photography), History, Library Use, one interpersonal skill, Own Language, Psychology, Spot Hidden, one personal choice.'},
+  {n:'Police Detective',p:'EDU×2 + STR×2',cr:'20–50',s:'Art/Craft (Acting), Disguise, Fighting, Firearms, Intimidate, Law, Psychology, Spot Hidden.'},
+  {n:'Professor',p:'EDU × 4',cr:'20–70',s:'Library Use, Other Language, Own Language, Psychology, two Science or specialist subjects, two personal choices.'},
+  {n:'Private Investigator',p:'EDU×2 + DEX×2',cr:'9–30',s:'Art/Craft (Photography), Disguise, Law, Library Use, one interpersonal skill, Psychology, Spot Hidden, one other.'},
+  {n:'Soldier / Officer',p:'EDU×2 + DEX×2',cr:'9–30',s:'Climb, Drive Auto, Fighting or Firearms, First Aid, Navigate, Stealth, Survival, one personal choice.'},
+  {n:'Criminal',p:'EDU×2 + DEX×2',cr:'5–65',s:'Disguise, Fighting, Firearms, Locksmith, one interpersonal skill, Psychology, Stealth, one other.'},
+  {n:'Entertainer',p:'EDU×2 + APP×2',cr:'9–40',s:'Art/Craft (any), Disguise, two interpersonal skills, Listen, Psychology, one combat skill, one personal choice.'},
+  {n:'Clergy',p:'EDU × 4',cr:'9–60',s:'Accounting, History, Library Use, Listen, Other Language, one interpersonal skill, Psychology, one personal choice.'}
+];
 
-
-);
+function hdr(num,title,byline){
+  return '<div class="ch"><div class="cn">'+num+'</div><div class="corn"><div class="ol l"></div><div class="od"></div><div class="ol r"></div></div><div class="ct">'+title+'</div><div class="cbl">'+byline+'</div></div>';
+>>>>>>> 9980147fee64c7a91ce0650de3a4ae29b32a1dd2
 }
 
+function introHTML(){
+  return '<div class="page">'+hdr('Chapter I','Introduction','"The oldest and strongest emotion of mankind is fear, and the oldest and strongest kind of fear is fear of the unknown." — H.P. Lovecraft')+
+  '<div class="c2"><div>'+
+  '<div class="blk"><div class="sl">What is Call of Cthulhu?</div><p class="pr">Call of Cthulhu is a horror roleplaying game based on H.P. Lovecraft\'s fiction. Players take the roles of <strong>Investigators</strong> — ordinary people drawn into extraordinary and terrifying encounters with forces beyond human comprehension.</p><p class="pr">Unlike many games, investigators are not superheroes. They are journalists, professors, and doctors — people whose courage and intellect are their greatest weapons.</p></div>'+
+  '<div class="blk"><div class="sl">The Keeper of Arcane Lore</div><p class="pr">One player takes the role of <strong>Keeper of Arcane Lore</strong>. The Keeper describes the world, portrays all NPCs, and presents the mysteries to be unravelled.</p><div class="co"><div class="cot g">Working With Your Keeper</div>The Keeper presents challenges and mysteries — not a fight to defeat you. Trust their descriptions, engage with the fiction, bring your investigator to life. If you disagree with a ruling, raise it after the session.</div></div>'+
+  '<div class="blk"><div class="sl">The Shape of a Session</div><ul class="pr" style="padding-left:20px;list-style:disc;line-height:2.1"><li>The Keeper describes a situation, location, or event</li><li>Players describe what their investigators do or say</li><li>The Keeper calls for a dice roll when uncertain and dramatic</li><li>Results drive the story — success and failure are both meaningful</li></ul></div>'+
+  '</div><div>'+
+  '<div class="blk"><div class="sl">The World of the 1920s</div><p class="pr">The default setting is the <strong>Roaring Twenties</strong>: jazz, prohibition, the shadow of the Great War, and the first tremors of a world that no longer makes sense. Strange cults flourish in dark corners. Ancient tomes surface in dusty bookshops. Something stirs in the deep places of the earth.</p><div class="co red"><div class="cot">A Note on Horror</div>Call of Cthulhu deals with dark themes. Investigators may become injured, descend into madness, or meet their end. This is not failure — it is the nature of the game. The horror genre demands that consequences be real.</div></div>'+
+  '<div class="blk"><div class="sl">What Investigators Face</div><ul class="pr" style="padding-left:20px;list-style:disc;line-height:2.1"><li><strong>Cultists</strong> — humans devoted to powers beyond reason</li><li><strong>Mythos Creatures</strong> — entities from outside our reality</li><li><strong>The Great Old Ones</strong> — cosmic beings of incomprehensible scale</li><li><strong>Forbidden Knowledge</strong> — truths that fracture the mind</li></ul></div>'+
+  '<div class="blk"><div class="sl">Table Etiquette</div><ul class="pr" style="padding-left:20px;list-style:disc;line-height:2.1"><li>Discuss safety and content limits with your group beforehand</li><li>Set a goal before rolling dice — do not sign contracts unread</li><li>Accept failure — it takes the story to unexpected places</li><li>Cooperate — investigators who work together survive longer</li></ul></div>'+
+  '<div class="bq"><p>"The most merciful thing in the world, I think, is the inability of the human mind to correlate all its contents."</p><cite>H.P. Lovecraft &middot; The Call of Cthulhu</cite></div>'+
+  '</div></div></div>';
+}
+
+function createHTML(){
+  var cards=CHARS.map(function(c){return '<div class="sc"><div class="sn">'+c.a+' — '+c.n+'</div><div class="sr">'+c.r+'</div><div class="sd">'+c.d+'</div></div>';}).join('');
+  var occs=OCCS.map(function(o){return '<div class="oc" onclick="tog(this)"><div class="och"><div><div class="ocn">'+o.n+'</div><div class="ocp">'+o.p+'</div></div><div class="oca">&#9660;</div></div><div class="ocb"><div class="ocs">'+o.s+'</div><div class="occr">Credit Rating: '+o.cr+'</div></div></div>';}).join('');
+  var bk=[['Personal Description','How your investigator looks, their manner and bearing.'],['Ideology / Beliefs','What principles guide them? Religion, philosophy, superstition?'],['Significant People','Who matters most? A mentor, parent, rival, or friend?'],['Meaningful Locations','A place of importance: a study, a church, a childhood street.'],['Treasured Possessions','An heirloom, a journal, a lucky coin, or a tool of the trade.'],['Traits','A personality quirk: paranoid, meticulous, impulsive, reckless.'],['Injuries &amp; Scars','Added during play — wounds that leave their lasting mark.'],['Arcane Tomes &amp; Spells','Acquired through investigation. Knowledge has its price.']];
+  var bkhtml=bk.map(function(b){return '<div class="co" style="margin:4px 0"><div class="cot g">'+b[0]+'</div>'+b[1]+'</div>';}).join('');
+  return '<div class="page">'+hdr('Chapter II','Investigator Creation','Five steps from blank page to breathing character')+
+  '<div class="co" style="margin-bottom:22px"><div class="cot g">The Five Steps</div><div style="margin-top:8px">'+
+  ['1. Roll Characteristics','2. Determine Occupation','3. Allocate Skill Points','4. Create Backstory','5. Equip Your Investigator'].map(function(s){return '<span class="sbadge">'+s+'</span>';}).join('')+'</div></div>'+
+  '<div class="sl">Step One: Characteristics</div>'+
+  '<p class="pr" style="margin-bottom:12px">Roll the dice shown, multiply by 5. Record the <strong>full value</strong>, then calculate the <strong>half value</strong> (÷2, round down) and <strong>fifth value</strong> (÷5, round down) — you reference all three during play.</p>'+
+  '<div class="sg">'+cards+'</div>'+
+  '<div class="deco">&#10022;</div>'+
+  '<div class="c2" style="margin-bottom:22px"><div>'+
+  '<div class="blk"><div class="sl">Derived Attributes</div><table class="rt"><thead><tr><th>Attribute</th><th>Formula</th></tr></thead><tbody><tr><td><strong>Hit Points</strong></td><td>(CON + SIZ) ÷ 10, round down</td></tr><tr><td><strong>Starting Sanity</strong></td><td>= POW</td></tr><tr><td><strong>Luck</strong></td><td>3D6 × 5 (separate roll)</td></tr><tr><td><strong>Magic Points</strong></td><td>POW ÷ 5, round down</td></tr><tr><td><strong>Own Language</strong></td><td>Skill % = EDU value</td></tr><tr><td><strong>Dodge (base)</strong></td><td>DEX ÷ 2</td></tr></tbody></table></div>'+
+  '<div class="blk"><div class="sl">Movement Rate (MOV)</div><table class="movt"><tr><td>Both DEX and STR each &lt; SIZ</td><td>MOV 7</td></tr><tr><td>Either STR or DEX &ge; SIZ (or all equal)</td><td>MOV 8</td></tr><tr><td>Both STR and DEX &gt; SIZ</td><td>MOV 9</td></tr><tr><td>Age 40s / 50s / 60s / 70s / 80s</td><td>&minus;1 / &minus;2 / &minus;3 / &minus;4 / &minus;5</td></tr></table><p class="pr" style="font-size:13px;margin-top:6px">An investigator moves up to MOV × 5 yards per combat round.</p></div>'+
+  '</div><div>'+
+  '<div class="blk"><div class="sl">Damage Bonus &amp; Build (STR + SIZ)</div>'+
+  '<div class="dbr"><div class="dbrange">2–64</div><div class="dbval">DB &minus;2 &nbsp;|&nbsp; Build &minus;2</div></div>'+
+  '<div class="dbr"><div class="dbrange">65–84</div><div class="dbval">DB &minus;1 &nbsp;|&nbsp; Build &minus;1</div></div>'+
+  '<div class="dbr"><div class="dbrange">85–124</div><div class="dbval">DB None &nbsp;|&nbsp; Build 0</div></div>'+
+  '<div class="dbr"><div class="dbrange">125–164</div><div class="dbval">DB +1D4 &nbsp;|&nbsp; Build 1</div></div>'+
+  '<div class="dbr"><div class="dbrange">165–204</div><div class="dbval">DB +1D6 &nbsp;|&nbsp; Build 2</div></div>'+
+  '<p class="pr" style="font-size:13px;margin-top:8px">Add Damage Bonus to all melee and unarmed attacks. <strong>Never applied to firearms.</strong></p></div>'+
+  '<div class="blk"><div class="sl">Age Modifiers</div><table class="rt" style="font-size:13px"><thead><tr><th>Age</th><th>Modifier</th></tr></thead><tbody><tr><td>15–19</td><td>&minus;5 from STR &amp; SIZ; &minus;5 EDU; roll Luck twice, take higher</td></tr><tr><td>20s–30s</td><td>1 EDU improvement check</td></tr><tr><td>40s</td><td>2 EDU checks; &minus;5 from STR/CON/DEX; &minus;5 APP</td></tr><tr><td>50s</td><td>3 EDU checks; &minus;10 from STR/CON/DEX; &minus;10 APP</td></tr><tr><td>60s+</td><td>4 EDU checks; increasing stat penalties</td></tr></tbody></table><p class="pr" style="font-size:12px;margin-top:6px">EDU check: roll D100; if result &gt; current EDU, add 1D10 to EDU (max 99).</p></div>'+
+  '</div></div>'+
+  '<div class="deco">&#10022;</div>'+
+  '<div class="sl">Step Two: Occupations</div>'+
+  '<p class="pr" style="margin-bottom:8px">Your occupation sets professional skill points and Credit Rating range. Calculate points using the formula, distribute across listed skills. <em>Click any card to expand.</em></p>'+
+  '<div class="co" style="margin-bottom:14px"><div class="cot g">Personal Interest Points (Step Three)</div>After occupation points, also allocate <strong>INT &times; 2</strong> freely to any skills (except Cthulhu Mythos unless agreed by your Keeper). These represent hobbies and life experience.</div>'+
+  '<div class="og">'+occs+'</div>'+
+  '<div class="deco">&#10022;</div>'+
+  '<div class="sl">Step Four: Backstory</div>'+
+  '<p class="pr" style="margin-bottom:12px">Complete at least the first six categories to breathe life into your investigator beyond the statistics:</p>'+
+  '<div class="c2">'+bkhtml+'</div>'+
+  '</div>';
+}
+
+<<<<<<< HEAD
 /* ─────────────────────────── CREATION SECTION ─────────────────────────── */
 
 function CreationSection() {
@@ -1530,448 +1656,95 @@ Five steps transform blank paper into a living, breathing investigator. Work thr
 
 
 );
+=======
+function rulesHTML(){
+  return '<div class="page">'+hdr('Chapter III','Core Rules','The mechanics of the percentile system — success, failure, and the push')+
+  '<div class="c2"><div>'+
+  '<div class="blk"><div class="sl">The Dice System</div><p class="pr">Call of Cthulhu uses <strong>percentile dice (two D10s read as 01–100)</strong>. Roll equal to or <em>under</em> your skill or characteristic value to succeed.</p><p class="pr" style="margin-top:9px">Each skill and characteristic has three values on your sheet:</p><table class="rt" style="margin-top:11px"><thead><tr><th>Box</th><th>Value</th><th>Used For</th></tr></thead><tbody><tr><td>Large</td><td>Full value</td><td>Regular success</td></tr><tr><td>Medium</td><td>&divide;2, round down</td><td>Hard success</td></tr><tr><td>Small</td><td>&divide;5, round down</td><td>Extreme success</td></tr></tbody></table></div>'+
+  '<div class="blk"><div class="sl">Levels of Success</div><div class="sbrow"><div class="sb ex"><div class="sbl">Extreme</div><div class="sbv">&le; 1/5 skill</div></div><div class="sb ha"><div class="sbl">Hard</div><div class="sbv">&le; 1/2 skill</div></div><div class="sb re"><div class="sbl">Regular</div><div class="sbv">&le; full skill</div></div><div class="sb fa"><div class="sbl">Failure</div><div class="sbv">&gt; skill</div></div></div><div class="co red" style="margin-top:10px"><div class="cot">Fumble</div>Roll <strong>96–100</strong> (skill below 50%) or <strong>100</strong> (skill 50%+) for catastrophic failure. Consequences determined by the Keeper — often severe.</div></div>'+
+  '<div class="blk"><div class="sl">Bonus &amp; Penalty Dice</div><table class="rt"><thead><tr><th>Type</th><th>Method</th></tr></thead><tbody><tr><td><strong>Bonus Die</strong></td><td>Roll an extra tens die; use the <em>lower</em> tens result.</td></tr><tr><td><strong>Penalty Die</strong></td><td>Roll an extra tens die; use the <em>higher</em> tens result.</td></tr></tbody></table><p class="pr" style="font-size:13px;margin-top:8px">Only one bonus or penalty die applies at a time; they cancel out. <strong>Luck rolls are never modified.</strong></p></div>'+
+  '<div class="blk"><div class="sl">Pushed Rolls</div><p class="pr">If a roll fails, you may attempt it again as a <strong>Pushed Roll</strong> — but only by justifying to the Keeper what your investigator is doing differently, at greater risk or effort.</p><p class="pr" style="margin-top:8px">A failed pushed roll brings <strong>severe consequences</strong>. You can only push a roll once.</p></div>'+
+  '</div><div>'+
+  '<div class="blk"><div class="sl">When to Roll</div><div class="co red"><div class="cot">Golden Rule</div><strong>Do not roll unless the Keeper asks you to.</strong> Routine tasks need no roll. Only roll when the outcome is uncertain and dramatically significant.</div><div class="co" style="margin-top:10px"><div class="cot g">Set a Goal First</div>Before rolling, state what success means. "I want to persuade the clerk to hand over the files." The Keeper sets the difficulty — then you roll. Rolling before the goal is set is like signing a contract you have not read.</div></div>'+
+  '<div class="blk"><div class="sl">Opposed Rolls</div><p class="pr">When two characters directly contest each other, both roll. The winner achieves the <strong>higher level of success</strong>. On equal levels, the higher skill value wins.</p></div>'+
+  '<div class="blk"><div class="sl">Special Rolls</div><table class="rt"><thead><tr><th>Roll</th><th>Characteristic</th><th>When Used</th></tr></thead><tbody><tr><td><strong>Idea</strong></td><td>INT</td><td>When stuck — intuitive nudge to advance the investigation.</td></tr><tr><td><strong>Know</strong></td><td>EDU</td><td>General knowledge from life experience.</td></tr><tr><td><strong>Luck</strong></td><td>Luck</td><td>External circumstances outside investigator control.</td></tr></tbody></table></div>'+
+  '<div class="blk"><div class="sl">Social Skills</div><table class="rt"><thead><tr><th>Skill</th><th>When to Use</th></tr></thead><tbody><tr><td><strong>Charm (15%)</strong></td><td>Befriending, seducing, making a good impression.</td></tr><tr><td><strong>Fast Talk (5%)</strong></td><td>Quick deception, distraction, confusion.</td></tr><tr><td><strong>Intimidate (15%)</strong></td><td>Using threats, presence, or implied violence.</td></tr><tr><td><strong>Persuade (10%)</strong></td><td>Logical argument, negotiation, sustained reasoning.</td></tr><tr><td><strong>Psychology (10%)</strong></td><td>Reading motives; opposing social influence used against you.</td></tr></tbody></table></div>'+
+  '<div class="blk"><div class="sl">Skill Improvement</div><p class="pr" style="font-size:13px">When you meaningfully use a skill, the Keeper may mark it. At session end, roll D100 for each marked skill. If the result is <strong>greater</strong> than the skill\'s current value, add 1D10 to it.</p></div>'+
+  '</div></div></div>';
+>>>>>>> 9980147fee64c7a91ce0650de3a4ae29b32a1dd2
 }
 
-/* ─────────────────────────── MECHANICS SECTION ─────────────────────────── */
-
-function MechanicsSection() {
-return (
-<div className="fade-in">
-<SectionHead num="III" title="Core Rules"/>
-<p className="lead">
-Every meaningful action resolves with a D100. Roll <em>equal to or under</em> your skill. Three thresholds, two special dice, one crucial option: push the roll.
-</p>
-
-
-  <div className="card gold mb-6">
-    <div className="card-title">The Fundamental Rule</div>
-    <div className="grid-2">
-      <div>
-        <p>To attempt any skill, the Keeper sets a <span className="gold">difficulty level</span>. You roll D100. If the result equals or falls <em>under</em> the relevant threshold, you succeed.</p>
-        <div className="formula-box mt-4">
-          <span className="formula-val">Roll ≤ Skill%</span>
-          <span className="formula-label formula-eq">= Regular Success</span>
-        </div>
-        <div className="formula-box">
-          <span className="formula-val">Roll ≤ Skill ÷ 2</span>
-          <span className="formula-label formula-eq">= Hard Success</span>
-        </div>
-        <div className="formula-box">
-          <span className="formula-val">Roll ≤ Skill ÷ 5</span>
-          <span className="formula-label formula-eq">= Extreme Success</span>
-        </div>
-      </div>
-      <div>
-        <p className="small muted mb-4">The Keeper declares the difficulty level <strong>before</strong> you roll. Never roll before the difficulty is set — you'd be signing a contract without reading it.</p>
-        <div className="dice-example">
-          <span className="dice-big">47</span>
-          <span className="dice-label">EXAMPLE: Library Use 60%</span>
-        </div>
-        <p className="small mt-4"><span className="teal">47 ≤ 60</span> → Regular Success ✓<br/>
-        <span className="gold">47 ≤ 30</span> → Hard Success ✓ (47 exceeds 30 — fail at Hard)<br/>
-        <span className="red">47 ≤ 12</span> → Extreme Success ✗</p>
-      </div>
-    </div>
-  </div>
-
-  <div className="deco-divider"><span>Difficulty Levels</span></div>
-
-  <div className="card mb-6">
-    <div className="card-title">Difficulty Levels — Set by the Keeper</div>
-    <table className="diff-table">
-      <thead><tr><th>Level</th><th>Threshold</th><th>When Used</th></tr></thead>
-      <tbody>
-        <tr>
-          <td>Regular</td>
-          <td className="teal">Roll ≤ Skill (Full Value)</td>
-          <td>Standard tasks. The default difficulty for most rolls.</td>
-        </tr>
-        <tr>
-          <td>Hard</td>
-          <td className="teal">Roll ≤ Skill ÷ 2</td>
-          <td>Difficult or challenging tasks; adverse conditions; specialist skill used out-of-specialty.</td>
-        </tr>
-        <tr>
-          <td>Extreme</td>
-          <td className="teal">Roll ≤ Skill ÷ 5</td>
-          <td>Near-impossible feats. Extraordinary circumstances. Long shots only.</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-
-  <div className="deco-divider"><span>Special Results</span></div>
-
-  <div className="grid-2 mb-6">
-    <div className="card teal">
-      <div className="card-title">Critical & Fumble</div>
-      <ul className="coc-list">
-        <li><span className="gold">01</span> — Critical Success (always). Best possible outcome regardless of skill.</li>
-        <li><span className="gold">96–99</span> — Failure (if skill is below 50)</li>
-        <li><span className="red">100</span> — Fumble. Always. Catastrophic failure — worst possible outcome.</li>
-        <li><span className="red">96–100</span> — Fumble (if skill is 50 or above, a 96–99 still fails but isn't a Fumble)</li>
-      </ul>
-      <p className="small muted mt-4">In combat, a Fumble with a weapon can mean dropping it, hitting an ally, or jamming the firearm.</p>
-    </div>
-    <div className="card">
-      <div className="card-title">Opposed Rolls</div>
-      <p>When two characters contest directly — an investigator trying to Persuade an NPC, or an investigator Dodging an attack — each rolls against their relevant skill. The winner is determined by:</p>
-      <ul className="coc-list mt-4">
-        <li>Both fail: the initiating party wins narrowly</li>
-        <li>One succeeds, one fails: the successful party wins</li>
-        <li>Both succeed: the <span className="gold">higher level of success</span> wins (Extreme beats Hard beats Regular)</li>
-        <li>Both succeed equally: the <span className="gold">higher skill value</span> wins</li>
-      </ul>
-    </div>
-  </div>
-
-  <div className="deco-divider"><span>Bonus & Penalty Dice</span></div>
-
-  <div className="die-pair mb-6">
-    <div className="die-box bonus">
-      <span className="die-icon">🎲+</span>
-      <div className="die-title">Bonus Die</div>
-      <div className="die-explain">
-        Roll <strong>two tens dice</strong> and one units die. Take the <em>lower</em> of the two tens dice to form your result.<br/><br/>
-        Bonus dice represent favourable conditions: assistance, good tools, advantageous position. The Keeper grants them.
-      </div>
-    </div>
-    <div className="die-box penalty">
-      <span className="die-icon">🎲−</span>
-      <div className="die-title">Penalty Die</div>
-      <div className="die-explain">
-        Roll <strong>two tens dice</strong> and one units die. Take the <em>higher</em> of the two tens dice to form your result.<br/><br/>
-        Penalty dice represent adverse conditions: injury, impaired senses, hostile environment, or insanity effects.
-      </div>
-    </div>
-  </div>
-
-  <div className="deco-divider"><span>Pushing the Roll</span></div>
-
-  <div className="card mb-6">
-    <div className="card-title">Pushing a Failed Roll</div>
-    <div className="grid-2">
-      <div>
-        <p>If you fail a skill roll, you may attempt it <span className="gold">once more</span> as a <em>pushed roll</em> — but only if you can justify <strong>what your investigator does differently</strong>.</p>
-        <ul className="coc-list mt-4">
-          <li>Describe the extra effort, risk, or approach taken</li>
-          <li>The Keeper must agree the justification is valid</li>
-          <li>You must declare the push <em>immediately</em> after failing</li>
-          <li>If the pushed roll also fails, serious consequences follow</li>
-          <li>Combat skills <span className="red">cannot</span> be pushed</li>
-        </ul>
-      </div>
-      <div>
-        <div className="pull-quote">
-          "I failed to pick the lock. But I push — I take a hairpin and work it more carefully, ignoring the footsteps approaching down the hall."
-        </div>
-        <div className="card red" style={{marginTop:12}}>
-          <div className="card-title">Consequences of a Failed Push</div>
-          <p className="small">The Keeper decides — but it will be <em>bad</em>. Injury. An alarm triggered. A cultist alerted. Evidence destroyed. A fall. The worse the situation, the worse the consequence.</p>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div className="deco-divider"><span>Other Roll Types</span></div>
-
-  <div className="grid-3">
-    <div className="card">
-      <div className="card-title">Luck Roll</div>
-      <p className="small">Used for external circumstances — is there a candle in the drawer? Does the car have a spare tyre? Roll against your Luck score. <span className="gold">Never modified</span> by Bonus or Penalty Dice. Luck spent in certain ways can lower the score permanently.</p>
-    </div>
-    <div className="card">
-      <div className="card-title">Idea Roll (INT)</div>
-      <p className="small">If you're stuck and the investigation has stalled, ask for an Idea roll. A success gives your investigator a deductive flash — a remembered clue, a connection made, a path forward. Use sparingly.</p>
-    </div>
-    <div className="card">
-      <div className="card-title">Know Roll (EDU)</div>
-      <p className="small">For general knowledge stored in memory — the capital of Peru, the name of a specific Roman emperor, how many legs an arachnid has. Represents the breadth of your education without requiring a specific skill.</p>
-    </div>
-  </div>
-</div>
-
-
-);
+function combatHTML(){
+  var acts=[['01','Attack','Roll your Fighting or Firearms skill. On success, roll weapon damage plus Damage Bonus (melee only).'],['02','Dodge','Roll Dodge (half DEX base). On success, you avoid the attack entirely. Uses your action for the round.'],['03','Fight Back','Strike simultaneously as you are struck. Both roll — higher success level wins and deals damage. Uses your action.'],['04','Move','Move up to MOV × 5 yards. You may still attack, but shooting while moving applies a Penalty Die.'],['05','Aim','Spend one full round aiming. Gain a Bonus Die on your next firearm attack against the same target.'],['06','Maneuver','Attempt to disarm, trip, grapple, or gain positional advantage. Opposed STR or Fighting roll.'],['07','Other','Draw a weapon, reload, call for help, apply First Aid, or any action the Keeper permits.']];
+  var alist=acts.map(function(a){return '<li><span class="cnum">'+a[0]+'</span><span class="cterm">'+a[1]+'</span>'+a[2]+'</li>';}).join('');
+  return '<div class="page">'+hdr('Chapter IV','Combat','Dangerous, brutal, and often a last resort — investigators are not soldiers')+
+  '<div class="co red" style="margin-bottom:22px"><div class="cot">Investigators Are Fragile</div>Combat in Call of Cthulhu is lethal. A single bullet can incapacitate or kill. Discretion, evasion, and preparation are almost always better options than a straight fight.</div>'+
+  '<div class="c2"><div>'+
+  '<div class="blk"><div class="sl">The Combat Round</div><p class="pr">One round represents approximately <strong>one second</strong> of action. Combatants act in order from <strong>highest DEX to lowest</strong>. Each participant takes one action per round. Tied DEX values act simultaneously.</p></div>'+
+  '<div class="blk"><div class="sl">Actions Available</div><ul class="cl">'+alist+'</ul></div>'+
+  '<div class="blk"><div class="sl">Attack vs. Defence</div><table class="rt"><thead><tr><th>Situation</th><th>Outcome</th></tr></thead><tbody><tr><td>Regular attack success</td><td>Hit — roll weapon damage</td></tr><tr><td>Extreme attack success</td><td>Maximum damage or impale (extra damage die)</td></tr><tr><td>Dodge vs. attack</td><td>Higher success level wins; tie goes to defender</td></tr><tr><td>Fight Back vs. attack</td><td>Higher success wins; may deal damage to attacker</td></tr><tr><td>Point blank (&lt;1 yard)</td><td>Cannot dodge or fight back; only Dive Away allowed</td></tr></tbody></table></div>'+
+  '</div><div>'+
+  '<div class="blk"><div class="sl">Hit Point Thresholds</div><table class="rt"><thead><tr><th>State</th><th>Effect</th></tr></thead><tbody><tr><td>HP at half or below</td><td>Seriously wounded; Keeper may call CON roll</td></tr><tr><td>Major Wound (half max HP in one hit)</td><td>CON roll or fall unconscious immediately</td></tr><tr><td>HP reduced to 1 or 2</td><td>CON roll or collapse; can only crawl</td></tr><tr><td>HP at 0</td><td>Dying; needs First Aid within 1 round or death</td></tr><tr><td>HP reaches &minus;max HP</td><td>Instant death</td></tr></tbody></table><div class="co red" style="margin-top:11px"><div class="cot">Major Wounds</div>Losing more than half your maximum HP in a single blow is a <strong>Major Wound</strong>. Fail the CON roll and you fall unconscious until someone applies First Aid.</div></div>'+
+  '<div class="blk"><div class="sl">Common Weapons (1920s)</div><table class="rt"><thead><tr><th>Weapon</th><th>Skill (Base)</th><th>Damage</th></tr></thead><tbody><tr><td>Fist / Brawl</td><td>Fighting (Brawl) 25%</td><td>1D3 + DB</td></tr><tr><td>Knife</td><td>Fighting (Brawl) 25%</td><td>1D4 + DB</td></tr><tr><td>Club / Cosh</td><td>Fighting (Brawl) 25%</td><td>1D6 + DB</td></tr><tr><td>Handgun (.38)</td><td>Firearms (Handgun) 20%</td><td>1D10</td></tr><tr><td>Rifle</td><td>Firearms (Rifle) 25%</td><td>2D6+4</td></tr><tr><td>Shotgun (close)</td><td>Firearms (Rifle/Shotgun) 25%</td><td>4D6</td></tr><tr><td>Thompson SMG</td><td>Firearms (Submachine) 15%</td><td>1D10+2</td></tr></tbody></table></div>'+
+  '<div class="blk"><div class="sl">Healing</div><table class="rt"><thead><tr><th>Method</th><th>Recovery</th></tr></thead><tbody><tr><td>First Aid (within 1 hour)</td><td>Restore 1 HP; stabilise dying investigator</td></tr><tr><td>Medicine skill</td><td>Restore 1D3 HP; better treatment</td></tr><tr><td>Natural healing (1 week rest)</td><td>+1D3 HP</td></tr><tr><td>Major wound + hospital care</td><td>1D3 HP per week with physician</td></tr></tbody></table></div>'+
+  '</div></div></div>';
 }
 
-/* ─────────────────────────── SANITY SECTION ─────────────────────────── */
-
-function SanitySection() {
-const [sanDemo, setSanDemo] = useState(60);
-const lostSan = 99 - sanDemo;
-const warnLine = Math.floor(sanDemo * 0.8);
-
-return (
-<div className="fade-in">
-<SectionHead num="IV" title="Sanity"/>
-<p className="lead">
-Sanity is the currency of survival. Every encounter with the Mythos chips away at the mind. The question is not <em>whether</em> you will be changed — but how much of yourself you will lose before the end.
-</p>
-
-
-  <div className="card gold mb-6">
-    <div className="card-title">The Sanity System — Overview</div>
-    <div className="grid-2">
-      <div>
-        <p>When investigators encounter something <span className="red">horrifying</span> — a monster, a forbidden tome, a cosmic revelation — the Keeper calls for a <span className="gold">Sanity Roll</span>.</p>
-        <ul className="coc-list mt-4">
-          <li>Roll D100 vs your current <strong>SAN</strong> score</li>
-          <li><span className="teal">Success:</span> Take the lower SAN loss (e.g. the "1" in "1/1D6")</li>
-          <li><span className="red">Failure:</span> Take the higher SAN loss (e.g. roll the "1D6")</li>
-          <li>SAN starts equal to POW</li>
-          <li>Maximum SAN = <span className="red">99 − Cthulhu Mythos</span></li>
-        </ul>
-      </div>
-      <div>
-        <p className="small muted mb-4">Use the slider to see the insanity thresholds for a given SAN score:</p>
-        <div style={{padding:'0 4px'}}>
-          <label style={{fontSize:11,letterSpacing:1,color:'var(--gold-dim)',textTransform:'uppercase'}}>Current SAN: <span className="gold">{sanDemo}</span></label>
-          <input type="range" min={1} max={99} value={sanDemo} onChange={e=>setSanDemo(+e.target.value)}
-            style={{width:'100%',margin:'6px 0',accentColor:'var(--gold)'}}/>
-        </div>
-        <div className="qr-grid" style={{gridTemplateColumns:'1fr 1fr 1fr',gap:8,marginTop:8}}>
-          <div className="qr-item">
-            <div className="qr-label">Current SAN</div>
-            <div className="qr-val" style={{color:'var(--teal)'}}>{sanDemo}</div>
-          </div>
-          <div className="qr-item">
-            <div className="qr-label">Temp Insanity (&lt;5 in 1 roll)</div>
-            <div className="qr-val" style={{color:'var(--gold)'}}>5+</div>
-            <div className="qr-note">SAN lost in a single roll triggers temp insanity</div>
-          </div>
-          <div className="qr-item">
-            <div className="qr-label">Indef Insanity (20% line)</div>
-            <div className="qr-val" style={{color:'var(--red-bright)'}}>{Math.ceil(sanDemo*0.2)}</div>
-            <div className="qr-note">Lose this in 1 session → indefinite insanity</div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div className="deco-divider"><span>Types of Insanity</span></div>
-
-  <div className="insanity-types mb-6">
-    <div className="insanity-card">
-      <span className="insanity-icon">😰</span>
-      <div className="insanity-name">Temporary Insanity</div>
-      <div className="insanity-trigger">Lose 5+ SAN in a single roll</div>
-      <div className="insanity-desc">A <em>bout of madness</em> lasting 1D10 rounds (Real Time) or 1D10 hours (Summary Time). The Keeper directs your behaviour — you may rave, faint, flee, or act irrationally.</div>
-    </div>
-    <div className="insanity-card">
-      <span className="insanity-icon">🌀</span>
-      <div className="insanity-name">Indefinite Insanity</div>
-      <div className="insanity-trigger">Lose 20%+ of current SAN in one session</div>
-      <div className="insanity-desc">Your investigator is institutionally insane. Between bouts of madness, you can function normally — but further Sanity loss triggers new bouts. The Keeper may add a specific <em>phobia</em> or <em>mania</em>.</div>
-    </div>
-    <div className="insanity-card">
-      <span className="insanity-icon">💀</span>
-      <div className="insanity-name">Permanent Insanity</div>
-      <div className="insanity-trigger">SAN reaches 0</div>
-      <div className="insanity-desc">The investigator is lost to madness permanently and becomes an NPC. They may be encountered again as an antagonist, a gibbering wreck, or something worse — but their story as a player character is over.</div>
-    </div>
-  </div>
-
-  <div className="grid-2 mb-6">
-    <div className="card red">
-      <div className="card-title">Phobias & Manias After Insanity</div>
-      <p>When sane, phobias and manias are merely <span className="gold">character flavour</span> — you choose how your investigator reacts to spiders or heights. Once <span className="red">insane</span>, the rules bite:</p>
-      <ul className="coc-list mt-4">
-        <li><strong>Phobia:</strong> Encountering the trigger imposes a <span className="red">Penalty Die</span> on all rolls not directly related to fleeing or fighting the source</li>
-        <li><strong>Mania:</strong> The Keeper may penalise you until you indulge the mania (e.g. the dipsomaniac investigator in a bar)</li>
-        <li>Reality Checks (INT roll) let you fight back against delusions — but failure makes the madness worse</li>
-      </ul>
-    </div>
-    <div className="card">
-      <div className="card-title">Recovering Sanity</div>
-      <ul className="coc-list">
-        <li><span className="gold">Successful skill rolls</span> sometimes award SAN at Keeper discretion</li>
-        <li><span className="gold">Completing an investigation</span> — defeating the threat earns SAN</li>
-        <li><span className="gold">Backstory connections</span> — spending time with meaningful people/places</li>
-        <li><span className="gold">Psychoanalysis</span> — another investigator or NPC therapist can treat indefinite insanity (1D3 SAN recovered per successful session)</li>
-        <li><span className="gold">Development Phase</span> — between sessions, SAN may be restored</li>
-      </ul>
-      <p className="small muted mt-4">SAN can never exceed <strong>99 minus your Cthulhu Mythos skill</strong>. Knowledge of the Mythos permanently lowers your ceiling.</p>
-    </div>
-  </div>
-
-  <div className="deco-divider"><span>The Cthulhu Mythos</span></div>
-
-  <div className="card teal mb-6">
-    <div className="card-title">Maximum Sanity & Cthulhu Mythos Knowledge</div>
-    <div className="grid-2">
-      <div>
-        <p>Every point of <span className="teal">Cthulhu Mythos</span> skill your investigator gains permanently reduces their maximum possible Sanity:</p>
-        <div className="formula-box mt-4">
-          <span className="formula-val">Max SAN = 99 − Cthulhu Mythos%</span>
-        </div>
-        <p className="small muted mt-4">At Cthulhu Mythos 50%, your investigator can never recover above SAN 49. At Mythos 80%, they can never rise above 19. The more they understand, the less humanity remains.</p>
-      </div>
-      <div>
-        <div className="pull-quote">
-          "Reading an ancient book of horrific secrets while safe in an apartment, you might dismiss the contents as fantasy. But when encountering evidence of the Mythos firsthand, the realisation hits: those accursed books held the truth."
-        </div>
-        <p className="small muted mt-4">Becoming a Believer — when an investigator first loses SAN to a genuine Mythos encounter, they immediately lose additional SAN equal to their current Cthulhu Mythos skill.</p>
-      </div>
-    </div>
-  </div>
-
-  <div className="card">
-    <div className="card-title">Sample SAN Loss Triggers</div>
-    <table className="diff-table">
-      <thead><tr><th>Encounter</th><th>SAN Roll (Success / Failure)</th></tr></thead>
-      <tbody>
-        <tr><td>Seeing a corpse (fresh, violent)</td><td className="teal">0 / 1D3</td></tr>
-        <tr><td>Witness a brutal murder</td><td className="teal">0 / 1D6</td></tr>
-        <tr><td>Reading a Mythos tome</td><td className="teal">1D3 / 1D10 + further Mythos skill</td></tr>
-        <tr><td>Seeing a minor Mythos entity (Deep One, Ghoul)</td><td className="teal">0 / 1D6</td></tr>
-        <tr><td>Seeing a major Mythos entity (Shoggoth)</td><td className="teal">1D6 / 1D20</td></tr>
-        <tr><td>Witnessing a spell being cast</td><td className="teal">0 / 1D3</td></tr>
-        <tr><td>Seeing Great Cthulhu himself</td><td className="red">1D10 / 1D100</td></tr>
-      </tbody>
-    </table>
-  </div>
-</div>
-
-
-);
+function sanityHTML(){
+  return '<div class="page">'+hdr('Chapter V','Sanity','The fragile membrane between reason and the abyss')+
+  '<p class="pr" style="margin-bottom:18px">Your <strong>Sanity (SAN)</strong> begins equal to your POW characteristic. Every encounter with the Mythos, every brush with violence, every truth the mind was not meant to hold grinds it away.</p>'+
+  '<div class="sam"><div class="saml">Sanity Track — <span id="sv">50</span> / 99</div><input type="range" min="0" max="99" value="50" oninput="updSan(this.value)"/><div class="sapt" id="spips"></div><div class="sast" id="sstat">Troubled</div></div>'+
+  '<div class="c2" style="margin-top:22px"><div>'+
+  '<div class="blk"><div class="sl">Making a Sanity Roll</div><p class="pr">When investigators encounter the unnatural, witness violence, or confront the Mythos, the Keeper calls for a <strong>SAN roll</strong>. Roll D100 equal to or under your current SAN to succeed.</p><table class="rt" style="margin-top:10px"><thead><tr><th>Result</th><th>SAN Loss</th></tr></thead><tbody><tr><td><strong>Success</strong></td><td>Minimum loss (first number listed)</td></tr><tr><td><strong>Failure</strong></td><td>Full loss (second number listed)</td></tr></tbody></table><p class="pr" style="font-size:13px;margin-top:8px">SAN losses are written as two values, e.g. <em>0/1D6</em>. Success = 0 loss; Failure = roll 1D6 loss.</p></div>'+
+  '<div class="blk"><div class="sl">Typical SAN Loss</div><table class="rt"><thead><tr><th>Trigger</th><th>Loss</th></tr></thead><tbody><tr><td>Badly mutilated corpse</td><td>0/1D3</td></tr><tr><td>Witnessing someone killed</td><td>0/1D3</td></tr><tr><td>Killing another human being</td><td>0/1D4</td></tr><tr><td>Seeing a ghoul or Deep One</td><td>0/1D6</td></tr><tr><td>Encountering a Mythos monster</td><td>1/1D6</td></tr><tr><td>Reading a Mythos tome</td><td>1D4/1D10</td></tr><tr><td>Encountering a Great Old One</td><td>1D10/1D100</td></tr></tbody></table></div>'+
+  '<div class="blk"><div class="sl">Regaining Sanity</div><table class="rt"><thead><tr><th>Method</th><th>Recovery</th></tr></thead><tbody><tr><td>Session completion / defeating evil</td><td>+1D10 (Keeper discretion)</td></tr><tr><td>Psychoanalysis (monthly)</td><td>+1D3 on successful roll</td></tr><tr><td>Time with a loved one</td><td>+1D3 (Keeper discretion)</td></tr></tbody></table></div>'+
+  '</div><div>'+
+  '<div class="blk"><div class="sl">Temporary Insanity</div><p class="pr">Lose <strong>5 or more SAN in a single roll</strong> and the investigator may fall into a temporary bout of madness.</p><div class="co red"><div class="cot">Bout of Madness</div>The Keeper takes narrative control of your investigator for the bout. They may panic, flee, act violently, babble incoherently, or freeze. A bout typically lasts 1D10 rounds.</div></div>'+
+  '<div class="blk"><div class="sl">Indefinite Insanity</div><p class="pr">Lose <strong>one-fifth (20%) of your current SAN in a single day</strong> and you suffer indefinite insanity.</p><div class="co"><div class="cot g">Tracking the 20% Line</div>If your SAN is 45, losing 9 points in one day (20% of 45) triggers indefinite insanity. Mark the line on your sheet; update it whenever your SAN changes.</div><p class="pr" style="font-size:13px;margin-top:8px">Recovery requires <strong>1D6 months of institutional care</strong> or intensive therapy. Your investigator gains a phobia, mania, or disorder.</p></div>'+
+  '<div class="blk"><div class="sl">Maximum SAN &amp; Cthulhu Mythos</div><div class="co red"><div class="cot">Maximum Sanity</div>Maximum Sanity = <strong>99 minus Cthulhu Mythos skill</strong>. With a Mythos skill of 20%, your SAN can never exceed 79. Knowledge of the truth is not free.</div></div>'+
+  '<div class="blk"><div class="sl">Phobias &amp; Manias</div><p class="pr" style="font-size:13px">While <strong>sane</strong>, a phobia or mania is roleplay flavour you control freely. While <strong>insane</strong>, encountering your phobia\'s subject imposes a Penalty Die on any roll not directly related to fleeing or fighting it.</p></div>'+
+  '</div></div></div>';
 }
 
-/* ─────────────────────────── COMBAT SECTION ─────────────────────────── */
-
-function CombatSection() {
-return (
-<div className="fade-in">
-<SectionHead num="V" title="Combat"/>
-<p className="lead">
-Violence is brutal, fast, and often fatal. The wisest investigators avoid combat — but sometimes the monsters come to you. Know the rules, and know when to run.
-</p>
-
-
-  <div className="card red mb-6">
-    <div className="card-title">The Golden Rule of Combat</div>
-    <p>Call of Cthulhu is not a game that rewards combat. Investigators are <span className="red">not action heroes</span>. A single lucky shot can kill. A major wound can incapacitate. Running, hiding, and negotiating are always valid strategies — often the only ones that work against Mythos creatures.</p>
-  </div>
-
-  <div className="deco-divider"><span>Combat Sequence</span></div>
-
-  <div className="combat-order mb-6">
-    {[
-      { num:'1', title:'Surprise',   detail:'Keeper determines if either side is surprised. Surprised characters cannot act this round.' },
-      { num:'2', title:'Declare',    detail:'All players declare their intended actions before dice are rolled.' },
-      { num:'3', title:'Initiative', detail:'Highest DEX acts first. Ties broken by higher DEX; if still tied, roll.' },
-      { num:'4', title:'Resolve',    detail:'Actions resolve in DEX order. Each character gets one action per round (approx. 1 second).' },
-      { num:'5', title:'Next Round', detail:'Begin again from declaration if combat continues.' },
-    ].map(s => (
-      <div key={s.num} className="combat-step">
-        <div className="combat-step-num">{s.num}</div>
-        <div className="combat-step-title">{s.title}</div>
-        <div className="combat-step-detail">{s.detail}</div>
-      </div>
-    ))}
-  </div>
-
-  <div className="grid-2 mb-6">
-    <div className="card">
-      <div className="card-title">Making an Attack</div>
-      <ul className="coc-list">
-        <li>Roll D100 vs your <span className="gold">Fighting</span> or <span className="gold">Firearms</span> skill</li>
-        <li>Success: Roll damage dice (weapon) + Damage Bonus (melee only)</li>
-        <li>Hard Success: Deals maximum weapon damage</li>
-        <li>Extreme Success (melee): Maximum damage + max Damage Bonus (an <em>impaling</em> blow)</li>
-        <li>Fumble (96–100): Drop weapon, injure self, or worse — Keeper decides</li>
-      </ul>
-      <div className="card teal" style={{marginTop:12}}>
-        <div className="card-title">Common Weapons (1920s)</div>
-        <table className="build-table" style={{marginTop:4}}>
-          <thead><tr><th>Weapon</th><th>Damage</th><th>Base Skill</th></tr></thead>
-          <tbody>
-            <tr><td>Fist / Brawl</td><td>1D3+DB</td><td>25%</td></tr>
-            <tr><td>Knife</td><td>1D4+DB</td><td>25%</td></tr>
-            <tr><td>.38 Revolver</td><td>1D10</td><td>20%</td></tr>
-            <tr><td>Shotgun</td><td>4D6/2D6</td><td>25%</td></tr>
-            <tr><td>Rifle</td><td>2D6+4</td><td>25%</td></tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-    <div className="card">
-      <div className="card-title">Defending Against Attacks</div>
-      <p className="small mb-4">There are two ways to avoid taking damage:</p>
-      <div className="card" style={{marginBottom:12,padding:14}}>
-        <div className="card-title" style={{color:'var(--teal-pale)',fontSize:10}}>Dodge</div>
-        <p className="small">Roll D100 vs your <span className="teal">Dodge</span> skill (starts at DEX÷2). An <em>opposed roll</em> against the attacker. If the Dodge succeeds at a <em>higher level</em> than the attack, no damage is taken. You can Dodge once per attack but any number of times per round.</p>
-        <p className="small muted mt-4">You <span className="red">cannot</span> dodge bullets — only take cover.</p>
-      </div>
-      <div className="card" style={{padding:14}}>
-        <div className="card-title" style={{color:'var(--teal-pale)',fontSize:10}}>Fighting Back</div>
-        <p className="small">Instead of a separate action, you may attempt to fight back in the same round as you're attacked. Roll your Fighting skill in <em>opposition</em> to the attacker's roll. The winner deals damage to the loser. This costs your action for the round.</p>
-      </div>
-    </div>
-  </div>
-
-  <div className="deco-divider"><span>Wounds & Consequences</span></div>
-
-  <div className="grid-3 mb-6">
-    <div className="card">
-      <div className="card-title">Major Wounds</div>
-      <p className="small">If an investigator takes damage <em>in a single hit</em> equal to half or more of their maximum HP, they suffer a <span className="red">Major Wound</span>.</p>
-      <ul className="coc-list mt-4">
-        <li>Must make a <span className="gold">CON roll</span> or fall unconscious</li>
-        <li>Likely to have a lasting injury (broken bone, severed limb)</li>
-        <li>Requires medical attention to stabilise</li>
-      </ul>
-    </div>
-    <div className="card">
-      <div className="card-title">Dying</div>
-      <p className="small">When HP reaches 0, the investigator is <span className="red">unconscious and dying</span>. They will die in one hour without <span className="gold">First Aid</span> or medical intervention.</p>
-      <ul className="coc-list mt-4">
-        <li>Successful <span className="teal">First Aid</span> roll stabilises them</li>
-        <li>Unconscious investigators cannot act</li>
-        <li>Further damage to a dying character kills them outright</li>
-      </ul>
-    </div>
-    <div className="card">
-      <div className="card-title">Healing</div>
-      <ul className="coc-list">
-        <li><span className="gold">First Aid:</span> Restores 1 HP if successful; can be used once per wound</li>
-        <li><span className="gold">Medicine:</span> Used for serious injuries and major wounds; provides Bonus Die on recovery</li>
-        <li><span className="gold">Natural Recovery:</span> 1 HP per day with rest</li>
-        <li>A <span className="red">Major Wound</span> requires bed rest and proper medical attention</li>
-      </ul>
-    </div>
-  </div>
-
-  <div className="card teal mb-6">
-    <div className="card-title">Improvised Combat Tactics</div>
-    <p>The rules don't limit your options in combat. If you want to do something other than a straightforward attack, describe your intent and the Keeper will determine the roll:</p>
-    <div className="grid-2 mt-4">
-      <ul className="coc-list">
-        <li><strong>Throw dust in eyes</strong> — Sleight of Hand; Penalty Die on opponent's next roll</li>
-        <li><strong>Tackle and pin</strong> — opposed STR (Build) rolls</li>
-        <li><strong>Disarm</strong> — Fighting at Hard difficulty</li>
-      </ul>
-      <ul className="coc-list">
-        <li><strong>Use environment</strong> — push them into a wall, trip over furniture</li>
-        <li><strong>Call a bluff</strong> — Intimidate vs Psychology</li>
-        <li><strong>Flee</strong> — DEX or Athletics roll; almost always better than fighting Mythos</li>
-      </ul>
-    </div>
-  </div>
-
-  <div className="pull-quote">
-    "One dice roll does not represent only one blow. It can be a flurry of punches, a grapple, a desperate struggle. The dice tell you how much damage. How you describe it turns numbers into story."
-    <span className="pull-attr">— Call of Cthulhu 7th Edition, Investigator Handbook</span>
-  </div>
-</div>
-
-
-);
+function qrHTML(){
+  var sk1=[['Library Use','20%'],['Spot Hidden','25%'],['Listen','20%'],['Track','10%'],['Locksmith','01%']];
+  var sk2=[['Charm','15%'],['Fast Talk','05%'],['Intimidate','15%'],['Persuade','10%'],['Psychology','10%']];
+  var sk3=[['History','05%'],['Archaeology','01%'],['Occult','05%'],['Law','05%'],['Medicine','01%']];
+  var sk4=[['Climb','20%'],['Swim','20%'],['Jump','20%'],['Stealth','20%'],['Dodge','DEX÷2']];
+  var sk5=[['Fighting (Brawl)','25%'],['Firearms (Handgun)','20%'],['Firearms (Rifle/Shotgun)','25%'],['First Aid','30%']];
+  var sk6=[['Natural World','10%'],['Navigate','10%'],['Appraise','05%'],['Own Language','EDU'],['Cthulhu Mythos','00%']];
+  function tags(arr){return arr.map(function(s){return '<span class="stg">'+s[0]+'<span class="base">'+s[1]+'</span></span>';}).join('');}
+  return '<div class="page">'+hdr('Chapter VI','Quick Reference','Everything you need when the Keeper looks your way')+
+  '<div class="qrg">'+
+  '<div class="qrb"><div class="qrt">Success Levels</div><div class="qri"><span class="ql">Extreme Success</span><span class="qv">Roll &le; 1/5 skill</span></div><div class="qri"><span class="ql">Hard Success</span><span class="qv">Roll &le; 1/2 skill</span></div><div class="qri"><span class="ql">Regular Success</span><span class="qv">Roll &le; full skill</span></div><div class="qri"><span class="ql">Failure</span><span class="qv">Roll &gt; skill</span></div><div class="qri"><span class="ql">Fumble (skill &lt;50%)</span><span class="qv">Roll 96–100</span></div><div class="qri"><span class="ql">Fumble (skill 50%+)</span><span class="qv">Roll 100</span></div></div>'+
+  '<div class="qrb"><div class="qrt">Bonus &amp; Penalty Dice</div><div class="qri"><span class="ql">Bonus Die</span><span class="qv">Extra tens; take lower</span></div><div class="qri"><span class="ql">Penalty Die</span><span class="qv">Extra tens; take higher</span></div><div class="qri"><span class="ql">Luck Rolls</span><span class="qv">Never modified</span></div><div class="qri"><span class="ql">Pushed Roll</span><span class="qv">One re-roll; justify to Keeper</span></div><div class="qri"><span class="ql">Opposed Roll</span><span class="qv">Higher success level wins</span></div></div>'+
+  '<div class="qrb"><div class="qrt">Derived Attributes</div><div class="qri"><span class="ql">Hit Points</span><span class="qv">(CON + SIZ) ÷ 10</span></div><div class="qri"><span class="ql">Starting Sanity</span><span class="qv">= POW</span></div><div class="qri"><span class="ql">Maximum SAN</span><span class="qv">99 − Cthulhu Mythos</span></div><div class="qri"><span class="ql">Magic Points</span><span class="qv">POW ÷ 5</span></div><div class="qri"><span class="ql">Dodge (base)</span><span class="qv">DEX ÷ 2</span></div><div class="qri"><span class="ql">Own Language</span><span class="qv">= EDU</span></div></div>'+
+  '<div class="qrb"><div class="qrt">Damage Bonus (STR+SIZ)</div><div class="qri"><span class="ql">2–64</span><span class="qv">&minus;2</span></div><div class="qri"><span class="ql">65–84</span><span class="qv">&minus;1</span></div><div class="qri"><span class="ql">85–124</span><span class="qv">None</span></div><div class="qri"><span class="ql">125–164</span><span class="qv">+1D4</span></div><div class="qri"><span class="ql">165–204</span><span class="qv">+1D6</span></div></div>'+
+  '<div class="qrb"><div class="qrt">Sanity Thresholds</div><div class="qri"><span class="ql">Temp insanity trigger</span><span class="qv">5+ SAN in one roll</span></div><div class="qri"><span class="ql">Indefinite trigger</span><span class="qv">20% current SAN / day</span></div><div class="qri"><span class="ql">Bout duration</span><span class="qv">~1D10 rounds</span></div><div class="qri"><span class="ql">Recovery</span><span class="qv">1D6 months care</span></div><div class="qri"><span class="ql">Max SAN cap</span><span class="qv">99 − Mythos skill</span></div></div>'+
+  '<div class="qrb"><div class="qrt">Combat Quick Ref</div><div class="qri"><span class="ql">Initiative</span><span class="qv">Highest DEX first</span></div><div class="qri"><span class="ql">Actions per round</span><span class="qv">1</span></div><div class="qri"><span class="ql">Fight Back</span><span class="qv">Higher success level wins</span></div><div class="qri"><span class="ql">Major Wound</span><span class="qv">Half max HP in one hit</span></div><div class="qri"><span class="ql">Dying (0 HP)</span><span class="qv">First Aid within 1 round</span></div></div>'+
+  '<div class="qrb"><div class="qrt">Movement</div><div class="qri"><span class="ql">MOV 7</span><span class="qv">35 yards/round</span></div><div class="qri"><span class="ql">MOV 8</span><span class="qv">40 yards/round</span></div><div class="qri"><span class="ql">MOV 9</span><span class="qv">45 yards/round</span></div><div class="qri"><span class="ql">Age penalty (40s–80s)</span><span class="qv">&minus;1 to &minus;5 MOV</span></div></div>'+
+  '<div class="qrb"><div class="qrt">Occupation Points</div><div class="qri"><span class="ql">Most Academic roles</span><span class="qv">EDU &times; 4</span></div><div class="qri"><span class="ql">Dilettante / Entertainer</span><span class="qv">EDU&times;2 + APP&times;2</span></div><div class="qri"><span class="ql">Police / Soldier / PI</span><span class="qv">EDU&times;2 + DEX/STR&times;2</span></div><div class="qri"><span class="ql">Personal Interest</span><span class="qv">INT &times; 2</span></div></div>'+
+  '</div>'+
+  '<div class="deco" style="margin:26px 0 20px">&#10022;</div>'+
+  '<div class="sl">Core Skill Base Values</div>'+
+  '<div class="c2" style="margin-top:12px"><div>'+
+  '<div class="scat"><div class="scn">Investigation</div><div class="stgs">'+tags(sk1)+'</div></div>'+
+  '<div class="scat"><div class="scn">Social</div><div class="stgs">'+tags(sk2)+'</div></div>'+
+  '<div class="scat"><div class="scn">Academic</div><div class="stgs">'+tags(sk3)+'</div></div>'+
+  '</div><div>'+
+  '<div class="scat"><div class="scn">Physical</div><div class="stgs">'+tags(sk4)+'</div></div>'+
+  '<div class="scat"><div class="scn">Combat</div><div class="stgs">'+tags(sk5)+'</div></div>'+
+  '<div class="scat"><div class="scn">Knowledge</div><div class="stgs">'+tags(sk6)+'</div></div>'+
+  '</div></div>'+
+  '<div class="bq" style="margin-top:26px"><p>"The most merciful thing in the world, I think, is the inability of the human mind to correlate all its contents. We live on a placid island of ignorance in the midst of black seas of infinity, and it was not meant that we should voyage far."</p><cite>H.P. Lovecraft &middot; The Call of Cthulhu</cite></div>'+
+  '</div>';
 }
 
-/* ─────────────────────────── QUICK REFERENCE ─────────────────────────── */
+var SECS={intro:introHTML,create:createHTML,rules:rulesHTML,combat:combatHTML,sanity:sanityHTML,qr:qrHTML};
+var curTab='intro';
+var tutIdx=0;
 
+<<<<<<< HEAD
 function QuickRefSection() {
 return (
 <div className="fade-in">
@@ -2164,8 +1937,90 @@ return (
 }
 
 ReactDOM.createRoot(document.getElementById('root')).render(<App/>);
-</script>
+=======
+function buildNav(){
+  var bar=document.getElementById('navBar');
+  bar.innerHTML='';
+  TABS.forEach(function(t){
+    var b=document.createElement('button');
+    b.className='nt'+(t.id===curTab?' active':'');
+    b.textContent=t.label;
+    b.onclick=function(){showTab(t.id);};
+    bar.appendChild(b);
+  });
+}
 
+function showTab(id){
+  curTab=id;
+  document.querySelectorAll('.nt').forEach(function(b,i){b.classList.toggle('active',TABS[i].id===id);});
+  var c=document.getElementById('canvas');
+  c.innerHTML=SECS[id]();
+  if(id==='sanity'){initPips(50);}
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function tog(card){
+  card.classList.toggle('open');
+  var a=card.querySelector('.oca');
+  if(a) a.innerHTML=card.classList.contains('open')?'&#9650;':'&#9660;';
+}
+
+function initPips(v){
+  var c=document.getElementById('spips');
+  if(!c) return;
+  c.innerHTML='';
+  for(var i=1;i<=99;i++){
+    var p=document.createElement('div');
+    p.className='sapp';
+    if(i<=v){p.classList.add(v>=70?'hi':v>=30?'mi':'lo');}
+    c.appendChild(p);
+  }
+  var sv=document.getElementById('sv');
+  var st=document.getElementById('sstat');
+  if(sv) sv.textContent=v;
+  if(st){
+    if(v===0){st.textContent='PERMANENTLY INSANE';st.style.color='#5a0a0a';}
+    else if(v<10){st.textContent='On the Brink of Oblivion';st.style.color='#8b1a1a';}
+    else if(v<30){st.textContent='Unravelling';st.style.color='#a02020';}
+    else if(v<50){st.textContent='Deeply Troubled';st.style.color='#c49a1e';}
+    else if(v<70){st.textContent='Troubled';st.style.color='#c49a1e';}
+    else{st.textContent='Stable';st.style.color='#8b6914';}
+  }
+}
+
+function updSan(v){initPips(parseInt(v));}
+
+function openTut(){tutIdx=0;renderTut();document.getElementById('overlay').classList.add('show');}
+
+function renderTut(){
+  var s=TUT[tutIdx];
+  document.getElementById('ovT').textContent=s.t;
+  document.getElementById('ovX').innerHTML=s.x;
+  document.getElementById('ovS').textContent='Chapter '+(tutIdx+1)+' of '+TUT.length;
+  var dots=document.getElementById('ovDots');
+  dots.innerHTML='';
+  TUT.forEach(function(_,i){
+    var d=document.createElement('div');
+    d.className='ovdot'+(i===tutIdx?' active':'');
+    d.onclick=(function(idx){return function(){tutIdx=idx;renderTut();};})(i);
+    dots.appendChild(d);
+  });
+  var back=document.getElementById('ovBack');
+  var next=document.getElementById('ovNext');
+  back.style.visibility=tutIdx===0?'hidden':'visible';
+  if(tutIdx===TUT.length-1){next.textContent='Enter the Archives \u2192';next.onclick=function(){document.getElementById('overlay').classList.remove('show');};}
+  else{next.textContent='Next \u2192';next.onclick=function(){tutIdx++;renderTut();};}
+}
+
+document.getElementById('ovBack').onclick=function(){if(tutIdx>0){tutIdx--;renderTut();}};
+document.getElementById('briefBtn').onclick=openTut;
+document.getElementById('overlay').addEventListener('click',function(e){if(e.target===this)this.classList.remove('show');});
+
+buildNav();
+showTab('intro');
+openTut();
+>>>>>>> 9980147fee64c7a91ce0650de3a4ae29b32a1dd2
+</script>
 </body>
 </html>
 
