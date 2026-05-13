@@ -4,24 +4,26 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>The Auroran Empire — A Traveller's Guide</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Cinzel+Decorative:wght@400;700&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap" rel="stylesheet">
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=EB+Garamond:ital,wght@0,400;0,500;1,400;1,500&display=swap');
 
   :root {
-    --deep: #0a1218;
-    --surface: #0f1e28;
-    --raised: #162636;
-    --border: #1e3a4a;
-    --border-light: #2a5060;
+    --deep: #0a0c14;
+    --surface: #0f1219;
+    --raised: #151920;
+    --border: rgba(180,100,80,0.14);
+    --border-light: rgba(180,100,80,0.28);
     --teal: #4ab8a0;
     --teal-dim: #2a7060;
-    --teal-faint: #16403a;
-    --gold: #c9a84c;
-    --gold-bright: #e8c876;
-    --gold-faint: #8a6a2a;
-    --cream: #c8d8d4;
-    --muted: #6a8880;
-    --faint: #2a4040;
+    --teal-faint: rgba(74,184,160,0.08);
+    --gold: #a88050;
+    --gold-bright: #c9a070;
+    --gold-faint: rgba(168,128,80,0.1);
+    --cream: #e8dcc8;
+    --muted: #a89878;
+    --faint: #5a4a38;
 
     --heartfen: #3a7a5a;
     --heartfen-dim: #1e4a36;
@@ -44,7 +46,7 @@
   body {
     background-color: var(--deep);
     color: var(--cream);
-    font-family: 'EB Garamond', Georgia, serif;
+    font-family: 'Crimson Pro', Georgia, serif;
     font-size: 16px;
     line-height: 1.75;
     min-height: 100vh;
@@ -57,9 +59,9 @@
     position: fixed;
     inset: 0;
     background:
-      radial-gradient(ellipse 80% 40% at 15% 10%, rgba(74,184,160,0.06) 0%, transparent 60%),
-      radial-gradient(ellipse 60% 50% at 85% 80%, rgba(74,184,160,0.04) 0%, transparent 60%),
-      radial-gradient(ellipse 100% 30% at 50% 50%, rgba(201,168,76,0.02) 0%, transparent 70%);
+      radial-gradient(ellipse 80% 40% at 15% 10%, rgba(168,128,80,0.06) 0%, transparent 60%),
+      radial-gradient(ellipse 60% 50% at 85% 80%, rgba(184,104,58,0.04) 0%, transparent 60%),
+      radial-gradient(ellipse 100% 30% at 50% 50%, rgba(168,128,80,0.02) 0%, transparent 70%);
     pointer-events: none;
     z-index: 0;
   }
