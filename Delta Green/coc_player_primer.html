@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 
 <html lang="en">
 <head>
@@ -52,11 +52,11 @@ overflow-x: hidden;
 
 /* Aged paper texture overlay */
 body::before {
-content: ‘’;
+content: '';
 position: fixed;
 inset: 0;
 background-image:
-url(“data:image/svg+xml,%3Csvg xmlns=‘http://www.w3.org/2000/svg’ width=‘300’ height=‘300’%3E%3Cfilter id=‘n’%3E%3CfeTurbulence type=‘fractalNoise’ baseFrequency=‘0.9’ numOctaves=‘4’ stitchTiles=‘stitch’/%3E%3CfeColorMatrix type=‘saturate’ values=‘0’/%3E%3C/filter%3E%3Crect width=‘300’ height=‘300’ filter=‘url(%23n)’ opacity=‘0.04’/%3E%3C/svg%3E”);
+url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
 pointer-events: none;
 z-index: 9999;
 opacity: 0.6;
@@ -247,7 +247,7 @@ margin: 8px auto 0;
 }
 .sec-rule::before,
 .sec-rule::after {
-content: ‘’;
+content: '';
 flex: 1;
 height: 1px;
 background: linear-gradient(to right, transparent, var(--gold-dim));
@@ -283,7 +283,7 @@ position: relative;
 
 .card::before,
 .card::after {
-content: ‘’;
+content: '';
 position: absolute;
 width: 10px;
 height: 10px;
@@ -401,7 +401,7 @@ color: var(--text);
 }
 ul.coc-list li:last-child { border-bottom: none; }
 ul.coc-list li::before {
-content: ‘◆’;
+content: '◆';
 position: absolute;
 left: 2px;
 font-size: 7px;
@@ -722,7 +722,7 @@ margin: 28px 0;
 position: relative;
 }
 .deco-divider::before {
-content: ‘’;
+content: '';
 position: absolute;
 top: 50%;
 left: 0;
@@ -788,7 +788,7 @@ max-height: 90vh;
 overflow-y: auto;
 }
 .overlay-card::before, .overlay-card::after {
-content: ‘’;
+content: '';
 position: absolute;
 width: 18px;
 height: 18px;
@@ -937,139 +937,139 @@ const { useState, useCallback } = React;
 /* ─────────────────────────── DATA ─────────────────────────── */
 
 const TABS = [
-{ id:‘intro’,    label:‘Introduction’,    num:‘I’   },
-{ id:‘creation’, label:‘Investigator’,    num:‘II’  },
-{ id:‘mechanics’,label:‘Core Rules’,      num:‘III’ },
-{ id:‘sanity’,   label:‘Sanity’,          num:‘IV’  },
-{ id:‘combat’,   label:‘Combat’,          num:‘V’   },
-{ id:‘quickref’, label:‘Quick Reference’, num:‘VI’  },
+{ id:'intro',    label:'Introduction',    num:'I'   },
+{ id:'creation', label:'Investigator',    num:'II'  },
+{ id:'mechanics',label:'Core Rules',      num:'III' },
+{ id:'sanity',   label:'Sanity',          num:'IV'  },
+{ id:'combat',   label:'Combat',          num:'V'   },
+{ id:'quickref', label:'Quick Reference', num:'VI'  },
 ];
 
 const CHARACTERISTICS = [
-{ abbr:‘STR’, name:‘Strength’,     roll:‘3D6×5’,  range:‘15–90’, desc:‘Muscle power. Determines damage in melee combat.’ },
-{ abbr:‘CON’, name:‘Constitution’, roll:‘3D6×5’,  range:‘15–90’, desc:‘Vitality & health. Helps determine Hit Points.’ },
-{ abbr:‘SIZ’, name:‘Size’,         roll:’(2D6+6)×5’, range:‘40–90’, desc:‘Height/weight average. Affects Hit Points & Damage Bonus.’ },
-{ abbr:‘DEX’, name:‘Dexterity’,    roll:‘3D6×5’,  range:‘15–90’, desc:‘Speed & agility. Highest DEX acts first in combat.’ },
-{ abbr:‘APP’, name:‘Appearance’,   roll:‘3D6×5’,  range:‘15–90’, desc:‘Charm & attractiveness. Useful in social situations.’ },
-{ abbr:‘INT’, name:‘Intelligence’, roll:’(2D6+6)×5’, range:‘40–90’, desc:‘Learning & analysis. Gives Personal Interest points (INT×2).’ },
-{ abbr:‘POW’, name:‘Power’,        roll:‘3D6×5’,  range:‘15–90’, desc:‘Willpower & magic. Starting Sanity = POW. Magic Points = POW÷5.’ },
-{ abbr:‘EDU’, name:‘Education’,    roll:’(2D6+6)×5’, range:‘40–90’, desc:‘Formal learning. Gives Occupation skill points. Own Language = EDU%.’ },
+{ abbr:'STR', name:'Strength',     roll:'3D6×5',  range:'15–90', desc:'Muscle power. Determines damage in melee combat.' },
+{ abbr:'CON', name:'Constitution', roll:'3D6×5',  range:'15–90', desc:'Vitality & health. Helps determine Hit Points.' },
+{ abbr:'SIZ', name:'Size',         roll:'(2D6+6)×5', range:'40–90', desc:'Height/weight average. Affects Hit Points & Damage Bonus.' },
+{ abbr:'DEX', name:'Dexterity',    roll:'3D6×5',  range:'15–90', desc:'Speed & agility. Highest DEX acts first in combat.' },
+{ abbr:'APP', name:'Appearance',   roll:'3D6×5',  range:'15–90', desc:'Charm & attractiveness. Useful in social situations.' },
+{ abbr:'INT', name:'Intelligence', roll:'(2D6+6)×5', range:'40–90', desc:'Learning & analysis. Gives Personal Interest points (INT×2).' },
+{ abbr:'POW', name:'Power',        roll:'3D6×5',  range:'15–90', desc:'Willpower & magic. Starting Sanity = POW. Magic Points = POW÷5.' },
+{ abbr:'EDU', name:'Education',    roll:'(2D6+6)×5', range:'40–90', desc:'Formal learning. Gives Occupation skill points. Own Language = EDU%.' },
 ];
 
 const OCCUPATIONS = [
 {
-name:‘Antiquarian’, icon:‘🏺’,
-formula:‘EDU×4’, crRange:‘30–75’,
-desc:‘Collector of old curiosities; comfortable with arcane lore and dusty tomes.’,
-skills:[‘Appraise’,‘Art/Craft (any)’,‘History’,‘Library Use’,‘Other Language’,‘Spot Hidden’,‘One Interpersonal Skill’],
-tip:‘Best for investigation and research. Your Library Use is your most powerful weapon.’
+name:'Antiquarian', icon:'🏺',
+formula:'EDU×4', crRange:'30–75',
+desc:'Collector of old curiosities; comfortable with arcane lore and dusty tomes.',
+skills:['Appraise','Art/Craft (any)','History','Library Use','Other Language','Spot Hidden','One Interpersonal Skill'],
+tip:'Best for investigation and research. Your Library Use is your most powerful weapon.'
 },
 {
-name:‘Author’, icon:‘📖’,
-formula:‘EDU×4’, crRange:‘9–30’,
-desc:‘Chronicler of strange events; skilled at gathering information and telling stories.’,
-skills:[‘Art/Craft (Literature)’,‘History’,‘Library Use’,‘Occult’,‘Own Language’,‘One Interpersonal Skill’,‘Psychology’,‘Two Other Skills’],
-tip:‘Social and research powerhouse. Can fast-talk almost anyone.’
+name:'Author', icon:'📖',
+formula:'EDU×4', crRange:'9–30',
+desc:'Chronicler of strange events; skilled at gathering information and telling stories.',
+skills:['Art/Craft (Literature)','History','Library Use','Occult','Own Language','One Interpersonal Skill','Psychology','Two Other Skills'],
+tip:'Social and research powerhouse. Can fast-talk almost anyone.'
 },
 {
-name:‘Dilettante’, icon:‘🎩’,
-formula:‘APP×2+EDU×2’, crRange:‘50–99’,
-desc:‘A wealthy person of leisure—bored, curious, and unafraid to spend money on answers.’,
-skills:[‘Art/Craft (any)’,‘Firearms’,‘Other Language’,‘Ride’,‘One Interpersonal Skill’,‘Spot Hidden’,‘Three Other Skills’],
-tip:‘High Credit Rating means you can fund the group. Connections open many doors.’
+name:'Dilettante', icon:'🎩',
+formula:'APP×2+EDU×2', crRange:'50–99',
+desc:'A wealthy person of leisure—bored, curious, and unafraid to spend money on answers.',
+skills:['Art/Craft (any)','Firearms','Other Language','Ride','One Interpersonal Skill','Spot Hidden','Three Other Skills'],
+tip:'High Credit Rating means you can fund the group. Connections open many doors.'
 },
 {
-name:‘Doctor of Medicine’, icon:‘⚕️’,
-formula:‘EDU×4’, crRange:‘30–80’,
-desc:‘Healer and scientist with knowledge of the human body—and what destroys it.’,
-skills:[‘First Aid’,‘Medicine’,‘Other Language (Latin)’,‘Persuade’,‘Psychology’,‘Science (Biology)’,‘Spot Hidden’,‘Two Other Skills’],
-tip:‘The group's lifeline. Your healing and Psychology skills are invaluable.’
+name:'Doctor of Medicine', icon:'⚕️',
+formula:'EDU×4', crRange:'30–80',
+desc:'Healer and scientist with knowledge of the human body—and what destroys it.',
+skills:['First Aid','Medicine','Other Language (Latin)','Persuade','Psychology','Science (Biology)','Spot Hidden','Two Other Skills'],
+tip:"The group's lifeline. Your healing and Psychology skills are invaluable."
 },
 {
-name:‘Journalist’, icon:‘📰’,
-formula:‘EDU×4’, crRange:‘9–30’,
-desc:‘Seeker of truth armed with a press pass, a nose for lies, and relentless curiosity.’,
-skills:[‘Art/Craft (Photography)’,‘Library Use’,‘Persuade’,‘Psychology’,‘Spot Hidden’,‘Own Language’,‘Two Specialist Skills’],
-tip:‘Fastest at finding clues. Photography can capture evidence no one else believes.’
+name:'Journalist', icon:'📰',
+formula:'EDU×4', crRange:'9–30',
+desc:'Seeker of truth armed with a press pass, a nose for lies, and relentless curiosity.',
+skills:['Art/Craft (Photography)','Library Use','Persuade','Psychology','Spot Hidden','Own Language','Two Specialist Skills'],
+tip:'Fastest at finding clues. Photography can capture evidence no one else believes.'
 },
 {
-name:‘Occultist’, icon:‘🔮’,
-formula:‘EDU×4’, crRange:‘9–65’,
-desc:‘A student of forbidden and arcane knowledge—closer to the Mythos than most dare.’,
-skills:[‘Anthropology’,‘History’,‘Library Use’,‘Occult’,‘Other Language’,‘One Interpersonal Skill’,‘Spot Hidden’,‘Two Other Skills’],
-tip:‘High Occult and Cthulhu Mythos knowledge. You recognize what others can't name.’
+name:'Occultist', icon:'🔮',
+formula:'EDU×4', crRange:'9–65',
+desc:'A student of forbidden and arcane knowledge—closer to the Mythos than most dare.',
+skills:['Anthropology','History','Library Use','Occult','Other Language','One Interpersonal Skill','Spot Hidden','Two Other Skills'],
+tip:"High Occult and Cthulhu Mythos knowledge. You recognize what others can't name."
 },
 {
-name:‘Police Detective’, icon:‘🔍’,
-formula:‘EDU×2+STR×2 (or DEX×2)’, crRange:‘20–50’,
-desc:‘Officer of the law with an eye for crime scenes, a gun at their hip, and authority.’,
-skills:[‘Art/Craft (Photography)’,‘Firearms’,‘Law’,‘Listen’,‘Spot Hidden’,‘Psychology’,‘Two Other Skills’],
-tip:‘Firearms access, legal authority, and top-tier Spot Hidden. Great all-rounder.’
+name:'Police Detective', icon:'🔍',
+formula:'EDU×2+STR×2 (or DEX×2)', crRange:'20–50',
+desc:'Officer of the law with an eye for crime scenes, a gun at their hip, and authority.',
+skills:['Art/Craft (Photography)','Firearms','Law','Listen','Spot Hidden','Psychology','Two Other Skills'],
+tip:'Firearms access, legal authority, and top-tier Spot Hidden. Great all-rounder.'
 },
 {
-name:‘Professor’, icon:‘🎓’,
-formula:‘EDU×4’, crRange:‘20–70’,
-desc:‘Academic expert with university resources, deep research skills, and specialist knowledge.’,
-skills:[‘Library Use’,‘Own Language’,‘Other Language’,‘Psychology’,‘Spot Hidden’,‘Two Science/Academic Skills’,‘One Other Skill’],
-tip:‘Miskatonic connections are priceless. High EDU means more skill points to work with.’
+name:'Professor', icon:'🎓',
+formula:'EDU×4', crRange:'20–70',
+desc:'Academic expert with university resources, deep research skills, and specialist knowledge.',
+skills:['Library Use','Own Language','Other Language','Psychology','Spot Hidden','Two Science/Academic Skills','One Other Skill'],
+tip:'Miskatonic connections are priceless. High EDU means more skill points to work with.'
 },
 {
-name:‘Private Investigator’, icon:‘🕵️’,
-formula:‘EDU×2+STR×2 (or DEX×2)’, crRange:‘9–30’,
-desc:‘A hired sleuth who finds the truth no matter how dark—usually for a fee.’,
-skills:[‘Art/Craft (Photography)’,‘Disguise’,‘Law’,‘Library Use’,‘Persuade’,‘Psychology’,‘Spot Hidden’,‘Two Other Skills’],
-tip:‘Master of social deception and information gathering. Know when to run.’
+name:'Private Investigator', icon:'🕵️',
+formula:'EDU×2+STR×2 (or DEX×2)', crRange:'9–30',
+desc:'A hired sleuth who finds the truth no matter how dark—usually for a fee.',
+skills:['Art/Craft (Photography)','Disguise','Law','Library Use','Persuade','Psychology','Spot Hidden','Two Other Skills'],
+tip:'Master of social deception and information gathering. Know when to run.'
 },
 {
-name:‘Soldier / Veteran’, icon:‘⚔️’,
-formula:‘EDU×2+STR×2 (or DEX×2)’, crRange:‘9–30’,
-desc:‘A survivor of combat who carries the skills—and scars—of military service.’,
-skills:[‘Climb’,‘First Aid’,‘Fighting (Brawl)’,‘Firearms’,‘Navigate’,‘Stealth’,‘Survival’,‘One Other Skill’],
-tip:‘The best fighter in most groups. But Call of Cthulhu rewards brains over brawn.’
+name:'Soldier / Veteran', icon:'⚔️',
+formula:'EDU×2+STR×2 (or DEX×2)', crRange:'9–30',
+desc:'A survivor of combat who carries the skills—and scars—of military service.',
+skills:['Climb','First Aid','Fighting (Brawl)','Firearms','Navigate','Stealth','Survival','One Other Skill'],
+tip:'The best fighter in most groups. But Call of Cthulhu rewards brains over brawn.'
 },
 ];
 
 const TUTORIAL_STEPS = [
 {
-icon:‘🐙’,
-num:‘WELCOME TO ARKHAM’,
-title:‘Investigator Primer’,
+icon:'🐙',
+num:'WELCOME TO ARKHAM',
+title:'Investigator Primer',
 body:`Welcome to the Call of Cthulhu Investigator Primer — your guide to diving into a world of cosmic dread and forbidden knowledge. This companion walks you through everything a new player needs to begin their first session.`,
 },
 {
-icon:‘📋’,
-num:‘TAB I — INTRODUCTION’,
-title:‘What is Call of Cthulhu?’,
+icon:'📋',
+num:'TAB I — INTRODUCTION',
+title:'What is Call of Cthulhu?',
 body:`Start here to understand the game's core concept: who the Keeper is, what investigators do, and the tone of the world you're stepping into. Lovecraftian horror meets 1920s detective fiction.`,
 },
 {
-icon:‘🎭’,
-num:‘TAB II — INVESTIGATOR CREATION’,
-title:‘Building Your Character’,
+icon:'🎭',
+num:'TAB II — INVESTIGATOR CREATION',
+title:'Building Your Character',
 body:`Click through five steps: roll your Characteristics, choose an Occupation, allocate Skills, craft a Backstory, and equip your investigator. Use the expandable Occupation cards to find the right role.`,
 },
 {
-icon:‘🎲’,
-num:‘TAB III — CORE RULES’,
-title:‘How to Roll Dice’,
+icon:'🎲',
+num:'TAB III — CORE RULES',
+title:'How to Roll Dice',
 body:`Everything resolves on a D100. Roll equal to or under your skill to succeed. Learn the three Difficulty Levels, when to use Bonus or Penalty Dice, and when you can Push a failed roll.`,
 },
 {
-icon:‘🧠’,
-num:‘TAB IV — SANITY’,
-title:‘The Horror Within’,
+icon:'🧠',
+num:'TAB IV — SANITY',
+title:'The Horror Within',
 body:`Sanity is your most precious resource. Learn what triggers SAN rolls, how much you can lose before going temporarily or indefinitely insane, and what the Cthulhu Mythos does to your maximum Sanity.`,
 },
 {
-icon:‘⚔️’,
-num:‘TAB V — COMBAT’,
-title:‘When Things Go Violent’,
+icon:'⚔️',
+num:'TAB V — COMBAT',
+title:'When Things Go Violent',
 body:`Call of Cthulhu combat is dangerous and fast. Learn initiative order, how attacks and Dodge work, what a Major Wound means, and — most importantly — when to run rather than fight.`,
 },
 {
-icon:‘📜’,
-num:‘TAB VI — QUICK REFERENCE’,
-title:‘At-a-Glance Rules’,
+icon:'📜',
+num:'TAB VI — QUICK REFERENCE',
+title:'At-a-Glance Rules',
 body:`Tab VI is your mid-session lifeline. Key formulas, roll thresholds, Sanity triggers, combat sequence, and common difficulty levels — all condensed for quick lookup at the table.`,
 },
 ];
@@ -1080,7 +1080,7 @@ function Tutorial({ onClose }) {
 const [step, setStep] = useState(0);
 const s = TUTORIAL_STEPS[step];
 return (
-<div className=“overlay-bg” onClick={e => e.target === e.currentTarget && onClose()}>
+<div className="overlay-bg" onClick={e => e.target === e.currentTarget && onClose()}>
 <div className="overlay-card fade-in">
 <span className="overlay-step-icon">{s.icon}</span>
 <div className="overlay-step-num">STEP {step+1} OF {TUTORIAL_STEPS.length} — {s.num}</div>
@@ -1092,9 +1092,9 @@ return (
 ))}
 </div>
 <div className="overlay-buttons">
-{step > 0 && <button className=“primer-btn ghost” onClick={()=>setStep(step-1)}>← Back</button>}
+{step > 0 && <button className="primer-btn ghost" onClick={()=>setStep(step-1)}>← Back</button>}
 {step < TUTORIAL_STEPS.length-1
-? <button className=“primer-btn” onClick={()=>setStep(step+1)}>Next →</button>
+? <button className="primer-btn" onClick={()=>setStep(step+1)}>Next →</button>
 : <button className="primer-btn" onClick={onClose}>Begin Investigation →</button>
 }
 </div>
@@ -1231,11 +1231,11 @@ const [creStep, setCreStep] = useState(0);
 const [expandedOcc, setExpandedOcc] = useState(null);
 
 const steps = [
-{ num:‘1’, label:‘Characteristics’ },
-{ num:‘2’, label:‘Occupation’      },
-{ num:‘3’, label:‘Skills’          },
-{ num:‘4’, label:‘Backstory’       },
-{ num:‘5’, label:‘Equipment’       },
+{ num:'1', label:'Characteristics' },
+{ num:'2', label:'Occupation'      },
+{ num:'3', label:'Skills'          },
+{ num:'4', label:'Backstory'       },
+{ num:'5', label:'Equipment'       },
 ];
 
 return (
@@ -1977,7 +1977,7 @@ return (
 <div className="fade-in">
 <SectionHead num="VI" title="Quick Reference"/>
 <p className="lead">
-Everything you need at the table, distilled. When the Keeper says “Make a SAN roll” — breathe, find your number, and hope the dice are kind.
+Everything you need at the table, distilled. When the Keeper says "Make a SAN roll" — breathe, find your number, and hope the dice are kind.
 </p>
 
 
@@ -2110,17 +2110,17 @@ Everything you need at the table, distilled. When the Keeper says “Make a SAN 
 /* ─────────────────────────── APP ─────────────────────────── */
 
 function App() {
-const [tab, setTab] = useState(‘intro’);
+const [tab, setTab] = useState('intro');
 const [showTutorial, setShowTutorial] = useState(true);
 
 const renderSection = () => {
 switch(tab) {
-case ‘intro’:     return <IntroSection/>;
-case ‘creation’:  return <CreationSection/>;
-case ‘mechanics’: return <MechanicsSection/>;
-case ‘sanity’:    return <SanitySection/>;
-case ‘combat’:    return <CombatSection/>;
-case ‘quickref’:  return <QuickRefSection/>;
+case 'intro':     return <IntroSection/>;
+case 'creation':  return <CreationSection/>;
+case 'mechanics': return <MechanicsSection/>;
+case 'sanity':    return <SanitySection/>;
+case 'combat':    return <CombatSection/>;
+case 'quickref':  return <QuickRefSection/>;
 default:          return null;
 }
 };
@@ -2163,8 +2163,9 @@ return (
 );
 }
 
-ReactDOM.createRoot(document.getElementById(‘root’)).render(<App/>);
+ReactDOM.createRoot(document.getElementById('root')).render(<App/>);
 </script>
 
 </body>
 </html>
+
