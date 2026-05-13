@@ -1,17 +1,15 @@
-<<<<<<< HEAD
 ﻿<!DOCTYPE html>
 
-=======
-<!DOCTYPE html>
->>>>>>> 9980147fee64c7a91ce0650de3a4ae29b32a1dd2
 <html lang="en">
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Call of Cthulhu — Investigator's Primer</title>
-<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Crimson+Text:ital,wght@0,400;0,600;1,400;1,600&family=Special+Elite&display=swap" rel="stylesheet"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.23.2/babel.min.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Cinzel+Decorative:wght@400;700&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Courier+Prime:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet"/>
 <style>
-<<<<<<< HEAD
 :root {
   --bg:        #100d08;
   --bg2:       #160f09;
@@ -928,133 +926,9 @@ text-transform: uppercase;
 /* Animations */
 @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
 .fade-in { animation: fadeIn 0.3s ease both; }
-=======
-:root{--parchment:#f0e8d5;--parchment-dark:#e0d0b0;--parchment-deep:#c8b890;--ink:#1a120a;--ink-faded:#3d2e1e;--ink-mid:#5a4030;--crimson:#8b1a1a;--crimson-dark:#5c0f0f;--crimson-bright:#b52020;--gold:#8b6914;--gold-bright:#c49a1e;--fd:'Cinzel',serif;--fb:'Crimson Text',serif;--ft:'Special Elite',cursive}
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-body{background:#100a04;font-family:var(--fb);font-size:16px;color:var(--ink);min-height:100vh;overflow-x:hidden}
-.masthead{background:var(--ink);border-bottom:3px solid var(--gold);position:sticky;top:0;z-index:200;box-shadow:0 4px 24px rgba(0,0,0,.9)}
-.mh-inner{max-width:1160px;margin:0 auto}
-.mh-top{display:flex;align-items:center;justify-content:space-between;padding:10px 24px 8px;border-bottom:1px solid #3a2a14}
-.mh-title{font-family:var(--fd);font-size:20px;font-weight:700;color:var(--gold-bright);letter-spacing:.14em;text-transform:uppercase}
-.mh-sub{font-family:var(--ft);font-size:11px;color:var(--parchment-deep);letter-spacing:.1em;margin-top:2px}
-.ob{background:var(--crimson);border:1px solid var(--crimson-bright);color:var(--parchment);font-family:var(--fd);font-size:10px;font-weight:600;letter-spacing:.1em;padding:6px 14px;cursor:pointer;text-transform:uppercase;transition:background .2s}
-.ob:hover{background:var(--crimson-bright)}
-.nav{display:flex;overflow-x:auto;scrollbar-width:none}
-.nav::-webkit-scrollbar{display:none}
-.nt{background:transparent;border:none;border-right:1px solid #2a1808;color:var(--parchment-deep);font-family:var(--fd);font-size:10px;font-weight:600;letter-spacing:.09em;text-transform:uppercase;padding:9px 18px;cursor:pointer;white-space:nowrap;transition:all .2s;position:relative}
-.nt:hover{background:#2a1808;color:var(--gold-bright)}
-.nt.active{background:var(--parchment-dark);color:var(--ink)}
-.nt.active::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:var(--crimson)}
-.canvas{max-width:1160px;margin:0 auto;padding:28px 18px 60px}
-.page{background:var(--parchment);border:1px solid var(--parchment-deep);box-shadow:0 8px 40px rgba(0,0,0,.7);padding:40px 44px}
-@media(max-width:700px){.page{padding:22px 18px}}
-.ch{text-align:center;border-bottom:2px solid var(--gold);padding-bottom:18px;margin-bottom:30px}
-.cn{font-family:var(--fd);font-size:10px;font-weight:600;letter-spacing:.25em;color:var(--crimson);text-transform:uppercase;margin-bottom:6px}
-.corn{display:flex;align-items:center;justify-content:center;gap:14px;margin-bottom:8px}
-.ol{flex:1;max-width:120px;height:1px}.ol.l{background:linear-gradient(to right,transparent,var(--gold))}.ol.r{background:linear-gradient(to left,transparent,var(--gold))}
-.od{width:8px;height:8px;background:var(--gold);transform:rotate(45deg)}
-.ct{font-family:var(--fd);font-size:26px;font-weight:700;color:var(--ink);letter-spacing:.04em}
-.cbl{font-family:var(--ft);font-size:13px;color:var(--ink-mid);margin-top:8px;font-style:italic}
-.c2{display:grid;grid-template-columns:1fr 1fr;gap:28px}
-@media(max-width:720px){.c2{grid-template-columns:1fr}}
-.sl{font-family:var(--fd);font-size:12px;font-weight:700;letter-spacing:.12em;color:var(--crimson);text-transform:uppercase;border-bottom:1px solid var(--parchment-deep);padding-bottom:5px;margin:0 0 12px}
-.sl.g{color:var(--gold)}
-.pr{font-size:15px;line-height:1.75;color:var(--ink-faded)}.pr+.pr{margin-top:8px}
-.blk{margin-bottom:26px}
-.co{background:rgba(139,105,20,.07);border-left:3px solid var(--gold);padding:13px 16px;margin:14px 0;font-size:14px;line-height:1.65;color:var(--ink-faded)}
-.co.red{background:rgba(139,26,26,.06);border-left-color:var(--crimson)}
-.cot{font-family:var(--fd);font-size:11px;font-weight:600;letter-spacing:.1em;color:var(--crimson);text-transform:uppercase;margin-bottom:5px}
-.cot.g{color:var(--gold)}
-table.rt{width:100%;border-collapse:collapse;font-size:14px;margin:12px 0}
-table.rt th{background:var(--ink);color:var(--gold-bright);font-family:var(--fd);font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;padding:7px 11px;text-align:left;border:1px solid #3a2a14}
-table.rt td{padding:7px 11px;border:1px solid var(--parchment-deep);color:var(--ink-faded);vertical-align:top;line-height:1.5}
-table.rt tr:nth-child(even) td{background:rgba(200,168,100,.07)}
-.sg{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:9px;margin:12px 0}
-.sc{background:var(--ink);border:1px solid var(--gold);padding:11px 13px;text-align:center}
-.sn{font-family:var(--fd);font-size:10px;font-weight:700;letter-spacing:.1em;color:var(--gold-bright);text-transform:uppercase}
-.sr{font-family:var(--ft);font-size:13px;color:var(--parchment);margin:4px 0 2px}
-.sd{font-family:var(--fb);font-size:11px;font-style:italic;color:var(--parchment-deep);line-height:1.4}
-.dbr{display:flex;border:1px solid var(--parchment-deep);margin-bottom:3px;font-size:13px}
-.dbrange{background:var(--ink);color:var(--gold-bright);font-family:var(--ft);padding:5px 10px;min-width:86px;display:flex;align-items:center}
-.dbval{color:var(--ink-faded);padding:5px 12px;border-left:1px solid var(--parchment-deep);flex:1;display:flex;align-items:center}
-.og{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:10px;margin:12px 0}
-.oc{background:var(--ink);border:1px solid #3a2a14;cursor:pointer;transition:border-color .2s;overflow:hidden}
-.oc:hover{border-color:var(--gold)}.oc.open{border-color:var(--crimson)}
-.och{display:flex;justify-content:space-between;align-items:center;padding:11px 13px}
-.ocn{font-family:var(--fd);font-size:10px;font-weight:700;letter-spacing:.08em;color:var(--gold-bright);text-transform:uppercase}
-.ocp{font-family:var(--ft);font-size:10px;color:var(--parchment-deep);margin-top:2px}
-.oca{color:var(--parchment-deep);font-size:10px}
-.ocb{display:none;padding:0 13px 11px;border-top:1px solid #2a1808}
-.oc.open .ocb{display:block}
-.ocs{font-family:var(--ft);font-size:11px;color:var(--parchment-deep);line-height:1.7;margin-top:8px}
-.occr{font-family:var(--fd);font-size:10px;color:var(--crimson);letter-spacing:.06em;margin-top:5px}
-.sbrow{display:flex;gap:2px;margin:12px 0}
-.sb{flex:1;padding:13px 8px;text-align:center}
-.sb.ex{background:var(--crimson-dark)}.sb.ha{background:#3a2010}.sb.re{background:var(--ink)}.sb.fa{background:#160804}
-.sbl{font-family:var(--fd);font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;margin-bottom:4px}
-.sb.ex .sbl{color:var(--gold-bright)}.sb.ha .sbl,.sb.re .sbl{color:var(--parchment-deep)}.sb.fa .sbl{color:#5a3030}
-.sbv{font-family:var(--ft);font-size:11px}
-.sb.ex .sbv,.sb.ha .sbv{color:var(--parchment)}.sb.re .sbv{color:#8a7060}.sb.fa .sbv{color:#3a1818}
-.sam{background:var(--ink);border:1px solid var(--gold);padding:18px 20px;margin:14px 0}
-.saml{font-family:var(--fd);font-size:10px;letter-spacing:.15em;color:var(--gold);text-transform:uppercase;margin-bottom:10px;text-align:center}
-.sapt{display:flex;flex-wrap:wrap;gap:2px;justify-content:center;margin-top:10px}
-.sapp{width:13px;height:13px;border:1px solid #3a2a14;background:#1e0e04;transition:background .15s}
-.sapp.hi{background:var(--gold)}.sapp.mi{background:var(--crimson)}.sapp.lo{background:#4a0a0a}
-.sast{text-align:center;font-family:var(--ft);font-size:12px;color:var(--parchment-deep);margin-top:8px}
-input[type=range]{width:100%;accent-color:var(--crimson)}
-.bq{border-left:3px solid var(--crimson);padding:12px 18px;margin:20px 0;background:rgba(139,26,26,.04)}
-.bq p{font-style:italic;font-size:15px;color:var(--ink-mid);line-height:1.7}
-.bq cite{display:block;margin-top:6px;font-size:11px;color:var(--crimson);font-family:var(--fd);font-weight:600;letter-spacing:.06em;text-transform:uppercase;font-style:normal}
-.deco{display:flex;align-items:center;gap:12px;margin:22px 0;color:var(--gold)}
-.deco::before,.deco::after{content:'';flex:1;height:1px}
-.deco::before{background:linear-gradient(to right,transparent,var(--parchment-deep))}
-.deco::after{background:linear-gradient(to left,transparent,var(--parchment-deep))}
-.cl{list-style:none}
-.cl li{display:flex;gap:12px;padding:9px 0;border-bottom:1px solid var(--parchment-deep);font-size:14px;color:var(--ink-faded);line-height:1.5}
-.cl li:last-child{border-bottom:none}
-.cnum{font-family:var(--fd);font-size:9px;font-weight:700;color:var(--crimson);min-width:20px;padding-top:2px}
-.cterm{font-family:var(--fd);font-size:11px;font-weight:600;color:var(--ink);min-width:100px;padding-top:2px;letter-spacing:.03em}
-.qrg{display:grid;grid-template-columns:1fr 1fr;gap:18px}
-@media(max-width:620px){.qrg{grid-template-columns:1fr}}
-.qrb{background:var(--ink);border:1px solid #3a2a14;padding:13px 15px}
-.qrt{font-family:var(--fd);font-size:10px;font-weight:700;letter-spacing:.14em;color:var(--gold-bright);text-transform:uppercase;border-bottom:1px solid #3a2a14;padding-bottom:6px;margin-bottom:9px}
-.qri{display:flex;justify-content:space-between;font-size:12px;padding:3px 0;border-bottom:1px solid #221208;color:var(--parchment-deep);gap:10px}
-.qri:last-child{border-bottom:none}
-.ql{color:var(--parchment);font-family:var(--fb);flex:1}
-.qv{font-family:var(--ft);color:var(--crimson);white-space:nowrap}
-.stgs{display:flex;flex-wrap:wrap;gap:5px;margin-top:6px}
-.stg{background:var(--ink);color:var(--parchment-deep);font-family:var(--ft);font-size:11px;padding:3px 8px;border:1px solid #3a2a14}
-.stg .base{color:var(--crimson);margin-left:3px}
-.scat{margin-bottom:14px}
-.scn{font-family:var(--fd);font-size:10px;font-weight:700;letter-spacing:.12em;color:var(--gold);text-transform:uppercase}
-.movt{width:100%;border-collapse:collapse;font-size:13px;margin:10px 0}
-.movt td{padding:5px 10px;border:1px solid var(--parchment-deep);color:var(--ink-faded)}
-.movt td:first-child{background:rgba(139,105,20,.1);font-family:var(--ft)}
-.sbadge{background:var(--ink);color:var(--parchment);font-family:var(--fd);font-size:10px;font-weight:600;padding:5px 11px;letter-spacing:.06em;border:1px solid #4a3010;display:inline-block;margin:3px}
-.ov{display:none;position:fixed;inset:0;background:rgba(8,4,1,.93);z-index:1000;align-items:center;justify-content:center;padding:20px}
-.ov.show{display:flex}
-.ovc{background:var(--parchment);border:2px solid var(--gold);max-width:540px;width:100%;box-shadow:0 20px 80px rgba(0,0,0,.9);position:relative;overflow:hidden}
-.ovc::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(to right,var(--crimson),var(--gold),var(--crimson))}
-.ovst{background:var(--ink);text-align:center;padding:14px 20px;font-family:var(--fd);font-size:10px;font-weight:600;letter-spacing:.22em;color:var(--gold);text-transform:uppercase}
-.ovb{padding:26px 30px 18px}
-.ovti{font-family:var(--fd);font-size:19px;font-weight:700;color:var(--ink);margin-bottom:13px}
-.ovtx{font-family:var(--fb);font-size:15px;line-height:1.75;color:var(--ink-faded)}
-.ovtx p+p{margin-top:9px}
-.ovsp{font-family:var(--ft);font-size:11px;color:var(--ink-mid);text-align:center;margin-top:10px}
-.ovf{display:flex;justify-content:space-between;align-items:center;padding:14px 30px 22px;border-top:1px solid var(--parchment-deep)}
-.ovd{display:flex;gap:6px}
-.ovdot{width:8px;height:8px;border:1px solid var(--parchment-deep);background:transparent;cursor:pointer;transition:all .2s}
-.ovdot.active{background:var(--crimson);border-color:var(--crimson)}
-.ovbts{display:flex;gap:9px}
-.bp{background:var(--crimson);border:1px solid var(--crimson-bright);color:var(--parchment);font-family:var(--fd);font-size:10px;font-weight:600;letter-spacing:.1em;padding:8px 17px;cursor:pointer;text-transform:uppercase;transition:background .2s}
-.bp:hover{background:var(--crimson-bright)}
-.bs{background:transparent;border:1px solid var(--parchment-deep);color:var(--ink-mid);font-family:var(--fd);font-size:10px;font-weight:600;letter-spacing:.1em;padding:8px 17px;cursor:pointer;text-transform:uppercase;transition:all .2s}
-.bs:hover{border-color:var(--gold);color:var(--ink)}
->>>>>>> 9980147fee64c7a91ce0650de3a4ae29b32a1dd2
 </style>
 </head>
 <body>
-<<<<<<< HEAD
 <div id="root"></div>
 <script type="text/babel">
 const { useState, useCallback } = React;
@@ -1226,76 +1100,6 @@ return (
 </div>
 </div>
 );
-=======
-<div class="masthead">
-  <div class="mh-inner">
-    <div class="mh-top">
-      <div>
-        <div class="mh-title">Call of Cthulhu</div>
-        <div class="mh-sub">Investigator's Primer &middot; 7th Edition &middot; Player's Reference</div>
-      </div>
-      <button class="ob" id="briefBtn">&#8853; Keeper's Briefing</button>
-    </div>
-    <div class="nav" id="navBar"></div>
-  </div>
-</div>
-<div class="canvas" id="canvas"></div>
-<div class="ov" id="overlay">
-  <div class="ovc">
-    <div class="ovst">Call of Cthulhu &middot; Keeper's Welcome &middot; 7th Edition</div>
-    <div class="ovb">
-      <div class="ovti" id="ovT"></div>
-      <div class="ovtx" id="ovX"></div>
-      <div class="ovsp" id="ovS"></div>
-    </div>
-    <div class="ovf">
-      <div class="ovd" id="ovDots"></div>
-      <div class="ovbts">
-        <button class="bs" id="ovBack">&#8592; Back</button>
-        <button class="bp" id="ovNext">Next &#8594;</button>
-      </div>
-    </div>
-  </div>
-</div>
-<script>
-var TABS=[{id:'intro',label:'I. Introduction'},{id:'create',label:'II. Creation'},{id:'rules',label:'III. Core Rules'},{id:'combat',label:'IV. Combat'},{id:'sanity',label:'V. Sanity'},{id:'qr',label:'VI. Quick Ref'}];
-var TUT=[
-  {t:"Investigator's Briefing",x:"<p>Welcome to the <strong>Call of Cthulhu Investigator's Primer</strong>. Use the tabs at the top to navigate the six chapters.</p><p>Call of Cthulhu is a horror roleplaying game set in H.P. Lovecraft's universe. You portray an <strong>Investigator</strong> drawn into mysteries touching cosmic terror.</p>"},
-  {t:"Chapter I — Introduction",x:"<p>The Introduction covers the setting, your role as a player, what the <strong>Keeper of Arcane Lore</strong> does, and the core premise of every session.</p><p>Investigators are <strong>ordinary people</strong>. Knowledge, wit, and cooperation matter more than combat prowess.</p>"},
-  {t:"Chapter II — Creation",x:"<p>Character creation follows <strong>five steps</strong>: roll characteristics, choose occupation, allocate skill points, write a backstory, and equip your investigator.</p><p>Occupation cards are <strong>interactive</strong> — click any card to expand its skill list.</p>"},
-  {t:"Chapter III — Core Rules",x:"<p>Call of Cthulhu uses <strong>percentile dice (D100)</strong>. Roll equal to or under your skill value to succeed. Three levels of success: Regular, Hard, and Extreme.</p><p>Learn Bonus and Penalty dice, Pushed Rolls, and the golden rule: <strong>don't roll unless the Keeper asks</strong>.</p>"},
-  {t:"Chapter IV — Combat",x:"<p>Combat is dangerous and lethal. Investigators are human beings — they <strong>get hurt</strong>. This chapter covers initiative, all combat actions, major wounds, and healing.</p>"},
-  {t:"Chapter V — Sanity",x:"<p><strong>Sanity</strong> is your most precious resource. The interactive track lets you visualise your investigator's state.</p><p>Learn SAN rolls, temporary and indefinite insanity, and how Mythos knowledge permanently lowers your maximum SAN.</p>"},
-  {t:"Chapter VI — Quick Reference",x:"<p>Eight compact reference blocks for mid-session play: success thresholds, damage tables, movement rates, sanity checkpoints, and skill base values.</p><p><strong>Good luck, Investigator.</strong></p>"}
-];
-var CHARS=[
-  {a:'STR',n:'Strength',r:'3D6 × 5',d:'Muscle power; melee damage, carrying capacity.'},
-  {a:'CON',n:'Constitution',r:'3D6 × 5',d:'Health & vitality; contributes to Hit Points.'},
-  {a:'SIZ',n:'Size',r:'(2D6+6) × 5',d:'Height & mass; affects Hit Points & Damage Bonus.'},
-  {a:'DEX',n:'Dexterity',r:'3D6 × 5',d:'Speed & nimbleness. Highest DEX acts first in combat.'},
-  {a:'APP',n:'Appearance',r:'3D6 × 5',d:'Charm & looks. Useful in social encounters.'},
-  {a:'INT',n:'Intelligence',r:'(2D6+6) × 5',d:'Learning & analysis. Drives Personal Interest points.'},
-  {a:'POW',n:'Power',r:'3D6 × 5',d:'Willpower & magic. Starting Sanity equals POW.'},
-  {a:'EDU',n:'Education',r:'(2D6+6) × 5',d:'Formal knowledge. Drives Occupation skill points.'}
-];
-var OCCS=[
-  {n:'Antiquarian',p:'EDU × 4',cr:'30–50',s:'Appraise, Art/Craft (any), History, Library Use, Other Language, one interpersonal skill, Spot Hidden, one personal choice.'},
-  {n:'Author',p:'EDU × 4',cr:'9–30',s:'Art/Craft (Writing), History, Library Use, Natural World or Occult, Other Language, Own Language, Psychology, one other.'},
-  {n:'Dilettante',p:'EDU×2 + APP×2',cr:'50–99',s:'Art/Craft (any), Firearms, Other Language, Ride, one interpersonal skill, Spot Hidden, two personal choices.'},
-  {n:'Doctor of Medicine',p:'EDU × 4',cr:'30–60',s:'First Aid, Medicine, Other Language (Latin), Pharmacy, Psychology, Science (Biology), Science (Pharmacy), two others.'},
-  {n:'Journalist',p:'EDU × 4',cr:'9–30',s:'Art/Craft (Photography), History, Library Use, one interpersonal skill, Own Language, Psychology, Spot Hidden, one personal choice.'},
-  {n:'Police Detective',p:'EDU×2 + STR×2',cr:'20–50',s:'Art/Craft (Acting), Disguise, Fighting, Firearms, Intimidate, Law, Psychology, Spot Hidden.'},
-  {n:'Professor',p:'EDU × 4',cr:'20–70',s:'Library Use, Other Language, Own Language, Psychology, two Science or specialist subjects, two personal choices.'},
-  {n:'Private Investigator',p:'EDU×2 + DEX×2',cr:'9–30',s:'Art/Craft (Photography), Disguise, Law, Library Use, one interpersonal skill, Psychology, Spot Hidden, one other.'},
-  {n:'Soldier / Officer',p:'EDU×2 + DEX×2',cr:'9–30',s:'Climb, Drive Auto, Fighting or Firearms, First Aid, Navigate, Stealth, Survival, one personal choice.'},
-  {n:'Criminal',p:'EDU×2 + DEX×2',cr:'5–65',s:'Disguise, Fighting, Firearms, Locksmith, one interpersonal skill, Psychology, Stealth, one other.'},
-  {n:'Entertainer',p:'EDU×2 + APP×2',cr:'9–40',s:'Art/Craft (any), Disguise, two interpersonal skills, Listen, Psychology, one combat skill, one personal choice.'},
-  {n:'Clergy',p:'EDU × 4',cr:'9–60',s:'Accounting, History, Library Use, Listen, Other Language, one interpersonal skill, Psychology, one personal choice.'}
-];
-
-function hdr(num,title,byline){
-  return '<div class="ch"><div class="cn">'+num+'</div><div class="corn"><div class="ol l"></div><div class="od"></div><div class="ol r"></div></div><div class="ct">'+title+'</div><div class="cbl">'+byline+'</div></div>';
->>>>>>> 9980147fee64c7a91ce0650de3a4ae29b32a1dd2
 }
 
 function introHTML(){
@@ -1349,7 +1153,6 @@ function createHTML(){
   '</div>';
 }
 
-<<<<<<< HEAD
 /* ─────────────────────────── CREATION SECTION ─────────────────────────── */
 
 function CreationSection() {
@@ -1656,22 +1459,6 @@ Five steps transform blank paper into a living, breathing investigator. Work thr
 
 
 );
-=======
-function rulesHTML(){
-  return '<div class="page">'+hdr('Chapter III','Core Rules','The mechanics of the percentile system — success, failure, and the push')+
-  '<div class="c2"><div>'+
-  '<div class="blk"><div class="sl">The Dice System</div><p class="pr">Call of Cthulhu uses <strong>percentile dice (two D10s read as 01–100)</strong>. Roll equal to or <em>under</em> your skill or characteristic value to succeed.</p><p class="pr" style="margin-top:9px">Each skill and characteristic has three values on your sheet:</p><table class="rt" style="margin-top:11px"><thead><tr><th>Box</th><th>Value</th><th>Used For</th></tr></thead><tbody><tr><td>Large</td><td>Full value</td><td>Regular success</td></tr><tr><td>Medium</td><td>&divide;2, round down</td><td>Hard success</td></tr><tr><td>Small</td><td>&divide;5, round down</td><td>Extreme success</td></tr></tbody></table></div>'+
-  '<div class="blk"><div class="sl">Levels of Success</div><div class="sbrow"><div class="sb ex"><div class="sbl">Extreme</div><div class="sbv">&le; 1/5 skill</div></div><div class="sb ha"><div class="sbl">Hard</div><div class="sbv">&le; 1/2 skill</div></div><div class="sb re"><div class="sbl">Regular</div><div class="sbv">&le; full skill</div></div><div class="sb fa"><div class="sbl">Failure</div><div class="sbv">&gt; skill</div></div></div><div class="co red" style="margin-top:10px"><div class="cot">Fumble</div>Roll <strong>96–100</strong> (skill below 50%) or <strong>100</strong> (skill 50%+) for catastrophic failure. Consequences determined by the Keeper — often severe.</div></div>'+
-  '<div class="blk"><div class="sl">Bonus &amp; Penalty Dice</div><table class="rt"><thead><tr><th>Type</th><th>Method</th></tr></thead><tbody><tr><td><strong>Bonus Die</strong></td><td>Roll an extra tens die; use the <em>lower</em> tens result.</td></tr><tr><td><strong>Penalty Die</strong></td><td>Roll an extra tens die; use the <em>higher</em> tens result.</td></tr></tbody></table><p class="pr" style="font-size:13px;margin-top:8px">Only one bonus or penalty die applies at a time; they cancel out. <strong>Luck rolls are never modified.</strong></p></div>'+
-  '<div class="blk"><div class="sl">Pushed Rolls</div><p class="pr">If a roll fails, you may attempt it again as a <strong>Pushed Roll</strong> — but only by justifying to the Keeper what your investigator is doing differently, at greater risk or effort.</p><p class="pr" style="margin-top:8px">A failed pushed roll brings <strong>severe consequences</strong>. You can only push a roll once.</p></div>'+
-  '</div><div>'+
-  '<div class="blk"><div class="sl">When to Roll</div><div class="co red"><div class="cot">Golden Rule</div><strong>Do not roll unless the Keeper asks you to.</strong> Routine tasks need no roll. Only roll when the outcome is uncertain and dramatically significant.</div><div class="co" style="margin-top:10px"><div class="cot g">Set a Goal First</div>Before rolling, state what success means. "I want to persuade the clerk to hand over the files." The Keeper sets the difficulty — then you roll. Rolling before the goal is set is like signing a contract you have not read.</div></div>'+
-  '<div class="blk"><div class="sl">Opposed Rolls</div><p class="pr">When two characters directly contest each other, both roll. The winner achieves the <strong>higher level of success</strong>. On equal levels, the higher skill value wins.</p></div>'+
-  '<div class="blk"><div class="sl">Special Rolls</div><table class="rt"><thead><tr><th>Roll</th><th>Characteristic</th><th>When Used</th></tr></thead><tbody><tr><td><strong>Idea</strong></td><td>INT</td><td>When stuck — intuitive nudge to advance the investigation.</td></tr><tr><td><strong>Know</strong></td><td>EDU</td><td>General knowledge from life experience.</td></tr><tr><td><strong>Luck</strong></td><td>Luck</td><td>External circumstances outside investigator control.</td></tr></tbody></table></div>'+
-  '<div class="blk"><div class="sl">Social Skills</div><table class="rt"><thead><tr><th>Skill</th><th>When to Use</th></tr></thead><tbody><tr><td><strong>Charm (15%)</strong></td><td>Befriending, seducing, making a good impression.</td></tr><tr><td><strong>Fast Talk (5%)</strong></td><td>Quick deception, distraction, confusion.</td></tr><tr><td><strong>Intimidate (15%)</strong></td><td>Using threats, presence, or implied violence.</td></tr><tr><td><strong>Persuade (10%)</strong></td><td>Logical argument, negotiation, sustained reasoning.</td></tr><tr><td><strong>Psychology (10%)</strong></td><td>Reading motives; opposing social influence used against you.</td></tr></tbody></table></div>'+
-  '<div class="blk"><div class="sl">Skill Improvement</div><p class="pr" style="font-size:13px">When you meaningfully use a skill, the Keeper may mark it. At session end, roll D100 for each marked skill. If the result is <strong>greater</strong> than the skill\'s current value, add 1D10 to it.</p></div>'+
-  '</div></div></div>';
->>>>>>> 9980147fee64c7a91ce0650de3a4ae29b32a1dd2
 }
 
 function combatHTML(){
@@ -1744,7 +1531,6 @@ var SECS={intro:introHTML,create:createHTML,rules:rulesHTML,combat:combatHTML,sa
 var curTab='intro';
 var tutIdx=0;
 
-<<<<<<< HEAD
 function QuickRefSection() {
 return (
 <div className="fade-in">
@@ -1937,89 +1723,6 @@ return (
 }
 
 ReactDOM.createRoot(document.getElementById('root')).render(<App/>);
-=======
-function buildNav(){
-  var bar=document.getElementById('navBar');
-  bar.innerHTML='';
-  TABS.forEach(function(t){
-    var b=document.createElement('button');
-    b.className='nt'+(t.id===curTab?' active':'');
-    b.textContent=t.label;
-    b.onclick=function(){showTab(t.id);};
-    bar.appendChild(b);
-  });
-}
-
-function showTab(id){
-  curTab=id;
-  document.querySelectorAll('.nt').forEach(function(b,i){b.classList.toggle('active',TABS[i].id===id);});
-  var c=document.getElementById('canvas');
-  c.innerHTML=SECS[id]();
-  if(id==='sanity'){initPips(50);}
-  window.scrollTo({top:0,behavior:'smooth'});
-}
-
-function tog(card){
-  card.classList.toggle('open');
-  var a=card.querySelector('.oca');
-  if(a) a.innerHTML=card.classList.contains('open')?'&#9650;':'&#9660;';
-}
-
-function initPips(v){
-  var c=document.getElementById('spips');
-  if(!c) return;
-  c.innerHTML='';
-  for(var i=1;i<=99;i++){
-    var p=document.createElement('div');
-    p.className='sapp';
-    if(i<=v){p.classList.add(v>=70?'hi':v>=30?'mi':'lo');}
-    c.appendChild(p);
-  }
-  var sv=document.getElementById('sv');
-  var st=document.getElementById('sstat');
-  if(sv) sv.textContent=v;
-  if(st){
-    if(v===0){st.textContent='PERMANENTLY INSANE';st.style.color='#5a0a0a';}
-    else if(v<10){st.textContent='On the Brink of Oblivion';st.style.color='#8b1a1a';}
-    else if(v<30){st.textContent='Unravelling';st.style.color='#a02020';}
-    else if(v<50){st.textContent='Deeply Troubled';st.style.color='#c49a1e';}
-    else if(v<70){st.textContent='Troubled';st.style.color='#c49a1e';}
-    else{st.textContent='Stable';st.style.color='#8b6914';}
-  }
-}
-
-function updSan(v){initPips(parseInt(v));}
-
-function openTut(){tutIdx=0;renderTut();document.getElementById('overlay').classList.add('show');}
-
-function renderTut(){
-  var s=TUT[tutIdx];
-  document.getElementById('ovT').textContent=s.t;
-  document.getElementById('ovX').innerHTML=s.x;
-  document.getElementById('ovS').textContent='Chapter '+(tutIdx+1)+' of '+TUT.length;
-  var dots=document.getElementById('ovDots');
-  dots.innerHTML='';
-  TUT.forEach(function(_,i){
-    var d=document.createElement('div');
-    d.className='ovdot'+(i===tutIdx?' active':'');
-    d.onclick=(function(idx){return function(){tutIdx=idx;renderTut();};})(i);
-    dots.appendChild(d);
-  });
-  var back=document.getElementById('ovBack');
-  var next=document.getElementById('ovNext');
-  back.style.visibility=tutIdx===0?'hidden':'visible';
-  if(tutIdx===TUT.length-1){next.textContent='Enter the Archives \u2192';next.onclick=function(){document.getElementById('overlay').classList.remove('show');};}
-  else{next.textContent='Next \u2192';next.onclick=function(){tutIdx++;renderTut();};}
-}
-
-document.getElementById('ovBack').onclick=function(){if(tutIdx>0){tutIdx--;renderTut();}};
-document.getElementById('briefBtn').onclick=openTut;
-document.getElementById('overlay').addEventListener('click',function(e){if(e.target===this)this.classList.remove('show');});
-
-buildNav();
-showTab('intro');
-openTut();
->>>>>>> 9980147fee64c7a91ce0650de3a4ae29b32a1dd2
 </script>
 </body>
 </html>
