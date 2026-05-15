@@ -74,6 +74,44 @@
     padding: 56px 40px 100px;
   }
 
+  .back-nav {
+    max-width: 1040px;
+    margin: 0 auto 0.45rem;
+    padding: 0.85rem 40px 0;
+    position: relative;
+    z-index: 2;
+  }
+
+  .back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-family: 'Cinzel', serif;
+    font-size: 0.66rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    line-height: 1.2;
+    color: #b7aa92;
+    text-decoration: none;
+    border: 1px solid rgba(255,255,255,0.10);
+    background: rgba(255,255,255,0.02);
+    border-radius: 3px;
+    padding: 0.4rem 0.75rem;
+    opacity: 0.92;
+    transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease, opacity 0.2s ease;
+  }
+
+  .back-link:hover {
+    opacity: 1;
+    color: #ddd4bb;
+    background: rgba(255,255,255,0.05);
+  }
+
+  .back-link:focus-visible {
+    outline: 2px solid rgba(126,188,196,0.8);
+    outline-offset: 2px;
+  }
+
   /* ── HEADER ── */
   .page-header {
     text-align: center;
@@ -562,6 +600,7 @@
 
   /* ── RESPONSIVE ── */
   @media (max-width: 720px) {
+    .back-nav { padding: 0.7rem 20px 0; }
     .page-wrap { padding: 32px 20px 60px; }
     .world-overview { grid-template-columns: 1fr; }
     .city-grid { grid-template-columns: 1fr; }
@@ -575,6 +614,9 @@
 </style>
 </head>
 <body>
+<nav class="back-nav" aria-label="Page navigation">
+  <a class="back-link" href="index.html">&larr; Back to Index</a>
+</nav>
 <div class="page-wrap">
 
   <!-- HEADER -->
