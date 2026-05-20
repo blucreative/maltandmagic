@@ -1,203 +1,1105 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
+
 <html lang="en">
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Call of Cthulhu — Investigator's Primer</title>
-<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Crimson+Text:ital,wght@0,400;0,600;1,400;1,600&family=Special+Elite&display=swap" rel="stylesheet"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.23.2/babel.min.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Cinzel+Decorative:wght@400;700&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Courier+Prime:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet"/>
 <style>
-:root{--parchment:#f0e8d5;--parchment-dark:#e0d0b0;--parchment-deep:#c8b890;--ink:#1a120a;--ink-faded:#3d2e1e;--ink-mid:#5a4030;--crimson:#8b1a1a;--crimson-dark:#5c0f0f;--crimson-bright:#b52020;--gold:#8b6914;--gold-bright:#c49a1e;--fd:'Cinzel',serif;--fb:'Crimson Text',serif;--ft:'Special Elite',cursive}
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-body{background:#100a04;font-family:var(--fb);font-size:16px;color:var(--ink);min-height:100vh;overflow-x:hidden}
-.masthead{background:var(--ink);border-bottom:3px solid var(--gold);position:sticky;top:0;z-index:200;box-shadow:0 4px 24px rgba(0,0,0,.9)}
-.mh-inner{max-width:1160px;margin:0 auto}
-.mh-top{display:flex;align-items:center;justify-content:space-between;padding:10px 24px 8px;border-bottom:1px solid #3a2a14}
-.mh-title{font-family:var(--fd);font-size:20px;font-weight:700;color:var(--gold-bright);letter-spacing:.14em;text-transform:uppercase}
-.mh-sub{font-family:var(--ft);font-size:11px;color:var(--parchment-deep);letter-spacing:.1em;margin-top:2px}
-.ob{background:var(--crimson);border:1px solid var(--crimson-bright);color:var(--parchment);font-family:var(--fd);font-size:10px;font-weight:600;letter-spacing:.1em;padding:6px 14px;cursor:pointer;text-transform:uppercase;transition:background .2s}
-.ob:hover{background:var(--crimson-bright)}
-.nav{display:flex;overflow-x:auto;scrollbar-width:none}
-.nav::-webkit-scrollbar{display:none}
-.nt{background:transparent;border:none;border-right:1px solid #2a1808;color:var(--parchment-deep);font-family:var(--fd);font-size:10px;font-weight:600;letter-spacing:.09em;text-transform:uppercase;padding:9px 18px;cursor:pointer;white-space:nowrap;transition:all .2s;position:relative}
-.nt:hover{background:#2a1808;color:var(--gold-bright)}
-.nt.active{background:var(--parchment-dark);color:var(--ink)}
-.nt.active::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:var(--crimson)}
-.canvas{max-width:1160px;margin:0 auto;padding:28px 18px 60px}
-.page{background:var(--parchment);border:1px solid var(--parchment-deep);box-shadow:0 8px 40px rgba(0,0,0,.7);padding:40px 44px}
-@media(max-width:700px){.page{padding:22px 18px}}
-.ch{text-align:center;border-bottom:2px solid var(--gold);padding-bottom:18px;margin-bottom:30px}
-.cn{font-family:var(--fd);font-size:10px;font-weight:600;letter-spacing:.25em;color:var(--crimson);text-transform:uppercase;margin-bottom:6px}
-.corn{display:flex;align-items:center;justify-content:center;gap:14px;margin-bottom:8px}
-.ol{flex:1;max-width:120px;height:1px}.ol.l{background:linear-gradient(to right,transparent,var(--gold))}.ol.r{background:linear-gradient(to left,transparent,var(--gold))}
-.od{width:8px;height:8px;background:var(--gold);transform:rotate(45deg)}
-.ct{font-family:var(--fd);font-size:26px;font-weight:700;color:var(--ink);letter-spacing:.04em}
-.cbl{font-family:var(--ft);font-size:13px;color:var(--ink-mid);margin-top:8px;font-style:italic}
-.c2{display:grid;grid-template-columns:1fr 1fr;gap:28px}
-@media(max-width:720px){.c2{grid-template-columns:1fr}}
-.sl{font-family:var(--fd);font-size:12px;font-weight:700;letter-spacing:.12em;color:var(--crimson);text-transform:uppercase;border-bottom:1px solid var(--parchment-deep);padding-bottom:5px;margin:0 0 12px}
-.sl.g{color:var(--gold)}
-.pr{font-size:15px;line-height:1.75;color:var(--ink-faded)}.pr+.pr{margin-top:8px}
-.blk{margin-bottom:26px}
-.co{background:rgba(139,105,20,.07);border-left:3px solid var(--gold);padding:13px 16px;margin:14px 0;font-size:14px;line-height:1.65;color:var(--ink-faded)}
-.co.red{background:rgba(139,26,26,.06);border-left-color:var(--crimson)}
-.cot{font-family:var(--fd);font-size:11px;font-weight:600;letter-spacing:.1em;color:var(--crimson);text-transform:uppercase;margin-bottom:5px}
-.cot.g{color:var(--gold)}
-table.rt{width:100%;border-collapse:collapse;font-size:14px;margin:12px 0}
-table.rt th{background:var(--ink);color:var(--gold-bright);font-family:var(--fd);font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;padding:7px 11px;text-align:left;border:1px solid #3a2a14}
-table.rt td{padding:7px 11px;border:1px solid var(--parchment-deep);color:var(--ink-faded);vertical-align:top;line-height:1.5}
-table.rt tr:nth-child(even) td{background:rgba(200,168,100,.07)}
-.sg{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:9px;margin:12px 0}
-.sc{background:var(--ink);border:1px solid var(--gold);padding:11px 13px;text-align:center}
-.sn{font-family:var(--fd);font-size:10px;font-weight:700;letter-spacing:.1em;color:var(--gold-bright);text-transform:uppercase}
-.sr{font-family:var(--ft);font-size:13px;color:var(--parchment);margin:4px 0 2px}
-.sd{font-family:var(--fb);font-size:11px;font-style:italic;color:var(--parchment-deep);line-height:1.4}
-.dbr{display:flex;border:1px solid var(--parchment-deep);margin-bottom:3px;font-size:13px}
-.dbrange{background:var(--ink);color:var(--gold-bright);font-family:var(--ft);padding:5px 10px;min-width:86px;display:flex;align-items:center}
-.dbval{color:var(--ink-faded);padding:5px 12px;border-left:1px solid var(--parchment-deep);flex:1;display:flex;align-items:center}
-.og{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:10px;margin:12px 0}
-.oc{background:var(--ink);border:1px solid #3a2a14;cursor:pointer;transition:border-color .2s;overflow:hidden}
-.oc:hover{border-color:var(--gold)}.oc.open{border-color:var(--crimson)}
-.och{display:flex;justify-content:space-between;align-items:center;padding:11px 13px}
-.ocn{font-family:var(--fd);font-size:10px;font-weight:700;letter-spacing:.08em;color:var(--gold-bright);text-transform:uppercase}
-.ocp{font-family:var(--ft);font-size:10px;color:var(--parchment-deep);margin-top:2px}
-.oca{color:var(--parchment-deep);font-size:10px}
-.ocb{display:none;padding:0 13px 11px;border-top:1px solid #2a1808}
-.oc.open .ocb{display:block}
-.ocs{font-family:var(--ft);font-size:11px;color:var(--parchment-deep);line-height:1.7;margin-top:8px}
-.occr{font-family:var(--fd);font-size:10px;color:var(--crimson);letter-spacing:.06em;margin-top:5px}
-.sbrow{display:flex;gap:2px;margin:12px 0}
-.sb{flex:1;padding:13px 8px;text-align:center}
-.sb.ex{background:var(--crimson-dark)}.sb.ha{background:#3a2010}.sb.re{background:var(--ink)}.sb.fa{background:#160804}
-.sbl{font-family:var(--fd);font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;margin-bottom:4px}
-.sb.ex .sbl{color:var(--gold-bright)}.sb.ha .sbl,.sb.re .sbl{color:var(--parchment-deep)}.sb.fa .sbl{color:#5a3030}
-.sbv{font-family:var(--ft);font-size:11px}
-.sb.ex .sbv,.sb.ha .sbv{color:var(--parchment)}.sb.re .sbv{color:#8a7060}.sb.fa .sbv{color:#3a1818}
-.sam{background:var(--ink);border:1px solid var(--gold);padding:18px 20px;margin:14px 0}
-.saml{font-family:var(--fd);font-size:10px;letter-spacing:.15em;color:var(--gold);text-transform:uppercase;margin-bottom:10px;text-align:center}
-.sapt{display:flex;flex-wrap:wrap;gap:2px;justify-content:center;margin-top:10px}
-.sapp{width:13px;height:13px;border:1px solid #3a2a14;background:#1e0e04;transition:background .15s}
-.sapp.hi{background:var(--gold)}.sapp.mi{background:var(--crimson)}.sapp.lo{background:#4a0a0a}
-.sast{text-align:center;font-family:var(--ft);font-size:12px;color:var(--parchment-deep);margin-top:8px}
-input[type=range]{width:100%;accent-color:var(--crimson)}
-.bq{border-left:3px solid var(--crimson);padding:12px 18px;margin:20px 0;background:rgba(139,26,26,.04)}
-.bq p{font-style:italic;font-size:15px;color:var(--ink-mid);line-height:1.7}
-.bq cite{display:block;margin-top:6px;font-size:11px;color:var(--crimson);font-family:var(--fd);font-weight:600;letter-spacing:.06em;text-transform:uppercase;font-style:normal}
-.deco{display:flex;align-items:center;gap:12px;margin:22px 0;color:var(--gold)}
-.deco::before,.deco::after{content:'';flex:1;height:1px}
-.deco::before{background:linear-gradient(to right,transparent,var(--parchment-deep))}
-.deco::after{background:linear-gradient(to left,transparent,var(--parchment-deep))}
-.cl{list-style:none}
-.cl li{display:flex;gap:12px;padding:9px 0;border-bottom:1px solid var(--parchment-deep);font-size:14px;color:var(--ink-faded);line-height:1.5}
-.cl li:last-child{border-bottom:none}
-.cnum{font-family:var(--fd);font-size:9px;font-weight:700;color:var(--crimson);min-width:20px;padding-top:2px}
-.cterm{font-family:var(--fd);font-size:11px;font-weight:600;color:var(--ink);min-width:100px;padding-top:2px;letter-spacing:.03em}
-.qrg{display:grid;grid-template-columns:1fr 1fr;gap:18px}
-@media(max-width:620px){.qrg{grid-template-columns:1fr}}
-.qrb{background:var(--ink);border:1px solid #3a2a14;padding:13px 15px}
-.qrt{font-family:var(--fd);font-size:10px;font-weight:700;letter-spacing:.14em;color:var(--gold-bright);text-transform:uppercase;border-bottom:1px solid #3a2a14;padding-bottom:6px;margin-bottom:9px}
-.qri{display:flex;justify-content:space-between;font-size:12px;padding:3px 0;border-bottom:1px solid #221208;color:var(--parchment-deep);gap:10px}
-.qri:last-child{border-bottom:none}
-.ql{color:var(--parchment);font-family:var(--fb);flex:1}
-.qv{font-family:var(--ft);color:var(--crimson);white-space:nowrap}
-.stgs{display:flex;flex-wrap:wrap;gap:5px;margin-top:6px}
-.stg{background:var(--ink);color:var(--parchment-deep);font-family:var(--ft);font-size:11px;padding:3px 8px;border:1px solid #3a2a14}
-.stg .base{color:var(--crimson);margin-left:3px}
-.scat{margin-bottom:14px}
-.scn{font-family:var(--fd);font-size:10px;font-weight:700;letter-spacing:.12em;color:var(--gold);text-transform:uppercase}
-.movt{width:100%;border-collapse:collapse;font-size:13px;margin:10px 0}
-.movt td{padding:5px 10px;border:1px solid var(--parchment-deep);color:var(--ink-faded)}
-.movt td:first-child{background:rgba(139,105,20,.1);font-family:var(--ft)}
-.sbadge{background:var(--ink);color:var(--parchment);font-family:var(--fd);font-size:10px;font-weight:600;padding:5px 11px;letter-spacing:.06em;border:1px solid #4a3010;display:inline-block;margin:3px}
-.ov{display:none;position:fixed;inset:0;background:rgba(8,4,1,.93);z-index:1000;align-items:center;justify-content:center;padding:20px}
-.ov.show{display:flex}
-.ovc{background:var(--parchment);border:2px solid var(--gold);max-width:540px;width:100%;box-shadow:0 20px 80px rgba(0,0,0,.9);position:relative;overflow:hidden}
-.ovc::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(to right,var(--crimson),var(--gold),var(--crimson))}
-.ovst{background:var(--ink);text-align:center;padding:14px 20px;font-family:var(--fd);font-size:10px;font-weight:600;letter-spacing:.22em;color:var(--gold);text-transform:uppercase}
-.ovb{padding:26px 30px 18px}
-.ovti{font-family:var(--fd);font-size:19px;font-weight:700;color:var(--ink);margin-bottom:13px}
-.ovtx{font-family:var(--fb);font-size:15px;line-height:1.75;color:var(--ink-faded)}
-.ovtx p+p{margin-top:9px}
-.ovsp{font-family:var(--ft);font-size:11px;color:var(--ink-mid);text-align:center;margin-top:10px}
-.ovf{display:flex;justify-content:space-between;align-items:center;padding:14px 30px 22px;border-top:1px solid var(--parchment-deep)}
-.ovd{display:flex;gap:6px}
-.ovdot{width:8px;height:8px;border:1px solid var(--parchment-deep);background:transparent;cursor:pointer;transition:all .2s}
-.ovdot.active{background:var(--crimson);border-color:var(--crimson)}
-.ovbts{display:flex;gap:9px}
-.bp{background:var(--crimson);border:1px solid var(--crimson-bright);color:var(--parchment);font-family:var(--fd);font-size:10px;font-weight:600;letter-spacing:.1em;padding:8px 17px;cursor:pointer;text-transform:uppercase;transition:background .2s}
-.bp:hover{background:var(--crimson-bright)}
-.bs{background:transparent;border:1px solid var(--parchment-deep);color:var(--ink-mid);font-family:var(--fd);font-size:10px;font-weight:600;letter-spacing:.1em;padding:8px 17px;cursor:pointer;text-transform:uppercase;transition:all .2s}
-.bs:hover{border-color:var(--gold);color:var(--ink)}
+:root {
+  --bg:        #100d08;
+  --bg2:       #160f09;
+  --surface:   #1e1510;
+  --surface2:  #261b12;
+  --surface3:  #2e2118;
+  --border:    #3d2e1e;
+  --border2:   #5a3e28;
+  --gold:      #c9a84c;
+  --gold-dim:  #7a6230;
+  --gold-pale: #e8d49a;
+  --teal:      #4a9b8a;
+  --teal-dim:  #2a6058;
+  --teal-pale: #a0d4ca;
+  --red:       #9b3a28;
+  --red-bright:#c9503a;
+  --text:      #d4c9a8;
+  --text-dim:  #8a7a5a;
+  --text-pale: #ede4cc;
+  --text-faint:#4a3e2a;
+  --font-deco: 'Cinzel', serif;
+  --font-display: 'Cinzel Decorative', serif;
+  --font-body: 'EB Garamond', serif;
+  --font-mono: 'Courier Prime', monospace;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+background: var(--bg);
+color: var(--text);
+font-family: var(--font-body);
+font-size: 16px;
+line-height: 1.65;
+min-height: 100vh;
+overflow-x: hidden;
+}
+
+/* Aged paper texture overlay */
+body::before {
+content: '';
+position: fixed;
+inset: 0;
+background-image:
+url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+pointer-events: none;
+z-index: 9999;
+opacity: 0.6;
+}
+
+/* ── SCROLLBAR ── */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--gold-dim); border-radius: 0; }
+
+/* ── HEADER ── */
+.header {
+background: var(--bg2);
+border-bottom: 1px solid var(--border2);
+position: sticky;
+top: 0;
+z-index: 200;
+box-shadow: 0 4px 30px rgba(0,0,0,0.8);
+}
+
+.header-top {
+max-width: 1200px;
+margin: 0 auto;
+padding: 14px 28px 0;
+display: flex;
+align-items: flex-end;
+gap: 20px;
+flex-wrap: wrap;
+}
+
+.cthulhu-eye {
+font-size: 32px;
+line-height: 1;
+filter: drop-shadow(0 0 8px rgba(201,168,76,0.6));
+flex-shrink: 0;
+}
+
+.header-text { flex: 1; }
+
+.header-eyebrow {
+font-family: var(--font-mono);
+font-size: 9px;
+letter-spacing: 3px;
+color: var(--gold-dim);
+text-transform: uppercase;
+margin-bottom: 2px;
+}
+
+.header-title {
+font-family: var(--font-display);
+font-size: clamp(16px, 2.5vw, 24px);
+color: var(--gold);
+letter-spacing: 2px;
+text-shadow: 0 0 20px rgba(201,168,76,0.3);
+line-height: 1.1;
+}
+
+.header-subtitle {
+font-family: var(--font-deco);
+font-size: 11px;
+color: var(--text-dim);
+letter-spacing: 2px;
+}
+
+.header-actions {
+display: flex;
+align-items: center;
+gap: 10px;
+padding-bottom: 4px;
+}
+
+.primer-btn {
+background: none;
+border: 1px solid var(--gold-dim);
+color: var(--gold);
+font-family: var(--font-deco);
+font-size: 10px;
+letter-spacing: 1.5px;
+padding: 7px 16px;
+cursor: pointer;
+transition: all 0.2s;
+text-transform: uppercase;
+}
+.primer-btn:hover {
+background: var(--gold);
+color: var(--bg);
+border-color: var(--gold);
+}
+.primer-btn.ghost {
+border-color: var(--border);
+color: var(--text-dim);
+}
+.primer-btn.ghost:hover {
+background: var(--surface);
+color: var(--text);
+border-color: var(--border2);
+}
+
+/* ── NAV ── */
+.nav-bar {
+max-width: 1200px;
+margin: 0 auto;
+padding: 0 28px;
+display: flex;
+gap: 0;
+overflow-x: auto;
+-webkit-overflow-scrolling: touch;
+scrollbar-width: none;
+}
+.nav-bar::-webkit-scrollbar { display: none; }
+
+.nav-tab {
+background: none;
+border: none;
+border-bottom: 2px solid transparent;
+color: var(--text-dim);
+font-family: var(--font-deco);
+font-size: 10px;
+letter-spacing: 1.5px;
+padding: 10px 18px;
+cursor: pointer;
+transition: all 0.2s;
+white-space: nowrap;
+text-transform: uppercase;
+position: relative;
+}
+.nav-tab:hover { color: var(--gold-pale); }
+.nav-tab.active {
+color: var(--gold);
+border-bottom-color: var(--gold);
+}
+.nav-tab .tab-num {
+display: block;
+font-size: 7px;
+letter-spacing: 2px;
+color: var(--gold-dim);
+margin-bottom: 1px;
+text-align: center;
+}
+
+/* ── MAIN ── */
+.main {
+max-width: 1200px;
+margin: 0 auto;
+padding: 36px 28px 80px;
+}
+
+/* ── SECTION HEADER ── */
+.sec-header {
+text-align: center;
+margin-bottom: 36px;
+position: relative;
+}
+
+.sec-ornament {
+font-size: 28px;
+color: var(--gold-dim);
+display: block;
+margin-bottom: 8px;
+opacity: 0.7;
+}
+
+.sec-num {
+font-family: var(--font-mono);
+font-size: 10px;
+letter-spacing: 4px;
+color: var(--teal);
+display: block;
+margin-bottom: 6px;
+text-transform: uppercase;
+}
+
+.sec-title {
+font-family: var(--font-display);
+font-size: clamp(18px, 3vw, 28px);
+color: var(--gold);
+letter-spacing: 3px;
+text-shadow: 0 0 30px rgba(201,168,76,0.2);
+margin-bottom: 8px;
+}
+
+.sec-rule {
+display: flex;
+align-items: center;
+gap: 12px;
+max-width: 500px;
+margin: 8px auto 0;
+}
+.sec-rule::before,
+.sec-rule::after {
+content: '';
+flex: 1;
+height: 1px;
+background: linear-gradient(to right, transparent, var(--gold-dim));
+}
+.sec-rule::after {
+background: linear-gradient(to left, transparent, var(--gold-dim));
+}
+.sec-diamond {
+width: 6px;
+height: 6px;
+background: var(--gold-dim);
+transform: rotate(45deg);
+flex-shrink: 0;
+}
+
+/* ── GRID ── */
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+.grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; }
+.grid-auto { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px,1fr)); gap: 20px; }
+
+@media (max-width: 768px) {
+.grid-2, .grid-3 { grid-template-columns: 1fr; }
+.header-top { flex-direction: column; align-items: flex-start; }
+}
+
+/* ── CARDS ── */
+.card {
+background: var(--surface);
+border: 1px solid var(--border);
+padding: 20px;
+position: relative;
+}
+
+.card::before,
+.card::after {
+content: '';
+position: absolute;
+width: 10px;
+height: 10px;
+border-color: var(--gold-dim);
+border-style: solid;
+}
+.card::before {
+top: -1px; left: -1px;
+border-width: 1px 0 0 1px;
+}
+.card::after {
+bottom: -1px; right: -1px;
+border-width: 0 1px 1px 0;
+}
+
+.card.teal {
+border-color: var(--teal-dim);
+background: rgba(42,96,88,0.12);
+}
+.card.teal::before, .card.teal::after { border-color: var(--teal-dim); }
+
+.card.gold {
+border-color: var(--gold-dim);
+background: rgba(122,98,48,0.1);
+}
+.card.gold::before, .card.gold::after { border-color: var(--gold-dim); }
+
+.card.red {
+border-color: var(--red);
+background: rgba(155,58,40,0.1);
+}
+.card.red::before, .card.red::after { border-color: var(--red); }
+
+.card-title {
+font-family: var(--font-deco);
+font-size: 11px;
+letter-spacing: 2px;
+color: var(--gold);
+text-transform: uppercase;
+margin-bottom: 12px;
+padding-bottom: 8px;
+border-bottom: 1px solid var(--border);
+}
+.card.teal .card-title { color: var(--teal-pale); border-bottom-color: var(--teal-dim); }
+.card.red .card-title { color: var(--red-bright); border-bottom-color: var(--red); }
+
+.card p + p { margin-top: 8px; }
+
+/* ── LEAD TEXT ── */
+.lead {
+font-family: var(--font-body);
+font-size: 17px;
+font-style: italic;
+color: var(--text-pale);
+line-height: 1.7;
+text-align: center;
+max-width: 750px;
+margin: 0 auto 32px;
+}
+
+/* ── STAT BLOCK ── */
+.stat-block {
+display: grid;
+grid-template-columns: repeat(auto-fill, minmax(130px,1fr));
+gap: 10px;
+margin: 16px 0;
+}
+
+.stat-item {
+background: var(--surface2);
+border: 1px solid var(--border);
+padding: 12px 10px;
+text-align: center;
+}
+.stat-name {
+font-family: var(--font-mono);
+font-size: 9px;
+letter-spacing: 2px;
+color: var(--text-dim);
+display: block;
+margin-bottom: 4px;
+}
+.stat-abbr {
+font-family: var(--font-deco);
+font-size: 20px;
+font-weight: 700;
+color: var(--gold);
+display: block;
+line-height: 1;
+}
+.stat-roll {
+font-family: var(--font-mono);
+font-size: 10px;
+color: var(--teal);
+display: block;
+margin-top: 2px;
+}
+.stat-desc {
+font-size: 11px;
+color: var(--text-dim);
+margin-top: 4px;
+}
+
+/* ── LISTS ── */
+ul.coc-list {
+list-style: none;
+padding: 0;
+}
+ul.coc-list li {
+padding: 5px 0 5px 20px;
+border-bottom: 1px solid var(--border);
+font-size: 14px;
+position: relative;
+color: var(--text);
+}
+ul.coc-list li:last-child { border-bottom: none; }
+ul.coc-list li::before {
+content: '◆';
+position: absolute;
+left: 2px;
+font-size: 7px;
+color: var(--gold-dim);
+top: 8px;
+}
+
+/* ── DIFFICULTY TABLE ── */
+.diff-table { width: 100%; border-collapse: collapse; margin: 12px 0; }
+.diff-table th {
+font-family: var(--font-deco);
+font-size: 9px;
+letter-spacing: 1.5px;
+text-transform: uppercase;
+color: var(--gold-dim);
+text-align: left;
+padding: 6px 10px;
+border-bottom: 1px solid var(--border2);
+}
+.diff-table td {
+font-size: 13px;
+padding: 7px 10px;
+border-bottom: 1px solid var(--border);
+vertical-align: top;
+}
+.diff-table tr:last-child td { border-bottom: none; }
+.diff-table td:first-child {
+font-family: var(--font-deco);
+font-weight: 600;
+color: var(--gold);
+white-space: nowrap;
+font-size: 11px;
+letter-spacing: 0.5px;
+}
+.diff-table td.teal { color: var(--teal); font-family: var(--font-mono); font-size: 12px; }
+.diff-table td.red { color: var(--red-bright); font-family: var(--font-mono); font-size: 12px; }
+
+/* ── DICE VISUAL ── */
+.dice-example {
+background: var(--surface2);
+border: 1px solid var(--border2);
+padding: 14px;
+text-align: center;
+margin: 10px 0;
+}
+.dice-big {
+font-family: var(--font-display);
+font-size: 36px;
+color: var(--gold);
+display: block;
+line-height: 1;
+text-shadow: 0 0 20px rgba(201,168,76,0.4);
+}
+.dice-label {
+font-family: var(--font-mono);
+font-size: 10px;
+letter-spacing: 2px;
+color: var(--text-dim);
+margin-top: 4px;
+display: block;
+}
+
+/* ── STEP INDICATOR ── */
+.steps {
+display: flex;
+gap: 0;
+margin-bottom: 28px;
+border: 1px solid var(--border);
+overflow-x: auto;
+}
+.step-item {
+flex: 1;
+min-width: 120px;
+padding: 12px 10px;
+text-align: center;
+border-right: 1px solid var(--border);
+cursor: pointer;
+transition: background 0.2s;
+background: var(--surface);
+}
+.step-item:last-child { border-right: none; }
+.step-item:hover, .step-item.active { background: var(--surface2); }
+.step-item.active .step-num { color: var(--gold); }
+.step-num {
+font-family: var(--font-display);
+font-size: 18px;
+color: var(--gold-dim);
+display: block;
+line-height: 1;
+}
+.step-label {
+font-family: var(--font-deco);
+font-size: 9px;
+letter-spacing: 1px;
+color: var(--text-dim);
+text-transform: uppercase;
+display: block;
+margin-top: 3px;
+}
+.step-item.active .step-label { color: var(--text); }
+
+/* ── OCCUPATION CARDS ── */
+.occ-grid {
+display: grid;
+grid-template-columns: repeat(auto-fill, minmax(260px,1fr));
+gap: 14px;
+margin-top: 16px;
+}
+.occ-card {
+background: var(--surface);
+border: 1px solid var(--border);
+cursor: pointer;
+transition: all 0.2s;
+overflow: hidden;
+}
+.occ-card:hover { border-color: var(--gold-dim); background: var(--surface2); }
+.occ-card.expanded { border-color: var(--gold); }
+.occ-header {
+padding: 14px 16px;
+display: flex;
+justify-content: space-between;
+align-items: center;
+}
+.occ-name {
+font-family: var(--font-deco);
+font-size: 13px;
+letter-spacing: 0.5px;
+color: var(--gold-pale);
+}
+.occ-icon {
+font-size: 18px;
+color: var(--gold-dim);
+}
+.occ-body {
+padding: 0 16px 14px;
+border-top: 1px solid var(--border);
+}
+.occ-desc {
+font-style: italic;
+color: var(--text-dim);
+font-size: 13px;
+margin: 10px 0;
+}
+.occ-formula {
+font-family: var(--font-mono);
+font-size: 11px;
+color: var(--teal);
+margin-bottom: 8px;
+}
+.skill-chip {
+display: inline-block;
+background: var(--surface3);
+border: 1px solid var(--border);
+font-family: var(--font-mono);
+font-size: 10px;
+color: var(--text);
+padding: 2px 7px;
+margin: 2px 2px;
+}
+
+/* ── SAN TRACK ── */
+.san-track {
+display: flex;
+flex-wrap: wrap;
+gap: 3px;
+margin: 12px 0;
+}
+.san-pip {
+width: 18px;
+height: 18px;
+border: 1px solid var(--border);
+background: var(--surface2);
+font-family: var(--font-mono);
+font-size: 7px;
+display: flex;
+align-items: center;
+justify-content: center;
+color: var(--text-faint);
+transition: all 0.15s;
+}
+.san-pip.lost { background: var(--red); border-color: var(--red-bright); color: transparent; }
+.san-pip.warn { background: rgba(155,58,40,0.3); border-color: var(--red); color: var(--text-faint); }
+.san-pip.ok { background: rgba(74,155,138,0.15); border-color: var(--teal-dim); color: var(--teal-dim); }
+
+/* ── INSANITY CARDS ── */
+.insanity-types {
+display: grid;
+grid-template-columns: 1fr 1fr 1fr;
+gap: 16px;
+margin: 16px 0;
+}
+@media (max-width: 640px) {
+.insanity-types { grid-template-columns: 1fr; }
+}
+.insanity-card {
+background: var(--surface);
+border: 1px solid var(--border);
+padding: 16px;
+text-align: center;
+}
+.insanity-icon { font-size: 32px; display: block; margin-bottom: 8px; }
+.insanity-name {
+font-family: var(--font-deco);
+font-size: 11px;
+letter-spacing: 1.5px;
+color: var(--red-bright);
+text-transform: uppercase;
+margin-bottom: 6px;
+}
+.insanity-trigger {
+font-family: var(--font-mono);
+font-size: 10px;
+color: var(--gold);
+margin-bottom: 8px;
+}
+.insanity-desc { font-size: 13px; color: var(--text-dim); }
+
+/* ── COMBAT ROW ── */
+.combat-order {
+display: flex;
+align-items: stretch;
+gap: 1px;
+background: var(--border);
+border: 1px solid var(--border);
+margin: 12px 0;
+overflow-x: auto;
+}
+.combat-step {
+flex: 1;
+min-width: 100px;
+background: var(--surface);
+padding: 12px 8px;
+text-align: center;
+}
+.combat-step-num {
+font-family: var(--font-display);
+font-size: 24px;
+color: var(--gold-dim);
+line-height: 1;
+}
+.combat-step-title {
+font-family: var(--font-deco);
+font-size: 9px;
+letter-spacing: 1px;
+color: var(--text-dim);
+margin-top: 4px;
+text-transform: uppercase;
+}
+.combat-step-detail { font-size: 11px; color: var(--text-dim); margin-top: 4px; }
+
+/* ── HIGHLIGHT TAGS ── */
+.tag {
+display: inline-block;
+font-family: var(--font-mono);
+font-size: 9px;
+letter-spacing: 1px;
+padding: 1px 6px;
+text-transform: uppercase;
+margin: 1px;
+vertical-align: middle;
+}
+.tag-gold { border: 1px solid var(--gold-dim); color: var(--gold); }
+.tag-teal { border: 1px solid var(--teal-dim); color: var(--teal); }
+.tag-red { border: 1px solid var(--red); color: var(--red-bright); }
+
+/* ── PULL QUOTE ── */
+.pull-quote {
+border-left: 3px solid var(--gold-dim);
+padding: 12px 16px;
+margin: 16px 0;
+font-style: italic;
+color: var(--text-pale);
+font-size: 14px;
+background: rgba(201,168,76,0.05);
+}
+.pull-attr {
+font-style: normal;
+font-family: var(--font-mono);
+font-size: 10px;
+color: var(--text-dim);
+margin-top: 6px;
+display: block;
+}
+
+/* ── BONUS/PENALTY ── */
+.die-pair {
+display: flex;
+gap: 12px;
+margin: 12px 0;
+}
+.die-box {
+flex: 1;
+padding: 14px;
+text-align: center;
+border: 1px solid var(--border);
+}
+.die-box.bonus { border-color: var(--teal-dim); background: rgba(74,155,138,0.08); }
+.die-box.penalty { border-color: var(--red); background: rgba(155,58,40,0.08); }
+.die-icon { font-size: 28px; display: block; margin-bottom: 4px; }
+.die-title {
+font-family: var(--font-deco);
+font-size: 11px;
+letter-spacing: 1px;
+text-transform: uppercase;
+margin-bottom: 6px;
+}
+.die-box.bonus .die-title { color: var(--teal); }
+.die-box.penalty .die-title { color: var(--red-bright); }
+.die-explain { font-size: 12px; color: var(--text-dim); }
+
+/* ── DIVIDERS ── */
+.deco-divider {
+text-align: center;
+color: var(--gold-dim);
+font-size: 12px;
+letter-spacing: 8px;
+margin: 28px 0;
+position: relative;
+}
+.deco-divider::before {
+content: '';
+position: absolute;
+top: 50%;
+left: 0;
+right: 0;
+height: 1px;
+background: var(--border);
+z-index: 0;
+}
+.deco-divider span {
+background: var(--bg);
+position: relative;
+z-index: 1;
+padding: 0 16px;
+}
+
+/* ── QUICKREF ── */
+.qr-grid {
+display: grid;
+grid-template-columns: repeat(auto-fill, minmax(220px,1fr));
+gap: 10px;
+margin-top: 10px;
+}
+.qr-item {
+background: var(--surface);
+border: 1px solid var(--border);
+padding: 12px 14px;
+}
+.qr-label {
+font-family: var(--font-mono);
+font-size: 8px;
+letter-spacing: 2px;
+color: var(--gold-dim);
+text-transform: uppercase;
+margin-bottom: 4px;
+}
+.qr-val {
+font-family: var(--font-deco);
+font-size: 15px;
+color: var(--gold);
+letter-spacing: 0.5px;
+}
+.qr-note { font-size: 11px; color: var(--text-dim); margin-top: 2px; }
+
+/* ── TUTORIAL OVERLAY ── */
+.overlay-bg {
+position: fixed;
+inset: 0;
+background: rgba(5,3,1,0.92);
+z-index: 1000;
+display: flex;
+align-items: center;
+justify-content: center;
+padding: 20px;
+}
+.overlay-card {
+background: var(--surface);
+border: 1px solid var(--gold-dim);
+max-width: 680px;
+width: 100%;
+padding: 36px 40px;
+position: relative;
+max-height: 90vh;
+overflow-y: auto;
+}
+.overlay-card::before, .overlay-card::after {
+content: '';
+position: absolute;
+width: 18px;
+height: 18px;
+border-color: var(--gold-dim);
+border-style: solid;
+}
+.overlay-card::before { top: 0; left: 0; border-width: 2px 0 0 2px; }
+.overlay-card::after { bottom: 0; right: 0; border-width: 0 2px 2px 0; }
+
+.overlay-step-icon {
+text-align: center;
+font-size: 48px;
+margin-bottom: 16px;
+display: block;
+}
+.overlay-step-num {
+font-family: var(--font-mono);
+font-size: 9px;
+letter-spacing: 3px;
+color: var(--teal);
+text-align: center;
+margin-bottom: 8px;
+}
+.overlay-title {
+font-family: var(--font-display);
+font-size: 22px;
+color: var(--gold);
+text-align: center;
+margin-bottom: 16px;
+letter-spacing: 2px;
+}
+.overlay-body {
+font-size: 15px;
+color: var(--text);
+line-height: 1.7;
+text-align: center;
+max-width: 520px;
+margin: 0 auto;
+}
+.overlay-dots {
+display: flex;
+justify-content: center;
+gap: 8px;
+margin: 24px 0 20px;
+}
+.overlay-dot {
+width: 8px;
+height: 8px;
+border: 1px solid var(--gold-dim);
+background: none;
+transform: rotate(45deg);
+cursor: pointer;
+transition: background 0.2s;
+}
+.overlay-dot.active { background: var(--gold); border-color: var(--gold); }
+.overlay-buttons {
+display: flex;
+justify-content: center;
+gap: 12px;
+margin-top: 4px;
+}
+
+/* ── MISC ── */
+.gold { color: var(--gold); }
+.teal { color: var(--teal); }
+.red { color: var(--red-bright); }
+.italic { font-style: italic; }
+.mono { font-family: var(--font-mono); font-size: 12px; }
+.small { font-size: 12px; }
+.muted { color: var(--text-dim); }
+
+p { margin-bottom: 0; }
+p + p { margin-top: 8px; }
+
+.mb-4 { margin-bottom: 16px; }
+.mb-6 { margin-bottom: 24px; }
+.mt-4 { margin-top: 16px; }
+.mt-6 { margin-top: 24px; }
+
+hr.deco {
+border: none;
+border-top: 1px solid var(--border);
+margin: 14px 0;
+}
+
+/* ── CHARACTERISTIC SCALE ── */
+.scale-bar {
+height: 6px;
+background: var(--surface3);
+border: 1px solid var(--border);
+border-radius: 0;
+margin: 6px 0 10px;
+overflow: hidden;
+position: relative;
+}
+.scale-fill {
+height: 100%;
+background: linear-gradient(to right, var(--teal-dim), var(--gold));
+transition: width 0.5s ease;
+}
+
+/* ── ATTRIBUTE FORMULA ── */
+.formula-box {
+background: var(--bg);
+border: 1px solid var(--border);
+padding: 10px 16px;
+display: flex;
+align-items: center;
+gap: 10px;
+margin: 8px 0;
+font-family: var(--font-mono);
+font-size: 13px;
+}
+.formula-eq { color: var(--text-dim); }
+.formula-val { color: var(--gold); }
+.formula-label { color: var(--text-dim); font-size: 11px; flex: 1; text-align: right; }
+
+/* Build table */
+.build-table { width: 100%; border-collapse: collapse; margin: 10px 0; font-size: 13px; }
+.build-table th {
+font-family: var(--font-mono);
+font-size: 9px;
+letter-spacing: 1.5px;
+color: var(--gold-dim);
+text-align: left;
+padding: 5px 8px;
+border-bottom: 1px solid var(--border2);
+text-transform: uppercase;
+}
+.build-table td { padding: 5px 8px; border-bottom: 1px solid var(--border); }
+.build-table td:first-child { font-family: var(--font-mono); color: var(--teal); }
+.build-table td:nth-child(2) { color: var(--gold); font-family: var(--font-mono); }
+.build-table td:nth-child(3) { color: var(--text-dim); }
+
+/* Animations */
+@keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+.fade-in { animation: fadeIn 0.3s ease both; }
 </style>
 </head>
 <body>
-<div class="masthead">
-  <div class="mh-inner">
-    <div class="mh-top">
-      <div>
-        <div class="mh-title">Call of Cthulhu</div>
-        <div class="mh-sub">Investigator's Primer &middot; 7th Edition &middot; Player's Reference</div>
-      </div>
-      <button class="ob" id="briefBtn">&#8853; Keeper's Briefing</button>
-    </div>
-    <div class="nav" id="navBar"></div>
-  </div>
-</div>
-<div class="canvas" id="canvas"></div>
-<div class="ov" id="overlay">
-  <div class="ovc">
-    <div class="ovst">Call of Cthulhu &middot; Keeper's Welcome &middot; 7th Edition</div>
-    <div class="ovb">
-      <div class="ovti" id="ovT"></div>
-      <div class="ovtx" id="ovX"></div>
-      <div class="ovsp" id="ovS"></div>
-    </div>
-    <div class="ovf">
-      <div class="ovd" id="ovDots"></div>
-      <div class="ovbts">
-        <button class="bs" id="ovBack">&#8592; Back</button>
-        <button class="bp" id="ovNext">Next &#8594;</button>
-      </div>
-    </div>
-  </div>
-</div>
-<script>
-var TABS=[{id:'intro',label:'I. Introduction'},{id:'create',label:'II. Creation'},{id:'rules',label:'III. Core Rules'},{id:'combat',label:'IV. Combat'},{id:'sanity',label:'V. Sanity'},{id:'qr',label:'VI. Quick Ref'}];
-var TUT=[
-  {t:"Investigator's Briefing",x:"<p>Welcome to the <strong>Call of Cthulhu Investigator's Primer</strong>. Use the tabs at the top to navigate the six chapters.</p><p>Call of Cthulhu is a horror roleplaying game set in H.P. Lovecraft's universe. You portray an <strong>Investigator</strong> drawn into mysteries touching cosmic terror.</p>"},
-  {t:"Chapter I — Introduction",x:"<p>The Introduction covers the setting, your role as a player, what the <strong>Keeper of Arcane Lore</strong> does, and the core premise of every session.</p><p>Investigators are <strong>ordinary people</strong>. Knowledge, wit, and cooperation matter more than combat prowess.</p>"},
-  {t:"Chapter II — Creation",x:"<p>Character creation follows <strong>five steps</strong>: roll characteristics, choose occupation, allocate skill points, write a backstory, and equip your investigator.</p><p>Occupation cards are <strong>interactive</strong> — click any card to expand its skill list.</p>"},
-  {t:"Chapter III — Core Rules",x:"<p>Call of Cthulhu uses <strong>percentile dice (D100)</strong>. Roll equal to or under your skill value to succeed. Three levels of success: Regular, Hard, and Extreme.</p><p>Learn Bonus and Penalty dice, Pushed Rolls, and the golden rule: <strong>don't roll unless the Keeper asks</strong>.</p>"},
-  {t:"Chapter IV — Combat",x:"<p>Combat is dangerous and lethal. Investigators are human beings — they <strong>get hurt</strong>. This chapter covers initiative, all combat actions, major wounds, and healing.</p>"},
-  {t:"Chapter V — Sanity",x:"<p><strong>Sanity</strong> is your most precious resource. The interactive track lets you visualise your investigator's state.</p><p>Learn SAN rolls, temporary and indefinite insanity, and how Mythos knowledge permanently lowers your maximum SAN.</p>"},
-  {t:"Chapter VI — Quick Reference",x:"<p>Eight compact reference blocks for mid-session play: success thresholds, damage tables, movement rates, sanity checkpoints, and skill base values.</p><p><strong>Good luck, Investigator.</strong></p>"}
-];
-var CHARS=[
-  {a:'STR',n:'Strength',r:'3D6 × 5',d:'Muscle power; melee damage, carrying capacity.'},
-  {a:'CON',n:'Constitution',r:'3D6 × 5',d:'Health & vitality; contributes to Hit Points.'},
-  {a:'SIZ',n:'Size',r:'(2D6+6) × 5',d:'Height & mass; affects Hit Points & Damage Bonus.'},
-  {a:'DEX',n:'Dexterity',r:'3D6 × 5',d:'Speed & nimbleness. Highest DEX acts first in combat.'},
-  {a:'APP',n:'Appearance',r:'3D6 × 5',d:'Charm & looks. Useful in social encounters.'},
-  {a:'INT',n:'Intelligence',r:'(2D6+6) × 5',d:'Learning & analysis. Drives Personal Interest points.'},
-  {a:'POW',n:'Power',r:'3D6 × 5',d:'Willpower & magic. Starting Sanity equals POW.'},
-  {a:'EDU',n:'Education',r:'(2D6+6) × 5',d:'Formal knowledge. Drives Occupation skill points.'}
-];
-var OCCS=[
-  {n:'Antiquarian',p:'EDU × 4',cr:'30–50',s:'Appraise, Art/Craft (any), History, Library Use, Other Language, one interpersonal skill, Spot Hidden, one personal choice.'},
-  {n:'Author',p:'EDU × 4',cr:'9–30',s:'Art/Craft (Writing), History, Library Use, Natural World or Occult, Other Language, Own Language, Psychology, one other.'},
-  {n:'Dilettante',p:'EDU×2 + APP×2',cr:'50–99',s:'Art/Craft (any), Firearms, Other Language, Ride, one interpersonal skill, Spot Hidden, two personal choices.'},
-  {n:'Doctor of Medicine',p:'EDU × 4',cr:'30–60',s:'First Aid, Medicine, Other Language (Latin), Pharmacy, Psychology, Science (Biology), Science (Pharmacy), two others.'},
-  {n:'Journalist',p:'EDU × 4',cr:'9–30',s:'Art/Craft (Photography), History, Library Use, one interpersonal skill, Own Language, Psychology, Spot Hidden, one personal choice.'},
-  {n:'Police Detective',p:'EDU×2 + STR×2',cr:'20–50',s:'Art/Craft (Acting), Disguise, Fighting, Firearms, Intimidate, Law, Psychology, Spot Hidden.'},
-  {n:'Professor',p:'EDU × 4',cr:'20–70',s:'Library Use, Other Language, Own Language, Psychology, two Science or specialist subjects, two personal choices.'},
-  {n:'Private Investigator',p:'EDU×2 + DEX×2',cr:'9–30',s:'Art/Craft (Photography), Disguise, Law, Library Use, one interpersonal skill, Psychology, Spot Hidden, one other.'},
-  {n:'Soldier / Officer',p:'EDU×2 + DEX×2',cr:'9–30',s:'Climb, Drive Auto, Fighting or Firearms, First Aid, Navigate, Stealth, Survival, one personal choice.'},
-  {n:'Criminal',p:'EDU×2 + DEX×2',cr:'5–65',s:'Disguise, Fighting, Firearms, Locksmith, one interpersonal skill, Psychology, Stealth, one other.'},
-  {n:'Entertainer',p:'EDU×2 + APP×2',cr:'9–40',s:'Art/Craft (any), Disguise, two interpersonal skills, Listen, Psychology, one combat skill, one personal choice.'},
-  {n:'Clergy',p:'EDU × 4',cr:'9–60',s:'Accounting, History, Library Use, Listen, Other Language, one interpersonal skill, Psychology, one personal choice.'}
+<div id="root"></div>
+<script type="text/babel">
+const { useState, useCallback } = React;
+
+/* ─────────────────────────── DATA ─────────────────────────── */
+
+const TABS = [
+{ id:'intro',    label:'Introduction',    num:'I'   },
+{ id:'creation', label:'Investigator',    num:'II'  },
+{ id:'mechanics',label:'Core Rules',      num:'III' },
+{ id:'sanity',   label:'Sanity',          num:'IV'  },
+{ id:'combat',   label:'Combat',          num:'V'   },
+{ id:'quickref', label:'Quick Reference', num:'VI'  },
 ];
 
-function hdr(num,title,byline){
-  return '<div class="ch"><div class="cn">'+num+'</div><div class="corn"><div class="ol l"></div><div class="od"></div><div class="ol r"></div></div><div class="ct">'+title+'</div><div class="cbl">'+byline+'</div></div>';
+const CHARACTERISTICS = [
+{ abbr:'STR', name:'Strength',     roll:'3D6×5',  range:'15–90', desc:'Muscle power. Determines damage in melee combat.' },
+{ abbr:'CON', name:'Constitution', roll:'3D6×5',  range:'15–90', desc:'Vitality & health. Helps determine Hit Points.' },
+{ abbr:'SIZ', name:'Size',         roll:'(2D6+6)×5', range:'40–90', desc:'Height/weight average. Affects Hit Points & Damage Bonus.' },
+{ abbr:'DEX', name:'Dexterity',    roll:'3D6×5',  range:'15–90', desc:'Speed & agility. Highest DEX acts first in combat.' },
+{ abbr:'APP', name:'Appearance',   roll:'3D6×5',  range:'15–90', desc:'Charm & attractiveness. Useful in social situations.' },
+{ abbr:'INT', name:'Intelligence', roll:'(2D6+6)×5', range:'40–90', desc:'Learning & analysis. Gives Personal Interest points (INT×2).' },
+{ abbr:'POW', name:'Power',        roll:'3D6×5',  range:'15–90', desc:'Willpower & magic. Starting Sanity = POW. Magic Points = POW÷5.' },
+{ abbr:'EDU', name:'Education',    roll:'(2D6+6)×5', range:'40–90', desc:'Formal learning. Gives Occupation skill points. Own Language = EDU%.' },
+];
+
+const OCCUPATIONS = [
+{
+name:'Antiquarian', icon:'🏺',
+formula:'EDU×4', crRange:'30–75',
+desc:'Collector of old curiosities; comfortable with arcane lore and dusty tomes.',
+skills:['Appraise','Art/Craft (any)','History','Library Use','Other Language','Spot Hidden','One Interpersonal Skill'],
+tip:'Best for investigation and research. Your Library Use is your most powerful weapon.'
+},
+{
+name:'Author', icon:'📖',
+formula:'EDU×4', crRange:'9–30',
+desc:'Chronicler of strange events; skilled at gathering information and telling stories.',
+skills:['Art/Craft (Literature)','History','Library Use','Occult','Own Language','One Interpersonal Skill','Psychology','Two Other Skills'],
+tip:'Social and research powerhouse. Can fast-talk almost anyone.'
+},
+{
+name:'Dilettante', icon:'🎩',
+formula:'APP×2+EDU×2', crRange:'50–99',
+desc:'A wealthy person of leisure—bored, curious, and unafraid to spend money on answers.',
+skills:['Art/Craft (any)','Firearms','Other Language','Ride','One Interpersonal Skill','Spot Hidden','Three Other Skills'],
+tip:'High Credit Rating means you can fund the group. Connections open many doors.'
+},
+{
+name:'Doctor of Medicine', icon:'⚕️',
+formula:'EDU×4', crRange:'30–80',
+desc:'Healer and scientist with knowledge of the human body—and what destroys it.',
+skills:['First Aid','Medicine','Other Language (Latin)','Persuade','Psychology','Science (Biology)','Spot Hidden','Two Other Skills'],
+tip:"The group's lifeline. Your healing and Psychology skills are invaluable."
+},
+{
+name:'Journalist', icon:'📰',
+formula:'EDU×4', crRange:'9–30',
+desc:'Seeker of truth armed with a press pass, a nose for lies, and relentless curiosity.',
+skills:['Art/Craft (Photography)','Library Use','Persuade','Psychology','Spot Hidden','Own Language','Two Specialist Skills'],
+tip:'Fastest at finding clues. Photography can capture evidence no one else believes.'
+},
+{
+name:'Occultist', icon:'🔮',
+formula:'EDU×4', crRange:'9–65',
+desc:'A student of forbidden and arcane knowledge—closer to the Mythos than most dare.',
+skills:['Anthropology','History','Library Use','Occult','Other Language','One Interpersonal Skill','Spot Hidden','Two Other Skills'],
+tip:"High Occult and Cthulhu Mythos knowledge. You recognize what others can't name."
+},
+{
+name:'Police Detective', icon:'🔍',
+formula:'EDU×2+STR×2 (or DEX×2)', crRange:'20–50',
+desc:'Officer of the law with an eye for crime scenes, a gun at their hip, and authority.',
+skills:['Art/Craft (Photography)','Firearms','Law','Listen','Spot Hidden','Psychology','Two Other Skills'],
+tip:'Firearms access, legal authority, and top-tier Spot Hidden. Great all-rounder.'
+},
+{
+name:'Professor', icon:'🎓',
+formula:'EDU×4', crRange:'20–70',
+desc:'Academic expert with university resources, deep research skills, and specialist knowledge.',
+skills:['Library Use','Own Language','Other Language','Psychology','Spot Hidden','Two Science/Academic Skills','One Other Skill'],
+tip:'Miskatonic connections are priceless. High EDU means more skill points to work with.'
+},
+{
+name:'Private Investigator', icon:'🕵️',
+formula:'EDU×2+STR×2 (or DEX×2)', crRange:'9–30',
+desc:'A hired sleuth who finds the truth no matter how dark—usually for a fee.',
+skills:['Art/Craft (Photography)','Disguise','Law','Library Use','Persuade','Psychology','Spot Hidden','Two Other Skills'],
+tip:'Master of social deception and information gathering. Know when to run.'
+},
+{
+name:'Soldier / Veteran', icon:'⚔️',
+formula:'EDU×2+STR×2 (or DEX×2)', crRange:'9–30',
+desc:'A survivor of combat who carries the skills—and scars—of military service.',
+skills:['Climb','First Aid','Fighting (Brawl)','Firearms','Navigate','Stealth','Survival','One Other Skill'],
+tip:'The best fighter in most groups. But Call of Cthulhu rewards brains over brawn.'
+},
+];
+
+const TUTORIAL_STEPS = [
+{
+icon:'🐙',
+num:'WELCOME TO ARKHAM',
+title:'Investigator Primer',
+body:`Welcome to the Call of Cthulhu Investigator Primer — your guide to diving into a world of cosmic dread and forbidden knowledge. This companion walks you through everything a new player needs to begin their first session.`,
+},
+{
+icon:'📋',
+num:'TAB I — INTRODUCTION',
+title:'What is Call of Cthulhu?',
+body:`Start here to understand the game's core concept: who the Keeper is, what investigators do, and the tone of the world you're stepping into. Lovecraftian horror meets 1920s detective fiction.`,
+},
+{
+icon:'🎭',
+num:'TAB II — INVESTIGATOR CREATION',
+title:'Building Your Character',
+body:`Click through five steps: roll your Characteristics, choose an Occupation, allocate Skills, craft a Backstory, and equip your investigator. Use the expandable Occupation cards to find the right role.`,
+},
+{
+icon:'🎲',
+num:'TAB III — CORE RULES',
+title:'How to Roll Dice',
+body:`Everything resolves on a D100. Roll equal to or under your skill to succeed. Learn the three Difficulty Levels, when to use Bonus or Penalty Dice, and when you can Push a failed roll.`,
+},
+{
+icon:'🧠',
+num:'TAB IV — SANITY',
+title:'The Horror Within',
+body:`Sanity is your most precious resource. Learn what triggers SAN rolls, how much you can lose before going temporarily or indefinitely insane, and what the Cthulhu Mythos does to your maximum Sanity.`,
+},
+{
+icon:'⚔️',
+num:'TAB V — COMBAT',
+title:'When Things Go Violent',
+body:`Call of Cthulhu combat is dangerous and fast. Learn initiative order, how attacks and Dodge work, what a Major Wound means, and — most importantly — when to run rather than fight.`,
+},
+{
+icon:'📜',
+num:'TAB VI — QUICK REFERENCE',
+title:'At-a-Glance Rules',
+body:`Tab VI is your mid-session lifeline. Key formulas, roll thresholds, Sanity triggers, combat sequence, and common difficulty levels — all condensed for quick lookup at the table.`,
+},
+];
+
+/* ─────────────────────────── TUTORIAL ─────────────────────────── */
+
+function Tutorial({ onClose }) {
+const [step, setStep] = useState(0);
+const s = TUTORIAL_STEPS[step];
+return (
+<div className="overlay-bg" onClick={e => e.target === e.currentTarget && onClose()}>
+<div className="overlay-card fade-in">
+<span className="overlay-step-icon">{s.icon}</span>
+<div className="overlay-step-num">STEP {step+1} OF {TUTORIAL_STEPS.length} — {s.num}</div>
+<div className="overlay-title">{s.title}</div>
+<div className="overlay-body">{s.body}</div>
+<div className="overlay-dots">
+{TUTORIAL_STEPS.map((_,i) => (
+<div key={i} className={`overlay-dot${i===step?' active':''}`} onClick={()=>setStep(i)}/>
+))}
+</div>
+<div className="overlay-buttons">
+{step > 0 && <button className="primer-btn ghost" onClick={()=>setStep(step-1)}>← Back</button>}
+{step < TUTORIAL_STEPS.length-1
+? <button className="primer-btn" onClick={()=>setStep(step+1)}>Next →</button>
+: <button className="primer-btn" onClick={onClose}>Begin Investigation →</button>
+}
+</div>
+</div>
+</div>
+);
 }
 
 function introHTML(){
@@ -251,20 +1153,312 @@ function createHTML(){
   '</div>';
 }
 
-function rulesHTML(){
-  return '<div class="page">'+hdr('Chapter III','Core Rules','The mechanics of the percentile system — success, failure, and the push')+
-  '<div class="c2"><div>'+
-  '<div class="blk"><div class="sl">The Dice System</div><p class="pr">Call of Cthulhu uses <strong>percentile dice (two D10s read as 01–100)</strong>. Roll equal to or <em>under</em> your skill or characteristic value to succeed.</p><p class="pr" style="margin-top:9px">Each skill and characteristic has three values on your sheet:</p><table class="rt" style="margin-top:11px"><thead><tr><th>Box</th><th>Value</th><th>Used For</th></tr></thead><tbody><tr><td>Large</td><td>Full value</td><td>Regular success</td></tr><tr><td>Medium</td><td>&divide;2, round down</td><td>Hard success</td></tr><tr><td>Small</td><td>&divide;5, round down</td><td>Extreme success</td></tr></tbody></table></div>'+
-  '<div class="blk"><div class="sl">Levels of Success</div><div class="sbrow"><div class="sb ex"><div class="sbl">Extreme</div><div class="sbv">&le; 1/5 skill</div></div><div class="sb ha"><div class="sbl">Hard</div><div class="sbv">&le; 1/2 skill</div></div><div class="sb re"><div class="sbl">Regular</div><div class="sbv">&le; full skill</div></div><div class="sb fa"><div class="sbl">Failure</div><div class="sbv">&gt; skill</div></div></div><div class="co red" style="margin-top:10px"><div class="cot">Fumble</div>Roll <strong>96–100</strong> (skill below 50%) or <strong>100</strong> (skill 50%+) for catastrophic failure. Consequences determined by the Keeper — often severe.</div></div>'+
-  '<div class="blk"><div class="sl">Bonus &amp; Penalty Dice</div><table class="rt"><thead><tr><th>Type</th><th>Method</th></tr></thead><tbody><tr><td><strong>Bonus Die</strong></td><td>Roll an extra tens die; use the <em>lower</em> tens result.</td></tr><tr><td><strong>Penalty Die</strong></td><td>Roll an extra tens die; use the <em>higher</em> tens result.</td></tr></tbody></table><p class="pr" style="font-size:13px;margin-top:8px">Only one bonus or penalty die applies at a time; they cancel out. <strong>Luck rolls are never modified.</strong></p></div>'+
-  '<div class="blk"><div class="sl">Pushed Rolls</div><p class="pr">If a roll fails, you may attempt it again as a <strong>Pushed Roll</strong> — but only by justifying to the Keeper what your investigator is doing differently, at greater risk or effort.</p><p class="pr" style="margin-top:8px">A failed pushed roll brings <strong>severe consequences</strong>. You can only push a roll once.</p></div>'+
-  '</div><div>'+
-  '<div class="blk"><div class="sl">When to Roll</div><div class="co red"><div class="cot">Golden Rule</div><strong>Do not roll unless the Keeper asks you to.</strong> Routine tasks need no roll. Only roll when the outcome is uncertain and dramatically significant.</div><div class="co" style="margin-top:10px"><div class="cot g">Set a Goal First</div>Before rolling, state what success means. "I want to persuade the clerk to hand over the files." The Keeper sets the difficulty — then you roll. Rolling before the goal is set is like signing a contract you have not read.</div></div>'+
-  '<div class="blk"><div class="sl">Opposed Rolls</div><p class="pr">When two characters directly contest each other, both roll. The winner achieves the <strong>higher level of success</strong>. On equal levels, the higher skill value wins.</p></div>'+
-  '<div class="blk"><div class="sl">Special Rolls</div><table class="rt"><thead><tr><th>Roll</th><th>Characteristic</th><th>When Used</th></tr></thead><tbody><tr><td><strong>Idea</strong></td><td>INT</td><td>When stuck — intuitive nudge to advance the investigation.</td></tr><tr><td><strong>Know</strong></td><td>EDU</td><td>General knowledge from life experience.</td></tr><tr><td><strong>Luck</strong></td><td>Luck</td><td>External circumstances outside investigator control.</td></tr></tbody></table></div>'+
-  '<div class="blk"><div class="sl">Social Skills</div><table class="rt"><thead><tr><th>Skill</th><th>When to Use</th></tr></thead><tbody><tr><td><strong>Charm (15%)</strong></td><td>Befriending, seducing, making a good impression.</td></tr><tr><td><strong>Fast Talk (5%)</strong></td><td>Quick deception, distraction, confusion.</td></tr><tr><td><strong>Intimidate (15%)</strong></td><td>Using threats, presence, or implied violence.</td></tr><tr><td><strong>Persuade (10%)</strong></td><td>Logical argument, negotiation, sustained reasoning.</td></tr><tr><td><strong>Psychology (10%)</strong></td><td>Reading motives; opposing social influence used against you.</td></tr></tbody></table></div>'+
-  '<div class="blk"><div class="sl">Skill Improvement</div><p class="pr" style="font-size:13px">When you meaningfully use a skill, the Keeper may mark it. At session end, roll D100 for each marked skill. If the result is <strong>greater</strong> than the skill\'s current value, add 1D10 to it.</p></div>'+
-  '</div></div></div>';
+/* ─────────────────────────── CREATION SECTION ─────────────────────────── */
+
+function CreationSection() {
+const [creStep, setCreStep] = useState(0);
+const [expandedOcc, setExpandedOcc] = useState(null);
+
+const steps = [
+{ num:'1', label:'Characteristics' },
+{ num:'2', label:'Occupation'      },
+{ num:'3', label:'Skills'          },
+{ num:'4', label:'Backstory'       },
+{ num:'5', label:'Equipment'       },
+];
+
+return (
+<div className="fade-in">
+<SectionHead num="II" title="Creating Your Investigator"/>
+<p className="lead">
+Five steps transform blank paper into a living, breathing investigator. Work through them together as a group — a balanced party survives longer than a collection of lone wolves.
+</p>
+
+
+  <div className="steps mb-6">
+    {steps.map((s,i) => (
+      <div key={i} className={`step-item${i===creStep?' active':''}`} onClick={()=>setCreStep(i)}>
+        <span className="step-num">{s.num}</span>
+        <span className="step-label">{s.label}</span>
+      </div>
+    ))}
+  </div>
+
+  {/* STEP 1: CHARACTERISTICS */}
+  {creStep === 0 && (
+    <div className="fade-in">
+      <div className="card gold mb-4">
+        <div className="card-title">Step 1 — Generate Characteristics</div>
+        <p>Roll the dice shown for each characteristic, then <span className="gold">multiply the result by 5</span>. This gives you a percentage value between 15% and 90%. Record the full value, its half (÷2), and its fifth (÷5) — you'll need all three during play.</p>
+      </div>
+      <div className="stat-block">
+        {CHARACTERISTICS.map(c => (
+          <div key={c.abbr} className="stat-item">
+            <span className="stat-name">{c.name}</span>
+            <span className="stat-abbr">{c.abbr}</span>
+            <span className="stat-roll">{c.roll}</span>
+            <span className="stat-desc" style={{marginTop:6}}>{c.desc}</span>
+          </div>
+        ))}
+      </div>
+
+      <div className="deco-divider mt-6"><span>Derived Attributes</span></div>
+
+      <div className="grid-2 mt-4">
+        <div>
+          <div className="card">
+            <div className="card-title">Hit Points (HP)</div>
+            <div className="formula-box">
+              <span className="formula-val">(CON + SIZ) ÷ 10</span>
+              <span className="formula-label formula-eq">rounded down</span>
+            </div>
+            <p className="small muted">Measures physical durability. When HP reaches 0, the investigator is unconscious and dying.</p>
+          </div>
+          <div className="card mt-4">
+            <div className="card-title">Sanity (SAN)</div>
+            <div className="formula-box">
+              <span className="formula-val">Equals POW</span>
+              <span className="formula-label formula-eq">at start</span>
+            </div>
+            <p className="small muted">Maximum SAN = 99 minus Cthulhu Mythos skill. Magic Points = POW ÷ 5.</p>
+          </div>
+          <div className="card mt-4">
+            <div className="card-title">Movement Rate (MOV)</div>
+            <div className="formula-box">
+              <span className="formula-val">7 / 8 / 9</span>
+              <span className="formula-label formula-eq">based on STR/DEX/SIZ</span>
+            </div>
+            <p className="small muted">MOV 7 if STR and DEX both under SIZ. MOV 8 if either meets SIZ. MOV 9 if both exceed SIZ. Reduce by 1 per decade over 40.</p>
+          </div>
+        </div>
+        <div>
+          <div className="card">
+            <div className="card-title">Damage Bonus & Build (STR + SIZ)</div>
+            <table className="build-table">
+              <thead><tr><th>STR+SIZ</th><th>Damage Bonus</th><th>Build</th></tr></thead>
+              <tbody>
+                <tr><td>2–64</td><td>–2</td><td>–2</td></tr>
+                <tr><td>65–84</td><td>–1</td><td>–1</td></tr>
+                <tr><td>85–124</td><td>None</td><td>0</td></tr>
+                <tr><td>125–164</td><td>+1D4</td><td>+1</td></tr>
+                <tr><td>165–204</td><td>+1D6</td><td>+2</td></tr>
+              </tbody>
+            </table>
+            <p className="small muted mt-4">Damage bonus added to all melee attacks. Build used in fighting maneuvers.</p>
+          </div>
+          <div className="card mt-4">
+            <div className="card-title">Age Modifiers</div>
+            <ul className="coc-list">
+              <li><span className="gold">15–19:</span> −5 from STR/SIZ, −5 EDU, roll Luck twice (take better)</li>
+              <li><span className="gold">20s–30s:</span> One EDU improvement check</li>
+              <li><span className="gold">40s:</span> Two EDU checks; −5 STR/CON/DEX; −5 APP</li>
+              <li><span className="gold">50s:</span> Three EDU checks; −10 STR/CON/DEX; −10 APP</li>
+              <li><span className="gold">60s:</span> Four EDU checks; −20 STR/CON/DEX; −15 APP</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div className="card teal mt-4">
+        <div className="card-title">Luck</div>
+        <p>Roll <span className="gold">3D6×5</span> separately for your <strong>Luck</strong> score. Luck is used by the Keeper to determine external circumstances — whether a candle is in the drawer, or whether the cultist glances your way. Unlike other characteristics, Luck is never affected by Bonus or Penalty Dice.</p>
+      </div>
+    </div>
+  )}
+
+  {/* STEP 2: OCCUPATION */}
+  {creStep === 1 && (
+    <div className="fade-in">
+      <div className="card gold mb-4">
+        <div className="card-title">Step 2 — Choose Your Occupation</div>
+        <p>Your occupation defines <span className="gold">how your investigator makes a living</span> and which skills are elevated. It also determines your starting Credit Rating range. Click any occupation below to see its details.</p>
+        <p className="mt-4 small muted">Occupation Skill Points = the formula shown. Allocate points among the listed skills (plus Credit Rating within the stated range). Personal Interest Points = INT × 2, spent on any skills.</p>
+      </div>
+      <div className="occ-grid">
+        {OCCUPATIONS.map(occ => {
+          const isOpen = expandedOcc === occ.name;
+          return (
+            <div key={occ.name} className={`occ-card${isOpen?' expanded':''}`} onClick={()=>setExpandedOcc(isOpen?null:occ.name)}>
+              <div className="occ-header">
+                <span className="occ-name">{occ.name}</span>
+                <span className="occ-icon">{occ.icon}</span>
+              </div>
+              {isOpen && (
+                <div className="occ-body fade-in">
+                  <div className="occ-desc">{occ.desc}</div>
+                  <div className="occ-formula">Skill Points: {occ.formula} &nbsp;|&nbsp; CR: {occ.crRange}</div>
+                  <div style={{marginBottom:8}}>
+                    {occ.skills.map(s => <span key={s} className="skill-chip">{s}</span>)}
+                  </div>
+                  <div className="pull-quote" style={{margin:'8px 0',padding:'8px 12px',fontSize:12}}>
+                    💡 {occ.tip}
+                  </div>
+                </div>
+              )}
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  )}
+
+  {/* STEP 3: SKILLS */}
+  {creStep === 2 && (
+    <div className="fade-in">
+      <div className="card gold mb-4">
+        <div className="card-title">Step 3 — Allocate Skill Points</div>
+        <p>Skills are the heart of an investigator's capabilities. Each skill has a <span className="gold">base chance</span> printed on the investigator sheet. Add your allocated points to that base. Record the full value, half (÷2), and fifth (÷5) for each skill — these are your Regular, Hard, and Extreme thresholds.</p>
+      </div>
+
+      <div className="grid-2 mb-4">
+        <div className="card">
+          <div className="card-title">Occupation Skill Points</div>
+          <p>Allocate points from your Occupation formula among the skills listed for your occupation (plus Credit Rating within range). These represent professional training.</p>
+          <p className="mt-4 small muted">Points not spent are lost — spend them all before moving on to Personal Interests.</p>
+        </div>
+        <div className="card">
+          <div className="card-title">Personal Interest Points</div>
+          <div className="formula-box"><span className="formula-val">INT × 2</span><span className="formula-label formula-eq">= Personal Interest Points</span></div>
+          <p>Spend these on <em>any</em> skills, including bolstering occupation skills. Represent hobbies, life experience, and personal passions. Cannot be spent on <span className="red">Cthulhu Mythos</span> unless the Keeper agrees.</p>
+        </div>
+      </div>
+
+      <div className="card mb-4">
+        <div className="card-title">Skill Proficiency Guide</div>
+        <table className="diff-table">
+          <thead><tr><th>Skill %</th><th>Level</th><th>What It Means</th></tr></thead>
+          <tbody>
+            <tr><td>01–05%</td><td className="teal">Novice</td><td>Complete amateur. Almost certain to fail.</td></tr>
+            <tr><td>06–19%</td><td className="teal">Neophyte</td><td>Beginner with a little knowledge.</td></tr>
+            <tr><td>20–49%</td><td className="teal">Amateur</td><td>Hobby-level ability. Some talent.</td></tr>
+            <tr><td>50–74%</td><td className="gold">Professional</td><td>Can make a living from this skill.</td></tr>
+            <tr><td>75–89%</td><td className="gold">Expert</td><td>Advanced expertise; master's degree level.</td></tr>
+            <tr><td>90%+</td><td className="red">Master</td><td>Among the world's best.</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div className="grid-2">
+        <div className="card teal">
+          <div className="card-title">Key Skills for Beginners</div>
+          <ul className="coc-list">
+            <li><strong className="gold">Library Use</strong> — finding information, researching clues</li>
+            <li><strong className="gold">Spot Hidden</strong> — noticing things out of place</li>
+            <li><strong className="gold">Psychology</strong> — reading people's true intentions</li>
+            <li><strong className="gold">Persuade / Charm</strong> — getting NPCs to cooperate</li>
+            <li><strong className="gold">First Aid</strong> — stabilising wounded investigators</li>
+            <li><strong className="gold">Dodge</strong> — surviving combat (starts at DEX ÷ 2)</li>
+          </ul>
+        </div>
+        <div className="card red">
+          <div className="card-title">Cthulhu Mythos — Special Case</div>
+          <p>This skill is <span className="red">not chosen at creation</span>. It grows through encounters with the Mythos, reading forbidden tomes, and surviving episodes of insanity.</p>
+          <p className="mt-4">Every point of Cthulhu Mythos <span className="red">permanently reduces</span> your maximum Sanity by 1. High Mythos knowledge means knowing things no sane person should know — at the cost of your sanity ceiling.</p>
+        </div>
+      </div>
+    </div>
+  )}
+
+  {/* STEP 4: BACKSTORY */}
+  {creStep === 3 && (
+    <div className="fade-in">
+      <div className="card gold mb-4">
+        <div className="card-title">Step 4 — Create Your Backstory</div>
+        <p>An investigator with a rich personal history is more compelling — and more vulnerable. Complete at least the first six categories on the back of your investigator sheet. The more you define, the more the Keeper has to work with.</p>
+      </div>
+
+      <div className="grid-2 mb-4">
+        <div>
+          {[
+            { cat:'Personal Description', desc:'How do they look? Dress? Carry themselves? A vivid image in one sentence.', eg:'"Gaunt, well-dressed, eyes that have seen too much."' },
+            { cat:'Ideology & Beliefs', desc:'What does your investigator believe in? Religion, science, fate, politics?', eg:'"Science has all the answers — or so I believed."' },
+            { cat:'Significant People', desc:'Who matters most? Name them. Why do they matter?', eg:'"My wife, Annabel — I couldn\'t live without her."' },
+            { cat:'Meaningful Locations', desc:'A place with emotional weight. Not just a description.', eg:'"The lighthouse at Cape Cod where my father took me fishing."' },
+          ].map(b => (
+            <div key={b.cat} className="card mb-4" style={{borderColor:'var(--border2)'}}>
+              <div className="card-title" style={{color:'var(--teal-pale)'}}>{b.cat}</div>
+              <p className="small">{b.desc}</p>
+              <div className="pull-quote" style={{margin:'8px 0',padding:'8px 12px',fontSize:12,fontStyle:'italic'}}>
+                {b.eg}
+              </div>
+            </div>
+          ))}
+        </div>
+        <div>
+          {[
+            { cat:'Treasured Possessions', desc:'An item of great personal meaning. Not expensive — meaningful.', eg:'"A silver pocket watch engraved with my grandfather\'s initials."' },
+            { cat:'Traits', desc:'A defining personality quality. Positive or negative, but vivid.', eg:'"Compulsive note-taker. Never enters a room without mapping it first."' },
+            { cat:'Injuries & Scars', desc:'Physical evidence of a troubled past. Add during play as wounds accumulate.', eg:'"A burn scar across my left palm from the Cairo incident."' },
+            { cat:'Phobias & Manias', desc:'These begin as roleplaying colour. After insanity, they become mechanical penalties.', eg:'"Terrified of deep water since my brother drowned."' },
+          ].map(b => (
+            <div key={b.cat} className="card mb-4" style={{borderColor:'var(--border2)'}}>
+              <div className="card-title" style={{color:'var(--teal-pale)'}}>{b.cat}</div>
+              <p className="small">{b.desc}</p>
+              <div className="pull-quote" style={{margin:'8px 0',padding:'8px 12px',fontSize:12,fontStyle:'italic'}}>
+                {b.eg}
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <div className="card teal">
+        <div className="card-title">Why Backstory Matters</div>
+        <p>In Call of Cthulhu, your backstory serves three purposes: it guides your roleplaying decisions; it can be called upon to <span className="teal">recover Sanity</span> during the Investigator Development Phase; and its gradual corruption — as the Mythos destroys everything you once held dear — mirrors your loss of Sanity. <em>The investigator's only connections to the world become madness and pain.</em></p>
+      </div>
+    </div>
+  )}
+
+  {/* STEP 5: EQUIPMENT */}
+  {creStep === 4 && (
+    <div className="fade-in">
+      <div className="card gold mb-4">
+        <div className="card-title">Step 5 — Equip Your Investigator</div>
+        <p>Your Credit Rating determines your starting wealth and what you can comfortably afford. The Keeper sets starting equipment appropriate to the scenario and era — you don't need to buy every item upfront.</p>
+      </div>
+
+      <table className="diff-table mb-6">
+        <thead><tr><th>Credit Rating</th><th>Standard</th><th>Lifestyle</th></tr></thead>
+        <tbody>
+          <tr><td>0</td><td className="red">Penniless</td><td>Living on the street. Hitchhiking. No possessions.</td></tr>
+          <tr><td>1–9</td><td className="teal">Poor</td><td>Cheapest rental housing. Public transport only.</td></tr>
+          <tr><td>10–49</td><td className="gold">Average</td><td>Average apartment. Occasional taxi. Modest hotels.</td></tr>
+          <tr><td>50–89</td><td className="gold">Wealthy</td><td>Substantial home. First class. Owns a car.</td></tr>
+          <tr><td>90+</td><td className="gold">Rich</td><td>Estate or mansion. Private car. Top hotels.</td></tr>
+          <tr><td>99</td><td className="gold">Super Rich</td><td>Among the world's wealthiest. Money is no object.</td></tr>
+        </tbody>
+      </table>
+
+      <div className="grid-2">
+        <div className="card">
+          <div className="card-title">1920s Essentials</div>
+          <ul className="coc-list">
+            <li>Notebook and pencils</li>
+            <li>Electric torch (flashlight)</li>
+            <li>First aid kit</li>
+            <li>Pocket watch</li>
+            <li>Camera (Photography skill)</li>
+            <li>Automobile (if Credit Rating ≥ 30)</li>
+            <li>.38 Revolver (Firearms skill required)</li>
+          </ul>
+        </div>
+        <div className="card">
+          <div className="card-title">Starting Cash</div>
+          <p className="small">The Keeper may provide a spending allowance at the start of a scenario based on your Credit Rating. Generally:</p>
+          <ul className="coc-list mt-4">
+            <li><span className="gold">Spending:</span> CR × $20 available per month</li>
+            <li><span className="gold">Assets:</span> CR × $50 in savings/property</li>
+            <li>A car costs approximately $200–800 in the 1920s</li>
+            <li>A decent hotel room: $2–5 per night</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  )}
+</div>
+
+
+);
 }
 
 function combatHTML(){
@@ -333,91 +1527,550 @@ function qrHTML(){
   '</div>';
 }
 
-var SECS={intro:introHTML,create:createHTML,rules:rulesHTML,combat:combatHTML,sanity:sanityHTML,qr:qrHTML};
-var curTab='intro';
-var tutIdx=0;
+/* ─────────────────────────── SHARED COMPONENTS ─────────────────────────── */
 
-function buildNav(){
-  var bar=document.getElementById('navBar');
-  bar.innerHTML='';
-  TABS.forEach(function(t){
-    var b=document.createElement('button');
-    b.className='nt'+(t.id===curTab?' active':'');
-    b.textContent=t.label;
-    b.onclick=function(){showTab(t.id);};
-    bar.appendChild(b);
-  });
+function SectionHead({ num, title, subtitle }) {
+  return (
+    <div className="sec-header">
+      <span className="sec-num">Chapter {num}</span>
+      <div className="sec-title">{title}</div>
+      {subtitle && <div className="sec-sub">{subtitle}</div>}
+    </div>
+  );
 }
 
-function showTab(id){
-  curTab=id;
-  document.querySelectorAll('.nt').forEach(function(b,i){b.classList.toggle('active',TABS[i].id===id);});
-  var c=document.getElementById('canvas');
-  c.innerHTML=SECS[id]();
-  if(id==='sanity'){initPips(50);}
-  window.scrollTo({top:0,behavior:'smooth'});
+/* ─────────────────────────── INTRO SECTION ─────────────────────────── */
+
+function IntroSection() {
+  return (
+    <div className="fade-in">
+      <SectionHead num="I" title="Introduction" subtitle='"The oldest and strongest emotion of mankind is fear." — H.P. Lovecraft' />
+      <p className="lead">
+        Call of Cthulhu is a horror roleplaying game based on H.P. Lovecraft's fiction. Players take the roles of <strong>Investigators</strong> — ordinary people drawn into extraordinary encounters with forces beyond human comprehension.
+      </p>
+      <div className="grid-2 mt-6">
+        <div>
+          <div className="card mb-4">
+            <div className="card-title">What is Call of Cthulhu?</div>
+            <p>Unlike many RPGs, investigators are not superheroes. They are journalists, professors, and doctors — people whose <span className="gold">courage and intellect</span> are their greatest weapons. The monsters they face cannot be fought head-on. The truths they uncover cannot be unfound.</p>
+          </div>
+          <div className="card mb-4">
+            <div className="card-title">The Keeper of Arcane Lore</div>
+            <p>One player takes the role of <strong>Keeper of Arcane Lore</strong>. The Keeper describes the world, portrays all NPCs, and presents the mysteries to be unravelled.</p>
+            <div className="card mt-4">
+              <div className="card-title">Working With Your Keeper</div>
+              The Keeper presents challenges — not a fight to defeat you. Trust their descriptions, engage with the fiction, and raise disagreements after the session.
+            </div>
+          </div>
+          <div className="card mb-4">
+            <div className="card-title">The Shape of a Session</div>
+            <ul className="coc-list">
+              <li>The Keeper describes a situation, location, or event</li>
+              <li>Players describe what their investigators do or say</li>
+              <li>The Keeper calls for a dice roll when uncertain and dramatic</li>
+              <li>Results drive the story — success and failure are both meaningful</li>
+            </ul>
+          </div>
+        </div>
+        <div>
+          <div className="card mb-4">
+            <div className="card-title">The World of the 1920s</div>
+            <p>The default setting is the <strong>Roaring Twenties</strong>: jazz, prohibition, the shadow of the Great War, and the first tremors of a world that no longer makes sense. Strange cults flourish in dark corners. Ancient tomes surface in dusty bookshops. Something stirs in the deep places of the earth.</p>
+            <div className="card red mt-4">
+              <div className="card-title">A Note on Horror</div>
+              Call of Cthulhu deals with dark themes. Investigators may be injured, descend into madness, or meet their end. This is not failure — it is the nature of the game.
+            </div>
+          </div>
+          <div className="card mb-4">
+            <div className="card-title">What Investigators Face</div>
+            <ul className="coc-list">
+              <li><span className="gold">Cultists</span> — humans devoted to powers beyond reason</li>
+              <li><span className="gold">Mythos Creatures</span> — entities from outside our reality</li>
+              <li><span className="gold">The Great Old Ones</span> — cosmic beings of incomprehensible scale</li>
+              <li><span className="gold">Forbidden Knowledge</span> — truths that fracture the mind</li>
+            </ul>
+          </div>
+          <div className="card mb-4">
+            <div className="card-title">Table Etiquette</div>
+            <ul className="coc-list">
+              <li>Discuss safety and content limits with your group beforehand</li>
+              <li>Set a goal before rolling dice — do not sign contracts unread</li>
+              <li>Accept failure — it takes the story to unexpected places</li>
+              <li>Cooperate — investigators who work together survive longer</li>
+            </ul>
+          </div>
+          <div className="pull-quote">
+            <p>"The most merciful thing in the world, I think, is the inability of the human mind to correlate all its contents."</p>
+            <cite>H.P. Lovecraft · The Call of Cthulhu</cite>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
 }
 
-function tog(card){
-  card.classList.toggle('open');
-  var a=card.querySelector('.oca');
-  if(a) a.innerHTML=card.classList.contains('open')?'&#9650;':'&#9660;';
+/* ─────────────────────────── MECHANICS SECTION ─────────────────────────── */
+
+function MechanicsSection() {
+  return (
+    <div className="fade-in">
+      <SectionHead num="III" title="Core Rules" subtitle="Everything resolves on a D100 — roll equal to or under your skill" />
+      <p className="lead">
+        Call of Cthulhu uses a percentile system. Every skill and characteristic is a percentage. Roll a D100 — if the result is <span className="gold">equal to or under</span> your skill value, you succeed.
+      </p>
+
+      <div className="grid-2 mt-6 mb-4">
+        <div className="card gold">
+          <div className="card-title">The Three Difficulty Levels</div>
+          <table className="diff-table">
+            <thead><tr><th>Difficulty</th><th>Threshold</th><th>When Used</th></tr></thead>
+            <tbody>
+              <tr><td className="gold">Regular</td><td>≤ Full skill</td><td>Normal circumstances</td></tr>
+              <tr><td className="gold">Hard</td><td>≤ Half skill</td><td>Difficult conditions</td></tr>
+              <tr><td className="gold">Extreme</td><td>≤ Fifth of skill</td><td>Near-impossible feats</td></tr>
+            </tbody>
+          </table>
+          <p className="small muted mt-4">The Keeper sets the difficulty <em>before</em> you roll. A skill of 60% has a Hard threshold of 30% and an Extreme threshold of 12%.</p>
+        </div>
+        <div className="card">
+          <div className="card-title">Critical Success & Fumble</div>
+          <ul className="coc-list">
+            <li><span className="gold">01</span> — Always a critical success regardless of skill</li>
+            <li><span className="gold">96–100</span> — Fumble if skill is below 50%</li>
+            <li><span className="gold">100</span> — Fumble if skill is 50% or higher</li>
+          </ul>
+          <div className="card red mt-4">
+            <div className="card-title">Fumbles</div>
+            A fumble is the worst possible outcome — a weapon jams, a clue is destroyed, a contact is alienated. The Keeper decides the consequence.
+          </div>
+        </div>
+      </div>
+
+      <div className="deco-divider"><span>Bonus & Penalty Dice</span></div>
+
+      <div className="grid-2 mt-4 mb-4">
+        <div className="card teal">
+          <div className="card-title">Bonus Die</div>
+          <p>Roll an extra tens die alongside your normal D100. <span className="gold">Take the lower tens result</span>. This gives you a better chance of rolling under your skill.</p>
+          <p className="mt-4 small muted">Granted by favourable circumstances: a skill directly relevant to your occupation, working from a position of advantage, or having proper time and tools.</p>
+        </div>
+        <div className="card red">
+          <div className="card-title">Penalty Die</div>
+          <p>Roll an extra tens die alongside your normal D100. <span className="red">Take the higher tens result</span>. This makes it harder to roll under your skill.</p>
+          <p className="mt-4 small muted">Applied for adverse conditions: working in darkness, injured, panicked, using improvised tools, or attempting something outside your expertise.</p>
+        </div>
+      </div>
+
+      <div className="deco-divider"><span>Pushing a Roll</span></div>
+
+      <div className="card mt-4 mb-4">
+        <div className="card-title">The Pushed Roll</div>
+        <p>If you fail a roll, you may — with the Keeper's permission and a good justification — <span className="gold">push the roll</span>: try once more with the same dice. However, if the pushed roll also fails, the consequences are significantly worse than a normal failure.</p>
+        <div className="grid-2 mt-4">
+          <div className="card">
+            <div className="card-title">When You Can Push</div>
+            You have a compelling reason to try again. You are not simply repeating the same approach. The stakes of failure are clear.
+          </div>
+          <div className="card red">
+            <div className="card-title">When You Cannot Push</div>
+            Luck rolls, Sanity rolls, and Cthulhu Mythos rolls can never be pushed. Some rolls are one chance only.
+          </div>
+        </div>
+      </div>
+
+      <div className="deco-divider"><span>Opposed Rolls</span></div>
+
+      <div className="card mt-4">
+        <div className="card-title">Opposed Rolls</div>
+        <p>When two characters act against each other, both roll. The <span className="gold">higher success level wins</span>. If success levels tie, the <span className="gold">higher skill value</span> wins. If still tied, re-roll.</p>
+        <table className="diff-table mt-4">
+          <thead><tr><th>Priority</th><th>Tiebreaker</th></tr></thead>
+          <tbody>
+            <tr><td>1st</td><td>Higher success level (Extreme beats Hard beats Regular)</td></tr>
+            <tr><td>2nd</td><td>Higher skill value</td></tr>
+            <tr><td>3rd</td><td>Re-roll</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  );
 }
 
-function initPips(v){
-  var c=document.getElementById('spips');
-  if(!c) return;
-  c.innerHTML='';
-  for(var i=1;i<=99;i++){
-    var p=document.createElement('div');
-    p.className='sapp';
-    if(i<=v){p.classList.add(v>=70?'hi':v>=30?'mi':'lo');}
-    c.appendChild(p);
-  }
-  var sv=document.getElementById('sv');
-  var st=document.getElementById('sstat');
-  if(sv) sv.textContent=v;
-  if(st){
-    if(v===0){st.textContent='PERMANENTLY INSANE';st.style.color='#5a0a0a';}
-    else if(v<10){st.textContent='On the Brink of Oblivion';st.style.color='#8b1a1a';}
-    else if(v<30){st.textContent='Unravelling';st.style.color='#a02020';}
-    else if(v<50){st.textContent='Deeply Troubled';st.style.color='#c49a1e';}
-    else if(v<70){st.textContent='Troubled';st.style.color='#c49a1e';}
-    else{st.textContent='Stable';st.style.color='#8b6914';}
-  }
+/* ─────────────────────────── SANITY SECTION ─────────────────────────── */
+
+function SanitySection() {
+  return (
+    <div className="fade-in">
+      <SectionHead num="IV" title="Sanity" subtitle="The fragile membrane between reason and the abyss" />
+      <p className="lead">
+        Your <strong>Sanity (SAN)</strong> begins equal to your POW characteristic. Every encounter with the Mythos, every brush with violence, every truth the mind was not meant to hold grinds it away.
+      </p>
+
+      <div className="grid-2 mt-6 mb-4">
+        <div className="card">
+          <div className="card-title">Making a Sanity Roll</div>
+          <p>When investigators encounter the unnatural, the Keeper calls for a <span className="gold">SAN roll</span>. Roll D100 equal to or under your current SAN to succeed.</p>
+          <table className="diff-table mt-4">
+            <thead><tr><th>Result</th><th>SAN Loss</th></tr></thead>
+            <tbody>
+              <tr><td className="gold">Success</td><td>Minimum loss (first number, e.g. <em>0</em>/1D6)</td></tr>
+              <tr><td className="red">Failure</td><td>Full loss (second number, e.g. 0/<em>1D6</em>)</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div className="card">
+          <div className="card-title">Typical SAN Loss Values</div>
+          <table className="diff-table">
+            <thead><tr><th>Trigger</th><th>Loss</th></tr></thead>
+            <tbody>
+              <tr><td>Badly mutilated corpse</td><td>0/1D3</td></tr>
+              <tr><td>Witnessing someone killed</td><td>0/1D3</td></tr>
+              <tr><td>Killing another human being</td><td>0/1D4</td></tr>
+              <tr><td>Seeing a ghoul or Deep One</td><td>0/1D6</td></tr>
+              <tr><td>Encountering a Mythos monster</td><td>1/1D6</td></tr>
+              <tr><td>Reading a Mythos tome</td><td>1D4/1D10</td></tr>
+              <tr><td>Encountering a Great Old One</td><td>1D10/1D100</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div className="deco-divider"><span>Insanity Thresholds</span></div>
+
+      <div className="grid-2 mt-4 mb-4">
+        <div className="card">
+          <div className="card-title">Temporary Insanity</div>
+          <p>Lose <span className="red">5 or more SAN in a single roll</span> and the investigator may fall into a temporary bout of madness.</p>
+          <div className="card red mt-4">
+            <div className="card-title">Bout of Madness</div>
+            The Keeper takes narrative control of your investigator for the bout — ~1D10 rounds. They may panic, flee, babble incoherently, or freeze entirely.
+          </div>
+        </div>
+        <div className="card">
+          <div className="card-title">Indefinite Insanity</div>
+          <p>Lose <span className="red">one-fifth (20%) of your current SAN in a single day</span> and you suffer indefinite insanity.</p>
+          <div className="card mt-4">
+            <div className="card-title">Tracking the 20% Line</div>
+            If your SAN is 45, losing 9 points in one day triggers indefinite insanity. Update this threshold on your sheet whenever SAN changes.
+          </div>
+          <p className="small muted mt-4">Recovery requires 1D6 months of care. Your investigator gains a phobia, mania, or disorder.</p>
+        </div>
+      </div>
+
+      <div className="deco-divider"><span>Maximum SAN & Recovery</span></div>
+
+      <div className="grid-2 mt-4">
+        <div className="card red">
+          <div className="card-title">Maximum Sanity</div>
+          <div className="formula-box">
+            <span className="formula-val">99 − Cthulhu Mythos%</span>
+            <span className="formula-label formula-eq">= SAN ceiling</span>
+          </div>
+          <p className="mt-4">Every point of Cthulhu Mythos permanently lowers your maximum Sanity. With Mythos at 20%, your SAN can never exceed 79. Knowledge of the truth is not free.</p>
+        </div>
+        <div className="card">
+          <div className="card-title">Regaining Sanity</div>
+          <table className="diff-table">
+            <thead><tr><th>Method</th><th>Recovery</th></tr></thead>
+            <tbody>
+              <tr><td>Session completion / defeating evil</td><td>+1D10 (Keeper discretion)</td></tr>
+              <tr><td>Psychoanalysis (monthly)</td><td>+1D3 on successful roll</td></tr>
+              <tr><td>Time with a loved one</td><td>+1D3 (Keeper discretion)</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  );
 }
 
-function updSan(v){initPips(parseInt(v));}
+/* ─────────────────────────── COMBAT SECTION ─────────────────────────── */
 
-function openTut(){tutIdx=0;renderTut();document.getElementById('overlay').classList.add('show');}
+function CombatSection() {
+  const actions = [
+    { num:'01', act:'Attack',   desc:'Roll your Fighting or Firearms skill. On success, roll weapon damage plus Damage Bonus (melee only).' },
+    { num:'02', act:'Dodge',    desc:'Roll Dodge (half DEX base). On success, you avoid the attack entirely. Uses your action for the round.' },
+    { num:'03', act:'Fight Back',desc:'Strike simultaneously as you are struck. Both roll — higher success level wins and deals damage. Uses your action.' },
+    { num:'04', act:'Move',     desc:'Move up to MOV × 5 yards. You may still attack, but shooting while moving applies a Penalty Die.' },
+    { num:'05', act:'Aim',      desc:'Spend one full round aiming. Gain a Bonus Die on your next firearm attack against the same target.' },
+    { num:'06', act:'Maneuver', desc:'Attempt to disarm, trip, grapple, or gain positional advantage. Opposed STR or Fighting roll.' },
+    { num:'07', act:'Other',    desc:'Draw a weapon, reload, call for help, apply First Aid, or any action the Keeper permits.' },
+  ];
 
-function renderTut(){
-  var s=TUT[tutIdx];
-  document.getElementById('ovT').textContent=s.t;
-  document.getElementById('ovX').innerHTML=s.x;
-  document.getElementById('ovS').textContent='Chapter '+(tutIdx+1)+' of '+TUT.length;
-  var dots=document.getElementById('ovDots');
-  dots.innerHTML='';
-  TUT.forEach(function(_,i){
-    var d=document.createElement('div');
-    d.className='ovdot'+(i===tutIdx?' active':'');
-    d.onclick=(function(idx){return function(){tutIdx=idx;renderTut();};})(i);
-    dots.appendChild(d);
-  });
-  var back=document.getElementById('ovBack');
-  var next=document.getElementById('ovNext');
-  back.style.visibility=tutIdx===0?'hidden':'visible';
-  if(tutIdx===TUT.length-1){next.textContent='Enter the Archives \u2192';next.onclick=function(){document.getElementById('overlay').classList.remove('show');};}
-  else{next.textContent='Next \u2192';next.onclick=function(){tutIdx++;renderTut();};}
+  return (
+    <div className="fade-in">
+      <SectionHead num="V" title="Combat" subtitle="Dangerous, brutal, and often a last resort — investigators are not soldiers" />
+      <p className="lead">
+        Combat in Call of Cthulhu is lethal. A single bullet can incapacitate or kill. Discretion, evasion, and preparation are almost always better options than a straight fight.
+      </p>
+
+      <div className="card red mb-4">
+        <div className="card-title">Investigators Are Fragile</div>
+        <p>You are not a hero built for combat. You are a person of ordinary resilience facing things that should not exist. When violence becomes unavoidable, <span className="red">the goal is to survive</span>, not to win.</p>
+      </div>
+
+      <div className="grid-2 mb-4">
+        <div className="card">
+          <div className="card-title">The Combat Round</div>
+          <p>One round is approximately <strong>one second</strong>. Combatants act in order from <span className="gold">highest DEX to lowest</span>. Each participant takes one action per round. Tied DEX values act simultaneously.</p>
+        </div>
+        <div className="card">
+          <div className="card-title">Hit Point Thresholds</div>
+          <table className="diff-table">
+            <thead><tr><th>State</th><th>Effect</th></tr></thead>
+            <tbody>
+              <tr><td>Half HP or below</td><td>Seriously wounded</td></tr>
+              <tr><td>Major Wound (½ max HP in one hit)</td><td>CON roll or unconscious</td></tr>
+              <tr><td>HP = 0</td><td>Dying; First Aid within 1 round or death</td></tr>
+              <tr><td>HP = −(max HP)</td><td>Instant death</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div className="deco-divider"><span>Available Actions</span></div>
+
+      <div className="card mt-4 mb-4">
+        <div className="card-title">Combat Actions</div>
+        <ul className="coc-list">
+          {actions.map(a => (
+            <li key={a.num}><span className="gold">{a.act}</span> — {a.desc}</li>
+          ))}
+        </ul>
+      </div>
+
+      <div className="deco-divider"><span>Weapons & Healing</span></div>
+
+      <div className="grid-2 mt-4">
+        <div className="card">
+          <div className="card-title">Common Weapons (1920s)</div>
+          <table className="diff-table">
+            <thead><tr><th>Weapon</th><th>Skill (Base)</th><th>Damage</th></tr></thead>
+            <tbody>
+              <tr><td>Fist / Brawl</td><td>Fighting (Brawl) 25%</td><td>1D3 + DB</td></tr>
+              <tr><td>Knife</td><td>Fighting (Brawl) 25%</td><td>1D4 + DB</td></tr>
+              <tr><td>Club / Cosh</td><td>Fighting (Brawl) 25%</td><td>1D6 + DB</td></tr>
+              <tr><td>Handgun (.38)</td><td>Firearms (Handgun) 20%</td><td>1D10</td></tr>
+              <tr><td>Rifle</td><td>Firearms (Rifle) 25%</td><td>2D6+4</td></tr>
+              <tr><td>Shotgun (close)</td><td>Firearms (Shotgun) 25%</td><td>4D6</td></tr>
+              <tr><td>Thompson SMG</td><td>Firearms (Submachine) 15%</td><td>1D10+2</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div className="card">
+          <div className="card-title">Healing</div>
+          <table className="diff-table">
+            <thead><tr><th>Method</th><th>Recovery</th></tr></thead>
+            <tbody>
+              <tr><td>First Aid (within 1 hour)</td><td>Restore 1 HP; stabilise dying investigator</td></tr>
+              <tr><td>Medicine skill</td><td>Restore 1D3 HP</td></tr>
+              <tr><td>Natural healing (1 week rest)</td><td>+1D3 HP</td></tr>
+              <tr><td>Major wound + hospital care</td><td>1D3 HP per week with physician</td></tr>
+            </tbody>
+          </table>
+          <div className="card mt-4">
+            <div className="card-title">First Aid Limit</div>
+            First Aid can only be applied once per wound. Subsequent treatment requires the Medicine skill.
+          </div>
+        </div>
+      </div>
+    </div>
+  );
 }
 
-document.getElementById('ovBack').onclick=function(){if(tutIdx>0){tutIdx--;renderTut();}};
-document.getElementById('briefBtn').onclick=openTut;
-document.getElementById('overlay').addEventListener('click',function(e){if(e.target===this)this.classList.remove('show');});
+function QuickRefSection() {
+return (
+<div className="fade-in">
+<SectionHead num="VI" title="Quick Reference"/>
+<p className="lead">
+Everything you need at the table, distilled. When the Keeper says "Make a SAN roll" — breathe, find your number, and hope the dice are kind.
+</p>
 
-buildNav();
-showTab('intro');
-openTut();
+
+  <div className="deco-divider"><span>Characteristics & Derived Attributes</span></div>
+  <div className="qr-grid mb-6">
+    {[
+      { label:'STR — Strength',     val:'3D6×5',          note:'Melee damage, carrying capacity'},
+      { label:'CON — Constitution', val:'3D6×5',          note:'HP, resist poison/disease'},
+      { label:'SIZ — Size',         val:'(2D6+6)×5',      note:'HP, Damage Bonus, Build'},
+      { label:'DEX — Dexterity',    val:'3D6×5',          note:'Initiative, Dodge base'},
+      { label:'APP — Appearance',   val:'3D6×5',          note:'Social encounters'},
+      { label:'INT — Intelligence', val:'(2D6+6)×5',      note:'Personal Interest pts = INT×2'},
+      { label:'POW — Power',        val:'3D6×5',          note:'Starting SAN; Magic Pts = POW÷5'},
+      { label:'EDU — Education',    val:'(2D6+6)×5',      note:'Occupation pts formula; Own Language%'},
+      { label:'Luck',               val:'3D6×5',          note:'External circumstances; never Bonus/Penalty dice'},
+      { label:'Hit Points',         val:'(CON+SIZ)÷10',   note:'Rounded down. Major Wound = ½ max HP in one hit.'},
+      { label:'Sanity',             val:'= POW',           note:'Max SAN = 99 − Cthulhu Mythos'},
+      { label:'Magic Points',       val:'POW ÷ 5',         note:'Spent casting spells; recovers with rest'},
+      { label:'Damage Bonus',       val:'STR+SIZ table',  note:'Added to melee damage rolls'},
+      { label:'Movement Rate',      val:'7 / 8 / 9',      note:'Based on STR/DEX vs SIZ comparison'},
+    ].map(q => (
+      <div key={q.label} className="qr-item">
+        <div className="qr-label">{q.label}</div>
+        <div className="qr-val">{q.val}</div>
+        {q.note && <div className="qr-note">{q.note}</div>}
+      </div>
+    ))}
+  </div>
+
+  <div className="deco-divider"><span>Skill Rolls</span></div>
+  <div className="grid-2 mb-6">
+    <div>
+      <table className="diff-table">
+        <thead><tr><th>Difficulty</th><th>Roll Target</th></tr></thead>
+        <tbody>
+          <tr><td>Regular</td><td className="teal">≤ Skill (full value)</td></tr>
+          <tr><td>Hard</td><td className="teal">≤ Skill ÷ 2</td></tr>
+          <tr><td>Extreme</td><td className="teal">≤ Skill ÷ 5</td></tr>
+          <tr><td>Critical Success</td><td className="gold">Roll of 01 (always)</td></tr>
+          <tr><td>Fumble</td><td className="red">Roll of 96–100 (or 100 if skill ≥50)</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div>
+      <table className="diff-table">
+        <thead><tr><th>Roll Type</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td>Bonus Die</td><td>Roll 2 tens dice; take the lower</td></tr>
+          <tr><td>Penalty Die</td><td>Roll 2 tens dice; take the higher</td></tr>
+          <tr><td>Pushed Roll</td><td>One retry; must justify extra effort; fail = consequences</td></tr>
+          <tr><td>Opposed Roll</td><td>Both roll; higher success level wins</td></tr>
+          <tr><td>Luck Roll</td><td>Never uses Bonus/Penalty dice</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div className="deco-divider"><span>Sanity</span></div>
+  <div className="qr-grid mb-6">
+    {[
+      { label:'Starting SAN',           val:'= POW',                  note:''},
+      { label:'Maximum SAN',            val:'99 − Mythos%',            note:'Cthulhu Mythos permanently lowers ceiling'},
+      { label:'SAN Roll — Success',     val:'Lower SAN loss',          note:'e.g. the "1" in "1/1D6"'},
+      { label:'SAN Roll — Failure',     val:'Higher SAN loss',         note:'e.g. roll the "1D6"'},
+      { label:'Temp Insanity Trigger',  val:'Lose 5+ in one roll',     note:'1D10 rounds/hours of madness'},
+      { label:'Indef Insanity Trigger', val:'Lose 20%+ in one session',note:'Keeper adds phobia or mania'},
+      { label:'Permanent Insanity',     val:'SAN = 0',                 note:'Investigator becomes an NPC'},
+      { label:'Phobia (while insane)',  val:'Penalty Die',             note:'On all rolls not related to fleeing the trigger'},
+    ].map(q => (
+      <div key={q.label} className="qr-item">
+        <div className="qr-label">{q.label}</div>
+        <div className="qr-val" style={{fontSize:13}}>{q.val}</div>
+        {q.note && <div className="qr-note">{q.note}</div>}
+      </div>
+    ))}
+  </div>
+
+  <div className="deco-divider"><span>Combat</span></div>
+  <div className="grid-2 mb-6">
+    <table className="diff-table">
+      <thead><tr><th>Combat Step</th><th>Notes</th></tr></thead>
+      <tbody>
+        <tr><td>Initiative</td><td>Highest DEX acts first</td></tr>
+        <tr><td>Attack</td><td>Roll ≤ Fighting or Firearms skill</td></tr>
+        <tr><td>Damage</td><td>Weapon dice + Damage Bonus (melee)</td></tr>
+        <tr><td>Hard Success</td><td>Maximum weapon damage</td></tr>
+        <tr><td>Extreme Success</td><td>Max damage + max Damage Bonus</td></tr>
+        <tr><td>Dodge</td><td>Opposed roll vs attack; DEX÷2 base</td></tr>
+        <tr><td>Fight Back</td><td>Opposed Fighting; costs your action</td></tr>
+      </tbody>
+    </table>
+    <table className="diff-table">
+      <thead><tr><th>Wound / State</th><th>Effect</th></tr></thead>
+      <tbody>
+        <tr><td>Major Wound</td><td>½+ max HP in one hit → CON roll or unconscious</td></tr>
+        <tr><td>HP = 0</td><td>Unconscious, dying; 1 hour without First Aid = dead</td></tr>
+        <tr><td>First Aid</td><td>Stabilises (1 HP); one use per wound</td></tr>
+        <tr><td>Healing (rest)</td><td>1 HP per day</td></tr>
+        <tr><td>Firearm Fumble</td><td>Roll 96–100: weapon jams or misfires</td></tr>
+        <tr><td>Melee Fumble</td><td>Roll 96–100: drop weapon, fall, or hurt self</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div className="card teal">
+    <div className="card-title">The Most Important Rules to Remember</div>
+    <div className="grid-2">
+      <ul className="coc-list">
+        <li>Roll <em>equal to or under</em> your skill to succeed</li>
+        <li>Difficulty is set <strong>before</strong> you roll</li>
+        <li>Half value = Hard; Fifth value = Extreme</li>
+        <li>01 is always a critical success</li>
+        <li>96–100 is always a fumble (or 100 if skill ≥50)</li>
+      </ul>
+      <ul className="coc-list">
+        <li>SAN starts = POW; Max SAN = 99 − Mythos</li>
+        <li>Lose 5+ SAN in one roll → Temp Insanity</li>
+        <li>Lose 20%+ SAN in one session → Indefinite Insanity</li>
+        <li>When in doubt: <em>investigate first, fight never</em></li>
+        <li>Luck rolls are never modified by bonus/penalty dice</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+
+);
+}
+
+/* ─────────────────────────── APP ─────────────────────────── */
+
+function App() {
+const [tab, setTab] = useState('intro');
+const [showTutorial, setShowTutorial] = useState(true);
+
+const renderSection = () => {
+switch(tab) {
+case 'intro':     return <IntroSection/>;
+case 'creation':  return <CreationSection/>;
+case 'mechanics': return <MechanicsSection/>;
+case 'sanity':    return <SanitySection/>;
+case 'combat':    return <CombatSection/>;
+case 'quickref':  return <QuickRefSection/>;
+default:          return null;
+}
+};
+
+return (
+<>
+{showTutorial && <Tutorial onClose={()=>setShowTutorial(false)}/>}
+
+
+  <div className="header">
+    <div className="header-top">
+      <span className="cthulhu-eye">🐙</span>
+      <div className="header-text">
+        <div className="header-eyebrow">Chaosium Inc. — 7th Edition</div>
+        <div className="header-title">Call of Cthulhu</div>
+        <div className="header-subtitle">Investigator Primer — Player's Companion</div>
+      </div>
+      <div className="header-actions">
+        <button className="primer-btn ghost" onClick={()=>setShowTutorial(true)}>
+          ⊞ Orientation
+        </button>
+      </div>
+    </div>
+    <div className="nav-bar">
+      {TABS.map(t => (
+        <button key={t.id} className={`nav-tab${tab===t.id?' active':''}`} onClick={()=>setTab(t.id)}>
+          <span className="tab-num">{t.num}</span>
+          {t.label}
+        </button>
+      ))}
+    </div>
+  </div>
+
+  <main className="main">
+    {renderSection()}
+  </main>
+</>
+
+
+);
+}
+
+ReactDOM.createRoot(document.getElementById('root')).render(<App/>);
 </script>
 </body>
 </html>
+
