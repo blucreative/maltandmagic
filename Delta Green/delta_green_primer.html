@@ -290,24 +290,6 @@ const TUTORIAL = [
 ];
 
 let step = 0;
-const ORIENTATION_STORAGE_KEY = 'deltaGreenPrimerOrientationComplete';
-
-function hasCompletedOrientation(){
-  try{
-    return localStorage.getItem(ORIENTATION_STORAGE_KEY) === '1';
-  }catch(_err){
-    return false;
-  }
-}
-
-function markOrientationComplete(){
-  try{
-    localStorage.setItem(ORIENTATION_STORAGE_KEY, '1');
-  }catch(_err){
-    // Ignore storage failures (private browsing, blocked storage, etc.)
-  }
-}
-
 function renderOverlay(){
   const s = TUTORIAL[step];
   document.getElementById('ov-title').textContent = s.title;
@@ -321,21 +303,12 @@ function renderOverlay(){
 function gotoStep(i){step=i;renderOverlay()}
 document.getElementById('ov-next').onclick=()=>{
   if(step<TUTORIAL.length-1){step++;renderOverlay();}
-  else{
-    markOrientationComplete();
-    document.getElementById('overlay').style.display='none';
-  }
+  else{document.getElementById('overlay').style.display='none';}
 };
 document.getElementById('ov-back').onclick=()=>{if(step>0){step--;renderOverlay();}};
 document.getElementById('overlay').addEventListener('click',e=>{if(e.target.id==='overlay')e.target.style.display='none';});
 function startTutorial(){step=0;document.getElementById('overlay').style.display='flex';renderOverlay();}
-
-if(hasCompletedOrientation()){
-  document.getElementById('overlay').style.display='none';
-}else{
-  document.getElementById('overlay').style.display='flex';
-  renderOverlay();
-}
+renderOverlay();
 
 /* ═══════════════════════════════════════════════
    TABS & SECTIONS
