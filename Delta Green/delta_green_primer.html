@@ -974,14 +974,7 @@ ${callout('<strong>Home scenes</strong> occur between missions. A chance to expl
 SECTIONS.equipment = () => `
 ${sh('EQUIPMENT & VEHICLES')}
 
-${panel('CAMPAIGN STRUCTURE NOTE', `<div class="g2">
-<div>
-${callout('<strong>PART 1 — THE ZEROS OF LITTLE TREGAW:</strong> You are local civilians. No special equipment, no loadout. Whatever you own or can scavenge in Tregaw. Character creation follows standard Call of Cthulhu 7th Edition rules.','info')}
-</div>
-<div>
-${callout('<strong>PART 2 — THE EYES OF THE STORM:</strong> You are operatives of The Firm (Delta Green). You will be issued a combat loadout from the tables below before insertion. Delta Green character creation rules apply.')}
-</div>
-</div>`, 'accent')}
+${panel('CAMPAIGN STRUCTURE NOTE', `${callout('<strong>PART 2 — THE EYES OF THE STORM:</strong> You are operatives of The Firm (Delta Green). You will be issued a combat loadout from the tables below before insertion. Delta Green character creation rules apply.')}`, 'accent')}
 
 ${divrow('PART 2 — ISSUED COMBAT LOADOUT')}
 <p style="font-size:12px;color:var(--txd);margin-bottom:14px">Each operative selects from the following tables. All weapons include 2× spare magazines/clips where applicable. These are issued — not chosen from a catalogue — so availability is fixed. The Skill column indicates which skill governs use.</p>
