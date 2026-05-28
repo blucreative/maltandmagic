@@ -240,6 +240,10 @@ body::before{content:'';position:fixed;inset:0;background:repeating-linear-gradi
 .adapted-banner strong{color:var(--gb);font-family:var(--fn);font-size:9px;letter-spacing:1px}
 .scroll-hint{text-align:center;font-size:9px;letter-spacing:2px;color:var(--gd);padding:20px 0}
 
+.top-nav{background:var(--sf);border:1px solid var(--bd);padding:8px 10px;display:flex;gap:8px;flex-wrap:wrap}
+.top-nav a{font-size:10px;letter-spacing:1px;color:var(--txd);text-transform:uppercase;text-decoration:none;border:1px solid var(--bd2);padding:4px 10px;transition:all .15s}
+.top-nav a:hover{border-color:var(--gb);color:var(--gb);background:var(--gg)}
+
 /* ── PRINT ────────────────────────────────────────────────── */
 @media print{
   @page{size:A4;margin:10mm}
@@ -328,6 +332,14 @@ body::before{content:'';position:fixed;inset:0;background:repeating-linear-gradi
 </div>
 
 <div class="page">
+
+  <nav class="top-nav">
+    <a href="../index.html">Delta Green Hub</a>
+    <a href="index.html">DG Sheets</a>
+    <a href="../delta_green_primer.html">DG Primer</a>
+    <a href="../coc_player_primer.html">CoC Primer</a>
+    <a href="../coc_character_sheets/index.html">CoC Sheets</a>
+  </nav>
 
   <!-- HEADER -->
   <div class="main-hd">

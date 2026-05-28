@@ -155,6 +155,34 @@ color: var(--text);
 border-color: var(--border2);
 }
 
+.dir-nav {
+max-width: 1200px;
+margin: 0 auto;
+padding: 10px 28px;
+display: flex;
+flex-wrap: wrap;
+gap: 8px;
+}
+
+.dir-nav-link {
+text-decoration: none;
+background: var(--surface);
+border: 1px solid var(--border2);
+color: var(--text-dim);
+font-family: var(--font-deco);
+font-size: 10px;
+letter-spacing: 1.2px;
+padding: 6px 12px;
+text-transform: uppercase;
+transition: all 0.2s;
+}
+
+.dir-nav-link:hover {
+border-color: var(--gold);
+color: var(--gold-pale);
+background: var(--surface2);
+}
+
 /* ── NAV ── */
 .nav-bar {
 max-width: 1200px;
@@ -929,6 +957,12 @@ text-transform: uppercase;
 </style>
 </head>
 <body>
+<nav class="dir-nav" aria-label="Delta Green Directory Navigation">
+  <a class="dir-nav-link" href="index.html">Delta Green Hub</a>
+  <a class="dir-nav-link" href="coc_character_sheets/index.html">CoC Sheets</a>
+  <a class="dir-nav-link" href="dg_character_sheets/index.html">DG Sheets</a>
+  <a class="dir-nav-link" href="delta_green_primer.html">DG Primer</a>
+</nav>
 <div id="root"></div>
 <script type="text/babel">
 const { useState, useCallback } = React;

@@ -48,6 +48,10 @@ body::before{content:'';position:fixed;inset:0;background:repeating-linear-gradi
 .tab-num{color:var(--txd);font-size:8px;margin-right:4px}
 .tab-btn.active .tab-num{color:var(--g)}
 
+.dir-nav{max-width:1100px;margin:0 auto;padding:10px 20px;display:flex;gap:8px;flex-wrap:wrap}
+.dir-nav-link{text-decoration:none;background:var(--sf);border:1px solid var(--bd2);color:var(--txd);font-family:var(--fn);font-size:9px;letter-spacing:1.2px;padding:5px 11px;text-transform:uppercase;transition:all .15s}
+.dir-nav-link:hover{border-color:var(--gb);color:var(--gb);background:var(--gg)}
+
 /* ── MAIN ─────────────────────────────────── */
 .main{max-width:1100px;margin:0 auto;padding:24px 20px 60px}
 .section{animation:fadeIn .25s ease}
@@ -235,6 +239,12 @@ hr.thin{border:none;border-top:1px solid var(--bd);margin:12px 0}
 </style>
 </head>
 <body>
+<nav class="dir-nav" aria-label="Delta Green Directory Navigation">
+  <a class="dir-nav-link" href="index.html">Delta Green Hub</a>
+  <a class="dir-nav-link" href="dg_character_sheets/index.html">DG Sheets</a>
+  <a class="dir-nav-link" href="coc_character_sheets/index.html">CoC Sheets</a>
+  <a class="dir-nav-link" href="coc_player_primer.html">CoC Primer</a>
+</nav>
 <div class="overlay" id="overlay">
   <div class="ov-box">
     <div class="ov-stamp">FIELD ORIENTATION</div>

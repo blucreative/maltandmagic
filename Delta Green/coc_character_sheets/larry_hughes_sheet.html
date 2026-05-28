@@ -150,6 +150,10 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .legend-dot{width:8px;height:8px;border-radius:50%;background:var(--gb)}
 .legend-dot.base{background:transparent;border:1px solid var(--pp)}
 
+.nav-strip{max-width:1200px;margin:0 auto 12px auto;background:var(--ink);border:1px solid var(--g);padding:8px 12px;display:flex;flex-wrap:wrap;gap:8px}
+.nav-link{font-family:var(--fd);font-size:10px;letter-spacing:0.08em;text-transform:uppercase;color:var(--pp);text-decoration:none;border:1px solid #4a3a20;padding:4px 10px;transition:all 0.15s}
+.nav-link:hover{color:var(--p);border-color:var(--gb);background:rgba(139,105,20,0.2)}
+
 /* COMBAT TABLE */
 .combat-table{width:100%;border-collapse:collapse;font-size:13px}
 .combat-table th{background:var(--ink);color:var(--gb);font-family:var(--fd);font-size:9px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;padding:6px 8px;text-align:left;border:1px solid #3a2a14}
@@ -158,6 +162,13 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 </style>
 </head>
 <body>
+<nav class="nav-strip">
+  <a class="nav-link" href="../index.html">Delta Green Hub</a>
+  <a class="nav-link" href="index.html">CoC Sheets</a>
+  <a class="nav-link" href="../coc_player_primer.html">CoC Primer</a>
+  <a class="nav-link" href="../delta_green_primer.html">DG Primer</a>
+  <a class="nav-link" href="../dg_character_sheets/index.html">DG Sheets</a>
+</nav>
 <div style="max-width:1200px;margin:0 auto">
 
 <!-- HEADER -->
@@ -280,7 +291,7 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
     <span class="tag">&#128295; Chisel & screwdrivers</span>
     <span class="tag">&#128221; Notepad of ideas/projects</span>
     <div style="margin-top:12px;font-family:var(--fd);font-size:9px;letter-spacing:0.12em;color:var(--g);text-transform:uppercase;margin-bottom:6px">Items Acquired</div>
-    <textarea class="notes-area" style="min-height:60px" placeholder="Items found or acquired during play..."></textarea>
+    <textarea class="notes-area" id="notes-items" style="min-height:60px" placeholder="Items found or acquired during play..."></textarea>
   </div>
 
 </div>
@@ -369,14 +380,14 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
     <!-- NOTES TAB -->
     <div class="tab-content" id="tab-notes">
       <div style="font-family:var(--fd);font-size:10px;letter-spacing:0.14em;color:var(--g);text-transform:uppercase;margin-bottom:10px">Session Notes</div>
-      <textarea class="notes-area" style="min-height:180px" placeholder="Notes from play — clues, finds, observations...&#10;&#10;Larry notices things others throw away. Write them down."></textarea>
+      <textarea class="notes-area" id="notes-session" style="min-height:180px" placeholder="Notes from play — clues, finds, observations...&#10;&#10;Larry notices things others throw away. Write them down."></textarea>
       <div style="margin-top:12px">
         <div style="font-family:var(--fd);font-size:10px;letter-spacing:0.14em;color:var(--g);text-transform:uppercase;margin-bottom:6px">Mythos Encountered</div>
-        <textarea class="notes-area" style="min-height:80px" placeholder="Things that cannot be unseen..."></textarea>
+        <textarea class="notes-area" id="notes-mythos" style="min-height:80px" placeholder="Things that cannot be unseen..."></textarea>
       </div>
       <div style="margin-top:12px">
         <div style="font-family:var(--fd);font-size:10px;letter-spacing:0.14em;color:var(--cr);text-transform:uppercase;margin-bottom:6px">SAN Events This Session</div>
-        <textarea class="notes-area" style="min-height:80px" placeholder="Record SAN rolls, losses, and triggers..."></textarea>
+        <textarea class="notes-area" id="notes-san-events" style="min-height:80px" placeholder="Record SAN rolls, losses, and triggers..."></textarea>
       </div>
     </div>
 
@@ -599,7 +610,17 @@ function showTab(e,id){
 
 // SAVE/LOAD
 function saveState(){
-  try{localStorage.setItem('larry_hughes_v1',JSON.stringify({vitals:vitals,wounds:wounds,skills:SKILLS.map(function(s){return s.checked;})}));}catch(e){}
+  try{localStorage.setItem('larry_hughes_v1',JSON.stringify({
+    vitals:vitals,
+    wounds:wounds,
+    skills:SKILLS.map(function(s){return s.checked;}),
+    notes:{
+      items:document.getElementById('notes-items').value,
+      session:document.getElementById('notes-session').value,
+      mythos:document.getElementById('notes-mythos').value,
+      sanEvents:document.getElementById('notes-san-events').value
+    }
+  }));}catch(e){}
 }
 function loadState(){
   try{
@@ -609,8 +630,18 @@ function loadState(){
     if(st.vitals) vitals=st.vitals;
     if(st.wounds) wounds=st.wounds;
     if(st.skills) st.skills.forEach(function(c,i){if(SKILLS[i]) SKILLS[i].checked=c;});
+    if(st.notes){
+      if(typeof st.notes.items==='string') document.getElementById('notes-items').value=st.notes.items;
+      if(typeof st.notes.session==='string') document.getElementById('notes-session').value=st.notes.session;
+      if(typeof st.notes.mythos==='string') document.getElementById('notes-mythos').value=st.notes.mythos;
+      if(typeof st.notes.sanEvents==='string') document.getElementById('notes-san-events').value=st.notes.sanEvents;
+    }
   }catch(e){}
 }
+
+document.querySelectorAll('.notes-area').forEach(function(el){
+  el.addEventListener('input', saveState);
+});
 
 loadState();
 buildWoundTrack();
