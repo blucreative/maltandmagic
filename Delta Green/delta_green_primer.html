@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -47,10 +48,6 @@ body::before{content:'';position:fixed;inset:0;background:repeating-linear-gradi
 .tab-btn.active::after{content:'';position:absolute;bottom:-2px;left:0;right:0;height:2px;background:var(--sf2)}
 .tab-num{color:var(--txd);font-size:8px;margin-right:4px}
 .tab-btn.active .tab-num{color:var(--g)}
-
-.dir-nav{max-width:1100px;margin:0 auto;padding:10px 20px;display:flex;gap:8px;flex-wrap:wrap}
-.dir-nav-link{text-decoration:none;background:var(--sf);border:1px solid var(--bd2);color:var(--txd);font-family:var(--fn);font-size:9px;letter-spacing:1.2px;padding:5px 11px;text-transform:uppercase;transition:all .15s}
-.dir-nav-link:hover{border-color:var(--gb);color:var(--gb);background:var(--gg)}
 
 /* ── MAIN ─────────────────────────────────── */
 .main{max-width:1100px;margin:0 auto;padding:24px 20px 60px}
@@ -239,12 +236,6 @@ hr.thin{border:none;border-top:1px solid var(--bd);margin:12px 0}
 </style>
 </head>
 <body>
-<nav class="dir-nav" aria-label="Delta Green Directory Navigation">
-  <a class="dir-nav-link" href="index.html">Delta Green Hub</a>
-  <a class="dir-nav-link" href="dg_character_sheets/index.html">DG Sheets</a>
-  <a class="dir-nav-link" href="coc_character_sheets/index.html">CoC Sheets</a>
-  <a class="dir-nav-link" href="coc_player_primer.html">CoC Primer</a>
-</nav>
 <div class="overlay" id="overlay">
   <div class="ov-box">
     <div class="ov-stamp">FIELD ORIENTATION</div>
@@ -299,24 +290,6 @@ const TUTORIAL = [
 ];
 
 let step = 0;
-const ORIENTATION_STORAGE_KEY = 'deltaGreenPrimerOrientationComplete';
-
-function hasCompletedOrientation(){
-  try{
-    return localStorage.getItem(ORIENTATION_STORAGE_KEY) === '1';
-  }catch(_err){
-    return false;
-  }
-}
-
-function markOrientationComplete(){
-  try{
-    localStorage.setItem(ORIENTATION_STORAGE_KEY, '1');
-  }catch(_err){
-    // Ignore storage failures (private browsing, blocked storage, etc.)
-  }
-}
-
 function renderOverlay(){
   const s = TUTORIAL[step];
   document.getElementById('ov-title').textContent = s.title;
@@ -330,21 +303,12 @@ function renderOverlay(){
 function gotoStep(i){step=i;renderOverlay()}
 document.getElementById('ov-next').onclick=()=>{
   if(step<TUTORIAL.length-1){step++;renderOverlay();}
-  else{
-    markOrientationComplete();
-    document.getElementById('overlay').style.display='none';
-  }
+  else{document.getElementById('overlay').style.display='none';}
 };
 document.getElementById('ov-back').onclick=()=>{if(step>0){step--;renderOverlay();}};
 document.getElementById('overlay').addEventListener('click',e=>{if(e.target.id==='overlay')e.target.style.display='none';});
 function startTutorial(){step=0;document.getElementById('overlay').style.display='flex';renderOverlay();}
-
-if(hasCompletedOrientation()){
-  document.getElementById('overlay').style.display='none';
-}else{
-  document.getElementById('overlay').style.display='flex';
-  renderOverlay();
-}
+renderOverlay();
 
 /* ═══════════════════════════════════════════════
    TABS & SECTIONS
@@ -1009,150 +973,131 @@ ${callout('<strong>Home scenes</strong> occur between missions. A chance to expl
 ═══════════════════════════════════════════════ */
 SECTIONS.equipment = () => `
 ${sh('EQUIPMENT & VEHICLES')}
-<div class="lead">Man is a tool-using animal. These rules don't track every dollar — they handle expensive or restricted items through expense categories and requisition procedures.</div>
 
-${divrow('EXPENSE CATEGORIES')}
-${panel('WHAT EACH CATEGORY MEANS', `<div class="g2">
+${panel('CAMPAIGN STRUCTURE NOTE', `<div class="g2">
 <div>
-  ${statrow('<span class="hl">INCIDENTAL</span>','Trivial cost. Common gear: basic camping kit, lock picks, pepper spray, a burner phone. Available to almost anyone.')}
-  ${statrow('<span class="hl">STANDARD</span>','Significant personal expense: a rented car, a pistol, standard body armour. Requires some justification for requisition.')}
-  ${statrow('<span class="hl-a">UNUSUAL</span>','Harder to acquire: submachine gun, advanced drone, GPS tracker. Needs official paperwork or a solid cover.')}
-  ${statrow('<span class="hl-a">MAJOR</span>','Big-ticket ($6,000–$30,000): heavy weapon, a new vehicle, rare item. High-priority missions or wealthy Agents only.')}
-  ${statrow('<span class="hl-r">EXTREME</span>','Beyond that — black budgets, truly wealthy individuals. Weeks or months to deliver. Always triggers official review.')}
+${callout('<strong>PART 1 — THE ZEROS OF LITTLE TREGAW:</strong> You are local civilians. No special equipment, no loadout. Whatever you own or can scavenge in Tregaw. Character creation follows standard Call of Cthulhu 7th Edition rules.','info')}
 </div>
-<div>${callout('Wealth helps: coming from a wealthy occupation (physician, senior lawyer) allows treating each expense as one category lower.')}<hr class="thin">
-${callout('<strong>Crafting your own:</strong> an appropriate Craft skill can build a piece of equipment at one category lower. Lockpicks → Craft (Locksmithing). A firearm → Craft (Gunsmithing). Usually one to two days.','info')}</div>
+<div>
+${callout('<strong>PART 2 — THE EYES OF THE STORM:</strong> You are operatives of The Firm (Delta Green). You will be issued a combat loadout from the tables below before insertion. Delta Green character creation rules apply.')}
+</div>
+</div>`, 'accent')}
+
+${divrow('PART 2 — ISSUED COMBAT LOADOUT')}
+<p style="font-size:12px;color:var(--txd);margin-bottom:14px">Each operative selects from the following tables. All weapons include 2× spare magazines/clips where applicable. These are issued — not chosen from a catalogue — so availability is fixed. The Skill column indicates which skill governs use.</p>
+
+${panel('PRIMARY WEAPON — CHOOSE ONE', `
+<table class="wpn-table">
+<thead><tr><th>WEAPON</th><th>SKILL</th><th>BASE RANGE</th><th>DAMAGE</th><th>LETHALITY</th><th>AMMO CAP.</th></tr></thead>
+<tbody>
+${[
+  ['Shotgun','Firearms','75m','2D8 (shot) / 2D6 (slug)','—','5'],
+  ['Light rifle / carbine','Firearms','100m','1D12','10% (burst fire)','10'],
+  ['Submachine gun','Firearms','50m','1D10','10% (full auto)','30'],
+  ['Flamethrower (handheld)','Heavy Weapons','5m','1m radius','10%','20'],
+  ['Extra sidearm (in lieu of primary)','—','—','—','—','—'],
+].map(([n,sk,r,d,l,a])=>`<tr><td class="wn">${n}</td><td>${sk}</td><td>${r}</td><td class="wd">${d}</td><td class="lth">${l}</td><td style="text-align:center">${a}</td></tr>`).join('')}
+</tbody></table>
+<p style="font-size:10px;color:var(--txd)">Includes 2× spare ammo clips/magazines. Burst/full-auto fire uses Lethality rating — see Combat section. Flamethrower: incendiary, difficult to extinguish, extremely dangerous in enclosed spaces.</p>`, 'accent')}
+
+${panel('SIDEARM — CHOOSE ONE', `
+<table class="wpn-table">
+<thead><tr><th>WEAPON</th><th>SKILL</th><th>BASE RANGE</th><th>DAMAGE</th><th>LETHALITY</th><th>AMMO CAP.</th></tr></thead>
+<tbody>
+${[
+  ['Medium pistol','Firearms','15m','1D10','—','15'],
+  ['Heavy pistol','Firearms','20m','1D12','—','10'],
+  ['Pepper spray (can)','DEX×5','3m','−20% all rolls, up to 2 targets','—','12 uses'],
+  ['Extra ancillary (in lieu of sidearm)','—','—','—','—','—'],
+].map(([n,sk,r,d,l,a])=>`<tr><td class="wn">${n}</td><td>${sk}</td><td>${r}</td><td class="wd">${d}</td><td class="lth">${l}</td><td style="text-align:center">${a}</td></tr>`).join('')}
+</tbody></table>
+<p style="font-size:10px;color:var(--txd)">Includes 2× spare clips where applicable. Pepper spray effect lasts ~1 hour.</p>`)}
+
+${panel('HAND-TO-HAND — CHOOSE ONE', `
+<table class="wpn-table">
+<thead><tr><th>WEAPON</th><th>SKILL</th><th>DAMAGE</th><th>LETHALITY</th><th>ARMOUR PIERCE</th><th>NOTES</th></tr></thead>
+<tbody>
+${[
+  ['Combat knife','Melee Weapons','1D6','—','3','Concealable'],
+  ['Machete / club / hand axe','Melee Weapons','1D8','—','—','Longer reach than knife'],
+  ['Extra ancillary (in lieu of H2H)','—','—','—','—','—'],
+].map(([n,sk,d,l,ap,note])=>`<tr><td class="wn">${n}</td><td>${sk}</td><td class="wd">${d}</td><td class="lth">${l}</td><td style="text-align:center">${ap}</td><td class="note">${note}</td></tr>`).join('')}
+</tbody></table>`)}
+
+${panel('ANCILLARY — CHOOSE TWO (must be different)', `
+<table class="wpn-table">
+<thead><tr><th>ITEM</th><th>SKILL / USE</th><th>RANGE / EFFECT</th><th>DAMAGE / LETHALITY</th><th>NOTES</th></tr></thead>
+<tbody>
+${[
+  ['Flashbang','Athletics (DEX×5)','20m throw / 10m radius','−40% all rolls (stun)','Half effective radius outdoors. No roll needed into closed room.'],
+  ['Hand grenade','Athletics','20m throw / 10m radius','Lethality 15%','Frag. See combat rules for Kill Radius.'],
+  ['Wood / fire axe','Melee Weapons','Melee','1D10','AP 1. Double damage vs doors and barriers.'],
+  ['Small fire extinguisher','DEX×5','3m spray','N/A (suppression)','Single use. Can also spray animals/threats in the face (DEX×5).'],
+  ['Gas mask','—','Worn','N/A','Protects against gas and airborne hazards. Imposes −10% to Alertness.'],
+  ['Holographic sight','—','Primary weapon only','N/A','+20% to hit with primary weapon. Requires mounting.'],
+  ['C4 block','Demolitions','Placed','Lethality 30%, 2m radius','Single use. Requires Demolitions or special training to set safely.'],
+  ['Kevlar helmet','—','Worn','N/A','+1 Armour Rating. Cannot be concealed. Stacks with vest.'],
+  ['First responder kit','First Aid / Medicine','—','N/A','+20% to First Aid or Medicine rolls. Four uses.'],
+].map(([n,sk,r,d,note])=>`<tr><td class="wn">${n}</td><td>${sk}</td><td>${r}</td><td class="wd">${d}</td><td class="note">${note}</td></tr>`).join('')}
+</tbody></table>
+<p style="font-size:10px;color:var(--txd)">Two ancillaries maximum, must be different items. Selecting "Extra ancillary" from Primary or Sidearm grants an additional pick here.</p>`)}
+
+${divrow('STANDARD ISSUE — ALL OPERATIVES')}
+${panel('EVERYONE RECEIVES', `<div class="g2">
+<div>
+${dgl([
+  'Combat fatigues and boots',
+  'Small tactical torch — 20m range, can be weapon-mounted',
+  'Walkie-talkie (short range, encrypted)',
+],'tight')}
+</div>
+<div>
+${callout('<strong>Body armour is NOT included</strong> in the standard loadout. A Kevlar vest (3 AP) must be selected as an Ancillary item (Kevlar helmet) or sourced separately. Plan accordingly.','danger')}
+</div>
 </div>`)}
 
-${divrow('OFFICIAL REQUISITION')}
-${g2(
-  panel('HOW REQUISITION WORKS', `<p>Delta Green operations often run under official cover investigations. That allows requisitioning equipment through legitimate channels — but leaves a paper trail.</p>
-  ${dgl(['Requires a Bureaucracy roll unless it\'s obvious','Incidental/Standard: quick, minimal review','Unusual: requires reasonable justification, may take days','Major: always triggers official review, two weeks minimum','Extreme: weeks to months, formal inquiry possible'],'tight')}
-  <hr class="thin">
-  <p style="font-size:11px;color:var(--txd)">Misusing a Major-expense asset: severe disciplinary action. Misusing an Extreme-expense asset: criminal prosecution.</p>`),
-  panel('PERSONAL FUNDS & THE BLACK MARKET', `<p>Most Agents are not rich. Paying out of pocket beyond Standard is difficult.</p>
-  ${statrow('Finding black market items','Criminology roll (street) or Computer Science (Dark Web)')}
-  ${statrow('Failure','Your Agent cannot get the item without getting caught')}
-  <hr class="thin">
-  <p style="font-size:11px;color:var(--txd)">Special training with Criminology or CHA can grant access to specific black markets: gun clubs and veteran networks for firearms; drug industry contacts for restricted medicines.</p>
-  ${callout('Weapons are easy to obtain for professions that regularly use them — law enforcement and military. Heavier weapons require an armory checkout process.','info')}`)
-)}
-
-${divrow('HAND-TO-HAND & MELEE WEAPONS')}
-<table class="wpn-table">
-<thead><tr><th>WEAPON</th><th>SKILL</th><th>DAMAGE</th><th>ARMOR PIERCE</th><th>EXPENSE</th></tr></thead>
-<tbody>
-${[
-  ['Unarmed attack','Unarmed Combat','1D4−1','—','None'],
-  ['Brass knuckles / steel-toe boots','Unarmed Combat','1D4','—','Incidental'],
-  ['Garrotte','Unarmed Combat','1D6/rnd (special)','—','Incidental'],
-  ['Knife','Melee Weapons','1D4','3','Incidental'],
-  ['Large knife / combat dagger','Melee Weapons','1D6','3','Incidental'],
-  ['Club / nightstick / baton','Melee Weapons','1D6','—','Incidental'],
-  ['Machete / tomahawk / sword','Melee Weapons','1D8','—','Incidental'],
-  ['Baseball bat / rifle butt','Melee Weapons','1D8','—','Incidental'],
-  ['Spear / fixed bayonet','Melee Weapons','1D8','3','Incidental'],
-  ['Wood axe','Melee Weapons','1D10','—','Incidental'],
-  ['Large sword','Melee Weapons','1D10','—','Standard'],
-].map(([n,s,d,ap,e])=>`<tr><td class="wn">${n}</td><td>${s}</td><td class="wd">${d}</td><td style="text-align:center">${ap}</td><td class="exp">${e}</td></tr>`).join('')}
-</tbody></table>
-<p style="font-size:10px;color:var(--txd)">Garrotte: works only from surprise. If it succeeds, target is pinned and silent; 1D6 damage per round until escape or death.</p>
-
-${divrow('FIREARMS')}
-<table class="wpn-table">
-<thead><tr><th>WEAPON</th><th>SKILL</th><th>RANGE</th><th>DAMAGE</th><th>LETHALITY</th><th>AMMO</th><th>AP</th><th>EXPENSE</th></tr></thead>
-<tbody>
-${[
-  ['Light pistol (e.g. Walther PPK, .38 Special)','Firearms','10m','1D8','—','7','—','Standard'],
-  ['Medium pistol (e.g. Glock 17, Beretta M92, .45 ACP)','Firearms','15m','1D10','—','15','—','Standard'],
-  ['Heavy pistol (e.g. .357 Mag, .44 Mag)','Firearms','20m','1D12','—','10','—','Standard'],
-  ['Shotgun (shot)','Firearms','75m','2D8*','—','5','—','Standard'],
-  ['Shotgun (slug)','Firearms','75m','2D8*','—','5','—','Standard'],
-  ['Shotgun (nonlethal)','Firearms','10m','1D6 + stunned','—','5','—','Standard'],
-  ['Light rifle/carbine (e.g. AR-15, AK-47, M4)','Firearms','100m','1D12','10%','10–30','3','Standard†'],
-  ['Submachine gun (e.g. MP5, Uzi, P90)','Firearms','50m','1D10','10%','30','—','Unusual†'],
-  ['Sniper rifle (e.g. M40, .338 Lapua)','Firearms','300m+','1D12+4','—','5–10','3','Unusual'],
-  ['Heavy rifle (e.g. .50 BMG)','Firearms','600m+','2D6+4','15%','5–10','5','Major'],
-].map(([n,s,r,d,l,a,ap,e])=>`<tr><td class="wn">${n}</td><td>${s}</td><td>${r}</td><td class="wd">${d}</td><td class="lth">${l}</td><td style="text-align:center">${a}</td><td style="text-align:center">${ap}</td><td class="exp">${e}</td></tr>`).join('')}
-</tbody></table>
-<p style="font-size:10px;color:var(--txd)">* Half damage beyond base range. † RESTRICTED if capable of full-auto fire. Use Lethality rating when firing bursts.</p>
-
-${divrow('HEAVY WEAPONS & DEMOLITIONS')}
-<table class="wpn-table">
-<thead><tr><th>WEAPON</th><th>SKILL</th><th>RANGE</th><th>LETHALITY</th><th>KILL RADIUS</th><th>AP</th><th>EXPENSE</th></tr></thead>
-<tbody>
-${[
-  ['Frag grenade (e.g. M67)','Athletics','20m','15%','10m','—','Incidental'],
-  ['Stun grenade','Athletics (DEX×5)','20m','—','5m (stun)','—','Incidental'],
-  ['C4 plastic explosive','Demolitions','N/A','30%','2m','—','Incidental†'],
-  ['IED (improvised explosive)','Demolitions','N/A','15%','10m','—','Incidental†'],
-  ['Large IED / car bomb','Demolitions','N/A','60%','75m','—','Standard†'],
-  ['Light machine gun (e.g. M249 SAW)','Heavy Weapons','200m','10%','per burst','3','Major†'],
-  ['Heavy machine gun (e.g. M2 Browning)','Heavy Weapons','400m','20%','per burst','5','Major†'],
-].map(([n,s,r,l,kr,ap,e])=>`<tr><td class="wn">${n}</td><td>${s}</td><td>${r}</td><td class="lth">${l}</td><td style="text-align:center">${kr}</td><td style="text-align:center">${ap}</td><td class="exp">${e}</td></tr>`).join('')}
-</tbody></table>
-<p style="font-size:10px;color:var(--txd)">† RESTRICTED. Grenade thrown with Athletics; stun grenade hits on DEX×5 test with +20% bonus. Demolitions requires special training.</p>
-
-${divrow('BODY ARMOUR')}
-<table class="wpn-table">
-<thead><tr><th>ITEM</th><th>ARMOR RATING</th><th>NOTES</th><th>EXPENSE</th></tr></thead>
-<tbody>
-${[
-  ['Kevlar vest','3','Below outer garments — Alertness test to notice','Standard'],
-  ['Reinforced Kevlar vest','4','Below outer garments — Alertness +20% to notice','Unusual'],
-  ['Tactical body armour','5','Cannot be concealed','Unusual'],
-  ['Kevlar helmet','+1','Adds to any other armour. Cannot be concealed.','Standard'],
-  ['Riot helmet','+1','Effective only vs melee and thrown. Cannot be concealed.','Standard'],
-  ['Bomb suit','10','Includes helmet. Cannot be concealed.','Extreme'],
-].map(([n,a,note,e])=>`<tr><td class="wn">${n}</td><td class="wd">${a}</td><td class="note">${note}</td><td class="exp">${e}</td></tr>`).join('')}
-</tbody></table>
-<p style="font-size:10px;color:var(--txd)">Armour reduces ordinary attack damage. No effect on Called Shots or successful Lethality rolls. Armor-piercing ammo: reduces Armor by 5, −1 damage. Hollow-point: +1 damage, but armour is twice as effective.</p>
-
-${divrow('VEHICLES')}
-${g2(
-`<table class="wpn-table">
-<thead><tr><th>GROUND VEHICLE</th><th>HP</th><th>ARMOUR</th><th>SPEED</th><th>EXPENSE</th></tr></thead>
-<tbody>
-${[['Motorcycle','15–20','0','Fast','Major'],['Sedan','25–30','3','Average','Major'],['Pickup / SUV','30–35','3','Average','Major'],['Armoured SUV','35','10','Average','Extreme'],['Humvee','40','3','Average','Extreme'],['Armoured Humvee','40','10','Slow','Extreme'],['MRAP armoured vehicle','60','20','Slow','Extreme'],['Modern tank','100','25','Slow','Extreme']].map(([n,hp,ar,sp,e])=>`<tr><td class="wn">${n}</td><td style="text-align:center">${hp}</td><td style="text-align:center">${ar}</td><td style="text-align:center">${sp}</td><td class="exp">${e}</td></tr>`).join('')}
-</tbody></table>`,
-`<table class="wpn-table">
-<thead><tr><th>AIR / WATER VEHICLE</th><th>HP</th><th>ARMOUR</th><th>SPEED</th><th>EXPENSE</th></tr></thead>
-<tbody>
-${[['Rigid-hulled inflatable boat','20','0','Slow','Major'],['Speedboat','25','0','Average','Extreme'],['Civilian helicopter','20','0','Average','Extreme'],['Police helicopter','30','0','Fast','Extreme'],['Commuter plane','25','0','Average','Extreme']].map(([n,hp,ar,sp,e])=>`<tr><td class="wn">${n}</td><td style="text-align:center">${hp}</td><td style="text-align:center">${ar}</td><td style="text-align:center">${sp}</td><td class="exp">${e}</td></tr>`).join('')}
-</tbody></table>
-${callout('<strong>Ramming:</strong> Low speed → 1D6–2D6 dmg. Moderate → half vehicle HP as Lethality. High speed → full vehicle HP as Lethality. Passengers in ramming vehicle take 1D6; in rammed vehicle take 2D6. Seat belt or airbag halves this.','warn')}`
-)}
-
-${divrow('OTHER GEAR & SERVICES')}
+${divrow('PERSONAL ITEMS')}
+${panel('PERSONAL EFFECTS', `<p>You may bring up to <strong>5 items</strong> that collectively weigh no more than <strong>5 kg</strong>. These must be the kind of items you'd find in a typical home or that could be easily purchased at a specialist store — tools from a hardware shop, climbing rope from a camping store, a standard torch, etc.</p>
 <div class="g2">
-${panel('SURVEILLANCE & ENTRY', `
-${statrow('Simple directional microphone (10m)','Incidental')}
-${statrow('Bug detector','Standard')}
-${statrow('Fibre optic scope','Standard')}
-${statrow('GPS jammer','Standard')}
-${statrow('Voice-activated recorder','Standard')}
-${statrow('Advanced directional mic (20–50m)','Standard–Unusual')}
-${statrow('GPS tracking device','Unusual')}
-${statrow('Advanced drone (requires Pilot skill)','Unusual')}
-${statrow('Ground-penetrating radar','Major')}
-<hr class="thin">
-${statrow('Lockpick kit (needs special training: DEX)','Incidental')}
-${statrow('Lockpick gun (simple tumbler locks only)','Standard')}
-${statrow('Halligan forcible-entry tool','Standard')}`)}
-${panel('COMMUNICATIONS & SURVIVAL', `
-${statrow('Burner phone','Incidental')}
-${statrow('Early-generation mobile phone','Incidental')}
-${statrow('Short-range walkie-talkie','Incidental')}
-${statrow('Earpiece communicator set','Standard')}
-${statrow('Ordinary computer / tablet','Standard')}
-<hr class="thin">
-${statrow('Individual first aid kit (+20% one FA roll)','Incidental')}
-${statrow('Handheld GPS (14–25hr battery)','Incidental')}
-${statrow('Basic camping gear','Incidental')}
-${statrow('Small fire extinguisher','Incidental')}
-${statrow('Forged passport / ID','Standard')}
-${statrow('Fake credentials for restricted site','Standard')}`)}
-</div>`;
+<div>
+${dgl([
+  'Hand tools (hammer, screwdriver, bolt cutters)',
+  'Rope (10–20m coil, camping shop)',
+  'Standard torch and spare batteries',
+  'First aid kit (basic, not responder kit)',
+  'Lock picks (DEX special training required)',
+  'Binoculars',
+  'Camera (disposable or compact)',
+  'Notebook and maps of the area',
+  'Waterproof clothing / waders',
+  'Food and water supply (24–48hr)',
+],'tight')}
+</div>
+<div>
+${callout('You may also assume you have any reasonable minor items that would not interfere with your loadout: cigarette lighter, sunglasses, ballpoint pen, small good luck charm, etc. Note these on your character sheet.','info')}
+${callout('<strong>Weight discipline matters.</strong> Tregaw is not a dry environment. The terrain is coastal and frequently waterlogged. Everything you carry will get wet.','warn')}
+</div>
+</div>`)}
+
+${divrow('GENERAL EQUIPMENT RULES REFERENCE')}
+${g2(
+  panel('ARMOUR IN PLAY', `
+  ${statrow('Kevlar vest (3 AP)','Reduces ordinary attack damage. Under clothes.')}
+  ${statrow('Kevlar helmet (+1 AP)','Stacks with vest. Cannot be concealed.')}
+  ${statrow('Called Shots','Armour has NO effect — bypass entirely')}
+  ${statrow('Lethality rolls (success)','Armour has NO effect')}
+  ${statrow('Armour-piercing ammo','Reduces target AP by 5, but −1 damage')}
+  ${statrow('Hollow-point ammo','+1 damage, but armour is twice as effective against it')}`),
+  panel('WEAPON QUICK NOTES', `
+  ${statrow('Burst / full-auto fire','Use Lethality % instead of damage roll')}
+  ${statrow('Kill Radius (grenades)','Hit: Lethality for all inside. Miss: all inside suppressed.')}
+  ${statrow('Suppression','Must hide or go prone, or lose 1 SAN')}
+  ${statrow('Shotgun beyond range','Half damage beyond 75m')}
+  ${statrow('Critical hit','Double normal damage')}
+  ${statrow('STR 13–16','+1 melee/unarmed damage')}
+  ${statrow('STR 17–18','+2 melee/unarmed damage')}`)
+)}`;
+
 
 /* ═══════════════════════════════════════════════
    SECTION: QUICK REF
