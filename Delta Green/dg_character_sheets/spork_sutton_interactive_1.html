@@ -1,0 +1,1080 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>DELTA GREEN // SUTTON 'SPORK' — FIELD SHEET</title>
+<link href="https://fonts.googleapis.com/css2?family=Special+Elite&family=Share+Tech+Mono&family=Oswald:wght@300;400;600;700&display=swap" rel="stylesheet"/>
+<style>
+/* ── RESET & ROOT ─────────────────────────────────────────── */
+*{box-sizing:border-box;margin:0;padding:0;-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important;color-adjust:exact!important}
+:root{
+  --g:#3d7a3d;--gb:#5cb85c;--gd:#1e3d1e;--gg:rgba(92,184,92,.12);
+  --bg:#080e08;--bg2:#0b120b;--bg3:#0f180f;
+  --sf:#111a11;--sf2:#162016;
+  --bd:#1e2e1e;--bd2:#2a3e2a;
+  --tx:#b0c8b0;--txd:#5a785a;--txb:#d8ecd8;
+  --red:#8b1a1a;--rb:#c0392b;
+  --am:#8a6000;--ab:#c49000;
+  --bl:#1a3a6a;--bb:#4a90d9;
+  --fn:'Share Tech Mono',monospace;
+  --fd:'Oswald',sans-serif;
+  --ft:'Special Elite',cursive;
+}
+html{font-size:13px;background:var(--bg)}
+body{color:var(--tx);font-family:var(--fn);min-height:100vh;padding:12px}
+body::before{content:'';position:fixed;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(0,0,0,.05) 3px,rgba(0,0,0,.05) 4px);pointer-events:none;z-index:9999}
+
+/* ── LAYOUT ───────────────────────────────────────────────── */
+.page{max-width:960px;margin:0 auto;display:flex;flex-direction:column;gap:10px}
+.row{display:grid;gap:10px}
+.r2{grid-template-columns:1fr 1fr}
+.r3{grid-template-columns:1fr 1fr 1fr}
+.r13{grid-template-columns:1fr 3fr}
+.r31{grid-template-columns:3fr 1fr}
+@media(max-width:680px){.r2,.r3,.r13,.r31{grid-template-columns:1fr}}
+
+/* ── PANEL ────────────────────────────────────────────────── */
+.panel{background:var(--sf);border:1px solid var(--bd);position:relative}
+.panel-hd{background:var(--sf2);border-bottom:1px solid var(--bd);padding:5px 12px;display:flex;justify-content:space-between;align-items:center}
+.panel-hd h3{font:600 9px/1 var(--fd);letter-spacing:3px;color:var(--gb);text-transform:uppercase}
+.panel-hd span{font-size:8px;letter-spacing:1px;color:var(--txd)}
+.panel-body{padding:12px}
+
+/* ── HEADER ───────────────────────────────────────────────── */
+.main-hd{background:var(--sf2);border:1px solid var(--bd);border-left:4px solid var(--gb);padding:0;display:grid;grid-template-columns:56px 1fr auto;align-items:stretch}
+.hd-emblem{background:var(--gd);display:flex;align-items:center;justify-content:center;border-right:1px solid var(--g)}
+.diamond{width:26px;height:26px;border:2px solid var(--gb);transform:rotate(45deg);position:relative}
+.diamond::after{content:'';position:absolute;inset:5px;background:var(--gb)}
+.hd-info{padding:10px 14px}
+.hd-title{font:700 24px/1 var(--fd);letter-spacing:5px;color:var(--gb);text-shadow:0 0 20px rgba(92,184,92,.3)}
+.hd-name{font:700 16px/1.2 var(--fd);letter-spacing:2px;color:var(--txb);margin-top:3px}
+.hd-name .cs{color:var(--gb)}
+.hd-sub{font-size:9px;letter-spacing:2px;color:var(--txd);margin-top:4px}
+.hd-stamps{padding:10px 14px;display:flex;flex-direction:column;align-items:flex-end;justify-content:center;gap:4px}
+.stamp{font-size:8px;letter-spacing:1.5px;padding:2px 7px;border:1px solid;text-transform:uppercase;white-space:nowrap}
+.s-red{color:var(--rb);border-color:var(--red);background:rgba(139,26,26,.12)}
+.s-grn{color:var(--gb);border-color:var(--g);background:var(--gg)}
+.s-amb{color:var(--ab);border-color:var(--am);background:rgba(138,96,0,.1)}
+.s-blu{color:var(--bb);border-color:var(--bl);background:rgba(26,58,106,.15)}
+
+/* ── SAVE BAR ─────────────────────────────────────────────── */
+.save-bar{background:var(--bg3);border:1px solid var(--bd);padding:7px 14px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px}
+.save-status{font-size:10px;color:var(--txd);letter-spacing:1px}
+.save-status .dot{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--gb);margin-right:6px;animation:pulse 2s ease infinite}
+@keyframes pulse{0%,100%{opacity:.4}50%{opacity:1}}
+.btn-row{display:flex;gap:8px;flex-wrap:wrap}
+.btn{background:none;border:1px solid var(--bd2);color:var(--txd);font:11px var(--fn);letter-spacing:1px;padding:5px 12px;cursor:pointer;transition:all .15s;text-transform:uppercase}
+.btn:hover{border-color:var(--gb);color:var(--gb);background:var(--gg)}
+.btn.danger{border-color:var(--red);color:var(--rb)}
+.btn.danger:hover{background:rgba(139,26,26,.15)}
+.btn.primary{border-color:var(--g);color:var(--gb);background:var(--gg)}
+.btn.primary:hover{background:rgba(92,184,92,.25)}
+.session-badge{font-size:9px;letter-spacing:2px;color:var(--ab);border:1px solid var(--am);padding:2px 7px}
+
+/* ── STATS TABLE ──────────────────────────────────────────── */
+.stat-tbl{width:100%;border-collapse:collapse}
+.stat-tbl th{font-size:8px;letter-spacing:2px;color:var(--g);padding:4px 8px;text-align:left;border-bottom:1px solid var(--bd);font-weight:normal}
+.stat-tbl th:not(:first-child){text-align:center}
+.stat-tbl td{padding:5px 8px;border-bottom:1px solid rgba(30,46,30,.6);font-size:11px}
+.stat-tbl tr:last-child td{border-bottom:none}
+.stat-tbl td.sn{color:var(--txd);letter-spacing:.5px}
+.stat-tbl td.sv{text-align:center;font:700 19px/1 var(--fd);color:var(--txb)}
+.stat-tbl td.sv.lo{color:var(--rb)}
+.stat-tbl td.x5{text-align:center;color:var(--gb);font-size:12px}
+.stat-tbl td.ft{font-size:10px;font-family:var(--ft);color:var(--ab)}
+
+/* ── TRACKER ──────────────────────────────────────────────── */
+.tracker{margin-bottom:14px}
+.tracker:last-child{margin-bottom:0}
+.tr-head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:5px}
+.tr-label{font-size:9px;letter-spacing:2px;color:var(--txd);text-transform:uppercase}
+.tr-val{font:700 30px/1 var(--fd)}
+.tr-val.hp{color:var(--ab)}
+.tr-val.wp{color:var(--bb)}
+.tr-val.san{color:var(--gb)}
+.tr-val.san.warn{color:var(--ab)}
+.tr-val.san.crit{color:var(--rb);animation:flicker .4s ease infinite alternate}
+@keyframes flicker{from{opacity:.7}to{opacity:1}}
+.tr-max{font-size:11px;color:var(--txd);font-family:var(--fn);margin-left:2px}
+.tr-controls{display:flex;gap:6px;align-items:center}
+.tr-btn{width:26px;height:26px;border:1px solid var(--bd2);background:none;color:var(--txd);font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .15s;font-family:var(--fn);flex-shrink:0}
+.tr-btn:hover{border-color:var(--gb);color:var(--gb);background:var(--gg)}
+.tr-btn.minus:hover{border-color:var(--rb);color:var(--rb);background:rgba(139,26,26,.1)}
+.pip-row{display:flex;flex-wrap:wrap;gap:3px}
+.pip{width:14px;height:14px;border:1px solid;cursor:pointer;transition:all .1s;flex-shrink:0}
+.pip.hp{border-color:var(--am)}
+.pip.hp.fill{background:var(--ab)}
+.pip.hp.low{background:var(--rb);border-color:var(--red)}
+.pip.wp{border-color:var(--bl)}
+.pip.wp.fill{background:var(--bb)}
+
+/* SAN BAR */
+.san-bar-wrap{position:relative;height:14px;background:var(--bg);border:1px solid var(--bd);margin-top:6px}
+.san-bar-fill{height:100%;transition:width .3s ease;position:absolute;top:0;left:0}
+.san-bar-fill.good{background:linear-gradient(90deg,var(--gd),var(--gb))}
+.san-bar-fill.warn{background:linear-gradient(90deg,var(--am),var(--ab))}
+.san-bar-fill.crit{background:linear-gradient(90deg,var(--red),var(--rb))}
+.san-bp-marker{position:absolute;top:-4px;bottom:-4px;width:2px;background:var(--rb);opacity:.8}
+.san-bp-label{position:absolute;top:-16px;font-size:8px;color:var(--rb);letter-spacing:1px;white-space:nowrap;transform:translateX(-50%)}
+
+/* SAN EVENT TRACKER */
+.san-alert{background:rgba(139,26,26,.15);border:1px solid var(--red);padding:8px 10px;margin-top:8px;font-size:10px;color:var(--rb);display:none}
+.san-alert.show{display:block}
+.san-drop-note{font-size:9px;color:var(--txd);margin-top:4px;letter-spacing:1px}
+
+/* ── SKILLS ───────────────────────────────────────────────── */
+.skills-grid{display:grid;grid-template-columns:1fr 1fr;gap:0}
+@media(max-width:480px){.skills-grid{grid-template-columns:1fr}}
+.skill-item{display:flex;align-items:center;gap:8px;padding:4px 10px;border-bottom:1px solid rgba(30,46,30,.5);border-right:1px solid rgba(30,46,30,.5);cursor:pointer;transition:background .1s;user-select:none}
+.skill-item:nth-child(even){border-right:none}
+.skill-item:hover{background:var(--sf2)}
+.skill-item.checked{background:rgba(184,134,0,.08)}
+.skill-cb{width:13px;height:13px;border:1px solid var(--bd2);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:10px;color:var(--ab);transition:all .15s}
+.skill-item.checked .skill-cb{border-color:var(--ab);background:rgba(196,144,0,.15)}
+.skill-name{font-size:11px;color:var(--tx);flex:1}
+.skill-pct{font:600 14px/1 var(--fd);min-width:38px;text-align:right;flex-shrink:0}
+.skill-pct.e{color:var(--gb)}
+.skill-pct.h{color:#8dc88d}
+.skill-pct.m{color:var(--tx)}
+.skill-pct.l{color:var(--txd)}
+.skill-note{font-size:8px;color:var(--txd);margin-left:2px}
+.skill-footer{padding:6px 10px;font-size:9px;color:var(--txd);letter-spacing:.5px;border-top:1px solid var(--bd)}
+
+/* ── BONDS ────────────────────────────────────────────────── */
+.bond-item{background:var(--bg);border:1px solid var(--bd);padding:10px 12px;margin-bottom:8px;position:relative}
+.bond-item::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--ab)}
+.bond-item:last-child{margin-bottom:0}
+.bond-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:4px}
+.bond-name{font-size:12px;color:var(--txb);padding-left:4px}
+.bond-controls{display:flex;align-items:center;gap:5px}
+.bond-score{font:700 24px/1 var(--fd);color:var(--ab);min-width:28px;text-align:center}
+.bond-score.zero{color:var(--rb)}
+.bond-note{font-size:10px;color:var(--txd);padding-left:4px;line-height:1.5}
+
+/* ── MOTIVATIONS ──────────────────────────────────────────── */
+.motiv-item{display:flex;align-items:center;gap:8px;padding:7px 10px;border-bottom:1px solid rgba(30,46,30,.5);cursor:pointer;user-select:none;transition:all .15s}
+.motiv-item:last-child{border-bottom:none}
+.motiv-item:hover{background:var(--sf2)}
+.motiv-item.crossed .motiv-text{text-decoration:line-through;color:var(--txd);opacity:.6}
+.motiv-check{width:13px;height:13px;border:1px solid var(--bd2);flex-shrink:0}
+.motiv-text{font-size:11px;color:var(--tx);flex:1}
+
+/* DISORDERS */
+.disorder-item{padding:6px 10px;font-size:11px;color:var(--rb);background:rgba(139,26,26,.08);border:1px solid rgba(139,26,26,.3);margin-bottom:6px;display:flex;justify-content:space-between;align-items:center}
+.disorder-item:last-child{margin-bottom:0}
+.disorder-remove{background:none;border:none;color:var(--rb);cursor:pointer;font-size:14px;padding:0 2px}
+.disorder-add{width:100%;background:none;border:1px dashed rgba(139,26,26,.4);color:var(--rb);font:11px var(--fn);padding:6px;cursor:pointer;text-align:left;letter-spacing:1px;margin-top:6px;transition:all .15s}
+.disorder-add:hover{background:rgba(139,26,26,.1);border-style:solid}
+.disorder-add input{background:none;border:none;outline:none;color:var(--rb);font:11px var(--fn);width:100%}
+
+/* ── INCIDENT TRACKERS ────────────────────────────────────── */
+.incident-row{display:flex;align-items:center;gap:8px;padding:7px 0;border-bottom:1px solid rgba(30,46,30,.4)}
+.incident-row:last-child{border-bottom:none}
+.incident-label{font-size:10px;letter-spacing:1px;color:var(--txd);min-width:90px;text-transform:uppercase}
+.incident-boxes{display:flex;gap:5px}
+.inc-box{width:20px;height:20px;border:1px solid var(--bd2);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:11px;transition:all .15s;user-select:none}
+.inc-box:hover{border-color:var(--gb)}
+.inc-box.checked{border-color:var(--gb);background:var(--gg);color:var(--gb)}
+.inc-box.adapted-v{background:var(--gg);border-color:var(--gb);cursor:default}
+.adapted-tag{font-size:8px;letter-spacing:1.5px;color:var(--gb);border:1px solid var(--gd);padding:1px 6px;margin-left:4px}
+
+/* ── WEAPONS TABLE ────────────────────────────────────────── */
+.wpn-tbl{width:100%;border-collapse:collapse;font-size:11px}
+.wpn-tbl th{background:var(--bg);color:var(--g);font-size:8px;letter-spacing:1.5px;padding:5px 8px;text-align:left;border:1px solid var(--bd);font-weight:normal}
+.wpn-tbl td{padding:5px 8px;border:1px solid var(--bd);color:var(--tx)}
+.wpn-tbl td.wn{color:var(--txb)}
+.wpn-tbl td.ws{font:600 14px/1 var(--fd);color:var(--gb);text-align:center}
+.wpn-tbl td.wd{font:600 13px/1 var(--fd);color:var(--ab);text-align:center}
+.wpn-tbl tr:nth-child(even) td{background:var(--sf)}
+
+/* ── GEAR LIST ────────────────────────────────────────────── */
+.gear-grid{display:grid;grid-template-columns:1fr 1fr;gap:0}
+@media(max-width:480px){.gear-grid{grid-template-columns:1fr}}
+.gear-item{display:flex;align-items:center;gap:8px;padding:5px 10px;border-bottom:1px solid rgba(30,46,30,.4);border-right:1px solid rgba(30,46,30,.4);cursor:pointer;user-select:none;transition:background .1s}
+.gear-item:nth-child(even){border-right:none}
+.gear-item:hover{background:var(--sf2)}
+.gear-item.used{opacity:.45}
+.gear-item.used .gear-name{text-decoration:line-through}
+.gear-check{width:13px;height:13px;border:1px solid var(--bd2);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:10px;color:var(--txd)}
+.gear-item.used .gear-check{border-color:var(--rb);color:var(--rb)}
+.gear-name{font-size:11px;color:var(--tx)}
+
+/* ── TEXTAREA FIELDS ──────────────────────────────────────── */
+.field-ta{width:100%;background:var(--bg);border:1px solid var(--bd);color:var(--tx);font:12px var(--ft);padding:10px;resize:vertical;min-height:80px;line-height:1.7;outline:none;transition:border-color .15s}
+.field-ta:focus{border-color:var(--g)}
+.field-ta::placeholder{color:var(--txd);font-size:11px}
+.field-ta.wounds{min-height:60px}
+
+/* ── NOTES ────────────────────────────────────────────────── */
+.session-notes-wrap .field-ta{min-height:100px;font:12px var(--fn)}
+
+/* ── HP STATE INDICATOR ───────────────────────────────────── */
+.hp-state{font-size:9px;letter-spacing:2px;padding:2px 7px;border:1px solid;display:inline-block;margin-top:4px}
+.hp-state.ok{color:var(--gb);border-color:var(--gd)}
+.hp-state.warn{color:var(--ab);border-color:var(--am)}
+.hp-state.crit{color:var(--rb);border-color:var(--red);animation:pulse .6s ease infinite}
+
+/* ── TOAST ────────────────────────────────────────────────── */
+.toast{position:fixed;bottom:20px;right:20px;background:var(--sf2);border:1px solid var(--gb);color:var(--gb);font:11px var(--fn);letter-spacing:1px;padding:10px 18px;z-index:10000;opacity:0;transition:opacity .3s;pointer-events:none}
+.toast.show{opacity:1}
+
+/* ── MODAL ────────────────────────────────────────────────── */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.85);z-index:1000;display:none;align-items:center;justify-content:center;padding:20px}
+.modal-overlay.show{display:flex}
+.modal-box{background:var(--bg2);border:2px solid var(--gb);max-width:480px;width:100%;padding:28px;position:relative}
+.modal-title{font:600 16px/1 var(--fd);letter-spacing:3px;color:var(--gb);margin-bottom:8px}
+.modal-body{font-size:12px;color:var(--tx);line-height:1.7;margin-bottom:20px;font-family:var(--ft)}
+.modal-body strong{color:var(--gb);font-family:var(--fn)}
+.modal-btns{display:flex;gap:10px;justify-content:flex-end}
+
+/* ── MISC ─────────────────────────────────────────────────── */
+.divider{display:flex;align-items:center;gap:8px;color:var(--gd);font-size:9px;letter-spacing:2px;margin:8px 0}
+.divider::before,.divider::after{content:'';flex:1;height:1px;background:var(--bd)}
+.label-tag{font-size:8px;letter-spacing:2px;color:var(--txd);text-transform:uppercase;margin-bottom:4px}
+.inline-field{background:none;border:none;border-bottom:1px solid var(--bd2);color:var(--txb);font:12px var(--fn);padding:2px 4px;outline:none;width:100%;transition:border-color .15s}
+.inline-field:focus{border-color:var(--gb)}
+.adapted-banner{background:var(--gg);border:1px solid var(--gd);padding:7px 10px;display:flex;align-items:flex-start;gap:8px;margin-top:10px}
+.adapted-banner .icon{color:var(--gb);font-size:13px;flex-shrink:0;margin-top:1px}
+.adapted-banner p{font-size:10px;color:var(--tx);line-height:1.5}
+.adapted-banner strong{color:var(--gb);font-family:var(--fn);font-size:9px;letter-spacing:1px}
+.scroll-hint{text-align:center;font-size:9px;letter-spacing:2px;color:var(--gd);padding:20px 0}
+
+/* ── PRINT ────────────────────────────────────────────────── */
+@media print{
+  @page{size:A4;margin:10mm}
+  html,body{
+    background:#080e08!important;
+    color:#b0c8b0!important;
+    padding:0!important;
+    font-size:11px!important;
+  }
+  body::before{display:none}
+  /* hide interactive chrome */
+  .save-bar,.toast,.modal-overlay,.scroll-hint,
+  .btn,.btn-row,.tr-btn,.disorder-add,
+  .disorder-remove{display:none!important}
+  /* kill fixed/sticky */
+  *{position:static!important;animation:none!important;transition:none!important}
+  /* page layout */
+  .page{max-width:100%;gap:6px}
+  /* ensure panels break cleanly */
+  .panel{break-inside:avoid;page-break-inside:avoid}
+  .row.r2,.row.r3{break-inside:avoid;page-break-inside:avoid}
+  /* force all backgrounds */
+  .main-hd{background:#162016!important;border-left:4px solid #5cb85c!important}
+  .hd-emblem{background:#1e3d1e!important}
+  .panel{background:#111a11!important;border:1px solid #1e2e1e!important}
+  .panel-hd{background:#162016!important;border-bottom:1px solid #2a3e2a!important}
+  .skill-item.checked{background:rgba(184,134,0,.08)!important}
+  .skill-item:nth-child(odd){background:#0b120b!important}
+  .gear-item.used{opacity:.4!important}
+  .stat-tbl td{border-bottom:1px solid rgba(30,46,30,.6)!important}
+  .wpn-tbl th{background:#080e08!important}
+  .wpn-tbl tr:nth-child(even) td{background:#111a11!important}
+  .san-bar-wrap{background:#080e08!important;border:1px solid #1e2e1e!important}
+  .adapted-banner{background:rgba(92,184,92,.12)!important;border:1px solid #1e3d1e!important}
+  /* SAN bar — use inline style so it prints */
+  .san-bar-fill{display:block!important}
+  /* pips */
+  .pip.hp.fill{background:#c49000!important;border-color:#8a6000!important}
+  .pip.hp.low{background:#c0392b!important;border-color:#8b1a1a!important}
+  .pip.wp.fill{background:#4a90d9!important;border-color:#1a3a6a!important}
+  .inc-box.checked{background:rgba(92,184,92,.15)!important;border-color:#5cb85c!important;color:#5cb85c!important}
+  .inc-box.adapted-v{background:rgba(92,184,92,.15)!important;border-color:#3d7a3d!important}
+  .bond-item{background:#080e08!important;border:1px solid #1e2e1e!important}
+  .bond-item::before{background:#c49000!important}
+  .bond-score{color:#c49000!important}
+  .disorder-item{background:rgba(139,26,26,.08)!important;border:1px solid rgba(139,26,26,.3)!important}
+  .field-ta{background:#080e08!important;border:1px solid #1e2e1e!important;color:#b0c8b0!important;min-height:60px!important}
+  /* stamps */
+  .stamp{border:1px solid!important}
+  .s-red{color:#c0392b!important;border-color:#8b1a1a!important;background:rgba(139,26,26,.12)!important}
+  .s-grn{color:#5cb85c!important;border-color:#3d7a3d!important;background:rgba(92,184,92,.12)!important}
+  .s-blu{color:#4a90d9!important;border-color:#1a3a6a!important;background:rgba(26,58,106,.15)!important}
+  .s-amb{color:#c49000!important;border-color:#8a6000!important;background:rgba(138,96,0,.1)!important}
+  /* personal data strip */
+  [style*="display:grid"]{display:grid!important}
+}
+</style>
+</head>
+<body>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<!-- DEBRIEF MODAL -->
+<div class="modal-overlay" id="debriefModal">
+  <div class="modal-box">
+    <div class="modal-title">END OF SESSION — DEBRIEF</div>
+    <div class="modal-body" id="debriefBody">Loading...</div>
+    <div class="modal-btns">
+      <button class="btn" onclick="closeModal('debriefModal')">CLOSE</button>
+      <button class="btn primary" onclick="runDebrief()">CONFIRM DEBRIEF</button>
+    </div>
+  </div>
+</div>
+
+<!-- RESET MODAL -->
+<div class="modal-overlay" id="resetModal">
+  <div class="modal-box">
+    <div class="modal-title" style="color:var(--rb)">CONFIRM RESET</div>
+    <div class="modal-body">This will wipe all current HP, WP, SAN, bond scores, skill checks, and notes — reverting Spork to his starting state.<br><br><strong>This cannot be undone.</strong></div>
+    <div class="modal-btns">
+      <button class="btn" onclick="closeModal('resetModal')">ABORT</button>
+      <button class="btn danger" onclick="confirmReset()">WIPE & RESET</button>
+    </div>
+  </div>
+</div>
+
+<div class="page">
+
+  <!-- HEADER -->
+  <div class="main-hd">
+    <div class="hd-emblem"><div class="diamond"></div></div>
+    <div class="hd-info">
+      <div class="hd-title">DELTA GREEN</div>
+      <div class="hd-name">SUTTON, SIMON <span class="cs">'SPORK'</span></div>
+      <div class="hd-sub">SPECIAL OPERATOR · MOD-CONTRACTED SECURITY · BRITISH · TREGAW, DEVON · LATE 1997</div>
+    </div>
+    <div class="hd-stamps">
+      <div class="stamp s-red">TOP SECRET // ORCON</div>
+      <div class="stamp s-grn">DELTA GREEN EYES ONLY</div>
+      <div class="stamp s-blu" id="classificationStamp">ALEPH/7-(HR:EMERGENT)</div>
+      <div class="stamp s-amb">DEVON/CORNWALL — 1997</div>
+    </div>
+  </div>
+
+  <!-- PERSONAL DATA STRIP -->
+  <div style="background:var(--sf);border:1px solid var(--bd);padding:8px 14px;display:grid;grid-template-columns:repeat(4,1fr);gap:10px;">
+    <div>
+      <div style="font-size:7px;letter-spacing:2px;color:var(--txd);margin-bottom:3px">PROFESSION</div>
+      <div style="font-size:10px;color:var(--txb);font-family:var(--fd);font-weight:600;letter-spacing:1px">Special Operator</div>
+      <div style="font-size:9px;color:var(--txd)">(Security Contractor)</div>
+    </div>
+    <div>
+      <div style="font-size:7px;letter-spacing:2px;color:var(--txd);margin-bottom:3px">EMPLOYER</div>
+      <div style="font-size:10px;color:var(--txb);font-family:var(--fd);font-weight:600;letter-spacing:1px">MOD-Contracted</div>
+      <div style="font-size:9px;color:var(--txd)">Private Security</div>
+    </div>
+    <div>
+      <div style="font-size:7px;letter-spacing:2px;color:var(--txd);margin-bottom:3px">NATIONALITY</div>
+      <div style="font-size:10px;color:var(--txb);font-family:var(--fd);font-weight:600;letter-spacing:1px">British</div>
+      <div style="font-size:9px;color:var(--txd)">Army (classified detachment)</div>
+    </div>
+    <div>
+      <div style="font-size:7px;letter-spacing:2px;color:var(--txd);margin-bottom:3px">EDUCATION</div>
+      <div style="font-size:10px;color:var(--txb);font-family:var(--fd);font-weight:600;letter-spacing:1px">Secondary school</div>
+      <div style="font-size:9px;color:var(--txd)">Military; classified deployments</div>
+    </div>
+  </div>
+
+  <!-- SAVE BAR -->
+  <div class="save-bar">
+    <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap">
+      <div class="save-status"><span class="dot"></span><span id="saveTime">Not yet saved</span></div>
+      <div class="session-badge">SESSION <span id="sessionNum">1</span></div>
+    </div>
+    <div class="btn-row">
+      <button class="btn" onclick="newSession()">▸ NEW SESSION</button>
+      <button class="btn primary" onclick="openDebrief()">⊞ DEBRIEF</button>
+      <button class="btn" onclick="manualSave()">✦ SAVE NOW</button>
+      <button class="btn danger" onclick="openModal('resetModal')">↺ RESET</button>
+    </div>
+  </div>
+
+  <!-- STATS + DERIVED -->
+  <div class="row r2">
+
+    <!-- STATISTICS -->
+    <div class="panel">
+      <div class="panel-hd"><h3>02 // Statistics</h3><span>Specialist Array · Extreme Violence Applied</span></div>
+      <div class="panel-body" style="padding:8px 0">
+        <table class="stat-tbl">
+          <thead><tr><th>STAT</th><th>SCORE</th><th>×5%</th><th>NOTES</th></tr></thead>
+          <tbody>
+            <tr><td class="sn">Strength (STR)</td><td class="sv">14</td><td class="x5">70%</td><td class="ft">Powerfully built; +1 melee dmg</td></tr>
+            <tr><td class="sn">Constitution (CON)</td><td class="sv">11</td><td class="x5">55%</td><td class="ft">—</td></tr>
+            <tr><td class="sn">Dexterity (DEX)</td><td class="sv">15</td><td class="x5">75%</td><td class="ft">Frighteningly quick</td></tr>
+            <tr><td class="sn">Intelligence (INT)</td><td class="sv">12</td><td class="x5">60%</td><td class="ft">Tactical, reads situations fast</td></tr>
+            <tr><td class="sn">Power (POW)</td><td class="sv">10</td><td class="x5">50%</td><td class="ft">—</td></tr>
+            <tr><td class="sn">Charisma (CHA)</td><td class="sv lo">7</td><td class="x5" style="color:#e05050">35%</td><td class="ft" style="color:var(--rb)">Cold stare. Doesn't put people at ease.</td></tr>
+          </tbody>
+        </table>
+        <div style="padding:6px 10px;font-size:9px;color:var(--txd)">CHA 10→7 (Extreme Violence −3). Adapted to Violence.</div>
+      </div>
+    </div>
+
+    <!-- DERIVED ATTRIBUTES -->
+    <div class="panel">
+      <div class="panel-hd"><h3>03 // Derived Attributes</h3><span>Click ±  to adjust · Auto-saved</span></div>
+      <div class="panel-body">
+
+        <!-- HP -->
+        <div class="tracker">
+          <div class="tr-head">
+            <div class="tr-label">Hit Points <span style="color:var(--txd);font-size:9px">/ 13 MAX</span></div>
+            <div class="tr-controls">
+              <button class="tr-btn minus" onclick="adjustStat('hp',-1)">−</button>
+              <span class="tr-val hp" id="hp-val">13</span>
+              <button class="tr-btn" onclick="adjustStat('hp',1)">+</button>
+            </div>
+          </div>
+          <div class="pip-row" id="hp-pips"></div>
+          <div id="hp-state-tag"></div>
+        </div>
+
+        <div class="divider">MENTAL</div>
+
+        <!-- WP -->
+        <div class="tracker">
+          <div class="tr-head">
+            <div class="tr-label">Willpower <span style="color:var(--txd);font-size:9px">/ 10 MAX</span></div>
+            <div class="tr-controls">
+              <button class="tr-btn minus" onclick="adjustStat('wp',-1)">−</button>
+              <span class="tr-val wp" id="wp-val">10</span>
+              <button class="tr-btn" onclick="adjustStat('wp',1)">+</button>
+            </div>
+          </div>
+          <div class="pip-row" id="wp-pips"></div>
+          <div id="wp-warn" style="font-size:9px;color:var(--rb);margin-top:4px;display:none">⚠ LOW WP — −20% ALL ACTIONS</div>
+        </div>
+
+        <!-- SAN -->
+        <div class="tracker">
+          <div class="tr-head">
+            <div class="tr-label">Sanity <span style="color:var(--txd);font-size:9px">/ 45 MAX · BP: 35</span></div>
+            <div class="tr-controls">
+              <button class="tr-btn minus" onclick="adjustStat('san',-1)">−</button>
+              <span class="tr-val san" id="san-val">45</span>
+              <button class="tr-btn" onclick="adjustStat('san',1)">+</button>
+            </div>
+          </div>
+          <div class="san-bar-wrap">
+            <div class="san-bar-fill good" id="san-bar" style="width:100%"></div>
+            <div class="san-bp-marker" id="bp-marker">
+              <div class="san-bp-label">BP 35</div>
+            </div>
+          </div>
+          <div class="san-alert" id="san-bp-alert">⚠ BREAKING POINT REACHED — GAIN DISORDER — NEW BP = CURRENT SAN − POW (10)</div>
+          <div class="san-drop-note" id="san-drop-note"></div>
+        </div>
+
+        <div class="adapted-banner">
+          <div class="icon">✓</div>
+          <p><strong>ADAPTED TO VIOLENCE</strong> — Always succeeds at SAN rolls triggered by violence. Costs: CHA permanently reduced.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SKILLS -->
+  <div class="panel">
+    <div class="panel-hd"><h3>04 // Skills</h3><span>Click to mark FAILED rolls · Debrief to improve</span></div>
+    <div class="skills-grid" id="skillsGrid"></div>
+    <div class="skill-footer">★ = Bonus skill applied &nbsp;|&nbsp; bg = Background modifier &nbsp;|&nbsp; STR 14 → +1 to Unarmed &amp; Melee damage &nbsp;|&nbsp; Unnatural: 0% (no Agent adapts to the Unnatural)</div>
+  </div>
+
+  <!-- PSYCH + INCIDENTS -->
+  <div class="row r2">
+
+    <!-- BONDS -->
+    <div class="panel">
+      <div class="panel-hd"><h3>05 // Bonds</h3><span>2 Bonds · Start score: CHA 7</span></div>
+      <div class="panel-body">
+        <div class="bond-item">
+          <div class="bond-top">
+            <div class="bond-name">Former commanding officer</div>
+            <div class="bond-controls">
+              <button class="tr-btn minus" onclick="adjustBond(0,-1)">−</button>
+              <div class="bond-score" id="bond-0">7</div>
+              <button class="tr-btn" onclick="adjustBond(0,1)">+</button>
+            </div>
+          </div>
+          <div class="bond-note">The man who pulled Spork into Delta Green. Complicated.</div>
+        </div>
+        <div class="bond-item">
+          <div class="bond-top">
+            <div class="bond-name">Surviving squad members</div>
+            <div class="bond-controls">
+              <button class="tr-btn minus" onclick="adjustBond(1,-1)">−</button>
+              <div class="bond-score" id="bond-1">7</div>
+              <button class="tr-btn" onclick="adjustBond(1,1)">+</button>
+            </div>
+          </div>
+          <div class="bond-note">The men he'd die for. The only people he fully trusts.</div>
+        </div>
+
+        <div class="divider" style="margin-top:12px">SAN INCIDENT TRACKING</div>
+        <div class="incident-row">
+          <div class="incident-label">Violence</div>
+          <div class="incident-boxes" id="violence-boxes"></div>
+          <div class="adapted-tag">ADAPTED ✓</div>
+        </div>
+        <div class="incident-row">
+          <div class="incident-label">Helplessness</div>
+          <div class="incident-boxes" id="helpless-boxes"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- MOTIVATIONS + DISORDERS -->
+    <div class="panel">
+      <div class="panel-hd"><h3>06 // Motivations &amp; Disorders</h3><span>Click to cross out when hit Breaking Point</span></div>
+      <div class="panel-body" style="padding:0">
+        <div id="motivList">
+          <!-- rendered by JS -->
+        </div>
+        <div class="divider" style="padding:0 12px;margin:0">DISORDERS</div>
+        <div id="disorderList" style="padding:8px 12px"></div>
+        <button class="disorder-add" onclick="addDisorder()">+ RECORD NEW DISORDER</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- EQUIPMENT -->
+  <div class="panel">
+    <div class="panel-hd"><h3>08 // Equipment &amp; Weapons — 1997</h3><span>Click gear to mark as used / expended</span></div>
+    <div class="panel-body" style="padding-bottom:8px">
+
+      <table class="wpn-tbl">
+        <thead>
+          <tr>
+            <th>WEAPON</th><th>SKILL %</th><th>BASE RANGE</th><th>DAMAGE</th><th>ARMOUR PIERCE</th><th>LETHALITY</th><th>AMMO</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td class="wn">Unarmed (fists)</td><td class="ws">80%</td><td>—</td><td class="wd">1D4</td><td style="text-align:center">—</td><td style="text-align:center">—</td><td style="text-align:center">—</td></tr>
+          <tr><td class="wn">Fairbairn-Sykes knife</td><td class="ws">70%</td><td>—</td><td class="wd">1D4+1</td><td style="text-align:center">3</td><td style="text-align:center">—</td><td style="text-align:center">—</td></tr>
+          <tr><td class="wn">L9A1 Browning Hi-Power</td><td class="ws">80%</td><td>15m</td><td class="wd">1D10</td><td style="text-align:center">—</td><td style="text-align:center">—</td><td style="text-align:center">13</td></tr>
+          <tr><td class="wn">HK MP5SD (suppressed)</td><td class="ws">80%</td><td>50m</td><td class="wd">1D10</td><td style="text-align:center">—</td><td style="text-align:center">—</td><td style="text-align:center">30</td></tr>
+          <tr><td class="wn">MP5SD (5-rnd burst)</td><td class="ws">80%</td><td>50m</td><td class="wd">Lethality</td><td style="text-align:center">—</td><td style="text-align:center">10%</td><td style="text-align:center">30</td></tr>
+        </tbody>
+      </table>
+      <div style="font-size:9px;color:var(--txd);margin:6px 0 10px">STR 14 → +1 to Unarmed &amp; Melee damage. Kevlar vest: 3 Armour Points (ignored by Called Shots and Lethality). L9A1 = standard British Army sidearm to late 1990s. MP5SD arranged by Delta Green, unlicensed.</div>
+
+      <div class="divider">STANDARD LOADOUT — TREGAW OPERATION, DEVON/CORNWALL, 1997</div>
+      <div class="gear-grid" id="gearGrid"></div>
+    </div>
+  </div>
+
+  <!-- WOUNDS + NOTES -->
+  <div class="row r2">
+    <div class="panel">
+      <div class="panel-hd"><h3>09 // Wounds &amp; Ailments</h3><span>Auto-saved on input</span></div>
+      <div class="panel-body">
+        <textarea class="field-ta wounds" id="wounds-ta" placeholder="Record injuries here. Note whether First Aid has been attempted (only once per injury)." oninput="autoSaveText('wounds')"></textarea>
+        <div style="font-size:9px;color:var(--txd);margin-top:6px">First Aid → 1D4 HP (once per injury). Rest → CON test → 1 HP/day. Medicine/Surgery → 1D4 HP/week.</div>
+      </div>
+    </div>
+    <div class="panel">
+      <div class="panel-hd"><h3>10 // Field Notes</h3><span>Auto-saved · Persists between sessions</span></div>
+      <div class="panel-body">
+        <textarea class="field-ta" id="notes-ta" placeholder="NPCs encountered, locations scouted, intelligence gathered, things to follow up..." oninput="autoSaveText('notes')" style="min-height:110px"></textarea>
+      </div>
+    </div>
+  </div>
+
+  <!-- SESSION LOG -->
+  <div class="panel">
+    <div class="panel-hd"><h3>11 // Session Log</h3><span>Current session notes — archived on Debrief</span></div>
+    <div class="panel-body session-notes-wrap">
+      <textarea class="field-ta" id="session-ta" placeholder="What happened this session? Key events, SAN losses, bond damage, decisions made..." oninput="autoSaveText('session')" style="min-height:90px"></textarea>
+      <div class="divider" style="margin-top:10px">PREVIOUS SESSION ARCHIVES</div>
+      <div id="archiveList" style="font-size:10px;color:var(--txd);font-family:var(--ft);line-height:1.7;max-height:200px;overflow-y:auto;background:var(--bg);padding:8px;border:1px solid var(--bd)">No archived sessions yet.</div>
+    </div>
+  </div>
+
+  <div class="scroll-hint">// SUTTON, S. 'SPORK' · DD-315-112382 · BRITISH · TOP SECRET ORCON · DELTA GREEN EYES ONLY // AUTO-SAVES TO LOCAL STORAGE //</div>
+</div>
+
+<script>
+/* ═══════════════════════════════════════════════════════════
+   STATE & STORAGE
+═══════════════════════════════════════════════════════════ */
+const SAVE_KEY = 'dg_spork_sutton_v3';
+
+const DEFAULT_STATE = {
+  hp: 13,
+  wp: 10,
+  san: 45,
+  sanSessionStart: 45,
+  bonds: [7, 7],
+  skillChecks: {},
+  violenceChecks: 3,   // 0–3; already adapted
+  helplessChecks: 0,
+  motivsCrossed: [],
+  disorders: [],
+  gearUsed: {},
+  wounds: '',
+  notes: 'Location: Tregaw, North Devon/Cornwall border. Late 1997.\n\nMobile signal: NONE (Vodafone/BT Cellnet — no coverage this far out).\nInternet: Library desktops only. 56k dial-up. Pay per hour.\nField radio: PRC-319 encrypted handset.\nContact method: Motorola Advisor pager only.\n\nKey orgs:\n  DIS — Defence Intelligence Staff (handler liaison)\n  Special Branch — local police intelligence contact\n  SIS — in-country assets if needed\n  GCHQ — signals; request via handler only\n\nOperation classification: ALEPH/7-(HR:EMERGENT).\nFull brief provided during transport to location.',
+  session: '',
+  sessionNum: 1,
+  archives: [],
+  lastSaved: null
+};
+
+let state = {};
+
+function loadState() {
+  try {
+    const raw = localStorage.getItem(SAVE_KEY);
+    if (raw) {
+      state = Object.assign({}, DEFAULT_STATE, JSON.parse(raw));
+    } else {
+      state = JSON.parse(JSON.stringify(DEFAULT_STATE));
+    }
+  } catch(e) {
+    state = JSON.parse(JSON.stringify(DEFAULT_STATE));
+  }
+}
+
+function saveState() {
+  try {
+    state.lastSaved = new Date().toISOString();
+    localStorage.setItem(SAVE_KEY, JSON.stringify(state));
+    const t = new Date(state.lastSaved);
+    const ts = t.toLocaleTimeString('en-GB', {hour:'2-digit', minute:'2-digit', second:'2-digit'});
+    document.getElementById('saveTime').textContent = `Last saved ${ts}`;
+  } catch(e) {
+    document.getElementById('saveTime').textContent = 'SAVE FAILED';
+  }
+}
+
+function manualSave() {
+  saveState();
+  showToast('FILED — data written to local storage');
+}
+
+let autoSaveTimer = null;
+function autoSaveText(field) {
+  state[field] = document.getElementById(field + '-ta').value;
+  clearTimeout(autoSaveTimer);
+  autoSaveTimer = setTimeout(() => { saveState(); }, 800);
+}
+
+/* ═══════════════════════════════════════════════════════════
+   SKILLS DATA
+═══════════════════════════════════════════════════════════ */
+const SKILLS = [
+  {id:'alertness',    name:'Alertness',              pct:80, tier:'e', note:'★'},
+  {id:'athletics',    name:'Athletics',              pct:80, tier:'e', note:'★'},
+  {id:'unarmed',      name:'Unarmed Combat',         pct:80, tier:'e', note:'★'},
+  {id:'firearms',     name:'Firearms',               pct:80, tier:'e', note:'★'},
+  {id:'melee',        name:'Melee Weapons',          pct:70, tier:'h', note:'★'},
+  {id:'stealth',      name:'Stealth',                pct:70, tier:'h', note:'★'},
+  {id:'milsci',       name:'Military Science (Land)',pct:60, tier:'h', note:''},
+  {id:'dodge',        name:'Dodge',                  pct:50, tier:'m', note:'★'},
+  {id:'heavywpn',     name:'Heavy Weapons',          pct:50, tier:'m', note:''},
+  {id:'navigate',     name:'Navigate',               pct:50, tier:'m', note:''},
+  {id:'survival',     name:'Survival',               pct:50, tier:'m', note:''},
+  {id:'swim',         name:'Swim',                   pct:50, tier:'m', note:''},
+  {id:'demolitions',  name:'Demolitions',            pct:40, tier:'m', note:''},
+  {id:'firstaid',     name:'First Aid',              pct:30, tier:'m', note:'★'},
+  {id:'occult',       name:'Occult',                 pct:20, tier:'l', note:'bg'},
+  {id:'drive',        name:'Drive',                  pct:20, tier:'l', note:''},
+  {id:'search',       name:'Search',                 pct:20, tier:'l', note:''},
+  {id:'humint',       name:'HUMINT',                 pct:10, tier:'l', note:''},
+  {id:'persuade',     name:'Persuade',               pct:20, tier:'l', note:''},
+  {id:'criminology',  name:'Criminology',            pct:10, tier:'l', note:''},
+  {id:'bureaucracy',  name:'Bureaucracy',            pct:10, tier:'l', note:''},
+  {id:'unnatural',    name:'Unnatural',              pct:0,  tier:'l', note:'⚠'},
+];
+
+/* ═══════════════════════════════════════════════════════════
+   GEAR DATA
+═══════════════════════════════════════════════════════════ */
+const GEAR = [
+  {id:'g01', name:'Kevlar vest (3 AP, worn under jacket)'},
+  {id:'g02', name:'Waxed Barbour jacket (civilian cover)'},
+  {id:'g03', name:'L9A1 Browning Hi-Power + 2× spare 13-rnd magazines'},
+  {id:'g04', name:'HK MP5SD + 4× spare 30-rnd magazines (DG-arranged)'},
+  {id:'g05', name:'Fairbairn-Sykes fighting knife + sheath'},
+  {id:'g06', name:'Motorola Advisor pager (Delta Green contact only)'},
+  {id:'g07', name:'Vodafone analogue mobile (no signal in Tregaw)'},
+  {id:'g08', name:'PRC-319 encrypted radio handset (MOD covert issue)'},
+  {id:'g09', name:'OS 1:25000 map — Sheet SS23/33 (Bude & Boscastle)'},
+  {id:'g10', name:'OS 1:25000 map — Sheet SS24/34 (Barnstaple)'},
+  {id:'g11', name:'Cash: £350 mixed notes'},
+  {id:'g12', name:'False ID — "Simon Turner, freelance journalist"'},
+  {id:'g13', name:'Kodak FunSaver disposable camera (27 exp)'},
+  {id:'g14', name:'Maglite D-cell torch + spare batteries'},
+  {id:'g15', name:'First responder medical bag (+20% to 4× First Aid)'},
+  {id:'g16', name:'Basic rations — 48hr field food'},
+];
+
+/* ═══════════════════════════════════════════════════════════
+   MOTIVATIONS
+═══════════════════════════════════════════════════════════ */
+const MOTIVATIONS = [
+  'Never leave a man behind',
+  'Quiet professionalism — do the job, no glory',
+  'Prove that human beings don\'t go down easy',
+  'Face what others won\'t',
+  'Keep the squad\'s casualties at zero',
+];
+
+/* ═══════════════════════════════════════════════════════════
+   RENDER FUNCTIONS
+═══════════════════════════════════════════════════════════ */
+
+function renderSkills() {
+  const grid = document.getElementById('skillsGrid');
+  grid.innerHTML = SKILLS.map(sk => {
+    const checked = state.skillChecks[sk.id] || false;
+    return `<div class="skill-item${checked?' checked':''}" onclick="toggleSkill('${sk.id}')" title="${checked?'Marked failed — will roll for improvement at debrief':'Click to mark as used and failed'}">
+      <div class="skill-cb">${checked?'✗':''}</div>
+      <div class="skill-name">${sk.name}</div>
+      <div class="skill-pct ${sk.tier}">${sk.pct}%<span class="skill-note">${sk.note}</span></div>
+    </div>`;
+  }).join('');
+}
+
+function renderHP() {
+  const v = state.hp;
+  const max = 13;
+  document.getElementById('hp-val').textContent = v;
+  const row = document.getElementById('hp-pips');
+  row.innerHTML = Array.from({length:max},(_,i)=>{
+    const filled = i < v;
+    const low = filled && v <= 4;
+    const cls = `pip hp${filled?(low?' low':' fill'):''}`;
+    return `<div class="${cls}" onclick="setStatTo('hp',${i+1})" title="${i+1} HP"></div>`;
+  }).join('');
+  const tag = document.getElementById('hp-state-tag');
+  if(v <= 0){ tag.innerHTML='<div class="hp-state crit">DEAD / DYING</div>'; }
+  else if(v <= 2){ tag.innerHTML='<div class="hp-state crit">UNCONSCIOUS — ROLL CON</div>'; }
+  else if(v <= 5){ tag.innerHTML='<div class="hp-state warn">CRITICAL</div>'; }
+  else{ tag.innerHTML='<div class="hp-state ok">OPERATIONAL</div>'; }
+}
+
+function renderWP() {
+  const v = state.wp;
+  document.getElementById('wp-val').textContent = v;
+  const row = document.getElementById('wp-pips');
+  row.innerHTML = Array.from({length:10},(_,i)=>{
+    const filled = i < v;
+    return `<div class="pip wp${filled?' fill':''}" onclick="setStatTo('wp',${i+1})" title="${i+1} WP"></div>`;
+  }).join('');
+  const warn = document.getElementById('wp-warn');
+  warn.style.display = (v <= 2) ? 'block' : 'none';
+}
+
+function renderSAN() {
+  const v = state.san;
+  const max = 45;
+  const bp = 35;
+  const el = document.getElementById('san-val');
+  el.textContent = v;
+  el.className = 'tr-val san' + (v <= bp ? (v <= 20 ? ' crit' : ' warn') : '');
+
+  const pct = (v / max) * 100;
+  const bar = document.getElementById('san-bar');
+  bar.style.width = Math.max(0, pct) + '%';
+  bar.className = 'san-bar-fill' + (v <= bp ? (v <= 20 ? ' crit' : ' warn') : ' good');
+
+  // BP marker position
+  const bpPct = (bp / max) * 100;
+  const marker = document.getElementById('bp-marker');
+  marker.style.left = bpPct + '%';
+
+  // Breaking point alert
+  const alert = document.getElementById('san-bp-alert');
+  alert.className = 'san-alert' + (v <= bp ? ' show' : '');
+
+  // Session drop note
+  const drop = state.sanSessionStart - v;
+  const dropEl = document.getElementById('san-drop-note');
+  if(drop >= 5){
+    dropEl.textContent = `▲ Lost ${drop} SAN this session (${drop >= 5 ? 'TEMPORARY INSANITY possible' : ''})`;
+    dropEl.style.color = 'var(--rb)';
+  } else if(drop > 0){
+    dropEl.textContent = `Lost ${drop} SAN this session`;
+    dropEl.style.color = 'var(--txd)';
+  } else {
+    dropEl.textContent = '';
+  }
+}
+
+function renderBonds() {
+  state.bonds.forEach((v, i) => {
+    const el = document.getElementById(`bond-${i}`);
+    if(el){
+      el.textContent = v;
+      el.className = 'bond-score' + (v <= 0 ? ' zero' : '');
+    }
+  });
+}
+
+function renderViolenceBoxes() {
+  const container = document.getElementById('violence-boxes');
+  container.innerHTML = Array.from({length:3},(_,i)=>`<div class="inc-box adapted-v" title="Adapted to Violence">✓</div>`).join('');
+}
+
+function renderHelplessBoxes() {
+  const container = document.getElementById('helpless-boxes');
+  container.innerHTML = Array.from({length:3},(_,i)=>{
+    const checked = i < state.helplessChecks;
+    return `<div class="inc-box${checked?' checked':''}" onclick="toggleHelpless(${i})">${checked?'✗':''}</div>`;
+  }).join('');
+}
+
+function renderMotivations() {
+  const list = document.getElementById('motivList');
+  list.innerHTML = MOTIVATIONS.map((m, i) => {
+    const crossed = state.motivsCrossed.includes(i);
+    return `<div class="motiv-item${crossed?' crossed':''}" onclick="toggleMotiv(${i})" title="${crossed?'Restore':'Cross out (Breaking Point reached)'}">
+      <div class="motiv-check" style="${crossed?'border-color:var(--rb)':''}"></div>
+      <div class="motiv-text">${m}</div>
+    </div>`;
+  }).join('');
+}
+
+function renderDisorders() {
+  const list = document.getElementById('disorderList');
+  if(state.disorders.length === 0){
+    list.innerHTML = '<div style="font-size:10px;color:var(--txd);padding:6px 0;font-family:var(--ft)">No disorders recorded.</div>';
+    return;
+  }
+  list.innerHTML = state.disorders.map((d, i) =>
+    `<div class="disorder-item">
+      <span>${d}</span>
+      <button class="disorder-remove" onclick="removeDisorder(${i})" title="Remove">×</button>
+    </div>`
+  ).join('');
+}
+
+function renderGear() {
+  const grid = document.getElementById('gearGrid');
+  grid.innerHTML = GEAR.map(g => {
+    const used = state.gearUsed[g.id] || false;
+    return `<div class="gear-item${used?' used':''}" onclick="toggleGear('${g.id}')">
+      <div class="gear-check">${used?'✗':'□'}</div>
+      <div class="gear-name">${g.name}</div>
+    </div>`;
+  }).join('');
+}
+
+function renderTextAreas() {
+  document.getElementById('wounds-ta').value = state.wounds || '';
+  document.getElementById('notes-ta').value = state.notes || '';
+  document.getElementById('session-ta').value = state.session || '';
+}
+
+function renderArchives() {
+  const el = document.getElementById('archiveList');
+  if(!state.archives || state.archives.length === 0){
+    el.textContent = 'No archived sessions yet.';
+    return;
+  }
+  el.innerHTML = state.archives.slice().reverse().map((a,i) => {
+    const num = state.archives.length - i;
+    return `<div style="margin-bottom:12px;padding-bottom:12px;border-bottom:1px dotted var(--bd)">
+      <div style="font-size:9px;letter-spacing:2px;color:var(--g);margin-bottom:3px">SESSION ${a.num} // ${a.date}</div>
+      <div style="white-space:pre-wrap">${a.text || '(no notes)'}</div>
+    </div>`;
+  }).join('');
+}
+
+function renderSession() {
+  document.getElementById('sessionNum').textContent = state.sessionNum;
+}
+
+function renderAll() {
+  renderSkills();
+  renderHP();
+  renderWP();
+  renderSAN();
+  renderBonds();
+  renderViolenceBoxes();
+  renderHelplessBoxes();
+  renderMotivations();
+  renderDisorders();
+  renderGear();
+  renderTextAreas();
+  renderArchives();
+  renderSession();
+}
+
+/* ═══════════════════════════════════════════════════════════
+   INTERACTIONS
+═══════════════════════════════════════════════════════════ */
+
+function adjustStat(stat, delta) {
+  const max = {hp:13, wp:10, san:45};
+  state[stat] = Math.max(0, Math.min(max[stat], state[stat] + delta));
+  if(stat === 'hp') renderHP();
+  if(stat === 'wp') renderWP();
+  if(stat === 'san') renderSAN();
+  saveState();
+}
+
+function setStatTo(stat, val) {
+  const max = {hp:13, wp:10};
+  state[stat] = Math.max(0, Math.min(max[stat], val));
+  if(stat === 'hp') renderHP();
+  if(stat === 'wp') renderWP();
+  saveState();
+}
+
+function adjustBond(idx, delta) {
+  state.bonds[idx] = Math.max(0, Math.min(15, state.bonds[idx] + delta));
+  renderBonds();
+  if(state.bonds[idx] === 0) showToast(`⚠ Bond ${idx+1} has collapsed — relationship destroyed`);
+  saveState();
+}
+
+function toggleSkill(id) {
+  state.skillChecks[id] = !state.skillChecks[id];
+  renderSkills();
+  saveState();
+}
+
+function toggleMotiv(idx) {
+  if(state.motivsCrossed.includes(idx)){
+    state.motivsCrossed = state.motivsCrossed.filter(i => i !== idx);
+  } else {
+    state.motivsCrossed.push(idx);
+    showToast('Motivation lost — replace with disorder at next opportunity');
+  }
+  renderMotivations();
+  saveState();
+}
+
+function toggleHelpless(idx) {
+  if(state.helplessChecks > idx){ state.helplessChecks = idx; }
+  else { state.helplessChecks = idx + 1; }
+  renderHelplessBoxes();
+  if(state.helplessChecks >= 3) showToast('⚠ ADAPTED TO HELPLESSNESS — Permanently lose 1D6 POW');
+  saveState();
+}
+
+function toggleGear(id) {
+  state.gearUsed[id] = !state.gearUsed[id];
+  renderGear();
+  saveState();
+}
+
+function addDisorder() {
+  const name = prompt('Name the disorder (e.g. PTSD, Amnesia, Sleep Disorder):');
+  if(name && name.trim()){
+    state.disorders.push(name.trim());
+    renderDisorders();
+    saveState();
+    showToast('Disorder recorded');
+  }
+}
+
+function removeDisorder(idx) {
+  if(confirm(`Remove disorder: "${state.disorders[idx]}"?`)){
+    state.disorders.splice(idx, 1);
+    renderDisorders();
+    saveState();
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════
+   SESSION / DEBRIEF
+═══════════════════════════════════════════════════════════ */
+
+function newSession() {
+  state.sanSessionStart = state.san;
+  state.sessionNum += 1;
+  document.getElementById('session-ta').value = '';
+  state.session = '';
+  renderSession();
+  renderSAN();
+  saveState();
+  showToast(`Session ${state.sessionNum} started — SAN baseline set to ${state.san}`);
+}
+
+function openDebrief() {
+  const checked = Object.entries(state.skillChecks).filter(([,v])=>v).map(([k])=>k);
+  const skNames = checked.map(id => SKILLS.find(s=>s.id===id)?.name).filter(Boolean);
+  let body = `<strong>SESSION ${state.sessionNum} DEBRIEF</strong><br><br>`;
+  const drop = state.sanSessionStart - state.san;
+  body += `SAN this session: ${state.san} (−${drop} from ${state.sanSessionStart})<br>`;
+  body += `HP: ${state.hp}/13 &nbsp; WP: ${state.wp}/10<br><br>`;
+  if(skNames.length > 0){
+    body += `<strong>SKILLS MARKED FAILED (may improve):</strong><br>`;
+    body += skNames.join(', ') + '<br><br>';
+    body += `Roll above current skill % to improve each by +1D4.<br><br>`;
+  } else {
+    body += `No skills marked failed this session.<br><br>`;
+  }
+  body += `Confirm to archive session notes and clear skill checks.`;
+  document.getElementById('debriefBody').innerHTML = body;
+  openModal('debriefModal');
+}
+
+function runDebrief() {
+  // Archive session log
+  const sessionText = state.session || '(no notes)';
+  const dateStr = new Date().toLocaleDateString('en-GB');
+  if(!state.archives) state.archives = [];
+  state.archives.push({ num: state.sessionNum, date: dateStr, text: sessionText });
+
+  // Clear checks
+  state.skillChecks = {};
+  state.session = '';
+  state.sanSessionStart = state.san;
+
+  closeModal('debriefModal');
+  renderAll();
+  saveState();
+  showToast(`Session ${state.sessionNum} archived — good work, Agent`);
+}
+
+function confirmReset() {
+  state = JSON.parse(JSON.stringify(DEFAULT_STATE));
+  closeModal('resetModal');
+  renderAll();
+  saveState();
+  showToast('Sheet reset to default state');
+}
+
+/* ═══════════════════════════════════════════════════════════
+   MODAL + TOAST
+═══════════════════════════════════════════════════════════ */
+
+function openModal(id){ document.getElementById(id).classList.add('show'); }
+function closeModal(id){ document.getElementById(id).classList.remove('show'); }
+
+let toastTimer;
+function showToast(msg){
+  const el = document.getElementById('toast');
+  el.textContent = msg;
+  el.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(()=>el.classList.remove('show'), 3000);
+}
+
+/* ═══════════════════════════════════════════════════════════
+   KEYBOARD SHORTCUTS
+═══════════════════════════════════════════════════════════ */
+document.addEventListener('keydown', e => {
+  if((e.ctrlKey || e.metaKey) && e.key === 's'){
+    e.preventDefault();
+    manualSave();
+  }
+});
+
+/* Close modals on overlay click */
+document.querySelectorAll('.modal-overlay').forEach(el=>{
+  el.addEventListener('click', e=>{ if(e.target===el) el.classList.remove('show'); });
+});
+
+/* ═══════════════════════════════════════════════════════════
+   INIT
+═══════════════════════════════════════════════════════════ */
+loadState();
+renderAll();
+
+// Initial save time display
+if(state.lastSaved){
+  const t = new Date(state.lastSaved);
+  document.getElementById('saveTime').textContent = `Last saved ${t.toLocaleTimeString('en-GB')}`;
+}
+</script>
+</body>
+</html>

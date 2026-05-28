@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Henry Press — Investigator Sheet</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Crimson+Text:ital,wght@0,400;0,600;1,400;1,600&family=Special+Elite&display=swap" rel="stylesheet"/>
+<style>
+:root{--p:#f0e8d5;--pd:#e0d0b0;--pp:#c8b890;--ink:#1a120a;--inkf:#3d2e1e;--inkm:#5a4030;--cr:#8b1a1a;--crb:#b52020;--crd:#5c0f0f;--g:#8b6914;--gb:#c49a1e;--fd:'Cinzel',serif;--fb:'Crimson Text',serif;--ft:'Special Elite',cursive}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{background:#0d0804;font-family:var(--fb);color:var(--ink);min-height:100vh;padding:20px}
+body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse at 50% 0%,rgba(139,105,20,0.08) 0%,transparent 70%);pointer-events:none}
+
+.sheet-header{background:var(--ink);border:2px solid var(--g);margin-bottom:18px;position:relative;overflow:hidden;max-width:1200px;margin-left:auto;margin-right:auto}
+.sheet-header::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(to right,var(--cr),var(--gb),var(--cr))}
+.header-top{padding:18px 28px 14px;display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:12px}
+.char-name{font-family:var(--fd);font-size:32px;font-weight:700;color:var(--gb);letter-spacing:0.06em;line-height:1}
+.char-sub{font-family:var(--ft);font-size:13px;color:var(--pp);margin-top:6px;letter-spacing:0.08em}
+.header-meta{display:flex;gap:20px;flex-wrap:wrap}
+.meta-item{text-align:right}
+.meta-label{font-family:var(--fd);font-size:9px;font-weight:600;letter-spacing:0.15em;color:var(--g);text-transform:uppercase}
+.meta-value{font-family:var(--ft);font-size:14px;color:var(--p);margin-top:2px}
+.header-desc{border-top:1px solid #3a2a14;padding:12px 28px;font-family:var(--ft);font-size:12px;color:var(--pp);font-style:italic;line-height:1.6}
+.status-banner{padding:8px 18px;font-family:var(--ft);font-size:12px;text-align:center;letter-spacing:0.06em;transition:all 0.3s}
+.status-banner.stable{background:rgba(139,105,20,0.15);color:var(--gb);border-top:1px solid var(--g)}
+.status-banner.troubled{background:rgba(139,26,26,0.12);color:#c06030;border-top:1px solid #8b4010}
+.status-banner.danger{background:rgba(92,15,15,0.3);color:var(--crb);border-top:1px solid var(--cr)}
+.status-banner.critical{background:rgba(92,15,15,0.5);color:#ff4040;border-top:1px solid var(--crb);animation:pulse 1.5s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.6}}
+
+.sheet-body{display:grid;grid-template-columns:280px 1fr;gap:18px;max-width:1200px;margin:0 auto}
+@media(max-width:820px){.sheet-body{grid-template-columns:1fr}}
+.col-left{display:flex;flex-direction:column;gap:16px}
+.col-right{display:flex;flex-direction:column;gap:16px}
+
+.panel{background:var(--p);border:1px solid var(--pp);padding:16px 18px}
+.panel-title{font-family:var(--fd);font-size:10px;font-weight:700;letter-spacing:0.18em;color:var(--cr);text-transform:uppercase;border-bottom:1px solid var(--pp);padding-bottom:6px;margin-bottom:13px}
+.panel-title.gold{color:var(--g)}
+
+.vitals-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.vital-box{background:var(--ink);border:1px solid var(--g);padding:12px;text-align:center}
+.vital-label{font-family:var(--fd);font-size:9px;font-weight:600;letter-spacing:0.14em;color:var(--gb);text-transform:uppercase;margin-bottom:6px}
+.vital-display{font-family:var(--ft);font-size:28px;color:var(--p);line-height:1}
+.vital-max{font-family:var(--ft);font-size:11px;color:var(--pp);margin-top:2px}
+.vital-btns{display:flex;justify-content:center;gap:6px;margin-top:8px}
+.vbtn{background:transparent;border:1px solid #4a3a20;color:var(--pp);font-family:var(--fd);font-size:14px;width:28px;height:28px;cursor:pointer;transition:all 0.15s;display:flex;align-items:center;justify-content:center}
+.vbtn:hover{background:var(--cr);border-color:var(--crb);color:var(--p)}
+.vbtn.plus:hover{background:var(--g);border-color:var(--gb)}
+.vital-bar{height:4px;background:#2a1808;margin-top:8px;overflow:hidden}
+.vital-fill{height:100%;transition:width 0.3s,background 0.3s}
+
+.char-grid{display:flex;flex-direction:column;gap:5px}
+.char-row{display:flex;align-items:center;gap:8px;padding:5px 0;border-bottom:1px solid rgba(200,168,100,0.15)}
+.char-row:last-child{border-bottom:none}
+.char-abbr{font-family:var(--fd);font-size:10px;font-weight:700;color:var(--cr);min-width:32px;letter-spacing:0.06em}
+.char-name-s{font-family:var(--fb);font-size:12px;color:var(--inkm);flex:1;font-style:italic}
+.char-vals{display:flex;gap:6px}
+.char-val{text-align:center}
+.cv-num{font-family:var(--ft);font-size:14px;color:var(--ink)}
+.cv-num.main{font-size:18px;color:var(--inkf)}
+.cv-label{font-family:var(--fd);font-size:8px;letter-spacing:0.1em;color:var(--pp);text-transform:uppercase}
+
+/* SKILLS */
+.skill-filter-bar{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px;align-items:center}
+.filter-btn{background:transparent;border:1px solid var(--pp);color:var(--inkm);font-family:var(--fd);font-size:9px;font-weight:600;letter-spacing:0.08em;padding:4px 10px;cursor:pointer;text-transform:uppercase;transition:all 0.2s}
+.filter-btn:hover{border-color:var(--g);color:var(--g)}
+.filter-btn.active{background:var(--ink);border-color:var(--g);color:var(--gb)}
+.skill-search{background:transparent;border:1px solid var(--pp);color:var(--inkf);font-family:var(--ft);font-size:13px;padding:4px 10px;flex:1;min-width:120px}
+.skill-search:focus{outline:none;border-color:var(--g)}
+.skill-search::placeholder{color:var(--pp)}
+
+.skill-list{display:flex;flex-direction:column;gap:1px}
+.skill-row{display:flex;align-items:center;gap:8px;padding:4px 6px;cursor:default;transition:background 0.15s;border-radius:1px}
+.skill-row:hover{background:rgba(139,105,20,0.08)}
+.skill-row.invested{background:rgba(139,105,20,0.06)}
+.skill-row.invested:hover{background:rgba(139,105,20,0.13)}
+.skill-row.hidden{display:none}
+
+.skill-check{width:14px;height:14px;border:1px solid var(--pp);background:transparent;cursor:pointer;flex-shrink:0;transition:all 0.15s;display:flex;align-items:center;justify-content:center;font-size:9px}
+.skill-check.checked{background:var(--cr);border-color:var(--crb);color:var(--p)}
+
+.skill-name{font-family:var(--fb);font-size:13px;color:var(--inkf);flex:1}
+.skill-name.invested-name{color:var(--ink);font-weight:600}
+.invested-dot{width:6px;height:6px;background:var(--gb);border-radius:50%;flex-shrink:0;margin-right:2px}
+.invested-dot.empty{background:transparent}
+
+.skill-base{font-family:var(--ft);font-size:11px;color:var(--pp);min-width:28px;text-align:right}
+.skill-pct{font-family:var(--ft);font-size:14px;color:var(--ink);min-width:32px;text-align:right}
+.skill-pct.invested-val{color:var(--cr);font-weight:bold}
+.skill-half{font-family:var(--ft);font-size:11px;color:var(--inkm);min-width:24px;text-align:right}
+.skill-fifth{font-family:var(--ft);font-size:11px;color:var(--pp);min-width:18px;text-align:right}
+
+.skill-header-row{display:flex;gap:8px;padding:0 6px 5px;border-bottom:2px solid var(--pp);margin-bottom:4px;align-items:flex-end}
+.sh-dot{width:6px;flex-shrink:0}
+.sh-chk{width:14px;flex-shrink:0}
+.sh-name{font-family:var(--fd);font-size:8px;letter-spacing:0.1em;color:var(--g);text-transform:uppercase;flex:1}
+.sh-base{font-family:var(--fd);font-size:8px;letter-spacing:0.06em;color:var(--pp);text-transform:uppercase;min-width:28px;text-align:right}
+.sh-val{font-family:var(--fd);font-size:8px;letter-spacing:0.08em;color:var(--cr);text-transform:uppercase;min-width:32px;text-align:right}
+.sh-half{font-family:var(--fd);font-size:8px;letter-spacing:0.06em;color:var(--pp);text-transform:uppercase;min-width:24px;text-align:right}
+.sh-fifth{font-family:var(--fd);font-size:8px;letter-spacing:0.06em;color:var(--pp);text-transform:uppercase;min-width:18px;text-align:right}
+.sh-roll{font-family:var(--fd);font-size:8px;letter-spacing:0.06em;color:var(--pp);text-transform:uppercase;min-width:60px;text-align:right}
+
+.roll-btn{background:transparent;border:1px solid #4a3020;color:var(--pp);font-family:var(--fd);font-size:8px;font-weight:600;letter-spacing:0.08em;padding:3px 8px;cursor:pointer;text-transform:uppercase;transition:all 0.2s;white-space:nowrap}
+.roll-btn:hover{background:var(--cr);border-color:var(--crb);color:var(--p)}
+.roll-result{font-family:var(--ft);font-size:11px;margin-left:4px;opacity:0;transition:opacity 0.3s;white-space:nowrap}
+.roll-result.show{opacity:1}
+.roll-result.success{color:#4a8a4a}
+.roll-result.hard{color:var(--gb)}
+.roll-result.extreme{color:#c8a020}
+.roll-result.fail{color:var(--crb)}
+.roll-result.fumble{color:#ff2020;font-weight:bold}
+
+.san-track{display:flex;flex-wrap:wrap;gap:3px;margin:10px 0 6px}
+.san-pip{width:12px;height:12px;border:1px solid #c8b890;background:transparent;cursor:pointer;transition:background 0.1s}
+.san-pip.filled.high{background:var(--g)}
+.san-pip.filled.mid{background:var(--cr)}
+.san-pip.filled.low{background:var(--crd)}
+.san-label-row{display:flex;justify-content:space-between;font-family:var(--ft);font-size:11px;color:var(--pp);margin-top:4px}
+
+.wound-grid{display:flex;gap:5px;flex-wrap:wrap;margin-top:8px}
+.wound-box{width:22px;height:22px;border:1px solid var(--pp);background:transparent;cursor:pointer;transition:all 0.15s;display:flex;align-items:center;justify-content:center;font-size:11px}
+.wound-box.hit{background:var(--cr);border-color:var(--crb);color:var(--p)}
+
+.tab-row{display:flex;border-bottom:2px solid var(--g);flex-wrap:wrap}
+.tab-btn{background:transparent;border:none;font-family:var(--fd);font-size:10px;font-weight:600;letter-spacing:0.1em;color:var(--pp);text-transform:uppercase;padding:8px 14px;cursor:pointer;transition:all 0.2s;border-bottom:2px solid transparent;margin-bottom:-2px}
+.tab-btn:hover{color:var(--gb)}
+.tab-btn.active{color:var(--ink);background:var(--p);border-color:var(--g)}
+.tab-content{display:none;padding:16px 18px}
+.tab-content.active{display:block}
+
+.backstory-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media(max-width:900px){.backstory-grid{grid-template-columns:1fr}}
+.bs-item{background:rgba(139,105,20,0.05);border-left:2px solid var(--g);padding:10px 14px}
+.bs-item.red{border-left-color:var(--cr);background:rgba(139,26,26,0.04)}
+.bs-title{font-family:var(--fd);font-size:9px;font-weight:600;letter-spacing:0.14em;color:var(--cr);text-transform:uppercase;margin-bottom:6px}
+.bs-title.gold{color:var(--g)}
+.bs-text{font-family:var(--fb);font-size:13px;color:var(--inkf);line-height:1.65;font-style:italic}
+
+.notes-area{width:100%;min-height:100px;background:rgba(139,105,20,0.05);border:1px solid var(--pp);padding:10px;font-family:var(--ft);font-size:13px;color:var(--inkf);resize:vertical;line-height:1.6}
+.notes-area:focus{outline:none;border-color:var(--g)}
+
+.deco{display:flex;align-items:center;gap:10px;color:var(--g);margin:12px 0}
+.deco::before,.deco::after{content:'';flex:1;height:1px}
+.deco::before{background:linear-gradient(to right,transparent,var(--pp))}
+.deco::after{background:linear-gradient(to left,transparent,var(--pp))}
+
+.reset-btn{background:transparent;border:1px solid #4a3020;color:var(--pp);font-family:var(--fd);font-size:9px;letter-spacing:0.1em;padding:3px 8px;cursor:pointer;text-transform:uppercase;float:right;transition:all 0.2s}
+.reset-btn:hover{border-color:var(--cr);color:var(--crb)}
+
+.tag{display:inline-block;background:var(--ink);color:var(--pp);font-family:var(--ft);font-size:11px;padding:2px 7px;border:1px solid #3a2a14;margin:2px}
+.legend{display:flex;gap:14px;margin-bottom:10px;flex-wrap:wrap}
+.legend-item{display:flex;align-items:center;gap:5px;font-family:var(--ft);font-size:11px;color:var(--inkm)}
+.legend-dot{width:8px;height:8px;border-radius:50%;background:var(--gb)}
+.legend-dot.base{background:transparent;border:1px solid var(--pp)}
+</style>
+</head>
+<body>
+<div style="max-width:1200px;margin:0 auto">
+
+<!-- HEADER -->
+<div class="sheet-header">
+  <div class="header-top">
+    <div>
+      <div class="char-name">Henry Press</div>
+      <div class="char-sub">Investigator &middot; Call of Cthulhu 7th Edition &middot; Little Tregaw, 1997</div>
+    </div>
+    <div class="header-meta">
+      <div class="meta-item"><div class="meta-label">Occupation</div><div class="meta-value">Engineer</div></div>
+      <div class="meta-item"><div class="meta-label">Age</div><div class="meta-value">28</div></div>
+      <div class="meta-item"><div class="meta-label">Birthplace</div><div class="meta-value">Little Tregaw</div></div>
+      <div class="meta-item"><div class="meta-label">Residence</div><div class="meta-value">Gerald's house</div></div>
+    </div>
+  </div>
+  <div class="header-desc">Big, broad, once-handsome in a way that still shows. Carries extra weight around the middle that wasn't there two years ago. Dresses like someone who used to have somewhere to be. Dark eyes that watch rooms too carefully.</div>
+  <div class="status-banner stable" id="statusBanner">Psychologically Stable — for now</div>
+</div>
+
+<!-- BODY -->
+<div class="sheet-body">
+
+<!-- LEFT COLUMN -->
+<div class="col-left">
+
+  <!-- VITALS -->
+  <div class="panel">
+    <div class="panel-title">Vital Statistics</div>
+    <div class="vitals-grid">
+      <div class="vital-box">
+        <div class="vital-label">Hit Points</div>
+        <div class="vital-display" id="hpVal">13</div>
+        <div class="vital-max">/ 13 max</div>
+        <div class="vital-btns">
+          <button class="vbtn" onclick="changeVital('hp',-1)">−</button>
+          <button class="vbtn plus" onclick="changeVital('hp',1)">+</button>
+        </div>
+        <div class="vital-bar"><div class="vital-fill" id="hpBar" style="width:100%;background:var(--g)"></div></div>
+      </div>
+      <div class="vital-box">
+        <div class="vital-label">Sanity</div>
+        <div class="vital-display" id="sanVal">30</div>
+        <div class="vital-max">/ 99 max</div>
+        <div class="vital-btns">
+          <button class="vbtn" onclick="changeVital('san',-1)">−</button>
+          <button class="vbtn plus" onclick="changeVital('san',1)">+</button>
+        </div>
+        <div class="vital-bar"><div class="vital-fill" id="sanBar" style="width:30%;background:var(--cr)"></div></div>
+      </div>
+      <div class="vital-box">
+        <div class="vital-label">Magic Points</div>
+        <div class="vital-display" id="mpVal">6</div>
+        <div class="vital-max">/ 6 max</div>
+        <div class="vital-btns">
+          <button class="vbtn" onclick="changeVital('mp',-1)">−</button>
+          <button class="vbtn plus" onclick="changeVital('mp',1)">+</button>
+        </div>
+        <div class="vital-bar"><div class="vital-fill" id="mpBar" style="width:100%;background:#4a6a8a"></div></div>
+      </div>
+      <div class="vital-box">
+        <div class="vital-label">Luck</div>
+        <div class="vital-display" id="luckVal">45</div>
+        <div class="vital-max">/ 99 max</div>
+        <div class="vital-btns">
+          <button class="vbtn" onclick="changeVital('luck',-1)">−</button>
+          <button class="vbtn plus" onclick="changeVital('luck',1)">+</button>
+        </div>
+        <div class="vital-bar"><div class="vital-fill" id="luckBar" style="width:45%;background:var(--gb)"></div></div>
+      </div>
+    </div>
+    <div style="margin-top:14px">
+      <div style="font-family:var(--fd);font-size:9px;letter-spacing:0.12em;color:var(--g);text-transform:uppercase;margin-bottom:6px">Wound Track <button class="reset-btn" onclick="resetWounds()">Reset</button></div>
+      <div class="wound-grid" id="woundTrack"></div>
+      <div style="font-family:var(--ft);font-size:11px;color:var(--pp);margin-top:6px" id="woundStatus">No wounds</div>
+    </div>
+  </div>
+
+  <!-- CHARACTERISTICS -->
+  <div class="panel">
+    <div class="panel-title">Characteristics</div>
+    <div class="char-grid">
+      <div class="char-row"><span class="char-abbr">STR</span><span class="char-name-s">Strength</span><div class="char-vals"><div class="char-val"><div class="cv-num main">35</div><div class="cv-label">Full</div></div><div class="char-val"><div class="cv-num">17</div><div class="cv-label">Half</div></div><div class="char-val"><div class="cv-num">7</div><div class="cv-label">Fifth</div></div></div></div>
+      <div class="char-row"><span class="char-abbr">CON</span><span class="char-name-s">Constitution</span><div class="char-vals"><div class="char-val"><div class="cv-num main">50</div><div class="cv-label">Full</div></div><div class="char-val"><div class="cv-num">25</div><div class="cv-label">Half</div></div><div class="char-val"><div class="cv-num">10</div><div class="cv-label">Fifth</div></div></div></div>
+      <div class="char-row"><span class="char-abbr">SIZ</span><span class="char-name-s">Size</span><div class="char-vals"><div class="char-val"><div class="cv-num main">80</div><div class="cv-label">Full</div></div><div class="char-val"><div class="cv-num">40</div><div class="cv-label">Half</div></div><div class="char-val"><div class="cv-num">16</div><div class="cv-label">Fifth</div></div></div></div>
+      <div class="char-row"><span class="char-abbr">DEX</span><span class="char-name-s">Dexterity</span><div class="char-vals"><div class="char-val"><div class="cv-num main">60</div><div class="cv-label">Full</div></div><div class="char-val"><div class="cv-num">30</div><div class="cv-label">Half</div></div><div class="char-val"><div class="cv-num">12</div><div class="cv-label">Fifth</div></div></div></div>
+      <div class="char-row"><span class="char-abbr">APP</span><span class="char-name-s">Appearance</span><div class="char-vals"><div class="char-val"><div class="cv-num main">60</div><div class="cv-label">Full</div></div><div class="char-val"><div class="cv-num">30</div><div class="cv-label">Half</div></div><div class="char-val"><div class="cv-num">12</div><div class="cv-label">Fifth</div></div></div></div>
+      <div class="char-row"><span class="char-abbr">INT</span><span class="char-name-s">Intelligence</span><div class="char-vals"><div class="char-val"><div class="cv-num main">75</div><div class="cv-label">Full</div></div><div class="char-val"><div class="cv-num">37</div><div class="cv-label">Half</div></div><div class="char-val"><div class="cv-num">15</div><div class="cv-label">Fifth</div></div></div></div>
+      <div class="char-row"><span class="char-abbr">POW</span><span class="char-name-s">Power</span><div class="char-vals"><div class="char-val"><div class="cv-num main">30</div><div class="cv-label">Full</div></div><div class="char-val"><div class="cv-num">15</div><div class="cv-label">Half</div></div><div class="char-val"><div class="cv-num">6</div><div class="cv-label">Fifth</div></div></div></div>
+      <div class="char-row"><span class="char-abbr">EDU</span><span class="char-name-s">Education</span><div class="char-vals"><div class="char-val"><div class="cv-num main">65</div><div class="cv-label">Full</div></div><div class="char-val"><div class="cv-num">32</div><div class="cv-label">Half</div></div><div class="char-val"><div class="cv-num">13</div><div class="cv-label">Fifth</div></div></div></div>
+    </div>
+    <div class="deco">&#10022;</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px">
+      <div style="background:var(--ink);padding:7px 10px;text-align:center"><div style="font-family:var(--fd);font-size:8px;letter-spacing:0.12em;color:var(--g);text-transform:uppercase">Damage Bonus</div><div style="font-family:var(--ft);font-size:16px;color:var(--p);margin-top:3px">None</div></div>
+      <div style="background:var(--ink);padding:7px 10px;text-align:center"><div style="font-family:var(--fd);font-size:8px;letter-spacing:0.12em;color:var(--g);text-transform:uppercase">Build</div><div style="font-family:var(--ft);font-size:16px;color:var(--p);margin-top:3px">0</div></div>
+      <div style="background:var(--ink);padding:7px 10px;text-align:center"><div style="font-family:var(--fd);font-size:8px;letter-spacing:0.12em;color:var(--g);text-transform:uppercase">Move Rate</div><div style="font-family:var(--ft);font-size:16px;color:var(--p);margin-top:3px">7</div></div>
+      <div style="background:var(--ink);padding:7px 10px;text-align:center"><div style="font-family:var(--fd);font-size:8px;letter-spacing:0.12em;color:var(--g);text-transform:uppercase">Max SAN</div><div style="font-family:var(--ft);font-size:16px;color:var(--p);margin-top:3px">99</div></div>
+    </div>
+  </div>
+
+  <!-- POSSESSIONS -->
+  <div class="panel">
+    <div class="panel-title gold">Possessions</div>
+    <div style="font-family:var(--ft);font-size:12px;color:var(--inkm);margin-bottom:8px;font-style:italic">Credit Rating: 10% (Poor)</div>
+    <span class="tag">&#9200; Mother's pocket watch</span>
+    <span class="tag">&#128187; Cracked old laptop</span>
+    <span class="tag">&#128366; Library card</span>
+    <span class="tag">&#128394; Biro</span>
+    <span class="tag">&#128095; House keys</span>
+    <div style="margin-top:12px;font-family:var(--fd);font-size:9px;letter-spacing:0.12em;color:var(--g);text-transform:uppercase;margin-bottom:6px">Items Acquired</div>
+    <textarea class="notes-area" style="min-height:60px" placeholder="Items found or acquired during play..."></textarea>
+  </div>
+
+</div>
+
+<!-- RIGHT COLUMN -->
+<div class="col-right">
+  <div class="panel" style="padding:0;overflow:hidden">
+    <div class="tab-row">
+      <button class="tab-btn active" onclick="showTab(event,'skills')">Skills</button>
+      <button class="tab-btn" onclick="showTab(event,'santrack')">SAN Track</button>
+      <button class="tab-btn" onclick="showTab(event,'backstory')">Backstory</button>
+      <button class="tab-btn" onclick="showTab(event,'notes')">Session Notes</button>
+    </div>
+
+    <!-- SKILLS TAB -->
+    <div class="tab-content active" id="tab-skills">
+      <div class="legend">
+        <div class="legend-item"><div class="legend-dot"></div> Points invested</div>
+        <div class="legend-item"><div class="legend-dot base"></div> Base value only</div>
+        <div style="font-family:var(--ft);font-size:11px;color:var(--inkm);font-style:italic">&#10003; = mark used this session &nbsp;|&nbsp; Base shown in grey &nbsp;|&nbsp; Henry's score in red</div>
+      </div>
+      <div class="skill-filter-bar">
+        <button class="filter-btn active" onclick="filterSkills(event,'all')">All Skills</button>
+        <button class="filter-btn" onclick="filterSkills(event,'invested')">Invested Only</button>
+        <button class="filter-btn" onclick="filterSkills(event,'combat')">Combat</button>
+        <button class="filter-btn" onclick="filterSkills(event,'social')">Social</button>
+        <button class="filter-btn" onclick="filterSkills(event,'knowledge')">Knowledge</button>
+        <input class="skill-search" type="text" placeholder="Search skills..." oninput="searchSkills(this.value)" id="skillSearch"/>
+      </div>
+      <div class="skill-header-row">
+        <div class="sh-dot"></div>
+        <div class="sh-chk"></div>
+        <div class="sh-name">Skill</div>
+        <div class="sh-base">Base</div>
+        <div class="sh-val">Henry's %</div>
+        <div class="sh-half">½</div>
+        <div class="sh-fifth">⅕</div>
+        <div class="sh-roll" style="min-width:90px">Roll</div>
+      </div>
+      <div class="skill-list" id="skillList"></div>
+    </div>
+
+    <!-- SAN TRACK TAB -->
+    <div class="tab-content" id="tab-santrack">
+      <div style="font-family:var(--fd);font-size:10px;letter-spacing:0.14em;color:var(--cr);text-transform:uppercase;margin-bottom:8px">Sanity Track — Click any pip to set current SAN</div>
+      <div style="font-family:var(--ft);font-size:12px;color:var(--inkm);margin-bottom:12px;font-style:italic">Starting SAN: 30 &nbsp;|&nbsp; Maximum SAN: 99 &nbsp;|&nbsp; Indefinite insanity: lose 6+ SAN in one day</div>
+      <div class="san-track" id="sanTrack"></div>
+      <div class="san-label-row">
+        <span>0 — Gone</span>
+        <span id="sanTrackVal" style="color:var(--cr)">Current: 30</span>
+        <span>99 — Max</span>
+      </div>
+      <div style="margin-top:16px;padding:12px;background:rgba(139,26,26,0.06);border-left:3px solid var(--cr)">
+        <div style="font-family:var(--fd);font-size:9px;letter-spacing:0.12em;color:var(--cr);text-transform:uppercase;margin-bottom:6px">Insanity Thresholds</div>
+        <div style="font-family:var(--ft);font-size:12px;color:var(--inkm);line-height:2">
+          Temporary insanity trigger: 5+ SAN in a single roll<br>
+          Indefinite insanity trigger: <span style="color:var(--cr)" id="indTrigger">6</span>+ SAN lost in one day (20% of current SAN)<br>
+          Permanent insanity: SAN reaches 0<br>
+          Current day's 20% line: <span style="color:var(--cr);font-weight:bold" id="twentyLine">24</span>
+        </div>
+      </div>
+      <div style="margin-top:12px;padding:12px;background:rgba(139,105,20,0.06);border-left:3px solid var(--g)">
+        <div style="font-family:var(--fd);font-size:9px;letter-spacing:0.12em;color:var(--g);text-transform:uppercase;margin-bottom:6px">Regaining Sanity</div>
+        <div style="font-family:var(--ft);font-size:12px;color:var(--inkm);line-height:2">
+          Completing investigation / defeating evil: +1D10<br>
+          Psychoanalysis (monthly treatment): +1D3 on successful roll<br>
+          Time with Gerald or meaningful connection: +1 (Keeper discretion)
+        </div>
+      </div>
+    </div>
+
+    <!-- BACKSTORY TAB -->
+    <div class="tab-content" id="tab-backstory">
+      <div class="backstory-grid">
+        <div class="bs-item"><div class="bs-title gold">Personal Description</div><div class="bs-text">Big, broad, once-handsome in a way that still shows. Carries extra weight around the middle that wasn't there two years ago. Dresses like someone who used to have somewhere to be. Dark eyes that watch rooms too carefully.</div></div>
+        <div class="bs-item"><div class="bs-title gold">Ideology &amp; Beliefs</div><div class="bs-text">Used to believe intelligence and hard work meant something — that the world was basically fair. That broke completely. Now quietly convinced there's something wrong underneath things he can't quite name. The occult reading isn't faith, it's picking at a scab. He'd be embarrassed if anyone knew.</div></div>
+        <div class="bs-item red" style="grid-column:1/-1"><div class="bs-title">Significant People</div><div class="bs-text">His father, Gerald Press — quiet, undemanding, loves Henry in the way that men of that generation do, by not asking questions and making sure there's food in the house. Henry missed his mother's decline while chasing something in London. That sits on top of everything else. No real friends. The people he grew up with are still here but he left them behind without a backward glance, and now nobody quite knows what to say.</div></div>
+        <div class="bs-item"><div class="bs-title gold">Meaningful Locations</div><div class="bs-text">The library — quiet, free, his main refuge. Times his visits for the quiet periods. The pub occasionally with Gerald, the most normal Henry feels. His dad's sitting room in the evenings, watching television without talking much. Not unhappy. Just very small.</div></div>
+        <div class="bs-item"><div class="bs-title gold">Treasured Possessions</div><div class="bs-text">A silver pocket watch — his mother's gift on his 18th birthday, the last birthday before the calls became less frequent. Carries it every day. An old laptop from the London years, cracked casing, takes four minutes to boot. He maintains it obsessively. Fixing things he's already broken.</div></div>
+        <div class="bs-item"><div class="bs-title gold">Traits</div><div class="bs-text">Has a habit of being the most competent person in a room and resenting that it's visible. Physically restless — always doing something with his hands. Pen clicking, pocket watch turning, tearing the corner off a beer mat. Gerald has learned to find it comforting.</div></div>
+        <div class="bs-item red"><div class="bs-title">Injuries &amp; Scars</div><div class="bs-text">None physical. The damage is internal and ongoing — a low hum of shame and self-recrimination he's learned to function around. He doesn't sleep well. He hasn't for two years.</div></div>
+        <div class="bs-item" style="grid-column:1/-1;border-left-color:var(--gb);background:rgba(139,105,20,0.08)"><div class="bs-title" style="color:var(--gb)">The Margaret Bond</div><div class="bs-text">About three months after he came back, Henry was in the library with nowhere better to be. Margaret was returning books. She didn't ask where he'd been or why he was back. She handed him something she thought he'd like, walked him to the desk and sorted him out a library card. No ceremony, no questions. He's read forty-odd books since then. It's the kindest thing anyone has done for him in years and he's never said so.</div></div>
+      </div>
+    </div>
+
+    <!-- NOTES TAB -->
+    <div class="tab-content" id="tab-notes">
+      <div style="font-family:var(--fd);font-size:10px;letter-spacing:0.14em;color:var(--g);text-transform:uppercase;margin-bottom:10px">Session Notes</div>
+      <textarea class="notes-area" style="min-height:180px" placeholder="Notes from play — clues, NPCs, observations...&#10;&#10;Henry notices things. Write them down."></textarea>
+      <div style="margin-top:12px">
+        <div style="font-family:var(--fd);font-size:10px;letter-spacing:0.14em;color:var(--g);text-transform:uppercase;margin-bottom:6px">Mythos Encountered</div>
+        <textarea class="notes-area" style="min-height:80px" placeholder="Things that cannot be unseen..."></textarea>
+      </div>
+      <div style="margin-top:12px">
+        <div style="font-family:var(--fd);font-size:10px;letter-spacing:0.14em;color:var(--cr);text-transform:uppercase;margin-bottom:6px">SAN Events This Session</div>
+        <textarea class="notes-area" style="min-height:80px" placeholder="Record SAN rolls, losses, and triggers..."></textarea>
+      </div>
+    </div>
+
+  </div>
+</div>
+</div>
+</div>
+
+<script>
+// ── ALL SKILLS — base values + Henry's invested values ────────────────────────
+// invested: true = Henry spent points here
+// henry: his actual score (base + investment)
+// base: the CoC 7e base value
+var SKILLS = [
+  // COMBAT
+  {name:'Dodge',              cat:'combat',    base:30, henry:30,  invested:false},
+  {name:'Fighting (Brawl)',   cat:'combat',    base:25, henry:25,  invested:false},
+  {name:'Fighting (Other)',   cat:'combat',    base:15, henry:15,  invested:false},
+  {name:'Firearms (Handgun)', cat:'combat',    base:20, henry:20,  invested:false},
+  {name:'Firearms (Rifle/Shotgun)', cat:'combat', base:25, henry:25, invested:false},
+  {name:'Firearms (Submachine Gun)', cat:'combat', base:15, henry:15, invested:false},
+  {name:'Throw',              cat:'combat',    base:20, henry:20,  invested:false},
+  // SOCIAL
+  {name:'Charm',              cat:'social',    base:15, henry:15,  invested:false},
+  {name:'Fast Talk',          cat:'social',    base:5,  henry:5,   invested:false},
+  {name:'Intimidate',         cat:'social',    base:15, henry:15,  invested:false},
+  {name:'Persuade',           cat:'social',    base:10, henry:60,  invested:true},
+  {name:'Psychology',         cat:'social',    base:10, henry:50,  invested:true},
+  // KNOWLEDGE / ACADEMIC
+  {name:'Accounting',         cat:'knowledge', base:5,  henry:5,   invested:false},
+  {name:'Anthropology',       cat:'knowledge', base:1,  henry:1,   invested:false},
+  {name:'Appraise',           cat:'knowledge', base:5,  henry:5,   invested:false},
+  {name:'Archaeology',        cat:'knowledge', base:1,  henry:1,   invested:false},
+  {name:'Cthulhu Mythos',     cat:'knowledge', base:0,  henry:0,   invested:false},
+  {name:'History',            cat:'knowledge', base:5,  henry:45,  invested:true},
+  {name:'Law',                cat:'knowledge', base:5,  henry:5,   invested:false},
+  {name:'Library Use',        cat:'knowledge', base:20, henry:70,  invested:true},
+  {name:'Medicine',           cat:'knowledge', base:1,  henry:1,   invested:false},
+  {name:'Natural World',      cat:'knowledge', base:10, henry:10,  invested:false},
+  {name:'Occult',             cat:'knowledge', base:5,  henry:45,  invested:true},
+  {name:'Other Language',     cat:'knowledge', base:1,  henry:1,   invested:false},
+  {name:'Own Language (Eng)', cat:'knowledge', base:65, henry:65,  invested:false},
+  {name:'Science (Physics)',  cat:'knowledge', base:1,  henry:21,  invested:true},
+  {name:'Science (Other)',    cat:'knowledge', base:1,  henry:1,   invested:false},
+  // INVESTIGATION
+  {name:'Listen',             cat:'investigation', base:20, henry:60, invested:true},
+  {name:'Spot Hidden',        cat:'investigation', base:25, henry:55, invested:true},
+  {name:'Track',              cat:'investigation', base:10, henry:10, invested:false},
+  // PHYSICAL
+  {name:'Climb',              cat:'physical',  base:20, henry:20,  invested:false},
+  {name:'Drive Auto',         cat:'physical',  base:20, henry:20,  invested:false},
+  {name:'First Aid',          cat:'physical',  base:30, henry:30,  invested:false},
+  {name:'Jump',               cat:'physical',  base:20, henry:20,  invested:false},
+  {name:'Ride',               cat:'physical',  base:5,  henry:5,   invested:false},
+  {name:'Stealth',            cat:'physical',  base:20, henry:20,  invested:false},
+  {name:'Swim',               cat:'physical',  base:20, henry:20,  invested:false},
+  // TECHNICAL
+  {name:'Art/Craft (any)',    cat:'technical', base:5,  henry:5,   invested:false},
+  {name:'Computer Use',       cat:'technical', base:5,  henry:45,  invested:true},
+  {name:'Credit Rating',      cat:'technical', base:0,  henry:10,  invested:true},
+  {name:'Disguise',           cat:'technical', base:5,  henry:5,   invested:false},
+  {name:'Electrical Repair',  cat:'technical', base:10, henry:40,  invested:true},
+  {name:'Locksmith',          cat:'technical', base:1,  henry:1,   invested:false},
+  {name:'Mechanical Repair',  cat:'technical', base:10, henry:30,  invested:true},
+  {name:'Navigate',           cat:'technical', base:10, henry:10,  invested:false},
+  {name:'Operate Heavy Mach.', cat:'technical', base:1,  henry:1,  invested:true},
+  {name:'Sleight of Hand',    cat:'technical', base:10, henry:10,  invested:false},
+];
+
+// add checked state and rolling timer
+SKILLS.forEach(function(s, i){ s.checked = false; s.idx = i; });
+
+var currentFilter = 'all';
+var currentSearch = '';
+var rollTimers = {};
+
+function h(pct){ return Math.floor(pct/2); }
+function f(pct){ return Math.floor(pct/5); }
+
+function buildSkillList() {
+  var list = document.getElementById('skillList');
+  list.innerHTML = '';
+  SKILLS.forEach(function(sk) {
+    var show = true;
+    if (currentFilter === 'invested' && !sk.invested) show = false;
+    if (currentFilter === 'combat' && sk.cat !== 'combat') show = false;
+    if (currentFilter === 'social' && sk.cat !== 'social') show = false;
+    if (currentFilter === 'knowledge' && sk.cat !== 'knowledge' && sk.cat !== 'investigation') show = false;
+    if (currentSearch && sk.name.toLowerCase().indexOf(currentSearch.toLowerCase()) === -1) show = false;
+
+    var row = document.createElement('div');
+    row.className = 'skill-row' + (sk.invested ? ' invested' : '') + (!show ? ' hidden' : '');
+
+    var dotHtml = sk.invested
+      ? '<div class="invested-dot"></div>'
+      : '<div class="invested-dot empty"></div>';
+
+    var checkHtml = '<div class="skill-check' + (sk.checked ? ' checked' : '') + '" onclick="toggleSkill(' + sk.idx + ')">' + (sk.checked ? '&#10003;' : '') + '</div>';
+
+    var nameHtml = '<span class="skill-name' + (sk.invested ? ' invested-name' : '') + '">' + sk.name + '</span>';
+    var baseHtml = '<span class="skill-base">' + sk.base + '%</span>';
+    var pctHtml  = '<span class="skill-pct' + (sk.invested ? ' invested-val' : '') + '">' + sk.henry + '%</span>';
+    var halfHtml = '<span class="skill-half">' + h(sk.henry) + '</span>';
+    var fifthHtml= '<span class="skill-fifth">' + f(sk.henry) + '</span>';
+    var rollHtml = '<button class="roll-btn" onclick="rollSkill(event,' + sk.idx + ')">Roll D100</button><span class="roll-result" id="rr' + sk.idx + '"></span>';
+
+    row.innerHTML = dotHtml + checkHtml + nameHtml + baseHtml + pctHtml + halfHtml + fifthHtml +
+      '<div style="display:flex;align-items:center;min-width:90px;justify-content:flex-end">' + rollHtml + '</div>';
+    list.appendChild(row);
+  });
+}
+
+function toggleSkill(idx) {
+  SKILLS[idx].checked = !SKILLS[idx].checked;
+  buildSkillList();
+  saveState();
+}
+
+function filterSkills(e, filter) {
+  currentFilter = filter;
+  document.querySelectorAll('.filter-btn').forEach(function(b){ b.classList.remove('active'); });
+  e.target.classList.add('active');
+  buildSkillList();
+}
+
+function searchSkills(val) {
+  currentSearch = val;
+  buildSkillList();
+}
+
+function rollSkill(e, idx) {
+  e.stopPropagation();
+  var sk = SKILLS[idx];
+  var roll = Math.floor(Math.random() * 100) + 1;
+  var el = document.getElementById('rr' + idx);
+  var cls, txt;
+  var isFumble = (sk.henry < 50 && roll >= 96) || roll === 100;
+  if (isFumble) {
+    cls = 'fumble'; txt = roll + ' FUMBLE';
+  } else if (roll <= f(sk.henry) && roll !== 100) {
+    cls = 'extreme'; txt = roll + ' Extreme!';
+  } else if (roll <= h(sk.henry)) {
+    cls = 'hard'; txt = roll + ' Hard ✓';
+  } else if (roll <= sk.henry) {
+    cls = 'success'; txt = roll + ' Success ✓';
+  } else {
+    cls = 'fail'; txt = roll + ' Fail ✗';
+  }
+  el.textContent = txt;
+  el.className = 'roll-result show ' + cls;
+  clearTimeout(rollTimers[idx]);
+  rollTimers[idx] = setTimeout(function(){ el.className = 'roll-result'; }, 5000);
+}
+
+// ── VITALS ────────────────────────────────────────────────────────────────────
+var vitals = { hp:{cur:13,max:13}, san:{cur:30,max:99}, mp:{cur:6,max:6}, luck:{cur:45,max:99} };
+
+function changeVital(key, delta) {
+  var v = vitals[key];
+  v.cur = Math.max(0, Math.min(v.max, v.cur + delta));
+  updateVitalDisplay(key);
+  updateStatus();
+  if (key === 'san') updateSanTrack();
+  if (key === 'hp') updateWoundsFromVital();
+  saveState();
+}
+
+function updateVitalDisplay(key) {
+  var v = vitals[key];
+  var el = document.getElementById(key+'Val');
+  var bar = document.getElementById(key+'Bar');
+  if (el) el.textContent = v.cur;
+  if (bar) {
+    var pct = (v.cur/v.max)*100;
+    bar.style.width = pct+'%';
+    if (key==='hp') bar.style.background = pct>50?'var(--g)':pct>25?'#8b6010':'var(--cr)';
+    if (key==='san') bar.style.background = pct>40?'var(--g)':pct>15?'var(--cr)':'var(--crd)';
+  }
+}
+
+function updateStatus() {
+  var san=vitals.san.cur, hp=vitals.hp.cur;
+  var banner=document.getElementById('statusBanner');
+  var msg,cls;
+  if (hp===0){msg='DYING — First Aid required immediately or death follows';cls='critical';}
+  else if (hp<=3){msg='Critically Wounded — CON roll or fall unconscious';cls='danger';}
+  else if (san===0){msg='PERMANENTLY INSANE — The darkness has him';cls='critical';}
+  else if (san<8){msg='On the brink — indefinite insanity imminent';cls='critical';}
+  else if (san<15){msg='Unravelling badly — temporary insanity likely';cls='danger';}
+  else if (san<30){msg='Deeply troubled — below starting SAN';cls='troubled';}
+  else if (hp<=6){msg='Seriously wounded — at risk of major wound';cls='troubled';}
+  else {msg='Psychologically Stable — for now';cls='stable';}
+  banner.textContent=msg;
+  banner.className='status-banner '+cls;
+  // update SAN thresholds
+  var tl=document.getElementById('twentyLine');
+  var it=document.getElementById('indTrigger');
+  if(tl) tl.textContent=san-Math.floor(san*0.2);
+  if(it) it.textContent=Math.max(1,Math.floor(san*0.2));
+}
+
+// ── WOUND TRACKER ─────────────────────────────────────────────────────────────
+var wounds=new Array(13).fill(false);
+function buildWoundTrack(){
+  var wt=document.getElementById('woundTrack');
+  wt.innerHTML='';
+  for(var i=0;i<13;i++){
+    var box=document.createElement('div');
+    box.className='wound-box'+(wounds[i]?' hit':'');
+    box.textContent=wounds[i]?'✕':'';
+    box.onclick=(function(idx){return function(){wounds[idx]=!wounds[idx];buildWoundTrack();updateWoundsFromWoundTrack();saveState();};})(i);
+    wt.appendChild(box);
+  }
+}
+function updateWoundsFromWoundTrack(){
+  var count=wounds.filter(Boolean).length;
+  vitals.hp.cur=Math.max(0,vitals.hp.max-count);
+  updateVitalDisplay('hp');
+  var st=document.getElementById('woundStatus');
+  if(count===0){st.textContent='No wounds';st.style.color='var(--pp)';}
+  else if(vitals.hp.cur<=2){st.textContent='CRITICAL — CON roll or unconscious';st.style.color='var(--crb)';}
+  else if(count>6){st.textContent='Major wound sustained';st.style.color='var(--cr)';}
+  else{st.textContent=count+' wound'+(count>1?'s':'')+' taken';st.style.color='#c08040';}
+  updateStatus();
+}
+function updateWoundsFromVital(){
+  var count=vitals.hp.max-vitals.hp.cur;
+  wounds=new Array(13).fill(false);
+  for(var i=0;i<count&&i<13;i++) wounds[i]=true;
+  buildWoundTrack();
+  var st=document.getElementById('woundStatus');
+  st.textContent=count>0?count+' wound'+(count>1?'s':'')+' taken':'No wounds';
+  st.style.color=count>0?'#c08040':'var(--pp)';
+}
+function resetWounds(){wounds=new Array(13).fill(false);vitals.hp.cur=vitals.hp.max;buildWoundTrack();updateVitalDisplay('hp');updateStatus();saveState();}
+
+// ── SAN TRACK ─────────────────────────────────────────────────────────────────
+function buildSanTrack(){
+  var track=document.getElementById('sanTrack');
+  if(!track) return;
+  track.innerHTML='';
+  for(var i=1;i<=99;i++){
+    var pip=document.createElement('div');
+    pip.className='san-pip';
+    var cur=vitals.san.cur;
+    if(i<=cur){
+      pip.classList.add('filled');
+      if(cur>=50) pip.classList.add('high');
+      else if(cur>=25) pip.classList.add('mid');
+      else pip.classList.add('low');
+    }
+    pip.onclick=(function(v){return function(){vitals.san.cur=v;updateSanTrack();updateVitalDisplay('san');updateStatus();saveState();};})(i);
+    track.appendChild(pip);
+  }
+  var tvEl=document.getElementById('sanTrackVal');
+  if(tvEl) tvEl.textContent='Current: '+vitals.san.cur;
+}
+function updateSanTrack(){buildSanTrack();}
+
+// ── TABS ──────────────────────────────────────────────────────────────────────
+function showTab(e,id){
+  document.querySelectorAll('.tab-btn').forEach(function(b){b.classList.remove('active');});
+  document.querySelectorAll('.tab-content').forEach(function(c){c.classList.remove('active');});
+  document.getElementById('tab-'+id).classList.add('active');
+  e.target.classList.add('active');
+  if(id==='santrack') buildSanTrack();
+}
+
+// ── SAVE / LOAD ───────────────────────────────────────────────────────────────
+function saveState(){
+  try{
+    localStorage.setItem('henry_v2',JSON.stringify({
+      vitals:vitals,
+      wounds:wounds,
+      skills:SKILLS.map(function(s){return s.checked;})
+    }));
+  }catch(e){}
+}
+function loadState(){
+  try{
+    var raw=localStorage.getItem('henry_v2');
+    if(!raw) return;
+    var st=JSON.parse(raw);
+    if(st.vitals) vitals=st.vitals;
+    if(st.wounds) wounds=st.wounds;
+    if(st.skills) st.skills.forEach(function(c,i){if(SKILLS[i]) SKILLS[i].checked=c;});
+  }catch(e){}
+}
+
+// ── INIT ──────────────────────────────────────────────────────────────────────
+loadState();
+buildWoundTrack();
+buildSkillList();
+['hp','san','mp','luck'].forEach(updateVitalDisplay);
+updateStatus();
+</script>
+</body>
+</html>
