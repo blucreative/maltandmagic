@@ -3,90 +3,181 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Delta Green & Call of Cthulhu — Reference Hub</title>
+  <title>Cosmic Horror Mini-Series - Reference Hub</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
   <style>
+    :root {
+      --bg-0: #07090f;
+      --bg-1: #0f1622;
+      --bg-2: #141d2e;
+      --panel: rgba(17, 24, 36, 0.78);
+      --panel-hover: rgba(23, 33, 48, 0.92);
+      --line: #2f415e;
+      --line-glow: #5f7ea8;
+      --text: #c8d5ea;
+      --text-soft: #8ea3c6;
+      --title: #eef4ff;
+      --accent-a: #9ad1ff;
+      --accent-b: #cdb08a;
+    }
+
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
     }
+
     body {
-      font-family: 'Courier New', monospace;
-      background: #0a0e0a;
-      color: #adc8ad;
+      font-family: 'Space Mono', monospace;
+      background:
+        radial-gradient(circle at 18% 15%, rgba(154, 209, 255, 0.1), transparent 38%),
+        radial-gradient(circle at 82% 12%, rgba(205, 176, 138, 0.09), transparent 34%),
+        linear-gradient(160deg, var(--bg-0) 0%, var(--bg-1) 45%, var(--bg-2) 100%);
+      color: var(--text);
       line-height: 1.6;
-      padding: 20px;
+      min-height: 100vh;
+      padding: 24px;
+      position: relative;
     }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background-image: radial-gradient(circle, rgba(255, 255, 255, 0.08) 1px, transparent 1px);
+      background-size: 3px 3px;
+      opacity: 0.2;
+      z-index: 0;
+    }
+
     .container {
-      max-width: 900px;
+      position: relative;
+      z-index: 1;
+      max-width: 980px;
       margin: 0 auto;
+      background: rgba(8, 12, 21, 0.72);
+      border: 1px solid var(--line);
+      box-shadow: 0 24px 70px rgba(0, 0, 0, 0.45);
+      backdrop-filter: blur(2px);
+      padding: 28px;
     }
+
     h1 {
-      color: #5cb85c;
-      font-size: 2em;
-      margin-bottom: 10px;
-      text-shadow: 0 0 10px rgba(92, 184, 92, 0.3);
-      letter-spacing: 2px;
+      color: var(--title);
+      font-family: 'Cinzel', serif;
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      font-weight: 700;
+      margin-bottom: 8px;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
     }
+
     .subtitle {
-      color: #507050;
-      font-size: 0.9em;
-      letter-spacing: 3px;
+      color: var(--text-soft);
+      font-size: 0.86rem;
+      letter-spacing: 2.5px;
       margin-bottom: 30px;
       text-transform: uppercase;
     }
+
     .section {
       margin: 40px 0;
-      border-left: 3px solid #3d7a3d;
+      border-left: 3px solid var(--line-glow);
       padding-left: 20px;
     }
+
     .section h2 {
-      color: #d4ecd4;
-      font-size: 1.3em;
+      color: var(--title);
+      font-family: 'Cinzel', serif;
+      font-size: 1.25rem;
       margin-bottom: 15px;
       letter-spacing: 1px;
+      text-transform: uppercase;
     }
+
     .link-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
       gap: 15px;
     }
+
     .link-card {
-      background: #151f15;
-      border: 1px solid #2a3e2a;
+      background: var(--panel);
+      border: 1px solid var(--line);
       padding: 15px;
       text-decoration: none;
-      color: #adc8ad;
-      transition: all 0.2s;
+      color: var(--text);
+      transition: transform 0.2s ease, border-color 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
       display: block;
+      position: relative;
+      overflow: hidden;
     }
+
+    .link-card::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background: linear-gradient(90deg, var(--accent-a), var(--accent-b));
+      opacity: 0.35;
+    }
+
     .link-card:hover {
-      background: #1c2c1c;
-      border-color: #5cb85c;
-      color: #d4ecd4;
-      box-shadow: 0 0 15px rgba(92, 184, 92, 0.15);
+      background: var(--panel-hover);
+      border-color: var(--line-glow);
+      color: var(--title);
+      transform: translateY(-2px);
+      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.35);
     }
+
     .link-card .title {
-      color: #5cb85c;
+      color: var(--accent-a);
+      font-family: 'Cinzel', serif;
+      letter-spacing: 0.5px;
       font-weight: bold;
       margin-bottom: 5px;
     }
+
     .link-card .desc {
       font-size: 0.85em;
-      color: #507050;
+      color: var(--text-soft);
     }
+
     .directory-note {
       font-size: 0.8em;
-      color: #507050;
+      color: var(--accent-b);
       margin-top: 5px;
       font-style: italic;
+    }
+
+    @media (max-width: 700px) {
+      body {
+        padding: 14px;
+      }
+
+      .container {
+        padding: 18px;
+      }
+
+      .subtitle {
+        letter-spacing: 1.8px;
+      }
+
+      .section {
+        padding-left: 14px;
+      }
     }
   </style>
 </head>
 <body>
   <div class="container">
-    <h1>DELTA GREEN & CALL OF CTHULHU</h1>
-    <div class="subtitle">Reference Hub & Character Sheets</div>
+    <h1>COSMIC HORROR MINI-SERIES</h1>
+    <div class="subtitle">Reference hub for investigators, agents, and operations across multiple systems</div>
 
     <div class="section">
       <h2>Player Primers</h2>
