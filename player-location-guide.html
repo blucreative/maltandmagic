@@ -562,6 +562,103 @@
     line-height: 1.6;
     margin-bottom: 0;
   }
+
+  /* ── MAP VIEWER ── */
+  .map-wrap {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    padding: 18px;
+  }
+
+  .map-toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 12px;
+  }
+
+  .map-btn {
+    font-family: 'Cinzel', serif;
+    font-size: 10px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    padding: 6px 12px;
+    border-radius: 2px;
+    border: 1px solid var(--border-light);
+    background: var(--raised);
+    color: var(--cream);
+    cursor: pointer;
+    transition: background 0.2s ease, border-color 0.2s ease;
+  }
+
+  .map-btn:hover {
+    background: #1a3040;
+    border-color: #3a6274;
+  }
+
+  .map-zoom-readout {
+    font-family: 'Cinzel', serif;
+    font-size: 10px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-left: 4px;
+  }
+
+  .map-open-link {
+    margin-left: auto;
+    font-family: 'Cinzel', serif;
+    font-size: 10px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--teal);
+    text-decoration: none;
+    border: 1px solid var(--teal-dim);
+    padding: 6px 10px;
+    border-radius: 2px;
+  }
+
+  .map-open-link:hover {
+    background: var(--teal-faint);
+    border-color: var(--teal);
+  }
+
+  .map-viewport {
+    position: relative;
+    width: 100%;
+    height: 68vh;
+    min-height: 360px;
+    max-height: 760px;
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    overflow: hidden;
+    background: #081016;
+    touch-action: none;
+    cursor: grab;
+  }
+
+  .map-viewport.dragging {
+    cursor: grabbing;
+  }
+
+  .map-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    transform-origin: 0 0;
+    user-select: none;
+    -webkit-user-drag: none;
+    max-width: none;
+  }
+
+  .map-hint {
+    margin-top: 10px;
+    font-size: 13px;
+    color: var(--muted);
+    opacity: 0.9;
+  }
  
   /* ── DIVIDER ── */
   .divider {
@@ -608,6 +705,8 @@
     .region-banner { grid-template-columns: 1fr; }
     .region-banner-meta { text-align: left; }
     .filter-bar { gap: 6px; }
+    .map-viewport { height: 54vh; min-height: 300px; }
+    .map-open-link { margin-left: 0; }
   }
 </style>
 </head>
@@ -657,6 +756,34 @@
       <div class="overview-value">Vareth, the Varethi Reach</div>
     </div>
   </div>
+
+  <section class="section">
+    <div class="section-header">
+      <h2 class="section-title">Imperial Map</h2>
+      <div class="section-line"></div>
+    </div>
+    <div class="map-wrap">
+      <div class="map-toolbar">
+        <button class="map-btn" type="button" id="mapZoomIn">Zoom In</button>
+        <button class="map-btn" type="button" id="mapZoomOut">Zoom Out</button>
+        <button class="map-btn" type="button" id="mapReset">Reset</button>
+        <span class="map-zoom-readout" id="mapZoomReadout">100%</span>
+        <a class="map-open-link" href="The%20Auroran%20Empire%206K.jpg" target="_blank" rel="noopener">Open 6K Image</a>
+      </div>
+      <div class="map-viewport" id="mapViewport" aria-label="Interactive Auroran Empire map viewer">
+        <img
+          class="map-image"
+          id="mapImage"
+          src="The%20Auroran%20Empire%206K.jpg"
+          alt="Map of the Auroran Empire"
+          draggable="false"
+        >
+      </div>
+      <p class="map-hint">Drag to pan. Use mouse wheel or controls to zoom. Double-click/tap the map to zoom in on a location.</p>
+    </div>
+  </section>
+
+  <hr class="divider">
  
   <!-- SETTLEMENTS -->
   <section class="section">
@@ -682,11 +809,11 @@
       <div class="region-banner heartfen">
         <div>
           <div class="region-banner-name">The Heartfen</div>
-          <div class="region-banner-biome">Temperate plains · fens and marshland · upland forest</div>
-          <p class="region-banner-desc">The imperial heartland. Flat terrain traps water across much of the north, producing the marshland that defines the region. The Fen Roads — an elevated stone network built over generations — made trade and military movement possible where nature intended neither. Cities here are old and know it.</p>
+          <div class="region-banner-biome">Temperate plains · fens and marshland · the Aldwood at southern edge</div>
+          <p class="region-banner-desc">The imperial heartland. Flat terrain traps water across much of the north, producing the marshland that defines the region. The Fen Roads — an elevated stone network built over generations — made trade and military movement possible where nature intended neither. The Aldwood, an ancient forest older than the Empire itself, marks the southern boundary where the fenland gives way to the Grandbelt plains. Cities here are old and know it.</p>
         </div>
         <div class="region-banner-meta">
-          <div class="region-city-count">8</div>
+          <div class="region-city-count">10</div>
           <div class="region-city-label">Settlements</div>
         </div>
       </div>
@@ -731,7 +858,7 @@
             <span class="city-card-name">Greywood</span>
             <span class="city-card-status status-minor">Minor City</span>
           </div>
-          <p class="city-card-desc">Upland forest town at the Heartfen's southern edge. Timber and charcoal. The only Heartfen city that negotiated the right to maintain armed foresters independent of the Imperial garrison — the reason Shimmerfen agreed to this has never been publicly explained, and the foresters do not invite questions.</p>
+          <p class="city-card-desc">Timber and charcoal town sitting within the Aldwood — the ancient forest that marks the Heartfen's southern edge. The only Heartfen city that negotiated the right to maintain armed foresters independent of the Imperial garrison — the reason Shimmerfen agreed to this has never been publicly explained, and the foresters do not invite questions.</p>
         </div>
         <div class="city-card heartfen">
           <div class="city-card-header">
@@ -746,6 +873,20 @@
             <span class="city-card-status status-minor">Minor City · Pilgrimage Site</span>
           </div>
           <p class="city-card-desc">A deep fen settlement where Aurora phenomena are more intense than anywhere outside the capital. The water glows. On certain nights a vertical shimmer appears over the fen that locals have developed elaborate explanations for and visitors simply stare at. Pilgrims come from across the Empire. The locals have stopped looking.</p>
+        </div>
+        <div class="city-card heartfen">
+          <div class="city-card-header">
+            <span class="city-card-name">Dunmore</span>
+            <span class="city-card-status status-minor">Minor City</span>
+          </div>
+          <p class="city-card-desc">On the road between Shimmerfen and Ironpass — the capital's main eastern artery toward the Ironspine. The last comfortable stop before the road climbs toward the Pass of Dernavar. A Crown Magistrate is stationed here permanently. Dunmore knows it sits on an important road and conducts itself with the quiet authority of a town that cannot be bypassed.</p>
+        </div>
+        <div class="city-card heartfen">
+          <div class="city-card-header">
+            <span class="city-card-name">Brackwater</span>
+            <span class="city-card-status status-minor">Minor City</span>
+          </div>
+          <p class="city-card-desc">A fen drainage channel town on the northeast road between Shimmerfen and Coldhaven. Services the fish and salt trade moving south toward the capital. Quieter and more insular than most Heartfen towns. People here ask fewer questions than you might expect about where you've come from, which suits most travellers on the Coldhaven road just fine.</p>
         </div>
       </div>
     </div>
@@ -877,7 +1018,7 @@
           <p class="region-banner-desc">The Empire's agricultural engine. Flat, vast, and underappreciated by the capital. Three rivers — the Arrath, the Davan, and the Sorn — drain the Ironspine highlands westward across the plains, converging near Cindral to form the Maren, which carries their combined flow to the Ocean of Conflux. The Grandbelt does not produce poets. It produces grain, cattle, soldiers, and invoices.</p>
         </div>
         <div class="region-banner-meta">
-          <div class="region-city-count">7</div>
+          <div class="region-city-count">11</div>
           <div class="region-city-label">Settlements</div>
         </div>
       </div>
@@ -930,6 +1071,34 @@
             <span class="city-card-status status-minor">Minor City</span>
           </div>
           <p class="city-card-desc">Southernmost Grandbelt city, where the plains begin giving way to Ashfringe scrubland. A waystation town for people making decisions slowly — refugees from the south pausing before going north, northerners pausing before going further south. Its economy runs on that indecision. No one is rushed here. Everyone eventually leaves.</p>
+        </div>
+        <div class="city-card grandbelt">
+          <div class="city-card-header">
+            <span class="city-card-name">Cornstead</span>
+            <span class="city-card-status status-minor">Minor City</span>
+          </div>
+          <p class="city-card-desc">Agricultural market town in the eastern Grandbelt plains between Cindral and Millhaven — the richest grain country in the Empire. Where the harvest is assessed, priced, and argued over before it moves anywhere else. The merchants here have opinions about grain values that they consider facts, and the farmers have opinions about the merchants that they consider facts, and Cornstead has run on this productive disagreement for as long as anyone can remember.</p>
+        </div>
+        <div class="city-card grandbelt">
+          <div class="city-card-header">
+            <span class="city-card-name">Tolmen</span>
+            <span class="city-card-status status-minor">Minor City</span>
+          </div>
+          <p class="city-card-desc">On the Maren, mid-river west of Cindral. The transfer point where Grandbelt goods shift from road and shallow barge to the larger river vessels that can make the full run to the coast. Busy, functional, and slightly chaotic — Tolmen exists at a chokepoint and runs accordingly. The toll levied here is the subject of ongoing formal complaint from traders in every direction. The toll has not changed.</p>
+        </div>
+        <div class="city-card grandbelt major">
+          <div class="city-card-header">
+            <span class="city-card-name">Marenfall</span>
+            <span class="city-card-status status-minor">Minor City · Western Port</span>
+          </div>
+          <p class="city-card-desc">Where the Maren meets the Ocean of Conflux — the Empire's western river port and the point through which the Grandbelt's output reaches the wider world. Different in character from Vareth entirely: this is an outflow port rather than an import hub, shaped by what leaves rather than what arrives. The docks here smell of grain and timber rather than spice and dye. The people who work them are proud of the distinction.</p>
+        </div>
+        <div class="city-card grandbelt">
+          <div class="city-card-header">
+            <span class="city-card-name">Greywatch</span>
+            <span class="city-card-status status-minor">Minor City</span>
+          </div>
+          <p class="city-card-desc">Open ocean fishing town on the Ocean of Conflux coast, exposed and weathered. Watches the sea more than it trades with it. The oldest fishing families here have spent generations reading the western ocean's moods and have developed views about what lies beyond the horizon that they share freely and that visitors tend to find unsettling. The fish are excellent. The conversation at dinner is not always comfortable.</p>
         </div>
       </div>
     </div>
@@ -1082,6 +1251,38 @@
   </section>
  
   <hr class="divider">
+
+  <!-- NOTABLE LANDMARKS -->
+  <section class="section">
+    <div class="section-header">
+      <h2 class="section-title">Notable Landmarks</h2>
+      <div class="section-line"></div>
+    </div>
+    <div class="beyond-grid">
+      <div class="beyond-card">
+        <div class="beyond-name">The Aldwood</div>
+        <div class="beyond-tag">Ancient Forest · Heartfen Southern Border</div>
+        <p>An extensive forest marking the boundary between the Heartfen and the Grandbelt. The Aldwood predates the Auroran Empire and likely predates any of the names currently given to the regions it separates. Greywood sits within it. The forest has a quality that travellers consistently describe and consistently fail to agree on — something about the age of the trees, the colour of the canopy, the way sound carries differently inside it than out. The Empire administers it. The Empire does not entirely understand it.</p>
+      </div>
+      <div class="beyond-card">
+        <div class="beyond-name">The Pass of Dernavar</div>
+        <div class="beyond-tag">Mountain Pass · The Ironspine</div>
+        <p>The primary east-west cleft through the Ironspine, connecting the Heartfen to the Varethi Reach. The most strategically significant geographic feature in the Empire's interior — everything crossing between the wet northern fenland and the Mediterranean coast passes through Dernavar. Ironpass controls it. The pass itself is narrow, dramatic, and exposed to wind from both sides simultaneously. Travellers who have made the crossing in winter have stories. Travellers who have made it in summer are more relaxed about the whole thing.</p>
+      </div>
+      <div class="beyond-card">
+        <div class="beyond-name">The Volcanic Ridge</div>
+        <div class="beyond-tag">Geological Feature · Southern Border</div>
+        <p>An east-west ridge of volcanic rock running across the full southern extent of the Empire. The hard geological boundary between the Ashfringe and whatever lies beyond. Thornwall is built into it. Cinder's Rest exploits its thermal venting. The volcanic activity here is not natural in origin — the ridge is older than the Empire, older than any recorded settlement, and the geology does not match the surrounding terrain. What caused it is not known. Local opinion on the subject is varied and strongly held.</p>
+      </div>
+      <div class="beyond-card">
+        <div class="beyond-name">The Fen Roads</div>
+        <div class="beyond-tag">Infrastructure · The Heartfen</div>
+        <p>An elevated stone road network crossing the northern fens — the Empire's greatest practical infrastructure achievement. Without the Fen Roads, the Heartfen would be near-impassable for trade and military movement. With them, it became the imperial heartland. The roads are old enough that nobody fully agrees on when they were built, who built them, or how the construction was managed across terrain that resists everything humans put on it. They are maintained obsessively. Nobody wants to find out what the Heartfen looks like without them.</p>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider">
  
   <!-- BEYOND THE EMPIRE -->
   <section class="section">
@@ -1135,6 +1336,186 @@
       }
     });
   }
+
+  (function setupInteractiveMap() {
+    const viewport = document.getElementById('mapViewport');
+    const image = document.getElementById('mapImage');
+    const zoomInBtn = document.getElementById('mapZoomIn');
+    const zoomOutBtn = document.getElementById('mapZoomOut');
+    const resetBtn = document.getElementById('mapReset');
+    const zoomReadout = document.getElementById('mapZoomReadout');
+
+    if (!viewport || !image || !zoomInBtn || !zoomOutBtn || !resetBtn || !zoomReadout) {
+      return;
+    }
+
+    const MIN_SCALE = 0.35;
+    const MAX_SCALE = 5;
+    const SCALE_STEP = 1.2;
+
+    let scale = 1;
+    let startScale = 1;
+    let tx = 0;
+    let ty = 0;
+    let imgW = 1;
+    let imgH = 1;
+    let isDragging = false;
+    let dragStartX = 0;
+    let dragStartY = 0;
+    let touchStartDistance = 0;
+
+    function clamp(value, min, max) {
+      return Math.max(min, Math.min(max, value));
+    }
+
+    function updateZoomReadout() {
+      zoomReadout.textContent = Math.round(scale * 100) + '%';
+    }
+
+    function boundsFor(currentScale) {
+      const viewW = viewport.clientWidth;
+      const viewH = viewport.clientHeight;
+      const scaledW = imgW * currentScale;
+      const scaledH = imgH * currentScale;
+
+      const minX = Math.min(0, viewW - scaledW);
+      const minY = Math.min(0, viewH - scaledH);
+      const maxX = scaledW < viewW ? (viewW - scaledW) / 2 : 0;
+      const maxY = scaledH < viewH ? (viewH - scaledH) / 2 : 0;
+      return { minX, maxX, minY, maxY };
+    }
+
+    function render() {
+      const bounds = boundsFor(scale);
+      tx = clamp(tx, bounds.minX, bounds.maxX);
+      ty = clamp(ty, bounds.minY, bounds.maxY);
+      image.style.transform = 'translate(' + tx + 'px,' + ty + 'px) scale(' + scale + ')';
+      updateZoomReadout();
+    }
+
+    function zoomAt(nextScale, clientX, clientY) {
+      const newScale = clamp(nextScale, MIN_SCALE, MAX_SCALE);
+      if (newScale === scale) {
+        return;
+      }
+
+      const rect = viewport.getBoundingClientRect();
+      const px = clientX - rect.left;
+      const py = clientY - rect.top;
+      const worldX = (px - tx) / scale;
+      const worldY = (py - ty) / scale;
+
+      scale = newScale;
+      tx = px - worldX * scale;
+      ty = py - worldY * scale;
+      render();
+    }
+
+    function centerFit() {
+      const viewW = viewport.clientWidth;
+      const viewH = viewport.clientHeight;
+      const fitScale = Math.min(viewW / imgW, viewH / imgH);
+      scale = clamp(fitScale, MIN_SCALE, MAX_SCALE);
+      tx = (viewW - imgW * scale) / 2;
+      ty = (viewH - imgH * scale) / 2;
+      render();
+    }
+
+    image.addEventListener('load', () => {
+      imgW = image.naturalWidth || 1;
+      imgH = image.naturalHeight || 1;
+      centerFit();
+    });
+
+    viewport.addEventListener('wheel', (event) => {
+      event.preventDefault();
+      const delta = event.deltaY < 0 ? SCALE_STEP : 1 / SCALE_STEP;
+      zoomAt(scale * delta, event.clientX, event.clientY);
+    }, { passive: false });
+
+    viewport.addEventListener('dblclick', (event) => {
+      zoomAt(scale * SCALE_STEP, event.clientX, event.clientY);
+    });
+
+    viewport.addEventListener('pointerdown', (event) => {
+      if (event.pointerType === 'mouse' && event.button !== 0) {
+        return;
+      }
+      isDragging = true;
+      dragStartX = event.clientX - tx;
+      dragStartY = event.clientY - ty;
+      viewport.classList.add('dragging');
+      viewport.setPointerCapture(event.pointerId);
+    });
+
+    viewport.addEventListener('pointermove', (event) => {
+      if (!isDragging) {
+        return;
+      }
+      tx = event.clientX - dragStartX;
+      ty = event.clientY - dragStartY;
+      render();
+    });
+
+    function endDrag(event) {
+      if (!isDragging) {
+        return;
+      }
+      isDragging = false;
+      viewport.classList.remove('dragging');
+      try {
+        viewport.releasePointerCapture(event.pointerId);
+      } catch (e) {
+        // Ignore if pointer capture is already released.
+      }
+    }
+
+    viewport.addEventListener('pointerup', endDrag);
+    viewport.addEventListener('pointercancel', endDrag);
+
+    viewport.addEventListener('touchstart', (event) => {
+      if (event.touches.length === 2) {
+        const a = event.touches[0];
+        const b = event.touches[1];
+        touchStartDistance = Math.hypot(b.clientX - a.clientX, b.clientY - a.clientY);
+        startScale = scale;
+      }
+    }, { passive: true });
+
+    viewport.addEventListener('touchmove', (event) => {
+      if (event.touches.length === 2 && touchStartDistance > 0) {
+        const a = event.touches[0];
+        const b = event.touches[1];
+        const distance = Math.hypot(b.clientX - a.clientX, b.clientY - a.clientY);
+        const cx = (a.clientX + b.clientX) / 2;
+        const cy = (a.clientY + b.clientY) / 2;
+        zoomAt(startScale * (distance / touchStartDistance), cx, cy);
+      }
+    }, { passive: true });
+
+    viewport.addEventListener('touchend', () => {
+      touchStartDistance = 0;
+    });
+
+    zoomInBtn.addEventListener('click', () => {
+      const rect = viewport.getBoundingClientRect();
+      zoomAt(scale * SCALE_STEP, rect.left + rect.width / 2, rect.top + rect.height / 2);
+    });
+
+    zoomOutBtn.addEventListener('click', () => {
+      const rect = viewport.getBoundingClientRect();
+      zoomAt(scale / SCALE_STEP, rect.left + rect.width / 2, rect.top + rect.height / 2);
+    });
+
+    resetBtn.addEventListener('click', centerFit);
+    window.addEventListener('resize', centerFit);
+
+    if (image.complete) {
+      imgW = image.naturalWidth || 1;
+      imgH = image.naturalHeight || 1;
+      centerFit();
+    }
+  })();
 </script>
 </body>
 </html>
