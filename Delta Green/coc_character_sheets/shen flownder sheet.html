@@ -135,9 +135,19 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .combat-table tr:nth-child(even) td{background:rgba(200,168,100,0.07)}
 .legend{display:flex;gap:14px;margin-bottom:10px;flex-wrap:wrap;align-items:center}
 .legend-item{display:flex;align-items:center;gap:5px;font-family:var(--ft);font-size:11px;color:var(--inkm)}
+.nav-strip{max-width:1200px;margin:0 auto 12px auto;background:var(--ink);border:1px solid var(--g);padding:8px 12px;display:flex;flex-wrap:wrap;gap:8px}
+.nav-link{font-family:var(--fd);font-size:10px;letter-spacing:0.08em;text-transform:uppercase;color:var(--pp);text-decoration:none;border:1px solid #4a3a20;padding:4px 10px;transition:all 0.15s}
+.nav-link:hover{color:var(--p);border-color:var(--gb);background:rgba(139,105,20,0.2)}
 </style>
 </head>
 <body>
+<nav class="nav-strip">
+  <a class="nav-link" href="../index.html">Delta Green Hub</a>
+  <a class="nav-link" href="index.html">CoC Sheets</a>
+  <a class="nav-link" href="../coc_player_primer.html">CoC Primer</a>
+  <a class="nav-link" href="../delta_green_primer.html">DG Primer</a>
+  <a class="nav-link" href="../dg_character_sheets/index.html">DG Sheets</a>
+</nav>
 <div style="max-width:1200px;margin:0 auto">
 
 <!-- HEADER -->
