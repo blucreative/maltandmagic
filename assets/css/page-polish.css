@@ -119,6 +119,115 @@ body.theme-cosmic90s.page-tony-mills-sheet :is(main, .container, section) {
   margin-right: auto;
 }
 
+/* CoC sheets: stronger contrast and larger type for data-dense panels */
+body.theme-cosmic90s.page-henry-press-sheet,
+body.theme-cosmic90s.page-larry-hughes-sheet,
+body.theme-cosmic90s.page-shen-flownder-sheet,
+body.theme-cosmic90s.page-tony-mills-sheet {
+  font-size: 17px;
+  line-height: 1.62;
+}
+
+body.theme-cosmic90s.page-henry-press-sheet .panel,
+body.theme-cosmic90s.page-larry-hughes-sheet .panel,
+body.theme-cosmic90s.page-shen-flownder-sheet .panel,
+body.theme-cosmic90s.page-tony-mills-sheet .panel {
+  background: #f4ead8;
+  border-color: #94805b;
+  color: #2a1e14;
+}
+
+body.theme-cosmic90s.page-henry-press-sheet .panel-title,
+body.theme-cosmic90s.page-larry-hughes-sheet .panel-title,
+body.theme-cosmic90s.page-shen-flownder-sheet .panel-title,
+body.theme-cosmic90s.page-tony-mills-sheet .panel-title {
+  font-size: 11px;
+  color: #6f1f1d;
+}
+
+body.theme-cosmic90s.page-henry-press-sheet .char-name-s,
+body.theme-cosmic90s.page-larry-hughes-sheet .char-name-s,
+body.theme-cosmic90s.page-shen-flownder-sheet .char-name-s,
+body.theme-cosmic90s.page-tony-mills-sheet .char-name-s,
+body.theme-cosmic90s.page-henry-press-sheet .skill-name,
+body.theme-cosmic90s.page-larry-hughes-sheet .skill-name,
+body.theme-cosmic90s.page-shen-flownder-sheet .skill-name,
+body.theme-cosmic90s.page-tony-mills-sheet .skill-name,
+body.theme-cosmic90s.page-henry-press-sheet .bs-text,
+body.theme-cosmic90s.page-larry-hughes-sheet .bs-text,
+body.theme-cosmic90s.page-shen-flownder-sheet .bs-text,
+body.theme-cosmic90s.page-tony-mills-sheet .bs-text,
+body.theme-cosmic90s.page-henry-press-sheet .notes-area,
+body.theme-cosmic90s.page-larry-hughes-sheet .notes-area,
+body.theme-cosmic90s.page-shen-flownder-sheet .notes-area,
+body.theme-cosmic90s.page-tony-mills-sheet .notes-area {
+  color: #2d2116;
+  font-size: 14px;
+}
+
+body.theme-cosmic90s.page-henry-press-sheet .skill-base,
+body.theme-cosmic90s.page-larry-hughes-sheet .skill-base,
+body.theme-cosmic90s.page-shen-flownder-sheet .skill-base,
+body.theme-cosmic90s.page-tony-mills-sheet .skill-base,
+body.theme-cosmic90s.page-henry-press-sheet .skill-half,
+body.theme-cosmic90s.page-larry-hughes-sheet .skill-half,
+body.theme-cosmic90s.page-shen-flownder-sheet .skill-half,
+body.theme-cosmic90s.page-tony-mills-sheet .skill-half,
+body.theme-cosmic90s.page-henry-press-sheet .skill-fifth,
+body.theme-cosmic90s.page-larry-hughes-sheet .skill-fifth,
+body.theme-cosmic90s.page-shen-flownder-sheet .skill-fifth,
+body.theme-cosmic90s.page-tony-mills-sheet .skill-fifth,
+body.theme-cosmic90s.page-henry-press-sheet .cv-label,
+body.theme-cosmic90s.page-larry-hughes-sheet .cv-label,
+body.theme-cosmic90s.page-shen-flownder-sheet .cv-label,
+body.theme-cosmic90s.page-tony-mills-sheet .cv-label,
+body.theme-cosmic90s.page-henry-press-sheet .meta-label,
+body.theme-cosmic90s.page-larry-hughes-sheet .meta-label,
+body.theme-cosmic90s.page-shen-flownder-sheet .meta-label,
+body.theme-cosmic90s.page-tony-mills-sheet .meta-label {
+  color: #5a472f;
+}
+
+body.theme-cosmic90s.page-henry-press-sheet .skill-pct,
+body.theme-cosmic90s.page-larry-hughes-sheet .skill-pct,
+body.theme-cosmic90s.page-shen-flownder-sheet .skill-pct,
+body.theme-cosmic90s.page-tony-mills-sheet .skill-pct,
+body.theme-cosmic90s.page-henry-press-sheet .cv-num,
+body.theme-cosmic90s.page-larry-hughes-sheet .cv-num,
+body.theme-cosmic90s.page-shen-flownder-sheet .cv-num,
+body.theme-cosmic90s.page-tony-mills-sheet .cv-num {
+  color: #22170f;
+}
+
+body.theme-cosmic90s.page-henry-press-sheet .sh-name,
+body.theme-cosmic90s.page-larry-hughes-sheet .sh-name,
+body.theme-cosmic90s.page-shen-flownder-sheet .sh-name,
+body.theme-cosmic90s.page-tony-mills-sheet .sh-name,
+body.theme-cosmic90s.page-henry-press-sheet .sh-base,
+body.theme-cosmic90s.page-larry-hughes-sheet .sh-base,
+body.theme-cosmic90s.page-shen-flownder-sheet .sh-base,
+body.theme-cosmic90s.page-tony-mills-sheet .sh-base,
+body.theme-cosmic90s.page-henry-press-sheet .sh-half,
+body.theme-cosmic90s.page-larry-hughes-sheet .sh-half,
+body.theme-cosmic90s.page-shen-flownder-sheet .sh-half,
+body.theme-cosmic90s.page-tony-mills-sheet .sh-half,
+body.theme-cosmic90s.page-henry-press-sheet .sh-fifth,
+body.theme-cosmic90s.page-larry-hughes-sheet .sh-fifth,
+body.theme-cosmic90s.page-shen-flownder-sheet .sh-fifth,
+body.theme-cosmic90s.page-tony-mills-sheet .sh-fifth {
+  font-size: 9px;
+  color: #5a472f;
+}
+
+body.theme-cosmic90s.page-henry-press-sheet .nav-link,
+body.theme-cosmic90s.page-larry-hughes-sheet .nav-link,
+body.theme-cosmic90s.page-shen-flownder-sheet .nav-link,
+body.theme-cosmic90s.page-tony-mills-sheet .nav-link {
+  color: #f1e4c6;
+  border-color: #8d7a53;
+  font-size: 11px;
+}
+
 /* Delta Green military pages: dossier-like spacing and compact headings */
 body.theme-military90s :is(h1, h2, h3) {
   margin-top: 0.95em;
