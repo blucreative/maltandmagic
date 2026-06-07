@@ -166,6 +166,25 @@ h1, h2, h3 { margin: 0; font-family: 'Oswald', sans-serif; letter-spacing: 0.03e
   margin-top: 8px;
 }
 
+.tracker-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.tracker-box {
+  border: 1px solid rgba(126, 168, 229, .3);
+  border-radius: 10px;
+  padding: 8px;
+  background: rgba(10, 17, 28, .55);
+}
+
+.tracker-value {
+  font-size: 1rem;
+  margin-top: 3px;
+}
+
 .row { display: flex; gap: 8px; flex-wrap: wrap; }
 
 button, input, textarea { font: inherit; }
@@ -354,6 +373,7 @@ input:focus-visible, textarea:focus-visible, button:focus-visible {
   .grid-5, .grid-4, .grid-2 { grid-template-columns: 1fr; }
   .status-grid { grid-template-columns: 1fr; }
   .cast-grid { grid-template-columns: 1fr; }
+  .tracker-grid { grid-template-columns: 1fr; }
   button, input, textarea { font-size: 16px; }
   .table { display: block; overflow-x: auto; white-space: nowrap; }
 }
@@ -378,6 +398,10 @@ input:focus-visible, textarea:focus-visible, button:focus-visible {
           <div class="status-chip">
             <div class="status-label">Conditions</div>
             <div class="status-value" id="statusConditions">0 active</div>
+          </div>
+          <div class="status-chip">
+            <div class="status-label">Turn</div>
+            <div class="status-value" id="statusTurn">Round 1</div>
           </div>
         </div>
       </div>
@@ -422,9 +446,14 @@ input:focus-visible, textarea:focus-visible, button:focus-visible {
       <div class="panel">
         <h3>Feature Controls</h3>
         <div class="small-note" id="cockpitRageState">Rage uses left: 0</div>
+        <div class="small-note" id="cockpitRageTimer">Rage rounds active: 0 / 100</div>
         <div class="row" style="margin-top:8px;">
           <button id="rageActivateBtn" class="action-btn">Activate Rage</button>
           <button id="rageEndBtn" class="secondary action-btn">End Rage</button>
+        </div>
+        <div class="row" style="margin-top:8px;">
+          <button id="rageAttackTriggerBtn" class="secondary action-btn">Mark Attack / Force Save</button>
+          <button id="rageBonusExtendBtn" class="secondary action-btn">Extend Rage (Bonus)</button>
         </div>
         <div class="row" style="margin-top:8px;">
           <button id="rageUseBtn" class="secondary action-btn">Use Rage Charge</button>
@@ -451,7 +480,30 @@ input:focus-visible, textarea:focus-visible, button:focus-visible {
       </div>
 
       <div class="panel">
-        <h3>Rest & Recovery</h3>
+        <h3>Turn & Recovery</h3>
+        <div class="tracker-grid">
+          <div class="tracker-box">
+            <div class="small-note">Action Economy</div>
+            <div class="tracker-value" id="turnEconomyState">A: Ready | B: Ready | R: Ready</div>
+            <div class="row" style="margin-top:8px;">
+              <button id="useActionBtn" class="secondary">Use Action</button>
+              <button id="useBonusBtn" class="secondary">Use Bonus</button>
+              <button id="useReactionBtn" class="secondary">Use Reaction</button>
+            </div>
+          </div>
+          <div class="tracker-box">
+            <div class="small-note">Movement</div>
+            <div class="tracker-value" id="movementState">0 / 0 ft used</div>
+            <div class="row" style="margin-top:8px;">
+              <button id="movePlus5Btn" class="secondary">+5 ft</button>
+              <button id="moveMinus5Btn" class="secondary">-5 ft</button>
+            </div>
+          </div>
+        </div>
+        <div class="row" style="margin-top:8px;">
+          <button id="nextTurnBtn">Next Turn</button>
+          <button id="refreshTurnBtn" class="secondary">Refresh Turn</button>
+        </div>
         <div class="row">
           <button id="shortRestBtnCockpit">Apply Short Rest</button>
           <button id="longRestBtnCockpit">Apply Long Rest</button>
@@ -482,7 +534,7 @@ input:focus-visible, textarea:focus-visible, button:focus-visible {
     </div>
     <div class="row" style="margin-top:8px;">
       <button id="longRestBtn">Long Rest Reset</button>
-      <span class="small-note">Long Rest resets Rage uses, spell slots, active toggles, and conditions.</span>
+      <span class="small-note">Long Rest restores rage uses and spell slots, and removes 1 exhaustion level.</span>
     </div>
   </section>
 
@@ -632,6 +684,16 @@ const DEFAULT_SESSION = {
   conditions: {},
   exhaustionLevel: 0,
   rageUsed: 0,
+  rageRoundsActive: 0,
+  rageNeedsSustain: false,
+  rageMaintainedThisTurn: false,
+  turn: {
+    round: 1,
+    actionUsed: false,
+    bonusUsed: false,
+    reactionUsed: false,
+    movementUsed: 0
+  },
   spellSlotsUsed: { 1: 0, 2: 0 },
   lastSpellCastLevel: null,
   lastRestType: null
@@ -652,6 +714,18 @@ function loadSession() {
       conditions: typeof parsed.conditions === 'object' && parsed.conditions ? parsed.conditions : {},
       exhaustionLevel: Number.isFinite(Number(parsed.exhaustionLevel)) ? Math.max(0, Math.min(6, Number(parsed.exhaustionLevel))) : 0,
       rageUsed: Number.isFinite(Number(parsed.rageUsed)) ? Number(parsed.rageUsed) : 0,
+      rageRoundsActive: Number.isFinite(Number(parsed.rageRoundsActive)) ? Math.max(0, Math.min(100, Number(parsed.rageRoundsActive))) : 0,
+      rageNeedsSustain: !!parsed.rageNeedsSustain,
+      rageMaintainedThisTurn: !!parsed.rageMaintainedThisTurn,
+      turn: {
+        ...DEFAULT_SESSION.turn,
+        ...(parsed.turn || {}),
+        round: Number.isFinite(Number(parsed.turn?.round)) ? Math.max(1, Number(parsed.turn.round)) : 1,
+        actionUsed: !!parsed.turn?.actionUsed,
+        bonusUsed: !!parsed.turn?.bonusUsed,
+        reactionUsed: !!parsed.turn?.reactionUsed,
+        movementUsed: Number.isFinite(Number(parsed.turn?.movementUsed)) ? Math.max(0, Number(parsed.turn.movementUsed)) : 0
+      },
       spellSlotsUsed: {
         ...DEFAULT_SESSION.spellSlotsUsed,
         ...(parsed.spellSlotsUsed || {})
@@ -699,6 +773,9 @@ function derivedStats() {
     if (f.effects?.meleeDamage) meleeDamage += f.effects.meleeDamage;
   });
 
+  speed -= (Number(session.exhaustionLevel) || 0) * 5;
+  if (speed < 0) speed = 0;
+
   if (session.conditions.grappled || session.conditions.restrained) {
     speed = 0;
   }
@@ -725,6 +802,10 @@ function getActiveConditionCount() {
 }
 
 function castSpellAtLevel(level) {
+  if (session.active.rage) {
+    alert('You cannot cast spells while Rage is active. End Rage first.');
+    return;
+  }
   const lvl = String(level);
   const max = Number(CHARACTER.spellSlotsMax[lvl] || 0);
   const used = Number(session.spellSlotsUsed[lvl] || 0);
@@ -744,9 +825,61 @@ function recoverSpellAtLevel(level) {
   renderAll();
 }
 
+function markActionUsed(type) {
+  if (type === 'action') session.turn.actionUsed = true;
+  if (type === 'bonus') session.turn.bonusUsed = true;
+  if (type === 'reaction') session.turn.reactionUsed = true;
+  saveSession();
+  renderAll();
+}
+
+function refreshTurn() {
+  session.turn.actionUsed = false;
+  session.turn.bonusUsed = false;
+  session.turn.reactionUsed = false;
+  session.turn.movementUsed = 0;
+  session.rageMaintainedThisTurn = false;
+  saveSession();
+  renderAll();
+}
+
+function advanceTurn() {
+  if (session.active.rage) {
+    const rageShouldEnd = session.rageNeedsSustain && !session.rageMaintainedThisTurn;
+    if (rageShouldEnd) {
+      session.active.rage = false;
+      session.rageRoundsActive = 0;
+      session.rageNeedsSustain = false;
+      session.rageMaintainedThisTurn = false;
+    } else {
+      session.rageNeedsSustain = true;
+      session.rageRoundsActive = Math.min(100, (Number(session.rageRoundsActive) || 0) + 1);
+      if (session.rageRoundsActive >= 100) {
+        session.active.rage = false;
+        session.rageRoundsActive = 0;
+        session.rageNeedsSustain = false;
+      }
+      session.rageMaintainedThisTurn = false;
+    }
+  }
+
+  session.turn.round = Math.max(1, (Number(session.turn.round) || 1) + 1);
+  session.turn.actionUsed = false;
+  session.turn.bonusUsed = false;
+  session.turn.reactionUsed = false;
+  session.turn.movementUsed = 0;
+  saveSession();
+  renderAll();
+}
+
 function applyShortRest() {
   session.lastRestType = 'Short Rest';
-  if (session.active.rage) session.active.rage = false;
+  if (session.active.rage) {
+    session.active.rage = false;
+    session.rageRoundsActive = 0;
+    session.rageNeedsSustain = false;
+    session.rageMaintainedThisTurn = false;
+  }
   saveSession();
   renderAll();
 }
@@ -755,9 +888,15 @@ function applyLongRest() {
   session.rageUsed = 0;
   session.spellSlotsUsed = { ...DEFAULT_SESSION.spellSlotsUsed };
   session.lastSpellCastLevel = null;
-  session.active = {};
-  session.conditions = {};
-  session.exhaustionLevel = 0;
+  session.active = { ...session.active, rage: false };
+  session.rageRoundsActive = 0;
+  session.rageNeedsSustain = false;
+  session.rageMaintainedThisTurn = false;
+  session.exhaustionLevel = Math.max(0, (Number(session.exhaustionLevel) || 0) - 1);
+  session.turn.actionUsed = false;
+  session.turn.bonusUsed = false;
+  session.turn.reactionUsed = false;
+  session.turn.movementUsed = 0;
   session.lastRestType = 'Long Rest';
   saveSession();
   renderAll();
@@ -806,16 +945,22 @@ function renderOverview() {
   document.getElementById('statusRage').textContent = `${getRageRemaining()} / ${CHARACTER.rageUsesMax} left`;
   document.getElementById('statusSlots').textContent = `${getTotalSlotsRemaining()} total left`;
   document.getElementById('statusConditions').textContent = `${getActiveConditionCount()} active`;
+  document.getElementById('statusTurn').textContent = `Round ${session.turn.round || 1}`;
 }
 
 function renderCockpit() {
   const stats = derivedStats();
   document.getElementById('cockpitRageState').textContent = `Rage uses left: ${getRageRemaining()} / ${CHARACTER.rageUsesMax}`;
+  document.getElementById('cockpitRageTimer').textContent = `Rage rounds active: ${Number(session.rageRoundsActive) || 0} / 100`;
   document.getElementById('lastSpellCastLevel').textContent = `Last spell cast level: ${session.lastSpellCastLevel == null ? '-' : session.lastSpellCastLevel}`;
   document.getElementById('restStateTop').textContent = `Last rest: ${session.lastRestType || '-'}`;
   document.getElementById('restStateCockpit').textContent = `Last rest: ${session.lastRestType || '-'}`;
   document.getElementById('exhaustionValue').textContent = String(session.exhaustionLevel || 0);
   document.getElementById('d20PenaltyValue').textContent = String(stats.d20Penalty);
+
+  const moveUsed = Number(session.turn.movementUsed) || 0;
+  document.getElementById('movementState').textContent = `${moveUsed} / ${stats.speed} ft used`;
+  document.getElementById('turnEconomyState').textContent = `A: ${session.turn.actionUsed ? 'Used' : 'Ready'} | B: ${session.turn.bonusUsed ? 'Used' : 'Ready'} | R: ${session.turn.reactionUsed ? 'Used' : 'Ready'}`;
 
   const castWrap = document.getElementById('castButtons');
   castWrap.innerHTML = Object.keys(CHARACTER.spellSlotsMax)
@@ -860,8 +1005,15 @@ function renderCockpit() {
 
   document.getElementById('rageActivateBtn').disabled = getRageRemaining() <= 0 || !!session.active.rage;
   document.getElementById('rageEndBtn').disabled = !session.active.rage;
+  document.getElementById('rageAttackTriggerBtn').disabled = !session.active.rage;
+  document.getElementById('rageBonusExtendBtn').disabled = !session.active.rage || session.turn.bonusUsed;
   document.getElementById('rageUseBtn').disabled = (Number(session.rageUsed) || 0) >= CHARACTER.rageUsesMax;
   document.getElementById('rageRecoverBtn').disabled = (Number(session.rageUsed) || 0) <= 0;
+  document.getElementById('useActionBtn').disabled = !!session.turn.actionUsed;
+  document.getElementById('useBonusBtn').disabled = !!session.turn.bonusUsed;
+  document.getElementById('useReactionBtn').disabled = !!session.turn.reactionUsed;
+  document.getElementById('movePlus5Btn').disabled = moveUsed >= stats.speed;
+  document.getElementById('moveMinus5Btn').disabled = moveUsed <= 0;
 }
 
 function renderSkills() {
@@ -906,6 +1058,15 @@ function renderFeats() {
           return;
         }
         session.rageUsed = Math.min(CHARACTER.rageUsesMax, (Number(session.rageUsed) || 0) + 1);
+        session.rageRoundsActive = 1;
+        session.rageNeedsSustain = false;
+        session.rageMaintainedThisTurn = true;
+        session.active.shield_of_faith = false;
+      }
+      if (id === 'rage' && !nextChecked) {
+        session.rageRoundsActive = 0;
+        session.rageNeedsSustain = false;
+        session.rageMaintainedThisTurn = false;
       }
       session.active[id] = nextChecked;
       saveSession();
@@ -1128,6 +1289,18 @@ function wireSessionControls() {
             conditions: typeof parsed.session.conditions === 'object' && parsed.session.conditions ? parsed.session.conditions : {},
             exhaustionLevel: Number.isFinite(Number(parsed.session.exhaustionLevel)) ? Math.max(0, Math.min(6, Number(parsed.session.exhaustionLevel))) : 0,
             rageUsed: Number.isFinite(Number(parsed.session.rageUsed)) ? Number(parsed.session.rageUsed) : 0,
+            rageRoundsActive: Number.isFinite(Number(parsed.session.rageRoundsActive)) ? Math.max(0, Math.min(100, Number(parsed.session.rageRoundsActive))) : 0,
+            rageNeedsSustain: !!parsed.session.rageNeedsSustain,
+            rageMaintainedThisTurn: !!parsed.session.rageMaintainedThisTurn,
+            turn: {
+              ...DEFAULT_SESSION.turn,
+              ...(parsed.session.turn || {}),
+              round: Number.isFinite(Number(parsed.session.turn?.round)) ? Math.max(1, Number(parsed.session.turn.round)) : 1,
+              actionUsed: !!parsed.session.turn?.actionUsed,
+              bonusUsed: !!parsed.session.turn?.bonusUsed,
+              reactionUsed: !!parsed.session.turn?.reactionUsed,
+              movementUsed: Number.isFinite(Number(parsed.session.turn?.movementUsed)) ? Math.max(0, Number(parsed.session.turn.movementUsed)) : 0
+            },
             spellSlotsUsed: {
               ...DEFAULT_SESSION.spellSlotsUsed,
               ...(parsed.session.spellSlotsUsed || {})
@@ -1156,6 +1329,10 @@ function wireSessionControls() {
     if (session.active.rage || getRageRemaining() <= 0) return;
     session.rageUsed = Math.min(CHARACTER.rageUsesMax, (Number(session.rageUsed) || 0) + 1);
     session.active.rage = true;
+    session.active.shield_of_faith = false;
+    session.rageRoundsActive = 1;
+    session.rageNeedsSustain = false;
+    session.rageMaintainedThisTurn = true;
     saveSession();
     renderAll();
   });
@@ -1163,6 +1340,24 @@ function wireSessionControls() {
   document.getElementById('rageEndBtn').addEventListener('click', () => {
     if (!session.active.rage) return;
     session.active.rage = false;
+    session.rageRoundsActive = 0;
+    session.rageNeedsSustain = false;
+    session.rageMaintainedThisTurn = false;
+    saveSession();
+    renderAll();
+  });
+
+  document.getElementById('rageAttackTriggerBtn').addEventListener('click', () => {
+    if (!session.active.rage) return;
+    session.rageMaintainedThisTurn = true;
+    saveSession();
+    renderAll();
+  });
+
+  document.getElementById('rageBonusExtendBtn').addEventListener('click', () => {
+    if (!session.active.rage || session.turn.bonusUsed) return;
+    session.turn.bonusUsed = true;
+    session.rageMaintainedThisTurn = true;
     saveSession();
     renderAll();
   });
@@ -1171,6 +1366,11 @@ function wireSessionControls() {
     if ((Number(session.rageUsed) || 0) >= CHARACTER.rageUsesMax) return;
     session.rageUsed = (Number(session.rageUsed) || 0) + 1;
     if (getRageRemaining() <= 0 && session.active.rage) session.active.rage = false;
+    if (!session.active.rage) {
+      session.rageRoundsActive = 0;
+      session.rageNeedsSustain = false;
+      session.rageMaintainedThisTurn = false;
+    }
     saveSession();
     renderAll();
   });
@@ -1193,6 +1393,28 @@ function wireSessionControls() {
     saveSession();
     renderAll();
   });
+
+  document.getElementById('useActionBtn').addEventListener('click', () => markActionUsed('action'));
+  document.getElementById('useBonusBtn').addEventListener('click', () => markActionUsed('bonus'));
+  document.getElementById('useReactionBtn').addEventListener('click', () => markActionUsed('reaction'));
+
+  document.getElementById('movePlus5Btn').addEventListener('click', () => {
+    const maxSpeed = derivedStats().speed;
+    const current = Number(session.turn.movementUsed) || 0;
+    session.turn.movementUsed = Math.min(maxSpeed, current + 5);
+    saveSession();
+    renderAll();
+  });
+
+  document.getElementById('moveMinus5Btn').addEventListener('click', () => {
+    const current = Number(session.turn.movementUsed) || 0;
+    session.turn.movementUsed = Math.max(0, current - 5);
+    saveSession();
+    renderAll();
+  });
+
+  document.getElementById('nextTurnBtn').addEventListener('click', advanceTurn);
+  document.getElementById('refreshTurnBtn').addEventListener('click', refreshTurn);
 
   document.getElementById('shortRestBtnTop').addEventListener('click', applyShortRest);
   document.getElementById('shortRestBtnCockpit').addEventListener('click', applyShortRest);
