@@ -88,6 +88,69 @@ h1, h2, h3 { margin: 0; font-family: 'Cormorant Garamond', serif; letter-spacing
   backdrop-filter: blur(5px);
 }
 
+.tab-bar {
+  display: flex;
+  gap: 4px;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.tab-bar::-webkit-scrollbar { display: none; }
+
+.tab-btn {
+  flex: 0 0 auto;
+  border: 1px solid rgba(176, 139, 90, .24);
+  border-bottom-width: 2px;
+  border-radius: 10px 10px 0 0;
+  background: rgba(21, 17, 13, .82);
+  color: var(--tx-d);
+  min-height: 40px;
+  padding: 7px 12px 6px;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: .95rem;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  transition: all .18s ease;
+}
+
+.tab-btn .tab-num {
+  display: block;
+  font-family: 'Manrope', sans-serif;
+  font-size: .62rem;
+  letter-spacing: .18em;
+  line-height: 1;
+  color: var(--tx-d);
+  margin-bottom: 2px;
+}
+
+.tab-btn:hover {
+  color: var(--tx);
+  border-color: rgba(176, 139, 90, .44);
+  transform: translateY(-1px);
+}
+
+.tab-btn.active {
+  background: linear-gradient(180deg, rgba(49, 38, 28, .98), rgba(28, 22, 17, .98));
+  color: var(--accent);
+  border-color: rgba(214, 178, 122, .58);
+  border-bottom-color: var(--bg-deep);
+}
+
+.tab-btn.active .tab-num { color: var(--accent); }
+
+section.card[data-tab-panel][hidden] {
+  display: none !important;
+}
+
+section.card[data-tab-panel] {
+  animation: tabFade .16s ease;
+}
+
+@keyframes tabFade {
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
 .hero-card {
   border-color: rgba(214, 178, 122, .48);
   background:
@@ -486,18 +549,17 @@ input:focus-visible, textarea:focus-visible, button:focus-visible {
   </section>
 
   <section class="card quick-nav">
-    <div class="row">
-      <button class="nav-btn" data-go="cockpit">Play Cockpit</button>
-      <button class="nav-btn" data-go="overview">Overview</button>
-      <button class="nav-btn" data-go="resources">Resources</button>
-      <button class="nav-btn" data-go="sfa">Skills / Feats / Actions</button>
-      <button class="nav-btn" data-go="inventory">Inventory</button>
-      <button class="nav-btn" data-go="notes">Session Notes</button>
+    <div class="tab-bar" role="tablist" aria-label="Sheet tabs">
+      <button class="tab-btn active" type="button" data-tab="command" aria-selected="true"><span class="tab-num">01</span>Command</button>
+      <button class="tab-btn" type="button" data-tab="resources" aria-selected="false"><span class="tab-num">02</span>Resources</button>
+      <button class="tab-btn" type="button" data-tab="traits" aria-selected="false"><span class="tab-num">03</span>Traits</button>
+      <button class="tab-btn" type="button" data-tab="gear" aria-selected="false"><span class="tab-num">04</span>Gear</button>
+      <button class="tab-btn" type="button" data-tab="notes" aria-selected="false"><span class="tab-num">05</span>Notes</button>
     </div>
   </section>
 
-  <section class="card" id="cockpit">
-    <h2 class="section-title">Play Cockpit</h2>
+  <section class="card" id="cockpit" data-tab-panel="command">
+    <h2 class="section-title">Adventurer's War Room</h2>
     <div class="cockpit-grid">
       <div class="panel">
         <h3>Vitals</h3>
@@ -597,18 +659,18 @@ input:focus-visible, textarea:focus-visible, button:focus-visible {
     </div>
   </section>
 
-  <section class="card" id="overview">
+  <section class="card" id="overview" data-tab-panel="command">
     <h2 class="section-title">Overview (Fixed Character Profile)</h2>
     <div class="grid-5" id="identityGrid"></div>
     <div class="grid-4" id="combatGrid" style="margin-top:8px;"></div>
     <div class="small-note" style="margin-top:8px;">Values update automatically when activations are toggled.</div>
   </section>
 
-  <section class="card" id="resources">
+  <section class="card" id="resources" data-tab-panel="resources" hidden>
     <h2 class="section-title">Spell Slots</h2>
     <div class="panel">
       <h3>Spell Slots</h3>
-      <div class="small-note" id="resourceSpellHint">Use the cockpit to cast by level quickly, then verify usage here.</div>
+      <div class="small-note" id="resourceSpellHint">Use the war room to cast by level quickly, then verify usage here.</div>
       <table class="table">
         <thead>
           <tr><th>Level</th><th>Used</th><th>Max</th><th>Remaining</th><th>Cast At</th><th>Controls</th></tr>
@@ -622,7 +684,7 @@ input:focus-visible, textarea:focus-visible, button:focus-visible {
     </div>
   </section>
 
-  <section class="card" id="sfa">
+  <section class="card" id="sfa" data-tab-panel="traits" hidden>
     <h2 class="section-title">Skills, Feats & Traits, Actions</h2>
     <div class="small-note">Actions and feats/traits now both show on-hover descriptions. Toggle activatable entries to apply effects.</div>
     <div class="grid-3" style="margin-top:10px;">
@@ -643,7 +705,7 @@ input:focus-visible, textarea:focus-visible, button:focus-visible {
     </div>
   </section>
 
-  <section class="card" id="inventory">
+  <section class="card" id="inventory" data-tab-panel="gear" hidden>
     <h2 class="section-title">Inventory (Editable)</h2>
     <div class="grid-4">
       <div class="field"><label>Item Name</label><input id="newItemName" /></div>
@@ -660,7 +722,7 @@ input:focus-visible, textarea:focus-visible, button:focus-visible {
     </table>
   </section>
 
-  <section class="card" id="notes">
+  <section class="card" id="notes" data-tab-panel="notes" hidden>
     <h2 class="section-title">Session Notes (Editable)</h2>
     <div class="field"><label>Notes</label><textarea id="sessionNotes" placeholder="Battle notes, plans, reminders..."></textarea></div>
   </section>
@@ -784,6 +846,9 @@ const DEFAULT_SESSION = {
   lastSpellCastLevel: null,
   lastRestType: null
 };
+
+const TAB_ORDER = ['command', 'resources', 'traits', 'gear', 'notes'];
+let activeTab = 'command';
 
 let session = loadSession();
 
@@ -1363,14 +1428,33 @@ function renderInventory() {
   });
 }
 
-function wireNavigation() {
-  document.querySelectorAll('.nav-btn').forEach((btn) => {
-    btn.addEventListener('click', () => {
-      const id = btn.getAttribute('data-go');
-      const section = document.getElementById(id);
-      if (section) section.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    });
+function applyTabVisibility() {
+  document.querySelectorAll('[data-tab-panel]').forEach((section) => {
+    const tab = section.getAttribute('data-tab-panel');
+    section.hidden = tab !== activeTab;
   });
+
+  document.querySelectorAll('.tab-btn').forEach((btn) => {
+    const tab = btn.getAttribute('data-tab');
+    const isActive = tab === activeTab;
+    btn.classList.toggle('active', isActive);
+    btn.setAttribute('aria-selected', isActive ? 'true' : 'false');
+  });
+}
+
+function setActiveTab(tab) {
+  if (!TAB_ORDER.includes(tab)) return;
+  activeTab = tab;
+  applyTabVisibility();
+  const quickNav = document.querySelector('.quick-nav');
+  if (quickNav) quickNav.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function wireNavigation() {
+  document.querySelectorAll('.tab-btn').forEach((btn) => {
+    btn.addEventListener('click', () => setActiveTab(btn.getAttribute('data-tab')));
+  });
+  applyTabVisibility();
 }
 
 function wireSessionControls() {
@@ -1585,6 +1669,7 @@ function renderAll() {
   renderActions();
   renderInventory();
   document.getElementById('sessionNotes').value = session.notes;
+  applyTabVisibility();
 }
 
 wireNavigation();
