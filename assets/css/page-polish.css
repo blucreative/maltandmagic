@@ -5,10 +5,18 @@
   --read-width-narrow: 780px;
 }
 
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
 body[class*='page-'] {
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   line-height: 1.6;
+}
+
+body[class*='page-'] :is(main, section, article) {
+  scroll-margin-top: 1.2rem;
 }
 
 body[class*='page-'] h1,
@@ -35,6 +43,14 @@ body[class*='page-'] p {
   margin-bottom: 0.65em;
 }
 
+body[class*='page-'] main p {
+  max-width: 78ch;
+}
+
+body[class*='page-'] li {
+  margin-bottom: 0.24em;
+}
+
 body[class*='page-'] table {
   font-size: 0.96rem;
 }
@@ -42,6 +58,27 @@ body[class*='page-'] table {
 body[class*='page-'] th,
 body[class*='page-'] td {
   padding: 0.45rem 0.5rem;
+}
+
+body[class*='page-'] :is(nav, [role='navigation']) {
+  row-gap: 0.45rem;
+}
+
+body[class*='page-'] :is(button, input[type='button'], input[type='submit']) {
+  line-height: 1.2;
+}
+
+body[class*='page-'] :is(button, input[type='button'], input[type='submit'], select) {
+  min-height: 40px;
+}
+
+body[class*='page-'] :is(input[type='text'], input[type='number'], input[type='search'], input[type='email'], textarea) {
+  min-height: 38px;
+}
+
+body[class*='page-'] :is(a, button, input, select, textarea):focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 2px;
 }
 
 /* Fantasy pages: lore readability and heading cadence */
@@ -102,6 +139,50 @@ body.theme-military90s.page-chuck-jenkins-interactive :is(main, .container, sect
 @media (max-width: 760px) {
   body[class*='page-'] {
     line-height: 1.55;
+  }
+
+  body[class*='page-'] :is(main, section, article, .container, .panel, .card) {
+    border-radius: 8px;
+  }
+
+  body[class*='page-'] :is(button, input[type='button'], input[type='submit'], a[role='button']) {
+    min-height: 44px;
+    padding-top: 0.55rem;
+    padding-bottom: 0.55rem;
+  }
+
+  body[class*='page-'] :is(input[type='text'], input[type='number'], input[type='search'], input[type='email'], textarea, select) {
+    font-size: 16px;
+  }
+
+  body[class*='page-'] :is(nav, [role='navigation']) {
+    gap: 0.4rem;
+  }
+
+  body[class*='page-'] :is(nav a, [role='navigation'] a, nav button, [role='navigation'] button) {
+    min-height: 42px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  body[class*='page-'] table {
+    display: block;
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    border-collapse: separate;
+  }
+
+  body[class*='page-'] th,
+  body[class*='page-'] td {
+    white-space: nowrap;
+  }
+
+  body[class*='page-'] pre,
+  body[class*='page-'] code {
+    white-space: pre-wrap;
+    word-break: break-word;
   }
 
   body[class*='page-'] h1 {

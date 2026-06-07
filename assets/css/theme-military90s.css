@@ -1,12 +1,12 @@
 :root {
   --mil-bg: #10140f;
   --mil-bg-soft: #1b2318;
-  --mil-panel: rgba(32, 41, 29, 0.88);
+  --mil-panel: rgba(32, 41, 29, 0.92);
   --mil-border: rgba(177, 190, 129, 0.34);
-  --mil-text: #d8dec7;
+  --mil-text: #e1e7d1;
   --mil-muted: #a7b08d;
   --mil-accent: #b1be81;
-  --mil-accent-strong: #d3ddaa;
+  --mil-accent-strong: #dde7b8;
   --mil-link: #c3cf96;
   --mil-link-hover: #e3edbf;
   --mil-shadow: 0 14px 32px rgba(0, 0, 0, 0.4);
@@ -60,6 +60,10 @@ body.theme-military90s a {
 body.theme-military90s a:hover,
 body.theme-military90s a:focus-visible {
   color: var(--mil-link-hover);
+}
+
+body.theme-military90s :is(a, button, input, select, textarea):focus-visible {
+  box-shadow: 0 0 0 2px rgba(211, 221, 170, 0.55);
 }
 
 body.theme-military90s section,

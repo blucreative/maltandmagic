@@ -132,7 +132,7 @@
   }
 
   .page-header::before {
-    content: 'âœ¶';
+    content: '✶';
     position: absolute;
     left: 50%;
     top: 0.55rem;
@@ -509,7 +509,7 @@
         <button className="chapter-toggle" onClick={onToggle} aria-expanded={open}>
           <span className="chapter-index">{number}</span>
           <span className="chapter-title">{chapter.title}</span>
-          <span className="chapter-caret">â–¶</span>
+          <span className="chapter-caret">▶</span>
         </button>
         {open && (
           <div className="chapter-body">
@@ -566,5 +566,6 @@
   </script>
 </body>
 </html>
+
 
 

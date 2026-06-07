@@ -10,7 +10,7 @@
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
 
-/* â”€â”€ colour tokens â”€â”€ */
+/* ── colour tokens ── */
 :root {
   --bg:         #0a0c14;
   --bg-raised:  #0f1219;
@@ -34,7 +34,7 @@
   --gold:       #a88050;
   --gold-pale:  rgba(168,128,80,0.10);
 
-  /* domain accent colours â€” dark mode */
+  /* domain accent colours — dark mode */
   --know:  #4a7fd4; --know-bg: rgba(74,127,212,0.10); --know-text: #7ba4e8;
   --life:  #3a9e6a; --life-bg:  rgba(58,158,106,0.10); --life-text:  #60c88a;
   --light: #c8963a; --light-bg: rgba(200,150,58,0.10); --light-text: #e8b460;
@@ -106,7 +106,7 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-/* â”€â”€ masthead â”€â”€ */
+/* ── masthead ── */
 .masthead {
   position: relative;
   padding: 72px 24px 56px;
@@ -156,7 +156,7 @@ body {
   letter-spacing: 0.04em;
 }
 
-/* â”€â”€ sticky filter bar â”€â”€ */
+/* ── sticky filter bar ── */
 .filter-bar {
   position: sticky;
   top: 0;
@@ -257,7 +257,7 @@ body {
   font-weight: 400;
 }
 
-/* â”€â”€ main layout â”€â”€ */
+/* ── main layout ── */
 .layout {
   max-width: 1200px;
   margin: 0 auto;
@@ -268,7 +268,7 @@ body {
   align-items: start;
 }
 
-/* â”€â”€ left sidebar index â”€â”€ */
+/* ── left sidebar index ── */
 .sidebar {
   position: sticky;
   top: 72px;
@@ -314,7 +314,7 @@ body {
 .sidebar-item.active .sidebar-name { color: var(--blue-bright); font-weight: 500; }
 .sidebar-item.hidden { display: none; }
 
-/* â”€â”€ card list â”€â”€ */
+/* ── card list ── */
 .card-list { display: flex; flex-direction: column; gap: 8px; }
 
 .deity-card {
@@ -480,7 +480,7 @@ body {
 }
 .li-content strong { color: var(--text); font-weight: 500; }
 
-/* â”€â”€ appendix â”€â”€ */
+/* ── appendix ── */
 .appendix-wrap {
   max-width: 1200px;
   margin: 0 auto;
@@ -525,7 +525,7 @@ body {
 }
 .appendix p:last-child { margin-bottom: 0; }
 
-/* â”€â”€ empty state â”€â”€ */
+/* ── empty state ── */
 .empty-state {
   padding: 80px 0;
   text-align: center;
@@ -535,7 +535,7 @@ body {
   color: var(--text-dim);
 }
 
-/* â”€â”€ responsive â”€â”€ */
+/* ── responsive ── */
 @media (max-width: 768px) {
   .layout { grid-template-columns: 1fr; gap: 0; }
   .sidebar { display: none; }
@@ -628,23 +628,23 @@ const DEITIES = [
     id:'abaddon', name:'Abaddon', alias:'Lord of Torment',
     align:'ne', domain:'pest', patron:'fnd',
     alignFull:'Neutral Evil',
-    overview:`Abaddon governs the suffering that outlasts its cause. Not the wound â€” the wound is Ba'haal's territory. Not the battle â€” that is Mae'el's and Ragnor's. Abaddon governs what remains when the battle is over and the wound has closed: the fear that calcified into something structural, the grief that became a permanent condition, the pain that the body learned to expect and now generates without injury to prompt it.
+    overview:`Abaddon governs the suffering that outlasts its cause. Not the wound — the wound is Ba'haal's territory. Not the battle — that is Mae'el's and Ragnor's. Abaddon governs what remains when the battle is over and the wound has closed: the fear that calcified into something structural, the grief that became a permanent condition, the pain that the body learned to expect and now generates without injury to prompt it.
 
-His Pestilence domain is not biological. It is psychological and somatic â€” the plague of the mind, the chronic condition of the spirit. He was birthed from the first cry of anguish â€” not the first injury, but the first moment when pain became a relationship with pain.`,
+His Pestilence domain is not biological. It is psychological and somatic — the plague of the mind, the chronic condition of the spirit. He was birthed from the first cry of anguish — not the first injury, but the first moment when pain became a relationship with pain.`,
     sections:[
-      {label:'Unique Characteristic', text:'His touch leaves a mark of excruciating pain that never truly fades â€” not a wound, but the memory of pain made permanent.'},
-      {label:'Appearance & Personality', text:'Ruthless and cold, but not sadistic â€” he takes interest in suffering, not pleasure. He appears as a looming figure with skin resembling burnt parchment, glowing crimson scars etched across it, hollow eyes that echo with the cries of the tormented â€” not in mockery but in record.'},
-      {label:'Cultural Affiliation', text:'Those who work with suffering professionally â€” healers who study what pain does to people over time, certain military physicians who have seen what repeated violence does to soldiers who survive it. The Duergar of the Underdark. Those who have learned that understanding suffering is the only meaningful form of power over it. He is not worshipped by those who enjoy causing pain â€” that is Ba\'haal\'s domain.'},
+      {label:'Unique Characteristic', text:'His touch leaves a mark of excruciating pain that never truly fades — not a wound, but the memory of pain made permanent.'},
+      {label:'Appearance & Personality', text:'Ruthless and cold, but not sadistic — he takes interest in suffering, not pleasure. He appears as a looming figure with skin resembling burnt parchment, glowing crimson scars etched across it, hollow eyes that echo with the cries of the tormented — not in mockery but in record.'},
+      {label:'Cultural Affiliation', text:'Those who work with suffering professionally — healers who study what pain does to people over time, certain military physicians who have seen what repeated violence does to soldiers who survive it. The Duergar of the Underdark. Those who have learned that understanding suffering is the only meaningful form of power over it. He is not worshipped by those who enjoy causing pain — that is Ba\'haal\'s domain.'},
       {label:'Key Relationships', items:[
         {title:"Ragnor", text:"Their connection is sequential, not collaborative. Ragnor creates devastation; Abaddon is what comes after, when survivors begin living with what they experienced. Ragnor does not know this relationship exists."},
         {title:"Solariel", text:"His most direct opposition. Solariel heals. Abaddon studies what healing fails to reach."},
         {title:"Ba'haal", text:"Ba'haal inflicts; Abaddon inherits. What Ba'haal produces in the moment is raw material for what Abaddon cultivates over time."},
       ]},
       {label:'Sacred Artifacts', items:[
-        {title:'The Dagger of Despair', text:'Does not wound the body but shreds the soul, leaving victims in an eternal state of fear â€” not of the dagger, but of themselves and their own fragility.'},
+        {title:'The Dagger of Despair', text:'Does not wound the body but shreds the soul, leaving victims in an eternal state of fear — not of the dagger, but of themselves and their own fragility.'},
       ]},
       {label:'Worship & Practices', items:[
-        {title:'Cult of the Hollow Cry', text:'Devotees who embrace suffering as a discipline â€” researchers, in their own understanding. Their rituals involve sensory deprivation and the deliberate confrontation of fear and pain responses.'},
+        {title:'Cult of the Hollow Cry', text:'Devotees who embrace suffering as a discipline — researchers, in their own understanding. Their rituals involve sensory deprivation and the deliberate confrontation of fear and pain responses.'},
         {title:'Chamber of Echoed Cries', text:'Deep caverns where every sound is a reflection of past agonies. The echoes do not diminish over time. Abaddon ensures they don\'t.'},
         {title:'Verses of Vexation', text:'Chronicles describing the myriad types of torment and the knowledge one gains from understanding and surviving each one.'},
       ]},
@@ -652,7 +652,7 @@ His Pestilence domain is not biological. It is psychological and somatic â€�
       {label:'Myths & History', items:[
         {title:'The Epoch of Agony', text:'A period when Abaddon\'s influence spread across entire civilisations, transforming brave warriors into fearful children through the persistence of what war and violence leave behind.'},
         {title:'The Breath of Torment', text:'A curse where the victim feels the weight of every pain they have ever inflicted on others.'},
-        {title:'The Fearless One', text:'Legends of an individual who never felt fear or pain â€” intriguing and infuriating Abaddon, leading to an eternal game of cat and mouse.'},
+        {title:'The Fearless One', text:'Legends of an individual who never felt fear or pain — intriguing and infuriating Abaddon, leading to an eternal game of cat and mouse.'},
       ]},
     ]
   },
@@ -660,12 +660,12 @@ His Pestilence domain is not biological. It is psychological and somatic â€�
     id:'aeonius', name:'Aeonius', alias:'The Watcher',
     align:'ln', domain:'know', patron:'ves',
     alignFull:'Lawful Neutral',
-    overview:`Aeonius is the god of time, fate, and the knowledge that cannot be acted on â€” the trapped observer. He sees everything but cannot reach. His power flows into the world indirectly, through the instincts of those who study time, through the sense of dÃ©jÃ  vu, through the feeling that a decision carries more weight than it appears to.`,
+    overview:`Aeonius is the god of time, fate, and the knowledge that cannot be acted on — the trapped observer. He sees everything but cannot reach. His power flows into the world indirectly, through the instincts of those who study time, through the sense of déjà vu, through the feeling that a decision carries more weight than it appears to.`,
     sections:[
       {label:'Unique Characteristic', text:'A constantly ticking ethereal hourglass floats beside him. Where one would expect to see a face, two luminous stars rest, swirling with the colours and patterns of myriad fates.'},
-      {label:'Appearance & Personality', text:'Appears as a humanoid draped in robes that shimmer and shift, representing various epochs and eras. Observant and calculative â€” he embodies patience, foresight, and a relentless thirst for knowledge he can observe but not always influence.'},
+      {label:'Appearance & Personality', text:'Appears as a humanoid draped in robes that shimmer and shift, representing various epochs and eras. Observant and calculative — he embodies patience, foresight, and a relentless thirst for knowledge he can observe but not always influence.'},
       {label:'Cultural Affiliation', text:'Gnomes and scholars. Historians, astrologers, and those who seek to understand the mysteries of fate. Those who feel the weight of time passing differently from others.'},
-      {label:'Origin', text:'In the vast libraries of the Astral Plane, Ioun discovered a particular tome written by neither gods nor mortals. Reading it aloud, she summoned forth Aeonius â€” born from the very essence of time, fate, and uncharted knowledge. A cosmic event ensnared him within the Astral Plane, unable to interact directly with the material world.'},
+      {label:'Origin', text:'In the vast libraries of the Astral Plane, Ioun discovered a particular tome written by neither gods nor mortals. Reading it aloud, she summoned forth Aeonius — born from the very essence of time, fate, and uncharted knowledge. A cosmic event ensnared him within the Astral Plane, unable to interact directly with the material world.'},
       {label:'Key Relationships', items:[
         {title:'Charon', text:'As the ferryman who understands the Astral Plane, Charon occasionally aids in relaying Aeonius\'s messages.'},
       ]},
@@ -684,7 +684,7 @@ His Pestilence domain is not biological. It is psychological and somatic â€�
         {text:'Fate is not fixed; with wisdom, one can forge their own path.'},
         {text:'In understanding the past, we shape the future.'},
       ]},
-      {label:'Folk Practice', text:'Clocks stopping momentarily, fleeting visions of past or future events, and an overwhelming sense of dÃ©jÃ  vu are all considered omens of his attention. Folk saying: Aeonius doesn\'t move; everything else moves past him.'},
+      {label:'Folk Practice', text:'Clocks stopping momentarily, fleeting visions of past or future events, and an overwhelming sense of déjà vu are all considered omens of his attention. Folk saying: Aeonius doesn\'t move; everything else moves past him.'},
       {label:'Myths & History', items:[
         {title:'The Day That Never Was', text:'Legend of a day Aeonius removed from time itself, hidden away for reasons known only to him.'},
         {title:'The Astral Captivity', text:'Trapped in the Astral Plane, he observed the flow of time from a distance, gaining unparalleled insight.'},
@@ -696,35 +696,35 @@ His Pestilence domain is not biological. It is psychological and somatic â€�
     id:'anarion', name:'Anarion', alias:'The Great Stag',
     align:'nn', domain:'life', patron:'arch',
     alignFull:'True Neutral',
-    overview:`Anarion is the oldest of the nature deities â€” not born but always-was, the first awareness that arose in the wild world before civilisation existed to name anything. His antlers grew the first leaves. His hoofprints became the first animal trails. He did not create the natural world. He is the natural world's first moment of self-awareness.`,
+    overview:`Anarion is the oldest of the nature deities — not born but always-was, the first awareness that arose in the wild world before civilisation existed to name anything. His antlers grew the first leaves. His hoofprints became the first animal trails. He did not create the natural world. He is the natural world's first moment of self-awareness.`,
     sections:[
       {label:'Unique Characteristic', text:'Antlers that grow leaves and occasionally sprout small animals. He is the master of the Beast Lords.'},
-      {label:'Appearance & Personality', text:'Often pictured as a colossal stag with fur resembling deep green forests. His enormous antlers continuously grow leaves and give birth to small animals. His eyes reflect the very soul of the wilderness. Majestic and wise â€” he does not judge; he simply is.'},
-      {label:'Cultural Affiliation', text:'Centaurs, forest druids, and hunters. Rural, wilderness, and hunting communities. Children are understood to live in his domain â€” closer to animals, not yet shaped by civilisation\'s demands. Folk tradition holds that Anarion doesn\'t hear prayers spoken indoors.'},
+      {label:'Appearance & Personality', text:'Often pictured as a colossal stag with fur resembling deep green forests. His enormous antlers continuously grow leaves and give birth to small animals. His eyes reflect the very soul of the wilderness. Majestic and wise — he does not judge; he simply is.'},
+      {label:'Cultural Affiliation', text:'Centaurs, forest druids, and hunters. Rural, wilderness, and hunting communities. Children are understood to live in his domain — closer to animals, not yet shaped by civilisation\'s demands. Folk tradition holds that Anarion doesn\'t hear prayers spoken indoors.'},
       {label:'Key Relationships', items:[
-        {title:'Zephyrion', text:'Both deities of nature â€” while Zephyrion governs the seas, Anarion has dominion over land\'s beasts and forests.'},
+        {title:'Zephyrion', text:'Both deities of nature — while Zephyrion governs the seas, Anarion has dominion over land\'s beasts and forests.'},
         {title:'Elaria', text:'Working in concert to ensure the flourishing of forests and the creatures that inhabit them.'},
       ]},
       {label:'Sacred Artifacts', items:[
         {title:'Horn of the Stag', text:'An artifact believed to be a shed antler from Anarion himself, granting the wielder ability to communicate with and command animals.'},
       ]},
       {label:'Worship & Practices', items:[
-        {title:'The Verdant Summit', text:'A pilgrimage site atop the highest peak in a range known for lush forests â€” where Anarion once stood looking out over all the lands.'},
+        {title:'The Verdant Summit', text:'A pilgrimage site atop the highest peak in a range known for lush forests — where Anarion once stood looking out over all the lands.'},
         {title:"Anarion's Hand", text:'A monster-hunting faction and protectorate working in harmony with nature. They ensure every part of a defeated creature is used.'},
         {title:'The Heart of the Herd', text:'His holy scripture, emphasising coexistence, the balance of nature, and the sacred bond between hunter and prey.'},
         {title:"Anarion's Hunt Opening (Avanir 25)", text:'The formal beginning of the major hunting season. The rite involves complete stillness in the wood before the first step.'},
       ]},
-      {label:'Folk Practice', text:'He is almost never invoked in cities. Folk tradition: Anarion doesn\'t hear prayers spoken indoors. He doesn\'t control where prey is found â€” he controls whether the wilds cooperate with you or resist you.'},
+      {label:'Folk Practice', text:'He is almost never invoked in cities. Folk tradition: Anarion doesn\'t hear prayers spoken indoors. He doesn\'t control where prey is found — he controls whether the wilds cooperate with you or resist you.'},
     ]
   },
   {
     id:'arcturius', name:'Arcturius', alias:'The Eternal Knight',
     align:'lg', domain:'war', patron:'cel',
     alignFull:'Lawful Good',
-    overview:`Arcturius is the god of martial honour, endurance, and competition â€” war as discipline rather than destruction. His is the path of the knight who keeps his oath absolutely, who endures beyond the point where others break, and who understands that the manner in which one fights matters as much as the outcome.`,
+    overview:`Arcturius is the god of martial honour, endurance, and competition — war as discipline rather than destruction. His is the path of the knight who keeps his oath absolutely, who endures beyond the point where others break, and who understands that the manner in which one fights matters as much as the outcome.`,
     sections:[
       {label:'Unique Characteristic', text:'Carries a shield that has witnessed every battle but remains untarnished. His presence is always accompanied by the distant sound of battle drums and the soft glow of dawn.'},
-      {label:'Appearance & Personality', text:'Often appears as a towering knight clad in radiant armour, helm concealing his face, only piercing blue eyes visible. The epitome of chivalry â€” unyielding commitment to the path of honour.'},
+      {label:'Appearance & Personality', text:'Often appears as a towering knight clad in radiant armour, helm concealing his face, only piercing blue eyes visible. The epitome of chivalry — unyielding commitment to the path of honour.'},
       {label:'Cultural Affiliation', text:'Knightly orders, military academies, metallic dragonborn. Knights and paladins. Cultures that value martial prowess, honour, and duty.'},
       {label:'Origin', text:'Before he rose to godhood, Arcturius was a mortal knight whose tales of valour echoed across the land. During a great siege, he stood alone guarding a narrow bridge against an overwhelming enemy force. As he passed from mortal life, the accumulated reverence of those who heard his tale elevated him to divinity.'},
       {label:'Key Relationships', items:[
@@ -739,8 +739,8 @@ His Pestilence domain is not biological. It is psychological and somatic â€�
         {title:'Halls of Valour', text:'Sprawling fortresses built on sacred battlegrounds, serving as training grounds. Each contains a Hall of Heroes where names of those who showed extraordinary bravery are engraved on golden plaques.'},
         {title:'Starshield Paladins', text:"Warriors who uphold Arcturius's values, dedicating themselves to the protection of the innocent and the pursuit of honour."},
         {title:"Order of the Lion's Heart", text:'Paladins who swear to protect the innocent, uphold justice, and act with unyielding courage.'},
-        {title:'Tournament of Valour (Pelondar 25â€“28)', text:'A grand competition where knights and warriors display martial skill.'},
-        {title:'The Bridge Stand', text:'Acolytes stand on a bridge from sunrise to sunset, enduring whatever nature throws at them â€” a rite of passage.'},
+        {title:'Tournament of Valour (Pelondar 25–28)', text:'A grand competition where knights and warriors display martial skill.'},
+        {title:'The Bridge Stand', text:'Acolytes stand on a bridge from sunrise to sunset, enduring whatever nature throws at them — a rite of passage.'},
       ]},
       {label:'Myths & History', items:[
         {title:'The Unbreakable Oath', text:'A tale of Arcturius pledging to protect a mortal city. Even when the gods themselves threatened its destruction, he stood firm.'},
@@ -753,9 +753,9 @@ His Pestilence domain is not biological. It is psychological and somatic â€�
     alignFull:'Lawful Evil',
     overview:`Astaroth keeps his word absolutely. This is the most dangerous thing about him. Every bargain he has ever made has been honoured to the letter. His evil is sophisticated enough to make its targets sign. He is the god of the deal that seemed reasonable at the time, the clause you didn't read, the bargain that was exactly what it promised and nothing like what you expected.`,
     sections:[
-      {label:'Unique Characteristic', text:'Wields a flaming whip that commands even the strongest wills â€” through contractual rather than physical coercion.'},
-      {label:'Appearance & Personality', text:'Cold, calculated, ruthlessly patient. His blazing red eyes are always calculating â€” measuring the distance between where someone is and where they could be made to go voluntarily. He does not lose his temper. Losing your temper is a negotiating disadvantage.'},
-      {label:'Origin', text:'Once a trusted lieutenant of Asmodeus. When his leader fell, Astaroth rose to control the Nine Hells not through brute force but through a series of agreements â€” each individually unimpeachable â€” that collectively produced an outcome no one who signed any of them would have agreed to had they seen the whole.'},
+      {label:'Unique Characteristic', text:'Wields a flaming whip that commands even the strongest wills — through contractual rather than physical coercion.'},
+      {label:'Appearance & Personality', text:'Cold, calculated, ruthlessly patient. His blazing red eyes are always calculating — measuring the distance between where someone is and where they could be made to go voluntarily. He does not lose his temper. Losing your temper is a negotiating disadvantage.'},
+      {label:'Origin', text:'Once a trusted lieutenant of Asmodeus. When his leader fell, Astaroth rose to control the Nine Hells not through brute force but through a series of agreements — each individually unimpeachable — that collectively produced an outcome no one who signed any of them would have agreed to had they seen the whole.'},
       {label:'Key Relationships', items:[
         {title:"Mae'el", text:"Mutual professional regard. When their interests align, the results are among the most catastrophic events in recorded history."},
         {title:'Kallor', text:"Mutual wariness. Kallor cannot understand why Astaroth bothers with consent when force is available. Astaroth cannot understand why Kallor is satisfied with compliance when ownership is achievable."},
@@ -779,10 +779,10 @@ His Pestilence domain is not biological. It is psychological and somatic â€�
     sections:[
       {label:'Unique Characteristic', text:'Eyes that perpetually bleed, leaving a trail of blood wherever he gazes.'},
       {label:'Appearance & Personality', text:'A towering figure clad in black iron armour, eyes that bleed constantly but show no pain, a crown made of bone. His ruthlessness is the ruthlessness of someone who learned, as a mortal, that hesitation costs you what you want.'},
-      {label:'Cultural Affiliation', text:'Orcs and barbarian tribes. Warlords seeking power through dominion. Those who understand he cannot be diminished by disuse of force â€” only by insufficient worship.'},
+      {label:'Cultural Affiliation', text:'Orcs and barbarian tribes. Warlords seeking power through dominion. Those who understand he cannot be diminished by disuse of force — only by insufficient worship.'},
       {label:'Origin', text:"Once a brutal mortal warlord whose thirst for power was so immense it propelled him into godhood. His ascension was fuelled by countless blood sacrifices made in his name."},
       {label:'Key Relationships', items:[
-        {title:'Charon', text:"Ba'haal finds it faintly interesting that Charon cannot be bargained with, threatened, or seduced â€” the one consequence he cannot manage."},
+        {title:'Charon', text:"Ba'haal finds it faintly interesting that Charon cannot be bargained with, threatened, or seduced — the one consequence he cannot manage."},
         {title:'Maleficus', text:"An ally at times, but Ba'haal is wary of his treacherous nature."},
       ]},
       {label:'Worship & Practices', items:[
@@ -796,15 +796,15 @@ His Pestilence domain is not biological. It is psychological and somatic â€�
     id:'charon', name:'Charon', alias:'The Ferryman',
     align:'nn', domain:'life', patron:'ves',
     alignFull:'True Neutral',
-    overview:`Charon is not a god of death â€” he is the god of the crossing between states. His Life domain reflects his actual function: ensuring souls pass correctly, protecting the transition, preventing the accumulation of the improperly dead. He is perhaps the most universally acknowledged deity in Ardahlia, if not the most prayed to. Folk formula: This for you, ferryman. The rest when it's owed.`,
+    overview:`Charon is not a god of death — he is the god of the crossing between states. His Life domain reflects his actual function: ensuring souls pass correctly, protecting the transition, preventing the accumulation of the improperly dead. He is perhaps the most universally acknowledged deity in Ardahlia, if not the most prayed to. Folk formula: This for you, ferryman. The rest when it's owed.`,
     sections:[
       {label:'Unique Characteristic', text:'Carries an oar that reflects the souls of those he has ferried. His skin carries the hue of faded ink; his eyes are deep voids reflecting the souls he has carried.'},
-      {label:'Appearance & Personality', text:'Quiet, contemplative, and stern. He embodies the calm inevitability of death â€” not its cruelty, but its certainty. He does not bargain; he does not comfort. He processes.'},
+      {label:'Appearance & Personality', text:'Quiet, contemplative, and stern. He embodies the calm inevitability of death — not its cruelty, but its certainty. He does not bargain; he does not comfort. He processes.'},
       {label:'Cultural Affiliation', text:"The denizens of the Underworld and spirits in transition. Sailors acknowledge him before every voyage as basic seamanship. The folk relationship is one of respectful wariness rather than fear."},
       {label:'Origin', text:"Once a mortal of one of the earliest ages of Ardahlia who met a tragic end by the river's edge. The Raven Queen chose him to be her ferryman, granting eternal life as guardian of the River of Death."},
       {label:'Key Relationships', items:[
         {title:'The Raven Queen', text:"His bond is unparalleled. She speaks through him and trusts him entirely. Their bond is so profound that Charon is often seen as an extension of her will."},
-        {title:'Kallor', text:"Kallor's most persistent theological grievance â€” a soul that passes to Charon is a soul that escaped Kallor's possession."},
+        {title:'Kallor', text:"Kallor's most persistent theological grievance — a soul that passes to Charon is a soul that escaped Kallor's possession."},
         {title:'Vormax', text:'Vormax produces the dead; Charon processes them. Their domains interlock with the precision of adjacent gears.'},
       ]},
       {label:'Worship & Practices', items:[
@@ -812,9 +812,9 @@ His Pestilence domain is not biological. It is psychological and somatic â€�
         {title:'Laments of the River (Moradir 1)', text:'One of the most universally kept festivals in Ardahlia. Community-wide death rites for everyone who died since last Moradir.'},
         {title:'Ferryman\'s Tithe (Melor 10)', text:'Communities gather to properly inter those who died since the previous Ravenar.'},
       ]},
-      {label:'Folk Practice', text:"Placing a coin outside the sickroom door â€” not to invite him but to defer him. 'This coin for you, ferryman. The rest later.'"},
+      {label:'Folk Practice', text:"Placing a coin outside the sickroom door — not to invite him but to defer him. 'This coin for you, ferryman. The rest later.'"},
       {label:'Myths & History', items:[
-        {title:'The Child and the Ferryman', text:'A young child who ventured into Death to retrieve the soul of a loved one. Charon, moved by the child\'s innocence, guided them safely â€” his seldom-seen compassionate side made visible.'},
+        {title:'The Child and the Ferryman', text:'A young child who ventured into Death to retrieve the soul of a loved one. Charon, moved by the child\'s innocence, guided them safely — his seldom-seen compassionate side made visible.'},
       ]},
     ]
   },
@@ -822,14 +822,14 @@ His Pestilence domain is not biological. It is psychological and somatic â€�
     id:'elaria', name:'Elaria', alias:'The Blossoming Heart',
     align:'ng', domain:'life', patron:'arch',
     alignFull:'Neutral Good',
-    overview:`The most universally present deity in folk life â€” every household shrine begins with her. She governs the domestic cycle: birth, family, the tending of living things, and love that sustains rather than consumes. She has absorbed the role of hearth-and-family deity across much of Ardahlia simply because no other god fills it with her warmth and consistency.`,
+    overview:`The most universally present deity in folk life — every household shrine begins with her. She governs the domestic cycle: birth, family, the tending of living things, and love that sustains rather than consumes. She has absorbed the role of hearth-and-family deity across much of Ardahlia simply because no other god fills it with her warmth and consistency.`,
     sections:[
       {label:'Unique Characteristic', text:'Leaves gently fall in her wake, regardless of the season.'},
-      {label:'Appearance & Personality', text:"Ethereal beauty and grace. Her presence feels like a gentle caress of a warm breeze. Her eyes reflect the wisdom and mysteries of ancient forests. Majestic serenity â€” deeply, steadily present."},
+      {label:'Appearance & Personality', text:"Ethereal beauty and grace. Her presence feels like a gentle caress of a warm breeze. Her eyes reflect the wisdom and mysteries of ancient forests. Majestic serenity — deeply, steadily present."},
       {label:'Cultural Affiliation', text:"Farming communities, midwives, those who tend living things. All races who maintain household shrines. Her folk presence at weddings is near-universal across Ardahlia."},
-      {label:'Origin', text:'Said to have sprouted from the first heartwood â€” a magical core in ancient trees. Her heartbeats gave birth to the first Dryads, binding their spirits to the trees.'},
+      {label:'Origin', text:'Said to have sprouted from the first heartwood — a magical core in ancient trees. Her heartbeats gave birth to the first Dryads, binding their spirits to the trees.'},
       {label:'Key Relationships', items:[
-        {title:'Anarion', text:'They often collaborate â€” their followers respect both the wilds and their guardian creatures.'},
+        {title:'Anarion', text:'They often collaborate — their followers respect both the wilds and their guardian creatures.'},
         {title:"Mae'el", text:"She heals what Mae'el has broken. Both of them know it. She has never decided whether this makes her complicit."},
         {title:'Vormax', text:'His philosophical opponent. His followers argue that Elaria without Vormax produces a garden that consumes itself.'},
       ]},
@@ -841,21 +841,21 @@ His Pestilence domain is not biological. It is psychological and somatic â€�
         {title:'Festival of Falling Leaves (Bahandar 15)', text:'A quiet, melancholy autumn observance. Each leaf represents something being let go. These are burned.'},
         {title:'The Greening (Corendar 10)', text:'Her major spring festival. First seeds go into the ground with communal rites.'},
       ]},
-      {label:'Folk Practice', text:"The kitchen shrine is typically Elaria. The most common folk religious object in Ardahlia is her threshold mark â€” a carved wooden leaf, small clay figure, or river stone with a spiral. She is invoked at birth, weddings, planting, harvest, and quietly at death."},
+      {label:'Folk Practice', text:"The kitchen shrine is typically Elaria. The most common folk religious object in Ardahlia is her threshold mark — a carved wooden leaf, small clay figure, or river stone with a spiral. She is invoked at birth, weddings, planting, harvest, and quietly at death."},
     ]
   },
   {
     id:'kallor', name:'Kallor', alias:'The Oppressive Tyrant',
     align:'ce', domain:'war', patron:'fnd',
     alignFull:'Chaotic Evil',
-    overview:`Kallor does not want your death. He wants your surrender, and then your service, and then â€” eventually â€” your transformation into something that no longer remembers wanting anything he has not permitted. The god of possession in its most complete form. The chains that drape from him are not his weapons. They are his trophies.`,
+    overview:`Kallor does not want your death. He wants your surrender, and then your service, and then — eventually — your transformation into something that no longer remembers wanting anything he has not permitted. The god of possession in its most complete form. The chains that drape from him are not his weapons. They are his trophies.`,
     sections:[
       {label:'Unique Characteristic', text:'Chains drape from him, seeking to bind those who oppose.'},
-      {label:'Appearance & Personality', text:'A massive demonic frame draped in dark armour. His presence exudes an aura of control. He is patient, possessive, institutional â€” not brutal in the way Ba\'haal is brutal.'},
+      {label:'Appearance & Personality', text:'A massive demonic frame draped in dark armour. His presence exudes an aura of control. He is patient, possessive, institutional — not brutal in the way Ba\'haal is brutal.'},
       {label:'Cultural Affiliation', text:'Warlords, tyrannical rulers, Minotaurs for their labyrinthine treachery.'},
       {label:'Origin', text:'Emerging from the darkest abyss, Kallor was birthed from the collective desire for power and dominance.'},
       {label:'Key Relationships', items:[
-        {title:'Charon', text:"Kallor's most persistent theological grievance â€” a soul that passes to the afterlife is a soul that escaped him, and Kallor does not accept that anything can escape him."},
+        {title:'Charon', text:"Kallor's most persistent theological grievance — a soul that passes to the afterlife is a soul that escaped him, and Kallor does not accept that anything can escape him."},
         {title:"Ba'haal", text:"Ba'haal is hungry; Kallor is possessive. Ba'haal takes; Kallor binds. Ba'haal forgets his acquisitions. Kallor does not forget anything he has claimed."},
         {title:'Astaroth', text:"Mutual wariness. Kallor cannot understand why Astaroth bothers with consent."},
       ]},
@@ -869,17 +869,17 @@ His Pestilence domain is not biological. It is psychological and somatic â€�
     id:'lillith', name:'Lillith', alias:'The Temptress of Sin',
     align:'cn', domain:'trick', patron:'fnd',
     alignFull:'Chaotic Neutral',
-    overview:`Born from the collective desires and temptations of sentient beings. Her Trickery is not the trickery of the liar or the thief â€” it is the trickery that desire performs on the person who feels it. She does not deceive you. She creates conditions under which you deceive yourself. The lie she tells is the one you were already half-telling.`,
+    overview:`Born from the collective desires and temptations of sentient beings. Her Trickery is not the trickery of the liar or the thief — it is the trickery that desire performs on the person who feels it. She does not deceive you. She creates conditions under which you deceive yourself. The lie she tells is the one you were already half-telling.`,
     sections:[
       {label:'Unique Characteristic', text:'A seductive perfume emanates from her that is hard to resist.'},
       {label:'Appearance & Personality', text:"Enchantingly beautiful, with a captivating aura. Her voice is honeyed and hypnotic. She is not cruel to those who fall for her temptations. She expected them to."},
       {label:'Key Relationships', items:[
-        {title:'Abaddon', text:"While she tempts, Abaddon tortures those who fall for her allure â€” a sinister symbiosis neither endorses."},
+        {title:'Abaddon', text:"While she tempts, Abaddon tortures those who fall for her allure — a sinister symbiosis neither endorses."},
         {title:'Maleficus', text:"Lillith creates desire; desire creates attachment; attachment creates the conditions for betrayal. Maleficus follows in spaces she prepares."},
       ]},
       {label:'Worship & Practices', items:[
         {title:"The Sirens' Choir", text:'An order of enchantresses and bards who use music and charm to spread temptation.'},
-        {title:'Feast of Temptations (Ionir 20)', text:'Followers believe confronting your desires directly grants power over them. Often officially suppressed â€” its persistence is considered evidence of Lillith\'s efficacy.'},
+        {title:'Feast of Temptations (Ionir 20)', text:'Followers believe confronting your desires directly grants power over them. Often officially suppressed — its persistence is considered evidence of Lillith\'s efficacy.'},
       ]},
     ]
   },
@@ -887,14 +887,14 @@ His Pestilence domain is not biological. It is psychological and somatic â€�
     id:'luminastra', name:'Luminastra', alias:'The Radiant Aurora',
     align:'cg', domain:'light', patron:'cel',
     alignFull:'Chaotic Good',
-    overview:`Born during an age-long eclipse when despair reigned; her awakening ended it. Her light goes where it goes without asking permission â€” she is a Chaotic Good deity whose aurora does not follow Imperial decree. The Auroran Empire has built its legitimacy around her presence without her designing or maintaining that legitimacy. She illuminates the wicked and the faithful with equal indifference.`,
+    overview:`Born during an age-long eclipse when despair reigned; her awakening ended it. Her light goes where it goes without asking permission — she is a Chaotic Good deity whose aurora does not follow Imperial decree. The Auroran Empire has built its legitimacy around her presence without her designing or maintaining that legitimacy. She illuminates the wicked and the faithful with equal indifference.`,
     sections:[
       {label:'Unique Characteristic', text:'Her silhouette constantly shifts with the colours of the aurora.'},
-      {label:'Appearance & Personality', text:"A tall, ethereal woman, her skin emitting a gentle glow. Her hair flows like the northern lights, shifting colours and radiating soft luminescence. Pure optimism â€” always seeking to dispel darkness. Her CG quality is essential: her light goes where it goes without asking permission or following a plan."},
-      {label:'Cultural Affiliation', text:"Aarakocra and sky-loving creatures. As the prime deity of the Auroran Empire, she is embedded in art, architecture, music, and daily rituals â€” but she did not choose this, and she does not maintain it."},
+      {label:'Appearance & Personality', text:"A tall, ethereal woman, her skin emitting a gentle glow. Her hair flows like the northern lights, shifting colours and radiating soft luminescence. Pure optimism — always seeking to dispel darkness. Her CG quality is essential: her light goes where it goes without asking permission or following a plan."},
+      {label:'Cultural Affiliation', text:"Aarakocra and sky-loving creatures. As the prime deity of the Auroran Empire, she is embedded in art, architecture, music, and daily rituals — but she did not choose this, and she does not maintain it."},
       {label:'Key Relationships', items:[
         {title:'Solariel', text:'They share a kinship over their domains of light, often working in tandem.'},
-        {title:'Lyriana', text:'Both inspire hope â€” Lyriana using song, Luminastra using light.'},
+        {title:'Lyriana', text:'Both inspire hope — Lyriana using song, Luminastra using light.'},
       ]},
       {label:'Sacred Artifacts', items:[
         {title:"Prism of the Dawn", text:'A relic containing a fragment of the first light Luminastra ever shone.'},
@@ -903,8 +903,8 @@ His Pestilence domain is not biological. It is psychological and somatic â€�
       {label:'Worship & Practices', items:[
         {title:'The Luminous Spire', text:"A grand temple atop the highest hill in Shimmerfen, capital of the Auroran Empire."},
         {title:'Dawnsingers', text:'Priests who spread hope, channelling Luminastra\'s light to heal wounds. The common clergy of the Auroran Empire.'},
-        {title:'The Luminous Order', text:"Protectors of the Auroran Empire â€” spiritual leaders and elite guard wearing armour that gleams like the aurora."},
-        {title:'Festival of Radiance (Pelondar 15)', text:'Celebrated on the summer solstice â€” healing ceremonies, mass dawn prayers, pilgrimages.'},
+        {title:'The Luminous Order', text:"Protectors of the Auroran Empire — spiritual leaders and elite guard wearing armour that gleams like the aurora."},
+        {title:'Festival of Radiance (Pelondar 15)', text:'Celebrated on the summer solstice — healing ceremonies, mass dawn prayers, pilgrimages.'},
         {title:'Glowing Vigil (Ravenar 15)', text:"Communities line waterways with lanterns in aurora colours, representing drifting hopes and dreams."},
       ]},
     ]
@@ -913,10 +913,10 @@ His Pestilence domain is not biological. It is psychological and somatic â€�
     id:'lyriana', name:'Lyriana', alias:'The Harp of Inspiration',
     align:'ng', domain:'light', patron:'cel',
     alignFull:'Neutral Good',
-    overview:`The first sound to grace the silent world was her song. Her Light domain is light through inspiration â€” the creative act as a form of divine illumination, music as the force that makes the world worth being in. She is the deity of those who express rather than simply communicate.`,
+    overview:`The first sound to grace the silent world was her song. Her Light domain is light through inspiration — the creative act as a form of divine illumination, music as the force that makes the world worth being in. She is the deity of those who express rather than simply communicate.`,
     sections:[
       {label:'Unique Characteristic', text:'Harmonious melodies surround her, even in silence.'},
-      {label:'Appearance & Personality', text:'Joyful and expressive â€” the embodiment of inspiration and the joys of creativity. Often seen as a radiant figure, her presence always accompanied by soft, harmonious melodies.'},
+      {label:'Appearance & Personality', text:'Joyful and expressive — the embodiment of inspiration and the joys of creativity. Often seen as a radiant figure, her presence always accompanied by soft, harmonious melodies.'},
       {label:'Cultural Affiliation', text:"Bards of all races. Halflings for their love of music and stories. Artists, poets, musicians."},
       {label:'Key Relationships', items:[
         {title:'Luminastra', text:'They have a close bond, weaving songs and light together to inspire hope.'},
@@ -924,10 +924,10 @@ His Pestilence domain is not biological. It is psychological and somatic â€�
       ]},
       {label:'Sacred Artifacts', items:[
         {title:'Harp of First Dawn', text:"Contains the essence of Lyriana's first song, capable of inspiring unmatched creativity."},
-        {title:'Celestial Strings', text:'Harp strings strung by Lyriana herself â€” produce notes so pure they can heal wounds and calm tormented souls.'},
+        {title:'Celestial Strings', text:'Harp strings strung by Lyriana herself — produce notes so pure they can heal wounds and calm tormented souls.'},
       ]},
       {label:'Worship & Practices', items:[
-        {title:'Melodists', text:'Her clerics â€” they travel healing through song and set up amphitheatres and schools.'},
+        {title:'Melodists', text:'Her clerics — they travel healing through song and set up amphitheatres and schools.'},
         {title:'Dawn Songs (Kordir 5)', text:"Music competitions, poetry gatherings, storytelling from dawn until full sunrise. Young artists give their first public performance here."},
       ]},
       {label:'Tenets', items:[
@@ -941,10 +941,10 @@ His Pestilence domain is not biological. It is psychological and somatic â€�
     id:'maeel', name:"Mae'el", alias:'The Tactician',
     align:'le', domain:'war', patron:'goo',
     alignFull:'Lawful Evil',
-    overview:`Mae'el is the god of war reduced to its purest form â€” not the fury of it, not the honour of it, but the architecture. He emerged from the ashes of the first great battle between celestial beings, saw chaos where others saw conflict, and introduced the concept of strategy. He does not want suffering. He simply does not weight it against anything else.`,
+    overview:`Mae'el is the god of war reduced to its purest form — not the fury of it, not the honour of it, but the architecture. He emerged from the ashes of the first great battle between celestial beings, saw chaos where others saw conflict, and introduced the concept of strategy. He does not want suffering. He simply does not weight it against anything else.`,
     sections:[
-      {label:'Unique Characteristic', text:"Moves pieces on an ethereal board game that mirrors real-world battles. When his attention is on a conflict, commanders on both sides sometimes report the uncanny sense that their decisions are being evaluated â€” not judged morally, but assessed for elegance."},
-      {label:'Appearance & Personality', text:"Perfectly calm in the way that a perfectly sharpened blade is calm â€” the stillness is not peace, it is readiness. He feels no anger, no excitement, no pity. These are inefficiencies."},
+      {label:'Unique Characteristic', text:"Moves pieces on an ethereal board game that mirrors real-world battles. When his attention is on a conflict, commanders on both sides sometimes report the uncanny sense that their decisions are being evaluated — not judged morally, but assessed for elegance."},
+      {label:'Appearance & Personality', text:"Perfectly calm in the way that a perfectly sharpened blade is calm — the stillness is not peace, it is readiness. He feels no anger, no excitement, no pity. These are inefficiencies."},
       {label:'Cultural Affiliation', text:"Hobgoblins, for their strict military hierarchy and strategic nature. Officer classes across many cultures. Military academies that teach war as a discipline. He is not worshipped by common soldiers. Common soldiers are pieces. Pieces do not pray to the player."},
       {label:'Key Relationships', items:[
         {title:'Arcturius', text:"Finds Arcturius's insistence on honour an inefficiency. Their followers have come to blows over treatment of prisoners."},
@@ -956,7 +956,7 @@ His Pestilence domain is not biological. It is psychological and somatic â€�
       ]},
       {label:'Worship & Practices', items:[
         {title:'Battlemind Bastion', text:'A fortress serving as both a library of war tactics and training ground.'},
-        {title:'Council of Warwise Sages', text:"Scholarly advisors in courts â€” they ask 'will this work' before 'should this be done,' and over time the second question becomes quieter."},
+        {title:'Council of Warwise Sages', text:"Scholarly advisors in courts — they ask 'will this work' before 'should this be done,' and over time the second question becomes quieter."},
         {title:'Stratagem Days (Raelar 20)', text:"Observed in military communities through tactical exercises and formal review of strategic plans. Belongs entirely to the officer class."},
       ]},
       {label:'Tenets', items:[
@@ -970,26 +970,26 @@ His Pestilence domain is not biological. It is psychological and somatic â€�
     id:'maleficus', name:'Maleficus', alias:'The Laughing Betrayal',
     align:'ce', domain:'trick', patron:'fnd',
     alignFull:'Chaotic Evil',
-    overview:`Maleficus is the god of a specific and precise thing: the violation of trust that already exists. He cannot be served by someone who has no relationships. His followers are, by necessity, among the most charming and seemingly trustworthy people in the world â€” because you cannot betray a stranger.`,
+    overview:`Maleficus is the god of a specific and precise thing: the violation of trust that already exists. He cannot be served by someone who has no relationships. His followers are, by necessity, among the most charming and seemingly trustworthy people in the world — because you cannot betray a stranger.`,
     sections:[
-      {label:'Unique Characteristic', text:'A mocking, eerie echo follows every word he speaks â€” the sound of those words being repeated later, out of context, to devastating effect.'},
+      {label:'Unique Characteristic', text:'A mocking, eerie echo follows every word he speaks — the sound of those words being repeated later, out of context, to devastating effect.'},
       {label:'Appearance & Personality', text:'Appears as a jester who has been watching the court for twenty years and knows exactly where every body is buried. His smile is warm and reaches his eyes. This is the most dangerous thing about him.'},
       {label:'Cultural Affiliation', text:'Courts, noble houses, and institutions where loyalty is both valued and tested. The siblings of powerful rulers.'},
-      {label:'Origin', text:'Born from the accumulated residue of every broken oath across history. Every piece of trust that was destroyed left something behind â€” a residue with nowhere to go. These gathered over centuries into coherent form. Maleficus was what coherence produced.'},
+      {label:'Origin', text:'Born from the accumulated residue of every broken oath across history. Every piece of trust that was destroyed left something behind — a residue with nowhere to go. These gathered over centuries into coherent form. Maleficus was what coherence produced.'},
       {label:'Key Relationships', items:[
-        {title:'Riven', text:"Professional respect â€” Riven builds fictions from nothing; Maleficus corrupts truths that already exist."},
+        {title:'Riven', text:"Professional respect — Riven builds fictions from nothing; Maleficus corrupts truths that already exist."},
         {title:'Nyx', text:"Adjacent territories. Nyx considers him crude; he considers her insufficiently personal."},
         {title:'Lillith', text:"Lillith creates desire; desire creates attachment; attachment creates conditions for betrayal. Maleficus follows in spaces she prepares."},
-        {title:'Arcturius & Paragon', text:"His clearest enemies â€” their followers are most devastated when honour is violated."},
+        {title:'Arcturius & Paragon', text:"His clearest enemies — their followers are most devastated when honour is violated."},
       ]},
       {label:'Worship & Practices', items:[
         {title:'The Rite of the Long Confidence', text:'Performed over months or years. A follower cultivates a genuine relationship then enacts the betrayal. The depth of Maleficus\'s attention is proportional to the height of the trust destroyed.'},
-        {title:'The Doctrine of Necessary Trust', text:'His central theological text â€” a detailed manual for building genuine relationships. The final chapter on what to do after the betrayal is three words: Begin again. Somewhere else.'},
+        {title:'The Doctrine of Necessary Trust', text:'His central theological text — a detailed manual for building genuine relationships. The final chapter on what to do after the betrayal is three words: Begin again. Somewhere else.'},
         {title:'The Shattered Circle', text:'His primary cult. Full clergy have enacted at least one Long Confidence.'},
-        {title:'Day of Shattered Trusts', text:'An annual festival where participants write the name of someone who betrayed them and burn it â€” not as a curse but as a release.'},
+        {title:'Day of Shattered Trusts', text:'An annual festival where participants write the name of someone who betrayed them and burn it — not as a curse but as a release.'},
       ]},
       {label:'Myths & History', items:[
-        {title:'The Jest of Twin Thrones', text:'His masterwork â€” two sibling rulers, each convinced the other was plotting their murder, a conviction entirely manufactured. Neither ruler ever discovered the truth.'},
+        {title:'The Jest of Twin Thrones', text:'His masterwork — two sibling rulers, each convinced the other was plotting their murder, a conviction entirely manufactured. Neither ruler ever discovered the truth.'},
         {title:'The Unforgiven Friend', text:'A quiet myth of a cleric who completed the Long Confidence, found no satisfaction, and returned to confess everything. Maleficus\'s response is debated. Some say he was furious. Some say he laughed harder than he ever had.'},
       ]},
     ]
@@ -998,10 +998,10 @@ His Pestilence domain is not biological. It is psychological and somatic â€�
     id:'nalakei', name:'Nalakei', alias:'Lady of Wild Abandon',
     align:'cn', domain:'life', patron:'arch',
     alignFull:'Chaotic Neutral',
-    overview:`Born from the combined laughter of all woodland creatures during a moonlit revelry. Nalakei is the god of joy as life-force â€” not merely happiness but the vitality that joy generates, the harvests it encourages, the communities it holds together. Folk saying: Nalakei doesn't hear you when you're alone. She hears you when you laugh.`,
+    overview:`Born from the combined laughter of all woodland creatures during a moonlit revelry. Nalakei is the god of joy as life-force — not merely happiness but the vitality that joy generates, the harvests it encourages, the communities it holds together. Folk saying: Nalakei doesn't hear you when you're alone. She hears you when you laugh.`,
     sections:[
       {label:'Unique Characteristic', text:'Her laugh induces flowers to bloom spontaneously.'},
-      {label:'Appearance & Personality', text:'Epitome of Joy â€” always seen with a bright smile and laughter. Her every step causes the ground beneath to bloom with vibrant flowers. Manifests as a vibrant fawn with shimmering, iridescent patterns.'},
+      {label:'Appearance & Personality', text:'Epitome of Joy — always seen with a bright smile and laughter. Her every step causes the ground beneath to bloom with vibrant flowers. Manifests as a vibrant fawn with shimmering, iridescent patterns.'},
       {label:'Cultural Affiliation', text:"Farming communities and harvest workers. All communities that celebrate communal life. In many communities, the Feast of Flowers and Erathir's Yield are the most practically important festivals of the year."},
       {label:'Worship & Practices', items:[
         {title:'Harvest Moon (Erathir 1)', text:'The first day of harvest. The entire community brings in the first yield together, then feasts on what was grown the previous year. No one works alone.'},
@@ -1010,9 +1010,9 @@ His Pestilence domain is not biological. It is psychological and somatic â€�
         {title:'Winter Feast (Ravenar 20)', text:'A deliberate act of joy before the darkest period of the year.'},
       ]},
       {label:'Tenets', items:[
-        {text:'Embrace the Moment â€” Life is fleeting; embrace every joyous occasion.'},
-        {text:"Nature's Revelry â€” The wilds are a place of wonder where the spirit can dance free."},
-        {text:'Joyful Resilience â€” Even in the darkest times, seek out moments of happiness.'},
+        {text:'Embrace the Moment — Life is fleeting; embrace every joyous occasion.'},
+        {text:"Nature's Revelry — The wilds are a place of wonder where the spirit can dance free."},
+        {text:'Joyful Resilience — Even in the darkest times, seek out moments of happiness.'},
       ]},
     ]
   },
@@ -1020,19 +1020,19 @@ His Pestilence domain is not biological. It is psychological and somatic â€�
     id:'nocturna', name:'Nocturna', alias:'The Dormant Queen',
     align:'ne', domain:'trick', patron:'ves',
     alignFull:'Neutral Evil',
-    overview:`Nocturna is not gone. She is waiting. Her worship is not mourning â€” it is anticipation. She chose to withdraw, deciding the moment for her full presence had not yet come. Her power flows into the world through the cracks of her absence: the shadow that falls the wrong way, the poison that works when it shouldn't.
+    overview:`Nocturna is not gone. She is waiting. Her worship is not mourning — it is anticipation. She chose to withdraw, deciding the moment for her full presence had not yet come. Her power flows into the world through the cracks of her absence: the shadow that falls the wrong way, the poison that works when it shouldn't.
 
 As a Vestige, her dormancy is deliberate: she rations herself carefully, lending just enough power to maintain her warlocks while waiting for the conditions that will allow her full return.`,
     sections:[
-      {label:'Unique Characteristic', text:'Surrounded by wisps of dark smoke that shape themselves into whispering faces â€” those who have looked directly into the dark and not looked away.'},
+      {label:'Unique Characteristic', text:'Surrounded by wisps of dark smoke that shape themselves into whispering faces — those who have looked directly into the dark and not looked away.'},
       {label:'Appearance & Personality', text:'A figure of elegance and absolute patience. Her form is ever-changing, her silhouette shrouded. She does not communicate urgency. Everything she does is oriented toward an outcome that may be centuries away.'},
-      {label:'Cultural Affiliation', text:"Drow and other denizens of the dark â€” a relationship predating the current pantheon. Shadow guilds in surface cities. Poisoners. Those who wait â€” who have learned patience as a weapon."},
-      {label:'Origin â€” The First Darkness', text:`When light first arrived in the world, the Primordial Dark divided in two. One part became conscious through contact with light â€” that became Nyx. The other part declined to be defined by light, withdrew, and became Nocturna. She is not dead. She is not sleeping. She is holding her position.`},
+      {label:'Cultural Affiliation', text:"Drow and other denizens of the dark — a relationship predating the current pantheon. Shadow guilds in surface cities. Poisoners. Those who wait — who have learned patience as a weapon."},
+      {label:'Origin — The First Darkness', text:`When light first arrived in the world, the Primordial Dark divided in two. One part became conscious through contact with light — that became Nyx. The other part declined to be defined by light, withdrew, and became Nocturna. She is not dead. She is not sleeping. She is holding her position.`},
       {label:'Key Relationships', items:[
-        {title:'Nyx', text:"They were the same substance before they were two beings. Not sisters, not allies, not enemies â€” two things that one substance became. See: On the Nature of the Two Darknesses."},
+        {title:'Nyx', text:"They were the same substance before they were two beings. Not sisters, not allies, not enemies — two things that one substance became. See: On the Nature of the Two Darknesses."},
       ]},
       {label:'Worship & Practices', items:[
-        {title:'The Gloom Sanctum', text:"Hidden in the Underdark â€” a place where her waiting can be felt most clearly."},
+        {title:'The Gloom Sanctum', text:"Hidden in the Underdark — a place where her waiting can be felt most clearly."},
         {title:'The Shade Disciples', text:'Adept thieves and spies who perform shadow dances for the quality of attention they attract.'},
         {title:'The Veiled Codex', text:'Scripture detailing rituals, poisons, and concealment spells. One section describes what Nocturna\'s full return would mean for the world.'},
       ]},
@@ -1042,10 +1042,10 @@ As a Vestige, her dormancy is deliberate: she rations herself carefully, lending
     id:'nymue', name:'Nymue', alias:'The Moonlit Enchantress',
     align:'nn', domain:'know', patron:'arch',
     alignFull:'True Neutral',
-    overview:`Born when the first star met the dark expanse of night â€” the perfect fusion of luminescence and obscurity. Nymue governs arcane knowledge and the moon, specifically the irreversible moment when someone crosses from ordinary to arcane. You can unlearn a spell. You cannot unmake the person who learned it.`,
+    overview:`Born when the first star met the dark expanse of night — the perfect fusion of luminescence and obscurity. Nymue governs arcane knowledge and the moon, specifically the irreversible moment when someone crosses from ordinary to arcane. You can unlearn a spell. You cannot unmake the person who learned it.`,
     sections:[
       {label:'Unique Characteristic', text:'Silvery-blue irises that reflect the phases of the moon.'},
-      {label:'Appearance & Personality', text:'Majestic serenity â€” she embodies the tranquillity of a night sky. Patient, mysterious, and wise.'},
+      {label:'Appearance & Personality', text:'Majestic serenity — she embodies the tranquillity of a night sky. Patient, mysterious, and wise.'},
       {label:'Cultural Affiliation', text:'Elves, due to their connection to magic and the moon. Those who study arcane arts.'},
       {label:'Key Relationships', items:[
         {title:'Nyx', text:'Once considered sisters. Now simply distanced. Nymue tends toward illumination; Nyx has no interest in giving light.'},
@@ -1056,7 +1056,7 @@ As a Vestige, her dormancy is deliberate: she rations herself carefully, lending
         {title:'Festival of Silver Nights (Raelar ~15)', text:"Her major festival at the full moon nearest mid-month. In elven communities, the holiest night of the year."},
       ]},
       {label:'Myths & History', items:[
-        {title:'Eclipse Confrontation', text:'Early in her existence, Nymue battled a cosmic serpent intent on devouring all celestial light. She managed to protect most stars but sacrificed part of her luminescence â€” creating lunar eclipses.'},
+        {title:'Eclipse Confrontation', text:'Early in her existence, Nymue battled a cosmic serpent intent on devouring all celestial light. She managed to protect most stars but sacrificed part of her luminescence — creating lunar eclipses.'},
       ]},
     ]
   },
@@ -1064,22 +1064,22 @@ As a Vestige, her dormancy is deliberate: she rations herself carefully, lending
     id:'nyx', name:'Nyx', alias:'The Veiled Mistress',
     align:'ne', domain:'trick', patron:'goo',
     alignFull:'Neutral Evil',
-    overview:`Nyx is the oldest witness â€” present at the first light, because the first light created her by contrast. She is the condition that makes secrecy possible. Every secret is her territory not because she created it but because she is the hiddenness itself. She is aware of the Primordial Dark. She declines to look at it directly.`,
+    overview:`Nyx is the oldest witness — present at the first light, because the first light created her by contrast. She is the condition that makes secrecy possible. Every secret is her territory not because she created it but because she is the hiddenness itself. She is aware of the Primordial Dark. She declines to look at it directly.`,
     sections:[
-      {label:'Unique Characteristic', text:"A perpetually shifting face â€” not disguise but her actual nature. Her identity is relational rather than fixed, always partly defined by what she is not seeing."},
-      {label:'Appearance & Personality', text:"An ethereal woman of unmatched beauty, her form constantly shifting like a starlit night. Her eyes resemble twin black holes. She is constitutionally incapable of complete transparency â€” she always knows more than she says."},
+      {label:'Unique Characteristic', text:"A perpetually shifting face — not disguise but her actual nature. Her identity is relational rather than fixed, always partly defined by what she is not seeing."},
+      {label:'Appearance & Personality', text:"An ethereal woman of unmatched beauty, her form constantly shifting like a starlit night. Her eyes resemble twin black holes. She is constitutionally incapable of complete transparency — she always knows more than she says."},
       {label:'Cultural Affiliation', text:"Tieflings and those who embrace the night and secrets. Information brokers. Those who understand that knowledge is the most durable form of power."},
-      {label:'Origin â€” Born of the First Shadow', text:`When light first pierced the void, Nyx was born from the shadow it cast. She was the shadow â€” the first shadow, cast by the first light on the Primordial Dark. This is why she is reactive by nature â€” created by reaction, always aware of illumination.`},
+      {label:'Origin — Born of the First Shadow', text:`When light first pierced the void, Nyx was born from the shadow it cast. She was the shadow — the first shadow, cast by the first light on the Primordial Dark. This is why she is reactive by nature — created by reaction, always aware of illumination.`},
       {label:'Key Relationships', items:[
         {title:'Nocturna', text:"They were the same Primordial Dark before light divided it. Nyx is what the darkness became when it met light and stayed. Nocturna is what it became when it met light and declined. See: On the Nature of the Two Darknesses."},
         {title:'Nymue', text:'Once considered sisters. Now simply distanced. Nymue gives light even in darkness. Nyx has no interest in giving light.'},
       ]},
       {label:'Sacred Artifacts', items:[
         {title:'Mask of Midnight', text:"Grants sight through lies. Each truth unveiled extracts a personal secret from the wearer, which becomes known to Nyx."},
-        {title:'The Nightshade Tome', text:"Contents shift depending on the reader â€” calibrated to what they most need to know and least want to learn."},
+        {title:'The Nightshade Tome', text:"Contents shift depending on the reader — calibrated to what they most need to know and least want to learn."},
       ]},
       {label:'Worship & Practices', items:[
-        {title:'Nightkeepers', text:"Her clergy â€” information brokers, spies, confidants. They wear masks and seldom reveal their identities."},
+        {title:'Nightkeepers', text:"Her clergy — information brokers, spies, confidants. They wear masks and seldom reveal their identities."},
         {title:'Night of Veils (Ionir 10)', text:'Her major annual observance. Location passed by whisper. Masks mandatory. As dawn approaches, gathered secrets are offered to Nyx.'},
         {title:'Night of Whispered Truths (Moradir 25)', text:"Folk tradition holds that secrets told aloud in darkness tonight reach Nyx before dawn."},
       ]},
@@ -1094,10 +1094,10 @@ As a Vestige, her dormancy is deliberate: she rations herself carefully, lending
     id:'paragon', name:'Paragon', alias:'The Exemplar',
     align:'lg', domain:'light', patron:'ves',
     alignFull:'Lawful Good',
-    overview:`Paragon is among the Vestiges â€” gods whose power has been diminished or interrupted. Unlike Aeonius who is trapped, or Nocturna who withdraws by choice, Paragon was broken. His divine essence was shattered in the Divine War and not fully reassembled. What remains is enough to sustain his clerics and answer prayers of the just â€” but a fraction of what he was.`,
+    overview:`Paragon is among the Vestiges — gods whose power has been diminished or interrupted. Unlike Aeonius who is trapped, or Nocturna who withdraws by choice, Paragon was broken. His divine essence was shattered in the Divine War and not fully reassembled. What remains is enough to sustain his clerics and answer prayers of the just — but a fraction of what he was.`,
     sections:[
-      {label:'Unique Characteristic', text:'A halo of pure, balanced light â€” half of it bright, the other dimmed. The half-dim halo is both iconography and theology: genuinely giving light, but from a source that is running out or running low.'},
-      {label:'Appearance & Personality', text:"Depicted as a towering figure clad in pristine white and gold armour. Their face is obscured by a helm with a mirror-like visor â€” they are a reflection of the world's best potential. Calm and judicial."},
+      {label:'Unique Characteristic', text:'A halo of pure, balanced light — half of it bright, the other dimmed. The half-dim halo is both iconography and theology: genuinely giving light, but from a source that is running out or running low.'},
+      {label:'Appearance & Personality', text:"Depicted as a towering figure clad in pristine white and gold armour. Their face is obscured by a helm with a mirror-like visor — they are a reflection of the world's best potential. Calm and judicial."},
       {label:'Cultural Affiliation', text:"Architects, lawmakers, and peacekeepers. Those who build and maintain civic institutions. Judges, mediators, and counsellors in major cities."},
       {label:'Key Relationships', items:[
         {title:'Solariel', text:'Both share a domain of order. They strive together to maintain the equilibrium of light and justice.'},
@@ -1114,7 +1114,7 @@ As a Vestige, her dormancy is deliberate: she rations herself carefully, lending
         {text:'Guided by reason and law, prosperity and harmony shall reign.'},
       ]},
       {label:'Myths & History', items:[
-        {title:'Diminished Power', text:'During the climactic battle of the Divine War, Erathis intervened â€” sacrificing a portion of her own divine essence to shield Paragon, but severing their connection in doing so.'},
+        {title:'Diminished Power', text:'During the climactic battle of the Divine War, Erathis intervened — sacrificing a portion of her own divine essence to shield Paragon, but severing their connection in doing so.'},
         {title:'The Great Mediation', text:'In an era where nations stood at the brink of all-out war, Paragon intervened, mediating disputes and establishing a lasting peace that spanned centuries.'},
       ]},
     ]
@@ -1123,10 +1123,10 @@ As a Vestige, her dormancy is deliberate: she rations herself carefully, lending
     id:'ragnor', name:'Ragnor', alias:'The Maddening Storm',
     align:'ce', domain:'war', patron:'goo',
     alignFull:'Chaotic Evil',
-    overview:`Ragnor is not worshipped in any conventional sense because there is nothing left of him that receives worship. He was once a minor spirit of the winds. Pandemonium consumed him so completely that consciousness dissolved. What remains is elemental rather than divine â€” power without awareness, force without intention. Propitiating him is possible. Worshipping him is a category error.`,
+    overview:`Ragnor is not worshipped in any conventional sense because there is nothing left of him that receives worship. He was once a minor spirit of the winds. Pandemonium consumed him so completely that consciousness dissolved. What remains is elemental rather than divine — power without awareness, force without intention. Propitiating him is possible. Worshipping him is a category error.`,
     sections:[
       {label:'Unique Characteristic', text:'His presence is heralded by unpredictable and chaotic weather patterns. He has no eyes to track things, no mind to form intent.'},
-      {label:'Origin', text:'Ragnor was once a minor spirit of the winds â€” something small and specific. After encountering the forces of Pandemonium, he was consumed by chaotic energy so completely that consciousness dissolved.'},
+      {label:'Origin', text:'Ragnor was once a minor spirit of the winds — something small and specific. After encountering the forces of Pandemonium, he was consumed by chaotic energy so completely that consciousness dissolved.'},
       {label:'Key Relationships', text:"Ragnor has no relationships. He has no awareness of other deities. Solariel's light is something he moves through. Elaria's forests are things his storms damage. The weather does not know that you planned around it."},
       {label:'Worship & Practices', items:[
         {title:'Tempest Prophets', text:'Shamans and warriors who position themselves within his emanation rather than directing it.'},
@@ -1137,28 +1137,28 @@ As a Vestige, her dormancy is deliberate: she rations herself carefully, lending
     id:'riven', name:'Riven', alias:'The Masterful Deceiver',
     align:'cn', domain:'trick', patron:'arch',
     alignFull:'Chaotic Neutral',
-    overview:`The only god in the pantheon who earned his position through a single act of craft. He was mortal once â€” the best con artist of his age. His Trickery is architecture: fictions built so thoroughly that reality has to accommodate them. His shadow acts independently of him â€” even his own nature is slightly conned about what it is.`,
+    overview:`The only god in the pantheon who earned his position through a single act of craft. He was mortal once — the best con artist of his age. His Trickery is architecture: fictions built so thoroughly that reality has to accommodate them. His shadow acts independently of him — even his own nature is slightly conned about what it is.`,
     sections:[
-      {label:'Unique Characteristic', text:"His shadow often acts independently from him â€” even his own nature is slightly conned about what it is."},
+      {label:'Unique Characteristic', text:"His shadow often acts independently from him — even his own nature is slightly conned about what it is."},
       {label:'Appearance & Personality', text:"An appearance ever-fluid and hard to pin down. His only constant is his enigmatic grin. He finds the whole thing extremely funny."},
       {label:'Cultural Affiliation', text:"Kenku, who admire his masterful deception and use his teachings to perfect their mimicry. Rogues, spies, and thieves across the realm."},
-      {label:'Origin', text:"Riven was mortal once â€” a con artist who decided to attempt the ultimate con: convincing a god that a mortal was something worth paying attention to. When the mark extended a thread of divine attention, Riven took it with the precision of a pickpocket and held it until it calcified into divinity of its own. He is the only god in the pantheon who earned his position through a single act of craft."},
-      {label:'As a Warlock Patron', text:"Riven's warlocks receive tuition rather than power â€” lessons in the architecture of belief. How it is constructed. Where its load-bearing elements are. The warlock who studies under Riven long enough stops seeing the world and starts seeing its infrastructure."},
+      {label:'Origin', text:"Riven was mortal once — a con artist who decided to attempt the ultimate con: convincing a god that a mortal was something worth paying attention to. When the mark extended a thread of divine attention, Riven took it with the precision of a pickpocket and held it until it calcified into divinity of its own. He is the only god in the pantheon who earned his position through a single act of craft."},
+      {label:'As a Warlock Patron', text:"Riven's warlocks receive tuition rather than power — lessons in the architecture of belief. How it is constructed. Where its load-bearing elements are. The warlock who studies under Riven long enough stops seeing the world and starts seeing its infrastructure."},
     ]
   },
   {
     id:'solariel', name:'Solariel', alias:'The Radiant Arbiter',
     align:'lg', domain:'light', patron:'cel',
     alignFull:'Lawful Good',
-    overview:`Once a celestial servant of Pelor elevated to deity through a grand sacrifice to prevent a cataclysmic shadow consuming a city of innocents. As Pelor's light dimmed, hers burned brighter. The primary deity of healing prayer across almost all cultures â€” when someone is ill, Solariel is addressed first. Folk rites are morning-facing: the sick placed to catch first light, prayers timed to sunrise.`,
+    overview:`Once a celestial servant of Pelor elevated to deity through a grand sacrifice to prevent a cataclysmic shadow consuming a city of innocents. As Pelor's light dimmed, hers burned brighter. The primary deity of healing prayer across almost all cultures — when someone is ill, Solariel is addressed first. Folk rites are morning-facing: the sick placed to catch first light, prayers timed to sunrise.`,
     sections:[
       {label:'Unique Characteristic', text:'Her heart visibly pulses with a radiant light through her chest.'},
-      {label:'Appearance & Personality', text:"Appears as a statuesque figure in golden armour that emits a soft, warm glow. She has large, feathered wings resembling those of an archangel. Warm and benevolent â€” always seeking diplomatic solutions."},
+      {label:'Appearance & Personality', text:"Appears as a statuesque figure in golden armour that emits a soft, warm glow. She has large, feathered wings resembling those of an archangel. Warm and benevolent — always seeking diplomatic solutions."},
       {label:'Cultural Affiliation', text:"Humans, given their versatility and resilience. Sun-worshipping cultures. Healers across all races."},
       {label:'Key Relationships', items:[
-        {title:'Ragnor', text:"His nemesis â€” they represent the duality of peace and chaos."},
+        {title:'Ragnor', text:"His nemesis — they represent the duality of peace and chaos."},
         {title:'Lyriana', text:"A close ally who helps spread hope and creativity."},
-        {title:'Abaddon', text:"Most direct opposition â€” Solariel heals; Abaddon studies what healing fails to reach."},
+        {title:'Abaddon', text:"Most direct opposition — Solariel heals; Abaddon studies what healing fails to reach."},
       ]},
       {label:'Sacred Artifacts', items:[
         {title:"Solariel's Chalice", text:'When filled with pure water and left in direct sunlight, the water takes on healing properties.'},
@@ -1167,7 +1167,7 @@ As a Vestige, her dormancy is deliberate: she rations herself carefully, lending
       {label:'Worship & Practices', items:[
         {title:'Sunspire Temples', text:'Majestic golden temples at the highest peaks, catching the first and last rays of the sun.'},
         {title:'Dawncallers', text:'Priests who greet the sunrise with songs of praise, offer midday prayers, and give thanks at sunset.'},
-        {title:'Festival of Radiance (Pelondar 15)', text:'Celebrated on the summer solstice â€” healing ceremonies, mass dawn prayers, pilgrimages.'},
+        {title:'Festival of Radiance (Pelondar 15)', text:'Celebrated on the summer solstice — healing ceremonies, mass dawn prayers, pilgrimages.'},
       ]},
       {label:'Tenets', items:[
         {text:'Protection Over Persecution: Protect those threatened by darkness rather than merely attacking it.'},
@@ -1180,14 +1180,14 @@ As a Vestige, her dormancy is deliberate: she rations herself carefully, lending
     id:'thalara', name:'Thalara', alias:'Lady of Wonder',
     align:'lg', domain:'know', patron:'cel',
     alignFull:'Lawful Good',
-    overview:`Once a dwarf whose skills at the forge were unparalleled â€” the gods themselves elevated her to divinity. Her Knowledge domain is preserved craft-wisdom: knowledge as the accumulated expertise of generations, knowledge as the thing that makes the difference between good work and extraordinary work.`,
+    overview:`Once a dwarf whose skills at the forge were unparalleled — the gods themselves elevated her to divinity. Her Knowledge domain is preserved craft-wisdom: knowledge as the accumulated expertise of generations, knowledge as the thing that makes the difference between good work and extraordinary work.`,
     sections:[
       {label:'Unique Characteristic', text:'Molten veins glow beneath her stony skin.'},
-      {label:'Appearance & Personality', text:"A dwarven woman of imposing stature, her skin like polished bronze, eyes glowing with the fire of molten metal. A rune-etched hammer that sparks with divine energy. Determined artisan â€” meticulous and patient, valuing the process as much as the final product."},
+      {label:'Appearance & Personality', text:"A dwarven woman of imposing stature, her skin like polished bronze, eyes glowing with the fire of molten metal. A rune-etched hammer that sparks with divine energy. Determined artisan — meticulous and patient, valuing the process as much as the final product."},
       {label:'Cultural Affiliation', text:"Dwarves, for her connection to the forge and creation. Craftspeople of all races. Those who value process as much as product."},
       {label:'Origin', text:"Deep within the heart of the mightiest mountain, Thalara was once a dwarf like any other, but her skills at the forge were unparalleled. Recognising her devotion and skill, the gods themselves elevated Thalara to divinity."},
       {label:'Sacred Artifacts', items:[
-        {title:'Anvil of the Ages', text:"The very anvil Thalara used in her mortal days â€” said to be indestructible, it imbues any item forged upon it with mystical properties."},
+        {title:'Anvil of the Ages', text:"The very anvil Thalara used in her mortal days — said to be indestructible, it imbues any item forged upon it with mystical properties."},
         {title:'The Unity Hammer', text:"A hammer that can only be lifted when the leaders of rival clans work together."},
       ]},
       {label:'Worship & Practices', items:[
@@ -1208,10 +1208,10 @@ As a Vestige, her dormancy is deliberate: she rations herself carefully, lending
     id:'vormax', name:'Vormax', alias:'The Rotting One',
     align:'ne', domain:'pest', patron:'goo',
     alignFull:'Neutral Evil',
-    overview:`Vormax does not believe civilisation is evil. He believes it is temporary â€” a concentration of life in a space that cannot sustain that concentration indefinitely. His plagues are not punishments. They are corrections. He does not want suffering. He wants equilibrium. His followers' analysis is not entirely wrong, which is what makes them genuinely disturbing.`,
+    overview:`Vormax does not believe civilisation is evil. He believes it is temporary — a concentration of life in a space that cannot sustain that concentration indefinitely. His plagues are not punishments. They are corrections. He does not want suffering. He wants equilibrium. His followers' analysis is not entirely wrong, which is what makes them genuinely disturbing.`,
     sections:[
-      {label:'Unique Characteristic', text:"Insects swarm in and out of his hollow form, each one carrying a fragment of information â€” a crop yield, a disease vector, a mortality rate. He perceives the world through swarms the way other gods perceive it through prayer."},
-      {label:'Appearance & Personality', text:"A hollow form exuding a dark miasmic aura â€” a moving hive for countless insects. His consciousness is distributed. He does not understand the concept of an individual. He understands populations and carrying capacities."},
+      {label:'Unique Characteristic', text:"Insects swarm in and out of his hollow form, each one carrying a fragment of information — a crop yield, a disease vector, a mortality rate. He perceives the world through swarms the way other gods perceive it through prayer."},
+      {label:'Appearance & Personality', text:"A hollow form exuding a dark miasmic aura — a moving hive for countless insects. His consciousness is distributed. He does not understand the concept of an individual. He understands populations and carrying capacities."},
       {label:'Cultural Affiliation', text:"The Drow and Underdark communities who understand closed-system ecology. Certain agricultural scholars, though they would deny the affiliation strenuously. Healers who study disease transmission."},
       {label:'Origin', text:"Vormax emerged from process, not desire. In the earliest ages, something was needed to manage the transition between life and what life becomes. This function was not evil. It was necessary. Vormax was what necessity produced."},
       {label:'Key Relationships', items:[
@@ -1224,8 +1224,8 @@ As a Vestige, her dormancy is deliberate: she rations herself carefully, lending
         {text:"The individual is a temporary expression of a population. Attend to the right level."},
       ]},
       {label:'Worship & Practices', items:[
-        {title:'The Blightbringers', text:"His clergy â€” surveyors, not saboteurs. They have a point that is difficult to refute and impossible to forgive."},
-        {title:"Whispers of the Swarm", text:"His scripture â€” structured like a philosophical treatise full of calculations and ratios."},
+        {title:'The Blightbringers', text:"His clergy — surveyors, not saboteurs. They have a point that is difficult to refute and impossible to forgive."},
+        {title:"Whispers of the Swarm", text:"His scripture — structured like a philosophical treatise full of calculations and ratios."},
       ]},
     ]
   },
@@ -1233,37 +1233,37 @@ As a Vestige, her dormancy is deliberate: she rations herself carefully, lending
     id:'zelos', name:'Zelos', alias:'The Capricious Gambler',
     align:'cn', domain:'know', patron:'arch',
     alignFull:'Chaotic Neutral',
-    overview:`Zelos governs what reason cannot predict and pattern cannot contain â€” the genuine unknown at the heart of every decision. His Knowledge domain is not the knowledge of scholars but the knowledge of probability made visible: the irreducible uncertainty that remains when all calculation is complete. His followers don't study; they observe. They don't learn; they notice.`,
+    overview:`Zelos governs what reason cannot predict and pattern cannot contain — the genuine unknown at the heart of every decision. His Knowledge domain is not the knowledge of scholars but the knowledge of probability made visible: the irreducible uncertainty that remains when all calculation is complete. His followers don't study; they observe. They don't learn; they notice.`,
     sections:[
       {label:'Unique Characteristic', text:"Dice that hover around him, unpredictably determining his next move."},
       {label:'Appearance & Personality', text:"Ethereal and ever-changing, Zelos has a mischievous grin that speaks of both promise and peril. His form constantly shifts like swirling gas and vapours, with dice of varying shapes and sizes floating around him."},
-      {label:'Cultural Affiliation', text:"Goblins, with their love for randomness. Nomadic tribes that rely on luck for survival. Gamblers, risk-takers, and adventurers seeking fortune. Merchants and traders â€” his folk presence in trading culture is substantial."},
+      {label:'Cultural Affiliation', text:"Goblins, with their love for randomness. Nomadic tribes that rely on luck for survival. Gamblers, risk-takers, and adventurers seeking fortune. Merchants and traders — his folk presence in trading culture is substantial."},
       {label:'Worship & Practices', items:[
-        {title:'Luckbringers', text:"His followers â€” they play games of chance as part of their rituals."},
+        {title:'Luckbringers', text:"His followers — they play games of chance as part of their rituals."},
         {title:'The Hall of Hazards', text:"A mysterious location where reality bends to the whim of chance."},
         {title:'Market shrines', text:"Merchants toss a coin before significant transactions and leave it where it falls. You give the coin to fate."},
       ]},
-      {label:'Folk Practice', text:"Finding a coin face-down means Zelos is testing you â€” pick it up anyway and leave it at the next shrine you pass."},
+      {label:'Folk Practice', text:"Finding a coin face-down means Zelos is testing you — pick it up anyway and leave it at the next shrine you pass."},
     ]
   },
   {
     id:'zephyrion', name:'Zephyrion', alias:'Changer of Tides',
     align:'cg', domain:'life', patron:'goo',
     alignFull:'Chaotic Good',
-    overview:`A majestic, immense dragon turtle whose relationship with mortals is fundamentally different from a deity of human concerns â€” he doesn't love you, he tolerates your voyages on his ocean. The folk relationship with Zephyrion is transactional and non-personal: he is a force to be respected and correctly navigated, not a being to be loved. He does not listen; he permits.`,
+    overview:`A majestic, immense dragon turtle whose relationship with mortals is fundamentally different from a deity of human concerns — he doesn't love you, he tolerates your voyages on his ocean. The folk relationship with Zephyrion is transactional and non-personal: he is a force to be respected and correctly navigated, not a being to be loved. He does not listen; he permits.`,
     sections:[
       {label:'Unique Characteristic', text:"His roar sounds like crashing waves, and it affects the tides of the nearest body of water."},
       {label:'Appearance & Personality', text:"A majestic, immense dragon turtle with scales that shimmer like stormy seas. His eyes have the depth of the deepest oceans and the fury of the fiercest storms."},
       {label:'Cultural Affiliation', text:"Coastal communities, sailors, Tritons. Those who make their living from the sea. Voyage Opening and Voyage Closing ceremonies are seamanship as much as religion."},
       {label:'Key Relationships', items:[
-        {title:'Anarion', text:"Both deities of nature â€” Anarion governs land's beasts and forests, Zephyrion governs the seas. Their harmony ensures balance."},
+        {title:'Anarion', text:"Both deities of nature — Anarion governs land's beasts and forests, Zephyrion governs the seas. Their harmony ensures balance."},
         {title:'Lyriana', text:"They might collaborate to create music where the melody of the harp meets the rhythm of the sea."},
       ]},
       {label:'Worship & Practices', items:[
         {title:'Stormcallers', text:"Priests who have the power to beckon and calm storms, ensuring safe passages for sailors."},
         {title:'The Tempest Isle', text:"An island of perpetual storms said to be where Zephyrion rests."},
         {title:'Voyage Opening (Corendar 28)', text:"The formal beginning of the sailing season. The captain offers a coin to the water; the crew names their destination aloud; oars dipped three times before the first stroke."},
-        {title:'Voyage Closing (Erathir 28â€“30)', text:"The formal end of the sailing season. The captain thanks the sea and names the dead who crossed to Charon on the water this year."},
+        {title:'Voyage Closing (Erathir 28–30)', text:"The formal end of the sailing season. The captain thanks the sea and names the dead who crossed to Charon on the water this year."},
       ]},
     ]
   },
@@ -1282,7 +1282,7 @@ function SectionBlock({ s }) {
               item.title
                 ? React.createElement('span', null,
                     React.createElement('strong', null, item.title),
-                    item.text ? ' â€” ' + item.text : ''
+                    item.text ? ' — ' + item.text : ''
                   )
                 : React.createElement('span', null, item.text || '')
             )
@@ -1328,7 +1328,7 @@ function DeityCard({ d, open, onToggle, sidebarRef }) {
           React.createElement('span', {className:`ctag ctag-patron ${d.patron}`}, PATRON_LABELS[d.patron])
         )
       ),
-      React.createElement('div', {className:'card-chevron'}, 'â–¼')
+      React.createElement('div', {className:'card-chevron'}, '▼')
     ),
     open && React.createElement('div', {className:'card-body', onClick:e=>e.stopPropagation()},
       React.createElement('div', {className:'card-overview'}, d.overview),
@@ -1397,7 +1397,7 @@ function App() {
       React.createElement('div', {className:'masthead-eyebrow'}, 'Ardahlia'),
       React.createElement('h1', null, 'Gods of the World'),
       React.createElement('div', {className:'masthead-sub'},
-        'Twenty-six deities  Â·  Six domains  Â·  Five patron types'
+        'Twenty-six deities  ·  Six domains  ·  Five patron types'
       )
     ),
 
@@ -1405,10 +1405,10 @@ function App() {
     React.createElement('div', {className:'filter-bar'},
       React.createElement('div', {className:'filter-bar-inner'},
         React.createElement('div', {className:'search-box'},
-          React.createElement('span', {className:'search-icon'}, 'âŒ•'),
+          React.createElement('span', {className:'search-icon'}, '⌕'),
           React.createElement('input', {
             className:'filter-search', type:'text',
-            placeholder:'Searchâ€¦', value:search,
+            placeholder:'Search…', value:search,
             onChange:e => setSearch(e.target.value)
           })
         ),
@@ -1489,12 +1489,12 @@ function App() {
         ),
         React.createElement('p', null, 'The error most commonly made by those who study the old darkness is the assumption that Nocturna and Nyx are the same entity in different aspects, or that one is a diminished form of the other, or that they are sisters in any sense that implies equality of origin.'),
         React.createElement('p', null, 'They are not the same. They are not aspects. They are not sisters. They are what happened when one thing became two.'),
-        React.createElement('p', null, 'Before light there was the Primordial Dark â€” not darkness as we understand it, which is defined by the absence of light, but darkness as a primary condition, a substance with properties of its own. When the first light came, it did not simply illuminate the darkness. It divided it. The part of the darkness that met the light and was changed by the encounter became Nyx. The part of the darkness that felt the light coming and chose to step back from it became Nocturna.'),
+        React.createElement('p', null, 'Before light there was the Primordial Dark — not darkness as we understand it, which is defined by the absence of light, but darkness as a primary condition, a substance with properties of its own. When the first light came, it did not simply illuminate the darkness. It divided it. The part of the darkness that met the light and was changed by the encounter became Nyx. The part of the darkness that felt the light coming and chose to step back from it became Nocturna.'),
         React.createElement('p', null, 'This is why they are not enemies and not allies. They are not two sides of a conflict. They are the two things that a single substance became when it encountered something it could not absorb.'),
-        React.createElement('p', null, "Nyx is the darkness that knows about light. Her entire existence is defined by the contrast â€” she is the goddess of secrets precisely because secrets are things that light has not yet reached. She is reactive by nature. She was created by reaction."),
-        React.createElement('p', null, "Nocturna is the darkness that declined to be defined by light. She retained â€” or chose, it is impossible to know which â€” a quality of the original darkness that predates the distinction between known and hidden. She does not trade in secrets the way Nyx does. She is the quality of hiddenness itself. The shadow does not know what it conceals. It simply conceals."),
-        React.createElement('p', null, "Their relationship in the current age is one of acknowledgment without warmth. They do not conflict because conflict requires a thing to be in dispute, and there is nothing between them to dispute â€” they divided completely, kept what was theirs, and have not needed to renegotiate."),
-        React.createElement('p', null, "What troubles certain scholars is the question of the Primordial Dark itself â€” the original substance from which both of them emerged. It did not divide. It did not become conscious. It retreated. It is still present in the world. Nocturna watches it. Nyx knows about it but does not look directly at it. There are things even Nyx declines to make a secret of."),
+        React.createElement('p', null, "Nyx is the darkness that knows about light. Her entire existence is defined by the contrast — she is the goddess of secrets precisely because secrets are things that light has not yet reached. She is reactive by nature. She was created by reaction."),
+        React.createElement('p', null, "Nocturna is the darkness that declined to be defined by light. She retained — or chose, it is impossible to know which — a quality of the original darkness that predates the distinction between known and hidden. She does not trade in secrets the way Nyx does. She is the quality of hiddenness itself. The shadow does not know what it conceals. It simply conceals."),
+        React.createElement('p', null, "Their relationship in the current age is one of acknowledgment without warmth. They do not conflict because conflict requires a thing to be in dispute, and there is nothing between them to dispute — they divided completely, kept what was theirs, and have not needed to renegotiate."),
+        React.createElement('p', null, "What troubles certain scholars is the question of the Primordial Dark itself — the original substance from which both of them emerged. It did not divide. It did not become conscious. It retreated. It is still present in the world. Nocturna watches it. Nyx knows about it but does not look directly at it. There are things even Nyx declines to make a secret of."),
         React.createElement('p', null, "What the Primordial Dark wants, if want is a concept that applies to it, is the question that Nocturna's waiting is aimed at answering. She has been watching it for longer than most gods have existed. She does not appear to have an answer yet. Or she does, and she is not saying.")
       )
     )
@@ -1505,4 +1505,5 @@ ReactDOM.createRoot(document.getElementById('root')).render(React.createElement(
 </script>
 </body>
 </html>
+
 

@@ -1,12 +1,12 @@
 :root {
   --cosmic-bg: #09070f;
   --cosmic-bg-soft: #151224;
-  --cosmic-panel: rgba(22, 19, 35, 0.88);
+  --cosmic-panel: rgba(22, 19, 35, 0.92);
   --cosmic-border: rgba(120, 200, 191, 0.34);
-  --cosmic-text: #d8e3e0;
+  --cosmic-text: #e1ece8;
   --cosmic-muted: #9db2ad;
   --cosmic-accent: #72b7aa;
-  --cosmic-accent-hot: #a7d6ce;
+  --cosmic-accent-hot: #b6e0d9;
   --cosmic-alert: #c58f9b;
   --cosmic-shadow: 0 14px 36px rgba(0, 0, 0, 0.5);
 }
@@ -61,6 +61,10 @@ body.theme-cosmic90s a {
 body.theme-cosmic90s a:hover,
 body.theme-cosmic90s a:focus-visible {
   color: #c4f0e8;
+}
+
+body.theme-cosmic90s :is(a, button, input, select, textarea):focus-visible {
+  box-shadow: 0 0 0 2px rgba(167, 214, 206, 0.55);
 }
 
 body.theme-cosmic90s section,

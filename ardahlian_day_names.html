@@ -77,7 +77,7 @@ body::before {
   padding: 0 1.5rem 5rem;
 }
 
-/* â”€â”€ header â”€â”€ */
+/* ── header ── */
 .hdr {
   text-align: center;
   padding: 2.8rem 0 2rem;
@@ -89,7 +89,7 @@ body::before {
 .hdr-sub { font-style:italic; color:var(--txt2); margin-top:0.5rem; letter-spacing:0.05em; font-size:0.95rem; }
 .hdr-intro { max-width:680px; margin:1.1rem auto 0; font-size:0.95rem; color:var(--txt2); line-height:1.75; }
 
-/* â”€â”€ legend â”€â”€ */
+/* ── legend ── */
 .legend {
   display: flex;
   flex-wrap: wrap;
@@ -113,7 +113,7 @@ body::before {
 .leg-txt { font-family:var(--font-b); font-size:13px; color:var(--txt2); }
 .leg-txt strong { font-family:var(--font-h); font-size:10px; letter-spacing:0.05em; font-weight:600; }
 
-/* â”€â”€ week strip â”€â”€ */
+/* ── week strip ── */
 .week-strip {
   display: grid;
   grid-template-columns: repeat(10, 1fr);
@@ -175,14 +175,14 @@ body::before {
   opacity: 0.8;
 }
 
-/* â”€â”€ card grid â”€â”€ */
+/* ── card grid ── */
 .card-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(440px, 1fr));
   gap: 0.85rem;
 }
 
-/* â”€â”€ day card â”€â”€ */
+/* ── day card ── */
 .day-card {
   background: var(--surface);
   border: 1px solid var(--border);
@@ -306,7 +306,7 @@ body::before {
   font-style: normal;
 }
 
-/* â”€â”€ ornament â”€â”€ */
+/* ── ornament ── */
 .orn {
   text-align: center;
   font-size: 10px;
@@ -378,7 +378,7 @@ const DAYS = [
     anchor: true,
     deity: null,
     meaning: "The opening day. Temple rites, shrine dedications, the week's first prayers.",
-    etymology: <>From <em>aur</em> â€” dawn-gold. Shares its root with aurora; in Auroran culture this is deliberate and unspoken.</>,
+    etymology: <>From <em>aur</em> — dawn-gold. Shares its root with aurora; in Auroran culture this is deliberate and unspoken.</>,
     usage: ["First thing Auren.", "We leave on Auren."],
   },
   {
@@ -388,8 +388,8 @@ const DAYS = [
     register: "common",
     anchor: false,
     deity: null,
-    meaning: "A short, blunt working day â€” the week's first full labour day, nothing ceremonial about it.",
-    etymology: <>From <em>brem</em> â€” a grinding sound, the sound of millstones. Old craft-guild slang that became the day's name.</>,
+    meaning: "A short, blunt working day — the week's first full labour day, nothing ceremonial about it.",
+    etymology: <>From <em>brem</em> — a grinding sound, the sound of millstones. Old craft-guild slang that became the day's name.</>,
     usage: ["Brem already and the order's not done.", "Back by Brem."],
   },
   {
@@ -399,9 +399,9 @@ const DAYS = [
     register: "formal",
     anchor: false,
     deity: "Aeonius",
-    meaning: "A longer, older name â€” feels like it belongs to a different era. Used in formal records and legal dating.",
-    etymology: <>From <em>thael</em> (thread) + <em>on</em> (forward) â€” the threading of time onward. Aeonius's fingerprint, never acknowledged.</>,
-    usage: ["Dated the third Thaelon of Corendar.", "Rarely used in speech â€” people say 'third day.'"],
+    meaning: "A longer, older name — feels like it belongs to a different era. Used in formal records and legal dating.",
+    etymology: <>From <em>thael</em> (thread) + <em>on</em> (forward) — the threading of time onward. Aeonius's fingerprint, never acknowledged.</>,
+    usage: ["Dated the third Thaelon of Corendar.", "Rarely used in speech — people say 'third day.'"],
   },
   {
     num: 4,
@@ -410,8 +410,8 @@ const DAYS = [
     register: "common",
     anchor: false,
     deity: null,
-    meaning: "The week's midpoint approach â€” market prep, travel day, the day people move between towns.",
-    etymology: <>From <em>kel</em> â€” a ford, a crossing. The day you cross toward the middle of the week.</>,
+    meaning: "The week's midpoint approach — market prep, travel day, the day people move between towns.",
+    etymology: <>From <em>kel</em> — a ford, a crossing. The day you cross toward the middle of the week.</>,
     usage: ["I'll be on the road Keld.", "Keld prices are always worse."],
   },
   {
@@ -432,8 +432,8 @@ const DAYS = [
     register: "common",
     anchor: false,
     deity: "Nymue",
-    meaning: "The week turns. Work continues but the second half has begun â€” a subtle shift in folk mood.",
-    etymology: <>From <em>glae</em> â€” a glint, a turning of light. Nymue's faint fingerprint: in old lunar reckoning, the day the moon begins its count toward the next phase.</>,
+    meaning: "The week turns. Work continues but the second half has begun — a subtle shift in folk mood.",
+    etymology: <>From <em>glae</em> — a glint, a turning of light. Nymue's faint fingerprint: in old lunar reckoning, the day the moon begins its count toward the next phase.</>,
     usage: ["Past Glaer already.", "Glaer and I'm still not done."],
   },
   {
@@ -443,8 +443,8 @@ const DAYS = [
     register: "formal",
     anchor: false,
     deity: "Solariel",
-    meaning: "The easing day â€” not a rest day, but the pace lightens. Apprentices given shorter hours in many trades.",
-    etymology: <>From <em>sol</em> (sun, warmth) + <em>veth</em> (breath, ease). Solariel's subtle mark â€” the day named for the sun's pause before its descent toward dusk.</>,
+    meaning: "The easing day — not a rest day, but the pace lightens. Apprentices given shorter hours in many trades.",
+    etymology: <>From <em>sol</em> (sun, warmth) + <em>veth</em> (breath, ease). Solariel's subtle mark — the day named for the sun's pause before its descent toward dusk.</>,
     usage: ["Solveth hours.", "At least it's Solveth."],
   },
   {
@@ -454,8 +454,8 @@ const DAYS = [
     register: "common",
     anchor: false,
     deity: null,
-    meaning: "The push day â€” the week's hardest working day by folk custom, the last full labour day before rest approaches.",
-    etymology: <>From <em>pelk</em> â€” a shove, a final effort. Purely working-class in origin, no cosmic etymology. The day has no dignity and everyone knows it.</>,
+    meaning: "The push day — the week's hardest working day by folk custom, the last full labour day before rest approaches.",
+    etymology: <>From <em>pelk</em> — a shove, a final effort. Purely working-class in origin, no cosmic etymology. The day has no dignity and everyone knows it.</>,
     usage: ["Pelk again.", "Don't schedule anything important on Pelk.", "A real Pelk of a day."],
   },
   {
@@ -465,8 +465,8 @@ const DAYS = [
     register: "formal",
     anchor: false,
     deity: "Charon",
-    meaning: "The settling day â€” accounts closed, work finished, preparation for rest. Formal and slightly solemn in character.",
-    etymology: <>From <em>ser</em> (settling, closing) + <em>adel</em> (toward the hearth). Charon's quiet fingerprint â€” the day you settle what is owed before the week closes.</>,
+    meaning: "The settling day — accounts closed, work finished, preparation for rest. Formal and slightly solemn in character.",
+    etymology: <>From <em>ser</em> (settling, closing) + <em>adel</em> (toward the hearth). Charon's quiet fingerprint — the day you settle what is owed before the week closes.</>,
     usage: ["Seradel accounts.", "Pay by Seradel."],
   },
   {
@@ -476,8 +476,8 @@ const DAYS = [
     register: "formal",
     anchor: true,
     deity: null,
-    meaning: "Rest day. Hearth and home. The week's close. Formally observed â€” most trades closed, travel discouraged.",
-    etymology: <>From <em>kael</em> (completion, wholeness) + <em>den</em> (hearth, rest). No pantheon echo â€” rest belongs to no god specifically, which is itself a theological position.</>,
+    meaning: "Rest day. Hearth and home. The week's close. Formally observed — most trades closed, travel discouraged.",
+    etymology: <>From <em>kael</em> (completion, wholeness) + <em>den</em> (hearth, rest). No pantheon echo — rest belongs to no god specifically, which is itself a theological position.</>,
     usage: ["Kaelden, finally.", "Kaelden hours.", "See you next Auren."],
   },
 ];
@@ -495,7 +495,7 @@ function WeekStrip() {
           d.anchor ? 'ws-anchor' : '',
         ].filter(Boolean).join(' ');
         return (
-          <div key={d.num} className={cls} onClick={() => scrollTo(d.num)} title={`Day ${d.num} â€” ${d.name}`}>
+          <div key={d.num} className={cls} onClick={() => scrollTo(d.num)} title={`Day ${d.num} — ${d.name}`}>
             <span className="ws-num">{d.num}</span>
             <span className="ws-name">{d.name}</span>
             {d.anchor && <span className="ws-anchor-dot" />}
@@ -555,11 +555,11 @@ function App() {
   return (
     <div className="page">
       <header className="hdr">
-        <span className="hdr-orn">âœ¦  Â·  âœ¦  Â·  âœ¦</span>
+        <span className="hdr-orn">✦  ·  ✦  ·  ✦</span>
         <div className="hdr-title">The Ardahlian Week</div>
         <div className="hdr-sub">Day names, registers, and their folk meanings</div>
         <p className="hdr-intro">
-          The Ardahlian week runs ten days. Three are anchor days â€” structurally significant
+          The Ardahlian week runs ten days. Three are anchor days — structurally significant
           points that shape the rhythm of commerce, worship, and rest. Day names exist in two
           registers: formal names used in records and ceremony, and common names used in speech.
           Several carry the faint fingerprint of a deity who influenced their naming.
@@ -569,15 +569,15 @@ function App() {
       <div className="legend">
         <div className="leg-item">
           <div className="leg-pip leg-pip-f">F</div>
-          <span className="leg-txt"><strong>Formal</strong> â€” used in records, ceremony, legal dates</span>
+          <span className="leg-txt"><strong>Formal</strong> — used in records, ceremony, legal dates</span>
         </div>
         <div className="leg-item">
           <div className="leg-pip leg-pip-c">C</div>
-          <span className="leg-txt"><strong>Common</strong> â€” everyday speech, folk usage</span>
+          <span className="leg-txt"><strong>Common</strong> — everyday speech, folk usage</span>
         </div>
         <div className="leg-item">
-          <div className="leg-pip leg-pip-a">âœ¦</div>
-          <span className="leg-txt"><strong>Anchor Day</strong> â€” structurally significant: Auren (open), Narven (market), Kaelden (rest)</span>
+          <div className="leg-pip leg-pip-a">✦</div>
+          <span className="leg-txt"><strong>Anchor Day</strong> — structurally significant: Auren (open), Narven (market), Kaelden (rest)</span>
         </div>
       </div>
 
@@ -587,7 +587,7 @@ function App() {
         {DAYS.map(d => <DayCard key={d.num} day={d} />)}
       </div>
 
-      <div className="orn">âœ¦ Â· âœ¦ Â· âœ¦</div>
+      <div className="orn">✦ · ✦ · ✦</div>
     </div>
   );
 }
@@ -596,5 +596,6 @@ ReactDOM.createRoot(document.getElementById('root')).render(<App />);
 </script>
 </body>
 </html>
+
 
 

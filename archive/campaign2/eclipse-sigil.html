@@ -71,7 +71,7 @@ body {
   margin-top: 4px;
 }
 
-/* â”€â”€ strain tracker â”€â”€ */
+/* ── strain tracker ── */
 .strain-section {
   background: var(--surface);
   border: 0.5px solid var(--border2);
@@ -156,7 +156,7 @@ body {
   font-style: italic;
 }
 
-/* â”€â”€ rings â”€â”€ */
+/* ── rings ── */
 .rings {
   max-width: 680px;
   margin: 0 auto;
@@ -200,7 +200,7 @@ body {
   text-transform: uppercase;
 }
 
-/* â”€â”€ passive â”€â”€ */
+/* ── passive ── */
 .passive-row {
   padding: 12px 16px;
   border-bottom: 0.5px solid var(--border);
@@ -228,7 +228,7 @@ body {
 }
 .passive-text b { color: var(--text); font-weight: 500; }
 
-/* â”€â”€ abilities â”€â”€ */
+/* ── abilities ── */
 .ability-row {
   padding: 12px 16px;
   display: flex;
@@ -293,7 +293,7 @@ body {
 }
 .ab-desc b { color: var(--text); font-weight: 500; }
 
-/* â”€â”€ long rest button â”€â”€ */
+/* ── long rest button ── */
 .rest-wrap {
   max-width: 680px;
   margin: 20px auto 0;
@@ -322,7 +322,7 @@ body {
   font-style: italic;
 }
 
-/* â”€â”€ strain note â”€â”€ */
+/* ── strain note ── */
 .strain-note {
   max-width: 680px;
   margin: 14px auto 0;
@@ -332,7 +332,7 @@ body {
   font-style: italic;
 }
 
-/* â”€â”€ colour theming per ring â”€â”€ */
+/* ── colour theming per ring ── */
 .ring-light  { border-color: var(--light-border); }
 .ring-matter { border-color: var(--matter-border); }
 .ring-energy { border-color: var(--energy-border); }
@@ -397,7 +397,7 @@ body {
 
 <div class="page-title">
   <h1>The Eclipse Sigil</h1>
-  <p>Wondrous Item Â· Artifact Â· Requires Attunement</p>
+  <p>Wondrous Item · Artifact · Requires Attunement</p>
 </div>
 
 <!-- STRAIN TRACKER -->
@@ -414,19 +414,19 @@ body {
 
 <p class="strain-note">Strain cannot be reduced by any spell, effect, or rest. Tap a pip to add or remove strain.</p>
 
-<!-- RING I â€” LIGHT -->
+<!-- RING I — LIGHT -->
 <div class="rings">
 <div class="ring-card ring-light">
   <div class="ring-header">
     <div class="ring-dot" style="background:var(--light);"></div>
     <div class="ring-name">
-      <div class="name" style="color:var(--light);">I. Light â€” The Celestial Shard</div>
+      <div class="name" style="color:var(--light);">I. Light — The Celestial Shard</div>
       <div class="subtitle">The first light that burned away the Void</div>
     </div>
   </div>
   <div class="passive-row">
     <span class="passive-tag">Passive</span>
-    <div class="passive-text"><b>Veil of Truth â€”</b> You cannot be deceived by magical illusions, glamours, or void-born concealment. You see through any effect that obscures, replaces, or falsifies what is real â€” understanding that something is false, even if the true form remains uncertain.</div>
+    <div class="passive-text"><b>Veil of Truth —</b> You cannot be deceived by magical illusions, glamours, or void-born concealment. You see through any effect that obscures, replaces, or falsifies what is real — understanding that something is false, even if the true form remains uncertain.</div>
   </div>
   <div class="ability-row" id="ab-light-mod" onclick="toggle('ab-light-mod', 1)">
     <div class="ab-check">
@@ -435,7 +435,7 @@ body {
     <div class="ab-content">
       <div class="ab-title-row">
         <span class="ab-name" style="color:var(--light);">Illumination</span>
-        <span class="ab-badge badge-mod">Moderate Â· 1 Strain</span>
+        <span class="ab-badge badge-mod">Moderate · 1 Strain</span>
       </div>
       <div class="ab-desc">All magical darkness, void concealment, and plane-shifted invisibility within <b>60 feet</b> fail for <b>1 minute</b>. Creatures relying on these effects become visible and lose any benefits they granted.</div>
     </div>
@@ -447,26 +447,26 @@ body {
     <div class="ab-content">
       <div class="ab-title-row">
         <span class="ab-name" style="color:var(--light);">Sundering Revelation</span>
-        <span class="ab-badge badge-maj">Major Â· 2 Strain</span>
+        <span class="ab-badge badge-maj">Major · 2 Strain</span>
         <span class="ab-badge badge-once">Once per Long Rest</span>
       </div>
-      <div class="ab-desc">One creature within <b>60 feet</b> is stripped of every illusory, polymorph, or assumed form â€” forced into its true shape for <b>1 hour</b>. If the creature's true form is unknown to it, this effect instead deals <b>6d10 radiant damage</b> as reality asserts itself.</div>
+      <div class="ab-desc">One creature within <b>60 feet</b> is stripped of every illusory, polymorph, or assumed form — forced into its true shape for <b>1 hour</b>. If the creature's true form is unknown to it, this effect instead deals <b>6d10 radiant damage</b> as reality asserts itself.</div>
     </div>
   </div>
 </div>
 
-<!-- RING II â€” MATTER -->
+<!-- RING II — MATTER -->
 <div class="ring-card ring-matter">
   <div class="ring-header">
     <div class="ring-dot" style="background:var(--matter);"></div>
     <div class="ring-name">
-      <div class="name" style="color:var(--matter);">II. Matter â€” The Abyssal Core</div>
+      <div class="name" style="color:var(--matter);">II. Matter — The Abyssal Core</div>
       <div class="subtitle">The Unyielding Form. The first material essence.</div>
     </div>
   </div>
   <div class="passive-row">
     <span class="passive-tag">Passive</span>
-    <div class="passive-text"><b>Anchor of Form â€”</b> You cannot be unwillingly moved, teleported, banished, or displaced across planes while the Sigil is active. You are immune to the prone condition from non-physical sources. Forced movement from physical impacts still applies.</div>
+    <div class="passive-text"><b>Anchor of Form —</b> You cannot be unwillingly moved, teleported, banished, or displaced across planes while the Sigil is active. You are immune to the prone condition from non-physical sources. Forced movement from physical impacts still applies.</div>
   </div>
   <div class="ability-row" id="ab-matter-mod" onclick="toggle('ab-matter-mod', 1)">
     <div class="ab-check">
@@ -475,7 +475,7 @@ body {
     <div class="ab-content">
       <div class="ab-title-row">
         <span class="ab-name" style="color:var(--matter);">Planar Seal</span>
-        <span class="ab-badge badge-mod">Moderate Â· 1 Strain</span>
+        <span class="ab-badge badge-mod">Moderate · 1 Strain</span>
       </div>
       <div class="ab-desc">Create a <b>Planar Anchor</b> in a <b>60-foot radius</b> for <b>10 minutes</b>. Within this area, teleportation, planar travel, summoning, banishment, and dimensional movement all fail unless you permit them. Void seams and planar breaches within the area are suppressed for the duration.</div>
     </div>
@@ -487,26 +487,26 @@ body {
     <div class="ab-content">
       <div class="ab-title-row">
         <span class="ab-name" style="color:var(--matter);">Containment</span>
-        <span class="ab-badge badge-maj">Major Â· 2 Strain</span>
+        <span class="ab-badge badge-maj">Major · 2 Strain</span>
         <span class="ab-badge badge-once">Once per Long Rest</span>
       </div>
-      <div class="ab-desc">One creature of any size is forced into absolute material fixity â€” <b>restrained</b>, cannot use teleportation or planar movement, cannot shift form or phase until the start of your next turn. If the target is a void entity or partially non-material, the duration extends to <b>1 minute, no concentration required</b>. Ignores resistances and immunities to the restrained condition.</div>
+      <div class="ab-desc">One creature of any size is forced into absolute material fixity — <b>restrained</b>, cannot use teleportation or planar movement, cannot shift form or phase until the start of your next turn. If the target is a void entity or partially non-material, the duration extends to <b>1 minute, no concentration required</b>. Ignores resistances and immunities to the restrained condition.</div>
     </div>
   </div>
 </div>
 
-<!-- RING III â€” ENERGY -->
+<!-- RING III — ENERGY -->
 <div class="ring-card ring-energy">
   <div class="ring-header">
     <div class="ring-dot" style="background:var(--energy);"></div>
     <div class="ring-name">
-      <div class="name" style="color:var(--energy);">III. Energy â€” The Elemental Seal</div>
+      <div class="name" style="color:var(--energy);">III. Energy — The Elemental Seal</div>
       <div class="subtitle">The Eternal Flow. The first motion.</div>
     </div>
   </div>
   <div class="passive-row">
     <span class="passive-tag">Passive</span>
-    <div class="passive-text"><b>Elemental Resilience â€”</b> Resistance to fire, cold, lightning, thunder, and acid damage. When you take elemental damage of any type, you may convert it to force damage instead â€” absorbed into the Sigil's constant motion rather than your body.</div>
+    <div class="passive-text"><b>Elemental Resilience —</b> Resistance to fire, cold, lightning, thunder, and acid damage. When you take elemental damage of any type, you may convert it to force damage instead — absorbed into the Sigil's constant motion rather than your body.</div>
   </div>
   <div class="ability-row" id="ab-energy-mod" onclick="toggle('ab-energy-mod', 1)">
     <div class="ab-check">
@@ -515,7 +515,7 @@ body {
     <div class="ab-content">
       <div class="ab-title-row">
         <span class="ab-name" style="color:var(--energy);">Redirect</span>
-        <span class="ab-badge badge-mod">Moderate Â· 1 Strain</span>
+        <span class="ab-badge badge-mod">Moderate · 1 Strain</span>
         <span class="ab-badge badge-react">Reaction</span>
       </div>
       <div class="ab-desc">Intercept one incoming elemental, force, or planar effect targeting yourself or an ally within <b>30 feet</b>. All damage from that effect is <b>halved</b> for all targets, and the remainder disperses harmlessly as force energy.</div>
@@ -528,26 +528,26 @@ body {
     <div class="ab-content">
       <div class="ab-title-row">
         <span class="ab-name" style="color:var(--energy);">Surge</span>
-        <span class="ab-badge badge-maj">Major Â· 2 Strain</span>
+        <span class="ab-badge badge-maj">Major · 2 Strain</span>
         <span class="ab-badge badge-once">Once per Long Rest</span>
       </div>
-      <div class="ab-desc">Release a single outward pulse. All creatures of your choice within <b>60 feet</b> â€” DC 20 Constitution save or take <b>8d8 force damage</b> and be pushed up to <b>30 feet</b> in a direction you choose. On a successful save, half damage and not pushed. You and excluded creatures are unaffected.</div>
+      <div class="ab-desc">Release a single outward pulse. All creatures of your choice within <b>60 feet</b> — DC 20 Constitution save or take <b>8d8 force damage</b> and be pushed up to <b>30 feet</b> in a direction you choose. On a successful save, half damage and not pushed. You and excluded creatures are unaffected.</div>
     </div>
   </div>
 </div>
 
-<!-- RING IV â€” THOUGHT -->
+<!-- RING IV — THOUGHT -->
 <div class="ring-card ring-thought">
   <div class="ring-header">
     <div class="ring-dot" style="background:var(--thought);"></div>
     <div class="ring-name">
-      <div class="name" style="color:var(--thought);">IV. Thought â€” The Feywild Amulet</div>
+      <div class="name" style="color:var(--thought);">IV. Thought — The Feywild Amulet</div>
       <div class="subtitle">The Dreaming Reality. The first consciousness.</div>
     </div>
   </div>
   <div class="passive-row">
     <span class="passive-tag">Passive</span>
-    <div class="passive-text"><b>Warded Mind â€”</b> Immune to the charmed and frightened conditions. Cannot be detected by divination magic unless you choose to allow it. Any attempt to read, alter, or access your memories or emotions without consent automatically fails.</div>
+    <div class="passive-text"><b>Warded Mind —</b> Immune to the charmed and frightened conditions. Cannot be detected by divination magic unless you choose to allow it. Any attempt to read, alter, or access your memories or emotions without consent automatically fails.</div>
   </div>
   <div class="ability-row" id="ab-thought-mod" onclick="toggle('ab-thought-mod', 1)">
     <div class="ab-check">
@@ -556,10 +556,10 @@ body {
     <div class="ab-content">
       <div class="ab-title-row">
         <span class="ab-name" style="color:var(--thought);">Probability Shift</span>
-        <span class="ab-badge badge-mod">Moderate Â· 1 Strain</span>
+        <span class="ab-badge badge-mod">Moderate · 1 Strain</span>
         <span class="ab-badge badge-react">Reaction</span>
       </div>
-      <div class="ab-desc">Reroll one failed saving throw, attack roll, or ability check â€” your own or an ally's within <b>60 feet</b> â€” and take either result. Can be declared after seeing the original result but before the outcome is determined.</div>
+      <div class="ab-desc">Reroll one failed saving throw, attack roll, or ability check — your own or an ally's within <b>60 feet</b> — and take either result. Can be declared after seeing the original result but before the outcome is determined.</div>
     </div>
   </div>
   <div class="ability-row" id="ab-thought-maj" onclick="toggle('ab-thought-maj', 2)">
@@ -569,26 +569,26 @@ body {
     <div class="ab-content">
       <div class="ab-title-row">
         <span class="ab-name" style="color:var(--thought);">Unwrite</span>
-        <span class="ab-badge badge-maj">Major Â· 2 Strain</span>
+        <span class="ab-badge badge-maj">Major · 2 Strain</span>
         <span class="ab-badge badge-once">Once per Long Rest</span>
       </div>
-      <div class="ab-desc">One mental, psychic, charm, or memory-based effect currently affecting any number of creatures within <b>60 feet</b> ends immediately for all affected creatures. Additionally, you may implant a single true statement into one creature's awareness â€” not a command, simply a fact the creature will know is accurate. The creature retains full autonomy in how they respond to it.</div>
+      <div class="ab-desc">One mental, psychic, charm, or memory-based effect currently affecting any number of creatures within <b>60 feet</b> ends immediately for all affected creatures. Additionally, you may implant a single true statement into one creature's awareness — not a command, simply a fact the creature will know is accurate. The creature retains full autonomy in how they respond to it.</div>
     </div>
   </div>
 </div>
 
-<!-- RING V â€” TIME -->
+<!-- RING V — TIME -->
 <div class="ring-card ring-time">
   <div class="ring-header">
     <div class="ring-dot" style="background:var(--time);"></div>
     <div class="ring-name">
-      <div class="name" style="color:var(--time);">V. Time â€” The Mortal Keystone</div>
+      <div class="name" style="color:var(--time);">V. Time — The Mortal Keystone</div>
       <div class="subtitle">The Measured Existence. The first moment.</div>
     </div>
   </div>
   <div class="passive-row">
     <span class="passive-tag">Passive</span>
-    <div class="passive-text"><b>Temporal Immunity â€”</b> Immune to forced time manipulation â€” Time Stop, magical aging, temporal stasis, and any effect that removes you from the normal flow of time without consent. You always act in the initiative order regardless of effects that would otherwise prevent it.</div>
+    <div class="passive-text"><b>Temporal Immunity —</b> Immune to forced time manipulation — Time Stop, magical aging, temporal stasis, and any effect that removes you from the normal flow of time without consent. You always act in the initiative order regardless of effects that would otherwise prevent it.</div>
   </div>
   <div class="ability-row" id="ab-time-mod" onclick="toggle('ab-time-mod', 1)">
     <div class="ab-check">
@@ -597,7 +597,7 @@ body {
     <div class="ab-content">
       <div class="ab-title-row">
         <span class="ab-name" style="color:var(--time);">Foresight</span>
-        <span class="ab-badge badge-mod">Moderate Â· 1 Strain</span>
+        <span class="ab-badge badge-mod">Moderate · 1 Strain</span>
       </div>
       <div class="ab-desc">Advantage on all initiative rolls and Dexterity saving throws for <b>1 hour</b>. Once during this duration, you may declare you knew a particular attack or effect was coming and <b>automatically succeed</b> on the saving throw against it. Must be declared before the roll is made.</div>
     </div>
@@ -609,10 +609,10 @@ body {
     <div class="ab-content">
       <div class="ab-title-row">
         <span class="ab-name" style="color:var(--time);">Consequence</span>
-        <span class="ab-badge badge-maj">Major Â· 2 Strain</span>
+        <span class="ab-badge badge-maj">Major · 2 Strain</span>
         <span class="ab-badge badge-once">Once per Long Rest</span>
       </div>
-      <div class="ab-desc">Force a reroll on any single die result that has just occurred â€” an enemy attack, a failed save, a missed spell, a critical hit â€” anywhere within <b>120 feet</b>. You do not choose which result stands. The second result stands regardless. Must be declared before any consequences of the original roll are described.</div>
+      <div class="ab-desc">Force a reroll on any single die result that has just occurred — an enemy attack, a failed save, a missed spell, a critical hit — anywhere within <b>120 feet</b>. You do not choose which result stands. The second result stands regardless. Must be declared before any consequences of the original roll are described.</div>
     </div>
   </div>
 </div>
@@ -620,7 +620,7 @@ body {
 
 <!-- LONG REST -->
 <div class="rest-wrap">
-  <button class="rest-btn" onclick="longRest()">Long Rest â€” Reset Abilities</button>
+  <button class="rest-btn" onclick="longRest()">Long Rest — Reset Abilities</button>
   <div class="rest-note">Resets all once-per-long-rest abilities. Strain is permanent and does not reset.</div>
 </div>
 
@@ -690,7 +690,7 @@ function renderEffect() {
   let color = strain >= 8 ? 'var(--strain-high)' : strain >= 5 ? 'var(--strain-mid)' : 'var(--strain-low)';
   el.style.borderLeftColor = color;
   el.classList.add('active');
-  let html = `<div class="ef-label" style="color:${color};">Strain ${strain} â€” ${d.label}</div>`;
+  let html = `<div class="ef-label" style="color:${color};">Strain ${strain} — ${d.label}</div>`;
   if (d.mech) html += `<div class="ef-mech">${d.mech}</div>`;
   el.innerHTML = html;
 }
@@ -732,5 +732,6 @@ init();
 </script>
 </body>
 </html>
+
 
 

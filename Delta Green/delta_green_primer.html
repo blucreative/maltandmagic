@@ -7,7 +7,7 @@
 <title>DELTA GREEN // PLAYER PRIMER</title>
 <link href="https://fonts.googleapis.com/css2?family=Special+Elite&family=Share+Tech+Mono&family=Oswald:wght@300;400;600;700&display=swap" rel="stylesheet"/>
 <style>
-/* â”€â”€ ROOT â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+/* ── ROOT ─────────────────────────────────── */
 :root{
   --g:#3d7a3d;--gb:#5cb85c;--gd:#1a381a;--gg:rgba(92,184,92,.1);
   --bg:#080e08;--bg2:#0c140c;--sf:#101810;--sf2:#151f15;
@@ -28,7 +28,7 @@ body::before{content:'';position:fixed;inset:0;background:repeating-linear-gradi
 .dir-nav-link{display:inline-block;text-decoration:none;color:var(--txd);border:1px solid var(--bd2);padding:6px 10px;font-size:9px;letter-spacing:1.4px;text-transform:uppercase;background:var(--sf);transition:all .15s}
 .dir-nav-link:hover{color:var(--gb);border-color:var(--g);background:var(--gg)}
 
-/* â”€â”€ HEADER â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+/* ── HEADER ───────────────────────────────── */
 .site-header{background:var(--sf2);border-bottom:2px solid var(--g);padding:0;position:sticky;top:0;z-index:200;box-shadow:0 4px 24px rgba(0,0,0,.8)}
 .header-inner{max-width:1100px;margin:0 auto;padding:12px 20px 0}
 .header-top{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-bottom:10px}
@@ -42,7 +42,7 @@ body::before{content:'';position:fixed;inset:0;background:repeating-linear-gradi
 .stamp-grn{color:var(--gb);border-color:var(--gd);background:var(--gg)}
 .stamp-blu{color:var(--bb);border-color:var(--bl);background:rgba(26,58,106,.12)}
 
-/* â”€â”€ NAV TABS â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+/* ── NAV TABS ─────────────────────────────── */
 .nav-tabs{display:flex;gap:2px;overflow-x:auto;scrollbar-width:none}
 .nav-tabs::-webkit-scrollbar{display:none}
 .tab-btn{background:none;border:1px solid transparent;border-bottom:none;color:var(--txd);font-family:var(--fn);font-size:9.5px;letter-spacing:1.5px;padding:7px 14px;cursor:pointer;white-space:nowrap;transition:all .15s;text-transform:uppercase;position:relative}
@@ -52,18 +52,18 @@ body::before{content:'';position:fixed;inset:0;background:repeating-linear-gradi
 .tab-num{color:var(--txd);font-size:8px;margin-right:4px}
 .tab-btn.active .tab-num{color:var(--g)}
 
-/* â”€â”€ MAIN â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+/* ── MAIN ─────────────────────────────────── */
 .main{max-width:1100px;margin:0 auto;padding:24px 20px 60px}
 .section{animation:fadeIn .25s ease}
 @keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
 
-/* â”€â”€ SECTION HEADER â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+/* ── SECTION HEADER ───────────────────────── */
 .sec-hd{display:flex;align-items:center;gap:10px;margin-bottom:20px;padding-bottom:8px;border-bottom:1px solid var(--bd)}
 .sec-num{font-size:9px;letter-spacing:2px;color:var(--g)}
 .sec-title{font-family:var(--fd);font-size:19px;font-weight:600;letter-spacing:3px;color:var(--txb)}
 .sec-line{flex:1;height:1px;background:linear-gradient(to right,var(--bd),transparent)}
 
-/* â”€â”€ PANEL â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+/* ── PANEL ────────────────────────────────── */
 .panel{background:var(--sf);border:1px solid var(--bd);margin-bottom:14px;position:relative}
 .panel::before{content:'';position:absolute;top:0;left:0;width:3px;height:100%;background:var(--gd)}
 .panel.accent::before{background:var(--gb)}
@@ -77,14 +77,14 @@ body::before{content:'';position:fixed;inset:0;background:repeating-linear-gradi
 .panel-hd span{font-size:9px;letter-spacing:1px;color:var(--txd)}
 .panel-body{padding:14px}
 
-/* â”€â”€ GRIDS â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+/* ── GRIDS ────────────────────────────────── */
 .g2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
 .g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px}
 .g4{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
 @media(max-width:700px){.g2,.g3,.g4{grid-template-columns:1fr}}
 @media(max-width:900px){.g3{grid-template-columns:1fr 1fr}}
 
-/* â”€â”€ TEXT â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+/* ── TEXT ─────────────────────────────────── */
 p{margin-bottom:10px;color:var(--tx)}
 p:last-child{margin-bottom:0}
 .lead{font-family:var(--ft);font-size:13px;color:var(--txb);line-height:1.9;border-left:3px solid var(--g);padding-left:14px;margin-bottom:18px}
@@ -96,39 +96,39 @@ p:last-child{margin-bottom:0}
 .hl-b{color:var(--bb)}
 strong{color:var(--txb)}
 
-/* â”€â”€ LIST â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+/* ── LIST ─────────────────────────────────── */
 ul.dgl{list-style:none;padding:0}
 ul.dgl li{padding:4px 0 4px 16px;position:relative;border-bottom:1px dotted var(--bd);font-size:12px;color:var(--tx)}
 ul.dgl li:last-child{border-bottom:none}
-ul.dgl li::before{content:'Â»';position:absolute;left:0;color:var(--g)}
+ul.dgl li::before{content:'»';position:absolute;left:0;color:var(--g)}
 ul.dgl.tight li{padding:2px 0 2px 14px;font-size:11.5px}
 
-/* â”€â”€ ROW DIVIDER â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+/* ── ROW DIVIDER ──────────────────────────── */
 .divrow{display:flex;align-items:center;gap:8px;margin:14px 0 10px;color:var(--gd);font-size:8.5px;letter-spacing:2px}
 .divrow::before,.divrow::after{content:'';flex:1;height:1px;background:var(--bd)}
 
-/* â”€â”€ FORMULA â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+/* ── FORMULA ──────────────────────────────── */
 .formula{background:var(--bg);border:1px solid var(--gd);padding:8px 12px;font-family:var(--fn);font-size:12px;color:var(--gb);margin:6px 0}
 
-/* â”€â”€ CALLOUT â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+/* ── CALLOUT ──────────────────────────────── */
 .callout{background:var(--bg);border:1px solid var(--gd);border-left:3px solid var(--gb);padding:10px 14px;font-family:var(--ft);font-size:12.5px;color:var(--txb);line-height:1.8;margin:10px 0}
 .callout.danger{border-left-color:var(--rb);border-color:rgba(139,26,26,.4)}
 .callout.warn{border-left-color:var(--ab);border-color:rgba(122,84,0,.4)}
 .callout.info{border-left-color:var(--bb);border-color:rgba(26,58,106,.4)}
 
-/* â”€â”€ STAT ROW â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+/* ── STAT ROW ─────────────────────────────── */
 .stat-row{display:flex;justify-content:space-between;align-items:baseline;padding:5px 0;border-bottom:1px solid var(--bd)}
 .stat-row:last-child{border-bottom:none}
 .stat-name{font-size:11.5px;color:var(--txd)}
 .stat-val{font-size:12px;color:var(--gb);font-weight:bold;text-align:right;max-width:65%}
 
-/* â”€â”€ BADGE â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+/* ── BADGE ────────────────────────────────── */
 .badge{display:inline-block;font-size:8px;letter-spacing:1.5px;padding:2px 6px;border:1px solid;vertical-align:middle;margin-left:5px;text-transform:uppercase}
 .badge-g{color:var(--gb);border-color:var(--g);background:var(--gg)}
 .badge-r{color:#e05050;border-color:var(--red);background:rgba(139,26,26,.1)}
 .badge-a{color:var(--ab);border-color:var(--am);background:rgba(122,84,0,.1)}
 
-/* â”€â”€ PROFESSION CARDS â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+/* ── PROFESSION CARDS ─────────────────────── */
 .prof-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:16px}
 @media(max-width:700px){.prof-grid{grid-template-columns:1fr 1fr}}
 .prof-card{background:var(--sf);border:1px solid var(--bd);padding:12px;cursor:pointer;transition:all .2s;position:relative}
@@ -140,14 +140,14 @@ ul.dgl.tight li{padding:2px 0 2px 14px;font-size:11.5px}
 .prof-detail{display:none;margin-top:10px;padding-top:10px;border-top:1px solid var(--bd)}
 .prof-card.open .prof-detail{display:block}
 
-/* â”€â”€ SKILLS TABLE â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+/* ── SKILLS TABLE ─────────────────────────── */
 .skills-2col{columns:2;gap:10px}
 @media(max-width:600px){.skills-2col{columns:1}}
 .sk-item{display:flex;justify-content:space-between;padding:3px 0;border-bottom:1px dotted var(--bd);font-size:11.5px;break-inside:avoid}
 .sk-name{color:var(--tx)}
 .sk-pct{color:var(--gb);font-weight:bold;min-width:36px;text-align:right}
 
-/* â”€â”€ FULL SKILLS TABLE â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+/* ── FULL SKILLS TABLE ────────────────────── */
 .skill-table{width:100%;border-collapse:collapse}
 .skill-table th{background:var(--bg);color:var(--g);font-size:9px;letter-spacing:2px;padding:5px 8px;text-align:left;border:1px solid var(--bd);font-weight:normal}
 .skill-table td{padding:5px 8px;border:1px solid var(--bd);font-size:11.5px;color:var(--tx);vertical-align:top}
@@ -156,7 +156,7 @@ ul.dgl.tight li{padding:2px 0 2px 14px;font-size:11.5px}
 .skill-table td.base{color:var(--gb);font-weight:bold;text-align:center;white-space:nowrap}
 .skill-table td.desc{color:var(--txd);font-size:11px}
 
-/* â”€â”€ WEAPONS TABLE â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+/* ── WEAPONS TABLE ────────────────────────── */
 .wpn-table{width:100%;border-collapse:collapse;font-size:11px;margin-bottom:14px}
 .wpn-table th{background:var(--bg);color:var(--g);font-size:8.5px;letter-spacing:1.5px;padding:5px 8px;text-align:left;border:1px solid var(--bd);white-space:nowrap}
 .wpn-table td{padding:4px 8px;border:1px solid var(--bd);color:var(--tx);vertical-align:top}
@@ -167,42 +167,42 @@ ul.dgl.tight li{padding:2px 0 2px 14px;font-size:11.5px}
 .wpn-table td.exp{color:var(--ab);text-align:center;font-size:10px}
 .wpn-table td.note{color:var(--txd);font-size:10px;font-style:italic}
 
-/* â”€â”€ SAN TABLES â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+/* ── SAN TABLES ───────────────────────────── */
 .san-table{width:100%;border-collapse:collapse;font-size:11px;margin-bottom:10px}
 .san-table th{background:rgba(139,26,26,.25);color:#e05050;font-size:9px;letter-spacing:1.5px;padding:5px 8px;text-align:left;border:1px solid rgba(139,26,26,.3)}
 .san-table td{padding:4px 8px;border:1px solid var(--bd);color:var(--tx)}
 .san-table td:last-child{color:var(--rb);font-weight:bold;text-align:right;font-family:var(--fn);white-space:nowrap}
 .san-table tr:nth-child(even) td{background:var(--sf2)}
 
-/* â”€â”€ DICE DISPLAY â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+/* ── DICE DISPLAY ─────────────────────────── */
 .dice-row{display:flex;gap:8px;flex-wrap:wrap;margin:8px 0}
 .die{background:var(--bg);border:1px solid var(--gd);padding:4px 10px;font-family:var(--fd);font-size:13px;color:var(--gb);font-weight:600;text-align:center;min-width:44px}
 .die.result{color:var(--txb)}
 .die.crit{border-color:var(--gb);background:var(--gg)}
 .die.fail{border-color:var(--red);color:var(--rb)}
 
-/* â”€â”€ STAT ARRAY TABLE â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+/* ── STAT ARRAY TABLE ─────────────────────── */
 .array-table{width:100%;border-collapse:collapse;text-align:center}
 .array-table th{background:var(--bg);color:var(--g);font-size:9px;letter-spacing:1.5px;padding:5px;border:1px solid var(--bd)}
 .array-table td{padding:7px;border:1px solid var(--bd);font-family:var(--fd);font-size:16px;font-weight:700;color:var(--txb)}
 .array-table tr:nth-child(even) td{background:var(--sf2)}
 .array-table tr:nth-child(odd) td{background:var(--bg2)}
 
-/* â”€â”€ COMBAT ACTIONS GRID â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+/* ── COMBAT ACTIONS GRID ──────────────────── */
 .action-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
 @media(max-width:600px){.action-grid{grid-template-columns:1fr}}
 .action-item{background:var(--bg);border:1px solid var(--bd);padding:10px 12px}
 .action-name{font-family:var(--fd);font-size:10px;font-weight:600;color:var(--gb);letter-spacing:1.5px;margin-bottom:4px;text-transform:uppercase}
 .action-desc{font-size:11px;color:var(--txd);line-height:1.5}
 
-/* â”€â”€ QUICK REF CARDS â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+/* ── QUICK REF CARDS ──────────────────────── */
 .qr-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:10px}
 .qr-card{background:var(--sf);border:1px solid var(--bd);padding:12px}
 .qr-lbl{font-size:8px;letter-spacing:2px;color:var(--txd);margin-bottom:4px;text-transform:uppercase}
 .qr-val{font-family:var(--fd);font-size:17px;font-weight:700;color:var(--gb)}
 .qr-note{font-size:10px;color:var(--txd);margin-top:2px}
 
-/* â”€â”€ TUTORIAL OVERLAY â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+/* ── TUTORIAL OVERLAY ─────────────────────── */
 .overlay{position:fixed;inset:0;background:rgba(0,0,0,.88);z-index:1000;display:flex;align-items:center;justify-content:center;padding:20px}
 .ov-box{background:var(--bg2);border:2px solid var(--g);max-width:540px;width:100%;padding:30px;position:relative;box-shadow:0 0 60px rgba(92,184,92,.15)}
 .ov-stamp{position:absolute;top:-12px;right:20px;background:var(--bg2);padding:0 8px;font-size:8px;letter-spacing:3px;color:var(--g);border:1px solid var(--g)}
@@ -221,10 +221,10 @@ ul.dgl.tight li{padding:2px 0 2px 14px;font-size:11.5px}
 .tut-btn{background:var(--gd);border:1px solid var(--g);color:var(--gb);font-family:var(--fn);font-size:10px;letter-spacing:1px;padding:5px 12px;cursor:pointer;transition:all .2s}
 .tut-btn:hover{background:var(--g);color:#000}
 
-/* â”€â”€ SEPARATOR â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+/* ── SEPARATOR ────────────────────────────── */
 hr.thin{border:none;border-top:1px solid var(--bd);margin:12px 0}
 
-/* â”€â”€ PRINT â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+/* ── PRINT ────────────────────────────────── */
 @media print{
   @page{size:A4;margin:10mm}
   body::before,.site-header,.overlay,.dir-nav{display:none!important}
@@ -233,7 +233,7 @@ hr.thin{border:none;border-top:1px solid var(--bd);margin:12px 0}
   .panel-hd{background:#e8e8e8}
 }
 
-/* â”€â”€ SCROLL HINT â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+/* ── SCROLL HINT ──────────────────────────── */
 .scroll-hint{text-align:center;font-size:9px;letter-spacing:2px;color:var(--gd);padding:30px 0;animation:pulse 2s infinite}
 @keyframes pulse{0%,100%{opacity:.3}50%{opacity:.8}}
 </style>
@@ -249,8 +249,8 @@ hr.thin{border:none;border-top:1px solid var(--bd);margin:12px 0}
     <div class="ov-body" id="ov-body"></div>
     <div class="ov-dots" id="ov-dots"></div>
     <div class="ov-btns">
-      <button class="btn sec" id="ov-back">â† BACK</button>
-      <button class="btn" id="ov-next">NEXT â†’</button>
+      <button class="btn sec" id="ov-back">← BACK</button>
+      <button class="btn" id="ov-next">NEXT →</button>
     </div>
   </div>
 </div>
@@ -276,7 +276,7 @@ hr.thin{border:none;border-top:1px solid var(--bd);margin:12px 0}
         <div class="stamp stamp-red">TOP SECRET // ORCON</div>
         <div class="stamp stamp-grn">DELTA GREEN EYES ONLY</div>
         <div class="stamp stamp-blu">FULL RULES REFERENCE</div>
-        <button class="tut-btn" onclick="startTutorial()">âŠž ORIENTATION</button>
+        <button class="tut-btn" onclick="startTutorial()">⊞ ORIENTATION</button>
       </div>
     </div>
     <nav class="nav-tabs" id="tabs"></nav>
@@ -284,21 +284,21 @@ hr.thin{border:none;border-top:1px solid var(--bd);margin:12px 0}
 </header>
 
 <main class="main" id="main"></main>
-<div class="scroll-hint" id="scroll-hint">// END OF TRANSMISSION â€” THE MISSION IS NEVER OVER //</div>
+<div class="scroll-hint" id="scroll-hint">// END OF TRANSMISSION — THE MISSION IS NEVER OVER //</div>
 
 <script>
-/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+/* ═══════════════════════════════════════════════
    TUTORIAL
-â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
+═══════════════════════════════════════════════ */
 const TUTORIAL = [
-  {title:'WELCOME TO DELTA GREEN',body:`This primer is your complete player reference, drawn directly from the <strong>Agent's Handbook</strong>.\n\nUse the <strong>tabs at the top</strong> to navigate. Everything you need to create an Agent and play the game is here â€” from character creation to the full equipment tables.`},
-  {title:'SECTION 01 â€” OVERVIEW',body:`Covers the setting, tone, and your role as a player. Delta Green is a horror game about <strong>fear, conspiracy, and terrible choices</strong>. Read this first if you're new.`},
-  {title:'SECTION 02 â€” CREATE YOUR AGENT',body:`Walk through all five steps: assign stats, choose a profession, pick skills, define bonds, and set motivations. <strong>Click profession cards</strong> to expand full skill lists.`},
-  {title:'SECTION 03 â€” STATISTICS & SKILLS',body:`Full descriptions of all six stats and every skill in the game. Use this during play to know exactly what each skill covers. The <strong>skills table</strong> includes base ratings and descriptions.`},
-  {title:'SECTION 04 â€” GAME MECHANICS',body:`How rolls work, success/failure/critical/fumble, opposed tests, pursuits, and willpower. <strong>Roll your skill or lower on 1D100</strong> â€” that's the core of everything.`},
-  {title:'SECTION 05 â€” COMBAT',body:`Turn structure, actions, attack rolls, defense rolls, damage, lethality, and cover. Remember: <strong>DEX order, one action per turn</strong>, and combat can kill you in a single roll.`},
-  {title:'SECTION 06 â€” SANITY',body:`The full sanity system including all three threat types, breaking points, disorders, and recovery. <strong>Check the SAN tables</strong> during play â€” they list exact loss amounts for every situation.`},
-  {title:'SECTION 07 â€” EQUIPMENT',body:`Full weapon tables, armor, vehicles, and gear by expense category. Covers <strong>official requisition, personal purchase, and the black market</strong>. Check this before any operation.`},
+  {title:'WELCOME TO DELTA GREEN',body:`This primer is your complete player reference, drawn directly from the <strong>Agent's Handbook</strong>.\n\nUse the <strong>tabs at the top</strong> to navigate. Everything you need to create an Agent and play the game is here — from character creation to the full equipment tables.`},
+  {title:'SECTION 01 — OVERVIEW',body:`Covers the setting, tone, and your role as a player. Delta Green is a horror game about <strong>fear, conspiracy, and terrible choices</strong>. Read this first if you're new.`},
+  {title:'SECTION 02 — CREATE YOUR AGENT',body:`Walk through all five steps: assign stats, choose a profession, pick skills, define bonds, and set motivations. <strong>Click profession cards</strong> to expand full skill lists.`},
+  {title:'SECTION 03 — STATISTICS & SKILLS',body:`Full descriptions of all six stats and every skill in the game. Use this during play to know exactly what each skill covers. The <strong>skills table</strong> includes base ratings and descriptions.`},
+  {title:'SECTION 04 — GAME MECHANICS',body:`How rolls work, success/failure/critical/fumble, opposed tests, pursuits, and willpower. <strong>Roll your skill or lower on 1D100</strong> — that's the core of everything.`},
+  {title:'SECTION 05 — COMBAT',body:`Turn structure, actions, attack rolls, defense rolls, damage, lethality, and cover. Remember: <strong>DEX order, one action per turn</strong>, and combat can kill you in a single roll.`},
+  {title:'SECTION 06 — SANITY',body:`The full sanity system including all three threat types, breaking points, disorders, and recovery. <strong>Check the SAN tables</strong> during play — they list exact loss amounts for every situation.`},
+  {title:'SECTION 07 — EQUIPMENT',body:`Full weapon tables, armor, vehicles, and gear by expense category. Covers <strong>official requisition, personal purchase, and the black market</strong>. Check this before any operation.`},
 ];
 
 let step = 0;
@@ -310,7 +310,7 @@ function renderOverlay(){
   const dots = document.getElementById('ov-dots');
   dots.innerHTML = TUTORIAL.map((_,i)=>`<div class="dot${i===step?' on':''}" onclick="gotoStep(${i})"></div>`).join('');
   document.getElementById('ov-back').style.display = step===0?'none':'';
-  document.getElementById('ov-next').textContent = step===TUTORIAL.length-1?'BEGIN â†’':'NEXT â†’';
+  document.getElementById('ov-next').textContent = step===TUTORIAL.length-1?'BEGIN →':'NEXT →';
 }
 function gotoStep(i){step=i;renderOverlay()}
 document.getElementById('ov-next').onclick=()=>{
@@ -322,9 +322,9 @@ document.getElementById('overlay').addEventListener('click',e=>{if(e.target.id==
 function startTutorial(){step=0;document.getElementById('overlay').style.display='flex';renderOverlay();}
 renderOverlay();
 
-/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+/* ═══════════════════════════════════════════════
    TABS & SECTIONS
-â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
+═══════════════════════════════════════════════ */
 const TABS=[
   {id:'overview',    label:'OVERVIEW'},
   {id:'creation',    label:'AGENT CREATION'},
@@ -359,9 +359,9 @@ function switchTab(id){
 
 buildTabs();
 
-/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+/* ═══════════════════════════════════════════════
    HELPERS
-â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
+═══════════════════════════════════════════════ */
 function sh(txt){return `<div class="sec-hd">
   <span class="sec-num">[${TABS.findIndex(t=>t.id===active)+1<10?'0':''}${TABS.findIndex(t=>t.id===active)+1}]</span>
   <h2 class="sec-title">${txt}</h2><div class="sec-line"></div></div>`;}
@@ -375,45 +375,45 @@ function statrow(name,val){return `<div class="stat-row"><span class="stat-name"
 function dgl(items,tight=false){return `<ul class="dgl${tight?' tight':''}">${items.map(i=>`<li>${i}</li>`).join('')}</ul>`;}
 function badge(txt,cls='badge-g'){return `<span class="badge ${cls}">${txt}</span>`;}
 
-/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+/* ═══════════════════════════════════════════════
    SECTION: OVERVIEW
-â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
+═══════════════════════════════════════════════ */
 const SECTIONS = {};
 
 SECTIONS.overview = () => `
 ${sh('OVERVIEW')}
-<div class="lead">Delta Green is a role-playing game about cosmic terror and deadly conspiracy. You fight to keep terrors from beyond space and time from infecting and destroying humanity â€” often at a shattering personal cost. This is not about victory. It is about the end.</div>
+<div class="lead">Delta Green is a role-playing game about cosmic terror and deadly conspiracy. You fight to keep terrors from beyond space and time from infecting and destroying humanity — often at a shattering personal cost. This is not about victory. It is about the end.</div>
 ${g2(
   panel('WHAT IS DELTA GREEN?', `<p>Born of the U.S. government's 1928 raid on the degenerate coastal town of Innsmouth, Massachusetts, Delta Green spent four decades opposing the forces of darkness. Stripped of sanction after a disastrous 1969 operation in Cambodia, its leaders made a secret pact: to continue their work without authority, without support, and without fear.</p>
-  <p>Delta Green agents slip through the system, manipulating the federal bureaucracy while pushing the darkness back for another day â€” but often at a shattering personal cost.</p>`,
+  <p>Delta Green agents slip through the system, manipulating the federal bureaucracy while pushing the darkness back for another day — but often at a shattering personal cost.</p>`,
   'accent'),
   panel('WHAT THE GAME IS ABOUT', `
   ${dgl([
-    '<strong>Fear</strong> â€” confronting threats beyond human comprehension',
-    '<strong>Conspiracy</strong> â€” hiding the truth from a world that cannot handle it',
-    '<strong>Cost</strong> â€” every operation extracts a price: sanity, relationships, career',
-    '<strong>The End</strong> â€” not of a mission, but of everything. Your family, your country, all life on Earth',
-    '<strong>Cover-up</strong> â€” success means nobody else has to see what you have seen',
+    '<strong>Fear</strong> — confronting threats beyond human comprehension',
+    '<strong>Conspiracy</strong> — hiding the truth from a world that cannot handle it',
+    '<strong>Cost</strong> — every operation extracts a price: sanity, relationships, career',
+    '<strong>The End</strong> — not of a mission, but of everything. Your family, your country, all life on Earth',
+    '<strong>Cover-up</strong> — success means nobody else has to see what you have seen',
   ])}`)
 )}
 ${g3(
-  panel('YOUR ROLE AS A PLAYER', `<p>Describe your Agent's actions. Listen to the Handler's descriptions. React. Ask questions. Roll when the Handler calls for it.</p>${dgl(['Speak in your Agent\'s voice','Act on instinct â€” keep the game moving','Work with the other players','Respect the mood â€” bleak, not silly','Trust the Handler\'s rulings'],'tight')}`),
-  panel('THE HANDLER', `<p>The Handler runs the game: they are the narrator, referee, and the voice of every NPC. They present the mystery, introduce horror, and decide the consequences of your choices.</p><p>Trust their rulings. If you disagree, raise it after the session â€” never mid-crisis.</p>`),
+  panel('YOUR ROLE AS A PLAYER', `<p>Describe your Agent's actions. Listen to the Handler's descriptions. React. Ask questions. Roll when the Handler calls for it.</p>${dgl(['Speak in your Agent\'s voice','Act on instinct — keep the game moving','Work with the other players','Respect the mood — bleak, not silly','Trust the Handler\'s rulings'],'tight')}`),
+  panel('THE HANDLER', `<p>The Handler runs the game: they are the narrator, referee, and the voice of every NPC. They present the mystery, introduce horror, and decide the consequences of your choices.</p><p>Trust their rulings. If you disagree, raise it after the session — never mid-crisis.</p>`),
   panel('WHAT YOU NEED', `
-  ${statrow('Players','2â€“6 (3â€“4 ideal)')}
+  ${statrow('Players','2–6 (3–4 ideal)')}
   ${statrow('Key dice','1D100 = two D10 (tens + units)')}
   ${statrow('Also needed','D4, D6, D8, D10, D12')}
-  ${statrow('Character sheet','Pencil â€” things will change')}
+  ${statrow('Character sheet','Pencil — things will change')}
   ${statrow('Handbook','Agent\'s Handbook (core rules)')}`)
 )}
 ${panel('THE OPERATION STRUCTURE', `<div class="g2">
-  <div>${dgl(['Handler briefs Agents on a task or threat','Agents investigate: NPCs, locations, clues','Crisis escalates â€” violence, horror, the Unnatural','Terrible decisions must be made','Consequences unfold â€” cover-up, fallout, loss','Debrief: what changed, what was lost'],'tight')}</div>
+  <div>${dgl(['Handler briefs Agents on a task or threat','Agents investigate: NPCs, locations, clues','Crisis escalates — violence, horror, the Unnatural','Terrible decisions must be made','Consequences unfold — cover-up, fallout, loss','Debrief: what changed, what was lost'],'tight')}</div>
   <div>${callout('Delta Green is not about guns. Delta Green is not about a bug hunt. Delta Green is not about understanding.<br><br>Delta Green is about the end.')}</div>
 </div>`)}`;
 
-/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+/* ═══════════════════════════════════════════════
    SECTION: AGENT CREATION
-â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
+═══════════════════════════════════════════════ */
 
 const PROFESSIONS = [
   {id:'anthro', name:'Anthropologist / Historian', rec:'INT, POW', bonds:4,
@@ -433,13 +433,13 @@ const PROFESSIONS = [
    skills:['Bureaucracy 50%','First Aid 60%','Medicine 60%','Persuade 40%','Pharmacy 50%','Science (Biology) 60%','Search 40%'],
    choose:'Choose any two: Forensics 50%, Psychotherapy 60%, Science (any) 50%, Surgery 50%'},
   {id:'scientist', name:'Scientist', rec:'INT', bonds:4,
-   teaser:'Research specialists who understand weird manifestations through rigorous analysis. Four bonds â€” civilian connections run deep.',
+   teaser:'Research specialists who understand weird manifestations through rigorous analysis. Four bonds — civilian connections run deep.',
    skills:['Bureaucracy 40%','Computer Science 40%','Science (primary) 60%','Science (secondary) 50%','Science (tertiary) 50%'],
    choose:'Choose any three: Accounting 50%, Craft (any) 40%, Foreign Language 40%, Forensics 40%, Law 40%, Pharmacy 40%'},
   {id:'operator', name:'Special Operator', rec:'STR, CON, POW', bonds:2,
    teaser:'Volunteers for the most difficult path. Years of the most grueling training. The most dangerous missions. Only 2 bonds left.',
    skills:['Alertness 60%','Athletics 60%','Demolitions 40%','Firearms 60%','Heavy Weapons 50%','Melee Weapons 50%','Military Science (Land) 60%','Navigate 50%','Stealth 50%','Survival 50%','Swim 50%','Unarmed Combat 60%'],
-   choose:'No additional choices â€” the kit is complete'},
+   choose:'No additional choices — the kit is complete'},
   {id:'criminal', name:'Criminal', rec:'DEX, CHA', bonds:3,
    teaser:'Pimp, burglar, extortionist, thug. Broad economies of crime. Hardened to things civilians never see.',
    skills:['Alertness 50%','Athletics 50%','Criminology 60%','Dodge 50%','Drive 40%','Stealth 50%','Unarmed Combat 60%'],
@@ -449,11 +449,11 @@ const PROFESSIONS = [
    skills:['Alertness 50%','Athletics 60%','Craft (Electrician) 40%','Craft (Mechanic) 40%','Demolitions 50%','Drive 50%','First Aid 50%'],
    choose:'Choose any three: Forensics 40%, Heavy Machinery 50%, Medicine 40%, Navigate 40%, Search 50%, Survival 40%'},
   {id:'police', name:'Police Officer', rec:'STR, CON, POW', bonds:4,
-   teaser:'Comes to investigate crime scenes after the fact and puts the pieces together. Four bonds â€” still rooted in the community.',
+   teaser:'Comes to investigate crime scenes after the fact and puts the pieces together. Four bonds — still rooted in the community.',
    skills:['Alertness 60%','Bureaucracy 40%','Criminology 40%','Drive 50%','Firearms 40%','First Aid 30%','HUMINT 50%','Law 30%','Melee Weapons 50%','Navigate 40%','Persuade 40%','Search 40%','Unarmed Combat 60%'],
    choose:'Choose one: Forensics 50%, Heavy Machinery 60%, Heavy Weapons 50%'},
   {id:'soldier', name:'Soldier / Marine', rec:'STR, CON', bonds:3,
-   teaser:'Governments will always need boots on the ground. When war begins, civilization gets out of the way â€” and unnatural things creep in at the edges.',
+   teaser:'Governments will always need boots on the ground. When war begins, civilization gets out of the way — and unnatural things creep in at the edges.',
    skills:['Alertness 50%','Athletics 50%','Bureaucracy 30%','Drive 40%','Firearms 40%','First Aid 40%','Military Science (Land) 40%','Navigate 40%','Persuade 30%','Unarmed Combat 50%'],
    choose:'Choose three: Artillery 40%, Computer Science 40%, Craft (any) 40%, Demolitions 40%, Foreign Language 40%, Heavy Weapons 40%, Melee Weapons 40%, Stealth 40%, Survival 40%, Swim 40%'},
 ];
@@ -480,12 +480,12 @@ SECTIONS.creation = () => {
     <div class="prof-card" data-id="${p.id}">
       <div class="prof-name">${p.name}</div>
       <div class="prof-rec">RECOMMENDED: ${p.rec}</div>
-      <div class="prof-bonds">â¬¡ ${p.bonds} BONDS</div>
+      <div class="prof-bonds">⬡ ${p.bonds} BONDS</div>
       <div class="prof-teaser">${p.teaser}</div>
       <div class="prof-detail">
         ${divrow('PROFESSIONAL SKILLS')}
         ${dgl(p.skills,'tight')}
-        ${p.choose !== 'No additional choices â€” the kit is complete' ? `${divrow('ADDITIONAL CHOICES')}<p style="font-size:11px;color:var(--ab)">${p.choose}</p>` : '<p style="font-size:11px;color:var(--txd)">Full kit â€” no additional choices needed.</p>'}
+        ${p.choose !== 'No additional choices — the kit is complete' ? `${divrow('ADDITIONAL CHOICES')}<p style="font-size:11px;color:var(--ab)">${p.choose}</p>` : '<p style="font-size:11px;color:var(--txd)">Full kit — no additional choices needed.</p>'}
         ${divrow('BONUS SKILLS')}
         <p style="font-size:11px;color:var(--txd)">All professions: pick any <strong>8 skills</strong> and add <strong>+20%</strong> to each. No skill above 80%.</p>
       </div>
@@ -501,7 +501,7 @@ SECTIONS.creation = () => {
 
   return `
 ${sh('AGENT CREATION')}
-${callout('A new Delta Green Agent takes only a few minutes to create. Follow these steps in order. Your biggest decision is Step 3 â€” your profession shapes everything.')}
+${callout('A new Delta Green Agent takes only a few minutes to create. Follow these steps in order. Your biggest decision is Step 3 — your profession shapes everything.')}
 
 ${divrow('STEP 01 // ASSIGN STATISTICS')}
 ${g2(
@@ -512,7 +512,7 @@ ${g2(
   ${statrow('<span class="hl">INT</span> Intelligence','Education, overall brilliance, pattern recognition. Clear reasoning.')}
   ${statrow('<span class="hl">POW</span> Power','Force of personality, psychic resilience. Sets WP and SAN.')}
   ${statrow('<span class="hl">CHA</span> Charisma','Charm, leadership, appearance. Determines Bond starting scores.')}
-  <hr class="thin"><p style="font-size:11px;color:var(--txd)">Each stat has a test score equal to stat Ã— 5 (e.g. INT 12 = 60% test). Stats below 9 or above 12 are exceptional â€” note a distinguishing feature.</p>`,
+  <hr class="thin"><p style="font-size:11px;color:var(--txd)">Each stat has a test score equal to stat × 5 (e.g. INT 12 = 60% test). Stats below 9 or above 12 are exceptional — note a distinguishing feature.</p>`,
   'accent'),
   panel('HOW TO ASSIGN STATS', `
   <p>Two options: roll <strong>4D6 drop lowest</strong> six times, or divide <strong>72 points</strong> between the six stats, or choose a set below.</p>
@@ -529,23 +529,23 @@ ${g2(
 ${divrow('STEP 02 // CALCULATE DERIVED ATTRIBUTES')}
 ${g2(
   panel('DERIVED ATTRIBUTES', `
-  ${formula('HP = (STR + CON) Ã· 2 &nbsp; <span style="color:var(--txd);font-size:11px">round up</span>')}
+  ${formula('HP = (STR + CON) ÷ 2 &nbsp; <span style="color:var(--txd);font-size:11px">round up</span>')}
   ${formula('WP = POW')}
-  ${formula('SAN = POW Ã— 5')}
-  ${formula('BP (Breaking Point) = SAN âˆ’ POW')}
+  ${formula('SAN = POW × 5')}
+  ${formula('BP (Breaking Point) = SAN − POW')}
   <hr class="thin">
   ${statrow('Hit Points (HP)','Physical health. At 2HP: unconscious. At 0HP: likely dead.')}
-  ${statrow('Willpower Points (WP)','Mental fuel. At 1â€“2WP: breakdown, âˆ’20% all tests. At 0WP: collapse.')}
+  ${statrow('Willpower Points (WP)','Mental fuel. At 1–2WP: breakdown, −20% all tests. At 0WP: collapse.')}
   ${statrow('Sanity Points (SAN)','Connection to reality. Drops from horror.')}
   ${statrow('Breaking Point (BP)','SAN threshold for gaining a disorder. Recalculates each time it\'s hit.')}`,
   'accent'),
   panel('SAN LIMITS', `
   <p>Two important limits on SAN:</p>
   ${statrow('Maximum SAN','99 minus your Unnatural skill rating')}
-  ${statrow('Maximum via therapy','POW Ã— 5 (e.g. POW 12 â†’ max 60 via therapy)')}
-  ${statrow('Exceeding POWÃ—5','Only possible by destroying unnatural threats')}
+  ${statrow('Maximum via therapy','POW × 5 (e.g. POW 12 → max 60 via therapy)')}
+  ${statrow('Exceeding POW×5','Only possible by destroying unnatural threats')}
   <hr class="thin">
-  <p style="font-size:11px;color:var(--txd)">Example: POW 11, Unnatural 0% â†’ SAN max 99. After therapy: max 55. After encounters: possibly higher.</p>
+  <p style="font-size:11px;color:var(--txd)">Example: POW 11, Unnatural 0% → SAN max 99. After therapy: max 55. After encounters: possibly higher.</p>
   ${callout('Every point of Unnatural skill cuts into your maximum sanity. Knowledge of the cosmos has a cost.','warn')}`)
 )}
 
@@ -562,36 +562,36 @@ ${g2(
   panel('BONDS IN PLAY', `
   ${statrow('Starting score','Equal to your CHA stat')}
   ${statrow('Anthropologist / Scientist','4 Bonds')}
-  ${statrow('Police Officer / Physician','3â€“4 Bonds')}
+  ${statrow('Police Officer / Physician','3–4 Bonds')}
   ${statrow('Federal Agent / Computer Sci.','3 Bonds')}
-  ${statrow('Special Operator / Criminal','2â€“3 Bonds')}
+  ${statrow('Special Operator / Criminal','2–3 Bonds')}
   <hr class="thin">
   ${callout('You can project SAN loss onto a Bond: spend 1D4 WP, reduce Bond by same amount, reduce SAN loss by same amount (minimum 0).','warn')}
-  <p style="font-size:11px;color:var(--txd);margin-top:8px">Delta Green Bonds form between teammates who survive together. After catastrophic trauma to a teammate, make a SAN test â€” if it fails, a new Bond forms or deepens.</p>`)
+  <p style="font-size:11px;color:var(--txd);margin-top:8px">Delta Green Bonds form between teammates who survive together. After catastrophic trauma to a teammate, make a SAN test — if it fails, a new Bond forms or deepens.</p>`)
 )}
 
 ${divrow('STEP 05 // MOTIVATIONS & FINISHING UP')}
 ${g2(
-  panel('MOTIVATIONS', `<p>Your Agent starts with up to <strong>five motivations</strong> â€” personal beliefs, drives, or obsessions. They are not Bonds, so they don't have scores.</p>
+  panel('MOTIVATIONS', `<p>Your Agent starts with up to <strong>five motivations</strong> — personal beliefs, drives, or obsessions. They are not Bonds, so they don't have scores.</p>
   <p>Motivations give your Agent something to fight for when everything else fails. Each time SAN hits the Breaking Point, <strong>replace one motivation with a new mental disorder</strong>.</p>
   ${divrow('EXAMPLES')}
-  ${dgl(['Protecting my family from the truth I know','Figuring out how the universe actually works','Finishing the investigation â€” for Agent Clara','Quiet professionalism: do the job, no glory','Never leave a man behind','Making the world safer, one covered-up horror at a time'],'tight')}`),
-  panel('FINAL DETAILS', `${dgl(['Choose name, age, and nationality','Note distinguishing features for high/low stats','Decide education history','Note what brought your Agent to Delta Green (see Damaged Veterans below)','As you play, refine motivations â€” they emerge in the game'],'tight')}
+  ${dgl(['Protecting my family from the truth I know','Figuring out how the universe actually works','Finishing the investigation — for Agent Clara','Quiet professionalism: do the job, no glory','Never leave a man behind','Making the world safer, one covered-up horror at a time'],'tight')}`),
+  panel('FINAL DETAILS', `${dgl(['Choose name, age, and nationality','Note distinguishing features for high/low stats','Decide education history','Note what brought your Agent to Delta Green (see Damaged Veterans below)','As you play, refine motivations — they emerge in the game'],'tight')}
   <hr class="thin">
-  <p style="font-size:11px;color:var(--txd)">Delta Green mostly recruits Agents in their thirties â€” old enough to be established in challenging careers. Special circumstances can bring in younger Agents.</p>`)
+  <p style="font-size:11px;color:var(--txd)">Delta Green mostly recruits Agents in their thirties — old enough to be established in challenging careers. Special circumstances can bring in younger Agents.</p>`)
 )}
 
-${divrow('DAMAGED VETERANS â€” WHAT BROUGHT YOU TO DELTA GREEN?')}
+${divrow('DAMAGED VETERANS — WHAT BROUGHT YOU TO DELTA GREEN?')}
 ${panel('TRAUMATIC BACKGROUND', `<p>If your Agent is already a Delta Green veteran (not new to the group), choose one background and apply its effects. Work with the Handler to determine the details.</p>
 <table class="wpn-table">
 <thead><tr><th>BACKGROUND</th><th>OCCULT</th><th>SAN EFFECT</th><th>NOTES</th></tr></thead>
 <tbody>${bgRows}</tbody></table>`,
-'warn', 'Veterans only â€” new Agents skip this step')}`;
+'warn', 'Veterans only — new Agents skip this step')}`;
 };
 
-/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+/* ═══════════════════════════════════════════════
    SECTION: STATS & SKILLS
-â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
+═══════════════════════════════════════════════ */
 const SKILLS_DATA = [
   ['Accounting','10%','Finance and business. Sift records for anomalies, hidden accounts, money laundering.'],
   ['Alertness','20%','Detects danger. Hear a safety switch, spot a hidden weapon, notice something wrong.'],
@@ -625,7 +625,7 @@ const SKILLS_DATA = [
   ['Persuade','20%','Convince someone to do something through argument, bargaining, or appeal.'],
   ['Pharmacy','0%','Drugs: identification, preparation, effects, and misuse. Create medicines and poisons.'],
   ['Pilot (type)','0%','Fly or navigate aircraft, watercraft, or spacecraft. Each type is a separate skill.'],
-  ['Psychotherapy','10%','Diagnose and treat mental illness. Help Agents recover SAN (limited â€” cannot treat Unnatural loss).'],
+  ['Psychotherapy','10%','Diagnose and treat mental illness. Help Agents recover SAN (limited — cannot treat Unnatural loss).'],
   ['Ride','10%','Ride horses and other animals under pressure.'],
   ['Science (type)','0%','Deep expertise in a scientific field: Biology, Chemistry, Physics, Astronomy, etc.'],
   ['Search','20%','Find things that are concealed or obscured. Beyond routine searching that only needs time.'],
@@ -641,17 +641,17 @@ const SKILLS_DATA = [
 SECTIONS['stats-skills'] = () => `
 ${sh('STATISTICS & SKILLS')}
 ${g2(
-  panel('USING A STAT', `<p>When no skill covers an action, the Handler may call for a <strong>stat Ã— 5 test</strong>. Roll the stat Ã— 5 or lower on 1D100.</p>
-  ${statrow('STR Ã— 5','Force open a door, hold someone down, lift a heavy load')}
-  ${statrow('CON Ã— 5','Resist disease, hold breath, endure pain without breaking')}
-  ${statrow('DEX Ã— 5','Catch something thrown without warning, stay balanced, quick reaction')}
-  ${statrow('INT Ã— 5','Recall a fact, solve a puzzle without a relevant skill, notice a pattern')}
-  ${statrow('POW Ã— 5','Resist supernatural compulsion, contest of wills, force of personality')}
-  ${statrow('CHA Ã— 5','Impress someone without time for a Persuade roll, first impression')}`),
+  panel('USING A STAT', `<p>When no skill covers an action, the Handler may call for a <strong>stat × 5 test</strong>. Roll the stat × 5 or lower on 1D100.</p>
+  ${statrow('STR × 5','Force open a door, hold someone down, lift a heavy load')}
+  ${statrow('CON × 5','Resist disease, hold breath, endure pain without breaking')}
+  ${statrow('DEX × 5','Catch something thrown without warning, stay balanced, quick reaction')}
+  ${statrow('INT × 5','Recall a fact, solve a puzzle without a relevant skill, notice a pattern')}
+  ${statrow('POW × 5','Resist supernatural compulsion, contest of wills, force of personality')}
+  ${statrow('CHA × 5','Impress someone without time for a Persuade roll, first impression')}`),
   panel('SKILL RATING GUIDE', `
-  ${statrow('0%','Cannot attempt â€” no training at all')}
-  ${statrow('1â€“19%','Dabbler â€” minimal exposure')}
-  ${statrow('20â€“29%','Hobbyist â€” studied casually')}
+  ${statrow('0%','Cannot attempt — no training at all')}
+  ${statrow('1–19%','Dabbler — minimal exposure')}
+  ${statrow('20–29%','Hobbyist — studied casually')}
   ${statrow('30%','Basic training or a college minor')}
   ${statrow('40%','Years of experience or a college major')}
   ${statrow('60%','Decades of experience or a graduate degree')}
@@ -666,16 +666,16 @@ ${divrow('COMPLETE SKILL REFERENCE')}
   <tbody>${SKILLS_DATA.map(([n,b,d])=>`<tr><td>${n}</td><td class="base">${b}</td><td class="desc">${d}</td></tr>`).join('')}</tbody>
 </table>
 ${divrow('SPECIAL TRAINING')}
-${panel('SPECIAL TRAINING', `<p>Some knowledge requires extensive training but not a dedicated skill rating. With special training, your Agent can use an existing stat or skill in a new way â€” at least 10â€“20 hours of instruction and practice.</p>
+${panel('SPECIAL TRAINING', `<p>Some knowledge requires extensive training but not a dedicated skill rating. With special training, your Agent can use an existing stat or skill in a new way — at least 10–20 hours of instruction and practice.</p>
 <p>Examples: lockpicks (DEX), SCUBA gear (Swim), parachuting (Athletics), grenades (Athletics), driving an armoured vehicle (Drive + special training).</p>
 ${callout('Using a skill without required special training: either no chance at all, or a heavy penalty. The Handler decides.','warn')}`, 'info')}`;
 
-/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+/* ═══════════════════════════════════════════════
    SECTION: GAME MECHANICS
-â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
+═══════════════════════════════════════════════ */
 SECTIONS.mechanics = () => `
 ${sh('GAME MECHANICS')}
-<div class="lead">The rules focus on skills. You decide what your Agent does; the Handler decides if it needs a roll; you roll if it does. Roll your skill (or stat Ã— 5) or lower on 1D100.</div>
+<div class="lead">The rules focus on skills. You decide what your Agent does; the Handler decides if it needs a roll; you roll if it does. Roll your skill (or stat × 5) or lower on 1D100.</div>
 
 ${divrow('THE DICE SYSTEM')}
 ${g2(
@@ -690,13 +690,13 @@ ${g2(
     <div class="die">Both: 0</div><div class="die"></div><div class="die result">= 100</div>
   </div>
   <hr class="thin">
-  ${statrow('Roll â‰¤ skill','SUCCESS')}
+  ${statrow('Roll ≤ skill','SUCCESS')}
   ${statrow('Roll > skill','FAILURE')}`, 'accent'),
   panel('FOUR OUTCOMES', `
   ${statrow('<span class="hl">CRITICAL SUCCESS</span>','Roll 01, or matching dice while succeeding (11, 22, 33...). Twice as good as an ordinary success.')}
   ${statrow('<span class="hl">SUCCESS</span>','Roll at or below your skill. You achieve what you intended.')}
   ${statrow('<span class="hl-r">FAILURE</span>','Roll above your skill. The action fails.')}
-  ${statrow('<span class="hl-r">FUMBLE</span>','Roll 100, or matching dice while failing (77, 88, 99...). The action fails badly â€” something else goes wrong too.')}
+  ${statrow('<span class="hl-r">FUMBLE</span>','Roll 100, or matching dice while failing (77, 88, 99...). The action fails badly — something else goes wrong too.')}
   <hr class="thin">
   <p style="font-size:11px;color:var(--txd)">Fumble consequences: physical strain (1D6 HP or temp stat loss), emotional burnout (1D6 WP), alienation, exhaustion, distraction, or false information. Handler chooses.</p>`)
 )}
@@ -705,17 +705,17 @@ ${divrow('WHEN TO ROLL')}
 ${g3(
   panel('ROLL WHEN...', `${dgl(['The outcome is in doubt','There\'s a crisis or emergency','Circumstances are not under control','The action might fail in a consequential way'],'tight')}`),
   panel('DON\'T ROLL WHEN...', `${dgl(['Anyone could do it with effort (routine)','Your Agent has time to plan and prepare carefully','A certain skill level makes success automatic','No meaningful consequence for failure exists'],'tight')}`),
-  panel('LUCK ROLL', `<p>Sometimes the Handler calls a Luck roll. No skill, no stat â€” pure chance.</p>
+  panel('LUCK ROLL', `<p>Sometimes the Handler calls a Luck roll. No skill, no stat — pure chance.</p>
   <div style="text-align:center;padding:10px"><div class="qr-val" style="font-size:28px">50%</div><div class="qr-note">Flat chance of success</div></div>`)
 )}
 
 ${divrow('BONUSES AND PENALTIES')}
 ${panel('MODIFIERS', `<div class="g3">
   <div>
-    <div class="lbl">EXCEPTIONALLY DIRE</div><div class="val hl-r">âˆ’40%</div><div style="font-size:11px;color:var(--txd);margin-top:3px">Rare. Nearly hopeless. Circumstances utterly against you.</div>
+    <div class="lbl">EXCEPTIONALLY DIRE</div><div class="val hl-r">−40%</div><div style="font-size:11px;color:var(--txd);margin-top:3px">Rare. Nearly hopeless. Circumstances utterly against you.</div>
   </div>
   <div>
-    <div class="lbl">DIFFICULT</div><div class="val hl-r">âˆ’20%</div><div style="font-size:11px;color:var(--txd);margin-top:3px">Uncommon. Circumstances working against you.</div>
+    <div class="lbl">DIFFICULT</div><div class="val hl-r">−20%</div><div style="font-size:11px;color:var(--txd);margin-top:3px">Uncommon. Circumstances working against you.</div>
   </div>
   <div>
     <div class="lbl">STANDARD</div><div class="val">Skill %</div><div style="font-size:11px;color:var(--txd);margin-top:3px">Default. Most situations use the base rating.</div>
@@ -732,22 +732,22 @@ ${panel('MODIFIERS', `<div class="g3">
 ${divrow('OPPOSED TESTS & PURSUIT')}
 ${g2(
   panel('OPPOSED TESTS', `<p>When two characters contest an action directly (Stealth vs. Alertness, HUMINT vs. Persuade, Dodge vs. attack roll), both sides roll.</p>
-  ${dgl(['A critical success beats an ordinary success','Otherwise: highest <em>successful</em> die-roll wins','If both fail: Handler decides â€” they keep trying, or the situation resolves inconclusively'],'tight')}`),
-  panel('PURSUIT', `<p>A chase is a series of opposed tests. The simplest chase is one test each â€” pursuer and quarry. Winner of that ends the chase (quarry escapes or is caught).</p>
+  ${dgl(['A critical success beats an ordinary success','Otherwise: highest <em>successful</em> die-roll wins','If both fail: Handler decides — they keep trying, or the situation resolves inconclusively'],'tight')}`),
+  panel('PURSUIT', `<p>A chase is a series of opposed tests. The simplest chase is one test each — pursuer and quarry. Winner of that ends the chase (quarry escapes or is caught).</p>
   <p>For a prolonged chase, one side needs <strong>two wins</strong>. Wins cancel out. A critical counts as two wins; a fumble counts as two losses.</p>
   ${callout('In a vehicle chase, a passenger can shoot before the pursuit roll. But if the driver attacks instead of pursuing, the opponent\'s roll automatically wins.','info')}`)
 )}
 
 ${divrow('WILLPOWER POINTS')}
 ${g2(
-  panel('WILLPOWER POINTS (WP)', `<p>WP equals POW. They are mental fuel â€” spent to keep going despite exhaustion, resist persuasion, repress terror, and fuel unnatural rituals.</p>
-  ${statrow('WP 1â€“2','Emotional breakdown: âˆ’20% penalty to all tests')}
-  ${statrow('WP 0','Agent collapses â€” incapacitated, possibly unconscious')}
+  panel('WILLPOWER POINTS (WP)', `<p>WP equals POW. They are mental fuel — spent to keep going despite exhaustion, resist persuasion, repress terror, and fuel unnatural rituals.</p>
+  ${statrow('WP 1–2','Emotional breakdown: −20% penalty to all tests')}
+  ${statrow('WP 0','Agent collapses — incapacitated, possibly unconscious')}
   <hr class="thin">
   ${statrow('Regain','Full night\'s rest restores 1D6 WP')}
   ${statrow('Regain','Fulfilling a personal motivation restores 1 WP (Handler\'s call)')}`, 'danger'),
   panel('EXHAUSTION', `<p>After working CON hours without a break, or after a failed attempt to sleep post-trauma, your Agent becomes <strong>exhausted</strong>.</p>
-  ${dgl(['Lose 1D6 WP immediately','âˆ’20% penalty to all skills, stat tests, and SAN rolls','Only a full night\'s rest removes the penalty'],'tight')}
+  ${dgl(['Lose 1D6 WP immediately','−20% penalty to all skills, stat tests, and SAN rolls','Only a full night\'s rest removes the penalty'],'tight')}
   <hr class="thin">
   <p style="font-size:11px;color:var(--txd)"><strong>Stimulants:</strong> remove exhaustion penalty for 1D6 hours (hard drugs: 2D6 hours). Every dose after the first costs 1D6 WP. Frequent use risks addiction.</p>`)
 )}
@@ -755,18 +755,18 @@ ${g2(
 ${divrow('SKILL IMPROVEMENT')}
 ${panel('LEARNING FROM FAILURE', `<p>Put a check in the box next to a skill when you <strong>attempt it and fail</strong>, or when you fail because the task requires more skill than you have (without a roll).</p>
 <p>At the end of each session (during Debrief): for each checked skill, roll 1D100. If the roll is <strong>above your current skill rating</strong>, add <strong>1D4</strong> to that skill. Then erase all checks.</p>
-${callout('You improve by failing and learning â€” not by succeeding. Mark every failure.')}`, 'accent')}`;
+${callout('You improve by failing and learning — not by succeeding. Mark every failure.')}`, 'accent')}`;
 
-/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+/* ═══════════════════════════════════════════════
    SECTION: COMBAT
-â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
+═══════════════════════════════════════════════ */
 SECTIONS.combat = () => `
 ${sh('COMBAT')}
-${callout('A serious fight, where people are trying to kill each other, is chaotic, frightening, and fast. Being skilled, having better weapons, or being in a superior position helps â€” but combat can claim even the most skilled combatant\'s life.','danger')}
+${callout('A serious fight, where people are trying to kill each other, is chaotic, frightening, and fast. Being skilled, having better weapons, or being in a superior position helps — but combat can claim even the most skilled combatant\'s life.','danger')}
 
 ${divrow('TURN STRUCTURE')}
 ${g2(
-  panel('INITIATIVE â€” DEX ORDER', `<p>Each character acts <strong>once per turn</strong>. The character with the highest DEX goes first, then the next-highest, and so on.</p>
+  panel('INITIATIVE — DEX ORDER', `<p>Each character acts <strong>once per turn</strong>. The character with the highest DEX goes first, then the next-highest, and so on.</p>
   <p>A turn typically represents a few seconds of action. A given turn might represent a split-second of sudden violence.</p>
   ${statrow('Same DEX','Handler decides, or simultaneous')}
   ${statrow('After acting','Agent cannot Dodge or Fight Back until next turn')}`, 'accent'),
@@ -783,13 +783,13 @@ ${divrow('ACTIONS IN COMBAT')}
 <div class="action-grid">
   ${[
     ['AIM','Add +20% to your next attack roll this turn. Cannot do anything else.'],
-    ['ATTACK','Inflict damage. One roll per turn. Includes defending in melee â€” see Defense Rolls.'],
-    ['CALLED SHOT','Attack that ignores cover or armor at âˆ’20% penalty (or âˆ’40% for a very difficult shot).'],
+    ['ATTACK','Inflict damage. One roll per turn. Includes defending in melee — see Defense Rolls.'],
+    ['CALLED SHOT','Attack that ignores cover or armor at −20% penalty (or −40% for a very difficult shot).'],
     ['DODGE','Roll Dodge to evade all melee attacks that turn. Also duck behind cover to evade ranged fire if cover is within 3 metres.'],
     ['FIGHT BACK','Roll Melee or Unarmed Combat to counter. If your roll beats the attacker\'s, your action lands instead. Defends against all hand-to-hand attackers; affects one target.'],
     ['DISARM','Roll Unarmed Combat to force the target to drop a weapon. Includes self-defence.'],
     ['PIN','Hold someone down. All melee attacks on a pinned target: +20%. They can only attempt Escape each turn.'],
-    ['ESCAPE','Roll STRÃ—5 or Unarmed Combat (best). Opposed by the pinning character. Success: free and defended for the rest of the turn.'],
+    ['ESCAPE','Roll STR×5 or Unarmed Combat (best). Opposed by the pinning character. Success: free and defended for the rest of the turn.'],
     ['MOVE','Jog 10m, run 20m, or sprint 30m. Can move 3m as part of any other action.'],
     ['WAIT','Delay your action to resolve after another character\'s action in the same turn.'],
   ].map(([n,d])=>`<div class="action-item"><div class="action-name">${n}</div><div class="action-desc">${d}</div></div>`).join('')}
@@ -797,7 +797,7 @@ ${divrow('ACTIONS IN COMBAT')}
 
 ${divrow('DEFENSE ROLLS')}
 ${g2(
-  panel('HOW DEFENSE WORKS', `<p>You can Dodge or Fight Back against an incoming attack <strong>before your DEX order</strong> in a turn â€” but it then becomes your only action for that turn.</p>
+  panel('HOW DEFENSE WORKS', `<p>You can Dodge or Fight Back against an incoming attack <strong>before your DEX order</strong> in a turn — but it then becomes your only action for that turn.</p>
   <p>An Agent who has already acted cannot Dodge or Fight Back until the next turn.</p>
   <p><strong>Requirement:</strong> your Agent must know the attack is coming and be physically capable of responding. Pinned or unaware Agents cannot defend.</p>
   ${statrow('<span class="hl">DODGE</span>','Opposes all melee attacks that turn + evades all ranged attacks if cover is near. Never inflicts damage.')}
@@ -808,20 +808,20 @@ ${g2(
   ${statrow('Called shot: ignores cover/armor','-20% to attack (or -40% for a hard shot)')}
   <hr class="thin">
   <p style="font-size:11px;color:var(--txd)">Called shots bypass body armor's protective effect. They can target specific body parts: aiming for the head, legs, or weapon hand.</p>
-  ${callout('Suppression: a suppressed Agent must hide behind cover or go prone. Refusal costs 1 SAN â€” but an Adapted-to-Violence Agent pays no SAN for ignoring suppression.','warn')}`)
+  ${callout('Suppression: a suppressed Agent must hide behind cover or go prone. Refusal costs 1 SAN — but an Adapted-to-Violence Agent pays no SAN for ignoring suppression.','warn')}`)
 )}
 
 ${divrow('DAMAGE & DEATH')}
 ${g2(
   panel('DAMAGE & HIT POINTS', `
   ${statrow('2 HP or below','Unconscious for one hour (or until healed to 3+ HP). Roll CON or lose stat points permanently.')}
-  ${statrow('0 HP','Dead â€” unless the Handler says prompt medical care can intervene.')}
+  ${statrow('0 HP','Dead — unless the Handler says prompt medical care can intervene.')}
   <hr class="thin">
-  ${statrow('First Aid roll','Restores 1D4 HP. Once per injury â€” cannot be repeated.')}
+  ${statrow('First Aid roll','Restores 1D4 HP. Once per injury — cannot be repeated.')}
   ${statrow('Daily rest (CON test)','1 HP per day if resting safely.')}
   ${statrow('Medicine/Surgery roll','Restores 1D4 HP per week with proper treatment.')}
   <hr class="thin">
-  <p style="font-size:11px;color:var(--txd)"><strong>Strength and damage:</strong> STR 13â€“16 â†’ +1 melee/unarmed damage. STR 17â€“18 â†’ +2. STR 5â€“8 â†’ âˆ’1. STR 3â€“4 â†’ âˆ’2.</p>`, 'danger'),
+  <p style="font-size:11px;color:var(--txd)"><strong>Strength and damage:</strong> STR 13–16 → +1 melee/unarmed damage. STR 17–18 → +2. STR 5–8 → −1. STR 3–4 → −2.</p>`, 'danger'),
   panel('LETHALITY RATING', `<p>Heavy weapons, explosives, and machine guns have a <strong>Lethality %</strong>. Instead of rolling damage, roll the Lethality %.</p>
   ${statrow('Success','Target immediately drops to 0 HP')}
   ${statrow('Failure','Target still takes damage: add the two percentile dice as individual D10s')}
@@ -833,9 +833,9 @@ ${g2(
   <p style="font-size:11px;color:var(--txd)"><strong>Body armor:</strong> reduces ordinary damage. No effect on Called Shots or successful Lethality rolls.<br><strong>Cover:</strong> Lethality automatically fails, but still deals HP damage. Cover reduces ordinary damage.</p>`)
 )}`;
 
-/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+/* ═══════════════════════════════════════════════
    SECTION: SANITY
-â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
+═══════════════════════════════════════════════ */
 let sanTab = 'violence';
 
 function initSanTabs(){
@@ -858,7 +858,7 @@ ${divrow('HOW SAN ROLLS WORK')}
 ${g2(
   panel('MAKING A SAN ROLL', `<p>When facing a threat, roll your Agent's <strong>current SAN score or lower</strong> on 1D100.</p>
   <div class="dice-row">
-    <div class="die crit">01</div><span style="color:var(--txd);font-size:11px;align-self:center">Critical success â€” minimum possible loss</span>
+    <div class="die crit">01</div><span style="color:var(--txd);font-size:11px;align-self:center">Critical success — minimum possible loss</span>
   </div>
   <div class="dice-row">
     <div class="die crit">Success</div><span style="color:var(--txd);font-size:11px;align-self:center">Lower loss (first number)</span>
@@ -867,16 +867,16 @@ ${g2(
     <div class="die fail">Failure</div><span style="color:var(--txd);font-size:11px;align-self:center">Higher loss (second number)</span>
   </div>
   <div class="dice-row">
-    <div class="die fail">100</div><span style="color:var(--txd);font-size:11px;align-self:center">Fumble â€” maximum possible loss</span>
+    <div class="die fail">100</div><span style="color:var(--txd);font-size:11px;align-self:center">Fumble — maximum possible loss</span>
   </div>
   <hr class="thin">
-  <p style="font-size:11px;color:var(--txd)">Loss is shown as <strong>Success/Failure</strong> â€” e.g. 0/1D6 means nothing on success, 1D6 on failure.</p>`, 'accent'),
+  <p style="font-size:11px;color:var(--txd)">Loss is shown as <strong>Success/Failure</strong> — e.g. 0/1D6 means nothing on success, 1D6 on failure.</p>`, 'accent'),
   panel('THREE TYPES OF INSANITY', `
   ${statrow('<span class="hl-a">TEMPORARY</span>','Lose 5+ SAN from one event. Fight, flight, or freeze until the source leaves. Typically a few minutes.')}
   ${statrow('<span class="hl-a">DISORDER</span>','SAN hits Breaking Point. Long-term neurotic disorder. Its nature matches the trauma type.')}
   ${statrow('<span class="hl-r">PERMANENT</span>','SAN reaches 0. Agent is irretrievably insane. Becomes a Handler character. Make a new Agent.')}
   <hr class="thin">
-  ${callout('<strong>Breaking Point:</strong> each time SAN hits BP or below, gain a new disorder. New BP = current SAN âˆ’ POW. The gap narrows each time.','danger')}`)
+  ${callout('<strong>Breaking Point:</strong> each time SAN hits BP or below, gain a new disorder. New BP = current SAN − POW. The gap narrows each time.','danger')}`)
 )}
 
 ${divrow('SAN LOSS TABLES')}
@@ -884,7 +884,7 @@ ${divrow('SAN LOSS TABLES')}
   ${['violence','helplessness','unnatural'].map(t=>`<button class="tab-btn san-tab-btn${t===sanTab?' active':''}" data-tab="${t}" style="font-size:10px;padding:5px 12px">${t.toUpperCase()}</button>`).join('')}
 </div>
 <div id="sant-violence" class="san-tab-content" style="display:${sanTab==='violence'?'block':'none'}">
-${panel('VIOLENCE â€” SAN LOSS', `
+${panel('VIOLENCE — SAN LOSS', `
 <div class="divrow">SUFFERING VIOLENCE</div>
 <table class="san-table"><thead><tr><th style="width:75%">TRIGGER</th><th>LOSS</th></tr></thead><tbody>
 ${[
@@ -911,7 +911,7 @@ ${[
 </tbody></table>
 <p style="font-size:10px;color:var(--txd);margin-top:6px">* For a failed roll involving multiple victims, add +1 per victim (beyond the first) up to the maximum possible die result.</p>`)}</div>
 <div id="sant-helplessness" class="san-tab-content" style="display:${sanTab==='helplessness'?'block':'none'}">
-${panel('HELPLESSNESS â€” SAN LOSS', `
+${panel('HELPLESSNESS — SAN LOSS', `
 <table class="san-table"><thead><tr><th style="width:75%">TRIGGER</th><th>LOSS</th></tr></thead><tbody>
 ${[
   ['Being fired from one\'s job','0 / 1'],
@@ -930,8 +930,8 @@ ${[
 ].map(([t,l])=>`<tr><td>${t}</td><td>${l}</td></tr>`).join('')}
 </tbody></table>`)}</div>
 <div id="sant-unnatural" class="san-tab-content" style="display:${sanTab==='unnatural'?'block':'none'}">
-${panel('THE UNNATURAL â€” SAN LOSS', `
-<p style="margin-bottom:10px;font-size:12px">The Unnatural is wholly outside human experience. It causes gaps in understanding. The Unnatural skill limits maximum SAN â€” the more you know, the harder it is to navigate the human world.</p>
+${panel('THE UNNATURAL — SAN LOSS', `
+<p style="margin-bottom:10px;font-size:12px">The Unnatural is wholly outside human experience. It causes gaps in understanding. The Unnatural skill limits maximum SAN — the more you know, the harder it is to navigate the human world.</p>
 <table class="san-table"><thead><tr><th style="width:75%">TRIGGER</th><th>LOSS</th></tr></thead><tbody>
 ${[
   ['Witnessing a supernatural effect that appears benign','0 / 1'],
@@ -943,11 +943,11 @@ ${[
   ['Learning a fundamental truth of the cosmos','Special (Handler)'],
 ].map(([t,l])=>`<tr><td>${t}</td><td>${l}</td></tr>`).join('')}
 </tbody></table>
-${callout('<strong>No adaptation to the Unnatural is possible.</strong> Every encounter is a fresh shock. The only \'adaptation\' is reaching 0 SAN â€” at which point the horrors make perfect sense and no longer inflict damage.','danger')}`)}</div>
+${callout('<strong>No adaptation to the Unnatural is possible.</strong> Every encounter is a fresh shock. The only \'adaptation\' is reaching 0 SAN — at which point the horrors make perfect sense and no longer inflict damage.','danger')}`)}</div>
 
 ${divrow('DISORDERS')}
 ${g3(
-  panel('FROM VIOLENCE', `${dgl(['PTSD â€” relives traumas, flashbacks, anxiety','Depression','Addiction','Sleep disorder','Paranoia','Intermittent explosive disorder','Ligyrophobia (loud noise phobia)','Totemic compulsion'],'tight')}`),
+  panel('FROM VIOLENCE', `${dgl(['PTSD — relives traumas, flashbacks, anxiety','Depression','Addiction','Sleep disorder','Paranoia','Intermittent explosive disorder','Ligyrophobia (loud noise phobia)','Totemic compulsion'],'tight')}`),
   panel('FROM HELPLESSNESS', `${dgl(['Depression','Obsessive/compulsive disorder','Anxiety disorder','Addiction','Obsession','Enclosure-related phobia','Conversion disorder','Dissociative identity disorder'],'tight')}`),
   panel('FROM THE UNNATURAL', `${dgl(['Depersonalisation disorder','Depression','Sleep disorder','Amnesia','Fugues','Paranoia','Megalomania','Dissociative identity disorder'],'tight')}`)
 )}
@@ -958,101 +958,101 @@ ${g2(
   ${dgl(['Roll 1D4 and reduce your WP by that amount','If at least 1 WP remains, reduce SAN loss by the amount rolled (minimum 0)','Reduce the chosen Bond\'s score by the same amount','Describe later how the relationship worsened'])}
   ${callout('The stresses of Delta Green often destroy the families and friendships that give Agents their strength.','danger')}`, 'warn'),
   panel('REPRESSING INSANITY', `<p>During temporary insanity or an acute disorder episode, try to suppress it by drawing on your Bonds:</p>
-  ${dgl(['Roll 1D4 and reduce your WP by that amount','If at least 1 WP remains, describe how a Bond helps you hold together','Reduce that Bond by the same amount','Make a SAN test â€” success: symptoms suppressed, you stay in control'])}
+  ${dgl(['Roll 1D4 and reduce your WP by that amount','If at least 1 WP remains, describe how a Bond helps you hold together','Reduce that Bond by the same amount','Make a SAN test — success: symptoms suppressed, you stay in control'])}
   <hr class="thin">
-  <p style="font-size:11px;color:var(--txd)"><strong>Psychoactive sedatives</strong> (diazepam, clonazepam): +20% to repress disorder, but âˆ’20% to all skill/stat tests. Frequent use risks addiction.</p>`)
+  <p style="font-size:11px;color:var(--txd)"><strong>Psychoactive sedatives</strong> (diazepam, clonazepam): +20% to repress disorder, but −20% to all skill/stat tests. Frequent use risks addiction.</p>`)
 )}
 
 ${divrow('ADAPTATION')}
 ${g2(
-  panel('ADAPTING TO VIOLENCE', `<p>Lose SAN from Violence three times without going insane â†’ become <strong>adapted</strong>. SAN tests for Violence always succeed.</p>
+  panel('ADAPTING TO VIOLENCE', `<p>Lose SAN from Violence three times without going insane → become <strong>adapted</strong>. SAN tests for Violence always succeed.</p>
   <p style="color:var(--rb)">Cost: permanently lose 1D6 CHA, and each Bond drops by the same amount.</p>
   <p style="font-size:11px;color:var(--txd);margin-top:6px">Adapted-to-Violence Agents also lose no SAN for refusing to hide from suppression fire.</p>`),
-  panel('ADAPTING TO HELPLESSNESS', `<p>Lose SAN from Helplessness three times without going insane â†’ become <strong>adapted</strong>. SAN tests for Helplessness always succeed.</p>
+  panel('ADAPTING TO HELPLESSNESS', `<p>Lose SAN from Helplessness three times without going insane → become <strong>adapted</strong>. SAN tests for Helplessness always succeed.</p>
   <p style="color:var(--rb)">Cost: permanently lose 1D6 POW (does not affect SAN directly).</p>
   ${callout('No Agent can ever adapt to the Unnatural.','danger')}`)
 )}
 
 ${divrow('RECOVERY')}
 ${panel('RECOVERING SAN', `<div class="g2">
-<div>${dgl(['<strong>Therapy (truth):</strong> Luck roll. Success: +1D6 SAN (crit: +6). Therapist may lose SAN from your stories, or report illegal violence.','<strong>Therapy (lies):</strong> Luck roll at âˆ’20%. Success: +1D4 SAN. Failure: +0.','<strong>Fulfill responsibilities:</strong> SAN test. Success: +1D6 Bond + maybe +1 SAN. Failure: +1 Bond. Fumble: âˆ’1D4 Bond, âˆ’1 SAN.','<strong>Personal motivation:</strong> SAN test. Success: +1 SAN. Crit: +1D4 SAN. Fumble: âˆ’1 SAN.','<strong>Destroy the Unnatural:</strong> Handler\'s discretion. Success can restore SAN beyond POWÃ—5 cap.'],'tight')}</div>
-<div>${callout('Therapy can only raise SAN up to POW Ã— 5. To exceed that ceiling, Agents must actively defeat unnatural threats â€” and even then, every point of Unnatural skill they carry reduces the absolute maximum.')}
-${callout('<strong>Home scenes</strong> occur between missions. A chance to explore what matters to your Agent â€” and whether Delta Green is destroying those things.','info')}</div>
+<div>${dgl(['<strong>Therapy (truth):</strong> Luck roll. Success: +1D6 SAN (crit: +6). Therapist may lose SAN from your stories, or report illegal violence.','<strong>Therapy (lies):</strong> Luck roll at −20%. Success: +1D4 SAN. Failure: +0.','<strong>Fulfill responsibilities:</strong> SAN test. Success: +1D6 Bond + maybe +1 SAN. Failure: +1 Bond. Fumble: −1D4 Bond, −1 SAN.','<strong>Personal motivation:</strong> SAN test. Success: +1 SAN. Crit: +1D4 SAN. Fumble: −1 SAN.','<strong>Destroy the Unnatural:</strong> Handler\'s discretion. Success can restore SAN beyond POW×5 cap.'],'tight')}</div>
+<div>${callout('Therapy can only raise SAN up to POW × 5. To exceed that ceiling, Agents must actively defeat unnatural threats — and even then, every point of Unnatural skill they carry reduces the absolute maximum.')}
+${callout('<strong>Home scenes</strong> occur between missions. A chance to explore what matters to your Agent — and whether Delta Green is destroying those things.','info')}</div>
 </div>`)}`; 
 
-/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+/* ═══════════════════════════════════════════════
    SECTION: EQUIPMENT
-â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
+═══════════════════════════════════════════════ */
 SECTIONS.equipment = () => `
 ${sh('EQUIPMENT & VEHICLES')}
 
-${panel('CAMPAIGN STRUCTURE NOTE', `${callout('<strong>PART 2 â€” THE EYES OF THE STORM:</strong> You are operatives of The Firm (Delta Green). You will be issued a combat loadout from the tables below before insertion. Delta Green character creation rules apply.')}`, 'accent')}
+${panel('CAMPAIGN STRUCTURE NOTE', `${callout('<strong>PART 2 — THE EYES OF THE STORM:</strong> You are operatives of The Firm (Delta Green). You will be issued a combat loadout from the tables below before insertion. Delta Green character creation rules apply.')}`, 'accent')}
 
-${divrow('PART 2 â€” ISSUED COMBAT LOADOUT')}
-<p style="font-size:12px;color:var(--txd);margin-bottom:14px">Each operative selects from the following tables. All weapons include 2Ã— spare magazines/clips where applicable. These are issued â€” not chosen from a catalogue â€” so availability is fixed. The Skill column indicates which skill governs use.</p>
+${divrow('PART 2 — ISSUED COMBAT LOADOUT')}
+<p style="font-size:12px;color:var(--txd);margin-bottom:14px">Each operative selects from the following tables. All weapons include 2× spare magazines/clips where applicable. These are issued — not chosen from a catalogue — so availability is fixed. The Skill column indicates which skill governs use.</p>
 
-${panel('PRIMARY WEAPON â€” CHOOSE ONE', `
+${panel('PRIMARY WEAPON — CHOOSE ONE', `
 <table class="wpn-table">
 <thead><tr><th>WEAPON</th><th>SKILL</th><th>BASE RANGE</th><th>DAMAGE</th><th>LETHALITY</th><th>AMMO CAP.</th></tr></thead>
 <tbody>
 ${[
-  ['Shotgun','Firearms','75m','2D8 (shot) / 2D6 (slug)','â€”','5'],
+  ['Shotgun','Firearms','75m','2D8 (shot) / 2D6 (slug)','—','5'],
   ['Light rifle / carbine','Firearms','100m','1D12','10% (burst fire)','10'],
   ['Submachine gun','Firearms','50m','1D10','10% (full auto)','30'],
   ['Flamethrower (handheld)','Heavy Weapons','5m','1m radius','10%','20'],
-  ['Extra sidearm (in lieu of primary)','â€”','â€”','â€”','â€”','â€”'],
+  ['Extra sidearm (in lieu of primary)','—','—','—','—','—'],
 ].map(([n,sk,r,d,l,a])=>`<tr><td class="wn">${n}</td><td>${sk}</td><td>${r}</td><td class="wd">${d}</td><td class="lth">${l}</td><td style="text-align:center">${a}</td></tr>`).join('')}
 </tbody></table>
-<p style="font-size:10px;color:var(--txd)">Includes 2Ã— spare ammo clips/magazines. Burst/full-auto fire uses Lethality rating â€” see Combat section. Flamethrower: incendiary, difficult to extinguish, extremely dangerous in enclosed spaces.</p>`, 'accent')}
+<p style="font-size:10px;color:var(--txd)">Includes 2× spare ammo clips/magazines. Burst/full-auto fire uses Lethality rating — see Combat section. Flamethrower: incendiary, difficult to extinguish, extremely dangerous in enclosed spaces.</p>`, 'accent')}
 
-${panel('SIDEARM â€” CHOOSE ONE', `
+${panel('SIDEARM — CHOOSE ONE', `
 <table class="wpn-table">
 <thead><tr><th>WEAPON</th><th>SKILL</th><th>BASE RANGE</th><th>DAMAGE</th><th>LETHALITY</th><th>AMMO CAP.</th></tr></thead>
 <tbody>
 ${[
-  ['Medium pistol','Firearms','15m','1D10','â€”','15'],
-  ['Heavy pistol','Firearms','20m','1D12','â€”','10'],
-  ['Pepper spray (can)','DEXÃ—5','3m','âˆ’20% all rolls, up to 2 targets','â€”','12 uses'],
-  ['Extra ancillary (in lieu of sidearm)','â€”','â€”','â€”','â€”','â€”'],
+  ['Medium pistol','Firearms','15m','1D10','—','15'],
+  ['Heavy pistol','Firearms','20m','1D12','—','10'],
+  ['Pepper spray (can)','DEX×5','3m','−20% all rolls, up to 2 targets','—','12 uses'],
+  ['Extra ancillary (in lieu of sidearm)','—','—','—','—','—'],
 ].map(([n,sk,r,d,l,a])=>`<tr><td class="wn">${n}</td><td>${sk}</td><td>${r}</td><td class="wd">${d}</td><td class="lth">${l}</td><td style="text-align:center">${a}</td></tr>`).join('')}
 </tbody></table>
-<p style="font-size:10px;color:var(--txd)">Includes 2Ã— spare clips where applicable. Pepper spray effect lasts ~1 hour.</p>`)}
+<p style="font-size:10px;color:var(--txd)">Includes 2× spare clips where applicable. Pepper spray effect lasts ~1 hour.</p>`)}
 
-${panel('HAND-TO-HAND â€” CHOOSE ONE', `
+${panel('HAND-TO-HAND — CHOOSE ONE', `
 <table class="wpn-table">
 <thead><tr><th>WEAPON</th><th>SKILL</th><th>DAMAGE</th><th>LETHALITY</th><th>ARMOUR PIERCE</th><th>NOTES</th></tr></thead>
 <tbody>
 ${[
-  ['Combat knife','Melee Weapons','1D6','â€”','3','Concealable'],
-  ['Machete / club / hand axe','Melee Weapons','1D8','â€”','â€”','Longer reach than knife'],
-  ['Extra ancillary (in lieu of H2H)','â€”','â€”','â€”','â€”','â€”'],
+  ['Combat knife','Melee Weapons','1D6','—','3','Concealable'],
+  ['Machete / club / hand axe','Melee Weapons','1D8','—','—','Longer reach than knife'],
+  ['Extra ancillary (in lieu of H2H)','—','—','—','—','—'],
 ].map(([n,sk,d,l,ap,note])=>`<tr><td class="wn">${n}</td><td>${sk}</td><td class="wd">${d}</td><td class="lth">${l}</td><td style="text-align:center">${ap}</td><td class="note">${note}</td></tr>`).join('')}
 </tbody></table>`)}
 
-${panel('ANCILLARY â€” CHOOSE TWO (must be different)', `
+${panel('ANCILLARY — CHOOSE TWO (must be different)', `
 <table class="wpn-table">
 <thead><tr><th>ITEM</th><th>SKILL / USE</th><th>RANGE / EFFECT</th><th>DAMAGE / LETHALITY</th><th>NOTES</th></tr></thead>
 <tbody>
 ${[
-  ['Flashbang','Athletics (DEXÃ—5)','20m throw / 10m radius','âˆ’40% all rolls (stun)','Half effective radius outdoors. No roll needed into closed room.'],
+  ['Flashbang','Athletics (DEX×5)','20m throw / 10m radius','−40% all rolls (stun)','Half effective radius outdoors. No roll needed into closed room.'],
   ['Hand grenade','Athletics','20m throw / 10m radius','Lethality 15%','Frag. See combat rules for Kill Radius.'],
   ['Wood / fire axe','Melee Weapons','Melee','1D10','AP 1. Double damage vs doors and barriers.'],
-  ['Small fire extinguisher','DEXÃ—5','3m spray','N/A (suppression)','Single use. Can also spray animals/threats in the face (DEXÃ—5).'],
-  ['Gas mask','â€”','Worn','N/A','Protects against gas and airborne hazards. Imposes âˆ’10% to Alertness.'],
-  ['Holographic sight','â€”','Primary weapon only','N/A','+20% to hit with primary weapon. Requires mounting.'],
+  ['Small fire extinguisher','DEX×5','3m spray','N/A (suppression)','Single use. Can also spray animals/threats in the face (DEX×5).'],
+  ['Gas mask','—','Worn','N/A','Protects against gas and airborne hazards. Imposes −10% to Alertness.'],
+  ['Holographic sight','—','Primary weapon only','N/A','+20% to hit with primary weapon. Requires mounting.'],
   ['C4 block','Demolitions','Placed','Lethality 30%, 2m radius','Single use. Requires Demolitions or special training to set safely.'],
-  ['Kevlar helmet','â€”','Worn','N/A','+1 Armour Rating. Cannot be concealed. Stacks with vest.'],
-  ['First responder kit','First Aid / Medicine','â€”','N/A','+20% to First Aid or Medicine rolls. Four uses.'],
+  ['Kevlar helmet','—','Worn','N/A','+1 Armour Rating. Cannot be concealed. Stacks with vest.'],
+  ['First responder kit','First Aid / Medicine','—','N/A','+20% to First Aid or Medicine rolls. Four uses.'],
 ].map(([n,sk,r,d,note])=>`<tr><td class="wn">${n}</td><td>${sk}</td><td>${r}</td><td class="wd">${d}</td><td class="note">${note}</td></tr>`).join('')}
 </tbody></table>
 <p style="font-size:10px;color:var(--txd)">Two ancillaries maximum, must be different items. Selecting "Extra ancillary" from Primary or Sidearm grants an additional pick here.</p>`)}
 
-${divrow('STANDARD ISSUE â€” ALL OPERATIVES')}
+${divrow('STANDARD ISSUE — ALL OPERATIVES')}
 ${panel('EVERYONE RECEIVES', `<div class="g2">
 <div>
 ${dgl([
   'Combat fatigues and boots',
-  'Small tactical torch â€” 20m range, can be weapon-mounted',
+  'Small tactical torch — 20m range, can be weapon-mounted',
   'Walkie-talkie (short range, encrypted)',
 ],'tight')}
 </div>
@@ -1062,12 +1062,12 @@ ${callout('<strong>Body armour is NOT included</strong> in the standard loadout.
 </div>`)}
 
 ${divrow('PERSONAL ITEMS')}
-${panel('PERSONAL EFFECTS', `<p>You may bring up to <strong>5 items</strong> that collectively weigh no more than <strong>5 kg</strong>. These must be the kind of items you'd find in a typical home or that could be easily purchased at a specialist store â€” tools from a hardware shop, climbing rope from a camping store, a standard torch, etc.</p>
+${panel('PERSONAL EFFECTS', `<p>You may bring up to <strong>5 items</strong> that collectively weigh no more than <strong>5 kg</strong>. These must be the kind of items you'd find in a typical home or that could be easily purchased at a specialist store — tools from a hardware shop, climbing rope from a camping store, a standard torch, etc.</p>
 <div class="g2">
 <div>
 ${dgl([
   'Hand tools (hammer, screwdriver, bolt cutters)',
-  'Rope (10â€“20m coil, camping shop)',
+  'Rope (10–20m coil, camping shop)',
   'Standard torch and spare batteries',
   'First aid kit (basic, not responder kit)',
   'Lock picks (DEX special training required)',
@@ -1075,7 +1075,7 @@ ${dgl([
   'Camera (disposable or compact)',
   'Notebook and maps of the area',
   'Waterproof clothing / waders',
-  'Food and water supply (24â€“48hr)',
+  'Food and water supply (24–48hr)',
 ],'tight')}
 </div>
 <div>
@@ -1089,9 +1089,9 @@ ${g2(
   panel('ARMOUR IN PLAY', `
   ${statrow('Kevlar vest (3 AP)','Reduces ordinary attack damage. Under clothes.')}
   ${statrow('Kevlar helmet (+1 AP)','Stacks with vest. Cannot be concealed.')}
-  ${statrow('Called Shots','Armour has NO effect â€” bypass entirely')}
+  ${statrow('Called Shots','Armour has NO effect — bypass entirely')}
   ${statrow('Lethality rolls (success)','Armour has NO effect')}
-  ${statrow('Armour-piercing ammo','Reduces target AP by 5, but âˆ’1 damage')}
+  ${statrow('Armour-piercing ammo','Reduces target AP by 5, but −1 damage')}
   ${statrow('Hollow-point ammo','+1 damage, but armour is twice as effective against it')}`),
   panel('WEAPON QUICK NOTES', `
   ${statrow('Burst / full-auto fire','Use Lethality % instead of damage roll')}
@@ -1099,28 +1099,28 @@ ${g2(
   ${statrow('Suppression','Must hide or go prone, or lose 1 SAN')}
   ${statrow('Shotgun beyond range','Half damage beyond 75m')}
   ${statrow('Critical hit','Double normal damage')}
-  ${statrow('STR 13â€“16','+1 melee/unarmed damage')}
-  ${statrow('STR 17â€“18','+2 melee/unarmed damage')}`)
+  ${statrow('STR 13–16','+1 melee/unarmed damage')}
+  ${statrow('STR 17–18','+2 melee/unarmed damage')}`)
 )}`;
 
 
-/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+/* ═══════════════════════════════════════════════
    SECTION: QUICK REF
-â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
+═══════════════════════════════════════════════ */
 SECTIONS.quickref = () => `
 ${sh('QUICK REFERENCE')}
-<div class="lead">Everything you need mid-session. The dice don't care â€” but knowing the rules helps.</div>
+<div class="lead">Everything you need mid-session. The dice don't care — but knowing the rules helps.</div>
 
 ${divrow('DICE SYSTEM')}
 <div class="qr-grid">
   ${[
-    ['To Succeed','Roll â‰¤ Skill %','Roll 2D10 as percentile'],
-    ['Critical Success','01 or matching â†“','Doubly good outcome'],
-    ['Fumble','100 or matching â†‘','Action fails badly, something else goes wrong too'],
-    ['Luck Roll','50 / 50','No skill â€” flat chance'],
+    ['To Succeed','Roll ≤ Skill %','Roll 2D10 as percentile'],
+    ['Critical Success','01 or matching ↓','Doubly good outcome'],
+    ['Fumble','100 or matching ↑','Action fails badly, something else goes wrong too'],
+    ['Luck Roll','50 / 50','No skill — flat chance'],
     ['Bonus','+ 10/20/40%','Circumstances in your favour'],
-    ['Penalty','âˆ’ 10/20/40%','Circumstances against you'],
-    ['Stat Test','Stat Ã— 5','When no skill applies'],
+    ['Penalty','− 10/20/40%','Circumstances against you'],
+    ['Stat Test','Stat × 5','When no skill applies'],
     ['Opposed Test','Highest success wins','Critical beats ordinary success'],
   ].map(([l,v,n])=>`<div class="qr-card"><div class="qr-lbl">${l}</div><div class="qr-val">${v}</div><div class="qr-note">${n}</div></div>`).join('')}
 </div>
@@ -1128,53 +1128,54 @@ ${divrow('DICE SYSTEM')}
 ${divrow('DERIVED ATTRIBUTES')}
 <div class="qr-grid">
   ${[
-    ['Hit Points','(STR + CON) Ã· 2','Round up'],
+    ['Hit Points','(STR + CON) ÷ 2','Round up'],
     ['Willpower','= POW','Spend to reduce SAN loss'],
-    ['Sanity','= POW Ã— 5','Starting SAN (max 99 âˆ’ Unnatural)'],
-    ['Breaking Point','SAN âˆ’ POW','Disorder threshold; resets each hit'],
-    ['WP 1â€“2','âˆ’20% all tests','Emotional breakdown'],
+    ['Sanity','= POW × 5','Starting SAN (max 99 − Unnatural)'],
+    ['Breaking Point','SAN − POW','Disorder threshold; resets each hit'],
+    ['WP 1–2','−20% all tests','Emotional breakdown'],
     ['WP 0','Incapacitated','No tests at all'],
-    ['HP â‰¤ 2','Unconscious 1hr','Roll CON or lose stat'],
+    ['HP ≤ 2','Unconscious 1hr','Roll CON or lose stat'],
     ['HP = 0','Dying','Needs prompt medical care'],
   ].map(([l,v,n])=>`<div class="qr-card"><div class="qr-lbl">${l}</div><div class="qr-val">${v}</div><div class="qr-note">${n}</div></div>`).join('')}
 </div>
 
 ${divrow('COMBAT')}
 ${g2(
-  panel('TURN SEQUENCE', `${dgl(['DEX order â€” highest first','One action per turn','Dodge / Fight Back before your turn: uses your action','Pinned Agents can only Escape','At 0 HP: dead (Handler may allow intervention)'],'tight')}`),
+  panel('TURN SEQUENCE', `${dgl(['DEX order — highest first','One action per turn','Dodge / Fight Back before your turn: uses your action','Pinned Agents can only Escape','At 0 HP: dead (Handler may allow intervention)'],'tight')}`),
   panel('QUICK DAMAGE', `
-  ${statrow('Unarmed','1D4 âˆ’ 1')}
+  ${statrow('Unarmed','1D4 − 1')}
   ${statrow('Knife','1D4 (AP 3)')}
   ${statrow('Large knife/club','1D6')}
   ${statrow('Medium pistol','1D10')}
   ${statrow('Heavy pistol','1D12')}
   ${statrow('Rifle','1D12')}
   ${statrow('Shotgun (shot, close)','2D8')}
-  ${statrow('STR 13â€“16 bonus','+1 melee/unarmed')}
-  ${statrow('STR 17â€“18 bonus','+2 melee/unarmed')}`)
+  ${statrow('STR 13–16 bonus','+1 melee/unarmed')}
+  ${statrow('STR 17–18 bonus','+2 melee/unarmed')}`)
 )}
 
 ${divrow('SANITY')}
 ${g2(
-  panel('SAN RULES', `${dgl(['Roll current SAN or below = pass (lower loss)','Roll above = fail (higher loss)','Lose 5+ in one event = Temp. Insanity (fight/flight/freeze)','Hit Breaking Point = disorder + new BP = SAN âˆ’ POW','SAN = 0 = permanent insanity','Violence Ã— 3 without insanity = Adapted (auto-pass, âˆ’1D6 CHA)','Helplessness Ã— 3 without insanity = Adapted (auto-pass, âˆ’1D6 POW)','No adaptation to the Unnatural â€” ever'],'tight')}`),
-  panel('SAN RECOVERY', `${dgl(['Therapy (truth): Luck roll, +1D6 SAN success','Therapy (lies): Luck âˆ’20%, +1D4 SAN success','Fulfill responsibilities: SAN test, +1D6 Bond + maybe +1 SAN','Personal motivation: SAN test, +1â€“1D4 SAN','Destroy the unnatural: Handler discretion, can exceed POWÃ—5 cap','Maximum via therapy: POW Ã— 5','Maximum ever: 99 âˆ’ Unnatural skill'],'tight')}`)
+  panel('SAN RULES', `${dgl(['Roll current SAN or below = pass (lower loss)','Roll above = fail (higher loss)','Lose 5+ in one event = Temp. Insanity (fight/flight/freeze)','Hit Breaking Point = disorder + new BP = SAN − POW','SAN = 0 = permanent insanity','Violence × 3 without insanity = Adapted (auto-pass, −1D6 CHA)','Helplessness × 3 without insanity = Adapted (auto-pass, −1D6 POW)','No adaptation to the Unnatural — ever'],'tight')}`),
+  panel('SAN RECOVERY', `${dgl(['Therapy (truth): Luck roll, +1D6 SAN success','Therapy (lies): Luck −20%, +1D4 SAN success','Fulfill responsibilities: SAN test, +1D6 Bond + maybe +1 SAN','Personal motivation: SAN test, +1–1D4 SAN','Destroy the unnatural: Handler discretion, can exceed POW×5 cap','Maximum via therapy: POW × 5','Maximum ever: 99 − Unnatural skill'],'tight')}`)
 )}
 
 ${divrow('EQUIPMENT AT A GLANCE')}
 ${g2(
-  panel('ARMOUR', `${statrow('Kevlar vest','3 AP â€” under clothes')}${statrow('Reinforced Kevlar','4 AP â€” under clothes')}${statrow('Tactical armour','5 AP â€” visible')}${statrow('Kevlar helmet','+1 AP')}${statrow('Armour-piercing ammo','Reduces AP by 5, âˆ’1 dmg')}${statrow('Hollow-point ammo','+1 dmg, 2Ã— armour effective')}`),
+  panel('ARMOUR', `${statrow('Kevlar vest','3 AP — under clothes')}${statrow('Reinforced Kevlar','4 AP — under clothes')}${statrow('Tactical armour','5 AP — visible')}${statrow('Kevlar helmet','+1 AP')}${statrow('Armour-piercing ammo','Reduces AP by 5, −1 dmg')}${statrow('Hollow-point ammo','+1 dmg, 2× armour effective')}`),
   panel('EXPENSE TIERS', `${statrow('Incidental','Lock picks, camping gear, burner phone')}${statrow('Standard','Pistol, Kevlar vest, rented car')}${statrow('Unusual','SMG, advanced drone, GPS tracker')}${statrow('Major','Heavy weapon, new vehicle')}${statrow('Extreme','Bomb suit, military vehicle')}`)
 )}
 
 <div class="scroll-hint" style="padding:20px 0">// DELTA GREEN EYES ONLY // THE MISSION IS NEVER OVER //</div>`;
 
-/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+/* ═══════════════════════════════════════════════
    INIT
-â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
+═══════════════════════════════════════════════ */
 document.getElementById('main').innerHTML = SECTIONS[active]();
 if(active==='creation') initProfCards();
 if(active==='sanity') initSanTabs();
 </script>
 </body>
 </html>
+
 

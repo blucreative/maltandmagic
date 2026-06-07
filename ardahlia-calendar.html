@@ -23,7 +23,7 @@
 
     body { background: var(--bg); color: var(--text); font-family: 'Crimson Pro', Palatino, Georgia, serif; min-height: 100vh; }
 
-    /* â”€â”€ HEADER â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+    /* ── HEADER ─────────────────────────────────── */
     .cal-header {
       position: relative;
       text-align: center;
@@ -65,7 +65,7 @@
       letter-spacing: 0.3px;
     }
 
-    /* â”€â”€ CONTROLS â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+    /* ── CONTROLS ───────────────────────────────── */
     .controls {
       display: flex;
       align-items: center;
@@ -95,7 +95,7 @@
     .s-btn:hover { background: rgba(168,128,80,0.08); color: #d4b890; }
     .s-btn.active { color: #e8dcc8; border-color: var(--s-accent); background: var(--s-badge); box-shadow: 0 0 14px var(--s-glow); }
 
-    /* â”€â”€ WEEK BANNER â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+    /* ── WEEK BANNER ────────────────────────────── */
     .week-banner {
       margin: 16px 24px 0;
       display: grid;
@@ -110,7 +110,7 @@
     .wb-n { font-size: 8.5px; color: var(--text-faint); font-family: 'Cinzel', serif; margin-bottom: 2px; }
     .wb-d { font-size: 10.5px; color: rgba(170,160,138,0.55); font-family: 'Cinzel', serif; letter-spacing: 0.2px; }
 
-    /* â”€â”€ LEGEND ROW â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+    /* ── LEGEND ROW ─────────────────────────────── */
     .legend-row {
       display: flex;
       flex-wrap: wrap;
@@ -123,7 +123,7 @@
     .leg-astro { width: 8px; height: 8px; border-radius: 50%; background: #d4a040; box-shadow: 0 0 5px 1px rgba(212,160,64,0.45); flex-shrink: 0; }
     .leg-div { width: 1px; height: 16px; background: rgba(255,255,255,0.08); margin: 0 4px; }
 
-    /* â”€â”€ MOON LEGEND â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+    /* ── MOON LEGEND ────────────────────────────── */
     .moon-legend {
       display: flex;
       flex-wrap: wrap;
@@ -139,7 +139,7 @@
       text-transform: uppercase;
     }
 
-    /* â”€â”€ MONTH GRID â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+    /* ── MONTH GRID ─────────────────────────────── */
     .months-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
@@ -149,7 +149,7 @@
     @media (max-width: 780px) { .months-grid { grid-template-columns: repeat(2,1fr); } }
     @media (max-width: 500px) { .months-grid { grid-template-columns: 1fr; padding: 14px; } }
 
-    /* â”€â”€ MONTH CARD â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+    /* ── MONTH CARD ─────────────────────────────── */
     .month-card {
       background: var(--surface);
       border: 1px solid var(--border);
@@ -207,7 +207,7 @@
       border-bottom: 1px solid rgba(255,255,255,0.04);
     }
 
-    /* â”€â”€ DAY GRID â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+    /* ── DAY GRID ───────────────────────────────── */
     .day-grid { padding: 9px 10px 11px 13px; }
     .dg-hdr-row {
       display: grid;
@@ -229,7 +229,7 @@
       margin-bottom: 2px;
     }
 
-    /* â”€â”€ DAY CELL â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+    /* ── DAY CELL ───────────────────────────────── */
     .day-cell {
       display: flex;
       flex-direction: column;
@@ -268,7 +268,7 @@
     }
     .dc-pip.astro { width: 6px; height: 6px; }
 
-    /* â”€â”€ TOOLTIP â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+    /* ── TOOLTIP ────────────────────────────────── */
     #tooltip {
       position: fixed;
       display: none;
@@ -294,7 +294,7 @@
     .tt-fest { font-weight: 500; }
     .tt-moon { font-size: 10.5px; color: rgba(200,190,165,0.7); font-style: italic; margin-top: 2px; }
 
-    /* â”€â”€ MODAL â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+    /* ── MODAL ──────────────────────────────────── */
     #modal {
       position: fixed;
       inset: 0;
@@ -461,29 +461,29 @@
 <div id="tooltip"><div class="tooltip-inner" id="tt-inner"></div></div>
 <div id="modal" style="display:none">
   <div id="modal-panel">
-    <button id="modal-close">Ã—</button>
+    <button id="modal-close">×</button>
     <div id="modal-body"></div>
   </div>
 </div>
 
 <script>
-// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+// ═══════════════════════════════════════════════════════════
 //  DATA
-// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+// ═══════════════════════════════════════════════════════════
 
 const MONTHS = [
-  { num:1,  name:"Aurveth",  short:"Aurv", season:"Winter", tag:"deep winter",    lore:"Aurora-veil â€” the Longnight at its height" },
+  { num:1,  name:"Aurveth",  short:"Aurv", season:"Winter", tag:"deep winter",    lore:"Aurora-veil — the Longnight at its height" },
   { num:2,  name:"Corath",   short:"Cor",  season:"Winter", tag:"late winter",     lore:"Shared endurance through the cold" },
   { num:3,  name:"Thalven",  short:"Thal", season:"Winter", tag:"first thaw",      lore:"Earth-waking; soil stirs, sailmakers prepare" },
-  { num:4,  name:"Veloran",  short:"Vel",  season:"Spring", tag:"spring equinox",  lore:"The balanced veil â€” light and dark equal" },
-  { num:5,  name:"Elavar",   short:"Ela",  season:"Spring", tag:"peak spring",     lore:"The growing â€” the world in full spring" },
-  { num:6,  name:"Zephran",  short:"Zeph", season:"Spring", tag:"late spring",     lore:"Open wind â€” sailing season fully begun" },
-  { num:7,  name:"Solareth", short:"Sol",  season:"Summer", tag:"summer solstice", lore:"Sun's height â€” the furthest reach of light" },
-  { num:8,  name:"Arnveld",  short:"Arn",  season:"Summer", tag:"late summer",     lore:"The active field â€” deeds, not ceremony" },
-  { num:9,  name:"Yorath",   short:"Yor",  season:"Autumn", tag:"harvest",         lore:"The yield â€” the earth's return" },
-  { num:10, name:"Caldven",  short:"Cald", season:"Autumn", tag:"mid-autumn",      lore:"Cold coming â€” the year begins to seal" },
-  { num:11, name:"Selaneth", short:"Sela", season:"Autumn", tag:"late autumn",     lore:"The settling â€” debts cleared, year balanced" },
-  { num:12, name:"Kaelvar",  short:"Kael", season:"Winter", tag:"year's end",      lore:"Hearthseal â€” the Longnight returns" },
+  { num:4,  name:"Veloran",  short:"Vel",  season:"Spring", tag:"spring equinox",  lore:"The balanced veil — light and dark equal" },
+  { num:5,  name:"Elavar",   short:"Ela",  season:"Spring", tag:"peak spring",     lore:"The growing — the world in full spring" },
+  { num:6,  name:"Zephran",  short:"Zeph", season:"Spring", tag:"late spring",     lore:"Open wind — sailing season fully begun" },
+  { num:7,  name:"Solareth", short:"Sol",  season:"Summer", tag:"summer solstice", lore:"Sun's height — the furthest reach of light" },
+  { num:8,  name:"Arnveld",  short:"Arn",  season:"Summer", tag:"late summer",     lore:"The active field — deeds, not ceremony" },
+  { num:9,  name:"Yorath",   short:"Yor",  season:"Autumn", tag:"harvest",         lore:"The yield — the earth's return" },
+  { num:10, name:"Caldven",  short:"Cald", season:"Autumn", tag:"mid-autumn",      lore:"Cold coming — the year begins to seal" },
+  { num:11, name:"Selaneth", short:"Sela", season:"Autumn", tag:"late autumn",     lore:"The settling — debts cleared, year balanced" },
+  { num:12, name:"Kaelvar",  short:"Kael", season:"Winter", tag:"year's end",      lore:"Hearthseal — the Longnight returns" },
 ];
 
 const WEEK = ["Auren","Brem","Thaelon","Keld","Narven","Glaer","Solveth","Pelk","Seradel","Kaelden"];
@@ -505,7 +505,7 @@ const DOMAINS = {
   multi: { dot:"#3ab898", name:"Multi-deity",  bg:"rgba(14,68,58,0.4)",  border:"rgba(58,184,152,0.5)" },
 };
 
-// Moon phase per day (same every month â€” 30-day lunar cycle)
+// Moon phase per day (same every month — 30-day lunar cycle)
 const MOON_PHASE = { 1:0, 5:1, 8:2, 11:3, 15:4, 19:5, 22:6, 26:7 };
 const MOON_NAMES = ["New Moon","Waxing Crescent","First Quarter","Waxing Gibbous","Full Moon","Waning Gibbous","Last Quarter","Waning Crescent"];
 
@@ -515,76 +515,76 @@ const NARVEN_COINCIDENCE = { "4-15":true, "7-15":true, "9-15":true };
 const NEWYEAR_MOON = { "1-1": true };
 
 const FESTIVALS = {
-  "1-1":  { name:"The Threshold",           deity:"Aeonius Â· Multi-deity",    domain:"know",
-    desc:"New Year folk rite. Every household shrine is cleaned and re-dedicated. Aeonius is observed as the year's time-thread turns; multi-deity acknowledgments made at the exact hour of midnight. Folk custom: something old is burned, and the year ahead is named aloud â€” because a year without a name has no shape to hold." },
-  "1-15": { name:"Midwinter's Watch",        deity:"Nyx Â· Abaddon",            domain:"prop",
-    desc:"The deep dark of the year is acknowledged rather than celebrated. Candles kept burning all night; fears named aloud before the fire. Folk logic: Abaddon's domain is surprise suffering â€” naming your fear to him voluntarily removes his leverage. Nyx is acknowledged with the lip-touch gesture whenever anything private is spoken. No one sleeps during Midwinter's Watch in communities that keep it seriously." },
+  "1-1":  { name:"The Threshold",           deity:"Aeonius · Multi-deity",    domain:"know",
+    desc:"New Year folk rite. Every household shrine is cleaned and re-dedicated. Aeonius is observed as the year's time-thread turns; multi-deity acknowledgments made at the exact hour of midnight. Folk custom: something old is burned, and the year ahead is named aloud — because a year without a name has no shape to hold." },
+  "1-15": { name:"Midwinter's Watch",        deity:"Nyx · Abaddon",            domain:"prop",
+    desc:"The deep dark of the year is acknowledged rather than celebrated. Candles kept burning all night; fears named aloud before the fire. Folk logic: Abaddon's domain is surprise suffering — naming your fear to him voluntarily removes his leverage. Nyx is acknowledged with the lip-touch gesture whenever anything private is spoken. No one sleeps during Midwinter's Watch in communities that keep it seriously." },
   "2-10": { name:"Ferryman's Tithe",         deity:"Charon",                   domain:"life",
-    desc:"Communities gather to properly inter everyone who died since the previous Kaelvar â€” especially those lost to cold, illness, or hardship. Food offerings left at the town's edge at dusk. The coin placed outside the sickroom door becomes the coin placed at the crossroads. Charon is addressed, not invited: 'This for you, ferryman. The rest when it's owed.'" },
+    desc:"Communities gather to properly inter everyone who died since the previous Kaelvar — especially those lost to cold, illness, or hardship. Food offerings left at the town's edge at dusk. The coin placed outside the sickroom door becomes the coin placed at the crossroads. Charon is addressed, not invited: 'This for you, ferryman. The rest when it's owed.'" },
   "2-25": { name:"Seedkeeper's Night",       deity:"Elaria",                   domain:"life",
-    desc:"An informal folk rite held before seeds are stored away for planting. Each seed is pressed to the lips and whispered to â€” what you need from the spring, told to the thing that will carry it into the earth. Elaria is not formally invoked; she is treated as already present in the seed itself. No clergy involved. No ceremony. Just the farmer, the seed, and the dark." },
+    desc:"An informal folk rite held before seeds are stored away for planting. Each seed is pressed to the lips and whispered to — what you need from the spring, told to the thing that will carry it into the earth. Elaria is not formally invoked; she is treated as already present in the seed itself. No clergy involved. No ceremony. Just the farmer, the seed, and the dark." },
   "3-10": { name:"The Greening",             deity:"Elaria",                   domain:"life",
-    desc:"Elaria's major spring festival and the formal opening of planting season. Household shrines cleaned and rededicated; the first seeds go into the ground with communal rites. In many communities, couples plant the first row together as a fertility rite â€” whether they are planting a field or a family or both is left deliberately ambiguous. The day is considered auspicious for marriages to be announced, though the wedding happens later." },
-  "3-20": { name:"First Feast",              deity:"Nalakei Â· Elaria",         domain:"life",
-    desc:"The first outdoor communal meal of the year. Nalakei and Elaria are honoured together â€” joy and life acknowledged in the same breath. Communities eat outside even if it is still cold, because Nalakei doesn't hear you when you're alone. The First Feast is also the traditional moment for announcing coming-of-age declarations, betrothals, and any significant change in a community member's life that the community should know about." },
+    desc:"Elaria's major spring festival and the formal opening of planting season. Household shrines cleaned and rededicated; the first seeds go into the ground with communal rites. In many communities, couples plant the first row together as a fertility rite — whether they are planting a field or a family or both is left deliberately ambiguous. The day is considered auspicious for marriages to be announced, though the wedding happens later." },
+  "3-20": { name:"First Feast",              deity:"Nalakei · Elaria",         domain:"life",
+    desc:"The first outdoor communal meal of the year. Nalakei and Elaria are honoured together — joy and life acknowledged in the same breath. Communities eat outside even if it is still cold, because Nalakei doesn't hear you when you're alone. The First Feast is also the traditional moment for announcing coming-of-age declarations, betrothals, and any significant change in a community member's life that the community should know about." },
   "3-28": { name:"Voyage Opening",           deity:"Zephyrion",                domain:"life",
     desc:"In coastal and river communities, the first ships of the year are formally launched with Zephyrion's rites. The captain offers a coin to the water; the crew names their destination aloud; the oars are dipped three times before the first stroke. This is seamanship as much as religion. Experienced sailors consider skipping these rites equivalent to leaving harbour without checking the ropes." },
   "4-5":  { name:"Dawn Songs",               deity:"Lyriana",                  domain:"lum",
-    desc:"Lyriana's Festival of Echoing Harmony. Music competitions, poetry gatherings, and storytelling that begins at dawn and runs until the sun is fully up. Young artists often give their first public performance here â€” treated as a soft coming-of-age moment for those whose vocation is creative. Folk belief: Lyriana hears music and speech more clearly at dawn than at any other hour, because that is when silence breaks for the first time each day." },
+    desc:"Lyriana's Festival of Echoing Harmony. Music competitions, poetry gatherings, and storytelling that begins at dawn and runs until the sun is fully up. Young artists often give their first public performance here — treated as a soft coming-of-age moment for those whose vocation is creative. Folk belief: Lyriana hears music and speech more clearly at dawn than at any other hour, because that is when silence breaks for the first time each day." },
   "4-15": { name:"Spring Equinox",           deity:"Multi-deity",              domain:"multi", astronomical:true,
-    desc:"No single deity owns the equinox in folk practice â€” it is a threshold moment acknowledged multi-deity. Elaria for the growth, Aeonius for the turning of the season's thread, Nalakei for the warmth returning. In communities with strong temple ties, clerics lead the rites; in communities without, an elder or village leader performs the acknowledgments and everyone eats outdoors until midnight." },
+    desc:"No single deity owns the equinox in folk practice — it is a threshold moment acknowledged multi-deity. Elaria for the growth, Aeonius for the turning of the season's thread, Nalakei for the warmth returning. In communities with strong temple ties, clerics lead the rites; in communities without, an elder or village leader performs the acknowledgments and everyone eats outdoors until midnight." },
   "4-20": { name:"Forgemaster's Day",        deity:"Thalara",                  domain:"know",
-    desc:"Thalara's crafting festival. New apprentices are formally accepted by their masters, their names entered in the workshop records. Workshop shrines cleaned and rededicated. The tradition is that completing a piece of work entirely on Forgemaster's Day makes it doubly well-made â€” a belief that functions as a useful fiction for getting craftspeople to work on their holy day." },
+    desc:"Thalara's crafting festival. New apprentices are formally accepted by their masters, their names entered in the workshop records. Workshop shrines cleaned and rededicated. The tradition is that completing a piece of work entirely on Forgemaster's Day makes it doubly well-made — a belief that functions as a useful fiction for getting craftspeople to work on their holy day." },
   "5-1":  { name:"Coming-of-Age Days",       deity:"Multi-deity",              domain:"multi",
-    desc:"Days 1â€“5: The traditional window for young people to formally declare their adult devotion â€” which deity they affiliate with as an adult. Not an exclusive commitment, but a declaration of primary identity. Ceremonies vary: Arcturius affiliates hold endurance vigils; Nymue affiliates make first castings under open sky; Thalara affiliates complete a first independent work; Nalakei affiliates lead a community feast. Those who choose no affiliation are considered unfinished in many rural communities â€” not shameful, just incomplete." },
+    desc:"Days 1–5: The traditional window for young people to formally declare their adult devotion — which deity they affiliate with as an adult. Not an exclusive commitment, but a declaration of primary identity. Ceremonies vary: Arcturius affiliates hold endurance vigils; Nymue affiliates make first castings under open sky; Thalara affiliates complete a first independent work; Nalakei affiliates lead a community feast. Those who choose no affiliation are considered unfinished in many rural communities — not shameful, just incomplete." },
   "5-15": { name:"Festival of Molten Tides", deity:"Thalara",                  domain:"know",
-    desc:"Thalara's larger and more public festival â€” a showcase of craft across all trades. Trade fairs, competitive demonstrations, auctions of exceptional work. Dwarven communities make major pilgrimages to Forgeheart Sanctums. The binding tradition: every master must teach one skill publicly and for free on this day. Those who don't are considered to have dishonoured Thalara regardless of their other observances." },
+    desc:"Thalara's larger and more public festival — a showcase of craft across all trades. Trade fairs, competitive demonstrations, auctions of exceptional work. Dwarven communities make major pilgrimages to Forgeheart Sanctums. The binding tradition: every master must teach one skill publicly and for free on this day. Those who don't are considered to have dishonoured Thalara regardless of their other observances." },
   "5-25": { name:"Anarion's Hunt Opening",   deity:"Anarion",                  domain:"life",
-    desc:"The formal beginning of the major hunting season. Hunters invoke Anarion before their first significant hunt of the year â€” not for luck, but for permission. Folk understanding: Anarion doesn't control where prey is found; he controls whether the wilds cooperate with you or resist you. Entering his domain without acknowledgment is considered both rude and practically dangerous. The rite involves a moment of complete stillness in the wood before the first step of the hunt." },
+    desc:"The formal beginning of the major hunting season. Hunters invoke Anarion before their first significant hunt of the year — not for luck, but for permission. Folk understanding: Anarion doesn't control where prey is found; he controls whether the wilds cooperate with you or resist you. Entering his domain without acknowledgment is considered both rude and practically dangerous. The rite involves a moment of complete stillness in the wood before the first step of the hunt." },
   "6-15": { name:"Festival of Silver Nights",deity:"Nymue",                    domain:"know",
-    desc:"Nymue's major festival, held at the full moon nearest to mid-month. Moonlit ceremonies for arcane practitioners; students of magic make their first formal casting under open sky rather than by candlelight. In elven communities, this is the holiest night of the year â€” the moment when the boundary between the material world and its magical underpinning is thinnest. Non-practitioners who are present at moonrise are considered to have received Nymue's notice, for better or worse." },
+    desc:"Nymue's major festival, held at the full moon nearest to mid-month. Moonlit ceremonies for arcane practitioners; students of magic make their first formal casting under open sky rather than by candlelight. In elven communities, this is the holiest night of the year — the moment when the boundary between the material world and its magical underpinning is thinnest. Non-practitioners who are present at moonrise are considered to have received Nymue's notice, for better or worse." },
   "6-20": { name:"Stratagem Days",           deity:"Mae'el",                   domain:"war",
-    desc:"Mae'el is observed in military communities through tactical exercises, war games, and the formal review of the season's strategic plans. Not prayer â€” planning done with deliberate rigour, which is how Mae'el is honoured. Officers who consult with the Council of Warwise Sages during this period are considered to have his attention for the coming campaign season. Common soldiers have almost no involvement; Stratagem Days belongs entirely to the officer class." },
+    desc:"Mae'el is observed in military communities through tactical exercises, war games, and the formal review of the season's strategic plans. Not prayer — planning done with deliberate rigour, which is how Mae'el is honoured. Officers who consult with the Council of Warwise Sages during this period are considered to have his attention for the coming campaign season. Common soldiers have almost no involvement; Stratagem Days belongs entirely to the officer class." },
   "7-14": { name:"Eve of the Long Day",      deity:"Luminastra",               domain:"lum",
-    desc:"The night before the solstice, dedicated to Luminastra. In regions where auroras are visible, this is among the most spectacular nights of the year â€” communities gather in open places and watch. The Glowing Vigil is held: lanterns in aurora colours set on water or high ground, representing hopes carried into the longest day. The vigil runs all night without sleep; those who fall asleep are gently woken and not mocked." },
+    desc:"The night before the solstice, dedicated to Luminastra. In regions where auroras are visible, this is among the most spectacular nights of the year — communities gather in open places and watch. The Glowing Vigil is held: lanterns in aurora colours set on water or high ground, representing hopes carried into the longest day. The vigil runs all night without sleep; those who fall asleep are gently woken and not mocked." },
   "7-15": { name:"Festival of Radiance",     deity:"Solariel",                 domain:"lum", astronomical:true,
-    desc:"Solariel's major festival and the year's greatest light celebration, held on the summer solstice. Healing ceremonies, mass dawn prayers at temples and outdoors. The sick are carried to open ground to catch first light. Pilgrimages to Sunspire Temples. Folk understanding: the sun is at its furthest reach today, and Solariel's influence travels with it â€” whatever you want healed or changed, today is when prayer has the furthest it can go." },
+    desc:"Solariel's major festival and the year's greatest light celebration, held on the summer solstice. Healing ceremonies, mass dawn prayers at temples and outdoors. The sick are carried to open ground to catch first light. Pilgrimages to Sunspire Temples. Folk understanding: the sun is at its furthest reach today, and Solariel's influence travels with it — whatever you want healed or changed, today is when prayer has the furthest it can go." },
   "7-25": { name:"Tournament of Valour",     deity:"Arcturius",                domain:"war",
-    desc:"Days 25â€“28: Arcturius's grand martial tournament across several days. Knights, soldiers, and warriors compete in all forms of combat. The Bridge Stand rite â€” standing exposed from sunrise to sunset â€” is performed by those seeking Arcturius's direct favour as a rite of passage. Military alliances are traditionally formed in Solareth â€” the fights on the field are often less consequential than the conversations in the stands." },
+    desc:"Days 25–28: Arcturius's grand martial tournament across several days. Knights, soldiers, and warriors compete in all forms of combat. The Bridge Stand rite — standing exposed from sunrise to sunset — is performed by those seeking Arcturius's direct favour as a rite of passage. Military alliances are traditionally formed in Solareth — the fights on the field are often less consequential than the conversations in the stands." },
   "8-10": { name:"Night of Veils",           deity:"Nyx",                      domain:"trick",
-    desc:"Nyx's major annual observance. Location passed by whisper, never announced. Attendees arrive masked; identities concealed even from each other. Secrets are traded, new alliances formed, old grudges settled under the rule of temporary neutral ground. As dawn approaches, gathered secrets are ritually offered to Nyx. The neutral ground tradition is broken often enough that attendance carries genuine risk â€” which most attendees consider part of the rite's authenticity." },
+    desc:"Nyx's major annual observance. Location passed by whisper, never announced. Attendees arrive masked; identities concealed even from each other. Secrets are traded, new alliances formed, old grudges settled under the rule of temporary neutral ground. As dawn approaches, gathered secrets are ritually offered to Nyx. The neutral ground tradition is broken often enough that attendance carries genuine risk — which most attendees consider part of the rite's authenticity." },
   "8-20": { name:"Feast of Temptations",     deity:"Lillith",                  domain:"trick",
-    desc:"Lillith's observance â€” often unofficial, sometimes actively suppressed by light-aligned temples. Followers believe that confronting your desires directly grants power over them. In practice this ranges from philosophical gatherings about the nature of want to considerably less philosophical events. Temples of Paragon and Solariel consider this the most theologically dangerous festival in the calendar. Its persistence despite periodic suppression is itself considered evidence of Lillith's efficacy." },
-  "9-1":  { name:"Harvest Moon",             deity:"Nalakei Â· Elaria",         domain:"life",
+    desc:"Lillith's observance — often unofficial, sometimes actively suppressed by light-aligned temples. Followers believe that confronting your desires directly grants power over them. In practice this ranges from philosophical gatherings about the nature of want to considerably less philosophical events. Temples of Paragon and Solariel consider this the most theologically dangerous festival in the calendar. Its persistence despite periodic suppression is itself considered evidence of Lillith's efficacy." },
+  "9-1":  { name:"Harvest Moon",             deity:"Nalakei · Elaria",         domain:"life",
     desc:"The first day of harvest, marked by Nalakei and Elaria together. The most joyful period of the folk calendar begins. The tradition: the entire community brings in the first day's yield together, then feasts on what was grown the previous year. No one works alone on Harvest Moon; even those with no farm connection join in. Nalakei's presence is understood to make the labour lighter and the yield larger, though whether this is magic or psychology is a question the folk calendar does not find interesting." },
-  "9-15": { name:"Yorath's Yield",           deity:"Nalakei Â· Multi-deity",    domain:"multi", astronomical:true,
-    desc:"The great harvest festival at the autumn equinox. Communities feast, settle the year's debts, arrange marriages, and hold the season's largest market fairs. This is the most economically important festival of the year â€” apprenticeships concluded, contracts renewed, land agreements settled, disputes mediated before the year closes. Zelos is acknowledged at every significant transaction. Elaria is invoked at every marriage. Charon is quietly noted at every reading of the year's dead." },
+  "9-15": { name:"Yorath's Yield",           deity:"Nalakei · Multi-deity",    domain:"multi", astronomical:true,
+    desc:"The great harvest festival at the autumn equinox. Communities feast, settle the year's debts, arrange marriages, and hold the season's largest market fairs. This is the most economically important festival of the year — apprenticeships concluded, contracts renewed, land agreements settled, disputes mediated before the year closes. Zelos is acknowledged at every significant transaction. Elaria is invoked at every marriage. Charon is quietly noted at every reading of the year's dead." },
   "9-28": { name:"Voyage Closing",           deity:"Zephyrion",                domain:"life",
-    desc:"Days 28â€“30: The formal end of the sailing season. Ships are brought to harbour with Zephyrion's closing rites â€” the captain thanks the sea for what was given, names the dead who crossed to Charon on the water this year, and asks permission to return in Thalven. Failure to perform the closing rite is considered a guarantee of bad fortune in the next season. In some communities, a ship that returns without completing the rite is not permitted to moor until the rite is performed in harbour." },
+    desc:"Days 28–30: The formal end of the sailing season. Ships are brought to harbour with Zephyrion's closing rites — the captain thanks the sea for what was given, names the dead who crossed to Charon on the water this year, and asks permission to return in Thalven. Failure to perform the closing rite is considered a guarantee of bad fortune in the next season. In some communities, a ship that returns without completing the rite is not permitted to moor until the rite is performed in harbour." },
   "10-5": { name:"Blood Offering",           deity:"Ba'haal",                  domain:"prop",
-    desc:"Ba'haal is propitiated in warrior and soldier cultures before winter â€” historically the season of resource-scarcity conflict. The rite: a small cut to the thumb, blood pressed to gate, threshold, or weapon. The meaning is explicit and spoken aloud: 'Here is blood freely given; find your hunger answered elsewhere.' Not worship. An attempt to establish the terms of the coming dark season on your own initiative before violence establishes them for you." },
+    desc:"Ba'haal is propitiated in warrior and soldier cultures before winter — historically the season of resource-scarcity conflict. The rite: a small cut to the thumb, blood pressed to gate, threshold, or weapon. The meaning is explicit and spoken aloud: 'Here is blood freely given; find your hunger answered elsewhere.' Not worship. An attempt to establish the terms of the coming dark season on your own initiative before violence establishes them for you." },
   "10-15":{ name:"Festival of Falling Leaves",deity:"Elaria",                  domain:"life",
-    desc:"Elaria's autumn observance â€” quieter and more melancholy than the Greening. Communities mourn the year's losses, honour the dead, and collect leaves as a folk rite of release. Each leaf gathered represents something being let go: a grief, a grudge, a hope that didn't grow. These are burned rather than kept. The festival ends at dusk; what isn't released by nightfall is understood to be carried into the winter, which is considered neither good nor bad, just honest." },
+    desc:"Elaria's autumn observance — quieter and more melancholy than the Greening. Communities mourn the year's losses, honour the dead, and collect leaves as a folk rite of release. Each leaf gathered represents something being let go: a grief, a grudge, a hope that didn't grow. These are burned rather than kept. The festival ends at dusk; what isn't released by nightfall is understood to be carried into the winter, which is considered neither good nor bad, just honest." },
   "10-25":{ name:"Eon's Remembrance",        deity:"Aeonius",                  domain:"know",
-    desc:"Aeonius is observed by scholars, historians, and those whose work involves time. The year's record is formally reviewed â€” what was learned, what was lost, what patterns emerged. Libraries hold public readings; scholars open their notes to visitors. Folk understanding: Aeonius watches the closing of each year's thread, and documenting history carefully is a form of prayer to him. This is the one festival where the act of writing is itself the rite." },
+    desc:"Aeonius is observed by scholars, historians, and those whose work involves time. The year's record is formally reviewed — what was learned, what was lost, what patterns emerged. Libraries hold public readings; scholars open their notes to visitors. Folk understanding: Aeonius watches the closing of each year's thread, and documenting history carefully is a form of prayer to him. This is the one festival where the act of writing is itself the rite." },
   "11-1": { name:"Laments of the River",     deity:"Charon",                   domain:"life",
-    desc:"Charon's major annual observance and one of the most universally kept festivals in Ardahlia. Community-wide death rites for everyone who died in the past year. The recently dead are formally released â€” possessions distributed, names spoken aloud in the town square, the ferryman's tithe paid on their behalf. Communities that skip this festival accumulate unsettled dead in the folk understanding. Charon cannot collect what hasn't been properly offered." },
+    desc:"Charon's major annual observance and one of the most universally kept festivals in Ardahlia. Community-wide death rites for everyone who died in the past year. The recently dead are formally released — possessions distributed, names spoken aloud in the town square, the ferryman's tithe paid on their behalf. Communities that skip this festival accumulate unsettled dead in the folk understanding. Charon cannot collect what hasn't been properly offered." },
   "11-15":{ name:"The Dim Day",              deity:"Paragon",                  domain:"lum",
-    desc:"Paragon observed in a quiet civic-religious rite. Community disputes heard and settled before the year closes; contracts renewed or ended; the year's justice accounting done. Judgments made on this day are considered especially binding in folk tradition â€” Paragon's attention is understood to be most present when the year's ledger is being balanced. Magistrates and mediators consider this their most important working day. Even diminished, Paragon's folk presence in civic life is substantial." },
+    desc:"Paragon observed in a quiet civic-religious rite. Community disputes heard and settled before the year closes; contracts renewed or ended; the year's justice accounting done. Judgments made on this day are considered especially binding in folk tradition — Paragon's attention is understood to be most present when the year's ledger is being balanced. Magistrates and mediators consider this their most important working day. Even diminished, Paragon's folk presence in civic life is substantial." },
   "11-25":{ name:"Night of Whispered Truths",deity:"Nyx",                      domain:"prop",
-    desc:"Folk tradition holds that secrets told aloud in darkness tonight reach Nyx before dawn, and that she may use them â€” for good or ill. This generates either a night of confessions and genuine intimacy in communities with a healthy relationship to the tradition, or a night of locked doors and absolute silence in communities that have learned to be cautious. Both responses are considered theologically appropriate. Nyx is acknowledged regardless." },
+    desc:"Folk tradition holds that secrets told aloud in darkness tonight reach Nyx before dawn, and that she may use them — for good or ill. This generates either a night of confessions and genuine intimacy in communities with a healthy relationship to the tradition, or a night of locked doors and absolute silence in communities that have learned to be cautious. Both responses are considered theologically appropriate. Nyx is acknowledged regardless." },
   "12-15":{ name:"Glowing Vigil",            deity:"Luminastra",               domain:"lum",
-    desc:"Luminastra honoured on the water. Communities line rivers, lakes, and coastlines with lanterns in aurora colours â€” set afloat representing the year's drifting hopes and dreams. The vigil is kept until the lanterns drift out of sight or extinguish; watching them go is the rite, not the lighting. In communities far from water, lanterns are set on high ground and left to burn. The mood is reflective rather than celebratory â€” a reckoning with what was hoped for and what arrived." },
+    desc:"Luminastra honoured on the water. Communities line rivers, lakes, and coastlines with lanterns in aurora colours — set afloat representing the year's drifting hopes and dreams. The vigil is kept until the lanterns drift out of sight or extinguish; watching them go is the rite, not the lighting. In communities far from water, lanterns are set on high ground and left to burn. The mood is reflective rather than celebratory — a reckoning with what was hoped for and what arrived." },
   "12-20":{ name:"Winter Feast",             deity:"Nalakei",                  domain:"life",
-    desc:"Nalakei's indoor winter celebration â€” a deliberate act of joy before the darkest period of the year. Food made deliberately elaborate; music played continuously; no one eats alone. Folk tradition: joy refused in darkness returns as sorrow, and gathering warmth in Kaelvar stores something intangible for the cold ahead. Attendance at Winter Feast is a social obligation as much as a religious one. Absence is noted and quietly worried about." },
-  "12-30":{ name:"Year's End",               deity:"Aeonius Â· Solariel",       domain:"multi", astronomical:true,
-    desc:"The longest night and the close of the year's thread. Aeonius is observed in silence at midnight as the old year closes. Solariel is prayed to at dawn â€” the returning sun's first light greeted with genuine gratitude, because on this night the darkness genuinely wins and the light genuinely returns. Every household fire is kept burning through the night. No shrine is left unlit. No hearth permitted to go cold. This is not superstition â€” it is acknowledgment that darkness must not go uncontested, even symbolically." },
+    desc:"Nalakei's indoor winter celebration — a deliberate act of joy before the darkest period of the year. Food made deliberately elaborate; music played continuously; no one eats alone. Folk tradition: joy refused in darkness returns as sorrow, and gathering warmth in Kaelvar stores something intangible for the cold ahead. Attendance at Winter Feast is a social obligation as much as a religious one. Absence is noted and quietly worried about." },
+  "12-30":{ name:"Year's End",               deity:"Aeonius · Solariel",       domain:"multi", astronomical:true,
+    desc:"The longest night and the close of the year's thread. Aeonius is observed in silence at midnight as the old year closes. Solariel is prayed to at dawn — the returning sun's first light greeted with genuine gratitude, because on this night the darkness genuinely wins and the light genuinely returns. Every household fire is kept burning through the night. No shrine is left unlit. No hearth permitted to go cold. This is not superstition — it is acknowledgment that darkness must not go uncontested, even symbolically." },
 };
 
 
-// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+// ═══════════════════════════════════════════════════════════
 //  MOON SVG GENERATOR
-// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+// ═══════════════════════════════════════════════════════════
 
 function moonSVG(phase, size) {
   size = size || 11;
@@ -607,7 +607,7 @@ function moonSVG(phase, size) {
   }
   // Path table: [outerSweep, innerRx, innerSweep]
   // outer: 1=CW(right half), 0=CCW(left half)
-  // inner: 0=CCW(concaveâ†’crescent), 1=CW(convexâ†’gibbous)
+  // inner: 0=CCW(concave→crescent), 1=CW(convex→gibbous)
   const configs = {
     1: [1, rx, 0],   // waxing crescent
     2: [1, null, 0], // first quarter
@@ -627,16 +627,16 @@ function moonSVG(phase, size) {
 }
 
 
-// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+// ═══════════════════════════════════════════════════════════
 //  RENDER FUNCTIONS
-// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+// ═══════════════════════════════════════════════════════════
 
 function renderHeader() {
   return `
     <div class="cal-header">
-      <div class="cal-eyebrow">The Living World Â· Ardahlia</div>
+      <div class="cal-eyebrow">The Living World · Ardahlia</div>
       <div class="cal-title">The Ardahlian Calendar</div>
-      <div class="cal-sub">12 months Â· 30 days each Â· 3 weeks of 10 Â· 360 days to the year</div>
+      <div class="cal-sub">12 months · 30 days each · 3 weeks of 10 · 360 days to the year</div>
     </div>`;
 }
 
@@ -666,7 +666,7 @@ function renderLegend() {
   const astroItem = `<div class="leg-item"><div class="leg-astro"></div><span>Solstice / Equinox</span></div>`;
   const divider = `<div class="leg-div"></div>`;
 
-  // Moon legend â€” 4 key phases
+  // Moon legend — 4 key phases
   const moonItems = [0,2,4,6].map(p =>
     `<div class="leg-item">${moonSVG(p,11)}<span>${MOON_NAMES[p]}</span></div>`
   ).join('');
@@ -758,9 +758,9 @@ function renderAll() {
 }
 
 
-// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+// ═══════════════════════════════════════════════════════════
 //  MODAL
-// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+// ═══════════════════════════════════════════════════════════
 
 function openModal(monthNum, day) {
   const fKey    = `${monthNum}-${day}`;
@@ -775,22 +775,22 @@ function openModal(monthNum, day) {
     ? `<div class="m-moon-badge">${moonSVG(mPhase, 13)} ${MOON_NAMES[mPhase]}</div>` : '';
 
   const astroBadge = festival.astronomical
-    ? `<div class="m-astro-badge">âœ¦ Astronomical Marker Â· Narven</div>` : '';
+    ? `<div class="m-astro-badge">✦ Astronomical Marker · Narven</div>` : '';
 
   // Special notes
   let note = '';
   if (NARVEN_COINCIDENCE[fKey]) {
     note = `<div class="m-narven-note">This is one of four days in the year where a solstice or equinox, the Full Moon, and Narven (market day) coincide exactly. The Council of Light considers this proof of divine design. The folk tradition considers it proof the calendar predates the Council.</div>`;
   } else if (fKey === '1-1') {
-    note = `<div class="m-narven-note">The New Moon falls on New Year's Day â€” and always on Auren, the first day of the week. The folk calendar was not designed around this coincidence. It was noticed, and the noticing became part of the tradition.</div>`;
+    note = `<div class="m-narven-note">The New Moon falls on New Year's Day — and always on Auren, the first day of the week. The folk calendar was not designed around this coincidence. It was noticed, and the noticing became part of the tradition.</div>`;
   } else if (fKey === '6-15') {
     note = `<div class="m-narven-note">The Festival of Silver Nights coincides with the Full Moon every year. Nymue's practitioners consider this the primary evidence that the folk calendar carries her fingerprint.</div>`;
   } else if (fKey === '12-15') {
-    note = `<div class="m-narven-note">The Glowing Vigil coincides with the Full Moon â€” lanterns set afloat on the same night the moon is at its brightest. Whether the timing was chosen for the moon or the moon makes the timing feel inevitable is a question communities answer differently.</div>`;
+    note = `<div class="m-narven-note">The Glowing Vigil coincides with the Full Moon — lanterns set afloat on the same night the moon is at its brightest. Whether the timing was chosen for the moon or the moon makes the timing feel inevitable is a question communities answer differently.</div>`;
   }
 
   document.getElementById('modal-body').innerHTML = `
-    <div class="m-where">${month.name} Â· Day ${day}</div>
+    <div class="m-where">${month.name} · Day ${day}</div>
     <div class="m-name">${festival.name}</div>
     <div class="m-meta">
       <div class="m-domain" style="background:${domain.bg};border:1px solid ${domain.border};color:${domain.dot}">${domain.name}</div>
@@ -812,9 +812,9 @@ function closeModal() {
 }
 
 
-// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+// ═══════════════════════════════════════════════════════════
 //  TOOLTIP
-// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+// ═══════════════════════════════════════════════════════════
 
 const tooltip   = document.getElementById('tooltip');
 const ttInner   = document.getElementById('tt-inner');
@@ -843,9 +843,9 @@ function hideTooltip() {
 }
 
 
-// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+// ═══════════════════════════════════════════════════════════
 //  EVENTS
-// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+// ═══════════════════════════════════════════════════════════
 
 document.addEventListener('click', function(e) {
   // Season filter
@@ -900,13 +900,14 @@ document.addEventListener('mouseout', function(e) {
 window.addEventListener('scroll', hideTooltip, true);
 
 
-// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+// ═══════════════════════════════════════════════════════════
 //  INIT
-// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+// ═══════════════════════════════════════════════════════════
 
 renderAll();
 </script>
 </body>
 </html>
+
 
 

@@ -1,13 +1,13 @@
 :root {
   --fantasy-bg: #0f0e10;
   --fantasy-bg-soft: #1a171d;
-  --fantasy-panel: rgba(28, 23, 33, 0.84);
+  --fantasy-panel: rgba(28, 23, 33, 0.9);
   --fantasy-panel-border: rgba(224, 197, 136, 0.35);
-  --fantasy-text: #efe4cb;
+  --fantasy-text: #f3ead5;
   --fantasy-muted: #c2b79f;
   --fantasy-accent: #c9a866;
   --fantasy-accent-strong: #e2c78a;
-  --fantasy-link: #e0c07a;
+  --fantasy-link: #e8ca87;
   --fantasy-link-hover: #f4ddac;
   --fantasy-shadow: 0 14px 34px rgba(0, 0, 0, 0.34);
 }
@@ -64,6 +64,10 @@ body.theme-fantasy a {
 body.theme-fantasy a:hover,
 body.theme-fantasy a:focus-visible {
   color: var(--fantasy-link-hover);
+}
+
+body.theme-fantasy :is(a, button, input, select, textarea):focus-visible {
+  box-shadow: 0 0 0 2px rgba(244, 221, 172, 0.55);
 }
 
 body.theme-fantasy p,

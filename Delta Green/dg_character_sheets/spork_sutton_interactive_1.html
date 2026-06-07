@@ -4,10 +4,10 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>DELTA GREEN // SUTTON 'SPORK' â€” FIELD SHEET</title>
+<title>DELTA GREEN // SUTTON 'SPORK' — FIELD SHEET</title>
 <link href="https://fonts.googleapis.com/css2?family=Special+Elite&family=Share+Tech+Mono&family=Oswald:wght@300;400;600;700&display=swap" rel="stylesheet" />
 <style>
-/* â”€â”€ RESET & ROOT â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+/* ── RESET & ROOT ─────────────────────────────────────────── */
 *{box-sizing:border-box;margin:0;padding:0;-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important;color-adjust:exact!important}
 :root{
  --g:#3d7a3d;--gb:#5cb85c;--gd:#1e3d1e;--gg:rgba(92,184,92,.12);
@@ -25,56 +25,56 @@
 html{font-size:13px;background:var(--bg)}
 body{color:var(--tx);font-family:var(--fn);min-height:100vh;padding:12px;background:var(--bg)}
 body::before{content:'';position:fixed;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(0,0,0,.05) 3px,rgba(0,0,0,.05) 4px);pointer-events:none;z-index:9999}
-/* â”€â”€ LAYOUT â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+/* ── LAYOUT ───────────────────────────────────────────────── */
 .page{max-width:960px;margin:0 auto;display:flex;flex-direction:column;gap:10px}
 .row{display:grid;gap:10px}.r2{grid-template-columns:1fr 1fr}.r3{grid-template-columns:1fr 1fr 1fr}.r13{grid-template-columns:1fr 3fr}.r31{grid-template-columns:3fr 1fr}
 @media(max-width:680px){.r2,.r3,.r13,.r31{grid-template-columns:1fr}.main-hd{grid-template-columns:42px 1fr!important}.hd-stamps{grid-column:1/-1;display:grid;grid-template-columns:1fr 1fr}.personal-strip{grid-template-columns:1fr 1fr!important}.save-bar{flex-wrap:wrap}.top-nav{flex-wrap:wrap}}
-/* â”€â”€ NAV â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+/* ── NAV ──────────────────────────────────────────────────── */
 .top-nav{display:flex;gap:8px;align-items:center;justify-content:flex-end;font-size:9px;letter-spacing:1px;text-transform:uppercase}
 .top-nav a{color:var(--txd);text-decoration:none;border:1px solid var(--bd);padding:4px 8px;background:var(--sf)}
 .top-nav a:hover{color:var(--gb);border-color:var(--gb)}
-/* â”€â”€ PANEL â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+/* ── PANEL ────────────────────────────────────────────────── */
 .panel{background:var(--sf);border:1px solid var(--bd);position:relative}
 .panel-hd{background:var(--sf2);border-bottom:1px solid var(--bd);padding:5px 12px;display:flex;justify-content:space-between;align-items:center;gap:12px}
 .panel-hd h3{font:600 9px/1 var(--fd);letter-spacing:3px;color:var(--gb);text-transform:uppercase}
 .panel-hd span{font-size:8px;letter-spacing:1px;color:var(--txd);text-align:right}.panel-body{padding:12px}
 .divider{font:600 8px/1 var(--fd);letter-spacing:2px;color:var(--txd);text-transform:uppercase;margin:10px 0 6px;border-top:1px solid var(--bd);padding-top:8px}
-/* â”€â”€ HEADER â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+/* ── HEADER ───────────────────────────────────────────────── */
 .main-hd{background:var(--sf2);border:1px solid var(--bd);border-left:4px solid var(--gb);padding:0;display:grid;grid-template-columns:56px 1fr auto;align-items:stretch}
 .hd-emblem{background:var(--gd);display:flex;align-items:center;justify-content:center;border-right:1px solid var(--g)}
 .diamond{width:26px;height:26px;border:2px solid var(--gb);transform:rotate(45deg);position:relative}.diamond::after{content:'';position:absolute;inset:5px;background:var(--gb)}
 .hd-info{padding:10px 14px}.hd-title{font:700 26px/.85 var(--fd);letter-spacing:3px;color:var(--txb)}.hd-name{font:600 17px/1.1 var(--fd);letter-spacing:2px;color:var(--gb);margin-top:4px}.cs{color:var(--ab)}
 .hd-sub{font-size:9px;letter-spacing:1.5px;color:var(--txd);margin-top:5px}.hd-stamps{padding:8px;display:flex;flex-direction:column;gap:4px;align-items:flex-end;justify-content:center}
 .stamp{font:600 8px/1 var(--fd);letter-spacing:1.5px;border:1px solid;padding:4px 7px;text-align:center;white-space:nowrap}.s-red{color:var(--rb);border-color:var(--red);transform:rotate(-1deg)}.s-grn{color:var(--gb);border-color:var(--g);transform:rotate(1deg)}.s-blu{color:var(--bb);border-color:var(--bl)}.s-amb{color:var(--ab);border-color:var(--am)}
-/* â”€â”€ SAVE BAR â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+/* ── SAVE BAR ─────────────────────────────────────────────── */
 .save-bar{display:flex;align-items:center;gap:8px;background:var(--sf);border:1px solid var(--bd);padding:6px 10px}
 .save-status{font-size:9px;letter-spacing:1px;color:var(--txd);margin-right:auto}.session-title{font:600 10px var(--fd);letter-spacing:2px;color:var(--ab);text-transform:uppercase}.btn{background:var(--bg);border:1px solid var(--bd2);color:var(--tx);font:9px var(--fn);letter-spacing:1px;padding:5px 8px;cursor:pointer;text-transform:uppercase}.btn:hover{border-color:var(--gb);color:var(--gb)}.btn.primary{border-color:var(--g);color:var(--gb)}.btn.danger{border-color:var(--red);color:var(--rb)}
-/* â”€â”€ PERSONAL STRIP â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+/* ── PERSONAL STRIP ───────────────────────────────────────── */
 .personal-strip{background:var(--sf);border:1px solid var(--bd);padding:8px 14px;display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
 .data-label{font-size:7px;letter-spacing:2px;color:var(--txd);margin-bottom:3px;text-transform:uppercase}.data-main{font-size:10px;color:var(--txb);font-family:var(--fd);font-weight:600;letter-spacing:1px}.data-sub{font-size:9px;color:var(--txd)}
-/* â”€â”€ STATS â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+/* ── STATS ────────────────────────────────────────────────── */
 .stat-tbl{width:100%;border-collapse:collapse}.stat-tbl th{font:600 8px var(--fd);letter-spacing:2px;color:var(--txd);text-align:left;border-bottom:1px solid var(--bd);padding:4px}.stat-tbl td{padding:5px 4px;border-bottom:1px solid rgba(30,46,30,.6)}.stat-name{color:var(--txb)}.stat-score{font:700 20px/1 var(--fd);color:var(--gb);text-align:center}.stat-x5{font:600 14px/1 var(--fd);color:var(--ab);text-align:center}.stat-note{font-size:10px;color:var(--txd)}
 .foot-note{font-size:9px;color:var(--txd);line-height:1.5;margin-top:8px;border-left:2px solid var(--bd2);padding-left:8px}
-/* â”€â”€ TRACKERS â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+/* ── TRACKERS ─────────────────────────────────────────────── */
 .tracker{margin-bottom:12px}.tracker:last-child{margin-bottom:0}.tr-head{display:flex;align-items:center;justify-content:space-between;gap:8px}.tr-label{font:600 11px var(--fd);letter-spacing:1.5px;color:var(--txb);text-transform:uppercase}.tr-controls{display:flex;align-items:center;gap:5px}.tr-btn{width:22px;height:22px;border:1px solid var(--bd2);background:var(--bg);color:var(--tx);cursor:pointer}.tr-btn:hover{border-color:var(--gb);color:var(--gb)}.tr-btn.minus:hover{border-color:var(--rb);color:var(--rb)}.tr-val{font:700 22px/1 var(--fd);min-width:32px;text-align:center}.tr-val.hp{color:var(--ab)}.tr-val.wp{color:var(--bb)}.tr-val.san{color:var(--gb)}
 .pip-row{display:flex;flex-wrap:wrap;gap:3px;margin-top:6px}.pip{width:12px;height:12px;border:1px solid var(--bd2);background:var(--bg)}.pip.fill{background:var(--gb);border-color:var(--g)}.pip.hp.fill{background:var(--ab);border-color:var(--am)}.pip.hp.low{background:var(--rb);border-color:var(--red)}.pip.wp.fill{background:var(--bb);border-color:var(--bl)}
 .san-bar-wrap{height:14px;background:var(--bg);border:1px solid var(--bd);margin-top:6px;position:relative}.san-bar-fill{height:100%;transition:width .2s;background:var(--gb)}.san-bar-fill.warn{background:var(--ab)}.san-bar-fill.crit{background:var(--rb)}.san-bp-marker{position:absolute;top:-4px;bottom:-4px;width:1px;background:var(--rb);left:77.78%}.san-bp-label{position:absolute;top:15px;left:-14px;font-size:8px;color:var(--rb);white-space:nowrap}.san-alert{font-size:9px;color:var(--rb);margin-top:14px;display:none}.san-drop-note{font-size:9px;color:var(--ab);margin-top:4px;display:none}.adapted-banner{display:flex;gap:8px;align-items:center;background:var(--gg);border:1px solid var(--gd);padding:8px;margin-top:10px}.adapted-banner .icon{width:18px;height:18px;border:1px solid var(--gb);display:flex;align-items:center;justify-content:center;color:var(--gb)}.adapted-banner p{font-size:10px;line-height:1.5;color:var(--tx)}
-/* â”€â”€ SKILLS â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+/* ── SKILLS ───────────────────────────────────────────────── */
 .skills-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:0}@media(max-width:760px){.skills-grid{grid-template-columns:repeat(2,1fr)}}@media(max-width:460px){.skills-grid{grid-template-columns:1fr}}
 .skill-item{display:flex;align-items:center;gap:7px;padding:6px 8px;border-right:1px solid rgba(30,46,30,.5);border-bottom:1px solid rgba(30,46,30,.5);cursor:pointer;user-select:none}.skill-item:nth-child(odd){background:var(--bg2)}.skill-item:hover{background:var(--sf2)}.skill-item.checked{background:rgba(184,134,0,.08)}.skill-check{width:13px;height:13px;border:1px solid var(--bd2);flex-shrink:0;color:var(--ab);display:flex;align-items:center;justify-content:center;font-size:10px}.skill-name{font-size:10px;color:var(--tx);flex:1}.skill-pct{font:600 13px/1 var(--fd);color:var(--gb);min-width:32px;text-align:right}.skill-star{color:var(--ab);font-size:9px}.skill-bg{color:var(--bb);font-size:9px}.skill-footer{font-size:9px;color:var(--txd);padding:8px 12px;line-height:1.5;border-top:1px solid var(--bd)}
-/* â”€â”€ BONDS â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+/* ── BONDS ────────────────────────────────────────────────── */
 .bond-item{display:grid;grid-template-columns:1fr auto;gap:8px;padding:8px 0;border-bottom:1px solid rgba(30,46,30,.5)}.bond-item:last-child{border-bottom:none}.bond-name{font-size:11px;color:var(--txb)}.bond-controls{display:flex;align-items:center;gap:5px}.bond-btn{width:20px;height:20px;background:var(--bg);border:1px solid var(--bd2);color:var(--tx);cursor:pointer}.bond-btn:hover{color:var(--gb);border-color:var(--gb)}.bond-score{font:700 24px/1 var(--fd);color:var(--ab);min-width:28px;text-align:center}.bond-score.zero{color:var(--rb)}.bond-note{font-size:10px;color:var(--txd);grid-column:1/-1;line-height:1.5;padding-left:4px}
-/* â”€â”€ MOTIVATIONS AND DISORDERS â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+/* ── MOTIVATIONS AND DISORDERS ────────────────────────────── */
 .motiv-item{display:flex;align-items:center;gap:8px;padding:7px 10px;border-bottom:1px solid rgba(30,46,30,.5);cursor:pointer;user-select:none}.motiv-item:last-child{border-bottom:none}.motiv-item:hover{background:var(--sf2)}.motiv-item.crossed .motiv-text{text-decoration:line-through;color:var(--txd);opacity:.6}.motiv-check{width:13px;height:13px;border:1px solid var(--bd2);flex-shrink:0}.motiv-text{font-size:11px;color:var(--tx);flex:1}.disorder-item{padding:6px 10px;font-size:11px;color:var(--rb);background:rgba(139,26,26,.08);border:1px solid rgba(139,26,26,.3);margin-bottom:6px;display:flex;justify-content:space-between;align-items:center}.disorder-remove{background:none;border:none;color:var(--rb);cursor:pointer;font-size:14px;padding:0 2px}.disorder-add{width:100%;background:none;border:1px dashed rgba(139,26,26,.4);color:var(--rb);font:11px var(--fn);padding:6px;cursor:pointer;text-align:left;letter-spacing:1px;margin-top:6px}.disorder-add:hover{background:rgba(139,26,26,.1);border-style:solid}.disorder-add input{background:none;border:none;outline:none;color:var(--rb);font:11px var(--fn);width:100%}
-/* â”€â”€ INCIDENTS â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+/* ── INCIDENTS ────────────────────────────────────────────── */
 .incident-row{display:flex;align-items:center;gap:8px;padding:7px 0;border-bottom:1px solid rgba(30,46,30,.4)}.incident-row:last-child{border-bottom:none}.incident-label{font-size:10px;letter-spacing:1px;color:var(--txd);min-width:90px;text-transform:uppercase}.incident-boxes{display:flex;gap:5px}.inc-box{width:20px;height:20px;border:1px solid var(--bd2);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:11px;user-select:none}.inc-box:hover{border-color:var(--gb)}.inc-box.checked{border-color:var(--gb);background:var(--gg);color:var(--gb)}.inc-box.adapted-v{background:var(--gg);border-color:var(--gb);cursor:default}.adapted-tag{font-size:8px;letter-spacing:1.5px;color:var(--gb);border:1px solid var(--gd);padding:1px 6px;margin-left:4px}
-/* â”€â”€ WEAPONS TABLE â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+/* ── WEAPONS TABLE ────────────────────────────────────────── */
 .wpn-tbl{width:100%;border-collapse:collapse;font-size:11px}.wpn-tbl th{background:var(--bg);color:var(--g);font-size:8px;letter-spacing:1.5px;padding:5px 8px;text-align:left;border:1px solid var(--bd);font-weight:normal}.wpn-tbl td{padding:5px 8px;border:1px solid var(--bd);color:var(--tx)}.wpn-tbl td.wn{color:var(--txb)}.wpn-tbl td.ws{font:600 14px/1 var(--fd);color:var(--gb);text-align:center}.wpn-tbl td.wd{font:600 13px/1 var(--fd);color:var(--ab);text-align:center}.wpn-tbl tr:nth-child(even) td{background:var(--sf)}
-/* â”€â”€ GEAR LIST â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+/* ── GEAR LIST ────────────────────────────────────────────── */
 .gear-grid{display:grid;grid-template-columns:1fr 1fr;gap:0}@media(max-width:480px){.gear-grid{grid-template-columns:1fr}}.gear-item{display:flex;align-items:center;gap:8px;padding:5px 10px;border-bottom:1px solid rgba(30,46,30,.4);border-right:1px solid rgba(30,46,30,.4);cursor:pointer;user-select:none}.gear-item:nth-child(even){border-right:none}.gear-item:hover{background:var(--sf2)}.gear-item.used{opacity:.45}.gear-item.used .gear-name{text-decoration:line-through}.gear-check{width:13px;height:13px;border:1px solid var(--bd2);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:10px;color:var(--txd)}.gear-item.used .gear-check{border-color:var(--rb);color:var(--rb)}.gear-name{font-size:11px;color:var(--tx)}
-/* â”€â”€ TEXTAREA FIELDS â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+/* ── TEXTAREA FIELDS ──────────────────────────────────────── */
 .field-ta{width:100%;background:var(--bg);border:1px solid var(--bd);color:var(--tx);font:12px var(--ft);padding:10px;resize:vertical;min-height:80px;line-height:1.7;outline:none}.field-ta:focus{border-color:var(--g)}.field-ta::placeholder{color:var(--txd);font-size:11px}.field-ta.wounds{min-height:60px}.session-notes-wrap .field-ta{min-height:100px;font:12px var(--fn)}
-/* â”€â”€ TOAST AND MODALS â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+/* ── TOAST AND MODALS ─────────────────────────────────────── */
 .toast{position:fixed;bottom:20px;right:20px;background:var(--sf2);border:1px solid var(--gb);color:var(--gb);font:11px var(--fn);letter-spacing:1px;padding:10px 18px;z-index:10000;opacity:0;transition:opacity .3s;pointer-events:none}.toast.show{opacity:1}.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.85);z-index:1000;display:none;align-items:center;justify-content:center;padding:20px}.modal-overlay.show{display:flex}.modal-box{background:var(--sf);border:1px solid var(--bd2);max-width:520px;width:100%;padding:18px}.modal-title{font:600 18px var(--fd);letter-spacing:2px;color:var(--gb);margin-bottom:10px}.modal-body{font-size:12px;line-height:1.6;color:var(--tx);margin-bottom:16px}.modal-btns{display:flex;justify-content:flex-end;gap:8px}
 @keyframes pulse{50%{opacity:.55}}
 @media print{@page{size:A4;margin:10mm}html,body{background:#080e08!important;color:#b0c8b0!important;padding:0!important;font-size:11px!important}body::before{display:none}.save-bar,.toast,.modal-overlay,.top-nav,.btn,.btn-row,.tr-btn,.disorder-add,.disorder-remove{display:none!important}.page{max-width:100%;gap:6px}.panel{break-inside:avoid;page-break-inside:avoid;background:#111a11!important;border:1px solid #1e2e1e!important}.main-hd{background:#162016!important;border-left:4px solid #5cb85c!important}.panel-hd{background:#162016!important;border-bottom:1px solid #2a3e2a!important}.skill-item:nth-child(odd){background:#0b120b!important}.wpn-tbl th{background:#080e08!important}.wpn-tbl tr:nth-child(even) td{background:#111a11!important}}
@@ -88,7 +88,7 @@ body::before{content:'';position:fixed;inset:0;background:repeating-linear-gradi
 <!-- DEBRIEF MODAL -->
 <div class="modal-overlay" id="debriefModal">
  <div class="modal-box">
-  <div class="modal-title">END OF SESSION â€” DEBRIEF</div>
+  <div class="modal-title">END OF SESSION — DEBRIEF</div>
   <div class="modal-body" id="debriefBody">Loading...</div>
   <div class="modal-btns">
    <button class="btn" onclick="closeModal('debriefModal')">CLOSE</button>
@@ -101,7 +101,7 @@ body::before{content:'';position:fixed;inset:0;background:repeating-linear-gradi
 <div class="modal-overlay" id="resetModal">
  <div class="modal-box">
   <div class="modal-title" style="color:var(--rb)">CONFIRM RESET</div>
-  <div class="modal-body">This will wipe all current HP, WP, SAN, bond scores, skill checks, and notes â€” reverting Spork to his starting state.<br><br><strong>This cannot be undone.</strong></div>
+  <div class="modal-body">This will wipe all current HP, WP, SAN, bond scores, skill checks, and notes — reverting Spork to his starting state.<br><br><strong>This cannot be undone.</strong></div>
   <div class="modal-btns">
    <button class="btn" onclick="closeModal('resetModal')">ABORT</button>
    <button class="btn danger" onclick="confirmReset()">WIPE & RESET</button>
@@ -124,13 +124,13 @@ body::before{content:'';position:fixed;inset:0;background:repeating-linear-gradi
   <div class="hd-info">
    <div class="hd-title">DELTA GREEN</div>
    <div class="hd-name">SUTTON, SIMON <span class="cs">'SPORK'</span></div>
-   <div class="hd-sub">SPECIAL OPERATOR Â· MOD-CONTRACTED SECURITY Â· BRITISH Â· TREGAW, DEVON Â· LATE 1997</div>
+   <div class="hd-sub">SPECIAL OPERATOR · MOD-CONTRACTED SECURITY · BRITISH · TREGAW, DEVON · LATE 1997</div>
   </div>
   <div class="hd-stamps">
    <div class="stamp s-red">TOP SECRET // ORCON</div>
    <div class="stamp s-grn">DELTA GREEN EYES ONLY</div>
    <div class="stamp s-blu" id="classificationStamp">ALEPH/7-(HR:EMERGENT)</div>
-   <div class="stamp s-amb">DEVON/CORNWALL â€” 1997</div>
+   <div class="stamp s-amb">DEVON/CORNWALL — 1997</div>
   </div>
  </div>
 
@@ -145,74 +145,74 @@ body::before{content:'';position:fixed;inset:0;background:repeating-linear-gradi
  <div class="save-bar">
   <div class="save-status" id="saveStatus">Not yet saved</div>
   <div class="session-title" id="sessionTitle">SESSION 1</div>
-  <button class="btn" onclick="newSession()">â–¸ New Session</button>
-  <button class="btn" onclick="openDebrief()">âŠž Debrief</button>
-  <button class="btn primary" onclick="manualSave()">âœ¦ Save Now</button>
-  <button class="btn danger" onclick="openReset()">â†º Reset</button>
+  <button class="btn" onclick="newSession()">▸ New Session</button>
+  <button class="btn" onclick="openDebrief()">⊞ Debrief</button>
+  <button class="btn primary" onclick="manualSave()">✦ Save Now</button>
+  <button class="btn danger" onclick="openReset()">↺ Reset</button>
  </div>
 
  <div class="row r13">
   <!-- STATS -->
   <div class="panel">
-   <div class="panel-hd"><h3>02 // Statistics</h3><span>Specialist Array Â· Extreme Violence Applied</span></div>
+   <div class="panel-hd"><h3>02 // Statistics</h3><span>Specialist Array · Extreme Violence Applied</span></div>
    <div class="panel-body">
     <table class="stat-tbl">
-     <thead><tr><th>Stat</th><th>Score</th><th>Ã—5%</th><th>Notes</th></tr></thead>
+     <thead><tr><th>Stat</th><th>Score</th><th>×5%</th><th>Notes</th></tr></thead>
      <tbody>
       <tr><td class="stat-name">Strength (STR)</td><td class="stat-score">14</td><td class="stat-x5">70%</td><td class="stat-note">Powerfully built; +1 melee dmg</td></tr>
-      <tr><td class="stat-name">Constitution (CON)</td><td class="stat-score">11</td><td class="stat-x5">55%</td><td class="stat-note">â€”</td></tr>
+      <tr><td class="stat-name">Constitution (CON)</td><td class="stat-score">11</td><td class="stat-x5">55%</td><td class="stat-note">—</td></tr>
       <tr><td class="stat-name">Dexterity (DEX)</td><td class="stat-score">15</td><td class="stat-x5">75%</td><td class="stat-note">Frighteningly quick</td></tr>
       <tr><td class="stat-name">Intelligence (INT)</td><td class="stat-score">12</td><td class="stat-x5">60%</td><td class="stat-note">Tactical, reads situations fast</td></tr>
-      <tr><td class="stat-name">Power (POW)</td><td class="stat-score">10</td><td class="stat-x5">50%</td><td class="stat-note">â€”</td></tr>
+      <tr><td class="stat-name">Power (POW)</td><td class="stat-score">10</td><td class="stat-x5">50%</td><td class="stat-note">—</td></tr>
       <tr><td class="stat-name">Charisma (CHA)</td><td class="stat-score">7</td><td class="stat-x5">35%</td><td class="stat-note">Cold stare. Doesn't put people at ease.</td></tr>
      </tbody>
     </table>
-    <div class="foot-note">CHA 10â†’7 (Extreme Violence âˆ’3). Adapted to Violence.</div>
+    <div class="foot-note">CHA 10→7 (Extreme Violence −3). Adapted to Violence.</div>
    </div>
   </div>
 
   <!-- DERIVED -->
   <div class="panel">
-   <div class="panel-hd"><h3>03 // Derived Attributes</h3><span>Click Â± to adjust Â· Auto-saved</span></div>
+   <div class="panel-hd"><h3>03 // Derived Attributes</h3><span>Click ± to adjust · Auto-saved</span></div>
    <div class="panel-body">
     <div class="tracker">
-     <div class="tr-head"><div class="tr-label">Hit Points <span style="color:var(--txd);font-size:9px">/ 13 MAX</span></div><div class="tr-controls"><button class="tr-btn minus" onclick="adjustStat('hp',-1)">âˆ’</button><span class="tr-val hp" id="hp-val">13</span><button class="tr-btn" onclick="adjustStat('hp',1)">+</button></div></div>
+     <div class="tr-head"><div class="tr-label">Hit Points <span style="color:var(--txd);font-size:9px">/ 13 MAX</span></div><div class="tr-controls"><button class="tr-btn minus" onclick="adjustStat('hp',-1)">−</button><span class="tr-val hp" id="hp-val">13</span><button class="tr-btn" onclick="adjustStat('hp',1)">+</button></div></div>
      <div class="pip-row" id="hp-pips"></div>
     </div>
     <div class="divider">Mental</div>
     <div class="tracker">
-     <div class="tr-head"><div class="tr-label">Willpower <span style="color:var(--txd);font-size:9px">/ 10 MAX</span></div><div class="tr-controls"><button class="tr-btn minus" onclick="adjustStat('wp',-1)">âˆ’</button><span class="tr-val wp" id="wp-val">10</span><button class="tr-btn" onclick="adjustStat('wp',1)">+</button></div></div>
+     <div class="tr-head"><div class="tr-label">Willpower <span style="color:var(--txd);font-size:9px">/ 10 MAX</span></div><div class="tr-controls"><button class="tr-btn minus" onclick="adjustStat('wp',-1)">−</button><span class="tr-val wp" id="wp-val">10</span><button class="tr-btn" onclick="adjustStat('wp',1)">+</button></div></div>
      <div class="pip-row" id="wp-pips"></div>
-     <div id="wp-warn" style="font-size:9px;color:var(--rb);margin-top:4px;display:none">âš  LOW WP â€” âˆ’20% ALL ACTIONS</div>
+     <div id="wp-warn" style="font-size:9px;color:var(--rb);margin-top:4px;display:none">⚠ LOW WP — −20% ALL ACTIONS</div>
     </div>
     <!-- SAN -->
     <div class="tracker">
-     <div class="tr-head"><div class="tr-label">Sanity <span style="color:var(--txd);font-size:9px">/ 45 START Â· BP: 35</span></div><div class="tr-controls"><button class="tr-btn minus" onclick="adjustStat('san',-1)">âˆ’</button><span class="tr-val san" id="san-val">45</span><button class="tr-btn" onclick="adjustStat('san',1)">+</button></div></div>
+     <div class="tr-head"><div class="tr-label">Sanity <span style="color:var(--txd);font-size:9px">/ 45 START · BP: 35</span></div><div class="tr-controls"><button class="tr-btn minus" onclick="adjustStat('san',-1)">−</button><span class="tr-val san" id="san-val">45</span><button class="tr-btn" onclick="adjustStat('san',1)">+</button></div></div>
      <div class="san-bar-wrap"><div class="san-bar-fill good" id="san-bar" style="width:100%"></div><div class="san-bp-marker" id="bp-marker"><div class="san-bp-label">BP 35</div></div></div>
-     <div class="san-alert" id="san-bp-alert">âš  BREAKING POINT REACHED â€” GAIN DISORDER â€” NEW BP = CURRENT SAN âˆ’ POW (10)</div>
+     <div class="san-alert" id="san-bp-alert">⚠ BREAKING POINT REACHED — GAIN DISORDER — NEW BP = CURRENT SAN − POW (10)</div>
      <div class="san-drop-note" id="san-drop-note"></div>
     </div>
-    <div class="adapted-banner"><div class="icon">âœ“</div><p><strong>ADAPTED TO VIOLENCE</strong> â€” Always succeeds at SAN rolls triggered by violence. Costs: CHA permanently reduced.</p></div>
+    <div class="adapted-banner"><div class="icon">✓</div><p><strong>ADAPTED TO VIOLENCE</strong> — Always succeeds at SAN rolls triggered by violence. Costs: CHA permanently reduced.</p></div>
    </div>
   </div>
  </div>
 
  <!-- SKILLS -->
  <div class="panel">
-  <div class="panel-hd"><h3>04 // Skills</h3><span>Click to mark FAILED rolls Â· Debrief to improve</span></div>
+  <div class="panel-hd"><h3>04 // Skills</h3><span>Click to mark FAILED rolls · Debrief to improve</span></div>
   <div class="skills-grid" id="skillsGrid"></div>
-  <div class="skill-footer">â˜… = Bonus skill applied &nbsp;|&nbsp; bg = Background modifier &nbsp;|&nbsp; STR 14 â†’ +1 to Unarmed &amp; Melee damage &nbsp;|&nbsp; Unnatural: 0% (no Agent adapts to the Unnatural)</div>
+  <div class="skill-footer">★ = Bonus skill applied &nbsp;|&nbsp; bg = Background modifier &nbsp;|&nbsp; STR 14 → +1 to Unarmed &amp; Melee damage &nbsp;|&nbsp; Unnatural: 0% (no Agent adapts to the Unnatural)</div>
  </div>
 
  <!-- PSYCH + INCIDENTS -->
  <div class="row r2">
   <!-- BONDS -->
   <div class="panel">
-   <div class="panel-hd"><h3>05 // Bonds</h3><span>2 Bonds Â· Start score: CHA 7</span></div>
+   <div class="panel-hd"><h3>05 // Bonds</h3><span>2 Bonds · Start score: CHA 7</span></div>
    <div class="panel-body" id="bondsPanel"></div>
    <div class="panel-body" style="padding-top:0">
     <div class="divider">SAN Incident Tracking</div>
-    <div class="incident-row"><div class="incident-label">Violence</div><div class="incident-boxes"><div class="inc-box adapted-v">âœ“</div><span class="adapted-tag">ADAPTED</span></div></div>
+    <div class="incident-row"><div class="incident-label">Violence</div><div class="incident-boxes"><div class="inc-box adapted-v">✓</div><span class="adapted-tag">ADAPTED</span></div></div>
     <div class="incident-row"><div class="incident-label">Helplessness</div><div class="incident-boxes" id="helplessBoxes"></div></div>
    </div>
   </div>
@@ -231,7 +231,7 @@ body::before{content:'';position:fixed;inset:0;background:repeating-linear-gradi
 
  <!-- EQUIPMENT -->
  <div class="panel">
-  <div class="panel-hd"><h3>08 // Equipment &amp; Weapons â€” 1997</h3><span>Click gear to mark as used / expended</span></div>
+  <div class="panel-hd"><h3>08 // Equipment &amp; Weapons — 1997</h3><span>Click gear to mark as used / expended</span></div>
   <div class="panel-body" style="padding-bottom:8px">
    <table class="wpn-tbl">
     <thead>
@@ -240,15 +240,15 @@ body::before{content:'';position:fixed;inset:0;background:repeating-linear-gradi
      </tr>
     </thead>
     <tbody>
-     <tr><td class="wn">Unarmed (fists)</td><td class="ws">80%</td><td>â€”</td><td class="wd">1D4</td><td style="text-align:center">â€”</td><td style="text-align:center">â€”</td><td style="text-align:center">â€”</td><td style="text-align:center">â€”</td></tr>
-     <tr><td class="wn">Combat knife</td><td class="ws">70%</td><td>Melee</td><td class="wd">1D6+1</td><td style="text-align:center">3</td><td style="text-align:center">N/A</td><td style="text-align:center">â€”</td><td style="text-align:center">â€”</td></tr>
-     <tr><td class="wn">Medium pistol</td><td class="ws">80%</td><td>15m</td><td class="wd">1D10</td><td style="text-align:center">â€”</td><td style="text-align:center">N/A</td><td style="text-align:center">â€”</td><td style="text-align:center">15</td></tr>
-     <tr><td class="wn">Submachine gun</td><td class="ws">80%</td><td>50m</td><td class="wd">1D10</td><td style="text-align:center">â€”</td><td style="text-align:center">N/A</td><td style="text-align:center">â€”</td><td style="text-align:center">30</td></tr>
-     <tr><td class="wn">Submachine gun (full auto)</td><td class="ws">80%</td><td>50m</td><td class="wd">Special</td><td style="text-align:center">â€”</td><td style="text-align:center">10%</td><td style="text-align:center">1m</td><td style="text-align:center">30</td></tr>
+     <tr><td class="wn">Unarmed (fists)</td><td class="ws">80%</td><td>—</td><td class="wd">1D4</td><td style="text-align:center">—</td><td style="text-align:center">—</td><td style="text-align:center">—</td><td style="text-align:center">—</td></tr>
+     <tr><td class="wn">Combat knife</td><td class="ws">70%</td><td>Melee</td><td class="wd">1D6+1</td><td style="text-align:center">3</td><td style="text-align:center">N/A</td><td style="text-align:center">—</td><td style="text-align:center">—</td></tr>
+     <tr><td class="wn">Medium pistol</td><td class="ws">80%</td><td>15m</td><td class="wd">1D10</td><td style="text-align:center">—</td><td style="text-align:center">N/A</td><td style="text-align:center">—</td><td style="text-align:center">15</td></tr>
+     <tr><td class="wn">Submachine gun</td><td class="ws">80%</td><td>50m</td><td class="wd">1D10</td><td style="text-align:center">—</td><td style="text-align:center">N/A</td><td style="text-align:center">—</td><td style="text-align:center">30</td></tr>
+     <tr><td class="wn">Submachine gun (full auto)</td><td class="ws">80%</td><td>50m</td><td class="wd">Special</td><td style="text-align:center">—</td><td style="text-align:center">10%</td><td style="text-align:center">1m</td><td style="text-align:center">30</td></tr>
     </tbody>
    </table>
-   <div style="font-size:9px;color:var(--txd);margin:6px 0 10px">STR 14 â†’ +1 to Unarmed &amp; Melee damage. GM loadout: primary = submachine gun with 2 spare clips; sidearm = medium pistol with 2 spare clips; hand-to-hand = combat knife; ancillary = Kevlar helmet and first responder kit.</div>
-   <div class="divider">STANDARD LOADOUT â€” TREGAW OPERATION, DEVON/CORNWALL, 1997</div>
+   <div style="font-size:9px;color:var(--txd);margin:6px 0 10px">STR 14 → +1 to Unarmed &amp; Melee damage. GM loadout: primary = submachine gun with 2 spare clips; sidearm = medium pistol with 2 spare clips; hand-to-hand = combat knife; ancillary = Kevlar helmet and first responder kit.</div>
+   <div class="divider">STANDARD LOADOUT — TREGAW OPERATION, DEVON/CORNWALL, 1997</div>
    <div class="gear-grid" id="gearGrid"></div>
   </div>
  </div>
@@ -257,17 +257,17 @@ body::before{content:'';position:fixed;inset:0;background:repeating-linear-gradi
  <div class="row r2">
   <div class="panel">
    <div class="panel-hd"><h3>09 // Wounds &amp; Ailments</h3><span>Auto-saved on input</span></div>
-   <div class="panel-body"><textarea class="field-ta wounds" id="wounds" placeholder="Record wounds, ailments, medical treatment, First Aid attempts..."></textarea><div class="foot-note">First Aid â†’ 1D4 HP (once per injury). Rest â†’ CON test â†’ 1 HP/day. Medicine/Surgery â†’ 1D4 HP/week.</div></div>
+   <div class="panel-body"><textarea class="field-ta wounds" id="wounds" placeholder="Record wounds, ailments, medical treatment, First Aid attempts..."></textarea><div class="foot-note">First Aid → 1D4 HP (once per injury). Rest → CON test → 1 HP/day. Medicine/Surgery → 1D4 HP/week.</div></div>
   </div>
   <div class="panel">
-   <div class="panel-hd"><h3>10 // Field Notes</h3><span>Auto-saved Â· Persists between sessions</span></div>
+   <div class="panel-hd"><h3>10 // Field Notes</h3><span>Auto-saved · Persists between sessions</span></div>
    <div class="panel-body"><textarea class="field-ta" id="fieldNotes" placeholder="Operational notes, clues, handler prompts, suspicious civilians..."></textarea></div>
   </div>
  </div>
 
  <!-- SESSION LOG -->
  <div class="panel session-notes-wrap">
-  <div class="panel-hd"><h3>11 // Session Log</h3><span>Current session notes â€” archived on Debrief</span></div>
+  <div class="panel-hd"><h3>11 // Session Log</h3><span>Current session notes — archived on Debrief</span></div>
   <div class="panel-body">
    <textarea class="field-ta" id="sessionNotes" placeholder="Session notes, failures, SAN incidents, bond damage, leads..."></textarea>
    <div class="divider">Previous Session Archives</div>
@@ -275,26 +275,26 @@ body::before{content:'';position:fixed;inset:0;background:repeating-linear-gradi
   </div>
  </div>
 
- <div style="font-size:8px;letter-spacing:1.5px;color:var(--txd);text-align:center;padding:8px 0 2px">// SUTTON, S. 'SPORK' Â· DD-315-112382 Â· BRITISH Â· TOP SECRET ORCON Â· DELTA GREEN EYES ONLY // AUTO-SAVES TO LOCAL STORAGE //</div>
+ <div style="font-size:8px;letter-spacing:1.5px;color:var(--txd);text-align:center;padding:8px 0 2px">// SUTTON, S. 'SPORK' · DD-315-112382 · BRITISH · TOP SECRET ORCON · DELTA GREEN EYES ONLY // AUTO-SAVES TO LOCAL STORAGE //</div>
 </div>
 
 <script>
-/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+/* ═══════════════════════════════════════════════════════════
    CONSTANTS
-â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
+═══════════════════════════════════════════════════════════ */
 const STORAGE_KEY = 'dg_spork_sutton_sheet_v1';
 const START = {hp:13, wp:10, san:45, bp:35, pow:10};
 const MAX = {hp:13, wp:10, san:45};
 
 const SKILLS = [
- {id:'alertness', name:'Alertness', pct:80, tier:'h', note:'â˜…'},
- {id:'athletics', name:'Athletics', pct:80, tier:'h', note:'â˜…'},
- {id:'unarmed', name:'Unarmed Combat', pct:80, tier:'h', note:'â˜…'},
- {id:'firearms', name:'Firearms', pct:80, tier:'h', note:'â˜…'},
- {id:'melee', name:'Melee Weapons', pct:70, tier:'h', note:'â˜…'},
- {id:'stealth', name:'Stealth', pct:70, tier:'h', note:'â˜…'},
- {id:'dodge', name:'Dodge', pct:50, tier:'m', note:'â˜…'},
- {id:'firstaid', name:'First Aid', pct:30, tier:'m', note:'â˜…'},
+ {id:'alertness', name:'Alertness', pct:80, tier:'h', note:'★'},
+ {id:'athletics', name:'Athletics', pct:80, tier:'h', note:'★'},
+ {id:'unarmed', name:'Unarmed Combat', pct:80, tier:'h', note:'★'},
+ {id:'firearms', name:'Firearms', pct:80, tier:'h', note:'★'},
+ {id:'melee', name:'Melee Weapons', pct:70, tier:'h', note:'★'},
+ {id:'stealth', name:'Stealth', pct:70, tier:'h', note:'★'},
+ {id:'dodge', name:'Dodge', pct:50, tier:'m', note:'★'},
+ {id:'firstaid', name:'First Aid', pct:30, tier:'m', note:'★'},
  {id:'search', name:'Search', pct:20, tier:'l', note:''},
  {id:'drive', name:'Drive', pct:20, tier:'l', note:''},
  {id:'persuade', name:'Persuade', pct:20, tier:'l', note:''},
@@ -311,31 +311,31 @@ const SKILLS = [
  {id:'demolitions', name:'Demolitions', pct:0, tier:'l', note:''},
  {id:'heavyweapons', name:'Heavy Weapons', pct:0, tier:'l', note:''},
  {id:'sigint', name:'SIGINT', pct:0, tier:'l', note:''},
- {id:'unnatural', name:'Unnatural', pct:0, tier:'l', note:'âš '}
+ {id:'unnatural', name:'Unnatural', pct:0, tier:'l', note:'⚠'}
 ];
 
 const GEAR = [
  {id:'g01', name:'ISSUED: combat fatigues & boots'},
  {id:'g02', name:'ISSUED: small tactical light (20m, weapon-mountable)'},
  {id:'g03', name:'ISSUED: walkie-talkie'},
- {id:'g04', name:'PRIMARY: submachine gun + 2Ã— spare 30-rnd clips'},
- {id:'g05', name:'SIDEARM: medium pistol + 2Ã— spare 15-rnd clips'},
+ {id:'g04', name:'PRIMARY: submachine gun + 2× spare 30-rnd clips'},
+ {id:'g05', name:'SIDEARM: medium pistol + 2× spare 15-rnd clips'},
  {id:'g06', name:'HAND-TO-HAND: Fairbairn-Sykes combat knife + sheath'},
  {id:'g07', name:'ANCILLARY: Kevlar helmet (+1 Armour Rating)'},
  {id:'g08', name:'ANCILLARY: first responder kit (+20% to Medicine, 4 uses)'},
- {id:'g09', name:'5KG ITEM 1: OS 1:25000 map â€” Tregaw coast and surrounding moor'},
+ {id:'g09', name:'5KG ITEM 1: OS 1:25000 map — Tregaw coast and surrounding moor'},
  {id:'g10', name:'5KG ITEM 2: compact compass'},
  {id:'g11', name:'5KG ITEM 3: Kodak FunSaver disposable camera (27 exp)'},
  {id:'g12', name:'5KG ITEM 4: Maglite D-cell torch + spare batteries'},
- {id:'g13', name:'5KG ITEM 5: basic rations â€” 48hr field food'},
- {id:'g14', name:'MINOR: cash, Â£350 mixed notes'},
+ {id:'g13', name:'5KG ITEM 5: basic rations — 48hr field food'},
+ {id:'g14', name:'MINOR: cash, £350 mixed notes'},
  {id:'g15', name:'MINOR: Motorola Advisor pager (Firm contact only)'},
  {id:'g16', name:'MINOR: cigarette lighter, ballpoint pen, wristwatch'}
 ];
 
 const MOTIVATIONS = [
  'Never leave a man behind',
- 'Quiet professionalism â€” do the job, no glory',
+ 'Quiet professionalism — do the job, no glory',
  'Prove that human beings don\'t go down easy',
  'Face what others won\'t',
  'Keep the squad\'s casualties at zero'
@@ -369,9 +369,9 @@ function defaultState(){
  };
 }
 
-/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+/* ═══════════════════════════════════════════════════════════
    STORAGE
-â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
+═══════════════════════════════════════════════════════════ */
 function loadState(){
  try{
   const raw = localStorage.getItem(STORAGE_KEY);
@@ -402,9 +402,9 @@ function showToast(msg){
  setTimeout(() => t.classList.remove('show'), 1200);
 }
 
-/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+/* ═══════════════════════════════════════════════════════════
    RENDER FUNCTIONS
-â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
+═══════════════════════════════════════════════════════════ */
 function renderAll(){
  renderTrackers();
  renderSkills();
@@ -454,9 +454,9 @@ function renderSkills(){
  const grid = document.getElementById('skillsGrid');
  grid.innerHTML = SKILLS.map(sk => {
   const checked = state.skillChecks[sk.id] || false;
-  const noteCls = sk.note === 'â˜…' ? 'skill-star' : sk.note === 'bg' ? 'skill-bg' : '';
+  const noteCls = sk.note === '★' ? 'skill-star' : sk.note === 'bg' ? 'skill-bg' : '';
   return `<div class="skill-item ${checked?'checked':''}" onclick="toggleSkill('${sk.id}')">
-   <div class="skill-check">${checked?'âœ“':''}</div>
+   <div class="skill-check">${checked?'✓':''}</div>
    <div class="skill-name">${sk.name} ${sk.note?`<span class="${noteCls}">${sk.note}</span>`:''}</div>
    <div class="skill-pct">${sk.pct}%</div>
   </div>`;
@@ -466,25 +466,25 @@ function renderBonds(){
  const panel = document.getElementById('bondsPanel');
  panel.innerHTML = state.bonds.map((b,i) => `<div class="bond-item">
   <div class="bond-name">${escapeHtml(b.name)}</div>
-  <div class="bond-controls"><button class="bond-btn" onclick="adjustBond(${i},-1)">âˆ’</button><div class="bond-score ${b.score<=0?'zero':''}">${b.score}</div><button class="bond-btn" onclick="adjustBond(${i},1)">+</button></div>
+  <div class="bond-controls"><button class="bond-btn" onclick="adjustBond(${i},-1)">−</button><div class="bond-score ${b.score<=0?'zero':''}">${b.score}</div><button class="bond-btn" onclick="adjustBond(${i},1)">+</button></div>
   <div class="bond-note">${escapeHtml(b.note)}</div>
  </div>`).join('');
 }
 function renderMotivations(){
  const panel = document.getElementById('motivationsPanel');
- panel.innerHTML = MOTIVATIONS.map((m,i) => `<div class="motiv-item ${state.crossedMotivations[i]?'crossed':''}" onclick="toggleMotivation(${i})"><div class="motiv-check">${state.crossedMotivations[i]?'Ã—':''}</div><div class="motiv-text">${escapeHtml(m)}</div></div>`).join('');
+ panel.innerHTML = MOTIVATIONS.map((m,i) => `<div class="motiv-item ${state.crossedMotivations[i]?'crossed':''}" onclick="toggleMotivation(${i})"><div class="motiv-check">${state.crossedMotivations[i]?'×':''}</div><div class="motiv-text">${escapeHtml(m)}</div></div>`).join('');
 }
 function renderDisorders(){
  const panel = document.getElementById('disordersPanel');
- panel.innerHTML = state.disorders.length ? state.disorders.map((d,i) => `<div class="disorder-item"><span>${escapeHtml(d)}</span><button class="disorder-remove" onclick="removeDisorder(${i})">Ã—</button></div>`).join('') : '<div style="font-size:10px;color:var(--txd);padding:4px 0">No disorders recorded.</div>';
+ panel.innerHTML = state.disorders.length ? state.disorders.map((d,i) => `<div class="disorder-item"><span>${escapeHtml(d)}</span><button class="disorder-remove" onclick="removeDisorder(${i})">×</button></div>`).join('') : '<div style="font-size:10px;color:var(--txd);padding:4px 0">No disorders recorded.</div>';
 }
 function renderIncidents(){
  const hb = document.getElementById('helplessBoxes');
- hb.innerHTML = state.helpless.map((v,i) => `<div class="inc-box ${v?'checked':''}" onclick="toggleHelpless(${i})">${v?'âœ“':''}</div>`).join('');
+ hb.innerHTML = state.helpless.map((v,i) => `<div class="inc-box ${v?'checked':''}" onclick="toggleHelpless(${i})">${v?'✓':''}</div>`).join('');
 }
 function renderGear(){
  const grid = document.getElementById('gearGrid');
- grid.innerHTML = GEAR.map(g => `<div class="gear-item ${state.usedGear[g.id]?'used':''}" onclick="toggleGear('${g.id}')"><div class="gear-check">${state.usedGear[g.id]?'Ã—':''}</div><div class="gear-name">${escapeHtml(g.name)}</div></div>`).join('');
+ grid.innerHTML = GEAR.map(g => `<div class="gear-item ${state.usedGear[g.id]?'used':''}" onclick="toggleGear('${g.id}')"><div class="gear-check">${state.usedGear[g.id]?'×':''}</div><div class="gear-name">${escapeHtml(g.name)}</div></div>`).join('');
 }
 function renderNotes(){
  document.getElementById('wounds').value = state.wounds || '';
@@ -497,9 +497,9 @@ function renderArchives(){
  panel.innerHTML = state.archives.map(a => `<div style="border-bottom:1px solid var(--bd);padding:6px 0"><strong style="color:var(--ab)">Session ${a.session}</strong> <span style="color:var(--txd)">${new Date(a.date).toLocaleString()}</span><br>${escapeHtml(a.notes || 'No notes recorded.').replace(/\n/g,'<br>')}</div>`).join('');
 }
 
-/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+/* ═══════════════════════════════════════════════════════════
    ACTIONS
-â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
+═══════════════════════════════════════════════════════════ */
 function adjustStat(stat, delta){
  const min = 0;
  const max = MAX[stat];
@@ -565,9 +565,9 @@ function openModal(id){document.getElementById(id).classList.add('show')}
 function closeModal(id){document.getElementById(id).classList.remove('show')}
 function escapeHtml(str){return String(str).replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));}
 
-/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+/* ═══════════════════════════════════════════════════════════
    EVENTS
-â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
+═══════════════════════════════════════════════════════════ */
 function bindTextareas(){
  ['wounds','fieldNotes','sessionNotes'].forEach(id => {
   const el = document.getElementById(id);
@@ -586,5 +586,6 @@ document.addEventListener('DOMContentLoaded', () => {
 </script>
 </body>
 </html>
+
 
 

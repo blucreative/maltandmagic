@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Larry Hughes â€” Investigator Sheet</title>
+<title>Larry Hughes — Investigator Sheet</title>
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Crimson+Text:ital,wght@0,400;0,600;1,400;1,600&family=Special+Elite&display=swap" rel="stylesheet"/>
 <style>
 :root{--p:#f0e8d5;--pd:#e0d0b0;--pp:#c8b890;--ink:#1a120a;--inkf:#3d2e1e;--inkm:#5a4030;--cr:#8b1a1a;--crb:#b52020;--crd:#5c0f0f;--g:#8b6914;--gb:#c49a1e;--fd:'Cinzel',serif;--fb:'Crimson Text',serif;--ft:'Special Elite',cursive}
@@ -206,7 +206,7 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
         <div class="vital-display" id="hpVal">10</div>
         <div class="vital-max">/ 10 max</div>
         <div class="vital-btns">
-          <button class="vbtn" onclick="changeVital('hp',-1)">âˆ’</button>
+          <button class="vbtn" onclick="changeVital('hp',-1)">−</button>
           <button class="vbtn plus" onclick="changeVital('hp',1)">+</button>
         </div>
         <div class="vital-bar"><div class="vital-fill" id="hpBar" style="width:100%;background:var(--g)"></div></div>
@@ -216,7 +216,7 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
         <div class="vital-display" id="sanVal">50</div>
         <div class="vital-max">/ 99 max</div>
         <div class="vital-btns">
-          <button class="vbtn" onclick="changeVital('san',-1)">âˆ’</button>
+          <button class="vbtn" onclick="changeVital('san',-1)">−</button>
           <button class="vbtn plus" onclick="changeVital('san',1)">+</button>
         </div>
         <div class="vital-bar"><div class="vital-fill" id="sanBar" style="width:50%;background:var(--cr)"></div></div>
@@ -226,7 +226,7 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
         <div class="vital-display" id="mpVal">10</div>
         <div class="vital-max">/ 10 max</div>
         <div class="vital-btns">
-          <button class="vbtn" onclick="changeVital('mp',-1)">âˆ’</button>
+          <button class="vbtn" onclick="changeVital('mp',-1)">−</button>
           <button class="vbtn plus" onclick="changeVital('mp',1)">+</button>
         </div>
         <div class="vital-bar"><div class="vital-fill" id="mpBar" style="width:100%;background:#4a6a8a"></div></div>
@@ -236,7 +236,7 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
         <div class="vital-display" id="luckVal">40</div>
         <div class="vital-max">/ 99 max</div>
         <div class="vital-btns">
-          <button class="vbtn" onclick="changeVital('luck',-1)">âˆ’</button>
+          <button class="vbtn" onclick="changeVital('luck',-1)">−</button>
           <button class="vbtn plus" onclick="changeVital('luck',1)">+</button>
         </div>
         <div class="vital-bar"><div class="vital-fill" id="luckBar" style="width:40%;background:var(--gb)"></div></div>
@@ -329,8 +329,8 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
         <div class="sh-name">Skill</div>
         <div class="sh-base">Base</div>
         <div class="sh-val">Larry's %</div>
-        <div class="sh-half">Â½</div>
-        <div class="sh-fifth">â…•</div>
+        <div class="sh-half">½</div>
+        <div class="sh-fifth">⅕</div>
         <div class="sh-roll" style="min-width:90px">Roll</div>
       </div>
       <div class="skill-list" id="skillList"></div>
@@ -338,13 +338,13 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 
     <!-- SAN TRACK TAB -->
     <div class="tab-content" id="tab-santrack">
-      <div style="font-family:var(--fd);font-size:10px;letter-spacing:0.14em;color:var(--cr);text-transform:uppercase;margin-bottom:8px">Sanity Track â€” Click any pip to set current SAN</div>
+      <div style="font-family:var(--fd);font-size:10px;letter-spacing:0.14em;color:var(--cr);text-transform:uppercase;margin-bottom:8px">Sanity Track — Click any pip to set current SAN</div>
       <div style="font-family:var(--ft);font-size:12px;color:var(--inkm);margin-bottom:12px;font-style:italic">Starting SAN: 50 &nbsp;|&nbsp; Max SAN: 99 &nbsp;|&nbsp; Indefinite insanity: lose 10+ SAN in one day (20% of 50)</div>
       <div class="san-track" id="sanTrack"></div>
       <div class="san-label-row">
-        <span>0 â€” Gone</span>
+        <span>0 — Gone</span>
         <span id="sanTrackVal" style="color:var(--cr)">Current: 50</span>
-        <span>99 â€” Max</span>
+        <span>99 — Max</span>
       </div>
       <div style="margin-top:16px;padding:12px;background:rgba(139,26,26,0.06);border-left:3px solid var(--cr)">
         <div style="font-family:var(--fd);font-size:9px;letter-spacing:0.12em;color:var(--cr);text-transform:uppercase;margin-bottom:6px">Insanity Thresholds</div>
@@ -356,7 +356,7 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
         </div>
       </div>
       <div style="margin-top:12px;padding:12px;background:rgba(192,96,16,0.06);border-left:3px solid #c06010">
-        <div style="font-family:var(--fd);font-size:9px;letter-spacing:0.12em;color:#c06010;text-transform:uppercase;margin-bottom:6px">Phobia â€” Active</div>
+        <div style="font-family:var(--fd);font-size:9px;letter-spacing:0.12em;color:#c06010;text-transform:uppercase;margin-bottom:6px">Phobia — Active</div>
         <div style="font-family:var(--ft);font-size:12px;color:var(--inkm);line-height:1.8">
           <strong>Ornithophobia:</strong> Scared of birds and most winged things (including moths).<br>
           While insane: Penalty Die on all rolls not related to fleeing or fighting the source.
@@ -368,21 +368,21 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
     <div class="tab-content" id="tab-backstory">
       <div class="backstory-grid">
         <div class="bs-item"><div class="bs-title gold">Personal Description</div><div class="bs-text">A seemingly meek and mild antiquity dealer and handyman of slender frame but with a surprising level of charm and attraction.</div></div>
-        <div class="bs-item"><div class="bs-title gold">Traits</div><div class="bs-text"><strong>Meticulous.</strong> Careful, precise, methodical â€” in his work and in his thinking. Things have a right place and a right way.<br><br><strong>Hoarder.</strong> One man's trash is another man's treasure. He keeps things. You never know when something will come in useful.</div></div>
+        <div class="bs-item"><div class="bs-title gold">Traits</div><div class="bs-text"><strong>Meticulous.</strong> Careful, precise, methodical — in his work and in his thinking. Things have a right place and a right way.<br><br><strong>Hoarder.</strong> One man's trash is another man's treasure. He keeps things. You never know when something will come in useful.</div></div>
         <div class="bs-item"><div class="bs-title gold">Ideology &amp; Beliefs</div><div class="bs-text">1. One man's trash is another man's treasure.<br>2. History teaches us lessons for today that we can use for tomorrow.<br>3. Fix your own problems.</div></div>
         <div class="bs-item amber"><div class="bs-title amber">Phobias &amp; Manias</div><div class="bs-text">Scared of birds and most winged things, such as moths. The fluttering, the unpredictability of it. He can manage in daylight but it gets to him.</div></div>
-        <div class="bs-item red" style="grid-column:1/-1"><div class="bs-title">Significant People</div><div class="bs-text">His father and grandfather who taught him all he knew â€” the trade, the eye for value, the patience for repair. Margaret is his best repeat customer; he met her through her late husband, who shared his passion for salvage and old things.</div></div>
-        <div class="bs-item"><div class="bs-title gold">Meaningful Locations</div><div class="bs-text">Tregaw Scrap and Tip â€” where he rescues his pieces. There is a ritual to it. Arriving early, working methodically through the piles. Finding something worthwhile in what everyone else threw away.</div></div>
-        <div class="bs-item"><div class="bs-title gold">Treasured Possessions</div><div class="bs-text">His notepad of ideas and projects â€” a catalogue of everything he's found, fixed, or is planning to. His tool belt, which belonged to his grandfather.</div></div>
+        <div class="bs-item red" style="grid-column:1/-1"><div class="bs-title">Significant People</div><div class="bs-text">His father and grandfather who taught him all he knew — the trade, the eye for value, the patience for repair. Margaret is his best repeat customer; he met her through her late husband, who shared his passion for salvage and old things.</div></div>
+        <div class="bs-item"><div class="bs-title gold">Meaningful Locations</div><div class="bs-text">Tregaw Scrap and Tip — where he rescues his pieces. There is a ritual to it. Arriving early, working methodically through the piles. Finding something worthwhile in what everyone else threw away.</div></div>
+        <div class="bs-item"><div class="bs-title gold">Treasured Possessions</div><div class="bs-text">His notepad of ideas and projects — a catalogue of everything he's found, fixed, or is planning to. His tool belt, which belonged to his grandfather.</div></div>
         <div class="bs-item"><div class="bs-title gold">Injuries &amp; Scars</div><div class="bs-text">None recorded. A working life of small cuts and calluses, but nothing worth noting.</div></div>
-        <div class="bs-item" style="grid-column:1/-1;background:rgba(92,15,15,0.04);border-left-color:var(--cr)"><div class="bs-title">Encounters with Strange Entities</div><div class="bs-text">None â€” outside of weird noises and shadows you see when working late at the workshop. But that's just cats and tricks of the light. Probably.</div></div>
+        <div class="bs-item" style="grid-column:1/-1;background:rgba(92,15,15,0.04);border-left-color:var(--cr)"><div class="bs-title">Encounters with Strange Entities</div><div class="bs-text">None — outside of weird noises and shadows you see when working late at the workshop. But that's just cats and tricks of the light. Probably.</div></div>
       </div>
     </div>
 
     <!-- NOTES TAB -->
     <div class="tab-content" id="tab-notes">
       <div style="font-family:var(--fd);font-size:10px;letter-spacing:0.14em;color:var(--g);text-transform:uppercase;margin-bottom:10px">Session Notes</div>
-      <textarea class="notes-area" id="notes-session" style="min-height:180px" placeholder="Notes from play â€” clues, finds, observations...&#10;&#10;Larry notices things others throw away. Write them down."></textarea>
+      <textarea class="notes-area" id="notes-session" style="min-height:180px" placeholder="Notes from play — clues, finds, observations...&#10;&#10;Larry notices things others throw away. Write them down."></textarea>
       <div style="margin-top:12px">
         <div style="font-family:var(--fd);font-size:10px;letter-spacing:0.14em;color:var(--g);text-transform:uppercase;margin-bottom:6px">Mythos Encountered</div>
         <textarea class="notes-area" id="notes-mythos" style="min-height:80px" placeholder="Things that cannot be unseen..."></textarea>
@@ -399,7 +399,7 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 </div>
 
 <script>
-// â”€â”€ ALL SKILLS â€” Larry Hughes â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ── ALL SKILLS — Larry Hughes ─────────────────────────────────────────────────
 var SKILLS = [
   // combat
   {name:'Dodge',              cat:'combat',    base:30, larry:30,  invested:false},
@@ -500,9 +500,9 @@ function rollSkill(e,idx){
   var isFumble=(sk.larry<50&&roll>=96)||roll===100;
   if(isFumble){cls='fumble';txt=roll+' FUMBLE';}
   else if(roll<=f(sk.larry)&&roll!==100){cls='extreme';txt=roll+' Extreme!';}
-  else if(roll<=h(sk.larry)){cls='hard';txt=roll+' Hard âœ“';}
-  else if(roll<=sk.larry){cls='success';txt=roll+' Success âœ“';}
-  else{cls='fail';txt=roll+' Fail âœ—';}
+  else if(roll<=h(sk.larry)){cls='hard';txt=roll+' Hard ✓';}
+  else if(roll<=sk.larry){cls='success';txt=roll+' Success ✓';}
+  else{cls='fail';txt=roll+' Fail ✗';}
   el.textContent=txt;el.className='roll-result show '+cls;
   clearTimeout(rollTimers[idx]);
   rollTimers[idx]=setTimeout(function(){el.className='roll-result';},5000);
@@ -532,13 +532,13 @@ function updateStatus(){
   var san=vitals.san.cur,hp=vitals.hp.cur;
   var banner=document.getElementById('statusBanner');
   var msg,cls;
-  if(hp===0){msg='DYING â€” First Aid required immediately';cls='critical';}
-  else if(hp<=2){msg='Critically Wounded â€” CON roll or unconscious';cls='danger';}
+  if(hp===0){msg='DYING — First Aid required immediately';cls='critical';}
+  else if(hp<=2){msg='Critically Wounded — CON roll or unconscious';cls='danger';}
   else if(san===0){msg='PERMANENTLY INSANE';cls='critical';}
-  else if(san<10){msg='On the brink â€” permanent insanity imminent';cls='critical';}
-  else if(san<20){msg='Unravelling â€” temporary insanity likely';cls='danger';}
-  else if(san<40){msg='Troubled â€” below starting SAN';cls='troubled';}
-  else if(hp<=4){msg='Seriously wounded â€” major wound risk';cls='troubled';}
+  else if(san<10){msg='On the brink — permanent insanity imminent';cls='critical';}
+  else if(san<20){msg='Unravelling — temporary insanity likely';cls='danger';}
+  else if(san<40){msg='Troubled — below starting SAN';cls='troubled';}
+  else if(hp<=4){msg='Seriously wounded — major wound risk';cls='troubled';}
   else{msg='Psychologically Stable';cls='stable';}
   banner.textContent=msg;banner.className='status-banner '+cls;
   var tl=document.getElementById('twentyLine');
@@ -554,7 +554,7 @@ function buildWoundTrack(){
   for(var i=0;i<10;i++){
     var box=document.createElement('div');
     box.className='wound-box'+(wounds[i]?' hit':'');
-    box.textContent=wounds[i]?'âœ•':'';
+    box.textContent=wounds[i]?'✕':'';
     box.onclick=(function(idx){return function(){wounds[idx]=!wounds[idx];buildWoundTrack();updateWoundsFromWoundTrack();saveState();};})(i);
     wt.appendChild(box);
   }
@@ -565,7 +565,7 @@ function updateWoundsFromWoundTrack(){
   updateVitalDisplay('hp');
   var st=document.getElementById('woundStatus');
   if(count===0){st.textContent='No wounds';st.style.color='var(--pp)';}
-  else if(vitals.hp.cur<=1){st.textContent='CRITICAL â€” CON roll or unconscious';st.style.color='var(--crb)';}
+  else if(vitals.hp.cur<=1){st.textContent='CRITICAL — CON roll or unconscious';st.style.color='var(--crb)';}
   else if(count>=5){st.textContent='Major wound sustained';st.style.color='var(--cr)';}
   else{st.textContent=count+' wound'+(count>1?'s':'')+' taken';st.style.color='#c08040';}
   updateStatus();
@@ -653,5 +653,6 @@ updateStatus();
 </script>
 </body>
 </html>
+
 
 
