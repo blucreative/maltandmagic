@@ -160,6 +160,10 @@ body::before {
 .sec-c3     .sec-rule  { background: linear-gradient(to right, rgba(184,160,128,0.3), transparent); }
 .sec-c3     .sec-tag   { background: rgba(184,160,128,0.12); color: #d4b890; border-color: rgba(184,160,128,0.3); }
 
+.sec-tools  .sec-title { color: #9ec4dd; }
+.sec-tools  .sec-rule  { background: linear-gradient(to right, rgba(158,196,221,0.34), transparent); }
+.sec-tools  .sec-tag   { background: rgba(100,153,184,0.14); color: #b9d8ec; border-color: rgba(135,186,217,0.32); }
+
 /* archive section */
 .archive-toggle {
   display: flex;
@@ -264,6 +268,10 @@ body::before {
 .card-c3::before { background: linear-gradient(to right, transparent, #c9a070, transparent); }
 .card-c3:hover { border-color: rgba(201,160,112,0.3); box-shadow: 0 6px 30px rgba(201,160,112,0.1); }
 
+/* tools card accent */
+.card-tools::before { background: linear-gradient(to right, transparent, #8cc4ea, transparent); }
+.card-tools:hover { border-color: rgba(140,196,234,0.36); box-shadow: 0 6px 30px rgba(140,196,234,0.13); }
+
 /* card innards */
 .card-top {
   display: flex;
@@ -310,6 +318,7 @@ body::before {
 .card-world:hover .card-title { color: var(--gold-lt); }
 .card-c2:hover    .card-title { color: #b8967a; }
 .card-c3:hover    .card-title { color: #d4b890; }
+.card-tools:hover .card-title { color: #b9d8ec; }
 
 .card-desc {
   font-family: var(--font-b);
@@ -400,6 +409,20 @@ const SECTIONS = [
         title: 'Location Guide',
         desc: "A traveller's guide to the five regions of the Auroran Empire — cities, settlements, waterways, and the territories beyond the frontier.",
         href: 'player-location-guide.html',
+      },
+    ],
+  },
+  {
+    id: 'tools',
+    label: 'Player Tools',
+    tag: 'Interactive',
+    theme: 'tools',
+    docs: [
+      {
+        icon: '⚙',
+        title: 'D&D 2024 Character Sheet',
+        desc: 'Fully interactive character sheet with reactive exhaustion/rage logic, inventory and spell tracking, plus JSON import/export for level-up handoff.',
+        href: 'dnd_2024_character_sheet.html',
       },
     ],
   },
