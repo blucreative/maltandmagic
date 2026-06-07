@@ -6,31 +6,33 @@
 <title>D&D 2024 Play Sheet</title>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Oswald:wght@400;600&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Crimson+Text:wght@400;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
 <style>
 * { box-sizing: border-box; }
 :root {
-  --bg: #0f1218;
-  --card: #1a2230;
-  --card-2: #222d41;
-  --line: #455571;
-  --line-hi: #7ea8e5;
-  --tx: #edf2fb;
-  --tx-d: #b3c2da;
-  --accent: #90c9ff;
-  --ok: #8de2a0;
-  --warn: #f4ce82;
-  --bad: #f197ab;
+  --bg: #0f0d0a;
+  --bg-deep: #070605;
+  --card: #1c1814;
+  --card-2: #221d18;
+  --line: #4b3a2c;
+  --line-hi: #b08b5a;
+  --tx: #f5ead8;
+  --tx-d: #d0bea4;
+  --accent: #d6b27a;
+  --ok: #91c48a;
+  --warn: #e0b45f;
+  --bad: #d77c72;
 }
 html, body {
   margin: 0;
   min-height: 100%;
   background:
-    radial-gradient(980px 520px at 15% -8%, rgba(144, 201, 255, 0.14), transparent 62%),
-    radial-gradient(780px 420px at 100% 0%, rgba(141, 226, 160, 0.1), transparent 58%),
-    linear-gradient(180deg, #0e121a, #101724);
+    radial-gradient(900px 500px at 15% -10%, rgba(214, 178, 122, 0.14), transparent 60%),
+    radial-gradient(780px 420px at 100% 0%, rgba(145, 196, 138, 0.08), transparent 56%),
+    radial-gradient(700px 380px at 50% 120%, rgba(133, 91, 52, 0.12), transparent 60%),
+    linear-gradient(180deg, var(--bg), var(--bg-deep));
   color: var(--tx);
-  font-family: 'Atkinson Hyperlegible', sans-serif;
+  font-family: 'Crimson Text', serif;
 }
 body { padding: 14px 12px 42px; }
 
@@ -42,13 +44,19 @@ body { padding: 14px 12px 42px; }
 }
 
 .card {
-  border: 1px solid var(--line);
+  position: relative;
+  border: 1px solid rgba(176, 139, 90, .28);
   border-radius: 14px;
-  background: linear-gradient(180deg, rgba(34,45,65,.94), rgba(26,34,48,.96));
+  background:
+    linear-gradient(180deg, rgba(31, 26, 20, .96), rgba(22, 18, 14, .98)),
+    radial-gradient(100% 60% at 50% 0%, rgba(214, 178, 122, .06), transparent 70%);
   padding: 12px;
+  box-shadow:
+    0 16px 36px rgba(0, 0, 0, .32),
+    inset 0 1px 0 rgba(255, 233, 190, .04);
 }
 
-h1, h2, h3 { margin: 0; font-family: 'Oswald', sans-serif; letter-spacing: 0.03em; }
+h1, h2, h3 { margin: 0; font-family: 'Cinzel', serif; letter-spacing: 0.06em; }
 
 .header {
   display: flex;
@@ -57,32 +65,34 @@ h1, h2, h3 { margin: 0; font-family: 'Oswald', sans-serif; letter-spacing: 0.03e
   gap: 12px;
   flex-wrap: wrap;
 }
-.subtitle { color: var(--tx-d); font-size: 0.95rem; margin-top: 2px; }
+.subtitle { color: var(--tx-d); font-size: 0.95rem; margin-top: 2px; font-family: 'Inter', sans-serif; }
 
 .pills { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 8px; }
 .pill {
-  border: 1px solid var(--line);
+  border: 1px solid rgba(176, 139, 90, .28);
   border-radius: 999px;
   padding: 4px 10px;
   font-size: 0.78rem;
   color: var(--tx-d);
+  background: rgba(255, 255, 255, .02);
+  font-family: 'Inter', sans-serif;
 }
-.pill.ok { border-color: rgba(141, 226, 160, .5); color: var(--ok); }
-.pill.warn { border-color: rgba(244, 206, 130, .5); color: var(--warn); }
+.pill.ok { border-color: rgba(145, 196, 138, .55); color: var(--ok); }
+.pill.warn { border-color: rgba(224, 180, 95, .55); color: var(--warn); }
 
 .quick-nav {
   position: sticky;
   top: 10px;
   z-index: 10;
-  background: rgba(16, 23, 36, .86);
+  background: rgba(16, 12, 9, .88);
   backdrop-filter: blur(5px);
 }
 
 .hero-card {
-  border-color: #5c7cb0;
+  border-color: rgba(214, 178, 122, .48);
   background:
-    linear-gradient(140deg, rgba(17, 27, 43, .95), rgba(25, 43, 64, .9)),
-    radial-gradient(640px 220px at 10% -20%, rgba(144, 201, 255, .22), transparent 70%);
+    linear-gradient(140deg, rgba(30, 23, 17, .98), rgba(17, 14, 11, .96)),
+    radial-gradient(640px 220px at 10% -20%, rgba(214, 178, 122, .2), transparent 70%);
 }
 
 .hero-layout {
@@ -93,6 +103,7 @@ h1, h2, h3 { margin: 0; font-family: 'Oswald', sans-serif; letter-spacing: 0.03e
 
 .hero-title {
   font-size: clamp(1.4rem, 2.4vw, 2rem);
+  text-shadow: 0 1px 0 rgba(0,0,0,.45);
 }
 
 .status-grid {
@@ -103,10 +114,10 @@ h1, h2, h3 { margin: 0; font-family: 'Oswald', sans-serif; letter-spacing: 0.03e
 }
 
 .status-chip {
-  border: 1px solid rgba(144, 201, 255, .3);
+  border: 1px solid rgba(176, 139, 90, .28);
   border-radius: 10px;
   padding: 8px;
-  background: rgba(12, 20, 31, .55);
+  background: rgba(14, 11, 9, .58);
 }
 
 .status-label {
@@ -134,18 +145,19 @@ h1, h2, h3 { margin: 0; font-family: 'Oswald', sans-serif; letter-spacing: 0.03e
 }
 
 .condition-btn {
-  border: 1px solid rgba(126, 168, 229, .42);
-  background: rgba(24, 35, 54, .6);
+  border: 1px solid rgba(176, 139, 90, .38);
+  background: rgba(33, 26, 20, .72);
   color: var(--tx-d);
   border-radius: 999px;
   padding: 6px 10px;
   min-height: 30px;
+  font-family: 'Inter', sans-serif;
 }
 
 .condition-btn.active {
-  border-color: rgba(244, 206, 130, .7);
+  border-color: rgba(224, 180, 95, .72);
   color: var(--warn);
-  background: rgba(71, 53, 26, .45);
+  background: rgba(80, 57, 28, .45);
 }
 
 .cast-grid {
@@ -174,10 +186,10 @@ h1, h2, h3 { margin: 0; font-family: 'Oswald', sans-serif; letter-spacing: 0.03e
 }
 
 .tracker-box {
-  border: 1px solid rgba(126, 168, 229, .3);
+  border: 1px solid rgba(176, 139, 90, .26);
   border-radius: 10px;
   padding: 8px;
-  background: rgba(10, 17, 28, .55);
+  background: rgba(16, 12, 9, .58);
 }
 
 .tracker-value {
@@ -185,25 +197,62 @@ h1, h2, h3 { margin: 0; font-family: 'Oswald', sans-serif; letter-spacing: 0.03e
   margin-top: 3px;
 }
 
+.hp-value {
+  font-size: 2rem;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.hp-max {
+  color: var(--tx-d);
+  font-size: 1.1rem;
+  margin-left: 6px;
+}
+
+.hp-bar {
+  margin-top: 8px;
+  width: 100%;
+  height: 10px;
+  border-radius: 99px;
+  border: 1px solid var(--line);
+  background: rgba(10, 17, 28, .8);
+  overflow: hidden;
+}
+
+.hp-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #ef6f86, #f4ce82 55%, #8de2a0);
+  transition: width .2s ease;
+}
+
+.chip-btn {
+  min-height: 28px;
+  padding: 4px 8px;
+  border-radius: 999px;
+  font-size: .78rem;
+}
+
 .row { display: flex; gap: 8px; flex-wrap: wrap; }
 
 button, input, textarea { font: inherit; }
 button {
-  border: 1px solid var(--line-hi);
-  background: #18243a;
+  border: 1px solid rgba(176, 139, 90, .58);
+  background: linear-gradient(180deg, #2a2119, #1a1410);
   color: var(--tx);
   border-radius: 10px;
   min-height: 36px;
   padding: 8px 12px;
   cursor: pointer;
+  font-family: 'Inter', sans-serif;
+  box-shadow: 0 1px 0 rgba(255,255,255,.05) inset, 0 8px 18px rgba(0,0,0,.15);
 }
-button:hover { border-color: var(--accent); }
-button.secondary { background: transparent; }
+button:hover { border-color: var(--accent); transform: translateY(-1px); }
+button.secondary { background: rgba(255,255,255,.02); }
 button.danger { border-color: var(--bad); color: var(--bad); }
 
 .nav-btn {
-  border-color: var(--line);
-  background: #131a28;
+  border-color: rgba(176, 139, 90, .28);
+  background: rgba(21, 17, 13, .92);
   color: var(--tx-d);
 }
 
@@ -221,9 +270,9 @@ button.danger { border-color: var(--bad); color: var(--bad); }
 .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
 
 .stat-box {
-  border: 1px solid var(--line);
+  border: 1px solid rgba(176, 139, 90, .22);
   border-radius: 10px;
-  background: rgba(15, 22, 35, .66);
+  background: rgba(17, 14, 11, .68);
   padding: 8px;
 }
 .stat-label {
@@ -240,9 +289,9 @@ button.danger { border-color: var(--bad); color: var(--bad); }
 .small-note { color: var(--tx-d); font-size: .84rem; }
 
 .panel {
-  border: 1px solid var(--line);
+  border: 1px solid rgba(176, 139, 90, .22);
   border-radius: 12px;
-  background: rgba(14, 21, 34, .66);
+  background: rgba(18, 14, 11, .64);
   padding: 10px;
 }
 .panel h3 {
@@ -262,10 +311,10 @@ button.danger { border-color: var(--bad); color: var(--bad); }
 }
 
 .item-row {
-  border: 1px solid rgba(126, 168, 229, .26);
+  border: 1px solid rgba(176, 139, 90, .2);
   border-radius: 8px;
   padding: 6px 8px;
-  background: rgba(15, 23, 35, .55);
+  background: rgba(19, 15, 11, .6);
 }
 
 .item-top {
@@ -291,9 +340,9 @@ button.danger { border-color: var(--bad); color: var(--bad); }
   display: none;
   z-index: 1000;
   max-width: min(440px, calc(100vw - 24px));
-  border: 1px solid var(--line-hi);
+  border: 1px solid rgba(214, 178, 122, .55);
   border-radius: 8px;
-  background: #0e1522;
+  background: #120f0b;
   color: var(--tx-d);
   font-size: .83rem;
   line-height: 1.42;
@@ -331,11 +380,12 @@ label {
 }
 input, textarea {
   width: 100%;
-  border: 1px solid var(--line);
+  border: 1px solid rgba(176, 139, 90, .22);
   border-radius: 9px;
-  background: #111a29;
+  background: #17110d;
   color: var(--tx);
   padding: 8px 10px;
+  font-family: 'Inter', sans-serif;
 }
 textarea { min-height: 110px; resize: vertical; }
 input:focus-visible, textarea:focus-visible, button:focus-visible {
@@ -349,7 +399,7 @@ input:focus-visible, textarea:focus-visible, button:focus-visible {
   margin-top: 8px;
 }
 .table th, .table td {
-  border-bottom: 1px solid rgba(126, 168, 229, .26);
+  border-bottom: 1px solid rgba(176, 139, 90, .2);
   padding: 7px 6px;
   text-align: left;
 }
@@ -384,8 +434,8 @@ input:focus-visible, textarea:focus-visible, button:focus-visible {
   <section class="card hero-card">
     <div class="hero-layout">
       <div>
-        <h1 class="hero-title">D&D 2024 Play Cockpit</h1>
-        <div class="subtitle">Use one-click controls for rage, spells, conditions, and rests. Keep paper untouched during play.</div>
+        <h1 class="hero-title">Naeethim Command Centre</h1>
+        <div class="subtitle">Monster hunter playboard for fast combat, spell, and resource control without rewriting the sheet.</div>
         <div class="status-grid">
           <div class="status-chip">
             <div class="status-label">Rage</div>
@@ -398,6 +448,10 @@ input:focus-visible, textarea:focus-visible, button:focus-visible {
           <div class="status-chip">
             <div class="status-label">Conditions</div>
             <div class="status-value" id="statusConditions">0 active</div>
+          </div>
+          <div class="status-chip">
+            <div class="status-label">HP</div>
+            <div class="status-value" id="statusHP">52 / 52</div>
           </div>
           <div class="status-chip">
             <div class="status-label">Turn</div>
@@ -444,6 +498,27 @@ input:focus-visible, textarea:focus-visible, button:focus-visible {
     <h2 class="section-title">Play Cockpit</h2>
     <div class="cockpit-grid">
       <div class="panel">
+        <h3>Vitals</h3>
+        <div>
+          <span class="small-note">Hit Points</span>
+          <div><span class="hp-value" id="hpCurrentText">52</span><span class="hp-max" id="hpMaxText">/ 52</span></div>
+          <div class="hp-bar"><div class="hp-bar-fill" id="hpBarFill" style="width: 100%;"></div></div>
+        </div>
+        <div class="row" style="margin-top:8px;">
+          <button id="hpMinus10Btn" class="secondary chip-btn">-10</button>
+          <button id="hpMinus5Btn" class="secondary chip-btn">-5</button>
+          <button id="hpMinus1Btn" class="secondary chip-btn">-1</button>
+          <button id="hpPlus1Btn" class="secondary chip-btn">+1</button>
+          <button id="hpPlus5Btn" class="secondary chip-btn">+5</button>
+          <button id="hpPlus10Btn" class="secondary chip-btn">+10</button>
+        </div>
+        <div class="row" style="margin-top:8px;">
+          <button id="hpSetZeroBtn" class="secondary">Set 0</button>
+          <button id="hpSetFullBtn" class="secondary">Full Heal</button>
+        </div>
+      </div>
+
+      <div class="panel">
         <h3>Feature Controls</h3>
         <div class="small-note" id="cockpitRageState">Rage uses left: 0</div>
         <div class="small-note" id="cockpitRageTimer">Rage rounds active: 0 / 100</div>
@@ -481,6 +556,13 @@ input:focus-visible, textarea:focus-visible, button:focus-visible {
 
       <div class="panel">
         <h3>Turn & Recovery</h3>
+        <div class="small-note" id="turnModeState">Turn mode: Manual</div>
+        <div class="row" style="margin-top:8px;">
+          <button id="macroAttackBtn" class="secondary">Attack Turn</button>
+          <button id="macroRecklessBtn" class="secondary">Reckless Turn</button>
+          <button id="macroDashBtn" class="secondary">Dash Turn</button>
+          <button id="macroDodgeBtn" class="secondary">Dodge Turn</button>
+        </div>
         <div class="tracker-grid">
           <div class="tracker-box">
             <div class="small-note">Action Economy</div>
@@ -680,6 +762,7 @@ const CONDITIONS = [
 const DEFAULT_SESSION = {
   notes: '',
   inventory: [],
+  hpCurrent: CHARACTER.hpMax,
   active: {},
   conditions: {},
   exhaustionLevel: 0,
@@ -692,7 +775,8 @@ const DEFAULT_SESSION = {
     actionUsed: false,
     bonusUsed: false,
     reactionUsed: false,
-    movementUsed: 0
+    movementUsed: 0,
+    mode: 'manual'
   },
   spellSlotsUsed: { 1: 0, 2: 0 },
   lastSpellCastLevel: null,
@@ -710,6 +794,7 @@ function loadSession() {
       ...structuredClone(DEFAULT_SESSION),
       ...parsed,
       inventory: Array.isArray(parsed.inventory) ? parsed.inventory : [],
+      hpCurrent: Number.isFinite(Number(parsed.hpCurrent)) ? Math.max(0, Math.min(CHARACTER.hpMax, Number(parsed.hpCurrent))) : CHARACTER.hpMax,
       active: typeof parsed.active === 'object' && parsed.active ? parsed.active : {},
       conditions: typeof parsed.conditions === 'object' && parsed.conditions ? parsed.conditions : {},
       exhaustionLevel: Number.isFinite(Number(parsed.exhaustionLevel)) ? Math.max(0, Math.min(6, Number(parsed.exhaustionLevel))) : 0,
@@ -724,7 +809,8 @@ function loadSession() {
         actionUsed: !!parsed.turn?.actionUsed,
         bonusUsed: !!parsed.turn?.bonusUsed,
         reactionUsed: !!parsed.turn?.reactionUsed,
-        movementUsed: Number.isFinite(Number(parsed.turn?.movementUsed)) ? Math.max(0, Number(parsed.turn.movementUsed)) : 0
+        movementUsed: Number.isFinite(Number(parsed.turn?.movementUsed)) ? Math.max(0, Number(parsed.turn.movementUsed)) : 0,
+        mode: ['manual', 'attack', 'reckless', 'dash', 'dodge'].includes(parsed.turn?.mode) ? parsed.turn.mode : 'manual'
       },
       spellSlotsUsed: {
         ...DEFAULT_SESSION.spellSlotsUsed,
@@ -833,11 +919,46 @@ function markActionUsed(type) {
   renderAll();
 }
 
+function adjustHP(delta) {
+  const current = Number(session.hpCurrent) || 0;
+  session.hpCurrent = Math.max(0, Math.min(CHARACTER.hpMax, current + delta));
+  saveSession();
+  renderAll();
+}
+
+function setHP(value) {
+  session.hpCurrent = Math.max(0, Math.min(CHARACTER.hpMax, Number(value) || 0));
+  saveSession();
+  renderAll();
+}
+
+function setTurnMode(mode) {
+  session.turn.mode = mode;
+  if (mode === 'attack') {
+    session.turn.actionUsed = true;
+    if (session.active.rage) session.rageMaintainedThisTurn = true;
+  }
+  if (mode === 'reckless') {
+    session.turn.actionUsed = true;
+    if (session.active.rage) session.rageMaintainedThisTurn = true;
+  }
+  if (mode === 'dash') {
+    session.turn.actionUsed = true;
+    session.turn.movementUsed = derivedStats().speed;
+  }
+  if (mode === 'dodge') {
+    session.turn.actionUsed = true;
+  }
+  saveSession();
+  renderAll();
+}
+
 function refreshTurn() {
   session.turn.actionUsed = false;
   session.turn.bonusUsed = false;
   session.turn.reactionUsed = false;
   session.turn.movementUsed = 0;
+  session.turn.mode = 'manual';
   session.rageMaintainedThisTurn = false;
   saveSession();
   renderAll();
@@ -868,6 +989,7 @@ function advanceTurn() {
   session.turn.bonusUsed = false;
   session.turn.reactionUsed = false;
   session.turn.movementUsed = 0;
+  session.turn.mode = 'manual';
   saveSession();
   renderAll();
 }
@@ -887,6 +1009,7 @@ function applyShortRest() {
 function applyLongRest() {
   session.rageUsed = 0;
   session.spellSlotsUsed = { ...DEFAULT_SESSION.spellSlotsUsed };
+  session.hpCurrent = CHARACTER.hpMax;
   session.lastSpellCastLevel = null;
   session.active = { ...session.active, rage: false };
   session.rageRoundsActive = 0;
@@ -897,6 +1020,7 @@ function applyLongRest() {
   session.turn.bonusUsed = false;
   session.turn.reactionUsed = false;
   session.turn.movementUsed = 0;
+  session.turn.mode = 'manual';
   session.lastRestType = 'Long Rest';
   saveSession();
   renderAll();
@@ -912,7 +1036,7 @@ function renderOverview() {
     ['Player', CHARACTER.player],
     ['Race / Species', CHARACTER.race],
     ['Background', CHARACTER.background],
-    ['HP', `${CHARACTER.hpCurrent} / ${CHARACTER.hpMax}`],
+    ['HP', `${session.hpCurrent} / ${CHARACTER.hpMax}`],
     ['Passive Perception', CHARACTER.passivePerception],
     ['Spell Save DC', CHARACTER.spellSaveDcBase || '-'],
     ['Spell Attack', CHARACTER.spellAttackBase || '-']
@@ -945,6 +1069,7 @@ function renderOverview() {
   document.getElementById('statusRage').textContent = `${getRageRemaining()} / ${CHARACTER.rageUsesMax} left`;
   document.getElementById('statusSlots').textContent = `${getTotalSlotsRemaining()} total left`;
   document.getElementById('statusConditions').textContent = `${getActiveConditionCount()} active`;
+  document.getElementById('statusHP').textContent = `${session.hpCurrent} / ${CHARACTER.hpMax}`;
   document.getElementById('statusTurn').textContent = `Round ${session.turn.round || 1}`;
 }
 
@@ -961,6 +1086,12 @@ function renderCockpit() {
   const moveUsed = Number(session.turn.movementUsed) || 0;
   document.getElementById('movementState').textContent = `${moveUsed} / ${stats.speed} ft used`;
   document.getElementById('turnEconomyState').textContent = `A: ${session.turn.actionUsed ? 'Used' : 'Ready'} | B: ${session.turn.bonusUsed ? 'Used' : 'Ready'} | R: ${session.turn.reactionUsed ? 'Used' : 'Ready'}`;
+  const modeMap = { manual: 'Manual', attack: 'Attack', reckless: 'Reckless', dash: 'Dash', dodge: 'Dodge' };
+  document.getElementById('turnModeState').textContent = `Turn mode: ${modeMap[session.turn.mode] || 'Manual'}`;
+  document.getElementById('hpCurrentText').textContent = String(session.hpCurrent);
+  document.getElementById('hpMaxText').textContent = `/ ${CHARACTER.hpMax}`;
+  const hpPct = Math.max(0, Math.min(100, (Number(session.hpCurrent) / CHARACTER.hpMax) * 100));
+  document.getElementById('hpBarFill').style.width = `${hpPct}%`;
 
   const castWrap = document.getElementById('castButtons');
   castWrap.innerHTML = Object.keys(CHARACTER.spellSlotsMax)
@@ -1014,6 +1145,10 @@ function renderCockpit() {
   document.getElementById('useReactionBtn').disabled = !!session.turn.reactionUsed;
   document.getElementById('movePlus5Btn').disabled = moveUsed >= stats.speed;
   document.getElementById('moveMinus5Btn').disabled = moveUsed <= 0;
+  document.getElementById('macroAttackBtn').disabled = !!session.turn.actionUsed;
+  document.getElementById('macroRecklessBtn').disabled = !!session.turn.actionUsed;
+  document.getElementById('macroDashBtn').disabled = !!session.turn.actionUsed;
+  document.getElementById('macroDodgeBtn').disabled = !!session.turn.actionUsed;
 }
 
 function renderSkills() {
@@ -1285,6 +1420,7 @@ function wireSessionControls() {
             ...structuredClone(DEFAULT_SESSION),
             ...parsed.session,
             inventory: Array.isArray(parsed.session.inventory) ? parsed.session.inventory : [],
+            hpCurrent: Number.isFinite(Number(parsed.session.hpCurrent)) ? Math.max(0, Math.min(CHARACTER.hpMax, Number(parsed.session.hpCurrent))) : CHARACTER.hpMax,
             active: typeof parsed.session.active === 'object' && parsed.session.active ? parsed.session.active : {},
             conditions: typeof parsed.session.conditions === 'object' && parsed.session.conditions ? parsed.session.conditions : {},
             exhaustionLevel: Number.isFinite(Number(parsed.session.exhaustionLevel)) ? Math.max(0, Math.min(6, Number(parsed.session.exhaustionLevel))) : 0,
@@ -1299,7 +1435,8 @@ function wireSessionControls() {
               actionUsed: !!parsed.session.turn?.actionUsed,
               bonusUsed: !!parsed.session.turn?.bonusUsed,
               reactionUsed: !!parsed.session.turn?.reactionUsed,
-              movementUsed: Number.isFinite(Number(parsed.session.turn?.movementUsed)) ? Math.max(0, Number(parsed.session.turn.movementUsed)) : 0
+              movementUsed: Number.isFinite(Number(parsed.session.turn?.movementUsed)) ? Math.max(0, Number(parsed.session.turn.movementUsed)) : 0,
+              mode: ['manual', 'attack', 'reckless', 'dash', 'dodge'].includes(parsed.session.turn?.mode) ? parsed.session.turn.mode : 'manual'
             },
             spellSlotsUsed: {
               ...DEFAULT_SESSION.spellSlotsUsed,
@@ -1415,6 +1552,20 @@ function wireSessionControls() {
 
   document.getElementById('nextTurnBtn').addEventListener('click', advanceTurn);
   document.getElementById('refreshTurnBtn').addEventListener('click', refreshTurn);
+
+  document.getElementById('hpMinus10Btn').addEventListener('click', () => adjustHP(-10));
+  document.getElementById('hpMinus5Btn').addEventListener('click', () => adjustHP(-5));
+  document.getElementById('hpMinus1Btn').addEventListener('click', () => adjustHP(-1));
+  document.getElementById('hpPlus1Btn').addEventListener('click', () => adjustHP(1));
+  document.getElementById('hpPlus5Btn').addEventListener('click', () => adjustHP(5));
+  document.getElementById('hpPlus10Btn').addEventListener('click', () => adjustHP(10));
+  document.getElementById('hpSetZeroBtn').addEventListener('click', () => setHP(0));
+  document.getElementById('hpSetFullBtn').addEventListener('click', () => setHP(CHARACTER.hpMax));
+
+  document.getElementById('macroAttackBtn').addEventListener('click', () => setTurnMode('attack'));
+  document.getElementById('macroRecklessBtn').addEventListener('click', () => setTurnMode('reckless'));
+  document.getElementById('macroDashBtn').addEventListener('click', () => setTurnMode('dash'));
+  document.getElementById('macroDodgeBtn').addEventListener('click', () => setTurnMode('dodge'));
 
   document.getElementById('shortRestBtnTop').addEventListener('click', applyShortRest);
   document.getElementById('shortRestBtnCockpit').addEventListener('click', applyShortRest);
