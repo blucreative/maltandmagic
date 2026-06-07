@@ -1,0 +1,1052 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>DELTA GREEN // JENKINS 'CHUCK' — FIELD SHEET</title>
+<link href="https://fonts.googleapis.com/css2?family=Special+Elite&family=Share+Tech+Mono&family=Oswald:wght@300;400;600;700&display=swap" rel="stylesheet"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important;color-adjust:exact!important}
+:root{
+  --g:#3d7a3d;--gb:#5cb85c;--gd:#1e3d1e;--gg:rgba(92,184,92,.12);
+  --bg:#080e08;--bg2:#0b120b;--bg3:#0f180f;
+  --sf:#111a11;--sf2:#162016;
+  --bd:#1e2e1e;--bd2:#2a3e2a;
+  --tx:#b0c8b0;--txd:#5a785a;--txb:#d8ecd8;
+  --red:#8b1a1a;--rb:#c0392b;
+  --am:#8a6000;--ab:#c49000;
+  --bl:#1a3a6a;--bb:#4a90d9;
+  --fn:'Share Tech Mono',monospace;
+  --fd:'Oswald',sans-serif;
+  --ft:'Special Elite',cursive;
+}
+html{font-size:13px;background:var(--bg)}
+body{color:var(--tx);font-family:var(--fn);min-height:100vh;padding:12px}
+body::before{content:'';position:fixed;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(0,0,0,.05) 3px,rgba(0,0,0,.05) 4px);pointer-events:none;z-index:9999}
+.page{max-width:960px;margin:0 auto;display:flex;flex-direction:column;gap:10px}
+.row{display:grid;gap:10px}
+.r2{grid-template-columns:1fr 1fr}
+.r3{grid-template-columns:1fr 1fr 1fr}
+.r13{grid-template-columns:1fr 3fr}
+.r31{grid-template-columns:3fr 1fr}
+@media(max-width:680px){.r2,.r3,.r13,.r31{grid-template-columns:1fr}.top-nav{flex-wrap:wrap}}
+.top-nav{display:flex;gap:8px;align-items:center;justify-content:flex-end;font-size:9px;letter-spacing:1px;text-transform:uppercase}
+.top-nav a{color:var(--txd);text-decoration:none;border:1px solid var(--bd);padding:4px 8px;background:var(--sf)}
+.top-nav a:hover{color:var(--gb);border-color:var(--gb)}
+.panel{background:var(--sf);border:1px solid var(--bd);position:relative}
+.panel-hd{background:var(--sf2);border-bottom:1px solid var(--bd);padding:5px 12px;display:flex;justify-content:space-between;align-items:center}
+.panel-hd h3{font:600 9px/1 var(--fd);letter-spacing:3px;color:var(--gb);text-transform:uppercase}
+.panel-hd span{font-size:8px;letter-spacing:1px;color:var(--txd)}
+.panel-body{padding:12px}
+.main-hd{background:var(--sf2);border:1px solid var(--bd);border-left:4px solid var(--gb);padding:0;display:grid;grid-template-columns:56px 1fr auto;align-items:stretch}
+.hd-emblem{background:var(--gd);display:flex;align-items:center;justify-content:center;border-right:1px solid var(--g)}
+.diamond{width:26px;height:26px;border:2px solid var(--gb);transform:rotate(45deg);position:relative}
+.diamond::after{content:'';position:absolute;inset:5px;background:var(--gb)}
+.hd-info{padding:10px 14px}
+.hd-title{font:700 24px/1 var(--fd);letter-spacing:5px;color:var(--gb);text-shadow:0 0 20px rgba(92,184,92,.3)}
+.hd-name{font:700 16px/1.2 var(--fd);letter-spacing:2px;color:var(--txb);margin-top:3px}
+.hd-name .cs{color:var(--gb)}
+.hd-sub{font-size:9px;letter-spacing:2px;color:var(--txd);margin-top:4px}
+.hd-stamps{padding:10px 14px;display:flex;flex-direction:column;align-items:flex-end;justify-content:center;gap:4px}
+.stamp{font-size:8px;letter-spacing:1.5px;padding:2px 7px;border:1px solid;text-transform:uppercase;white-space:nowrap}
+.s-red{color:var(--rb);border-color:var(--red);background:rgba(139,26,26,.12)}
+.s-grn{color:var(--gb);border-color:var(--g);background:var(--gg)}
+.s-amb{color:var(--ab);border-color:var(--am);background:rgba(138,96,0,.1)}
+.s-blu{color:var(--bb);border-color:var(--bl);background:rgba(26,58,106,.15)}
+.save-bar{background:var(--bg3);border:1px solid var(--bd);padding:7px 14px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px}
+.save-status{font-size:10px;color:var(--txd);letter-spacing:1px}
+.save-status .dot{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--gb);margin-right:6px;animation:pulse 2s ease infinite}
+@keyframes pulse{0%,100%{opacity:.4}50%{opacity:1}}
+.btn-row{display:flex;gap:8px;flex-wrap:wrap}
+.btn{background:none;border:1px solid var(--bd2);color:var(--txd);font:11px var(--fn);letter-spacing:1px;padding:5px 12px;cursor:pointer;transition:all .15s;text-transform:uppercase}
+.btn:hover{border-color:var(--gb);color:var(--gb);background:var(--gg)}
+.btn.danger{border-color:var(--red);color:var(--rb)}
+.btn.danger:hover{background:rgba(139,26,26,.15)}
+.btn.primary{border-color:var(--g);color:var(--gb);background:var(--gg)}
+.btn.primary:hover{background:rgba(92,184,92,.25)}
+.btn.secondary{border-color:var(--bd2);color:var(--txd)}
+.btn.secondary:hover{border-color:var(--bd2);color:var(--tx);background:var(--sf2)}
+.session-badge{font-size:9px;letter-spacing:2px;color:var(--ab);border:1px solid var(--am);padding:2px 7px}
+.stat-tbl{width:100%;border-collapse:collapse}
+.stat-tbl th{font-size:8px;letter-spacing:2px;color:var(--g);padding:4px 8px;text-align:left;border-bottom:1px solid var(--bd);font-weight:normal}
+.stat-tbl th:not(:first-child){text-align:center}
+.stat-tbl td{padding:5px 8px;border-bottom:1px solid rgba(30,46,30,.6);font-size:11px}
+.stat-tbl tr:last-child td{border-bottom:none}
+.stat-tbl td.sn{color:var(--txd);letter-spacing:.5px}
+.stat-tbl td.sv{text-align:center;font:700 19px/1 var(--fd);color:var(--txb)}
+.stat-tbl td.sv.lo{color:var(--rb)}
+.stat-tbl td.sv.hi{color:var(--gb)}
+.stat-tbl td.x5{text-align:center;color:var(--gb);font-size:12px}
+.stat-tbl td.ft{font-size:10px;font-family:var(--ft);color:var(--ab)}
+.tracker{margin-bottom:14px}
+.tracker:last-child{margin-bottom:0}
+.tr-head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:5px}
+.tr-label{font-size:9px;letter-spacing:2px;color:var(--txd);text-transform:uppercase}
+.tr-val{font:700 30px/1 var(--fd)}
+.tr-val.hp{color:var(--ab)}
+.tr-val.wp{color:var(--bb)}
+.tr-val.san{color:var(--gb)}
+.tr-val.san.warn{color:var(--ab)}
+.tr-val.san.crit{color:var(--rb);animation:flicker .4s ease infinite alternate}
+@keyframes flicker{from{opacity:.7}to{opacity:1}}
+.tr-controls{display:flex;gap:6px;align-items:center}
+.tr-btn{width:26px;height:26px;border:1px solid var(--bd2);background:none;color:var(--txd);font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .15s;font-family:var(--fn);flex-shrink:0}
+.tr-btn:hover{border-color:var(--gb);color:var(--gb);background:var(--gg)}
+.tr-btn.minus:hover{border-color:var(--rb);color:var(--rb);background:rgba(139,26,26,.1)}
+.pip-row{display:flex;flex-wrap:wrap;gap:3px}
+.pip{width:14px;height:14px;border:1px solid;cursor:pointer;transition:all .1s;flex-shrink:0}
+.pip.hp{border-color:var(--am)}
+.pip.hp.fill{background:var(--ab)}
+.pip.hp.low{background:var(--rb);border-color:var(--red)}
+.pip.wp{border-color:var(--bl)}
+.pip.wp.fill{background:var(--bb)}
+.san-bar-wrap{position:relative;height:14px;background:var(--bg);border:1px solid var(--bd);margin-top:6px}
+.san-bar-fill{height:100%;transition:width .3s ease;position:absolute;top:0;left:0}
+.san-bar-fill.good{background:linear-gradient(90deg,var(--gd),var(--gb))}
+.san-bar-fill.warn{background:linear-gradient(90deg,var(--am),var(--ab))}
+.san-bar-fill.crit{background:linear-gradient(90deg,var(--red),var(--rb))}
+.san-bp-marker{position:absolute;top:-4px;bottom:-4px;width:2px;background:var(--rb);opacity:.8}
+.san-bp-label{position:absolute;top:-16px;font-size:8px;color:var(--rb);letter-spacing:1px;white-space:nowrap;transform:translateX(-50%)}
+.san-alert{background:rgba(139,26,26,.15);border:1px solid var(--red);padding:8px 10px;margin-top:8px;font-size:10px;color:var(--rb);display:none}
+.san-alert.show{display:block}
+.san-drop-note{font-size:9px;color:var(--txd);margin-top:4px;letter-spacing:1px}
+.skills-grid{display:grid;grid-template-columns:1fr 1fr;gap:0}
+@media(max-width:480px){.skills-grid{grid-template-columns:1fr}}
+.skill-item{display:flex;align-items:center;gap:8px;padding:4px 10px;border-bottom:1px solid rgba(30,46,30,.5);border-right:1px solid rgba(30,46,30,.5);cursor:pointer;transition:background .1s;user-select:none}
+.skill-item:nth-child(even){border-right:none}
+.skill-item:hover{background:var(--sf2)}
+.skill-item.checked{background:rgba(184,134,0,.08)}
+.skill-cb{width:13px;height:13px;border:1px solid var(--bd2);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:10px;color:var(--ab)}
+.skill-item.checked .skill-cb{border-color:var(--ab);background:rgba(196,144,0,.15)}
+.skill-name{font-size:11px;color:var(--tx);flex:1}
+.skill-pct{font:600 14px/1 var(--fd);min-width:38px;text-align:right;flex-shrink:0}
+.skill-pct.e{color:var(--gb)}
+.skill-pct.h{color:#8dc88d}
+.skill-pct.m{color:var(--tx)}
+.skill-pct.l{color:var(--txd)}
+.skill-note{font-size:8px;color:var(--txd);margin-left:2px}
+.skill-footer{padding:6px 10px;font-size:9px;color:var(--txd);letter-spacing:.5px;border-top:1px solid var(--bd)}
+.skill-pct.penalised{text-decoration:line-through;color:var(--txd)!important;font-size:10px}
+.skill-effective{font:bold 14px/1 var(--fd);color:var(--rb)!important;margin-left:4px}
+.skill-effective.blocked{color:var(--red)!important}
+.skill-item.incapacitated .skill-name{opacity:.4}
+.bond-item{background:var(--bg);border:1px solid var(--bd);padding:10px 12px;margin-bottom:8px;position:relative}
+.bond-item::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--ab)}
+.bond-item:last-child{margin-bottom:0}
+.bond-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:4px}
+.bond-name{font-size:12px;color:var(--txb);padding-left:4px}
+.bond-controls{display:flex;align-items:center;gap:5px}
+.bond-score{font:700 24px/1 var(--fd);color:var(--ab);min-width:28px;text-align:center}
+.bond-score.zero{color:var(--rb)}
+.bond-note{font-size:10px;color:var(--txd);padding-left:4px;line-height:1.5}
+.motiv-item{display:flex;align-items:center;gap:8px;padding:7px 10px;border-bottom:1px solid rgba(30,46,30,.5);cursor:pointer;user-select:none;transition:all .15s}
+.motiv-item:last-child{border-bottom:none}
+.motiv-item:hover{background:var(--sf2)}
+.motiv-item.crossed .motiv-text{text-decoration:line-through;color:var(--txd);opacity:.6}
+.motiv-check{width:13px;height:13px;border:1px solid var(--bd2);flex-shrink:0}
+.motiv-text{font-size:11px;color:var(--tx);flex:1}
+.disorder-item{padding:6px 10px;font-size:11px;color:var(--rb);background:rgba(139,26,26,.08);border:1px solid rgba(139,26,26,.3);margin-bottom:6px;display:flex;justify-content:space-between;align-items:center}
+.disorder-remove{background:none;border:none;color:var(--rb);cursor:pointer;font-size:14px;padding:0 2px}
+.disorder-add{width:100%;background:none;border:1px dashed rgba(139,26,26,.4);color:var(--rb);font:11px var(--fn);padding:6px;cursor:pointer;text-align:left;letter-spacing:1px;margin-top:6px;transition:all .15s}
+.disorder-add:hover{background:rgba(139,26,26,.1);border-style:solid}
+.incident-row{display:flex;align-items:center;gap:8px;padding:7px 0;border-bottom:1px solid rgba(30,46,30,.4)}
+.incident-row:last-child{border-bottom:none}
+.incident-label{font-size:10px;letter-spacing:1px;color:var(--txd);min-width:90px;text-transform:uppercase}
+.incident-boxes{display:flex;gap:5px}
+.inc-box{width:20px;height:20px;border:1px solid var(--bd2);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:11px;transition:all .15s;user-select:none}
+.inc-box:hover{border-color:var(--gb)}
+.inc-box.checked{border-color:var(--gb);background:var(--gg);color:var(--gb)}
+.inc-box.adapted-v{background:var(--gg);border-color:var(--gb);cursor:default}
+.adapted-tag{font-size:8px;letter-spacing:1.5px;color:var(--gb);border:1px solid var(--gd);padding:1px 6px;margin-left:4px}
+.wpn-tbl{width:100%;border-collapse:collapse;font-size:11px}
+.wpn-tbl th{background:var(--bg);color:var(--g);font-size:8px;letter-spacing:1.5px;padding:5px 8px;text-align:left;border:1px solid var(--bd);font-weight:normal}
+.wpn-tbl td{padding:5px 8px;border:1px solid var(--bd);color:var(--tx)}
+.wpn-tbl td.wn{color:var(--txb)}
+.wpn-tbl td.ws{font:600 14px/1 var(--fd);color:var(--gb);text-align:center}
+.wpn-tbl td.wd{font:600 13px/1 var(--fd);color:var(--ab);text-align:center}
+.wpn-tbl tr:nth-child(even) td{background:var(--sf)}
+.gear-grid{display:grid;grid-template-columns:1fr 1fr;gap:0}
+@media(max-width:480px){.gear-grid{grid-template-columns:1fr}}
+.gear-item{display:flex;align-items:center;gap:8px;padding:5px 10px;border-bottom:1px solid rgba(30,46,30,.4);border-right:1px solid rgba(30,46,30,.4);cursor:pointer;user-select:none;transition:background .1s}
+.gear-item:nth-child(even){border-right:none}
+.gear-item:hover{background:var(--sf2)}
+.gear-item.used{opacity:.45}
+.gear-item.used .gear-name{text-decoration:line-through}
+.gear-check{width:13px;height:13px;border:1px solid var(--bd2);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:10px;color:var(--txd)}
+.gear-item.used .gear-check{border-color:var(--rb);color:var(--rb)}
+.gear-name{font-size:11px;color:var(--tx)}
+.field-ta{width:100%;background:var(--bg);border:1px solid var(--bd);color:var(--tx);font:12px var(--ft);padding:10px;resize:vertical;min-height:80px;line-height:1.7;outline:none;transition:border-color .15s}
+.field-ta:focus{border-color:var(--g)}
+.field-ta::placeholder{color:var(--txd);font-size:11px}
+.field-ta.wounds{min-height:60px}
+.hp-state{font-size:9px;letter-spacing:2px;padding:2px 7px;border:1px solid;display:inline-block;margin-top:4px}
+.hp-state.ok{color:var(--gb);border-color:var(--gd)}
+.hp-state.warn{color:var(--ab);border-color:var(--am)}
+.hp-state.crit{color:var(--rb);border-color:var(--red);animation:pulse .6s ease infinite}
+.toast{position:fixed;bottom:20px;right:20px;background:var(--sf2);border:1px solid var(--gb);color:var(--gb);font:11px var(--fn);letter-spacing:1px;padding:10px 18px;z-index:10000;opacity:0;transition:opacity .3s;pointer-events:none}
+.toast.show{opacity:1}
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.85);z-index:1000;display:none;align-items:center;justify-content:center;padding:20px}
+.modal-overlay.show{display:flex}
+.modal-box{background:var(--bg2);border:2px solid var(--gb);max-width:480px;width:100%;padding:28px;position:relative}
+.modal-title{font:600 16px/1 var(--fd);letter-spacing:3px;color:var(--gb);margin-bottom:8px}
+.modal-body{font-size:12px;color:var(--tx);line-height:1.7;margin-bottom:20px;font-family:var(--ft)}
+.modal-body strong{color:var(--gb);font-family:var(--fn)}
+.modal-btns{display:flex;gap:10px;justify-content:flex-end}
+.divider{display:flex;align-items:center;gap:8px;color:var(--gd);font-size:9px;letter-spacing:2px;margin:8px 0}
+.divider::before,.divider::after{content:'';flex:1;height:1px;background:var(--bd)}
+.label-tag{font-size:8px;letter-spacing:2px;color:var(--txd);text-transform:uppercase;margin-bottom:4px}
+.scroll-hint{text-align:center;font-size:9px;letter-spacing:2px;color:var(--gd);padding:20px 0;animation:pulse 2s infinite}
+.effect-banner{display:flex;flex-wrap:wrap;gap:6px;padding:7px 14px;border:1px solid}
+.effect-tag{font-size:10px;letter-spacing:1.5px;padding:3px 10px;border:1px solid;font-family:var(--fn);text-transform:uppercase}
+.effect-tag.crit{color:var(--rb);border-color:var(--red);background:rgba(139,26,26,.15)}
+.effect-tag.warn{color:var(--ab);border-color:var(--am);background:rgba(138,96,0,.1)}
+.effect-tag.info{color:var(--bb);border-color:var(--bl);background:rgba(26,58,106,.12)}
+@media print{
+  @page{size:A4;margin:10mm}
+  html,body{background:#080e08!important;color:#b0c8b0!important;padding:0!important;font-size:11px!important}
+  body::before,.save-bar,.toast,.modal-overlay,.scroll-hint,.btn,.btn-row,.tr-btn,.disorder-add,.disorder-remove{display:none!important}
+  *{position:static!important;animation:none!important;transition:none!important}
+  .page{max-width:100%;gap:6px}
+  .panel{break-inside:avoid;page-break-inside:avoid;background:#111a11!important;border:1px solid #1e2e1e!important}
+  .panel-hd{background:#162016!important;border-bottom:1px solid #2a3e2a!important}
+  .main-hd{background:#162016!important;border-left:4px solid #5cb85c!important}
+  .hd-emblem{background:#1e3d1e!important}
+  .wpn-tbl th{background:#080e08!important}
+  .wpn-tbl tr:nth-child(even) td{background:#111a11!important}
+  .san-bar-wrap{background:#080e08!important;border:1px solid #1e2e1e!important}
+  .san-bar-fill{display:block!important}
+  .pip.hp.fill{background:#c49000!important;border-color:#8a6000!important}
+  .pip.hp.low{background:#c0392b!important;border-color:#8b1a1a!important}
+  .pip.wp.fill{background:#4a90d9!important;border-color:#1a3a6a!important}
+  .bond-item{background:#080e08!important;border:1px solid #1e2e1e!important}
+  .bond-item::before{background:#c49000!important}
+  .bond-score{color:#c49000!important}
+  .field-ta{background:#080e08!important;border:1px solid #1e2e1e!important;color:#b0c8b0!important;min-height:60px!important}
+  .stamp{border:1px solid!important}
+  .s-red{color:#c0392b!important;border-color:#8b1a1a!important;background:rgba(139,26,26,.12)!important}
+  .s-grn{color:#5cb85c!important;border-color:#3d7a3d!important;background:rgba(92,184,92,.12)!important}
+  .s-blu{color:#4a90d9!important;border-color:#1a3a6a!important;background:rgba(26,58,106,.15)!important}
+  .s-amb{color:#c49000!important;border-color:#8a6000!important;background:rgba(138,96,0,.1)!important}
+  [style*="display:grid"]{display:grid!important}
+}
+</style>
+</head>
+<body>
+<div class="page">
+<nav class="top-nav">
+  <a href="../index.html">Delta Green Hub</a>
+  <a href="index.html">DG Sheets</a>
+  <a href="../delta_green_primer.html">DG Primer</a>
+  <a href="../coc_player_primer.html">CoC Primer</a>
+  <a href="../coc_character_sheets/index.html">CoC Sheets</a>
+</nav>
+
+<!-- PERSONAL DATA STRIP -->
+<div style="background:var(--sf);border:1px solid var(--bd);padding:8px 14px;display:grid;grid-template-columns:repeat(4,1fr);gap:10px;">
+  <div><div style="font-size:7px;letter-spacing:2px;color:var(--txd);margin-bottom:3px">PROFESSION</div><div style="font-size:10px;color:var(--txb);font-family:var(--fd);font-weight:600;letter-spacing:1px">Special Operator</div><div style="font-size:9px;color:var(--txd)">(The Firm)</div></div>
+  <div><div style="font-size:7px;letter-spacing:2px;color:var(--txd);margin-bottom:3px">EMPLOYER</div><div style="font-size:10px;color:var(--txb);font-family:var(--fd);font-weight:600;letter-spacing:1px">The Firm</div><div style="font-size:9px;color:var(--txd)">MOD-adjacent / classified</div></div>
+  <div><div style="font-size:7px;letter-spacing:2px;color:var(--txd);margin-bottom:3px">NATIONALITY</div><div style="font-size:10px;color:var(--txb);font-family:var(--fd);font-weight:600;letter-spacing:1px">British</div><div style="font-size:9px;color:var(--txd)">Age 35 — Male</div></div>
+  <div><div style="font-size:7px;letter-spacing:2px;color:var(--txd);margin-bottom:3px">BACKGROUND</div><div style="font-size:10px;color:var(--txb);font-family:var(--fd);font-weight:600;letter-spacing:1px">Military School</div><div style="font-size:9px;color:var(--txd)">Former Royal Navy operative</div></div>
+</div>
+
+<!-- ACTIVE EFFECTS BANNER -->
+<div id="effectsBanner" style="display:none"></div>
+
+<!-- HEADER -->
+<div class="main-hd">
+  <div class="hd-emblem"><div class="diamond"></div></div>
+  <div class="hd-info">
+    <div class="hd-title">DELTA GREEN</div>
+    <div class="hd-name">JENKINS, CHARLES <span class="cs">'CHUCK'</span> D.</div>
+    <div class="hd-sub">SPECIAL OPERATOR · THE FIRM · BRITISH · TREGAW, DEVON · LATE 1997</div>
+  </div>
+  <div class="hd-stamps">
+    <div class="stamp s-red">TOP SECRET // ORCON</div>
+    <div class="stamp s-grn">DELTA GREEN EYES ONLY</div>
+    <div class="stamp s-blu" id="classificationStamp">ALEPH/7-(HR:EMERGENT)</div>
+    <div class="stamp s-amb">DEVON/CORNWALL — 1997</div>
+  </div>
+</div>
+
+<!-- SAVE BAR -->
+<div class="save-bar">
+  <div class="save-status"><span class="dot"></span><span id="saveTime">AUTOSAVE ACTIVE</span></div>
+  <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
+    <span class="session-badge">SESSION <span id="sessionNum">1</span></span>
+    <div class="btn-row">
+      <button class="btn primary" onclick="saveState()">SAVE</button>
+      <button class="btn" onclick="newSession()">NEW SESSION</button>
+      <button class="btn" onclick="openDebrief()">DEBRIEF</button>
+      <button class="btn danger" onclick="openModal('resetModal')">RESET</button>
+    </div>
+  </div>
+</div>
+
+<!-- STATS + DERIVED -->
+<div class="row r2">
+  <!-- STATISTICS -->
+  <div class="panel">
+    <div class="panel-hd"><h3>02 // STATISTICS</h3><span>Navy Operative Array</span></div>
+    <div class="panel-body">
+      <table class="stat-tbl">
+        <thead><tr><th>STATISTIC</th><th>SCORE</th><th>×5%</th><th>NOTES</th></tr></thead>
+        <tbody>
+          <tr><td class="sn">Strength (STR)</td><td class="sv">13</td><td class="x5">65%</td><td class="ft">Hidden strength</td></tr>
+          <tr><td class="sn">Constitution (CON)</td><td class="sv">14</td><td class="x5">70%</td><td class="ft">Relentless</td></tr>
+          <tr><td class="sn">Dexterity (DEX)</td><td class="sv hi">17</td><td class="x5" style="color:var(--gb);font-weight:bold">85%</td><td class="ft">Big guy be nimble</td></tr>
+          <tr><td class="sn">Intelligence (INT)</td><td class="sv">10</td><td class="x5">50%</td><td class="ft">Perceptive</td></tr>
+          <tr><td class="sn">Power (POW)</td><td class="sv">10</td><td class="x5">50%</td><td class="ft">—</td></tr>
+          <tr><td class="sn">Charisma (CHA)</td><td class="sv lo">8</td><td class="x5" style="color:#e05050">40%</td><td class="ft">Keeps it professional</td></tr>
+        </tbody>
+      </table>
+      <p style="font-size:9px;color:var(--txd);margin-top:8px">DEX 17 exceptional. STR 13 = +1 melee/unarmed damage. CHA 8 — below threshold; bonds start low.</p>
+    </div>
+  </div>
+
+  <!-- DERIVED ATTRIBUTES -->
+  <div class="panel">
+    <div class="panel-hd"><h3>03 // DERIVED ATTRIBUTES</h3><span>All at maximum — mission start</span></div>
+    <div class="panel-body">
+
+      <!-- HP -->
+      <div class="tracker">
+        <div class="tr-head">
+          <div class="tr-label">Hit Points <span style="color:var(--txd);font-size:9px">/ 14 MAX</span></div>
+          <div class="tr-controls">
+            <button class="tr-btn minus" onclick="adjustStat('hp',-1)">−</button>
+            <span class="tr-val hp" id="hp-val">14</span>
+            <button class="tr-btn" onclick="adjustStat('hp',1)">+</button>
+          </div>
+        </div>
+        <div class="pip-row" id="hp-pips"></div>
+        <div id="hp-state-tag"></div>
+        <div style="font-size:9px;color:var(--txd);margin-top:4px">(STR 13 + CON 14) ÷ 2 = 13.5 → 14. At 2HP: unconscious. At 0HP: dying.</div>
+      </div>
+
+      <!-- WP -->
+      <div class="tracker">
+        <div class="tr-head">
+          <div class="tr-label">Willpower <span style="color:var(--txd);font-size:9px">/ <span id="wp-max-label">10</span> MAX</span></div>
+          <div class="tr-controls">
+            <button class="tr-btn minus" onclick="adjustStat('wp',-1)">−</button>
+            <span class="tr-val wp" id="wp-val">10</span>
+            <button class="tr-btn" onclick="adjustStat('wp',1)">+</button>
+          </div>
+        </div>
+        <div class="pip-row" id="wp-pips"></div>
+        <div id="wp-warn" style="display:none;margin-top:5px;font-size:9px;color:var(--rb);letter-spacing:.5px"></div>
+      </div>
+
+      <!-- SAN -->
+      <div class="tracker">
+        <div class="tr-head">
+          <div class="tr-label">Sanity <span style="color:var(--txd);font-size:9px">/ <span id="san-max-label">50</span> MAX · BP: <span id="bp-label">40</span></span></div>
+          <div class="tr-controls">
+            <button class="tr-btn minus" onclick="adjustStat('san',-1)">−</button>
+            <span class="tr-val san" id="san-val">50</span>
+            <button class="tr-btn" onclick="adjustStat('san',1)">+</button>
+          </div>
+        </div>
+        <div class="san-bar-wrap">
+          <div class="san-bar-fill good" id="san-bar" style="width:100%"></div>
+          <div class="san-bp-marker" id="bp-marker" style="left:80%"><span class="san-bp-label">BP 40</span></div>
+        </div>
+        <div class="san-alert" id="san-bp-alert"></div>
+        <div class="san-drop-note" id="san-drop-note"></div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- SKILLS -->
+<div class="panel">
+  <div class="panel-hd"><h3>04 // SKILLS</h3><span>★ bonus | Click to mark failed roll | Improve at debrief if roll > rating</span></div>
+  <div class="skills-grid" id="skillsGrid"></div>
+  <div class="skill-footer" id="skillFooter">★ = Bonus skill applied &nbsp;|&nbsp; STR 13 → +1 to Unarmed &amp; Melee damage &nbsp;|&nbsp; DEX 17 = 85% stat test — exceptional</div>
+</div>
+
+<!-- INCIDENTS + BONDS -->
+<div class="row r2">
+  <!-- INCIDENTS -->
+  <div class="panel">
+    <div class="panel-hd"><h3>05 // SAN INCIDENTS</h3><span>3× without insanity = adapted</span></div>
+    <div class="panel-body">
+      <div class="incident-row">
+        <span class="incident-label">Violence</span>
+        <div class="incident-boxes" id="violence-boxes"></div>
+      </div>
+      <div class="incident-row">
+        <span class="incident-label">Helplessness</span>
+        <div class="incident-boxes" id="helpless-boxes"></div>
+      </div>
+      <p style="font-size:9px;color:var(--txd);margin-top:10px;line-height:1.5">Adapt to Violence → −1D6 CHA, Bonds drop same. Adapt to Helplessness → −1D6 POW permanently.</p>
+    </div>
+  </div>
+
+  <!-- BONDS -->
+  <div class="panel">
+    <div class="panel-hd"><h3>06 // BONDS</h3><span>2 bonds | Start score = CHA (8)</span></div>
+    <div class="panel-body">
+      <div class="bond-item">
+        <div class="bond-top">
+          <div class="bond-name">Fellow Survivor</div>
+          <div class="bond-controls">
+            <button class="tr-btn minus" onclick="adjustBond(0,-1)">−</button>
+            <span class="bond-score" id="bond-0">8</span>
+            <button class="tr-btn" onclick="adjustBond(0,1)">+</button>
+          </div>
+        </div>
+        <div class="bond-note">Someone who came through the same nightmare. The only person who understands.</div>
+      </div>
+      <div class="bond-item">
+        <div class="bond-top">
+          <div class="bond-name">Support Group Sponsor</div>
+          <div class="bond-controls">
+            <button class="tr-btn minus" onclick="adjustBond(1,-1)">−</button>
+            <span class="bond-score" id="bond-1">8</span>
+            <button class="tr-btn" onclick="adjustBond(1,1)">+</button>
+          </div>
+        </div>
+        <div class="bond-note">Gave Chuck a reason to keep going. Doesn't know what he actually does.</div>
+      </div>
+      <p style="font-size:9px;color:var(--txd);margin-top:8px">Project SAN loss: spend 1D4 WP, reduce Bond by same, reduce SAN loss by same (min 0).</p>
+    </div>
+  </div>
+</div>
+
+<!-- MOTIVATIONS + DISORDERS -->
+<div class="row r2">
+  <div class="panel">
+    <div class="panel-hd"><h3>07 // MOTIVATIONS</h3><span>Cross out when BP hit — replace with disorder</span></div>
+    <div class="panel-body">
+      <div id="motivList"></div>
+    </div>
+  </div>
+  <div class="panel">
+    <div class="panel-hd"><h3>07b // DISORDERS</h3><span>Gained when SAN hits Breaking Point</span></div>
+    <div class="panel-body">
+      <div id="disorderList"></div>
+      <button class="disorder-add" onclick="addDisorder()">+ RECORD NEW DISORDER</button>
+    </div>
+  </div>
+</div>
+
+<!-- WEAPONS -->
+<div class="panel">
+  <div class="panel-hd"><h3>08 // WEAPONS & COMBAT LOADOUT — TREGAW 1997</h3><span>STR 13 → +1 melee/unarmed | DEX 17 → acts early in turn order</span></div>
+  <div class="panel-body">
+    <table class="wpn-tbl">
+      <thead><tr><th>WEAPON</th><th>SKILL %</th><th>RANGE</th><th>DAMAGE</th><th>ARM.PIERCE</th><th>LETHALITY</th><th>KILL RADIUS</th><th>AMMO</th></tr></thead>
+      <tbody>
+        <tr><td class="wn">Unarmed (fists)</td><td class="ws">60%</td><td>—</td><td class="wd">1D4</td><td style="text-align:center">—</td><td style="text-align:center">—</td><td style="text-align:center">—</td><td style="text-align:center">—</td></tr>
+        <tr><td class="wn">Machete</td><td class="ws">70%</td><td>Melee</td><td class="wd">1D8</td><td style="text-align:center">—</td><td style="text-align:center">—</td><td style="text-align:center">—</td><td style="text-align:center">—</td></tr>
+        <tr><td class="wn">Heavy Pistol</td><td class="ws">80%</td><td>20m</td><td class="wd">1D12</td><td style="text-align:center">—</td><td style="text-align:center">—</td><td style="text-align:center">—</td><td style="text-align:center">30</td></tr>
+        <tr><td class="wn">Shotgun</td><td class="ws">80%</td><td>75m</td><td class="wd">2D8</td><td style="text-align:center">—</td><td style="text-align:center">—</td><td style="text-align:center">—</td><td style="text-align:center">15</td></tr>
+        <tr><td class="wn">Flashbang</td><td class="ws">85%*</td><td>20m</td><td class="wd">−40% rolls</td><td style="text-align:center">—</td><td style="text-align:center">—</td><td style="text-align:center">10m</td><td style="text-align:center">1</td></tr>
+        <tr><td class="wn">Hand Grenade</td><td class="ws">85%*</td><td>20m</td><td class="wd">—</td><td style="text-align:center">—</td><td style="text-align:center">15%</td><td style="text-align:center">10m</td><td style="text-align:center">1</td></tr>
+      </tbody>
+    </table>
+    <div style="font-size:9px;color:var(--txd);margin-top:8px">* Thrown weapons use Athletics (DEX 17 = 85%). STR 13 → +1 melee/unarmed damage. Shotgun: half damage beyond 75m. Kevlar vest: 3 AP (not in loadout — no armour carried). Flashbang: half radius outdoors, no roll in closed room.</div>
+  </div>
+</div>
+
+<!-- GEAR -->
+<div class="panel">
+  <div class="panel-hd"><h3>09 // EQUIPMENT — TREGAW, LATE 1997</h3><span>Tick when expended or unavailable</span></div>
+  <div class="panel-body">
+    <div class="divider">STANDARD LOADOUT — DEVON/CORNWALL OPERATION</div>
+    <div class="gear-grid" id="gearGrid"></div>
+  </div>
+</div>
+
+<!-- WOUNDS + NOTES -->
+<div class="row r2">
+  <div class="panel">
+    <div class="panel-hd"><h3>10 // WOUNDS & AILMENTS</h3><span>First Aid: 1D4 HP once per injury | Rest: CON test, 1HP/day</span></div>
+    <div class="panel-body">
+      <textarea class="field-ta wounds" id="wounds-ta" placeholder="Note injuries here. Mark if First Aid has been attempted (once per injury — further healing requires Medicine, Surgery, or rest)..."></textarea>
+    </div>
+  </div>
+  <div class="panel">
+    <div class="panel-hd"><h3>11 // SPECIAL TRAINING</h3><span>Navy-derived skills</span></div>
+    <div class="panel-body">
+      <div style="display:grid;grid-template-columns:1fr auto;gap:4px 12px;font-size:11px">
+        <span style="color:var(--txd)">SCUBA / combat diving</span><span style="color:var(--gb)">Swim</span>
+        <span style="color:var(--txd)">Maritime navigation</span><span style="color:var(--gb)">Navigate</span>
+        <span style="color:var(--txd)">Shotgun proficiency</span><span style="color:var(--gb)">Firearms</span>
+        <span style="color:var(--txd)">Heavy weapons operation</span><span style="color:var(--gb)">Heavy Wpn</span>
+        <span style="color:var(--txd)">Explosive handling</span><span style="color:var(--gb)">Demolitions</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- NOTES + SESSION LOG -->
+<div class="row r2">
+  <div class="panel">
+    <div class="panel-hd"><h3>12 // FIELD NOTES & INTELLIGENCE</h3><span>NPCs | Locations | Evidence</span></div>
+    <div class="panel-body">
+      <textarea class="field-ta" id="notes-ta" style="min-height:130px"></textarea>
+    </div>
+  </div>
+  <div class="panel">
+    <div class="panel-hd"><h3>13 // SESSION LOG</h3><span>Record events | Keep between games</span></div>
+    <div class="panel-body session-notes-wrap">
+      <textarea class="field-ta" id="session-ta" placeholder="Session ____   Date: ___/___/1997&#10;&#10;Events this session..." style="min-height:130px"></textarea>
+      <div id="archiveList" style="margin-top:10px;font-size:10px;color:var(--txd);max-height:80px;overflow-y:auto"></div>
+    </div>
+  </div>
+</div>
+
+</div><!-- end .page -->
+
+<div class="scroll-hint">// JENKINS, C. 'CHUCK' · DD-315-112382 · BRITISH · TOP SECRET ORCON · DELTA GREEN EYES ONLY // AUTO-SAVES TO LOCAL STORAGE //</div>
+<div class="toast" id="toast"></div>
+
+<!-- MODALS -->
+<div class="modal-overlay" id="resetModal">
+  <div class="modal-box">
+    <div class="modal-title" style="color:var(--rb)">CONFIRM RESET</div>
+    <div class="modal-body">This will wipe all current HP, WP, SAN, bond scores, skill checks, and notes — reverting Chuck to his starting state.<br><br><strong>This cannot be undone.</strong></div>
+    <div class="modal-btns">
+      <button class="btn" onclick="closeModal('resetModal')">ABORT</button>
+      <button class="btn danger" onclick="confirmReset()">WIPE & RESET</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="debriefModal">
+  <div class="modal-box">
+    <div class="modal-title">SESSION DEBRIEF</div>
+    <div class="modal-body" id="debriefBody"></div>
+    <div class="modal-btns">
+      <button class="btn" onclick="closeModal('debriefModal')">CANCEL</button>
+      <button class="btn primary" onclick="runDebrief()">ARCHIVE & CLEAR</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="bpModal">
+  <div class="modal-box">
+    <div class="modal-title" style="color:var(--rb)">⚠ BREAKING POINT REACHED</div>
+    <div class="modal-body" id="bpModalBody"></div>
+    <div class="modal-btns">
+      <button class="btn danger" onclick="recordBPDisorder()">RECORD DISORDER</button>
+      <button class="btn secondary" onclick="closeModal('bpModal')">DISMISS</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="helpAdaptModal">
+  <div class="modal-box">
+    <div class="modal-title" style="color:var(--rb)">ADAPTED TO HELPLESSNESS</div>
+    <div class="modal-body" id="helpAdaptBody"></div>
+    <div class="modal-btns">
+      <button class="btn danger" onclick="applyHelpAdaptation()">APPLY POW REDUCTION</button>
+      <button class="btn secondary" onclick="closeModal('helpAdaptModal')">DISMISS</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const SAVE_KEY = 'dg_chuck_jenkins_v1';
+
+const DEFAULT_STATE = {
+  pow: 10, cha: 8,
+  wpMax: 10, sanMax: 50, bp: 40,
+  hp: 14, wp: 10, san: 50,
+  sanSessionStart: 50,
+  bpCrossedThisSession: false,
+  bonds: [8, 8],
+  skillChecks: {},
+  skillImprovements: {},
+  violenceChecks: 0,
+  helplessChecks: 0,
+  helplessAdapted: false,
+  motivsCrossed: [],
+  disorders: [],
+  gearUsed: {},
+  wounds: '',
+  notes: 'Name: Jenkins, Charles (Chuck), D\nProfession: Special Operator\nEmployer: The Firm\nNationality: British | Age: 35\nBackground: Military School; former Royal Navy operative\n\nLocation: Tregaw, North Devon/Cornwall border. Late 1997.\nMobile signal: NONE. Internet: library only.\nContact: walkie-talkie / The Firm comms only.\n\nClassification: ALEPH/7-(HR:EMERGENT)\nFull brief provided during transport to location.',
+  session: '',
+  sessionNum: 1,
+  archives: [],
+  lastSaved: null
+};
+
+const SKILLS = [
+  {id:'alertness',   name:'Alertness',              pct:60,  tier:'e', note:'★'},
+  {id:'athletics',   name:'Athletics',              pct:60,  tier:'e', note:'★'},
+  {id:'demolitions', name:'Demolitions',            pct:60,  tier:'h', note:'★'},
+  {id:'firearms',    name:'Firearms',               pct:80,  tier:'e', note:'★'},
+  {id:'heavywpn',    name:'Heavy Weapons',          pct:70,  tier:'h', note:'★'},
+  {id:'melee',       name:'Melee Weapons',          pct:70,  tier:'h', note:'★'},
+  {id:'milsci',      name:'Military Science (L)',   pct:80,  tier:'e', note:'★'},
+  {id:'unarmed',     name:'Unarmed Combat',         pct:60,  tier:'h', note:'★'},
+  {id:'stealth',     name:'Stealth',                pct:70,  tier:'h', note:'★'},
+  {id:'navigate',    name:'Navigate',               pct:50,  tier:'m', note:'★'},
+  {id:'survival',    name:'Survival',               pct:50,  tier:'m', note:'★'},
+  {id:'swim',        name:'Swim',                   pct:50,  tier:'m', note:'★'},
+  {id:'dodge',       name:'Dodge',                  pct:50,  tier:'m', note:''},
+  {id:'firstaid',    name:'First Aid',              pct:30,  tier:'m', note:''},
+  {id:'search',      name:'Search',                 pct:70,  tier:'h', note:''},
+  {id:'drive',       name:'Drive',                  pct:20,  tier:'l', note:''},
+  {id:'persuade',    name:'Persuade',               pct:20,  tier:'l', note:''},
+  {id:'humint',      name:'HUMINT',                 pct:10,  tier:'l', note:''},
+  {id:'occult',      name:'Occult',                 pct:10,  tier:'l', note:''},
+  {id:'bureaucracy', name:'Bureaucracy',            pct:10,  tier:'l', note:''},
+  {id:'criminology', name:'Criminology',            pct:10,  tier:'l', note:''},
+  {id:'unnatural',   name:'Unnatural',              pct:0,   tier:'l', note:'⚠'},
+];
+
+const GEAR = [
+  {id:'g01', name:'Combat fatigues & boots'},
+  {id:'g02', name:'Small tactical torch (20m, weapon-mount)'},
+  {id:'g03', name:'Walkie-talkie (encrypted)'},
+  {id:'g04', name:'Shotgun + 15 rounds total (incl. spares)'},
+  {id:'g05', name:'Heavy pistol + 30 rounds total (incl. spares)'},
+  {id:'g06', name:'Machete'},
+  {id:'g07', name:'Flashbang grenade × 1'},
+  {id:'g08', name:'Hand grenade × 1'},
+  {id:'g09', name:'Rope (personal — 10m coil)'},
+  {id:'g10', name:'Camelback water (2L, personal)'},
+  {id:'g11', name:'Paraffin (firestarter, personal)'},
+  {id:'g12', name:'Lighter & cigarettes (personal)'},
+  {id:'g13', name:'Tin of Ambrosia Custard (ring pull) + spoon'},
+];
+
+const MOTIVATIONS = [
+  "Survivor's guilt — it cannot happen again",
+  "Uncover the truth of what happened",
+  "Protect who is left",
+];
+
+let state = {};
+
+function saveState(){
+  state.lastSaved = new Date().toISOString();
+  try{ localStorage.setItem(SAVE_KEY, JSON.stringify(state)); }catch(e){}
+  const t = new Date(state.lastSaved);
+  document.getElementById('saveTime').textContent = 'Saved ' + t.toLocaleTimeString('en-GB');
+  showToast('FILED — data written to local storage');
+}
+
+function loadState(){
+  try{
+    const raw = localStorage.getItem(SAVE_KEY);
+    if(raw){ state = Object.assign(JSON.parse(JSON.stringify(DEFAULT_STATE)), JSON.parse(raw)); }
+    else { state = JSON.parse(JSON.stringify(DEFAULT_STATE)); }
+  }catch(e){ state = JSON.parse(JSON.stringify(DEFAULT_STATE)); }
+}
+
+// Auto-save text areas
+document.addEventListener('input', e=>{
+  if(e.target.id==='wounds-ta') state.wounds = e.target.value;
+  if(e.target.id==='notes-ta')  state.notes  = e.target.value;
+  if(e.target.id==='session-ta')state.session= e.target.value;
+});
+
+/* ── CASCADE ENGINE ── */
+function recalcDerived(){
+  state.wpMax  = state.pow;
+  state.sanMax = state.pow * 5;
+  state.wp  = Math.min(state.wp,  state.wpMax);
+  state.san = Math.min(state.san, state.sanMax);
+}
+
+function wpPenalty(){
+  if(state.wp === 0) return 'blocked';
+  if(state.wp <= 2)  return -20;
+  return 0;
+}
+
+function effectivePctForSkill(sk){
+  const pen = wpPenalty();
+  const imp = (state.skillImprovements||{})[sk.id]||0;
+  if(pen==='blocked') return 0;
+  return Math.max(0, sk.pct + imp + pen);
+}
+
+function checkBPCrossing(prevSAN){
+  if(state.san <= state.bp && prevSAN > state.bp){
+    const newBP = Math.max(0, state.san - state.pow);
+    document.getElementById('bpModalBody').innerHTML =
+      `<strong>SAN has fallen to ${state.san} — at or below the Breaking Point (${state.bp}).</strong><br><br>` +
+      `Chuck gains a new long-term mental disorder. Its nature depends on the source:<br>` +
+      `<span style="color:var(--rb)">Violence → PTSD, Depression, Sleep Disorder, Paranoia<br>` +
+      `Helplessness → OCD, Anxiety, Phobia, Dissociation<br>` +
+      `Unnatural → Amnesia, Fugues, Depersonalisation, Megalomania</span><br><br>` +
+      `New Breaking Point: <strong style="color:var(--rb)">${newBP}</strong> (SAN ${state.san} − POW ${state.pow})<br><br>` +
+      `Cross out one motivation.`;
+    state.bp = newBP;
+    openModal('bpModal');
+  }
+}
+
+function checkWPEffects(prevWP){
+  const cur = state.wp;
+  if(cur===0 && prevWP>0) showToast('⚠ WP 0 — INCAPACITATED: no tests possible, including SAN rolls');
+  else if(cur<=2 && prevWP>2) showToast('⚠ LOW WP — −20% penalty applies to ALL skill and stat checks');
+  else if(cur>2 && prevWP<=2) showToast('WP recovered above 2 — penalty lifted');
+}
+
+/* ── EFFECTS BANNER ── */
+function renderEffectsBanner(){
+  const banner = document.getElementById('effectsBanner');
+  const effects = [];
+  const pen = wpPenalty();
+  if(pen==='blocked') effects.push({cls:'crit', txt:'WP 0 — INCAPACITATED: no tests possible'});
+  else if(pen===-20)  effects.push({cls:'crit', txt:`WP ${state.wp} — PENALTY: −20% ALL skill & stat checks`});
+  if(state.hp<=2 && state.hp>0) effects.push({cls:'crit', txt:`HP ${state.hp} — UNCONSCIOUS: roll CON or lose stat points`});
+  if(state.hp===0) effects.push({cls:'crit', txt:'HP 0 — DYING'});
+  if(state.san<=state.bp) effects.push({cls:'warn', txt:`SAN ${state.san} ≤ BP ${state.bp} — DISORDER ACTIVE`});
+  if(state.helplessAdapted) effects.push({cls:'info', txt:`ADAPTED TO HELPLESSNESS: POW ${state.pow}`});
+  if(effects.length===0){banner.style.display='none';return;}
+  banner.style.display='block';
+  banner.innerHTML=`<div class="effect-banner" style="border-color:var(--red);background:rgba(139,26,26,.08)">${effects.map(e=>`<div class="effect-tag ${e.cls}">⚠ ${e.txt}</div>`).join('')}</div>`;
+}
+
+/* ── RENDER ── */
+function renderSkills(){
+  const grid = document.getElementById('skillsGrid');
+  const footer = document.getElementById('skillFooter');
+  const pen = wpPenalty();
+  if(pen==='blocked'){ footer.textContent='⚠ WP 0 — ALL SKILLS BLOCKED'; footer.style.color='var(--rb)'; }
+  else if(pen===-20){  footer.textContent=`⚠ WP ${state.wp} PENALTY — all values shown with −20% applied`; footer.style.color='var(--rb)'; }
+  else { footer.textContent='★ = Bonus skill  |  STR 13 → +1 Unarmed & Melee damage  |  DEX 17 → acts early in turn order'; footer.style.color=''; }
+
+  grid.innerHTML = SKILLS.map(sk=>{
+    const checked  = state.skillChecks[sk.id]||false;
+    const imp      = (state.skillImprovements||{})[sk.id]||0;
+    const baseDisp = sk.pct + imp;
+    const eff      = effectivePctForSkill(sk);
+    const hasPen   = pen !== 0;
+    const isBlocked= pen === 'blocked';
+    let pctHtml;
+    if(isBlocked){
+      pctHtml=`<div class="skill-pct ${sk.tier} penalised">${baseDisp}%</div><div class="skill-effective blocked">—</div>`;
+    }else if(hasPen){
+      pctHtml=`<div class="skill-pct ${sk.tier} penalised">${baseDisp}%</div><div class="skill-effective">${eff}%</div>`;
+    }else{
+      pctHtml=`<div class="skill-pct ${sk.tier}">${baseDisp}%<span class="skill-note">${sk.note}</span></div>`;
+    }
+    return `<div class="skill-item${checked?' checked':''}${isBlocked?' incapacitated':''}" onclick="toggleSkill('${sk.id}')">
+      <div class="skill-cb">${checked?'✗':''}</div>
+      <div class="skill-name">${sk.name}${imp>0?` <span style="font-size:8px;color:var(--gb)">+${imp}</span>`:''}</div>
+      <div style="display:flex;align-items:center;gap:3px">${pctHtml}</div>
+    </div>`;
+  }).join('');
+}
+
+function renderHP(){
+  const v=state.hp, max=14;
+  document.getElementById('hp-val').textContent=v;
+  const row=document.getElementById('hp-pips');
+  row.innerHTML=Array.from({length:max},(_,i)=>{
+    const filled=i<v, low=filled&&v<=4;
+    return `<div class="pip hp${filled?(low?' low':' fill'):''}" onclick="setStatTo('hp',${i+1})"></div>`;
+  }).join('');
+  const tag=document.getElementById('hp-state-tag');
+  if(v===0) tag.innerHTML='<div class="hp-state crit">DEAD / DYING</div>';
+  else if(v<=2) tag.innerHTML='<div class="hp-state crit">UNCONSCIOUS — ROLL CON</div>';
+  else if(v<=5) tag.innerHTML='<div class="hp-state warn">CRITICAL</div>';
+  else tag.innerHTML='<div class="hp-state ok">OPERATIONAL</div>';
+}
+
+function renderWP(){
+  const v=state.wp, max=state.wpMax;
+  document.getElementById('wp-val').textContent=v;
+  document.getElementById('wp-max-label').textContent=max;
+  const row=document.getElementById('wp-pips');
+  const total=Math.max(max,10);
+  row.innerHTML=Array.from({length:total},(_,i)=>{
+    if(i>=max) return `<div class="pip wp" style="opacity:.2;border-style:dashed"></div>`;
+    const filled=i<v;
+    return `<div class="pip wp${filled?' fill':''}" onclick="setStatTo('wp',${i+1})"></div>`;
+  }).join('');
+  const warn=document.getElementById('wp-warn');
+  if(v===0){ warn.style.display='block'; warn.textContent='⚠ WP 0 — INCAPACITATED: cannot succeed at any test'; }
+  else if(v<=2){ warn.style.display='block'; warn.textContent=`⚠ WP ${v} — −20% ALL skill and stat checks`; }
+  else { warn.style.display='none'; }
+}
+
+function renderSAN(){
+  const v=state.san, max=state.sanMax, bp=state.bp;
+  const el=document.getElementById('san-val');
+  el.textContent=v;
+  el.className='tr-val san'+(v<=bp?(v<=10?' crit':' warn'):'');
+  document.getElementById('san-max-label').textContent=max;
+  document.getElementById('bp-label').textContent=bp;
+  document.getElementById('bp-marker').querySelector('.san-bp-label').textContent=`BP ${bp}`;
+  const pct=(v/max)*100;
+  const bar=document.getElementById('san-bar');
+  bar.style.width=Math.max(0,pct)+'%';
+  bar.className='san-bar-fill'+(v<=bp?(v<=10?' crit':' warn'):' good');
+  const bpPct=(bp/max)*100;
+  document.getElementById('bp-marker').style.left=Math.min(100,bpPct)+'%';
+  const alert=document.getElementById('san-bp-alert');
+  alert.className='san-alert'+(v<=bp?' show':'');
+  if(v<=bp) alert.textContent=`⚠ BREAKING POINT ACTIVE (${bp}) — NEW BP = ${Math.max(0,v-state.pow)}`;
+  const drop=state.sanSessionStart-v;
+  const dropEl=document.getElementById('san-drop-note');
+  if(drop>=5){ dropEl.textContent=`▲ Lost ${drop} SAN this session — TEMPORARY INSANITY risk`; dropEl.style.color='var(--rb)'; }
+  else if(drop>0){ dropEl.textContent=`Lost ${drop} SAN this session`; dropEl.style.color='var(--txd)'; }
+  else { dropEl.textContent=''; }
+}
+
+function renderBonds(){
+  state.bonds.forEach((v,i)=>{
+    const el=document.getElementById(`bond-${i}`);
+    if(el){ el.textContent=v; el.className='bond-score'+(v<=0?' zero':''); }
+  });
+}
+
+function renderViolenceBoxes(){
+  const c=document.getElementById('violence-boxes');
+  c.innerHTML=Array.from({length:3},(_,i)=>{
+    const checked=i<state.violenceChecks;
+    return `<div class="inc-box${checked?' checked':''}" onclick="toggleViolence(${i})">${checked?'✓':''}</div>`;
+  }).join('');
+}
+
+function renderHelplessBoxes(){
+  const c=document.getElementById('helpless-boxes');
+  c.innerHTML=Array.from({length:3},(_,i)=>{
+    const checked=i<state.helplessChecks;
+    return `<div class="inc-box${checked?' checked':''}${state.helplessAdapted?' adapted-v':''}" onclick="${state.helplessAdapted?'':` toggleHelpless(${i})`}">${checked?'✓':''}</div>`;
+  }).join('');
+}
+
+function renderMotivations(){
+  const list=document.getElementById('motivList');
+  list.innerHTML=MOTIVATIONS.map((m,i)=>{
+    const crossed=state.motivsCrossed.includes(i);
+    return `<div class="motiv-item${crossed?' crossed':''}" onclick="toggleMotiv(${i})">
+      <div class="motiv-check" style="${crossed?'border-color:var(--rb)':''}"></div>
+      <div class="motiv-text">${m}</div>
+    </div>`;
+  }).join('');
+}
+
+function renderDisorders(){
+  const list=document.getElementById('disorderList');
+  if(state.disorders.length===0){ list.innerHTML='<div style="font-size:10px;color:var(--txd);padding:6px 0;font-family:var(--ft)">No disorders recorded.</div>'; return; }
+  list.innerHTML=state.disorders.map((d,i)=>`<div class="disorder-item"><span>${d}</span><button class="disorder-remove" onclick="removeDisorder(${i})">×</button></div>`).join('');
+}
+
+function renderGear(){
+  const grid=document.getElementById('gearGrid');
+  grid.innerHTML=GEAR.map(g=>{
+    const used=state.gearUsed[g.id]||false;
+    return `<div class="gear-item${used?' used':''}" onclick="toggleGear('${g.id}')">
+      <div class="gear-check">${used?'✗':'□'}</div>
+      <div class="gear-name">${g.name}</div>
+    </div>`;
+  }).join('');
+}
+
+function renderTextAreas(){
+  document.getElementById('wounds-ta').value=state.wounds||'';
+  document.getElementById('notes-ta').value=state.notes||'';
+  document.getElementById('session-ta').value=state.session||'';
+}
+
+function renderArchives(){
+  const el=document.getElementById('archiveList');
+  if(!state.archives||state.archives.length===0){ el.textContent='No archived sessions yet.'; return; }
+  el.innerHTML=state.archives.slice().reverse().map(a=>`<div style="margin-bottom:8px;padding-bottom:8px;border-bottom:1px dotted var(--bd)"><div style="font-size:9px;letter-spacing:2px;color:var(--g)">SESSION ${a.num} // ${a.date}</div><div style="white-space:pre-wrap;font-size:10px">${a.text||'(no notes)'}</div></div>`).join('');
+}
+
+function renderSession(){
+  document.getElementById('sessionNum').textContent=state.sessionNum;
+}
+
+function renderAll(){
+  recalcDerived();
+  renderEffectsBanner();
+  renderSkills();
+  renderHP();
+  renderWP();
+  renderSAN();
+  renderBonds();
+  renderViolenceBoxes();
+  renderHelplessBoxes();
+  renderMotivations();
+  renderDisorders();
+  renderGear();
+  renderTextAreas();
+  renderArchives();
+  renderSession();
+}
+
+/* ── INTERACTIONS ── */
+function adjustStat(stat,delta){
+  recalcDerived();
+  const max={hp:14,wp:state.wpMax,san:state.sanMax};
+  const prev=state[stat];
+  state[stat]=Math.max(0,Math.min(max[stat],state[stat]+delta));
+  if(stat==='wp'){ checkWPEffects(prev); renderWP(); renderSkills(); renderEffectsBanner(); }
+  if(stat==='san'){ checkBPCrossing(prev); renderSAN(); renderEffectsBanner(); }
+  if(stat==='hp'){ renderHP(); renderEffectsBanner(); }
+  saveState();
+}
+
+function setStatTo(stat,val){
+  recalcDerived();
+  const max={hp:14,wp:state.wpMax};
+  const prev=state[stat];
+  state[stat]=Math.max(0,Math.min(max[stat],val));
+  if(stat==='wp'){ checkWPEffects(prev); renderWP(); renderSkills(); renderEffectsBanner(); }
+  if(stat==='hp'){ renderHP(); renderEffectsBanner(); }
+  saveState();
+}
+
+function adjustBond(idx,delta){
+  state.bonds[idx]=Math.max(0,Math.min(15,state.bonds[idx]+delta));
+  renderBonds();
+  if(state.bonds[idx]===0) showToast(`⚠ Bond ${idx+1} collapsed — relationship destroyed`);
+  saveState();
+}
+
+function toggleSkill(id){ state.skillChecks[id]=!state.skillChecks[id]; renderSkills(); saveState(); }
+
+function toggleMotiv(idx){
+  if(state.motivsCrossed.includes(idx)) state.motivsCrossed=state.motivsCrossed.filter(i=>i!==idx);
+  else { state.motivsCrossed.push(idx); showToast('Motivation lost — record a disorder'); }
+  renderMotivations(); saveState();
+}
+
+function toggleViolence(idx){
+  if(state.violenceChecks>idx) state.violenceChecks=idx;
+  else state.violenceChecks=idx+1;
+  renderViolenceBoxes();
+  if(state.violenceChecks>=3) showToast('⚠ ADAPTED TO VIOLENCE — −1D6 CHA permanently, each Bond drops same');
+  saveState();
+}
+
+function toggleHelpless(idx){
+  if(state.helplessAdapted) return;
+  if(state.helplessChecks>idx) state.helplessChecks=idx;
+  else state.helplessChecks=idx+1;
+  renderHelplessBoxes();
+  if(state.helplessChecks>=3&&!state.helplessAdapted){
+    const roll=Math.ceil(Math.random()*6);
+    document.getElementById('helpAdaptBody').innerHTML=
+      `<strong>Chuck has been adapted to Helplessness.</strong><br><br>Permanent POW loss: <strong style="color:var(--rb)">1D6 = ${roll}</strong>.<br>` +
+      `POW: ${state.pow} → ${Math.max(1,state.pow-roll)}<br>WP max: ${state.wpMax} → ${Math.max(1,state.pow-roll)}<br>SAN max: ${state.sanMax} → ${Math.max(1,(state.pow-roll)*5)}<br><br>SAN rolls for Helplessness now always succeed.`;
+    document.getElementById('helpAdaptModal').dataset.roll=roll;
+    openModal('helpAdaptModal');
+  }
+  saveState();
+}
+
+function applyHelpAdaptation(){
+  const roll=parseInt(document.getElementById('helpAdaptModal').dataset.roll)||3;
+  state.pow=Math.max(1,state.pow-roll);
+  state.helplessAdapted=true;
+  recalcDerived();
+  state.wp=Math.min(state.wp,state.wpMax);
+  state.san=Math.min(state.san,state.sanMax);
+  state.bp=Math.max(0,state.san-state.pow);
+  closeModal('helpAdaptModal');
+  renderAll(); saveState();
+  showToast(`POW reduced to ${state.pow}. WP max: ${state.wpMax}. SAN max: ${state.sanMax}.`);
+}
+
+function recordBPDisorder(){
+  closeModal('bpModal');
+  const name=prompt('Name the disorder gained from this Breaking Point event:');
+  if(name&&name.trim()){ state.disorders.push(name.trim()); renderDisorders(); renderSAN(); saveState(); showToast(`Disorder recorded: ${name.trim()}`); }
+}
+
+function toggleGear(id){ state.gearUsed[id]=!state.gearUsed[id]; renderGear(); saveState(); }
+
+function addDisorder(){
+  const name=prompt('Name the disorder (e.g. Survivors Guilt, PTSD, Amnesia):');
+  if(name&&name.trim()){ state.disorders.push(name.trim()); renderDisorders(); saveState(); showToast('Disorder recorded'); }
+}
+
+function removeDisorder(idx){
+  if(confirm(`Remove disorder: "${state.disorders[idx]}"?`)){ state.disorders.splice(idx,1); renderDisorders(); saveState(); }
+}
+
+function newSession(){
+  state.sanSessionStart=state.san;
+  state.bpCrossedThisSession=false;
+  state.sessionNum+=1;
+  document.getElementById('session-ta').value='';
+  state.session='';
+  renderSession(); renderSAN(); saveState();
+  showToast(`Session ${state.sessionNum} started — SAN baseline set to ${state.san}`);
+}
+
+function openDebrief(){
+  const checked=Object.entries(state.skillChecks).filter(([,v])=>v).map(([k])=>k);
+  const skNames=checked.map(id=>SKILLS.find(s=>s.id===id)?.name).filter(Boolean);
+  const pen=wpPenalty();
+  const drop=state.sanSessionStart-state.san;
+  let body=`<strong>SESSION ${state.sessionNum} DEBRIEF</strong><br><br>`;
+  body+=`SAN: ${state.san}/${state.sanMax} (−${drop} from ${state.sanSessionStart})<br>`;
+  body+=`HP: ${state.hp}/14 &nbsp; WP: ${state.wp}/${state.wpMax} &nbsp; BP: ${state.bp}<br>`;
+  if(pen==='blocked') body+=`<span style="color:var(--rb)">⚠ WP 0 — penalty was active</span><br>`;
+  else if(pen===-20) body+=`<span style="color:var(--rb)">⚠ WP ${state.wp} — −20% penalty currently active</span><br>`;
+  body+='<br>';
+  if(skNames.length>0){ body+=`<strong>SKILLS FAILED — roll above rating to improve +1D4:</strong><br>${skNames.join(', ')}<br><br>`; }
+  else { body+='No skills marked failed this session.<br><br>'; }
+  body+='Confirm to archive session notes and clear skill checks.';
+  document.getElementById('debriefBody').innerHTML=body;
+  openModal('debriefModal');
+}
+
+function runDebrief(){
+  const sessionText=state.session||'(no notes)';
+  const dateStr=new Date().toLocaleDateString('en-GB');
+  if(!state.archives) state.archives=[];
+  state.archives.push({num:state.sessionNum, date:dateStr, text:sessionText});
+  state.skillChecks={}; state.session=''; state.sanSessionStart=state.san; state.bpCrossedThisSession=false;
+  closeModal('debriefModal'); renderAll(); saveState();
+  showToast(`Session ${state.sessionNum} archived. Good work, Agent.`);
+}
+
+function confirmReset(){
+  state=JSON.parse(JSON.stringify(DEFAULT_STATE));
+  closeModal('resetModal'); renderAll(); saveState();
+  showToast('Sheet reset to default state');
+}
+
+function openModal(id){ document.getElementById(id).classList.add('show'); }
+function closeModal(id){ document.getElementById(id).classList.remove('show'); }
+
+let toastTimer;
+function showToast(msg){
+  const el=document.getElementById('toast');
+  el.textContent=msg; el.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer=setTimeout(()=>el.classList.remove('show'),4000);
+}
+
+document.addEventListener('keydown',e=>{
+  if((e.ctrlKey||e.metaKey)&&e.key==='s'){ e.preventDefault(); saveState(); showToast('FILED — data written to local storage'); }
+});
+document.querySelectorAll('.modal-overlay').forEach(el=>{
+  el.addEventListener('click',e=>{ if(e.target===el) el.classList.remove('show'); });
+});
+
+/* ── INIT ── */
+loadState();
+if(state.pow===undefined) state.pow=10;
+if(state.cha===undefined) state.cha=8;
+if(state.bp===undefined) state.bp=40;
+if(state.wpMax===undefined) state.wpMax=state.pow;
+if(state.sanMax===undefined) state.sanMax=state.pow*5;
+if(state.helplessAdapted===undefined) state.helplessAdapted=false;
+if(state.skillImprovements===undefined) state.skillImprovements={};
+if(state.bpCrossedThisSession===undefined) state.bpCrossedThisSession=false;
+if(state.violenceChecks===undefined) state.violenceChecks=0;
+recalcDerived();
+renderAll();
+if(state.lastSaved){ const t=new Date(state.lastSaved); document.getElementById('saveTime').textContent=`Last saved ${t.toLocaleTimeString('en-GB')}`; }
+</script>
+</body>
+</html>

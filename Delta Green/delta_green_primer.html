@@ -24,6 +24,9 @@
 html{font-size:13px}
 body{background:var(--bg);color:var(--tx);font-family:var(--fn);line-height:1.6;min-height:100vh}
 body::before{content:'';position:fixed;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,.04) 2px,rgba(0,0,0,.04) 4px);pointer-events:none;z-index:9999}
+.dir-nav{max-width:1100px;margin:14px auto 0;padding:0 20px;display:flex;flex-wrap:wrap;gap:8px;position:relative;z-index:2}
+.dir-nav-link{display:inline-block;text-decoration:none;color:var(--txd);border:1px solid var(--bd2);padding:6px 10px;font-size:9px;letter-spacing:1.4px;text-transform:uppercase;background:var(--sf);transition:all .15s}
+.dir-nav-link:hover{color:var(--gb);border-color:var(--g);background:var(--gg)}
 
 /* ── HEADER ───────────────────────────────── */
 .site-header{background:var(--sf2);border-bottom:2px solid var(--g);padding:0;position:sticky;top:0;z-index:200;box-shadow:0 4px 24px rgba(0,0,0,.8)}
@@ -224,7 +227,7 @@ hr.thin{border:none;border-top:1px solid var(--bd);margin:12px 0}
 /* ── PRINT ────────────────────────────────── */
 @media print{
   @page{size:A4;margin:10mm}
-  body::before,.site-header,.overlay{display:none!important}
+  body::before,.site-header,.overlay,.dir-nav{display:none!important}
   body{background:#fff;color:#000;padding:0}
   .panel{background:#f8f8f8;border:1px solid #ccc;break-inside:avoid}
   .panel-hd{background:#e8e8e8}
@@ -249,6 +252,13 @@ hr.thin{border:none;border-top:1px solid var(--bd);margin:12px 0}
     </div>
   </div>
 </div>
+
+<nav class="dir-nav" aria-label="Delta Green Directory Navigation">
+  <a class="dir-nav-link" href="index.html">Delta Green Hub</a>
+  <a class="dir-nav-link" href="coc_character_sheets/index.html">CoC Sheets</a>
+  <a class="dir-nav-link" href="dg_character_sheets/index.html">DG Sheets</a>
+  <a class="dir-nav-link" href="coc_player_primer.html">CoC Primer</a>
+</nav>
 
 <header class="site-header">
   <div class="header-inner">
