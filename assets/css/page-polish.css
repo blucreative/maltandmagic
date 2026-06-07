@@ -290,6 +290,16 @@ body.theme-military90s.page-delta-green-primer .scroll-hint {
   color: #9cb593;
 }
 
+body.theme-military90s.page-delta-green-primer .divrow {
+  color: #b7d0ae;
+  font-size: 9.5px;
+}
+
+body.theme-military90s.page-delta-green-primer .divrow::before,
+body.theme-military90s.page-delta-green-primer .divrow::after {
+  background: #587854;
+}
+
 body.theme-military90s.page-delta-green-primer .ov-body {
   color: #c8ddc3;
   font-size: 14px;
