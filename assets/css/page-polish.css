@@ -161,7 +161,10 @@ body.theme-cosmic90s.page-henry-press-sheet .notes-area,
 body.theme-cosmic90s.page-larry-hughes-sheet .notes-area,
 body.theme-cosmic90s.page-shen-flownder-sheet .notes-area,
 body.theme-cosmic90s.page-tony-mills-sheet .notes-area {
+  background-color: rgba(139, 105, 20, 0.08);
   color: #2d2116;
+  caret-color: #2d2116;
+  -webkit-text-fill-color: #2d2116;
   font-size: 14px;
 }
 
