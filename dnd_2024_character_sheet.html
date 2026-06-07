@@ -3,743 +3,678 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>D&D 2024 Interactive Character Sheet</title>
+<title>D&D 2024 Character Sheet</title>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
-<script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
-<script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
-<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Oswald:wght@400;600&display=swap" rel="stylesheet" />
 <style>
 * { box-sizing: border-box; }
 :root {
-  --bg: #0f1115;
-  --bg-soft: #151922;
-  --card: #1b2130;
-  --card-2: #242d40;
-  --line: #33415b;
-  --line-2: #476085;
-  --tx: #e8eef9;
-  --tx-d: #9eb0cf;
-  --tx-m: #c8d5ec;
-  --ok: #63d48a;
-  --warn: #f2c268;
-  --bad: #f06f8b;
-  --accent: #7ac7ff;
-  --accent-2: #4de4c0;
+  --bg: #0f1218;
+  --card: #19202b;
+  --card-2: #202a3a;
+  --line: #3f4d66;
+  --line-2: #6584b8;
+  --tx: #ebf1fb;
+  --tx-d: #aebed9;
+  --accent: #8fc5ff;
+  --ok: #8de2a0;
+  --warn: #f2ca78;
+  --bad: #f08da6;
 }
-
 html, body {
   margin: 0;
-  background:
-    radial-gradient(1200px 600px at 18% -4%, rgba(77, 228, 192, 0.12), transparent 60%),
-    radial-gradient(1100px 500px at 100% 0%, rgba(122, 199, 255, 0.16), transparent 55%),
-    linear-gradient(180deg, #0c0f14, #10151f);
-  color: var(--tx);
-  font-family: 'Space Grotesk', sans-serif;
   min-height: 100%;
+  background:
+    radial-gradient(900px 500px at 10% -5%, rgba(143, 197, 255, 0.16), transparent 65%),
+    radial-gradient(800px 450px at 100% 0%, rgba(141, 226, 160, 0.12), transparent 55%),
+    linear-gradient(180deg, #0d1016, #111827);
+  color: var(--tx);
+  font-family: 'Atkinson Hyperlegible', sans-serif;
 }
+body { padding: 14px 12px 44px; }
 
-body { padding: 20px 16px 56px; }
-
-.app {
-  width: min(1400px, 100%);
+.page {
+  width: min(1260px, 100%);
   margin: 0 auto;
-}
-
-.hero {
-  border: 1px solid var(--line);
-  background: linear-gradient(180deg, rgba(36, 45, 64, 0.85), rgba(27, 33, 48, 0.95));
-  border-radius: 18px;
-  padding: 20px;
   display: grid;
   gap: 12px;
-}
-
-.hero-top {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-  flex-wrap: wrap;
-}
-
-.hero h1 {
-  margin: 0;
-  font-size: clamp(1.35rem, 2.4vw, 2rem);
-  letter-spacing: 0.02em;
-}
-
-.sub {
-  color: var(--tx-d);
-  font-size: 0.93rem;
-}
-
-.toolbar {
-  display: flex;
-  gap: 8px;
-  flex-wrap: wrap;
-}
-
-.grid {
-  margin-top: 16px;
-  display: grid;
-  grid-template-columns: 380px 1fr;
-  gap: 14px;
-}
-
-.col {
-  display: grid;
-  gap: 14px;
-  align-content: start;
 }
 
 .card {
+  background: linear-gradient(180deg, rgba(32, 42, 58, 0.95), rgba(25, 32, 43, 0.96));
   border: 1px solid var(--line);
   border-radius: 14px;
-  background: linear-gradient(180deg, rgba(27, 33, 48, 0.93), rgba(22, 28, 41, 0.96));
-  padding: 14px;
+  padding: 12px;
 }
 
-.card h2 {
-  margin: 0 0 10px;
-  font-size: 0.9rem;
-  text-transform: uppercase;
-  letter-spacing: 0.09em;
-  color: var(--accent);
+h1, h2, h3 { margin: 0; font-family: 'Oswald', sans-serif; letter-spacing: 0.03em; }
+
+.hero-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.hero-sub { color: var(--tx-d); margin-top: 3px; font-size: 0.95rem; }
+
+.quick-nav {
+  position: sticky;
+  top: 10px;
+  z-index: 10;
+  background: rgba(17, 24, 39, 0.86);
+  backdrop-filter: blur(6px);
 }
 
-.fields {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+.quick-nav .row {
+  display: flex;
   gap: 8px;
+  flex-wrap: wrap;
 }
 
-.fields-3 {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 8px;
+.nav-btn {
+  border: 1px solid var(--line);
+  background: #131a26;
+  color: var(--tx-d);
+  border-radius: 10px;
+  min-height: 36px;
+  padding: 8px 12px;
+  cursor: pointer;
 }
+.nav-btn:hover { border-color: var(--line-2); color: var(--tx); }
 
-.field {
-  display: grid;
-  gap: 4px;
+button, input, select, textarea { font: inherit; }
+button {
+  border: 1px solid var(--line-2);
+  border-radius: 10px;
+  background: #182234;
+  color: var(--tx);
+  min-height: 36px;
+  padding: 8px 12px;
+  cursor: pointer;
 }
+button:hover { border-color: var(--accent); }
+button.secondary { background: transparent; }
+button.danger { border-color: var(--bad); color: var(--bad); }
 
+.grid-6 { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 8px; }
+.grid-4 { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; }
+.grid-3 { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+
+.field { display: grid; gap: 4px; }
 label {
   font-size: 0.72rem;
-  letter-spacing: 0.07em;
   text-transform: uppercase;
+  letter-spacing: 0.08em;
   color: var(--tx-d);
 }
-
-input, select, textarea, button {
-  font: inherit;
-}
-
 input, select, textarea {
   width: 100%;
   border: 1px solid var(--line);
-  border-radius: 10px;
-  background: #121826;
+  border-radius: 9px;
+  background: #121927;
   color: var(--tx);
   padding: 8px 10px;
 }
+textarea { min-height: 90px; resize: vertical; }
 
 input:focus-visible, select:focus-visible, textarea:focus-visible, button:focus-visible {
   outline: 2px solid var(--accent);
   outline-offset: 2px;
 }
 
-textarea { min-height: 90px; resize: vertical; }
-
-button {
-  border: 1px solid var(--line-2);
-  color: var(--tx);
-  background: #172133;
-  border-radius: 10px;
-  min-height: 38px;
-  padding: 8px 12px;
-  cursor: pointer;
-}
-
-button:hover { border-color: var(--accent); }
-
-button.primary {
-  background: linear-gradient(180deg, #1a4062, #16354f);
-  border-color: #5ea4df;
-}
-
-button.ghost { background: transparent; }
-button.warn { border-color: var(--warn); color: var(--warn); }
-button.danger { border-color: var(--bad); color: var(--bad); }
-
-.ability-grid {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 8px;
-}
-
-.ability {
-  border: 1px solid var(--line);
-  border-radius: 10px;
-  padding: 8px;
-  background: rgba(19, 26, 40, 0.7);
-}
-
-.ability .top {
-  display: flex;
-  justify-content: space-between;
-  align-items: baseline;
-}
-
-.ability-name {
-  font-size: 0.74rem;
-  letter-spacing: 0.08em;
-  color: var(--tx-d);
-}
-
-.ability-mod {
-  font-family: 'IBM Plex Mono', monospace;
-  font-weight: 500;
-  color: var(--accent-2);
-}
-
-.kpis {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 8px;
-}
-
-.kpi {
-  border: 1px solid var(--line);
-  border-radius: 10px;
-  padding: 8px;
-  background: rgba(19, 26, 40, 0.65);
-}
-
-.kpi .k {
-  font-size: 0.68rem;
-  color: var(--tx-d);
+.section-title {
+  font-size: 0.92rem;
   text-transform: uppercase;
-  letter-spacing: 0.07em;
+  letter-spacing: 0.1em;
+  color: var(--accent);
+  margin-bottom: 10px;
 }
 
-.kpi .v {
-  font-family: 'IBM Plex Mono', monospace;
-  font-size: 1rem;
-  margin-top: 3px;
-}
-
-.tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-  margin-top: 8px;
-}
-
-.tag {
+.small-note { color: var(--tx-d); font-size: 0.85rem; }
+.pills { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 8px; }
+.pill {
   border: 1px solid var(--line);
   border-radius: 999px;
-  padding: 3px 8px;
-  font-size: 0.76rem;
-  color: var(--tx-m);
+  padding: 4px 10px;
+  font-size: 0.78rem;
+  color: var(--tx-d);
+}
+.pill.ok { border-color: rgba(141, 226, 160, 0.5); color: var(--ok); }
+.pill.warn { border-color: rgba(242, 202, 120, 0.5); color: var(--warn); }
+
+.panel {
+  border: 1px solid var(--line);
+  background: rgba(16, 22, 33, 0.65);
+  border-radius: 12px;
+  padding: 10px;
+}
+.panel h3 {
+  font-size: 0.82rem;
+  text-transform: uppercase;
+  letter-spacing: 0.09em;
+  color: var(--tx-d);
+  margin-bottom: 8px;
 }
 
-.tag.ok { border-color: rgba(99, 212, 138, 0.55); color: var(--ok); }
-.tag.warn { border-color: rgba(242, 194, 104, 0.6); color: var(--warn); }
-.tag.bad { border-color: rgba(240, 111, 139, 0.6); color: var(--bad); }
+.list {
+  display: grid;
+  gap: 6px;
+  max-height: 360px;
+  overflow: auto;
+  padding-right: 4px;
+}
 
-.row {
-  display: flex;
+.skill-row, .action-row {
+  display: grid;
+  grid-template-columns: 1fr auto;
   gap: 8px;
-  flex-wrap: wrap;
   align-items: center;
+  border: 1px solid rgba(101, 132, 184, 0.28);
+  border-radius: 8px;
+  padding: 6px 8px;
+  background: rgba(16, 24, 36, 0.55);
+}
+
+.feat-item {
+  position: relative;
+  border: 1px solid rgba(101, 132, 184, 0.28);
+  border-radius: 8px;
+  background: rgba(16, 24, 36, 0.55);
+  padding: 7px 8px;
+}
+
+.feat-trigger {
+  all: unset;
+  cursor: help;
+  color: var(--tx);
+  display: inline-block;
+}
+
+.feat-pop {
+  position: absolute;
+  left: 8px;
+  right: 8px;
+  top: calc(100% + 6px);
+  display: none;
+  z-index: 5;
+  border: 1px solid var(--line-2);
+  background: #0e1522;
+  border-radius: 8px;
+  padding: 8px;
+  color: var(--tx-d);
+  font-size: 0.84rem;
+  line-height: 1.45;
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.42);
+}
+
+.feat-item:hover .feat-pop,
+.feat-item:focus-within .feat-pop {
+  display: block;
 }
 
 .table {
   width: 100%;
   border-collapse: collapse;
-  font-size: 0.9rem;
 }
-
 .table th, .table td {
-  border-bottom: 1px solid rgba(71, 96, 133, 0.35);
-  padding: 8px 6px;
+  border-bottom: 1px solid rgba(101, 132, 184, 0.28);
+  padding: 7px 6px;
   text-align: left;
   vertical-align: top;
 }
-
 .table th {
   font-size: 0.72rem;
   color: var(--tx-d);
   text-transform: uppercase;
-  letter-spacing: 0.06em;
+  letter-spacing: 0.08em;
 }
 
-.right { text-align: right; }
-.small { font-size: 0.8rem; color: var(--tx-d); }
-.mono { font-family: 'IBM Plex Mono', monospace; }
-.spacer { height: 8px; }
-
-@media (max-width: 1120px) {
-  .grid { grid-template-columns: 1fr; }
+@media (max-width: 1080px) {
+  .grid-6 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .grid-4 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .grid-3 { grid-template-columns: 1fr; }
 }
 
-@media (max-width: 680px) {
-  .fields, .fields-3, .ability-grid, .kpis {
-    grid-template-columns: 1fr;
-  }
-
-  .table {
-    display: block;
-    overflow-x: auto;
-    white-space: nowrap;
-  }
+@media (max-width: 700px) {
+  .grid-6, .grid-4, .grid-2 { grid-template-columns: 1fr; }
+  input, select, textarea, button { font-size: 16px; }
+  .table { display: block; overflow-x: auto; white-space: nowrap; }
 }
 </style>
 </head>
 <body>
-<div id="app"></div>
+<div class="page">
+  <section class="card">
+    <div class="hero-head">
+      <div>
+        <h1>D&D 2024 Interactive Character Sheet</h1>
+        <div class="hero-sub">A cleaner, table-friendly sheet based on your PDF structure, focused on usability and navigation.</div>
+      </div>
+      <div class="row">
+        <button id="saveBtn" class="secondary">Save</button>
+        <button id="exportBtn">Export JSON</button>
+        <button id="importBtn" class="secondary">Import JSON</button>
+        <button id="resetBtn" class="danger">Reset</button>
+        <input id="importInput" type="file" accept="application/json" hidden />
+      </div>
+    </div>
+    <div class="pills">
+      <span class="pill ok">Auto-save enabled</span>
+      <span class="pill" id="pillProf">Proficiency +2</span>
+      <span class="pill warn" id="pillExhaustion">Exhaustion 0</span>
+    </div>
+  </section>
 
-<script type="text/babel">
-const STORAGE_KEY = 'dnd_2024_sheet_v1';
+  <section class="card quick-nav">
+    <div class="row">
+      <button class="nav-btn" data-go="overview">Overview</button>
+      <button class="nav-btn" data-go="combat">Combat</button>
+      <button class="nav-btn" data-go="sfa">Skills / Feats / Actions</button>
+      <button class="nav-btn" data-go="inventory">Inventory</button>
+      <button class="nav-btn" data-go="notes">Notes</button>
+    </div>
+  </section>
+
+  <section class="card" id="overview">
+    <h2 class="section-title">Overview (PDF Core Fields)</h2>
+    <div class="grid-6">
+      <div class="field"><label>Character Name</label><input id="characterName" /></div>
+      <div class="field"><label>Class</label><input id="className" /></div>
+      <div class="field"><label>Level</label><input id="level" type="number" min="1" max="20" /></div>
+      <div class="field"><label>Player Name</label><input id="playerName" /></div>
+      <div class="field"><label>Race / Species</label><input id="race" /></div>
+      <div class="field"><label>Background</label><input id="background" /></div>
+    </div>
+    <div class="grid-4" style="margin-top:8px;">
+      <div class="field"><label>Armor Class</label><input id="ac" type="number" /></div>
+      <div class="field"><label>Speed</label><input id="speed" type="number" /></div>
+      <div class="field"><label>Max HP</label><input id="maxHp" type="number" /></div>
+      <div class="field"><label>Current HP</label><input id="currentHp" type="number" /></div>
+    </div>
+    <div class="grid-4" style="margin-top:8px;">
+      <div class="field"><label>Exhaustion (0-10)</label><input id="exhaustion" type="number" min="0" max="10" /></div>
+      <div class="field"><label>Rage Active</label><select id="rageActive"><option value="no">No</option><option value="yes">Yes</option></select></div>
+      <div class="field"><label>Passive Perception</label><input id="passivePerception" type="number" /></div>
+      <div class="field"><label>Proficiency (Auto)</label><input id="proficiencyBonus" readonly /></div>
+    </div>
+  </section>
+
+  <section class="card" id="combat">
+    <h2 class="section-title">Combat</h2>
+    <div class="grid-2">
+      <div class="field"><label>Attack Notes</label><textarea id="attackNotes" placeholder="Main attacks, damage notes, conditions..."></textarea></div>
+      <div class="field"><label>Resource Notes</label><textarea id="resourceNotes" placeholder="Rage uses, spell slots, class resources..."></textarea></div>
+    </div>
+  </section>
+
+  <section class="card" id="sfa">
+    <h2 class="section-title">Skills, Feats & Traits, Actions</h2>
+    <div class="small-note">Feats and traits are listed in the center column. Hover or focus each name to view a pop-up description.</div>
+    <div class="grid-3" style="margin-top:10px;">
+      <div class="panel">
+        <h3>Skills</h3>
+        <div id="skillsList" class="list"></div>
+      </div>
+
+      <div class="panel">
+        <h3>Feats & Traits</h3>
+        <div id="featsList" class="list"></div>
+        <div class="grid-2" style="margin-top:8px;">
+          <div class="field"><label>Feat / Trait Name</label><input id="newFeatName" /></div>
+          <div class="field"><label>Source</label><input id="newFeatSource" placeholder="Class, Species, Feat..." /></div>
+        </div>
+        <div class="field" style="margin-top:8px;"><label>Description</label><textarea id="newFeatDesc"></textarea></div>
+        <button id="addFeatBtn" style="margin-top:8px;">Add Feat / Trait</button>
+      </div>
+
+      <div class="panel">
+        <h3>Actions</h3>
+        <div id="actionsList" class="list"></div>
+        <div class="field" style="margin-top:8px;"><label>Custom Action Name</label><input id="newAction" /></div>
+        <button id="addActionBtn" style="margin-top:8px;">Add Action</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="card" id="inventory">
+    <h2 class="section-title">Inventory</h2>
+    <div class="grid-4">
+      <div class="field"><label>Item Name</label><input id="newItemName" /></div>
+      <div class="field"><label>Qty</label><input id="newItemQty" type="number" value="1" min="1" /></div>
+      <div class="field"><label>Weight</label><input id="newItemWeight" type="number" value="0" step="0.1" min="0" /></div>
+      <div class="field"><label>Notes</label><input id="newItemNotes" /></div>
+    </div>
+    <button id="addItemBtn" style="margin-top:8px;">Add Item</button>
+    <table class="table" style="margin-top:8px;">
+      <thead>
+        <tr><th>Item</th><th>Qty</th><th>Weight</th><th>Notes</th><th>Remove</th></tr>
+      </thead>
+      <tbody id="inventoryRows"></tbody>
+    </table>
+  </section>
+
+  <section class="card" id="notes">
+    <h2 class="section-title">Session Notes</h2>
+    <div class="field"><label>Notes</label><textarea id="notesText" placeholder="Story notes, NPC names, reminders..."></textarea></div>
+  </section>
+</div>
+
+<script>
+const STORAGE_KEY = 'dnd2024_simple_pdf_sheet_v1';
+
+const SKILLS = [
+  'Acrobatics','Animal Handling','Arcana','Athletics','Deception','History','Insight','Intimidation','Investigation',
+  'Medicine','Nature','Perception','Performance','Persuasion','Religion','Sleight of Hand','Stealth','Survival'
+];
+
+const START_FEATS = [
+  { name: 'Darkvision', source: 'Species', desc: 'You can see in dim light within a limited range as if it were bright light, and in darkness as if it were dim light.' },
+  { name: 'Brave', source: 'Trait', desc: 'You have advantage on saving throws against being frightened.' },
+  { name: 'Lucky', source: 'Feat', desc: 'You can spend Luck Points to gain advantage on a d20 test or impose disadvantage on an attack against you, per feat rules.' }
+];
+
+const START_ACTIONS = ['Attack','Dash','Disengage','Dodge','Help','Hide','Ready','Search','Use an Object'];
 
 const DEFAULT_STATE = {
-  identity: {
-    characterName: 'New Adventurer',
-    playerName: '',
-    species: '',
-    className: 'Barbarian',
-    subclass: '',
-    background: '',
-    level: 1,
-    xp: 0,
-    spellcastingAbility: 'cha'
-  },
-  abilities: {
-    str: 16,
-    dex: 14,
-    con: 14,
-    int: 10,
-    wis: 10,
-    cha: 8
-  },
-  combat: {
-    maxHp: 14,
-    currentHp: 14,
-    tempHp: 0,
-    ac: 14,
-    initiativeBonus: 0,
-    speed: 30,
-    hitDiceTotal: 1,
-    hitDiceUsed: 0,
-    passivePerceptionBonus: 0,
-    globalAttackBonus: 0,
-    globalDamageBonus: 0,
-    spellDcBonus: 0,
-    spellAttackBonus: 0
-  },
-  conditions: {
-    exhaustion: 0,
-    raging: false,
-    concentrating: false,
-    inspired: false
-  },
-  resources: {
-    rageUses: 2,
-    rageUsed: 0,
-    deathSaveSuccess: 0,
-    deathSaveFail: 0
-  },
-  inventory: [
-    { id: crypto.randomUUID(), name: 'Greataxe', qty: 1, weight: 7, equipped: true, notes: '' }
-  ],
-  spells: [
-    { id: crypto.randomUUID(), name: 'Guidance', level: 0, school: 'Divination', prepared: true, castingTime: 'Action', range: 'Touch', components: 'V,S', notes: '' }
-  ],
-  notes: 'Use this panel for class features, quest notes, and table rulings.'
+  characterName: '', className: '', level: 1, playerName: '', race: '', background: '',
+  ac: 10, speed: 30, maxHp: 0, currentHp: 0,
+  exhaustion: 0, rageActive: false, passivePerception: 10,
+  attackNotes: '', resourceNotes: '', notesText: '',
+  skills: Object.fromEntries(SKILLS.map((s) => [s, 0])),
+  feats: START_FEATS,
+  actions: START_ACTIONS,
+  inventory: []
 };
+
+let state = loadState();
 
 function loadState() {
   try {
     const raw = localStorage.getItem(STORAGE_KEY);
-    if (!raw) return DEFAULT_STATE;
+    if (!raw) return structuredClone(DEFAULT_STATE);
     const parsed = JSON.parse(raw);
     return {
-      ...DEFAULT_STATE,
+      ...structuredClone(DEFAULT_STATE),
       ...parsed,
-      identity: { ...DEFAULT_STATE.identity, ...(parsed.identity || {}) },
-      abilities: { ...DEFAULT_STATE.abilities, ...(parsed.abilities || {}) },
-      combat: { ...DEFAULT_STATE.combat, ...(parsed.combat || {}) },
-      conditions: { ...DEFAULT_STATE.conditions, ...(parsed.conditions || {}) },
-      resources: { ...DEFAULT_STATE.resources, ...(parsed.resources || {}) },
-      inventory: Array.isArray(parsed.inventory) ? parsed.inventory : DEFAULT_STATE.inventory,
-      spells: Array.isArray(parsed.spells) ? parsed.spells : DEFAULT_STATE.spells,
-      notes: typeof parsed.notes === 'string' ? parsed.notes : DEFAULT_STATE.notes
+      skills: { ...DEFAULT_STATE.skills, ...(parsed.skills || {}) },
+      feats: Array.isArray(parsed.feats) ? parsed.feats : structuredClone(DEFAULT_STATE.feats),
+      actions: Array.isArray(parsed.actions) ? parsed.actions : structuredClone(DEFAULT_STATE.actions),
+      inventory: Array.isArray(parsed.inventory) ? parsed.inventory : []
     };
   } catch (_) {
-    return DEFAULT_STATE;
+    return structuredClone(DEFAULT_STATE);
   }
 }
 
-function toNumber(v, fallback = 0) {
-  const n = Number(v);
-  return Number.isFinite(n) ? n : fallback;
-}
-
-function abilityMod(score) {
-  return Math.floor((toNumber(score, 10) - 10) / 2);
-}
-
-function signed(n) {
-  const num = toNumber(n);
-  return num >= 0 ? `+${num}` : `${num}`;
+function saveState() {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
 }
 
 function proficiencyFromLevel(level) {
-  const lvl = Math.max(1, toNumber(level, 1));
-  return 2 + Math.floor((lvl - 1) / 4);
+  const lv = Math.max(1, Number(level) || 1);
+  return 2 + Math.floor((lv - 1) / 4);
 }
 
-function rageDamageBonus(level) {
-  const lvl = toNumber(level, 1);
-  if (lvl >= 16) return 4;
-  if (lvl >= 9) return 3;
-  return 2;
+function attachBasicField(id, key, type = 'text') {
+  const el = document.getElementById(id);
+  el.value = state[key];
+  el.addEventListener('input', () => {
+    state[key] = type === 'number' ? Number(el.value || 0) : el.value;
+    if (key === 'level' || key === 'exhaustion') renderTopPills();
+    if (key === 'level') document.getElementById('proficiencyBonus').value = '+' + proficiencyFromLevel(state.level);
+    saveState();
+  });
 }
 
-function exportJson(state) {
-  const blob = new Blob([JSON.stringify(state, null, 2)], { type: 'application/json' });
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement('a');
-  const fileName = (state.identity.characterName || 'character').replace(/\s+/g, '_').toLowerCase();
-  a.href = url;
-  a.download = `${fileName}_dnd2024_sheet.json`;
-  a.click();
-  URL.revokeObjectURL(url);
+function renderSkills() {
+  const wrap = document.getElementById('skillsList');
+  wrap.innerHTML = '';
+  SKILLS.forEach((skill) => {
+    const row = document.createElement('div');
+    row.className = 'skill-row';
+
+    const label = document.createElement('div');
+    label.textContent = skill;
+
+    const input = document.createElement('input');
+    input.type = 'number';
+    input.value = state.skills[skill] || 0;
+    input.style.width = '74px';
+    input.setAttribute('aria-label', skill + ' bonus');
+    input.addEventListener('input', () => {
+      state.skills[skill] = Number(input.value || 0);
+      saveState();
+    });
+
+    row.appendChild(label);
+    row.appendChild(input);
+    wrap.appendChild(row);
+  });
 }
 
-function App() {
-  const [sheet, setSheet] = React.useState(loadState);
-  const [itemDraft, setItemDraft] = React.useState({ name: '', qty: 1, weight: 0, equipped: false, notes: '' });
-  const [spellDraft, setSpellDraft] = React.useState({ name: '', level: 0, school: '', prepared: false, castingTime: '', range: '', components: '', notes: '' });
-  const fileRef = React.useRef(null);
+function renderFeats() {
+  const wrap = document.getElementById('featsList');
+  wrap.innerHTML = '';
+  state.feats.forEach((feat) => {
+    const item = document.createElement('div');
+    item.className = 'feat-item';
 
-  React.useEffect(() => {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(sheet));
-  }, [sheet]);
+    const trigger = document.createElement('button');
+    trigger.className = 'feat-trigger';
+    trigger.type = 'button';
+    trigger.textContent = feat.source ? feat.name + ' (' + feat.source + ')' : feat.name;
 
-  const prof = proficiencyFromLevel(sheet.identity.level);
-  const mods = {
-    str: abilityMod(sheet.abilities.str),
-    dex: abilityMod(sheet.abilities.dex),
-    con: abilityMod(sheet.abilities.con),
-    int: abilityMod(sheet.abilities.int),
-    wis: abilityMod(sheet.abilities.wis),
-    cha: abilityMod(sheet.abilities.cha)
-  };
+    const pop = document.createElement('div');
+    pop.className = 'feat-pop';
+    pop.textContent = feat.desc || 'No description added yet.';
 
-  const exhaustion = Math.max(0, Math.min(10, toNumber(sheet.conditions.exhaustion, 0)));
-  const exhaustionPenalty = exhaustion;
+    item.appendChild(trigger);
+    item.appendChild(pop);
+    wrap.appendChild(item);
+  });
+}
 
-  const castingMod = mods[sheet.identity.spellcastingAbility] || 0;
-  const baseSpellSaveDC = 8 + prof + castingMod + toNumber(sheet.combat.spellDcBonus, 0);
-  const adjustedSpellSaveDC = baseSpellSaveDC - exhaustionPenalty;
-  const baseSpellAttack = prof + castingMod + toNumber(sheet.combat.spellAttackBonus, 0);
-  const adjustedSpellAttack = baseSpellAttack - exhaustionPenalty;
+function renderActions() {
+  const wrap = document.getElementById('actionsList');
+  wrap.innerHTML = '';
+  state.actions.forEach((name, idx) => {
+    const row = document.createElement('div');
+    row.className = 'action-row';
 
-  const initiative = mods.dex + toNumber(sheet.combat.initiativeBonus, 0) - exhaustionPenalty;
-  const totalItemWeight = sheet.inventory.reduce((sum, i) => sum + (toNumber(i.weight, 0) * toNumber(i.qty, 0)), 0);
-  const carryCapacity = Math.max(0, toNumber(sheet.abilities.str, 10) * 15);
-  const speedAdjusted = Math.max(0, toNumber(sheet.combat.speed, 0));
+    const left = document.createElement('div');
+    left.textContent = name;
 
-  const isBarbarian = /barbarian/i.test(sheet.identity.className || '');
-  const rageBonus = isBarbarian ? rageDamageBonus(sheet.identity.level) : 0;
-  const meleeDamageMod = toNumber(sheet.combat.globalDamageBonus, 0) + (sheet.conditions.raging ? rageBonus : 0);
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'danger';
+    btn.textContent = 'x';
+    btn.style.minHeight = '30px';
+    btn.style.padding = '4px 8px';
+    btn.addEventListener('click', () => {
+      state.actions.splice(idx, 1);
+      saveState();
+      renderActions();
+    });
 
-  function updateSection(section, key, value) {
-    setSheet((prev) => ({ ...prev, [section]: { ...prev[section], [key]: value } }));
-  }
+    row.appendChild(left);
+    row.appendChild(btn);
+    wrap.appendChild(row);
+  });
+}
 
-  function resetSheet() {
-    if (!window.confirm('Reset this character sheet to defaults?')) return;
-    setSheet(DEFAULT_STATE);
-  }
+function renderInventory() {
+  const body = document.getElementById('inventoryRows');
+  body.innerHTML = '';
+  state.inventory.forEach((item, idx) => {
+    const tr = document.createElement('tr');
+    tr.innerHTML = '<td>' + esc(item.name) + '</td><td>' + esc(String(item.qty)) + '</td><td>' + esc(String(item.weight)) + '</td><td>' + esc(item.notes || '') + '</td><td><button class="danger" data-i="' + idx + '">Remove</button></td>';
+    body.appendChild(tr);
+  });
 
-  function addItem() {
-    if (!itemDraft.name.trim()) return;
-    setSheet((prev) => ({
-      ...prev,
-      inventory: [
-        ...prev.inventory,
-        { id: crypto.randomUUID(), ...itemDraft, name: itemDraft.name.trim(), qty: toNumber(itemDraft.qty, 1), weight: toNumber(itemDraft.weight, 0) }
-      ]
-    }));
-    setItemDraft({ name: '', qty: 1, weight: 0, equipped: false, notes: '' });
-  }
+  body.querySelectorAll('button[data-i]').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const i = Number(btn.getAttribute('data-i'));
+      state.inventory.splice(i, 1);
+      saveState();
+      renderInventory();
+    });
+  });
+}
 
-  function updateItem(id, key, value) {
-    setSheet((prev) => ({
-      ...prev,
-      inventory: prev.inventory.map((item) => item.id === id ? { ...item, [key]: value } : item)
-    }));
-  }
+function renderTopPills() {
+  document.getElementById('pillProf').textContent = 'Proficiency +' + proficiencyFromLevel(state.level);
+  document.getElementById('pillExhaustion').textContent = 'Exhaustion ' + state.exhaustion;
+}
 
-  function removeItem(id) {
-    setSheet((prev) => ({ ...prev, inventory: prev.inventory.filter((i) => i.id !== id) }));
-  }
+function esc(s) {
+  return String(s)
+    .replaceAll('&', '&amp;')
+    .replaceAll('<', '&lt;')
+    .replaceAll('>', '&gt;')
+    .replaceAll('"', '&quot;')
+    .replaceAll("'", '&#39;');
+}
 
-  function addSpell() {
-    if (!spellDraft.name.trim()) return;
-    setSheet((prev) => ({
-      ...prev,
-      spells: [
-        ...prev.spells,
-        { id: crypto.randomUUID(), ...spellDraft, name: spellDraft.name.trim(), level: toNumber(spellDraft.level, 0) }
-      ]
-    }));
-    setSpellDraft({ name: '', level: 0, school: '', prepared: false, castingTime: '', range: '', components: '', notes: '' });
-  }
+function wireNavigation() {
+  document.querySelectorAll('.nav-btn').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const id = btn.getAttribute('data-go');
+      const target = document.getElementById(id);
+      if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  });
+}
 
-  function updateSpell(id, key, value) {
-    setSheet((prev) => ({
-      ...prev,
-      spells: prev.spells.map((spell) => spell.id === id ? { ...spell, [key]: value } : spell)
-    }));
-  }
+function wireTopButtons() {
+  document.getElementById('saveBtn').addEventListener('click', saveState);
 
-  function removeSpell(id) {
-    setSheet((prev) => ({ ...prev, spells: prev.spells.filter((s) => s.id !== id) }));
-  }
+  document.getElementById('exportBtn').addEventListener('click', () => {
+    const fileName = (state.characterName || 'character').trim().replace(/\s+/g, '_').toLowerCase() || 'character';
+    const blob = new Blob([JSON.stringify(state, null, 2)], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = fileName + '_dnd2024_sheet.json';
+    a.click();
+    URL.revokeObjectURL(url);
+  });
 
-  function importJsonFromFile(file) {
+  const importInput = document.getElementById('importInput');
+  document.getElementById('importBtn').addEventListener('click', () => importInput.click());
+  importInput.addEventListener('change', () => {
+    const file = importInput.files && importInput.files[0];
     if (!file) return;
     const reader = new FileReader();
     reader.onload = () => {
       try {
         const parsed = JSON.parse(String(reader.result || '{}'));
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(parsed));
-        setSheet(loadState());
+        state = {
+          ...structuredClone(DEFAULT_STATE),
+          ...parsed,
+          skills: { ...DEFAULT_STATE.skills, ...(parsed.skills || {}) },
+          feats: Array.isArray(parsed.feats) ? parsed.feats : structuredClone(DEFAULT_STATE.feats),
+          actions: Array.isArray(parsed.actions) ? parsed.actions : structuredClone(DEFAULT_STATE.actions),
+          inventory: Array.isArray(parsed.inventory) ? parsed.inventory : []
+        };
+        saveState();
+        init();
       } catch (_) {
-        window.alert('That file could not be parsed as a valid character JSON export.');
+        alert('Could not import this JSON file.');
       }
     };
     reader.readAsText(file);
-  }
+  });
 
-  return (
-    <div className="app">
-      <section className="hero">
-        <div className="hero-top">
-          <div>
-            <h1>D&D 2024 Interactive Character Sheet</h1>
-            <div className="sub">Reactive rules tracking, local save, and easy level-up handoff without external services.</div>
-          </div>
-          <div className="toolbar">
-            <button className="primary" onClick={() => exportJson(sheet)}>Export JSON</button>
-            <button onClick={() => fileRef.current?.click()}>Import JSON</button>
-            <button className="ghost" onClick={() => localStorage.setItem(STORAGE_KEY, JSON.stringify(sheet))}>Force Save</button>
-            <button className="danger" onClick={resetSheet}>Reset</button>
-            <input ref={fileRef} type="file" accept="application/json" style={{ display: 'none' }} onChange={(e) => importJsonFromFile(e.target.files?.[0])} />
-          </div>
-        </div>
-        <div className="tags">
-          <span className="tag ok">Auto-save enabled</span>
-          <span className="tag">Rules: D&D 2024 baseline</span>
-          <span className={`tag ${exhaustion >= 6 ? 'bad' : exhaustion >= 1 ? 'warn' : ''}`}>Exhaustion {exhaustion}/10</span>
-          {sheet.conditions.raging && <span className="tag warn">Rage active (+{rageBonus} melee damage)</span>}
-          {sheet.conditions.concentrating && <span className="tag">Concentrating</span>}
-        </div>
-      </section>
-
-      <main className="grid">
-        <aside className="col">
-          <section className="card">
-            <h2>Identity</h2>
-            <div className="fields">
-              <div className="field"><label>Character</label><input value={sheet.identity.characterName} onChange={(e) => updateSection('identity', 'characterName', e.target.value)} /></div>
-              <div className="field"><label>Player</label><input value={sheet.identity.playerName} onChange={(e) => updateSection('identity', 'playerName', e.target.value)} /></div>
-              <div className="field"><label>Species</label><input value={sheet.identity.species} onChange={(e) => updateSection('identity', 'species', e.target.value)} /></div>
-              <div className="field"><label>Class</label><input value={sheet.identity.className} onChange={(e) => updateSection('identity', 'className', e.target.value)} /></div>
-              <div className="field"><label>Subclass</label><input value={sheet.identity.subclass} onChange={(e) => updateSection('identity', 'subclass', e.target.value)} /></div>
-              <div className="field"><label>Background</label><input value={sheet.identity.background} onChange={(e) => updateSection('identity', 'background', e.target.value)} /></div>
-            </div>
-            <div className="spacer" />
-            <div className="fields-3">
-              <div className="field"><label>Level</label><input type="number" min="1" max="20" value={sheet.identity.level} onChange={(e) => updateSection('identity', 'level', toNumber(e.target.value, 1))} /></div>
-              <div className="field"><label>XP</label><input type="number" min="0" value={sheet.identity.xp} onChange={(e) => updateSection('identity', 'xp', toNumber(e.target.value, 0))} /></div>
-              <div className="field">
-                <label>Spellcasting Ability</label>
-                <select value={sheet.identity.spellcastingAbility} onChange={(e) => updateSection('identity', 'spellcastingAbility', e.target.value)}>
-                  <option value="str">STR</option><option value="dex">DEX</option><option value="con">CON</option>
-                  <option value="int">INT</option><option value="wis">WIS</option><option value="cha">CHA</option>
-                </select>
-              </div>
-            </div>
-          </section>
-
-          <section className="card">
-            <h2>Conditions & Toggles</h2>
-            <div className="fields-3">
-              <div className="field">
-                <label>Exhaustion (2024)</label>
-                <input type="number" min="0" max="10" value={sheet.conditions.exhaustion}
-                  onChange={(e) => updateSection('conditions', 'exhaustion', Math.max(0, Math.min(10, toNumber(e.target.value, 0))))} />
-              </div>
-              <div className="field"><label>Raging</label><select value={sheet.conditions.raging ? 'yes' : 'no'} onChange={(e) => updateSection('conditions', 'raging', e.target.value === 'yes')}><option value="no">No</option><option value="yes">Yes</option></select></div>
-              <div className="field"><label>Inspired</label><select value={sheet.conditions.inspired ? 'yes' : 'no'} onChange={(e) => updateSection('conditions', 'inspired', e.target.value === 'yes')}><option value="no">No</option><option value="yes">Yes</option></select></div>
-            </div>
-            <div className="spacer" />
-            <div className="fields">
-              <div className="field"><label>Concentrating</label><select value={sheet.conditions.concentrating ? 'yes' : 'no'} onChange={(e) => updateSection('conditions', 'concentrating', e.target.value === 'yes')}><option value="no">No</option><option value="yes">Yes</option></select></div>
-              <div className="field"><label>Rage Uses</label><input type="number" min="0" value={sheet.resources.rageUses} onChange={(e) => updateSection('resources', 'rageUses', toNumber(e.target.value, 0))} /></div>
-            </div>
-            <div className="spacer" />
-            <div className="small">
-              Exhaustion applies a <span className="mono">-{exhaustionPenalty}</span> penalty to d20 tests and spell save DC.
-              {exhaustion >= 10 ? ' At 10 exhaustion, the character dies.' : ''}
-            </div>
-            <div className="tags">
-              {sheet.conditions.raging && <span className="tag warn">Advantage on STR checks/saves</span>}
-              {sheet.conditions.raging && <span className="tag warn">Resistance to B/P/S damage (rules-permitting)</span>}
-              {sheet.conditions.concentrating && <span className="tag">Track concentration checks on damage</span>}
-              {sheet.conditions.inspired && <span className="tag ok">Inspiration available</span>}
-            </div>
-          </section>
-
-          <section className="card">
-            <h2>Notes</h2>
-            <textarea value={sheet.notes} onChange={(e) => setSheet((prev) => ({ ...prev, notes: e.target.value }))} />
-          </section>
-        </aside>
-
-        <section className="col">
-          <section className="card">
-            <h2>Core Ability Scores</h2>
-            <div className="ability-grid">
-              {['str','dex','con','int','wis','cha'].map((abbr) => (
-                <div className="ability" key={abbr}>
-                  <div className="top">
-                    <span className="ability-name">{abbr.toUpperCase()}</span>
-                    <span className="ability-mod mono">{signed(mods[abbr])}</span>
-                  </div>
-                  <input
-                    type="number"
-                    value={sheet.abilities[abbr]}
-                    onChange={(e) => updateSection('abilities', abbr, toNumber(e.target.value, 10))}
-                  />
-                </div>
-              ))}
-            </div>
-            <div className="spacer" />
-            <div className="kpis">
-              <div className="kpi"><div className="k">Proficiency</div><div className="v">{signed(prof)}</div></div>
-              <div className="kpi"><div className="k">Initiative</div><div className="v">{signed(initiative)}</div></div>
-              <div className="kpi"><div className="k">Passive Perception</div><div className="v">{10 + mods.wis + toNumber(sheet.combat.passivePerceptionBonus, 0) - exhaustionPenalty}</div></div>
-            </div>
-          </section>
-
-          <section className="card">
-            <h2>Combat & Derived Values</h2>
-            <div className="fields-3">
-              <div className="field"><label>Max HP</label><input type="number" value={sheet.combat.maxHp} onChange={(e) => updateSection('combat', 'maxHp', toNumber(e.target.value, 1))} /></div>
-              <div className="field"><label>Current HP</label><input type="number" value={sheet.combat.currentHp} onChange={(e) => updateSection('combat', 'currentHp', toNumber(e.target.value, 0))} /></div>
-              <div className="field"><label>Temp HP</label><input type="number" value={sheet.combat.tempHp} onChange={(e) => updateSection('combat', 'tempHp', toNumber(e.target.value, 0))} /></div>
-              <div className="field"><label>Armor Class</label><input type="number" value={sheet.combat.ac} onChange={(e) => updateSection('combat', 'ac', toNumber(e.target.value, 10))} /></div>
-              <div className="field"><label>Speed</label><input type="number" value={sheet.combat.speed} onChange={(e) => updateSection('combat', 'speed', toNumber(e.target.value, 30))} /></div>
-              <div className="field"><label>Init Bonus (misc)</label><input type="number" value={sheet.combat.initiativeBonus} onChange={(e) => updateSection('combat', 'initiativeBonus', toNumber(e.target.value, 0))} /></div>
-              <div className="field"><label>Global Attack Bonus</label><input type="number" value={sheet.combat.globalAttackBonus} onChange={(e) => updateSection('combat', 'globalAttackBonus', toNumber(e.target.value, 0))} /></div>
-              <div className="field"><label>Global Damage Bonus</label><input type="number" value={sheet.combat.globalDamageBonus} onChange={(e) => updateSection('combat', 'globalDamageBonus', toNumber(e.target.value, 0))} /></div>
-              <div className="field"><label>Passive Perception Bonus</label><input type="number" value={sheet.combat.passivePerceptionBonus} onChange={(e) => updateSection('combat', 'passivePerceptionBonus', toNumber(e.target.value, 0))} /></div>
-              <div className="field"><label>Spell DC Bonus</label><input type="number" value={sheet.combat.spellDcBonus} onChange={(e) => updateSection('combat', 'spellDcBonus', toNumber(e.target.value, 0))} /></div>
-              <div className="field"><label>Spell Attack Bonus</label><input type="number" value={sheet.combat.spellAttackBonus} onChange={(e) => updateSection('combat', 'spellAttackBonus', toNumber(e.target.value, 0))} /></div>
-              <div className="field"><label>Hit Dice (used / total)</label><input type="text" value={`${sheet.combat.hitDiceUsed}/${sheet.combat.hitDiceTotal}`} onChange={() => {}} readOnly /></div>
-            </div>
-            <div className="spacer" />
-            <div className="kpis">
-              <div className="kpi"><div className="k">Spell Save DC</div><div className="v">{adjustedSpellSaveDC}</div></div>
-              <div className="kpi"><div className="k">Spell Attack</div><div className="v">{signed(adjustedSpellAttack)}</div></div>
-              <div className="kpi"><div className="k">Melee Damage Mod</div><div className="v">{signed(meleeDamageMod)}</div></div>
-            </div>
-            <div className="tags">
-              <span className="tag">Effective HP: {toNumber(sheet.combat.currentHp, 0) + toNumber(sheet.combat.tempHp, 0)}</span>
-              <span className="tag">Carry Capacity: {carryCapacity} lb</span>
-              <span className={`tag ${totalItemWeight > carryCapacity ? 'bad' : totalItemWeight > carryCapacity * 0.8 ? 'warn' : 'ok'}`}>Current Weight: {totalItemWeight.toFixed(1)} lb</span>
-              <span className="tag">Speed: {speedAdjusted} ft</span>
-            </div>
-          </section>
-
-          <section className="card">
-            <h2>Inventory</h2>
-            <table className="table">
-              <thead>
-                <tr><th>Item</th><th>Qty</th><th>Weight</th><th>Equipped</th><th>Notes</th><th className="right">Actions</th></tr>
-              </thead>
-              <tbody>
-                {sheet.inventory.map((item) => (
-                  <tr key={item.id}>
-                    <td><input value={item.name} onChange={(e) => updateItem(item.id, 'name', e.target.value)} /></td>
-                    <td><input type="number" min="0" value={item.qty} onChange={(e) => updateItem(item.id, 'qty', toNumber(e.target.value, 0))} /></td>
-                    <td><input type="number" min="0" step="0.1" value={item.weight} onChange={(e) => updateItem(item.id, 'weight', toNumber(e.target.value, 0))} /></td>
-                    <td><select value={item.equipped ? 'yes' : 'no'} onChange={(e) => updateItem(item.id, 'equipped', e.target.value === 'yes')}><option value="no">No</option><option value="yes">Yes</option></select></td>
-                    <td><input value={item.notes} onChange={(e) => updateItem(item.id, 'notes', e.target.value)} /></td>
-                    <td className="right"><button className="danger" onClick={() => removeItem(item.id)}>Remove</button></td>
-                  </tr>
-                ))}
-                <tr>
-                  <td><input placeholder="New item" value={itemDraft.name} onChange={(e) => setItemDraft((p) => ({ ...p, name: e.target.value }))} /></td>
-                  <td><input type="number" min="0" value={itemDraft.qty} onChange={(e) => setItemDraft((p) => ({ ...p, qty: toNumber(e.target.value, 1) }))} /></td>
-                  <td><input type="number" min="0" step="0.1" value={itemDraft.weight} onChange={(e) => setItemDraft((p) => ({ ...p, weight: toNumber(e.target.value, 0) }))} /></td>
-                  <td><select value={itemDraft.equipped ? 'yes' : 'no'} onChange={(e) => setItemDraft((p) => ({ ...p, equipped: e.target.value === 'yes' }))}><option value="no">No</option><option value="yes">Yes</option></select></td>
-                  <td><input placeholder="Notes" value={itemDraft.notes} onChange={(e) => setItemDraft((p) => ({ ...p, notes: e.target.value }))} /></td>
-                  <td className="right"><button className="primary" onClick={addItem}>Add</button></td>
-                </tr>
-              </tbody>
-            </table>
-          </section>
-
-          <section className="card">
-            <h2>Spells</h2>
-            <table className="table">
-              <thead>
-                <tr><th>Name</th><th>Level</th><th>School</th><th>Prepared</th><th>Casting</th><th>Range</th><th>Components</th><th>Notes</th><th className="right">Actions</th></tr>
-              </thead>
-              <tbody>
-                {sheet.spells.map((spell) => (
-                  <tr key={spell.id}>
-                    <td><input value={spell.name} onChange={(e) => updateSpell(spell.id, 'name', e.target.value)} /></td>
-                    <td><input type="number" min="0" max="9" value={spell.level} onChange={(e) => updateSpell(spell.id, 'level', toNumber(e.target.value, 0))} /></td>
-                    <td><input value={spell.school} onChange={(e) => updateSpell(spell.id, 'school', e.target.value)} /></td>
-                    <td><select value={spell.prepared ? 'yes' : 'no'} onChange={(e) => updateSpell(spell.id, 'prepared', e.target.value === 'yes')}><option value="no">No</option><option value="yes">Yes</option></select></td>
-                    <td><input value={spell.castingTime} onChange={(e) => updateSpell(spell.id, 'castingTime', e.target.value)} /></td>
-                    <td><input value={spell.range} onChange={(e) => updateSpell(spell.id, 'range', e.target.value)} /></td>
-                    <td><input value={spell.components} onChange={(e) => updateSpell(spell.id, 'components', e.target.value)} /></td>
-                    <td><input value={spell.notes} onChange={(e) => updateSpell(spell.id, 'notes', e.target.value)} /></td>
-                    <td className="right"><button className="danger" onClick={() => removeSpell(spell.id)}>Remove</button></td>
-                  </tr>
-                ))}
-                <tr>
-                  <td><input placeholder="New spell" value={spellDraft.name} onChange={(e) => setSpellDraft((p) => ({ ...p, name: e.target.value }))} /></td>
-                  <td><input type="number" min="0" max="9" value={spellDraft.level} onChange={(e) => setSpellDraft((p) => ({ ...p, level: toNumber(e.target.value, 0) }))} /></td>
-                  <td><input placeholder="School" value={spellDraft.school} onChange={(e) => setSpellDraft((p) => ({ ...p, school: e.target.value }))} /></td>
-                  <td><select value={spellDraft.prepared ? 'yes' : 'no'} onChange={(e) => setSpellDraft((p) => ({ ...p, prepared: e.target.value === 'yes' }))}><option value="no">No</option><option value="yes">Yes</option></select></td>
-                  <td><input placeholder="Action / Bonus" value={spellDraft.castingTime} onChange={(e) => setSpellDraft((p) => ({ ...p, castingTime: e.target.value }))} /></td>
-                  <td><input placeholder="Range" value={spellDraft.range} onChange={(e) => setSpellDraft((p) => ({ ...p, range: e.target.value }))} /></td>
-                  <td><input placeholder="V,S,M" value={spellDraft.components} onChange={(e) => setSpellDraft((p) => ({ ...p, components: e.target.value }))} /></td>
-                  <td><input placeholder="Notes" value={spellDraft.notes} onChange={(e) => setSpellDraft((p) => ({ ...p, notes: e.target.value }))} /></td>
-                  <td className="right"><button className="primary" onClick={addSpell}>Add</button></td>
-                </tr>
-              </tbody>
-            </table>
-          </section>
-        </section>
-      </main>
-    </div>
-  );
+  document.getElementById('resetBtn').addEventListener('click', () => {
+    if (!confirm('Reset this sheet to defaults?')) return;
+    state = structuredClone(DEFAULT_STATE);
+    saveState();
+    init();
+  });
 }
 
-ReactDOM.createRoot(document.getElementById('app')).render(<App />);
+function wireAdders() {
+  document.getElementById('addFeatBtn').addEventListener('click', () => {
+    const name = document.getElementById('newFeatName').value.trim();
+    const source = document.getElementById('newFeatSource').value.trim();
+    const desc = document.getElementById('newFeatDesc').value.trim();
+    if (!name) return;
+    state.feats.push({ name, source, desc });
+    document.getElementById('newFeatName').value = '';
+    document.getElementById('newFeatSource').value = '';
+    document.getElementById('newFeatDesc').value = '';
+    saveState();
+    renderFeats();
+  });
+
+  document.getElementById('addActionBtn').addEventListener('click', () => {
+    const name = document.getElementById('newAction').value.trim();
+    if (!name) return;
+    state.actions.push(name);
+    document.getElementById('newAction').value = '';
+    saveState();
+    renderActions();
+  });
+
+  document.getElementById('addItemBtn').addEventListener('click', () => {
+    const name = document.getElementById('newItemName').value.trim();
+    const qty = Number(document.getElementById('newItemQty').value || 1);
+    const weight = Number(document.getElementById('newItemWeight').value || 0);
+    const notes = document.getElementById('newItemNotes').value.trim();
+    if (!name) return;
+    state.inventory.push({ name, qty, weight, notes });
+    document.getElementById('newItemName').value = '';
+    document.getElementById('newItemQty').value = '1';
+    document.getElementById('newItemWeight').value = '0';
+    document.getElementById('newItemNotes').value = '';
+    saveState();
+    renderInventory();
+  });
+}
+
+function initFields() {
+  attachBasicField('characterName', 'characterName');
+  attachBasicField('className', 'className');
+  attachBasicField('level', 'level', 'number');
+  attachBasicField('playerName', 'playerName');
+  attachBasicField('race', 'race');
+  attachBasicField('background', 'background');
+  attachBasicField('ac', 'ac', 'number');
+  attachBasicField('speed', 'speed', 'number');
+  attachBasicField('maxHp', 'maxHp', 'number');
+  attachBasicField('currentHp', 'currentHp', 'number');
+  attachBasicField('exhaustion', 'exhaustion', 'number');
+  attachBasicField('passivePerception', 'passivePerception', 'number');
+  attachBasicField('attackNotes', 'attackNotes');
+  attachBasicField('resourceNotes', 'resourceNotes');
+  attachBasicField('notesText', 'notesText');
+
+  const rage = document.getElementById('rageActive');
+  rage.value = state.rageActive ? 'yes' : 'no';
+  rage.addEventListener('change', () => {
+    state.rageActive = rage.value === 'yes';
+    saveState();
+  });
+
+  document.getElementById('proficiencyBonus').value = '+' + proficiencyFromLevel(state.level);
+}
+
+function init() {
+  initFields();
+  renderSkills();
+  renderFeats();
+  renderActions();
+  renderInventory();
+  renderTopPills();
+}
+
+wireNavigation();
+wireTopButtons();
+wireAdders();
+init();
 </script>
 </body>
 </html>
