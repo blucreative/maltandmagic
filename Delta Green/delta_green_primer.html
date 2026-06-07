@@ -203,7 +203,8 @@ ul.dgl.tight li{padding:2px 0 2px 14px;font-size:11.5px}
 .qr-note{font-size:10px;color:var(--txd);margin-top:2px}
 
 /* ── TUTORIAL OVERLAY ─────────────────────── */
-.overlay{position:fixed;inset:0;background:rgba(0,0,0,.88);z-index:1000;display:flex;align-items:center;justify-content:center;padding:20px}
+.overlay{position:fixed;inset:0;background:rgba(0,0,0,.88);z-index:1000;display:none;align-items:center;justify-content:center;padding:20px}
+body.theme-military90s > .overlay{position:fixed;z-index:1000}
 .ov-box{background:var(--bg2);border:2px solid var(--g);max-width:540px;width:100%;padding:30px;position:relative;box-shadow:0 0 60px rgba(92,184,92,.15)}
 .ov-stamp{position:absolute;top:-12px;right:20px;background:var(--bg2);padding:0 8px;font-size:8px;letter-spacing:3px;color:var(--g);border:1px solid var(--g)}
 .ov-title{font-family:var(--fd);font-size:17px;font-weight:700;letter-spacing:3px;color:var(--gb);margin-bottom:4px}
@@ -302,6 +303,21 @@ const TUTORIAL = [
 ];
 
 let step = 0;
+const ORIENTATION_SEEN_KEY = 'dg_primer_orientation_seen_v1';
+
+function showOverlay(resetStep=false){
+  if(resetStep) step = 0;
+  document.getElementById('overlay').style.display='flex';
+  renderOverlay();
+}
+
+function hideOverlay(markSeen=true){
+  document.getElementById('overlay').style.display='none';
+  if(markSeen){
+    try { localStorage.setItem(ORIENTATION_SEEN_KEY, '1'); } catch (_) {}
+  }
+}
+
 function renderOverlay(){
   const s = TUTORIAL[step];
   document.getElementById('ov-title').textContent = s.title;
@@ -315,12 +331,23 @@ function renderOverlay(){
 function gotoStep(i){step=i;renderOverlay()}
 document.getElementById('ov-next').onclick=()=>{
   if(step<TUTORIAL.length-1){step++;renderOverlay();}
-  else{document.getElementById('overlay').style.display='none';}
+  else{hideOverlay(true);}
 };
 document.getElementById('ov-back').onclick=()=>{if(step>0){step--;renderOverlay();}};
-document.getElementById('overlay').addEventListener('click',e=>{if(e.target.id==='overlay')e.target.style.display='none';});
-function startTutorial(){step=0;document.getElementById('overlay').style.display='flex';renderOverlay();}
-renderOverlay();
+document.getElementById('overlay').addEventListener('click',e=>{if(e.target.id==='overlay')hideOverlay(true);});
+function startTutorial(){showOverlay(true);}
+
+try {
+  const hasSeen = localStorage.getItem(ORIENTATION_SEEN_KEY) === '1';
+  if(hasSeen){
+    hideOverlay(false);
+  } else {
+    showOverlay(true);
+  }
+} catch (_) {
+  // If storage is unavailable, default to showing orientation for safety.
+  showOverlay(true);
+}
 
 /* ═══════════════════════════════════════════════
    TABS & SECTIONS
