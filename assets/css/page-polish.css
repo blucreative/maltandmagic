@@ -244,6 +244,57 @@ body.theme-military90s.page-chuck-jenkins-interactive :is(main, .container, sect
   margin-right: auto;
 }
 
+/* Delta Green primer: raise contrast and legibility of dense low-size text */
+body.theme-military90s.page-delta-green-primer {
+  --tx: #d4e2d1;
+  --txd: #9cb593;
+  --txb: #edf7eb;
+  --g: #73a96a;
+  --gb: #a8d89e;
+}
+
+body.theme-military90s.page-delta-green-primer .panel-body,
+body.theme-military90s.page-delta-green-primer .panel-body p,
+body.theme-military90s.page-delta-green-primer .panel-body li {
+  font-size: 13.2px;
+  line-height: 1.72;
+}
+
+body.theme-military90s.page-delta-green-primer .lbl,
+body.theme-military90s.page-delta-green-primer .meta-label,
+body.theme-military90s.page-delta-green-primer .tab-num,
+body.theme-military90s.page-delta-green-primer .stamp,
+body.theme-military90s.page-delta-green-primer .sh-name,
+body.theme-military90s.page-delta-green-primer .sh-base,
+body.theme-military90s.page-delta-green-primer .sh-half,
+body.theme-military90s.page-delta-green-primer .sh-fifth,
+body.theme-military90s.page-delta-green-primer .sh-val,
+body.theme-military90s.page-delta-green-primer .wpn-table th,
+body.theme-military90s.page-delta-green-primer .san-table th,
+body.theme-military90s.page-delta-green-primer .skill-table th {
+  font-size: 9.5px;
+}
+
+body.theme-military90s.page-delta-green-primer .tab-btn {
+  font-size: 10.5px;
+}
+
+body.theme-military90s.page-delta-green-primer .skill-table td,
+body.theme-military90s.page-delta-green-primer .wpn-table td,
+body.theme-military90s.page-delta-green-primer .san-table td,
+body.theme-military90s.page-delta-green-primer .action-desc,
+body.theme-military90s.page-delta-green-primer .qr-note,
+body.theme-military90s.page-delta-green-primer .prof-teaser,
+body.theme-military90s.page-delta-green-primer .stat-name,
+body.theme-military90s.page-delta-green-primer .scroll-hint {
+  color: #9cb593;
+}
+
+body.theme-military90s.page-delta-green-primer .ov-body {
+  color: #c8ddc3;
+  font-size: 14px;
+}
+
 /* Mobile comfort pass */
 @media (max-width: 760px) {
   body[class*='page-'] {
