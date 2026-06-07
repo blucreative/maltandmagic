@@ -1,0 +1,118 @@
+/* Shared, non-invasive readability polish across all themed pages */
+:root {
+  --read-width-wide: 1100px;
+  --read-width-mid: 900px;
+  --read-width-narrow: 780px;
+}
+
+body[class*='page-'] {
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  line-height: 1.6;
+}
+
+body[class*='page-'] h1,
+body[class*='page-'] h2,
+body[class*='page-'] h3,
+body[class*='page-'] h4,
+body[class*='page-'] h5,
+body[class*='page-'] h6 {
+  line-height: 1.2;
+  margin-top: 1.1em;
+  margin-bottom: 0.45em;
+}
+
+body[class*='page-'] p,
+body[class*='page-'] li,
+body[class*='page-'] blockquote,
+body[class*='page-'] dd,
+body[class*='page-'] dt {
+  letter-spacing: 0.01em;
+}
+
+body[class*='page-'] p {
+  margin-top: 0.65em;
+  margin-bottom: 0.65em;
+}
+
+body[class*='page-'] table {
+  font-size: 0.96rem;
+}
+
+body[class*='page-'] th,
+body[class*='page-'] td {
+  padding: 0.45rem 0.5rem;
+}
+
+/* Fantasy pages: lore readability and heading cadence */
+body.theme-fantasy.page-index,
+body.theme-fantasy.page-campaign3-player-primer,
+body.theme-fantasy.page-campaign2-epilogue-guide,
+body.theme-fantasy.page-codex-lore,
+body.theme-fantasy.page-eclipse-sigil,
+body.theme-fantasy.page-the-eclipse-sigil-final-use {
+  letter-spacing: 0.005em;
+}
+
+body.theme-fantasy.page-player-location-guide :is(main, .container, section),
+body.theme-fantasy.page-pantheon-players-1 :is(main, .container, section),
+body.theme-fantasy.page-auroran-pantheon :is(main, .container, section),
+body.theme-fantasy.page-auroran-religious-strata :is(main, .container, section),
+body.theme-fantasy.page-ardahlia-folk-polytheism-matrix :is(main, .container, section),
+body.theme-fantasy.page-ardahlian-day-names :is(main, .container, section),
+body.theme-fantasy.page-ardahlia-calendar :is(main, .container, section) {
+  max-width: var(--read-width-wide);
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Cosmic horror pages: tighter type and stronger separation for forms/sheets */
+body.theme-cosmic90s :is(label, legend, th) {
+  letter-spacing: 0.02em;
+}
+
+body.theme-cosmic90s.page-coc-player-primer :is(main, .container, section),
+body.theme-cosmic90s.page-coc-character-sheets-index :is(main, .container, section),
+body.theme-cosmic90s.page-henry-press-sheet :is(main, .container, section),
+body.theme-cosmic90s.page-larry-hughes-sheet :is(main, .container, section),
+body.theme-cosmic90s.page-shen-flownder-sheet :is(main, .container, section),
+body.theme-cosmic90s.page-tony-mills-sheet :is(main, .container, section) {
+  max-width: var(--read-width-mid);
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Delta Green military pages: dossier-like spacing and compact headings */
+body.theme-military90s :is(h1, h2, h3) {
+  margin-top: 0.95em;
+  margin-bottom: 0.35em;
+}
+
+body.theme-military90s.page-delta-green-index :is(main, .container, section),
+body.theme-military90s.page-delta-green-primer :is(main, .container, section),
+body.theme-military90s.page-dg-character-sheets-index :is(main, .container, section),
+body.theme-military90s.page-spork-sutton-interactive-1 :is(main, .container, section),
+body.theme-military90s.page-chuck-jenkins-interactive :is(main, .container, section) {
+  max-width: var(--read-width-mid);
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Mobile comfort pass */
+@media (max-width: 760px) {
+  body[class*='page-'] {
+    line-height: 1.55;
+  }
+
+  body[class*='page-'] h1 {
+    font-size: clamp(1.5rem, 6vw, 2rem);
+  }
+
+  body[class*='page-'] h2 {
+    font-size: clamp(1.2rem, 4.8vw, 1.55rem);
+  }
+
+  body[class*='page-'] table {
+    font-size: 0.9rem;
+  }
+}

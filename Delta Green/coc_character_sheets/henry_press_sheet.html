@@ -1,9 +1,9 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Henry Press — Investigator Sheet</title>
+<title>Henry Press â€” Investigator Sheet</title>
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Crimson+Text:ital,wght@0,400;0,600;1,400;1,600&family=Special+Elite&display=swap" rel="stylesheet"/>
 <style>
 :root{--p:#f0e8d5;--pd:#e0d0b0;--pp:#c8b890;--ink:#1a120a;--inkf:#3d2e1e;--inkm:#5a4030;--cr:#8b1a1a;--crb:#b52020;--crd:#5c0f0f;--g:#8b6914;--gb:#c49a1e;--fd:'Cinzel',serif;--fb:'Crimson Text',serif;--ft:'Special Elite',cursive}
@@ -157,8 +157,10 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .nav-link{font-family:var(--fd);font-size:10px;letter-spacing:0.08em;text-transform:uppercase;color:var(--pp);text-decoration:none;border:1px solid #4a3a20;padding:4px 10px;transition:all 0.15s}
 .nav-link:hover{color:var(--p);border-color:var(--gb);background:rgba(139,105,20,0.2)}
 </style>
+    <link rel='stylesheet' href='../../assets/css/theme-cosmic90s.css'>
+    <link rel='stylesheet' href='../../assets/css/page-polish.css'>
 </head>
-<body>
+<body class='theme-cosmic90s page-henry-press-sheet'>
 <nav class="nav-strip">
   <a class="nav-link" href="../index.html">Delta Green Hub</a>
   <a class="nav-link" href="index.html">CoC Sheets</a>
@@ -183,7 +185,7 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
     </div>
   </div>
   <div class="header-desc">Big, broad, once-handsome in a way that still shows. Carries extra weight around the middle that wasn't there two years ago. Dresses like someone who used to have somewhere to be. Dark eyes that watch rooms too carefully.</div>
-  <div class="status-banner stable" id="statusBanner">Psychologically Stable — for now</div>
+  <div class="status-banner stable" id="statusBanner">Psychologically Stable â€” for now</div>
 </div>
 
 <!-- BODY -->
@@ -201,7 +203,7 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
         <div class="vital-display" id="hpVal">13</div>
         <div class="vital-max">/ 13 max</div>
         <div class="vital-btns">
-          <button class="vbtn" onclick="changeVital('hp',-1)">−</button>
+          <button class="vbtn" onclick="changeVital('hp',-1)">âˆ’</button>
           <button class="vbtn plus" onclick="changeVital('hp',1)">+</button>
         </div>
         <div class="vital-bar"><div class="vital-fill" id="hpBar" style="width:100%;background:var(--g)"></div></div>
@@ -211,7 +213,7 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
         <div class="vital-display" id="sanVal">30</div>
         <div class="vital-max">/ 99 max</div>
         <div class="vital-btns">
-          <button class="vbtn" onclick="changeVital('san',-1)">−</button>
+          <button class="vbtn" onclick="changeVital('san',-1)">âˆ’</button>
           <button class="vbtn plus" onclick="changeVital('san',1)">+</button>
         </div>
         <div class="vital-bar"><div class="vital-fill" id="sanBar" style="width:30%;background:var(--cr)"></div></div>
@@ -221,7 +223,7 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
         <div class="vital-display" id="mpVal">6</div>
         <div class="vital-max">/ 6 max</div>
         <div class="vital-btns">
-          <button class="vbtn" onclick="changeVital('mp',-1)">−</button>
+          <button class="vbtn" onclick="changeVital('mp',-1)">âˆ’</button>
           <button class="vbtn plus" onclick="changeVital('mp',1)">+</button>
         </div>
         <div class="vital-bar"><div class="vital-fill" id="mpBar" style="width:100%;background:#4a6a8a"></div></div>
@@ -231,7 +233,7 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
         <div class="vital-display" id="luckVal">45</div>
         <div class="vital-max">/ 99 max</div>
         <div class="vital-btns">
-          <button class="vbtn" onclick="changeVital('luck',-1)">−</button>
+          <button class="vbtn" onclick="changeVital('luck',-1)">âˆ’</button>
           <button class="vbtn plus" onclick="changeVital('luck',1)">+</button>
         </div>
         <div class="vital-bar"><div class="vital-fill" id="luckBar" style="width:45%;background:var(--gb)"></div></div>
@@ -312,8 +314,8 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
         <div class="sh-name">Skill</div>
         <div class="sh-base">Base</div>
         <div class="sh-val">Henry's %</div>
-        <div class="sh-half">½</div>
-        <div class="sh-fifth">⅕</div>
+        <div class="sh-half">Â½</div>
+        <div class="sh-fifth">â…•</div>
         <div class="sh-roll" style="min-width:90px">Roll</div>
       </div>
       <div class="skill-list" id="skillList"></div>
@@ -321,13 +323,13 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 
     <!-- SAN TRACK TAB -->
     <div class="tab-content" id="tab-santrack">
-      <div style="font-family:var(--fd);font-size:10px;letter-spacing:0.14em;color:var(--cr);text-transform:uppercase;margin-bottom:8px">Sanity Track — Click any pip to set current SAN</div>
+      <div style="font-family:var(--fd);font-size:10px;letter-spacing:0.14em;color:var(--cr);text-transform:uppercase;margin-bottom:8px">Sanity Track â€” Click any pip to set current SAN</div>
       <div style="font-family:var(--ft);font-size:12px;color:var(--inkm);margin-bottom:12px;font-style:italic">Starting SAN: 30 &nbsp;|&nbsp; Maximum SAN: 99 &nbsp;|&nbsp; Indefinite insanity: lose 6+ SAN in one day</div>
       <div class="san-track" id="sanTrack"></div>
       <div class="san-label-row">
-        <span>0 — Gone</span>
+        <span>0 â€” Gone</span>
         <span id="sanTrackVal" style="color:var(--cr)">Current: 30</span>
-        <span>99 — Max</span>
+        <span>99 â€” Max</span>
       </div>
       <div style="margin-top:16px;padding:12px;background:rgba(139,26,26,0.06);border-left:3px solid var(--cr)">
         <div style="font-family:var(--fd);font-size:9px;letter-spacing:0.12em;color:var(--cr);text-transform:uppercase;margin-bottom:6px">Insanity Thresholds</div>
@@ -352,12 +354,12 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
     <div class="tab-content" id="tab-backstory">
       <div class="backstory-grid">
         <div class="bs-item"><div class="bs-title gold">Personal Description</div><div class="bs-text">Big, broad, once-handsome in a way that still shows. Carries extra weight around the middle that wasn't there two years ago. Dresses like someone who used to have somewhere to be. Dark eyes that watch rooms too carefully.</div></div>
-        <div class="bs-item"><div class="bs-title gold">Ideology &amp; Beliefs</div><div class="bs-text">Used to believe intelligence and hard work meant something — that the world was basically fair. That broke completely. Now quietly convinced there's something wrong underneath things he can't quite name. The occult reading isn't faith, it's picking at a scab. He'd be embarrassed if anyone knew.</div></div>
-        <div class="bs-item red" style="grid-column:1/-1"><div class="bs-title">Significant People</div><div class="bs-text">His father, Gerald Press — quiet, undemanding, loves Henry in the way that men of that generation do, by not asking questions and making sure there's food in the house. Henry missed his mother's decline while chasing something in London. That sits on top of everything else. No real friends. The people he grew up with are still here but he left them behind without a backward glance, and now nobody quite knows what to say.</div></div>
-        <div class="bs-item"><div class="bs-title gold">Meaningful Locations</div><div class="bs-text">The library — quiet, free, his main refuge. Times his visits for the quiet periods. The pub occasionally with Gerald, the most normal Henry feels. His dad's sitting room in the evenings, watching television without talking much. Not unhappy. Just very small.</div></div>
-        <div class="bs-item"><div class="bs-title gold">Treasured Possessions</div><div class="bs-text">A silver pocket watch — his mother's gift on his 18th birthday, the last birthday before the calls became less frequent. Carries it every day. An old laptop from the London years, cracked casing, takes four minutes to boot. He maintains it obsessively. Fixing things he's already broken.</div></div>
-        <div class="bs-item"><div class="bs-title gold">Traits</div><div class="bs-text">Has a habit of being the most competent person in a room and resenting that it's visible. Physically restless — always doing something with his hands. Pen clicking, pocket watch turning, tearing the corner off a beer mat. Gerald has learned to find it comforting.</div></div>
-        <div class="bs-item red"><div class="bs-title">Injuries &amp; Scars</div><div class="bs-text">None physical. The damage is internal and ongoing — a low hum of shame and self-recrimination he's learned to function around. He doesn't sleep well. He hasn't for two years.</div></div>
+        <div class="bs-item"><div class="bs-title gold">Ideology &amp; Beliefs</div><div class="bs-text">Used to believe intelligence and hard work meant something â€” that the world was basically fair. That broke completely. Now quietly convinced there's something wrong underneath things he can't quite name. The occult reading isn't faith, it's picking at a scab. He'd be embarrassed if anyone knew.</div></div>
+        <div class="bs-item red" style="grid-column:1/-1"><div class="bs-title">Significant People</div><div class="bs-text">His father, Gerald Press â€” quiet, undemanding, loves Henry in the way that men of that generation do, by not asking questions and making sure there's food in the house. Henry missed his mother's decline while chasing something in London. That sits on top of everything else. No real friends. The people he grew up with are still here but he left them behind without a backward glance, and now nobody quite knows what to say.</div></div>
+        <div class="bs-item"><div class="bs-title gold">Meaningful Locations</div><div class="bs-text">The library â€” quiet, free, his main refuge. Times his visits for the quiet periods. The pub occasionally with Gerald, the most normal Henry feels. His dad's sitting room in the evenings, watching television without talking much. Not unhappy. Just very small.</div></div>
+        <div class="bs-item"><div class="bs-title gold">Treasured Possessions</div><div class="bs-text">A silver pocket watch â€” his mother's gift on his 18th birthday, the last birthday before the calls became less frequent. Carries it every day. An old laptop from the London years, cracked casing, takes four minutes to boot. He maintains it obsessively. Fixing things he's already broken.</div></div>
+        <div class="bs-item"><div class="bs-title gold">Traits</div><div class="bs-text">Has a habit of being the most competent person in a room and resenting that it's visible. Physically restless â€” always doing something with his hands. Pen clicking, pocket watch turning, tearing the corner off a beer mat. Gerald has learned to find it comforting.</div></div>
+        <div class="bs-item red"><div class="bs-title">Injuries &amp; Scars</div><div class="bs-text">None physical. The damage is internal and ongoing â€” a low hum of shame and self-recrimination he's learned to function around. He doesn't sleep well. He hasn't for two years.</div></div>
         <div class="bs-item" style="grid-column:1/-1;border-left-color:var(--gb);background:rgba(139,105,20,0.08)"><div class="bs-title" style="color:var(--gb)">The Margaret Bond</div><div class="bs-text">About three months after he came back, Henry was in the library with nowhere better to be. Margaret was returning books. She didn't ask where he'd been or why he was back. She handed him something she thought he'd like, walked him to the desk and sorted him out a library card. No ceremony, no questions. He's read forty-odd books since then. It's the kindest thing anyone has done for him in years and he's never said so.</div></div>
       </div>
     </div>
@@ -365,7 +367,7 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
     <!-- NOTES TAB -->
     <div class="tab-content" id="tab-notes">
       <div style="font-family:var(--fd);font-size:10px;letter-spacing:0.14em;color:var(--g);text-transform:uppercase;margin-bottom:10px">Session Notes</div>
-      <textarea class="notes-area" id="notes-session" style="min-height:180px" placeholder="Notes from play — clues, NPCs, observations...&#10;&#10;Henry notices things. Write them down."></textarea>
+      <textarea class="notes-area" id="notes-session" style="min-height:180px" placeholder="Notes from play â€” clues, NPCs, observations...&#10;&#10;Henry notices things. Write them down."></textarea>
       <div style="margin-top:12px">
         <div style="font-family:var(--fd);font-size:10px;letter-spacing:0.14em;color:var(--g);text-transform:uppercase;margin-bottom:6px">Mythos Encountered</div>
         <textarea class="notes-area" id="notes-mythos" style="min-height:80px" placeholder="Things that cannot be unseen..."></textarea>
@@ -382,7 +384,7 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 </div>
 
 <script>
-// ── ALL SKILLS — base values + Henry's invested values ────────────────────────
+// â”€â”€ ALL SKILLS â€” base values + Henry's invested values â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 // invested: true = Henry spent points here
 // henry: his actual score (base + investment)
 // base: the CoC 7e base value
@@ -515,11 +517,11 @@ function rollSkill(e, idx) {
   } else if (roll <= f(sk.henry) && roll !== 100) {
     cls = 'extreme'; txt = roll + ' Extreme!';
   } else if (roll <= h(sk.henry)) {
-    cls = 'hard'; txt = roll + ' Hard ✓';
+    cls = 'hard'; txt = roll + ' Hard âœ“';
   } else if (roll <= sk.henry) {
-    cls = 'success'; txt = roll + ' Success ✓';
+    cls = 'success'; txt = roll + ' Success âœ“';
   } else {
-    cls = 'fail'; txt = roll + ' Fail ✗';
+    cls = 'fail'; txt = roll + ' Fail âœ—';
   }
   el.textContent = txt;
   el.className = 'roll-result show ' + cls;
@@ -527,7 +529,7 @@ function rollSkill(e, idx) {
   rollTimers[idx] = setTimeout(function(){ el.className = 'roll-result'; }, 5000);
 }
 
-// ── VITALS ────────────────────────────────────────────────────────────────────
+// â”€â”€ VITALS â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 var vitals = { hp:{cur:13,max:13}, san:{cur:30,max:99}, mp:{cur:6,max:6}, luck:{cur:45,max:99} };
 
 function changeVital(key, delta) {
@@ -557,14 +559,14 @@ function updateStatus() {
   var san=vitals.san.cur, hp=vitals.hp.cur;
   var banner=document.getElementById('statusBanner');
   var msg,cls;
-  if (hp===0){msg='DYING — First Aid required immediately or death follows';cls='critical';}
-  else if (hp<=3){msg='Critically Wounded — CON roll or fall unconscious';cls='danger';}
-  else if (san===0){msg='PERMANENTLY INSANE — The darkness has him';cls='critical';}
-  else if (san<8){msg='On the brink — indefinite insanity imminent';cls='critical';}
-  else if (san<15){msg='Unravelling badly — temporary insanity likely';cls='danger';}
-  else if (san<30){msg='Deeply troubled — below starting SAN';cls='troubled';}
-  else if (hp<=6){msg='Seriously wounded — at risk of major wound';cls='troubled';}
-  else {msg='Psychologically Stable — for now';cls='stable';}
+  if (hp===0){msg='DYING â€” First Aid required immediately or death follows';cls='critical';}
+  else if (hp<=3){msg='Critically Wounded â€” CON roll or fall unconscious';cls='danger';}
+  else if (san===0){msg='PERMANENTLY INSANE â€” The darkness has him';cls='critical';}
+  else if (san<8){msg='On the brink â€” indefinite insanity imminent';cls='critical';}
+  else if (san<15){msg='Unravelling badly â€” temporary insanity likely';cls='danger';}
+  else if (san<30){msg='Deeply troubled â€” below starting SAN';cls='troubled';}
+  else if (hp<=6){msg='Seriously wounded â€” at risk of major wound';cls='troubled';}
+  else {msg='Psychologically Stable â€” for now';cls='stable';}
   banner.textContent=msg;
   banner.className='status-banner '+cls;
   // update SAN thresholds
@@ -574,7 +576,7 @@ function updateStatus() {
   if(it) it.textContent=Math.max(1,Math.floor(san*0.2));
 }
 
-// ── WOUND TRACKER ─────────────────────────────────────────────────────────────
+// â”€â”€ WOUND TRACKER â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 var wounds=new Array(13).fill(false);
 function buildWoundTrack(){
   var wt=document.getElementById('woundTrack');
@@ -582,7 +584,7 @@ function buildWoundTrack(){
   for(var i=0;i<13;i++){
     var box=document.createElement('div');
     box.className='wound-box'+(wounds[i]?' hit':'');
-    box.textContent=wounds[i]?'✕':'';
+    box.textContent=wounds[i]?'âœ•':'';
     box.onclick=(function(idx){return function(){wounds[idx]=!wounds[idx];buildWoundTrack();updateWoundsFromWoundTrack();saveState();};})(i);
     wt.appendChild(box);
   }
@@ -593,7 +595,7 @@ function updateWoundsFromWoundTrack(){
   updateVitalDisplay('hp');
   var st=document.getElementById('woundStatus');
   if(count===0){st.textContent='No wounds';st.style.color='var(--pp)';}
-  else if(vitals.hp.cur<=2){st.textContent='CRITICAL — CON roll or unconscious';st.style.color='var(--crb)';}
+  else if(vitals.hp.cur<=2){st.textContent='CRITICAL â€” CON roll or unconscious';st.style.color='var(--crb)';}
   else if(count>6){st.textContent='Major wound sustained';st.style.color='var(--cr)';}
   else{st.textContent=count+' wound'+(count>1?'s':'')+' taken';st.style.color='#c08040';}
   updateStatus();
@@ -609,7 +611,7 @@ function updateWoundsFromVital(){
 }
 function resetWounds(){wounds=new Array(13).fill(false);vitals.hp.cur=vitals.hp.max;buildWoundTrack();updateVitalDisplay('hp');updateStatus();saveState();}
 
-// ── SAN TRACK ─────────────────────────────────────────────────────────────────
+// â”€â”€ SAN TRACK â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 function buildSanTrack(){
   var track=document.getElementById('sanTrack');
   if(!track) return;
@@ -632,7 +634,7 @@ function buildSanTrack(){
 }
 function updateSanTrack(){buildSanTrack();}
 
-// ── TABS ──────────────────────────────────────────────────────────────────────
+// â”€â”€ TABS â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 function showTab(e,id){
   document.querySelectorAll('.tab-btn').forEach(function(b){b.classList.remove('active');});
   document.querySelectorAll('.tab-content').forEach(function(c){c.classList.remove('active');});
@@ -641,7 +643,7 @@ function showTab(e,id){
   if(id==='santrack') buildSanTrack();
 }
 
-// ── SAVE / LOAD ───────────────────────────────────────────────────────────────
+// â”€â”€ SAVE / LOAD â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 function saveState(){
   try{
     localStorage.setItem('henry_v2',JSON.stringify({
@@ -678,7 +680,7 @@ document.querySelectorAll('.notes-area').forEach(function(el){
   el.addEventListener('input', saveState);
 });
 
-// ── INIT ──────────────────────────────────────────────────────────────────────
+// â”€â”€ INIT â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 loadState();
 buildWoundTrack();
 buildSkillList();
@@ -687,3 +689,5 @@ updateStatus();
 </script>
 </body>
 </html>
+
+

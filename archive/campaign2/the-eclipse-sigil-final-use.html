@@ -1,9 +1,9 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>The Eclipse Sigil — The Final Use</title>
+<title>The Eclipse Sigil â€” The Final Use</title>
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;900&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap" rel="stylesheet">
 <style>
   :root {
@@ -41,7 +41,7 @@
     overflow-x: hidden;
   }
 
-  /* ── BACKGROUND ── */
+  /* â”€â”€ BACKGROUND â”€â”€ */
   body::before {
     content: '';
     position: fixed;
@@ -64,7 +64,7 @@
     z-index: 0;
   }
 
-  /* ── LAYOUT ── */
+  /* â”€â”€ LAYOUT â”€â”€ */
   .wrapper {
     position: relative;
     z-index: 1;
@@ -73,7 +73,7 @@
     padding: 0 2rem 8rem;
   }
 
-  /* ── HERO ── */
+  /* â”€â”€ HERO â”€â”€ */
   .hero {
     text-align: center;
     padding: 7rem 0 4rem;
@@ -137,7 +137,7 @@
     animation: fadeIn 1.8s ease both;
   }
 
-  /* ── EPIGRAPH ── */
+  /* â”€â”€ EPIGRAPH â”€â”€ */
   .epigraph {
     border-left: 2px solid var(--amber-dim);
     padding: 1.2rem 1.8rem;
@@ -154,7 +154,7 @@
     line-height: 1.9;
   }
 
-  /* ── SECTION HEADINGS ── */
+  /* â”€â”€ SECTION HEADINGS â”€â”€ */
   .section-title {
     font-family: 'Cinzel', serif;
     font-size: 0.72rem;
@@ -174,7 +174,7 @@
     background: linear-gradient(to right, var(--amber-dim), transparent);
   }
 
-  /* ── CONDITIONS TABLE ── */
+  /* â”€â”€ CONDITIONS TABLE â”€â”€ */
   .conditions {
     margin: 2rem 0 4rem;
     border: 1px solid rgba(200,135,58,0.2);
@@ -224,7 +224,7 @@
     font-weight: 600;
   }
 
-  /* ── TRIGGER BLOCK ── */
+  /* â”€â”€ TRIGGER BLOCK â”€â”€ */
   .trigger-block {
     text-align: center;
     padding: 2.5rem;
@@ -236,7 +236,7 @@
 
   .trigger-block::before,
   .trigger-block::after {
-    content: '◆';
+    content: 'â—†';
     position: absolute;
     color: var(--amber-dim);
     font-size: 0.6rem;
@@ -263,7 +263,7 @@
     letter-spacing: 0.1em;
   }
 
-  /* ── PATH DIVIDER ── */
+  /* â”€â”€ PATH DIVIDER â”€â”€ */
   .path-divider {
     display: flex;
     align-items: center;
@@ -278,7 +278,7 @@
     height: 1px;
   }
 
-  /* ── PATH CARDS ── */
+  /* â”€â”€ PATH CARDS â”€â”€ */
   .path {
     margin-bottom: 5rem;
     animation: fadeUp 0.8s ease both;
@@ -311,28 +311,28 @@
     letter-spacing: 0.02em;
   }
 
-  /* Path I — The Seal */
+  /* Path I â€” The Seal */
   .path-seal .path-number { color: var(--seal-accent); }
   .path-seal .path-name { color: #a8c0e8; }
   .path-seal .path-declaration { color: rgba(168,192,232,0.7); }
   .path-divider.seal::before,
   .path-divider.seal::after { background: linear-gradient(to right, transparent, var(--seal-accent), transparent); }
 
-  /* Path II — The Banishment */
+  /* Path II â€” The Banishment */
   .path-banish .path-number { color: var(--banish-accent); }
   .path-banish .path-name { color: #e8a870; }
   .path-banish .path-declaration { color: rgba(232,168,112,0.7); }
   .path-divider.banish::before,
   .path-divider.banish::after { background: linear-gradient(to right, transparent, var(--banish-accent), transparent); }
 
-  /* Path III — The Restoration */
+  /* Path III â€” The Restoration */
   .path-restore .path-number { color: var(--restore-accent); }
   .path-restore .path-name { color: #90c8a8; }
   .path-restore .path-declaration { color: rgba(144,200,168,0.7); }
   .path-divider.restore::before,
   .path-divider.restore::after { background: linear-gradient(to right, transparent, var(--restore-accent), transparent); }
 
-  /* ── PATH SUBSECTIONS ── */
+  /* â”€â”€ PATH SUBSECTIONS â”€â”€ */
   .path-subsection {
     margin-bottom: 2rem;
     padding-left: 1.5rem;
@@ -376,7 +376,7 @@
     color: var(--white);
   }
 
-  /* ── SHARED BLOCK ── */
+  /* â”€â”€ SHARED BLOCK â”€â”€ */
   .shared-block {
     margin-top: 2rem;
     padding: 1.4rem 1.8rem;
@@ -386,7 +386,7 @@
   }
 
   .shared-block::before {
-    content: '◆ The Shared Weight';
+    content: 'â—† The Shared Weight';
     display: block;
     font-family: 'Cinzel', serif;
     font-size: 0.68rem;
@@ -406,7 +406,7 @@
     color: var(--white);
   }
 
-  /* ── CLOSING ── */
+  /* â”€â”€ CLOSING â”€â”€ */
   .closing {
     margin-top: 5rem;
     padding: 3rem 0;
@@ -442,7 +442,7 @@
     color: var(--amber-dim);
   }
 
-  /* ── ANIMATIONS ── */
+  /* â”€â”€ ANIMATIONS â”€â”€ */
   @keyframes fadeIn {
     from { opacity: 0; }
     to { opacity: 1; }
@@ -453,7 +453,7 @@
     to { opacity: 1; transform: translateY(0); }
   }
 
-  /* ── SCROLLED FADE IN ── */
+  /* â”€â”€ SCROLLED FADE IN â”€â”€ */
   .reveal {
     opacity: 0;
     transform: translateY(20px);
@@ -465,7 +465,7 @@
     transform: translateY(0);
   }
 
-  /* ── RESPONSIVE ── */
+  /* â”€â”€ RESPONSIVE â”€â”€ */
   @media (max-width: 600px) {
     .condition-row {
       grid-template-columns: 1fr;
@@ -519,8 +519,10 @@
 }
 
 </style>
+    <link rel='stylesheet' href='../../assets/css/theme-fantasy.css'>
+    <link rel='stylesheet' href='../../assets/css/page-polish.css'>
 </head>
-<body>
+<body class='theme-fantasy page-the-eclipse-sigil-final-use'>
 <nav class="back-nav" aria-label="Page navigation">
   <a class="back-link" href="../../index.html">&larr; Back to Index</a>
 </nav>
@@ -549,7 +551,7 @@
         <circle cx="45" cy="45" r="30" fill="none" stroke="#c8873a" stroke-width="0.8" opacity="0.5"/>
         <!-- Inner ring -->
         <circle cx="45" cy="45" r="22" fill="none" stroke="#d4a843" stroke-width="0.8" opacity="0.6"/>
-        <!-- Eclipse body — dark circle -->
+        <!-- Eclipse body â€” dark circle -->
         <circle cx="45" cy="45" r="17" fill="#080808" filter="url(#glow)"/>
         <!-- Eclipse corona -->
         <circle cx="45" cy="45" r="17" fill="none" stroke="#f0d080" stroke-width="1.5" opacity="0.9" filter="url(#glow)"/>
@@ -584,7 +586,7 @@
       </div>
       <div class="condition-row">
         <div class="condition-label">The Weakening</div>
-        <div class="condition-detail">N'yahl'Zorath <em>(nee-HAL-zor-ath)</em> in Phase 2 — Ever Night Ascendant active — at <strong>65 HP or below</strong></div>
+        <div class="condition-detail">N'yahl'Zorath <em>(nee-HAL-zor-ath)</em> in Phase 2 â€” Ever Night Ascendant active â€” at <strong>65 HP or below</strong></div>
       </div>
       <div class="condition-row">
         <div class="condition-label">The Naming</div>
@@ -595,13 +597,13 @@
 
   <!-- TRIGGER -->
   <div class="trigger-block reveal">
-    <p>When all three conditions are met, the bearer declares their intent aloud — not the mechanics, not the path, but the choice in their own words. What they are trying to do. What they are willing to pay.</p>
+    <p>When all three conditions are met, the bearer declares their intent aloud â€” not the mechanics, not the path, but the choice in their own words. What they are trying to do. What they are willing to pay.</p>
     <p>The five rings accelerate. The eclipse opens. Reality holds its breath.</p>
   </div>
 
-  <!-- ═══════════════════════════════════════ -->
-  <!-- PATH I — THE SEAL -->
-  <!-- ═══════════════════════════════════════ -->
+  <!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
+  <!-- PATH I â€” THE SEAL -->
+  <!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
 
   <div class="path-divider seal reveal">
     <span></span><span></span>
@@ -616,32 +618,32 @@
 
     <div class="path-subsection">
       <p class="path-subsection-label">What Happens</p>
-      <p>The bearer speaks the complete pattern — all five principles in full convergence — and becomes the lock itself. N'yahl'Zorath is cast beyond the rim of the known. Not into the Void as before. Into a sealed silence that the bearer now constitutes.</p>
+      <p>The bearer speaks the complete pattern â€” all five principles in full convergence â€” and becomes the lock itself. N'yahl'Zorath is cast beyond the rim of the known. Not into the Void as before. Into a sealed silence that the bearer now constitutes.</p>
       <p>The five rings stop orbiting. They pass through the bearer and are gone. The eclipse at the Sigil's heart closes around them like a door being shut from the inside.</p>
     </div>
 
     <div class="path-subsection">
       <p class="path-subsection-label">What It Costs</p>
       <p>The bearer does not die. They are <strong>transformed</strong>.</p>
-      <p>They step out of mortal existence and into the structure of the boundary itself — gone from the world, not destroyed, not imprisoned. Present, as the thing that keeps the pattern closed. Their companions cannot reach them. No spell, no ritual, no act of will finds them. They are where the boundary is, which is everywhere the world ends.</p>
+      <p>They step out of mortal existence and into the structure of the boundary itself â€” gone from the world, not destroyed, not imprisoned. Present, as the thing that keeps the pattern closed. Their companions cannot reach them. No spell, no ritual, no act of will finds them. They are where the boundary is, which is everywhere the world ends.</p>
       <p>They are aware. They remember. They are not in pain. They are simply no longer here.</p>
-      <p>The other two carry the absence. They felt the moment it closed. They will feel it for the rest of their lives — not as grief alone, but as a specific, unnameable awareness that somewhere the boundary holds, and they know whose hands are on it.</p>
+      <p>The other two carry the absence. They felt the moment it closed. They will feel it for the rest of their lives â€” not as grief alone, but as a specific, unnameable awareness that somewhere the boundary holds, and they know whose hands are on it.</p>
     </div>
 
     <div class="path-subsection">
       <p class="path-subsection-label">What the World Gains</p>
       <p>The Shrouded Lord is sealed. The Shadowfell weakens over the following decades as his siphon collapses without his will to sustain it. The Mournweald slowly releases its hold. <strong>The threat does not return.</strong></p>
-      <p>Somewhere — not accessible, not visible, but <em>present</em> — the bearer holds the line.</p>
+      <p>Somewhere â€” not accessible, not visible, but <em>present</em> â€” the bearer holds the line.</p>
     </div>
 
     <div class="shared-block">
-      <p>All three of you carry the Sigil. All three of you will feel the moment the boundary closes. The last thing any of you perceives before the transformation completes is each other — clearly, through the Sigil's light, for one impossible instant. Then the bearer is gone, and you remain, and the world is quieter than it has ever been.</p>
+      <p>All three of you carry the Sigil. All three of you will feel the moment the boundary closes. The last thing any of you perceives before the transformation completes is each other â€” clearly, through the Sigil's light, for one impossible instant. Then the bearer is gone, and you remain, and the world is quieter than it has ever been.</p>
     </div>
   </article>
 
-  <!-- ═══════════════════════════════════════ -->
-  <!-- PATH II — THE BANISHMENT -->
-  <!-- ═══════════════════════════════════════ -->
+  <!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
+  <!-- PATH II â€” THE BANISHMENT -->
+  <!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
 
   <div class="path-divider banish reveal">
     <span></span><span></span>
@@ -656,32 +658,32 @@
 
     <div class="path-subsection">
       <p class="path-subsection-label">What Happens</p>
-      <p>All three of you use the Sigil together to replicate the original act — forcing N'yahl'Zorath beyond the rim without any of you becoming the lock. The pattern fires completely.</p>
+      <p>All three of you use the Sigil together to replicate the original act â€” forcing N'yahl'Zorath beyond the rim without any of you becoming the lock. The pattern fires completely.</p>
       <p>And then it <strong>shatters</strong>.</p>
-      <p>The five rings fracture outward in silence. The eclipse closes. What remains of the Sigil dissolves — into skin, into shadow, into the space behind your eyes. All three of you. The Shrouded Lord is expelled for an age.</p>
+      <p>The five rings fracture outward in silence. The eclipse closes. What remains of the Sigil dissolves â€” into skin, into shadow, into the space behind your eyes. All three of you. The Shrouded Lord is expelled for an age.</p>
     </div>
 
     <div class="path-subsection">
       <p class="path-subsection-label">What It Costs</p>
-      <p>All three of you survive. You are whole in body. But every Eclipse Strain you carried — together — becomes a <strong>permanent mark</strong> on each of you:</p>
-      <p>Shadows that never quite match your movements. In deep silence, voices that are not quite voices — the names of things forgotten before the world was named. Occasionally, without warning, a perception of the world through a lens of absolute exhaustion. Other creatures sometimes hesitating around you in ways they cannot explain.</p>
-      <p>You remain yourselves. You remember who you were. But you will carry the shape of what you held for the rest of your lives — all three of you, together, which is the only way any of you could have carried it at all.</p>
+      <p>All three of you survive. You are whole in body. But every Eclipse Strain you carried â€” together â€” becomes a <strong>permanent mark</strong> on each of you:</p>
+      <p>Shadows that never quite match your movements. In deep silence, voices that are not quite voices â€” the names of things forgotten before the world was named. Occasionally, without warning, a perception of the world through a lens of absolute exhaustion. Other creatures sometimes hesitating around you in ways they cannot explain.</p>
+      <p>You remain yourselves. You remember who you were. But you will carry the shape of what you held for the rest of your lives â€” all three of you, together, which is the only way any of you could have carried it at all.</p>
     </div>
 
     <div class="path-subsection">
       <p class="path-subsection-label">What the World Gains</p>
-      <p>N'yahl'Zorath is gone for an age. The Shadowfell quiets. It becomes, over generations, a stranger and more neutral place. <strong>The threat is sealed — not forever.</strong></p>
-      <p>A future generation will face this again. All three of you know this. That knowledge is also a permanent mark — shared, like everything else.</p>
+      <p>N'yahl'Zorath is gone for an age. The Shadowfell quiets. It becomes, over generations, a stranger and more neutral place. <strong>The threat is sealed â€” not forever.</strong></p>
+      <p>A future generation will face this again. All three of you know this. That knowledge is also a permanent mark â€” shared, like everything else.</p>
     </div>
 
     <div class="shared-block">
-      <p>All three of you carry the Sigil. All three of you carry the marks. The shadow that lags, the voices at the edge of silence, the occasional weight of a perspective that is not entirely your own — these do not belong to one bearer alone. You will all live with the shape of what you held. You will carry it together, for the rest of your lives, and your lives will be long enough that you will have time to understand what that means.</p>
+      <p>All three of you carry the Sigil. All three of you carry the marks. The shadow that lags, the voices at the edge of silence, the occasional weight of a perspective that is not entirely your own â€” these do not belong to one bearer alone. You will all live with the shape of what you held. You will carry it together, for the rest of your lives, and your lives will be long enough that you will have time to understand what that means.</p>
     </div>
   </article>
 
-  <!-- ═══════════════════════════════════════ -->
-  <!-- PATH III — THE RESTORATION -->
-  <!-- ═══════════════════════════════════════ -->
+  <!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
+  <!-- PATH III â€” THE RESTORATION -->
+  <!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
 
   <div class="path-divider restore reveal">
     <span></span><span></span>
@@ -696,15 +698,15 @@
 
     <div class="path-subsection">
       <p class="path-subsection-label">What Happens</p>
-      <p>You do not cast out. You do not become the lock. You use the Sigil together to do something the elder gods never considered — something the Codex was never designed for.</p>
+      <p>You do not cast out. You do not become the lock. You use the Sigil together to do something the elder gods never considered â€” something the Codex was never designed for.</p>
       <p>You <strong>return Aelthas his name</strong>.</p>
-      <p>The name was not destroyed when the gods cut it from him. It was held — first in the Codex, then in the fragments, and finally in the Sigil itself, preserved in the pattern without anyone knowing it was there. The Sigil, fully formed, at full power, in the presence of the being it was made from — can give it back.</p>
+      <p>The name was not destroyed when the gods cut it from him. It was held â€” first in the Codex, then in the fragments, and finally in the Sigil itself, preserved in the pattern without anyone knowing it was there. The Sigil, fully formed, at full power, in the presence of the being it was made from â€” can give it back.</p>
       <p>You speak the name. <em>Aelthas.</em> Aloud. All three of you. Directly at him. The five rings align for the first and only time into a single, perfect eclipse. The name passes through all of you and into the space where N'yahl'Zorath stands.</p>
     </div>
 
     <div class="path-subsection">
       <p class="path-subsection-label">What It Costs</p>
-      <p>The Sigil dissolves — cleanly, completely, without shattering. All three of you survive whole, with <strong>no permanent marks</strong>. The pattern releases cleanly when used for return rather than force.</p>
+      <p>The Sigil dissolves â€” cleanly, completely, without shattering. All three of you survive whole, with <strong>no permanent marks</strong>. The pattern releases cleanly when used for return rather than force.</p>
       <p>The cost is different. The cost is <strong>uncertainty</strong>.</p>
       <p>The outcome is not sealed. Not controlled. Not known. He is given back something that was stolen from him and left to decide what he does with it. You will never know, with certainty, what he becomes. The world will find out slowly, over years, in ways that may not be legible as his doing at all.</p>
     </div>
@@ -716,17 +718,17 @@
     </div>
 
     <div class="shared-block">
-      <p>All three of you carry the Sigil. All three of you speak the name. <strong>Aelthas</strong> — returned not by one voice but by three, by people who chose to say it knowing what it cost and not knowing what it would become. Whatever he does with what was given back to him, he heard it from all of you. That is not nothing. That may be everything.</p>
+      <p>All three of you carry the Sigil. All three of you speak the name. <strong>Aelthas</strong> â€” returned not by one voice but by three, by people who chose to say it knowing what it cost and not knowing what it would become. Whatever he does with what was given back to him, he heard it from all of you. That is not nothing. That may be everything.</p>
     </div>
   </article>
 
   <!-- CLOSING -->
   <footer class="closing reveal">
     <p class="closing-title">A Note on Choice</p>
-    <p>There is no correct path. Each one reshapes the world differently. Each one costs something real — power, selfhood, certainty, or the comfort of a clean ending.</p>
-    <p>You have all carried this together. You all feel the strain. You will all share the consequence, whatever it is. The Sigil responds to spoken intent — what you say to N'yahl'Zorath, what you declare you are willing to do, determines which path opens. If what you say is genuinely its own thing and doesn't map cleanly to any of the three paths above, let it be.</p>
+    <p>There is no correct path. Each one reshapes the world differently. Each one costs something real â€” power, selfhood, certainty, or the comfort of a clean ending.</p>
+    <p>You have all carried this together. You all feel the strain. You will all share the consequence, whatever it is. The Sigil responds to spoken intent â€” what you say to N'yahl'Zorath, what you declare you are willing to do, determines which path opens. If what you say is genuinely its own thing and doesn't map cleanly to any of the three paths above, let it be.</p>
     <p>The Sigil was always responsive to mortal will. That was the point of making mortals carry it.</p>
-    <p class="closing-final">◆ &nbsp; The Eclipse Sigil &nbsp; ◆</p>
+    <p class="closing-final">â—† &nbsp; The Eclipse Sigil &nbsp; â—†</p>
   </footer>
 
 </div>
@@ -748,3 +750,5 @@
 
 </body>
 </html>
+
+

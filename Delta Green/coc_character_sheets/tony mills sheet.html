@@ -1,9 +1,9 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Tony Mills — Investigator Sheet</title>
+<title>Tony Mills â€” Investigator Sheet</title>
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Crimson+Text:ital,wght@0,400;0,600;1,400;1,600&family=Special+Elite&display=swap" rel="stylesheet"/>
 <style>
 :root{--p:#f0e8d5;--pd:#e0d0b0;--pp:#c8b890;--ink:#1a120a;--inkf:#3d2e1e;--inkm:#5a4030;--cr:#8b1a1a;--crb:#b52020;--crd:#5c0f0f;--g:#8b6914;--gb:#c49a1e;--fd:'Cinzel',serif;--fb:'Crimson Text',serif;--ft:'Special Elite',cursive}
@@ -139,8 +139,10 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .nav-link{font-family:var(--fd);font-size:10px;letter-spacing:0.08em;text-transform:uppercase;color:var(--pp);text-decoration:none;border:1px solid #4a3a20;padding:4px 10px;transition:all 0.15s}
 .nav-link:hover{color:var(--p);border-color:var(--gb);background:rgba(139,105,20,0.2)}
 </style>
+    <link rel='stylesheet' href='../../assets/css/theme-cosmic90s.css'>
+    <link rel='stylesheet' href='../../assets/css/page-polish.css'>
 </head>
-<body>
+<body class='theme-cosmic90s page-tony-mills-sheet'>
 <nav class="nav-strip">
   <a class="nav-link" href="../index.html">Delta Green Hub</a>
   <a class="nav-link" href="index.html">CoC Sheets</a>
@@ -183,7 +185,7 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
         <div class="vital-display" id="hpVal">11</div>
         <div class="vital-max">/ 11 max</div>
         <div class="vital-btns">
-          <button class="vbtn" onclick="changeVital('hp',-1)">−</button>
+          <button class="vbtn" onclick="changeVital('hp',-1)">âˆ’</button>
           <button class="vbtn plus" onclick="changeVital('hp',1)">+</button>
         </div>
         <div class="vital-bar"><div class="vital-fill" id="hpBar" style="width:100%;background:var(--g)"></div></div>
@@ -193,7 +195,7 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
         <div class="vital-display" id="sanVal">45</div>
         <div class="vital-max">/ 99 max</div>
         <div class="vital-btns">
-          <button class="vbtn" onclick="changeVital('san',-1)">−</button>
+          <button class="vbtn" onclick="changeVital('san',-1)">âˆ’</button>
           <button class="vbtn plus" onclick="changeVital('san',1)">+</button>
         </div>
         <div class="vital-bar"><div class="vital-fill" id="sanBar" style="width:45%;background:var(--cr)"></div></div>
@@ -203,7 +205,7 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
         <div class="vital-display" id="mpVal">9</div>
         <div class="vital-max">/ 9 max</div>
         <div class="vital-btns">
-          <button class="vbtn" onclick="changeVital('mp',-1)">−</button>
+          <button class="vbtn" onclick="changeVital('mp',-1)">âˆ’</button>
           <button class="vbtn plus" onclick="changeVital('mp',1)">+</button>
         </div>
         <div class="vital-bar"><div class="vital-fill" id="mpBar" style="width:100%;background:#4a6a8a"></div></div>
@@ -213,7 +215,7 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
         <div class="vital-display" id="luckVal">80</div>
         <div class="vital-max">/ 99 max</div>
         <div class="vital-btns">
-          <button class="vbtn" onclick="changeVital('luck',-1)">−</button>
+          <button class="vbtn" onclick="changeVital('luck',-1)">âˆ’</button>
           <button class="vbtn plus" onclick="changeVital('luck',1)">+</button>
         </div>
         <div class="vital-bar"><div class="vital-fill" id="luckBar" style="width:80%;background:var(--gb)"></div></div>
@@ -285,7 +287,7 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
     <!-- SKILLS TAB -->
     <div class="tab-content active" id="tab-skills">
       <div class="highlight-box">
-        <div class="highlight-title">&#9733; Signature Skill — Drive Auto: 90%</div>
+        <div class="highlight-title">&#9733; Signature Skill â€” Drive Auto: 90%</div>
         <div style="font-family:var(--ft);font-size:12px;color:var(--inkm)">Tony knows every road in and around Tregaw. Half: 45 &nbsp;|&nbsp; Fifth: 18 &nbsp;|&nbsp; Extreme success at 18 or below.</div>
       </div>
       <div class="legend">
@@ -306,8 +308,8 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
         <div class="sh-name">Skill</div>
         <div class="sh-base">Base</div>
         <div class="sh-val">Tony's %</div>
-        <div class="sh-half">½</div>
-        <div class="sh-fifth">⅕</div>
+        <div class="sh-half">Â½</div>
+        <div class="sh-fifth">â…•</div>
         <div class="sh-roll" style="min-width:90px">Roll</div>
       </div>
       <div class="skill-list" id="skillList"></div>
@@ -315,13 +317,13 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 
     <!-- SAN TRACK TAB -->
     <div class="tab-content" id="tab-santrack">
-      <div style="font-family:var(--fd);font-size:10px;letter-spacing:0.14em;color:var(--cr);text-transform:uppercase;margin-bottom:8px">Sanity Track — Click any pip to set current SAN</div>
+      <div style="font-family:var(--fd);font-size:10px;letter-spacing:0.14em;color:var(--cr);text-transform:uppercase;margin-bottom:8px">Sanity Track â€” Click any pip to set current SAN</div>
       <div style="font-family:var(--ft);font-size:12px;color:var(--inkm);margin-bottom:12px;font-style:italic">Starting SAN: 45 &nbsp;|&nbsp; Insane threshold: 9 &nbsp;|&nbsp; Indefinite insanity: lose 9+ SAN in one day</div>
       <div class="san-track" id="sanTrack"></div>
       <div class="san-label-row">
-        <span>0 — Gone</span>
+        <span>0 â€” Gone</span>
         <span id="sanTrackVal" style="color:var(--cr)">Current: 45</span>
-        <span>99 — Max</span>
+        <span>99 â€” Max</span>
       </div>
       <div style="margin-top:16px;padding:12px;background:rgba(139,26,26,0.06);border-left:3px solid var(--cr)">
         <div style="font-family:var(--fd);font-size:9px;letter-spacing:0.12em;color:var(--cr);text-transform:uppercase;margin-bottom:6px">Insanity Thresholds</div>
@@ -333,9 +335,9 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
         </div>
       </div>
       <div style="margin-top:12px;padding:12px;background:rgba(139,105,20,0.06);border-left:3px solid var(--g)">
-        <div style="font-family:var(--fd);font-size:9px;letter-spacing:0.12em;color:var(--g);text-transform:uppercase;margin-bottom:6px">Note — High Luck</div>
+        <div style="font-family:var(--fd);font-size:9px;letter-spacing:0.12em;color:var(--g);text-transform:uppercase;margin-bottom:6px">Note â€” High Luck</div>
         <div style="font-family:var(--ft);font-size:12px;color:var(--inkm);line-height:1.8">
-          Luck: 80 — Tony is fortunate. External circumstances tend to break his way.<br>
+          Luck: 80 â€” Tony is fortunate. External circumstances tend to break his way.<br>
           Luck is never modified by bonus or penalty dice.
         </div>
       </div>
@@ -345,8 +347,8 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
     <div class="tab-content" id="tab-backstory">
       <div class="backstory-grid">
         <div class="bs-item red" style="grid-column:1/-1">
-          <div class="bs-title">Origin — My Story</div>
-          <div class="bs-text">20 years ago, got in trouble with the law — a minor issue, but enough to make him leg it to a nearby town to hide it out. He never left. Even through the workplace hardtimes, he never felt it was safe to return home. His home is here now. Nobody asks questions about where someone came from in a town like Tregaw. That suited him fine.</div>
+          <div class="bs-title">Origin â€” My Story</div>
+          <div class="bs-text">20 years ago, got in trouble with the law â€” a minor issue, but enough to make him leg it to a nearby town to hide it out. He never left. Even through the workplace hardtimes, he never felt it was safe to return home. His home is here now. Nobody asks questions about where someone came from in a town like Tregaw. That suited him fine.</div>
         </div>
         <div class="bs-item">
           <div class="bs-title gold">Personal Description</div>
@@ -354,7 +356,7 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
         </div>
         <div class="bs-item blank">
           <div class="bs-title grey">Traits</div>
-          <textarea class="notes-area" style="min-height:70px;margin-top:4px" placeholder="Not yet recorded — add traits here..."></textarea>
+          <textarea class="notes-area" style="min-height:70px;margin-top:4px" placeholder="Not yet recorded â€” add traits here..."></textarea>
         </div>
         <div class="bs-item blank">
           <div class="bs-title grey">Ideology &amp; Beliefs</div>
@@ -390,7 +392,7 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
     <!-- NOTES TAB -->
     <div class="tab-content" id="tab-notes">
       <div style="font-family:var(--fd);font-size:10px;letter-spacing:0.14em;color:var(--g);text-transform:uppercase;margin-bottom:10px">Session Notes</div>
-      <textarea class="notes-area" style="min-height:180px" placeholder="Notes from play — clues, routes, observations...&#10;&#10;Tony knows this town better than anyone. Write down what he notices."></textarea>
+      <textarea class="notes-area" style="min-height:180px" placeholder="Notes from play â€” clues, routes, observations...&#10;&#10;Tony knows this town better than anyone. Write down what he notices."></textarea>
       <div style="margin-top:12px">
         <div style="font-family:var(--fd);font-size:10px;letter-spacing:0.14em;color:var(--g);text-transform:uppercase;margin-bottom:6px">Mythos Encountered</div>
         <textarea class="notes-area" style="min-height:80px" placeholder="Things that cannot be unseen..."></textarea>
@@ -512,9 +514,9 @@ function rollSkill(e,idx){
   var isFumble=(sk.tony<50&&roll>=96)||roll===100;
   if(isFumble){cls='fumble';txt=roll+' FUMBLE';}
   else if(roll<=f(sk.tony)&&roll!==100){cls='extreme';txt=roll+' Extreme!';}
-  else if(roll<=h(sk.tony)){cls='hard';txt=roll+' Hard ✓';}
-  else if(roll<=sk.tony){cls='success';txt=roll+' Success ✓';}
-  else{cls='fail';txt=roll+' Fail ✗';}
+  else if(roll<=h(sk.tony)){cls='hard';txt=roll+' Hard âœ“';}
+  else if(roll<=sk.tony){cls='success';txt=roll+' Success âœ“';}
+  else{cls='fail';txt=roll+' Fail âœ—';}
   el.textContent=txt;el.className='roll-result show '+cls;
   clearTimeout(rollTimers[idx]);
   rollTimers[idx]=setTimeout(function(){el.className='roll-result';},5000);
@@ -539,13 +541,13 @@ function updateVitalDisplay(key){
 function updateStatus(){
   var san=vitals.san.cur,hp=vitals.hp.cur;
   var banner=document.getElementById('statusBanner');var msg,cls;
-  if(hp===0){msg='DYING — First Aid required immediately';cls='critical';}
-  else if(hp<=2){msg='Critically Wounded — CON roll or unconscious';cls='danger';}
+  if(hp===0){msg='DYING â€” First Aid required immediately';cls='critical';}
+  else if(hp<=2){msg='Critically Wounded â€” CON roll or unconscious';cls='danger';}
   else if(san===0){msg='PERMANENTLY INSANE';cls='critical';}
-  else if(san<9){msg='On the brink — permanent insanity imminent';cls='critical';}
-  else if(san<18){msg='Unravelling — temporary insanity likely';cls='danger';}
-  else if(san<36){msg='Troubled — below starting SAN';cls='troubled';}
-  else if(hp<=5){msg='Seriously wounded — major wound risk';cls='troubled';}
+  else if(san<9){msg='On the brink â€” permanent insanity imminent';cls='critical';}
+  else if(san<18){msg='Unravelling â€” temporary insanity likely';cls='danger';}
+  else if(san<36){msg='Troubled â€” below starting SAN';cls='troubled';}
+  else if(hp<=5){msg='Seriously wounded â€” major wound risk';cls='troubled';}
   else{msg='Psychologically Stable';cls='stable';}
   banner.textContent=msg;banner.className='status-banner '+cls;
   var tl=document.getElementById('twentyLine');var it=document.getElementById('indTrigger');
@@ -559,7 +561,7 @@ function buildWoundTrack(){
   for(var i=0;i<11;i++){
     var box=document.createElement('div');
     box.className='wound-box'+(wounds[i]?' hit':'');
-    box.textContent=wounds[i]?'✕':'';
+    box.textContent=wounds[i]?'âœ•':'';
     box.onclick=(function(idx){return function(){wounds[idx]=!wounds[idx];buildWoundTrack();updateWoundsFromWoundTrack();saveState();};})(i);
     wt.appendChild(box);
   }
@@ -568,7 +570,7 @@ function updateWoundsFromWoundTrack(){
   var count=wounds.filter(Boolean).length;vitals.hp.cur=Math.max(0,vitals.hp.max-count);
   updateVitalDisplay('hp');var st=document.getElementById('woundStatus');
   if(count===0){st.textContent='No wounds';st.style.color='var(--pp)';}
-  else if(vitals.hp.cur<=1){st.textContent='CRITICAL — CON roll or unconscious';st.style.color='var(--crb)';}
+  else if(vitals.hp.cur<=1){st.textContent='CRITICAL â€” CON roll or unconscious';st.style.color='var(--crb)';}
   else if(count>=5){st.textContent='Major wound sustained';st.style.color='var(--cr)';}
   else{st.textContent=count+' wound'+(count>1?'s':'')+' taken';st.style.color='#c08040';}
   updateStatus();
@@ -615,3 +617,5 @@ loadState();buildWoundTrack();buildSkillList();
 </script>
 </body>
 </html>
+
+

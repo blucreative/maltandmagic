@@ -1,0 +1,122 @@
+:root {
+  --mil-bg: #10140f;
+  --mil-bg-soft: #1b2318;
+  --mil-panel: rgba(32, 41, 29, 0.88);
+  --mil-border: rgba(177, 190, 129, 0.34);
+  --mil-text: #d8dec7;
+  --mil-muted: #a7b08d;
+  --mil-accent: #b1be81;
+  --mil-accent-strong: #d3ddaa;
+  --mil-link: #c3cf96;
+  --mil-link-hover: #e3edbf;
+  --mil-shadow: 0 14px 32px rgba(0, 0, 0, 0.4);
+}
+
+body.theme-military90s {
+  color: var(--mil-text);
+  background-color: var(--mil-bg);
+  background-image:
+    linear-gradient(120deg, rgba(92, 108, 69, 0.12) 0%, transparent 25%),
+    linear-gradient(300deg, rgba(67, 79, 52, 0.18) 0%, transparent 28%),
+    repeating-linear-gradient(
+      45deg,
+      rgba(30, 36, 26, 0.38) 0,
+      rgba(30, 36, 26, 0.38) 8px,
+      rgba(19, 24, 17, 0.45) 8px,
+      rgba(19, 24, 17, 0.45) 16px
+    );
+  background-attachment: fixed;
+}
+
+body.theme-military90s::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background-image: radial-gradient(circle at 20% 10%, rgba(211, 221, 170, 0.08), transparent 35%);
+  z-index: 0;
+}
+
+body.theme-military90s > * {
+  position: relative;
+  z-index: 1;
+}
+
+body.theme-military90s h1,
+body.theme-military90s h2,
+body.theme-military90s h3,
+body.theme-military90s h4,
+body.theme-military90s h5,
+body.theme-military90s h6 {
+  color: var(--mil-accent-strong);
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+
+body.theme-military90s a {
+  color: var(--mil-link);
+}
+
+body.theme-military90s a:hover,
+body.theme-military90s a:focus-visible {
+  color: var(--mil-link-hover);
+}
+
+body.theme-military90s section,
+body.theme-military90s article,
+body.theme-military90s main,
+body.theme-military90s .card,
+body.theme-military90s .panel,
+body.theme-military90s .container,
+body.theme-military90s form,
+body.theme-military90s table {
+  background-color: var(--mil-panel);
+  border: 1px solid var(--mil-border);
+  border-radius: 6px;
+  box-shadow: var(--mil-shadow);
+}
+
+body.theme-military90s table {
+  border-collapse: collapse;
+}
+
+body.theme-military90s th,
+body.theme-military90s td {
+  border-color: rgba(177, 190, 129, 0.32);
+}
+
+body.theme-military90s button,
+body.theme-military90s input[type="button"],
+body.theme-military90s input[type="submit"] {
+  background: linear-gradient(180deg, #6f7b4e 0%, #55603b 100%);
+  border: 1px solid rgba(206, 218, 160, 0.45);
+  color: #eff4dd;
+  border-radius: 5px;
+  transition: filter 0.2s ease, transform 0.14s ease;
+}
+
+body.theme-military90s button:hover,
+body.theme-military90s input[type="button"]:hover,
+body.theme-military90s input[type="submit"]:hover {
+  filter: brightness(1.08);
+}
+
+body.theme-military90s button:active,
+body.theme-military90s input[type="button"]:active,
+body.theme-military90s input[type="submit"]:active {
+  transform: translateY(1px);
+}
+
+body.theme-military90s input,
+body.theme-military90s textarea,
+body.theme-military90s select {
+  background-color: rgba(16, 22, 15, 0.9);
+  color: var(--mil-text);
+  border: 1px solid rgba(177, 190, 129, 0.45);
+}
+
+@media (max-width: 720px) {
+  body.theme-military90s {
+    font-size: 0.97rem;
+  }
+}

@@ -1,0 +1,152 @@
+:root {
+  --fantasy-bg: #0f0e10;
+  --fantasy-bg-soft: #1a171d;
+  --fantasy-panel: rgba(28, 23, 33, 0.84);
+  --fantasy-panel-border: rgba(224, 197, 136, 0.35);
+  --fantasy-text: #efe4cb;
+  --fantasy-muted: #c2b79f;
+  --fantasy-accent: #c9a866;
+  --fantasy-accent-strong: #e2c78a;
+  --fantasy-link: #e0c07a;
+  --fantasy-link-hover: #f4ddac;
+  --fantasy-shadow: 0 14px 34px rgba(0, 0, 0, 0.34);
+}
+
+body.theme-fantasy {
+  color: var(--fantasy-text);
+  background-color: var(--fantasy-bg);
+  background-image:
+    radial-gradient(circle at 12% 9%, rgba(201, 168, 102, 0.16), transparent 33%),
+    radial-gradient(circle at 88% 14%, rgba(124, 87, 37, 0.18), transparent 28%),
+    linear-gradient(180deg, #161318 0%, #0f0e10 65%, #0a090b 100%);
+  background-attachment: fixed;
+}
+
+body.theme-fantasy::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.25;
+  background-image: repeating-linear-gradient(
+    45deg,
+    rgba(245, 224, 174, 0.05) 0,
+    rgba(245, 224, 174, 0.05) 1px,
+    transparent 1px,
+    transparent 8px
+  );
+  z-index: 0;
+}
+
+body.theme-fantasy > * {
+  position: relative;
+  z-index: 1;
+}
+
+body.theme-fantasy h1,
+body.theme-fantasy h2,
+body.theme-fantasy h3,
+body.theme-fantasy h4,
+body.theme-fantasy h5,
+body.theme-fantasy h6 {
+  color: var(--fantasy-accent-strong);
+  letter-spacing: 0.02em;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.35);
+}
+
+body.theme-fantasy a {
+  color: var(--fantasy-link);
+  text-underline-offset: 2px;
+  text-decoration-thickness: 1px;
+  transition: color 0.2s ease;
+}
+
+body.theme-fantasy a:hover,
+body.theme-fantasy a:focus-visible {
+  color: var(--fantasy-link-hover);
+}
+
+body.theme-fantasy p,
+body.theme-fantasy li,
+body.theme-fantasy dd,
+body.theme-fantasy dt,
+body.theme-fantasy td,
+body.theme-fantasy th,
+body.theme-fantasy label,
+body.theme-fantasy span {
+  line-height: 1.55;
+}
+
+body.theme-fantasy table,
+body.theme-fantasy .card,
+body.theme-fantasy .panel,
+body.theme-fantasy section,
+body.theme-fantasy article,
+body.theme-fantasy main,
+body.theme-fantasy .container,
+body.theme-fantasy form {
+  border-color: var(--fantasy-panel-border);
+}
+
+body.theme-fantasy section,
+body.theme-fantasy article,
+body.theme-fantasy main,
+body.theme-fantasy .card,
+body.theme-fantasy .panel,
+body.theme-fantasy .container {
+  background-color: var(--fantasy-panel);
+  backdrop-filter: blur(2px);
+  border-radius: 10px;
+  box-shadow: var(--fantasy-shadow);
+}
+
+body.theme-fantasy table {
+  border-collapse: collapse;
+  overflow: hidden;
+}
+
+body.theme-fantasy table th,
+body.theme-fantasy table td {
+  border-color: rgba(220, 190, 130, 0.35);
+}
+
+body.theme-fantasy button,
+body.theme-fantasy input[type="button"],
+body.theme-fantasy input[type="submit"] {
+  background: linear-gradient(180deg, #6d5330 0%, #4f3a21 100%);
+  color: #f4e8ce;
+  border: 1px solid rgba(232, 206, 151, 0.55);
+  border-radius: 8px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.35);
+  transition: transform 0.14s ease, filter 0.2s ease;
+}
+
+body.theme-fantasy button:hover,
+body.theme-fantasy input[type="button"]:hover,
+body.theme-fantasy input[type="submit"]:hover {
+  filter: brightness(1.08);
+}
+
+body.theme-fantasy button:active,
+body.theme-fantasy input[type="button"]:active,
+body.theme-fantasy input[type="submit"]:active {
+  transform: translateY(1px);
+}
+
+body.theme-fantasy input,
+body.theme-fantasy textarea,
+body.theme-fantasy select {
+  background-color: rgba(14, 12, 16, 0.8);
+  color: var(--fantasy-text);
+  border: 1px solid rgba(224, 197, 136, 0.45);
+}
+
+@media (max-width: 720px) {
+  body.theme-fantasy {
+    font-size: 0.97rem;
+  }
+
+  body.theme-fantasy h1 {
+    line-height: 1.2;
+  }
+}

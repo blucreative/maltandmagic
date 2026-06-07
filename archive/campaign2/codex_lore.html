@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -132,7 +132,7 @@
   }
 
   .page-header::before {
-    content: '✶';
+    content: 'âœ¶';
     position: absolute;
     left: 50%;
     top: 0.55rem;
@@ -294,8 +294,10 @@
   }
 
 </style>
+    <link rel='stylesheet' href='../../assets/css/theme-fantasy.css'>
+    <link rel='stylesheet' href='../../assets/css/page-polish.css'>
 </head>
-<body>
+<body class='theme-fantasy page-codex-lore'>
 <nav class="back-nav" aria-label="Page navigation">
   <a class="back-link" href="../../index.html">&larr; Back to Index</a>
 </nav>
@@ -507,7 +509,7 @@
         <button className="chapter-toggle" onClick={onToggle} aria-expanded={open}>
           <span className="chapter-index">{number}</span>
           <span className="chapter-title">{chapter.title}</span>
-          <span className="chapter-caret">▶</span>
+          <span className="chapter-caret">â–¶</span>
         </button>
         {open && (
           <div className="chapter-body">
@@ -564,3 +566,5 @@
   </script>
 </body>
 </html>
+
+

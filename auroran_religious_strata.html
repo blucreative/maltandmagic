@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -295,8 +295,10 @@
   }
 
 </style>
+    <link rel='stylesheet' href='assets/css/theme-fantasy.css'>
+    <link rel='stylesheet' href='assets/css/page-polish.css'>
 </head>
-<body>
+<body class='theme-fantasy page-auroran-religious-strata'>
 <nav class="back-nav" aria-label="Page navigation">
   <a class="back-link" href="index.html">&larr; Back to Index</a>
 </nav>
@@ -311,7 +313,7 @@ const LAYERS = [
     id: "l0",
     color: "#EF9F27",
     title: "The Imperial Family",
-    sub: "Emperor · Empress · Blood heirs",
+    sub: "Emperor Â· Empress Â· Blood heirs",
     tags: [{ cls: "tg-lum", text: "Luminastra - divine vessel" }],
     sections: [
       {
@@ -333,7 +335,7 @@ const LAYERS = [
     id: "l1",
     color: "#FAC775",
     title: "The Council of Light",
-    sub: "High Seers · Doctrinal Interpreters · The real theological power",
+    sub: "High Seers Â· Doctrinal Interpreters Â· The real theological power",
     tags: [
       { cls: "tg-lum", text: "Luminastra - doctrine" },
       { cls: "tg-prop", text: "Other gods - managed" }
@@ -358,7 +360,7 @@ const LAYERS = [
     id: "l2",
     color: "#B5D4F4",
     title: "The Luminous Order",
-    sub: "Elite guard · Spiritual enforcers · Paladins and senior clergy combined",
+    sub: "Elite guard Â· Spiritual enforcers Â· Paladins and senior clergy combined",
     tags: [
       { cls: "tg-lum", text: "Luminastra - oath" },
       { cls: "tg-arc", text: "Arcturius - practice" }
@@ -383,7 +385,7 @@ const LAYERS = [
     id: "l3",
     color: "#97C459",
     title: "Dawnsingers",
-    sub: "Common clergy · Parish priests of the Empire",
+    sub: "Common clergy Â· Parish priests of the Empire",
     tags: [
       { cls: "tg-lum", text: "Luminastra - vocation" },
       { cls: "tg-folk", text: "Folk traditions - tolerated" }
@@ -408,7 +410,7 @@ const LAYERS = [
     id: "l4",
     color: "#B4B2A9",
     title: "Urban Aurorans",
-    sub: "Merchants · Craftspeople · City folk · The Empire's visible middle",
+    sub: "Merchants Â· Craftspeople Â· City folk Â· The Empire's visible middle",
     tags: [
       { cls: "tg-lum", text: "Luminastra - public life" },
       { cls: "tg-zel", text: "Zelos - commercial life" },
@@ -435,7 +437,7 @@ const LAYERS = [
     id: "l5",
     color: "#5DCAA5",
     title: "Rural Aurorans",
-    sub: "Farmers · Villagers · The Empire's invisible majority",
+    sub: "Farmers Â· Villagers Â· The Empire's invisible majority",
     tags: [
       { cls: "tg-folk", text: "Elaria - primary" },
       { cls: "tg-folk", text: "Nalakei - harvest and joy" },
@@ -467,7 +469,7 @@ function Layer({ layer, isOpen, onToggle }) {
         <span className="dot" style={{ background: layer.color }}></span>
         <span className="layer-title">{layer.title}</span>
         <span className="layer-sub">{layer.sub}</span>
-        <span className="layer-chevron">▶</span>
+        <span className="layer-chevron">â–¶</span>
       </button>
       {isOpen && (
         <div className="layer-body">
@@ -536,3 +538,5 @@ ReactDOM.createRoot(document.getElementById("app")).render(<App />);
 </script>
 </body>
 </html>
+
+

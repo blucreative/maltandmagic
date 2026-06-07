@@ -1,4 +1,4 @@
-
+﻿
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -47,7 +47,7 @@ body {
   min-height: 100vh;
 }
 
-/* ── star field ── */
+/* â”€â”€ star field â”€â”€ */
 body::before {
   content: '';
   position: fixed;
@@ -63,7 +63,7 @@ body::before {
   opacity: 0.2;
 }
 
-/* ── page shell ── */
+/* â”€â”€ page shell â”€â”€ */
 .page {
   position: relative;
   z-index: 1;
@@ -72,7 +72,7 @@ body::before {
   padding: 0 1.5rem 5rem;
 }
 
-/* ── site header ── */
+/* â”€â”€ site header â”€â”€ */
 .hdr {
   text-align: center;
   padding: 3.2rem 0 2.4rem;
@@ -113,7 +113,7 @@ body::before {
   line-height: 1.7;
 }
 
-/* ── section ── */
+/* â”€â”€ section â”€â”€ */
 .section {
   margin-bottom: 3.5rem;
 }
@@ -217,14 +217,14 @@ body::before {
   max-height: 1200px;
 }
 
-/* ── card grid ── */
+/* â”€â”€ card grid â”€â”€ */
 .card-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
   gap: 0.85rem;
 }
 
-/* ── doc card ── */
+/* â”€â”€ doc card â”€â”€ */
 .doc-card {
   display: block;
   text-decoration: none;
@@ -316,7 +316,7 @@ body::before {
   padding-left: 2px;
 }
 
-/* ── ornamental footer ── */
+/* â”€â”€ ornamental footer â”€â”€ */
 .orn {
   text-align: center;
   font-size: 10px;
@@ -327,8 +327,10 @@ body::before {
   margin-top: 1rem;
 }
 </style>
+    <link rel='stylesheet' href='assets/css/theme-fantasy.css'>
+    <link rel='stylesheet' href='assets/css/page-polish.css'>
 </head>
-<body>
+<body class='theme-fantasy page-index'>
 <div id="root"></div>
 <script type="text/babel">
 
@@ -340,31 +342,31 @@ const SECTIONS = [
     theme: 'world',
     docs: [
       {
-        icon: '✦',
+        icon: 'âœ¦',
         title: 'Pantheon',
-        desc: 'Quick-reference sheet for all 26 deities of Ardahlia — alignment, domain, patron type, and core identity at a glance.',
+        desc: 'Quick-reference sheet for all 26 deities of Ardahlia â€” alignment, domain, patron type, and core identity at a glance.',
         href: 'Auroran_Pantheon.html',
       },
       {
-        icon: '☽',
+        icon: 'â˜½',
         title: 'Deity Lore',
         desc: 'Full narrative entries for each deity: origin, theology, folk practices, and place in the divine order.',
         href: 'pantheon-players_1.html',
       },
       {
-        icon: '◎',
+        icon: 'â—Ž',
         title: 'Calendar',
         desc: 'The Ardahlian calendar: months, seasons, named festivals, and how time is reckoned across the empire.',
         href: 'ardahlia-calendar.html',
       },
       {
-        icon: '✿',
+        icon: 'âœ¿',
         title: 'Folk Worship',
-        desc: 'How ordinary Ardahlians practise religion day-to-day — household shrines, folk rites, and regional devotion.',
+        desc: 'How ordinary Ardahlians practise religion day-to-day â€” household shrines, folk rites, and regional devotion.',
         href: 'ardahlia_folk_polytheism_matrix.html',
       },
       {
-        icon: '⊛',
+        icon: 'âŠ›',
         title: 'Day Name Reference',
         desc: 'The names and divine associations of the days of the Ardahlian week.',
         href: 'ardahlian_day_names.html',
@@ -378,21 +380,21 @@ const SECTIONS = [
     theme: 'c3',
     docs: [
       {
-        icon: '⟁',
+        icon: 'âŸ',
         title: 'Campaign 3 Primer',
-        desc: 'Everything new players need before the first session — the world, the stakes, and the questions Campaign 3 begins with.',
+        desc: 'Everything new players need before the first session â€” the world, the stakes, and the questions Campaign 3 begins with.',
         href: 'Campaign3_PlayerPrimer.html',
       },
       {
-        icon: '∴',
+        icon: 'âˆ´',
         title: 'Auroran Religious Strata',
         desc: 'The layered religious culture of the Auroran Empire: the state faith, hidden folk devotions, and the faultlines between them.',
         href: 'auroran_religious_strata.html',
       },
       {
-        icon: '◉',
+        icon: 'â—‰',
         title: 'Location Guide',
-        desc: "A traveller's guide to the five regions of the Auroran Empire — cities, settlements, waterways, and the territories beyond the frontier.",
+        desc: "A traveller's guide to the five regions of the Auroran Empire â€” cities, settlements, waterways, and the territories beyond the frontier.",
         href: 'player-location-guide.html',
       },
     ],
@@ -407,25 +409,25 @@ const ARCHIVED_SECTIONS = [
     theme: 'c2',
     docs: [
       {
-        icon: '⬡',
+        icon: 'â¬¡',
         title: 'The Lore of the Codex',
-        desc: 'The history and significance of the Codex — what it is, where it came from, and why it sits at the heart of Campaign 2.',
+        desc: 'The history and significance of the Codex â€” what it is, where it came from, and why it sits at the heart of Campaign 2.',
         href: 'archive/campaign2/codex_lore.html',
       },
       {
-        icon: '◈',
+        icon: 'â—ˆ',
         title: 'The Eclipse Sigil',
         desc: 'Mechanics and mythology of the Eclipse Sigil artifact: its five principles, the Eclipse Strain, and the burden it carries.',
         href: 'archive/campaign2/eclipse-sigil.html',
       },
       {
-        icon: '⊕',
+        icon: 'âŠ•',
         title: 'The Final Use',
-        desc: 'Lore for the three resolution paths of the Eclipse Sigil — The Seal, The Banishment, and The Restoration.',
+        desc: 'Lore for the three resolution paths of the Eclipse Sigil â€” The Seal, The Banishment, and The Restoration.',
         href: 'archive/campaign2/the-eclipse-sigil-final-use.html',
       },
       {
-        icon: '✧',
+        icon: 'âœ§',
         title: 'Campaign 2 Epilogue Guide',
         desc: 'A planning guide for player epilogues: arc reflection prompts, closing tone choices, and what to bring for final character send-offs.',
         href: 'archive/campaign2/Campaign2_Epilogue_Guide.html',
@@ -440,7 +442,7 @@ function DocCard({ doc, theme }) {
       <div className="card-top">
         <span className="card-icon">{doc.icon}</span>
         <span className="card-title">{doc.title}</span>
-        <span className="card-arrow">→</span>
+        <span className="card-arrow">â†’</span>
       </div>
       <p className="card-desc">{doc.desc}</p>
     </a>
@@ -475,7 +477,7 @@ function Archive({ sections }) {
       >
         <span className="archive-title">Archived Campaigns</span>
         <span className="archive-rule" />
-        <span className="archive-chevron">▶</span>
+        <span className="archive-chevron">â–¶</span>
       </button>
       {isOpen && (
         <div className="archive-content">
@@ -492,7 +494,7 @@ function App() {
   return (
     <div className="page">
       <header className="hdr">
-        <span className="hdr-orn">✦  ·  ✦  ·  ✦</span>
+        <span className="hdr-orn">âœ¦  Â·  âœ¦  Â·  âœ¦</span>
         <div className="hdr-title">Ardahlia Lore Files</div>
         <div className="hdr-sub">A living archive of the world of the campaign</div>
         <p className="hdr-intro">
@@ -505,7 +507,7 @@ function App() {
       
       <Archive sections={ARCHIVED_SECTIONS} />
 
-      <div className="orn">✦ · ✦ · ✦</div>
+      <div className="orn">âœ¦ Â· âœ¦ Â· âœ¦</div>
     </div>
   );
 }
@@ -514,3 +516,5 @@ ReactDOM.createRoot(document.getElementById('root')).render(<App />);
 </script>
 </body>
 </html>
+
+

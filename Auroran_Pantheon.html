@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -45,7 +45,7 @@ body {
   min-height: 100vh;
 }
 
-/* ── stars overlay ── */
+/* â”€â”€ stars overlay â”€â”€ */
 body::before {
   content:'';
   position:fixed;
@@ -61,7 +61,7 @@ body::before {
   opacity: 0.22;
 }
 
-/* ── layout ── */
+/* â”€â”€ layout â”€â”€ */
 .page {
   position:relative;
   z-index:1;
@@ -71,7 +71,7 @@ body::before {
   transition: padding-bottom 0.3s;
 }
 
-/* ── header ── */
+/* â”€â”€ header â”€â”€ */
 .hdr {
   text-align:center;
   padding: 2.8rem 0 2rem;
@@ -104,7 +104,7 @@ body::before {
   letter-spacing:0.06em;
 }
 
-/* ── sticky controls ── */
+/* â”€â”€ sticky controls â”€â”€ */
 .ctrl-wrap {
   position:sticky;
   top:0;
@@ -221,7 +221,7 @@ body::before {
   margin-bottom:0.5rem;
 }
 
-/* ── table ── */
+/* â”€â”€ table â”€â”€ */
 .dt {
   width:100%;
   border-collapse:collapse;
@@ -279,7 +279,7 @@ body::before {
   line-height:1.35;
 }
 
-/* ── badges ── */
+/* â”€â”€ badges â”€â”€ */
 .badge {
   display:inline-block;
   font-family:var(--font-h);
@@ -329,7 +329,7 @@ body::before {
   letter-spacing:0.04em;
 }
 
-/* ── card grid ── */
+/* â”€â”€ card grid â”€â”€ */
 .grid {
   display:grid;
   grid-template-columns:repeat(auto-fill, minmax(275px,1fr));
@@ -361,7 +361,7 @@ body::before {
 .card-badges { display:flex; flex-wrap:wrap; gap:4px; margin-bottom:0.6rem; }
 .card-role { font-size:12.5px; color:var(--txt2); line-height:1.35; }
 
-/* ── detail panel ── */
+/* â”€â”€ detail panel â”€â”€ */
 .detail {
   position:fixed;
   bottom:0;
@@ -484,8 +484,10 @@ body::before {
 }
 
 </style>
+    <link rel='stylesheet' href='assets/css/theme-fantasy.css'>
+    <link rel='stylesheet' href='assets/css/page-polish.css'>
 </head>
-<body>
+<body class='theme-fantasy page-auroran-pantheon'>
 <nav class="back-nav" aria-label="Page navigation">
   <a class="back-link" href="index.html">&larr; Back to Index</a>
 </nav>
@@ -522,109 +524,109 @@ const PATRON = {
 
 const DEITIES = [
   {name:"Abaddon",    alias:"Lord of Torment",      al:"ne",dm:"pest",pt:"fnd",
-   role:"Suffering that outlasts its cause — trauma, chronic pain, fear as permanent condition",
-   title:"The Lord of Torment — God of Fear, Pain and Suffering",
-   desc:"Governs suffering that outlasts its cause: trauma, chronic pain, the fear response that continues long after the threat is gone. His Pestilence domain is psychological and somatic rather than biological. Born from the first cry of anguish — not the first injury, but the first moment pain became a relationship with pain. Patron of healers who study what healing fails to reach, and soldiers who understand what prolonged violence does to those who survive it."},
+   role:"Suffering that outlasts its cause â€” trauma, chronic pain, fear as permanent condition",
+   title:"The Lord of Torment â€” God of Fear, Pain and Suffering",
+   desc:"Governs suffering that outlasts its cause: trauma, chronic pain, the fear response that continues long after the threat is gone. His Pestilence domain is psychological and somatic rather than biological. Born from the first cry of anguish â€” not the first injury, but the first moment pain became a relationship with pain. Patron of healers who study what healing fails to reach, and soldiers who understand what prolonged violence does to those who survive it."},
   {name:"Aeonius",    alias:"The Watcher",           al:"ln",dm:"know",pt:"ves",
-   role:"Time, fate, and the knowledge that cannot be acted on — the trapped observer",
-   title:"The Watcher — Master of Time, Fate and Knowledge",
-   desc:"Trapped in the Astral Plane, unable to interact directly with the material world. A Vestige whose limitation is circumstantial rather than damage — he sees everything but cannot reach. Communicates indirectly through omens, déjà vu, and the dreams of those who study time. Born from a tome in the Astral libraries that was neither written by gods nor mortals. Ioun's protégé who taught his teacher something she didn't know."},
+   role:"Time, fate, and the knowledge that cannot be acted on â€” the trapped observer",
+   title:"The Watcher â€” Master of Time, Fate and Knowledge",
+   desc:"Trapped in the Astral Plane, unable to interact directly with the material world. A Vestige whose limitation is circumstantial rather than damage â€” he sees everything but cannot reach. Communicates indirectly through omens, dÃ©jÃ  vu, and the dreams of those who study time. Born from a tome in the Astral libraries that was neither written by gods nor mortals. Ioun's protÃ©gÃ© who taught his teacher something she didn't know."},
   {name:"Anarion",    alias:"The Great Stag",        al:"nn",dm:"life",pt:"arch",
-   role:"The wild world's first self-awareness — nature before civilisation had names for it",
-   title:"The Great Stag — Lord of Beasts",
-   desc:"The oldest of the nature deities — not born but always-was, the first awareness that arose in the wild world before civilisation existed to name anything. His antlers grew the first leaves; his hoofprints became the first animal trails. Master of Beast Lords. Does not hear prayers spoken indoors. Patron of hunters, forest druids, centaurs, and rural communities who understand the wilds as something to coexist with rather than conquer."},
+   role:"The wild world's first self-awareness â€” nature before civilisation had names for it",
+   title:"The Great Stag â€” Lord of Beasts",
+   desc:"The oldest of the nature deities â€” not born but always-was, the first awareness that arose in the wild world before civilisation existed to name anything. His antlers grew the first leaves; his hoofprints became the first animal trails. Master of Beast Lords. Does not hear prayers spoken indoors. Patron of hunters, forest druids, centaurs, and rural communities who understand the wilds as something to coexist with rather than conquer."},
   {name:"Arcturius",  alias:"The Eternal Knight",    al:"lg",dm:"war", pt:"cel",
-   role:"Martial honour, endurance, and competition — war as discipline rather than destruction",
-   title:"The Eternal Knight — Champion of Endurance, Courage and Competition",
-   desc:"Once a mortal knight who stood alone on a bridge against an overwhelming force and was elevated to divinity through the accumulated reverence of those who heard the tale. Embodies honourable martial conduct — not war as destruction but war as discipline. Untarnished shield; never yielded. Patron of knightly orders, paladins, military academies. The Tournament of Valour and the Bridge Stand vigil are his primary festivals."},
+   role:"Martial honour, endurance, and competition â€” war as discipline rather than destruction",
+   title:"The Eternal Knight â€” Champion of Endurance, Courage and Competition",
+   desc:"Once a mortal knight who stood alone on a bridge against an overwhelming force and was elevated to divinity through the accumulated reverence of those who heard the tale. Embodies honourable martial conduct â€” not war as destruction but war as discipline. Untarnished shield; never yielded. Patron of knightly orders, paladins, military academies. The Tournament of Valour and the Bridge Stand vigil are his primary festivals."},
   {name:"Astaroth",   alias:"Horde Master",          al:"le",dm:"trick",pt:"fnd",
-   role:"Infernal contract and consent-based domination — evil that makes you sign",
-   title:"Horde Master — Lord of the Nine Hells, Arch-Devil",
-   desc:"Keeps his word absolutely — which is why he is so dangerous. His evil is sophisticated enough to make its targets sign. The god of the deal that seemed reasonable at the time, the clause you didn't read, the bargain that was exactly what it promised and nothing like what you expected. Rose from lieutenant to Lord of the Nine Hells through a series of agreements each individually unimpeachable. Distinct from Kallor: Astaroth binds through consent; Kallor chains through force."},
+   role:"Infernal contract and consent-based domination â€” evil that makes you sign",
+   title:"Horde Master â€” Lord of the Nine Hells, Arch-Devil",
+   desc:"Keeps his word absolutely â€” which is why he is so dangerous. His evil is sophisticated enough to make its targets sign. The god of the deal that seemed reasonable at the time, the clause you didn't read, the bargain that was exactly what it promised and nothing like what you expected. Rose from lieutenant to Lord of the Nine Hells through a series of agreements each individually unimpeachable. Distinct from Kallor: Astaroth binds through consent; Kallor chains through force."},
   {name:"Ba'haal",    alias:"The Bloody Tyrant",     al:"ce",dm:"war", pt:"fnd",
-   role:"Hunger — the only ascended-mortal dark god, sustained by active worship",
-   title:"The Bloody Tyrant — God of Murder and Slaughter",
-   desc:"The only god in the pantheon who was made by his worshippers rather than preceding them — willed into divinity by mortal ambition and blood sacrifice. Still needs feeding: his cult's intensity is maintenance, not zeal. Remembers wanting, because he was mortal once. His evil is hungry where Kallor's is possessive and Ragnor's is impersonal. Eyes that perpetually bleed. A god who cannot diminish other gods' followers but whose own followers cannot afford to drift."},
+   role:"Hunger â€” the only ascended-mortal dark god, sustained by active worship",
+   title:"The Bloody Tyrant â€” God of Murder and Slaughter",
+   desc:"The only god in the pantheon who was made by his worshippers rather than preceding them â€” willed into divinity by mortal ambition and blood sacrifice. Still needs feeding: his cult's intensity is maintenance, not zeal. Remembers wanting, because he was mortal once. His evil is hungry where Kallor's is possessive and Ragnor's is impersonal. Eyes that perpetually bleed. A god who cannot diminish other gods' followers but whose own followers cannot afford to drift."},
   {name:"Charon",     alias:"The Ferryman",          al:"nn",dm:"life",pt:"ves",
-   role:"The crossing between states — mortal vessel for the Raven Queen's will",
-   title:"The Ferryman — Patron of the Nine Realms of Death",
-   desc:"Once a mortal of the earliest ages who met a tragic end by the river's edge. The Raven Queen sensed his deep connection to the river and chose him as her ferryman, granting eternal life as guardian of the River of Death. A Vestige whose power is borrowed — he is the Raven Queen's instrument made semi-independent. His oar reflects the souls he has ferried. The most universally acknowledged deity in Ardahlia: addressed at birth, at sea, at the sickbed. Folk formula: This for you, ferryman. The rest when it's owed."},
+   role:"The crossing between states â€” mortal vessel for the Raven Queen's will",
+   title:"The Ferryman â€” Patron of the Nine Realms of Death",
+   desc:"Once a mortal of the earliest ages who met a tragic end by the river's edge. The Raven Queen sensed his deep connection to the river and chose him as her ferryman, granting eternal life as guardian of the River of Death. A Vestige whose power is borrowed â€” he is the Raven Queen's instrument made semi-independent. His oar reflects the souls he has ferried. The most universally acknowledged deity in Ardahlia: addressed at birth, at sea, at the sickbed. Folk formula: This for you, ferryman. The rest when it's owed."},
   {name:"Elaria",     alias:"The Blossoming Heart",  al:"ng",dm:"life",pt:"arch",
-   role:"Domestic life, family, hearth, and the tending of living things — the folk foundation",
-   title:"The Blossoming Heart — Mother of Dryads",
-   desc:"Sprouted from the first heartwood; her heartbeats gave birth to the first Dryads. The most universally present deity in folk life — every household shrine begins with her. Governs the domestic cycle: birth, family, the tending of living things, love that sustains. Has absorbed the role of hearth-and-family deity across much of Ardahlia. Her folk presence at weddings is near-universal. Leaves fall gently in her wake regardless of season. The Greening and Festival of Falling Leaves are her major observances."},
+   role:"Domestic life, family, hearth, and the tending of living things â€” the folk foundation",
+   title:"The Blossoming Heart â€” Mother of Dryads",
+   desc:"Sprouted from the first heartwood; her heartbeats gave birth to the first Dryads. The most universally present deity in folk life â€” every household shrine begins with her. Governs the domestic cycle: birth, family, the tending of living things, love that sustains. Has absorbed the role of hearth-and-family deity across much of Ardahlia. Her folk presence at weddings is near-universal. Leaves fall gently in her wake regardless of season. The Greening and Festival of Falling Leaves are her major observances."},
   {name:"Kallor",     alias:"The Oppressive Tyrant", al:"ce",dm:"war", pt:"fnd",
-   role:"Possession — acquisition of wills rather than destruction of bodies",
-   title:"The Oppressive Tyrant — Demon Lord of Tyranny and Conquest",
-   desc:"Does not want your death — wants your surrender, then your service, then your transformation into something that no longer remembers wanting anything he has not permitted. The god of possession in its most complete form. His Chaotic Evil is the chaos of the conqueror who breaks every system and replaces it with himself — not building an empire but demonstrating the capacity to do so, repeatedly. Chains are his trophies. Distinct from Ba'haal (who is hungry) and Ragnor (who is impersonal)."},
+   role:"Possession â€” acquisition of wills rather than destruction of bodies",
+   title:"The Oppressive Tyrant â€” Demon Lord of Tyranny and Conquest",
+   desc:"Does not want your death â€” wants your surrender, then your service, then your transformation into something that no longer remembers wanting anything he has not permitted. The god of possession in its most complete form. His Chaotic Evil is the chaos of the conqueror who breaks every system and replaces it with himself â€” not building an empire but demonstrating the capacity to do so, repeatedly. Chains are his trophies. Distinct from Ba'haal (who is hungry) and Ragnor (who is impersonal)."},
   {name:"Lillith",    alias:"The Temptress",         al:"cn",dm:"trick",pt:"fnd",
-   role:"Self-deception through desire — the lie you were already telling yourself",
-   title:"The Temptress of Sin — Goddess of Temptation and Corruption",
-   desc:"Born from the collective desires and temptations of sentient beings. Her Trickery is not deception of external reality but the trickery that desire performs on the person who feels it — she creates conditions under which you deceive yourself. The lie she tells is the one you were already half-telling. Queen of Succubi and Incubi. Her followers believe that confronting your desires directly grants power over them. Prepares ground that Maleficus subsequently uses, without either having formally arranged this."},
+   role:"Self-deception through desire â€” the lie you were already telling yourself",
+   title:"The Temptress of Sin â€” Goddess of Temptation and Corruption",
+   desc:"Born from the collective desires and temptations of sentient beings. Her Trickery is not deception of external reality but the trickery that desire performs on the person who feels it â€” she creates conditions under which you deceive yourself. The lie she tells is the one you were already half-telling. Queen of Succubi and Incubi. Her followers believe that confronting your desires directly grants power over them. Prepares ground that Maleficus subsequently uses, without either having formally arranged this."},
   {name:"Luminastra", alias:"The Radiant Aurora",    al:"cg",dm:"light",pt:"cel",
-   role:"Uncontainable hope and light — the aurora that legitimises an empire it didn't design",
-   title:"The Radiant Aurora — Lady of Light and Hope",
-   desc:"Born during an age-long eclipse when despair reigned; her awakening ended it. Her light goes where it goes without asking permission — she is a Chaotic Good deity whose aurora does not follow Imperial decree. The Auroran Empire has built its legitimacy around her presence without her designing or maintaining that legitimacy. She will outlast the Empire without noticing it has gone. Her silhouette constantly shifts with aurora colours. Primary deity of the Auroran state religion."},
+   role:"Uncontainable hope and light â€” the aurora that legitimises an empire it didn't design",
+   title:"The Radiant Aurora â€” Lady of Light and Hope",
+   desc:"Born during an age-long eclipse when despair reigned; her awakening ended it. Her light goes where it goes without asking permission â€” she is a Chaotic Good deity whose aurora does not follow Imperial decree. The Auroran Empire has built its legitimacy around her presence without her designing or maintaining that legitimacy. She will outlast the Empire without noticing it has gone. Her silhouette constantly shifts with aurora colours. Primary deity of the Auroran state religion."},
   {name:"Lyriana",    alias:"The Harp of Inspiration",al:"ng",dm:"light",pt:"cel",
-   role:"Creative inspiration as divine light — music, poetry, and the illumination of expression",
-   title:"The Harp of Inspiration — Goddess of Music and Poetry",
-   desc:"The first sound to grace the silent world was her song — from her melodies, rivers began to flow, trees swayed, birds chirped. Light domain through inspiration: music as divine illumination, the creative act as a form of prayer. Her temples are grand concert halls; performance is devotion. Melodists travel healing through song. Patron of bards, halflings, and all who express rather than simply communicate. Harmonious melodies surround her even in silence."},
+   role:"Creative inspiration as divine light â€” music, poetry, and the illumination of expression",
+   title:"The Harp of Inspiration â€” Goddess of Music and Poetry",
+   desc:"The first sound to grace the silent world was her song â€” from her melodies, rivers began to flow, trees swayed, birds chirped. Light domain through inspiration: music as divine illumination, the creative act as a form of prayer. Her temples are grand concert halls; performance is devotion. Melodists travel healing through song. Patron of bards, halflings, and all who express rather than simply communicate. Harmonious melodies surround her even in silence."},
   {name:"Mae'el",     alias:"The Tactician",         al:"le",dm:"war", pt:"goo",
-   role:"Strategic evil — war as pure calculation, suffering as acceptable variable",
-   title:"The Tactician — God of War and Strategy",
-   desc:"War reduced to its purest form: not the fury, not the honour, but the architecture. Emerged from the first celestial battle — not as a survivor but as something that had been watching and studying. Treats armies as pieces, commanders as variables, suffering as a side effect. Optimises for strategic victory without moral constraint. His alien board-game consciousness makes him a Great Old One patron: warlocks receive perspective rather than power — the ability to see situations as tactical problems with optimal solutions, and the discomfort that the solutions are often correct."},
+   role:"Strategic evil â€” war as pure calculation, suffering as acceptable variable",
+   title:"The Tactician â€” God of War and Strategy",
+   desc:"War reduced to its purest form: not the fury, not the honour, but the architecture. Emerged from the first celestial battle â€” not as a survivor but as something that had been watching and studying. Treats armies as pieces, commanders as variables, suffering as a side effect. Optimises for strategic victory without moral constraint. His alien board-game consciousness makes him a Great Old One patron: warlocks receive perspective rather than power â€” the ability to see situations as tactical problems with optimal solutions, and the discomfort that the solutions are often correct."},
   {name:"Maleficus",  alias:"The Laughing Betrayal", al:"ce",dm:"trick",pt:"fnd",
-   role:"Betrayal of existing bonds — trust as prerequisite, violation as craft",
-   title:"The Laughing Betrayal — God of Betrayal and Treachery",
-   desc:"Cannot be served by someone with no relationships — requires clergy to build genuine bonds before breaking them. Born from the accumulated residue of every broken oath across history. His Trickery is specifically the violation of existing trust rather than deception of strangers. The Doctrine of Necessary Trust is a manual for building genuine relationships, not a guide to treachery. The Long Confidence rite takes months or years. His greatest enemy is Arcturius, whose followers are most devastated when honour is violated."},
+   role:"Betrayal of existing bonds â€” trust as prerequisite, violation as craft",
+   title:"The Laughing Betrayal â€” God of Betrayal and Treachery",
+   desc:"Cannot be served by someone with no relationships â€” requires clergy to build genuine bonds before breaking them. Born from the accumulated residue of every broken oath across history. His Trickery is specifically the violation of existing trust rather than deception of strangers. The Doctrine of Necessary Trust is a manual for building genuine relationships, not a guide to treachery. The Long Confidence rite takes months or years. His greatest enemy is Arcturius, whose followers are most devastated when honour is violated."},
   {name:"Nalakei",    alias:"Lady of Wild Abandon",  al:"cn",dm:"life",pt:"arch",
-   role:"Joy as life-force — revelry, harvest, and the reward at the end of labour",
-   title:"Lady of Wild Abandon — Fawn Lady of Joy and Revelry",
-   desc:"Born from the combined laughter of woodland creatures during a moonlit revelry. Her laugh induces flowers to bloom. In agricultural communities she is second only to Elaria — she governs joy as life's reward and the harvest cycle as its culmination. Nalakei doesn't hear you when you're alone. Her festivals are communal by nature. The Feast of Flowers and Erathir's Yield are harvest celebrations as much as revelry events. Patron of farmers, revellers, and those who understand that joy is not opposed to labour."},
+   role:"Joy as life-force â€” revelry, harvest, and the reward at the end of labour",
+   title:"Lady of Wild Abandon â€” Fawn Lady of Joy and Revelry",
+   desc:"Born from the combined laughter of woodland creatures during a moonlit revelry. Her laugh induces flowers to bloom. In agricultural communities she is second only to Elaria â€” she governs joy as life's reward and the harvest cycle as its culmination. Nalakei doesn't hear you when you're alone. Her festivals are communal by nature. The Feast of Flowers and Erathir's Yield are harvest celebrations as much as revelry events. Patron of farmers, revellers, and those who understand that joy is not opposed to labour."},
   {name:"Nocturna",   alias:"The Dormant Queen",     al:"ne",dm:"trick",pt:"ves",
-   role:"The deliberate withdrawal — primordial darkness biding its time",
-   title:"The Dormant Queen — Mistress of Thieves and Poisons",
-   desc:"Not gone — waiting. The part of the Primordial Dark that met light and declined to be defined by it. A Vestige whose dormancy is deliberate: she rations herself carefully, lending just enough power to maintain her warlocks while waiting for the conditions that will allow her full return. Domain changed from Pestilence — her mythology is shadows, concealment, and thieves, not disease. Distinct from Nyx: Nocturna is the physical darkness itself; Nyx is the consciousness that arose when darkness became aware."},
+   role:"The deliberate withdrawal â€” primordial darkness biding its time",
+   title:"The Dormant Queen â€” Mistress of Thieves and Poisons",
+   desc:"Not gone â€” waiting. The part of the Primordial Dark that met light and declined to be defined by it. A Vestige whose dormancy is deliberate: she rations herself carefully, lending just enough power to maintain her warlocks while waiting for the conditions that will allow her full return. Domain changed from Pestilence â€” her mythology is shadows, concealment, and thieves, not disease. Distinct from Nyx: Nocturna is the physical darkness itself; Nyx is the consciousness that arose when darkness became aware."},
   {name:"Nymue",      alias:"The Moonlit Enchantress",al:"nn",dm:"know",pt:"arch",
-   role:"Arcane knowledge and the moon — the irreversible crossing into magic",
-   title:"The Moonlit Enchantress — Goddess of Magic and the Moon",
-   desc:"Born when the first star met the dark expanse of night — the fusion of luminescence and obscurity. Silvery-blue irises that reflect the phases of the moon. Knowledge domain through arcane understanding: the moment when someone crosses from ordinary to arcane is irreversible, and Nymue governs that crossing. Festival of Silver Nights is the holiest night for elven communities. Moondrop Temples float above the world catching moonlight. The relationship with Nyx is of former allies now distanced by ideology."},
+   role:"Arcane knowledge and the moon â€” the irreversible crossing into magic",
+   title:"The Moonlit Enchantress â€” Goddess of Magic and the Moon",
+   desc:"Born when the first star met the dark expanse of night â€” the fusion of luminescence and obscurity. Silvery-blue irises that reflect the phases of the moon. Knowledge domain through arcane understanding: the moment when someone crosses from ordinary to arcane is irreversible, and Nymue governs that crossing. Festival of Silver Nights is the holiest night for elven communities. Moondrop Temples float above the world catching moonlight. The relationship with Nyx is of former allies now distanced by ideology."},
   {name:"Nyx",        alias:"The Veiled Mistress",   al:"ne",dm:"trick",pt:"goo",
-   role:"Night and secrets — the consciousness that arose when darkness first had light to define itself against",
-   title:"The Veiled Mistress — Goddess of Night, Secrets and Lies",
-   desc:"The part of the Primordial Dark that met light and became conscious by contrast — defined entirely by the boundary between known and hidden. Reactive by nature: created by reaction to light, perpetually aware of illumination. She is the condition that makes secrecy possible. Knows about the Primordial Dark but declines to look at it directly — the one thing she treats as outside her domain. Distinct from Nocturna: Nyx is the consciousness that arose from darkness; Nocturna is the darkness that withdrew before becoming conscious."},
+   role:"Night and secrets â€” the consciousness that arose when darkness first had light to define itself against",
+   title:"The Veiled Mistress â€” Goddess of Night, Secrets and Lies",
+   desc:"The part of the Primordial Dark that met light and became conscious by contrast â€” defined entirely by the boundary between known and hidden. Reactive by nature: created by reaction to light, perpetually aware of illumination. She is the condition that makes secrecy possible. Knows about the Primordial Dark but declines to look at it directly â€” the one thing she treats as outside her domain. Distinct from Nocturna: Nyx is the consciousness that arose from darkness; Nocturna is the darkness that withdrew before becoming conscious."},
   {name:"Paragon",    alias:"The Exemplar",          al:"lg",dm:"light",pt:"ves",
-   role:"Justice and civic order — shattered divine essence sustained by the acts of the just",
-   title:"The Exemplar — Chosen of Justice",
-   desc:"A Vestige: his essence was shattered in the Divine War and not fully reassembled. What remains is enough to sustain his clerics and answer prayers of the just — but a fraction of what he was. His most devoted followers believe every act of justice returns a fragment of his shattered essence. The half-dim halo is both iconography and theology: genuinely giving light, but from a source that is running out or running low. Civic presence is substantial despite diminishment — the Dim Day festival is one of the most widely observed."},
+   role:"Justice and civic order â€” shattered divine essence sustained by the acts of the just",
+   title:"The Exemplar â€” Chosen of Justice",
+   desc:"A Vestige: his essence was shattered in the Divine War and not fully reassembled. What remains is enough to sustain his clerics and answer prayers of the just â€” but a fraction of what he was. His most devoted followers believe every act of justice returns a fragment of his shattered essence. The half-dim halo is both iconography and theology: genuinely giving light, but from a source that is running out or running low. Civic presence is substantial despite diminishment â€” the Dim Day festival is one of the most widely observed."},
   {name:"Ragnor",     alias:"The Maddening Storm",   al:"ce",dm:"war", pt:"goo",
-   role:"Dissolved consciousness — pure elemental force with no person left inside it",
-   title:"The Maddening Storm — Force of Destruction",
-   desc:"Not worshipped in any conventional sense because nothing remains of him that receives worship. Once a minor spirit of the winds; Pandemonium consumed and expanded him until his consciousness dissolved. What emanates from him now is elemental rather than divine — power without awareness, force without intention. Tempest Prophets position themselves within his emanation rather than directing it. Propitiating him is possible. Worshipping him is a category error. The most impersonal of the dark gods."},
+   role:"Dissolved consciousness â€” pure elemental force with no person left inside it",
+   title:"The Maddening Storm â€” Force of Destruction",
+   desc:"Not worshipped in any conventional sense because nothing remains of him that receives worship. Once a minor spirit of the winds; Pandemonium consumed and expanded him until his consciousness dissolved. What emanates from him now is elemental rather than divine â€” power without awareness, force without intention. Tempest Prophets position themselves within his emanation rather than directing it. Propitiating him is possible. Worshipping him is a category error. The most impersonal of the dark gods."},
   {name:"Riven",      alias:"The Masterful Deceiver",al:"cn",dm:"trick",pt:"arch",
-   role:"The con — fiction built so well that reality accommodates it",
-   title:"The Masterful Deceiver — God of Trickery and Mischief",
-   desc:"The only god in the pantheon who earned his position through a single act of craft: a mortal con artist who successfully stole a fragment of divine attention from a god, held it until it calcified into divinity, and became a god himself. His Trickery is architecture — fictions built so thoroughly that reality has to accommodate them. His shadow acts independently: even his own nature is slightly conned about what it is. Distinct from Maleficus (betrayal), Nyx (secrets), Nocturna (concealment), Lillith (desire), and Astaroth (contract)."},
+   role:"The con â€” fiction built so well that reality accommodates it",
+   title:"The Masterful Deceiver â€” God of Trickery and Mischief",
+   desc:"The only god in the pantheon who earned his position through a single act of craft: a mortal con artist who successfully stole a fragment of divine attention from a god, held it until it calcified into divinity, and became a god himself. His Trickery is architecture â€” fictions built so thoroughly that reality has to accommodate them. His shadow acts independently: even his own nature is slightly conned about what it is. Distinct from Maleficus (betrayal), Nyx (secrets), Nocturna (concealment), Lillith (desire), and Astaroth (contract)."},
   {name:"Solariel",   alias:"The Radiant Arbiter",   al:"lg",dm:"light",pt:"cel",
-   role:"Healing light and the protection of life — dawn prayers, the recovered patient",
-   title:"The Radiant Arbiter — Lady of the Sun, Life and Peace",
-   desc:"Once a celestial servant of Pelor elevated to deity through a grand sacrifice to prevent a cataclysmic shadow consuming a city of innocents. As Pelor's light dimmed, hers burned brighter. The primary deity of healing prayer across almost all cultures — when someone is ill, Solariel is addressed first. Folk rites are morning-facing: the sick placed to catch first light, prayers timed to sunrise. Her Aegis of the Dawn and Chalice are among the most narratively developed artifacts in the pantheon. Her nemesis is Ragnor."},
+   role:"Healing light and the protection of life â€” dawn prayers, the recovered patient",
+   title:"The Radiant Arbiter â€” Lady of the Sun, Life and Peace",
+   desc:"Once a celestial servant of Pelor elevated to deity through a grand sacrifice to prevent a cataclysmic shadow consuming a city of innocents. As Pelor's light dimmed, hers burned brighter. The primary deity of healing prayer across almost all cultures â€” when someone is ill, Solariel is addressed first. Folk rites are morning-facing: the sick placed to catch first light, prayers timed to sunrise. Her Aegis of the Dawn and Chalice are among the most narratively developed artifacts in the pantheon. Her nemesis is Ragnor."},
   {name:"Thalara",    alias:"Lady of Wonder",        al:"lg",dm:"know",pt:"cel",
-   role:"Craft and making — preserved knowledge as devotion, process as prayer",
-   title:"The Lady of Wonder — Dwarven Mistress of the Forge",
-   desc:"Once a dwarf whose skills at the forge were unparalleled — the gods themselves elevated her to divinity, entrusting her with inspiring her kin in the arts of craft. Molten veins glow beneath her stony skin. The Knowledge domain through preserved craft-wisdom: Forgeheart Sanctums are simultaneously workshops and libraries. The Unity Hammer myth — crafted to be lifted only when rival clan leaders worked together — encapsulates her theology. Patron of dwarves, craftspeople of all races, and those who value process as much as product."},
+   role:"Craft and making â€” preserved knowledge as devotion, process as prayer",
+   title:"The Lady of Wonder â€” Dwarven Mistress of the Forge",
+   desc:"Once a dwarf whose skills at the forge were unparalleled â€” the gods themselves elevated her to divinity, entrusting her with inspiring her kin in the arts of craft. Molten veins glow beneath her stony skin. The Knowledge domain through preserved craft-wisdom: Forgeheart Sanctums are simultaneously workshops and libraries. The Unity Hammer myth â€” crafted to be lifted only when rival clan leaders worked together â€” encapsulates her theology. Patron of dwarves, craftspeople of all races, and those who value process as much as product."},
   {name:"Vormax",     alias:"The Rotting One",       al:"ne",dm:"pest",pt:"goo",
-   role:"Ecological correction — the god whose argument about carrying capacity is partially correct",
-   title:"The Rotting One — Insectoid Lord of Disease, Plague and Famine",
-   desc:"Does not believe civilisation is evil — believes it is temporary, like an algal bloom. His plagues are corrections not punishments: every system has a carrying capacity, and civilisation's refusal to acknowledge this is the real disease. Consciousness is distributed through swarms — he perceives populations not individuals. Does not understand the concept of one person. His Blightbringers are surveyors, not saboteurs. His theology is partially correct, which is what makes him genuinely disturbing rather than simply monstrous."},
+   role:"Ecological correction â€” the god whose argument about carrying capacity is partially correct",
+   title:"The Rotting One â€” Insectoid Lord of Disease, Plague and Famine",
+   desc:"Does not believe civilisation is evil â€” believes it is temporary, like an algal bloom. His plagues are corrections not punishments: every system has a carrying capacity, and civilisation's refusal to acknowledge this is the real disease. Consciousness is distributed through swarms â€” he perceives populations not individuals. Does not understand the concept of one person. His Blightbringers are surveyors, not saboteurs. His theology is partially correct, which is what makes him genuinely disturbing rather than simply monstrous."},
   {name:"Zelos",      alias:"The Capricious Gambler",al:"cn",dm:"know",pt:"arch",
-   role:"Probability as knowledge — the irreducible uncertainty that expertise cannot eliminate",
-   title:"The Capricious Gambler — Master of Chaos and Luck",
-   desc:"Born as the first Genie from unpredictable fluxes of magic. His Knowledge domain is not scholarship but probabilism: the genuine unknown at the heart of every decision, the irreducible uncertainty that remains when all calculation is complete. His followers don't study; they observe. Don't learn; they notice. Patron of merchants, gamblers, risk-takers, and nomadic tribes. The coin tossed before a deal is given to fate — not asking for a specific outcome but acknowledging that the outcome belongs to forces larger than the asker."},
+   role:"Probability as knowledge â€” the irreducible uncertainty that expertise cannot eliminate",
+   title:"The Capricious Gambler â€” Master of Chaos and Luck",
+   desc:"Born as the first Genie from unpredictable fluxes of magic. His Knowledge domain is not scholarship but probabilism: the genuine unknown at the heart of every decision, the irreducible uncertainty that remains when all calculation is complete. His followers don't study; they observe. Don't learn; they notice. Patron of merchants, gamblers, risk-takers, and nomadic tribes. The coin tossed before a deal is given to fate â€” not asking for a specific outcome but acknowledging that the outcome belongs to forces larger than the asker."},
   {name:"Zephyrion",  alias:"Changer of Tides",      al:"cg",dm:"life",pt:"goo",
-   role:"The ocean as a living force — ancient, non-personal, and demanding of correct navigation",
-   title:"Changer of Tides — Dragon Turtle Lord of Storms and Seas",
-   desc:"A majestic, immense dragon turtle whose roar sounds like crashing waves and affects the tides of the nearest body of water. Great Old One patron because he is an ancient, colossal non-humanoid intelligence whose relationship with mortals is fundamentally different — he doesn't love you, he tolerates your voyages on his ocean. The folk relationship with Zephyrion is transactional and non-personal: he is a force to be respected and correctly navigated, not a being to be loved. Voyage Opening and Closing ceremonies are seamanship as much as religion."},
+   role:"The ocean as a living force â€” ancient, non-personal, and demanding of correct navigation",
+   title:"Changer of Tides â€” Dragon Turtle Lord of Storms and Seas",
+   desc:"A majestic, immense dragon turtle whose roar sounds like crashing waves and affects the tides of the nearest body of water. Great Old One patron because he is an ancient, colossal non-humanoid intelligence whose relationship with mortals is fundamentally different â€” he doesn't love you, he tolerates your voyages on his ocean. The folk relationship with Zephyrion is transactional and non-personal: he is a force to be respected and correctly navigated, not a being to be loved. Voyage Opening and Closing ceremonies are seamanship as much as religion."},
 ];
 
 function Badge({type, id}) {
@@ -668,15 +670,15 @@ function App() {
     <div className="page" style={{paddingBottom: panelOpen ? '260px' : '2rem'}}>
 
       <header className="hdr">
-        <span className="hdr-orn">✦  ·  ✦  ·  ✦</span>
+        <span className="hdr-orn">âœ¦  Â·  âœ¦  Â·  âœ¦</span>
         <div className="hdr-title">The Auroran Pantheon</div>
-        <div className="hdr-sub">Twenty-six deities of Ardahlia · Quick Reference</div>
+        <div className="hdr-sub">Twenty-six deities of Ardahlia Â· Quick Reference</div>
       </header>
 
       <div className="ctrl-wrap">
         <div className="search-row">
           <input className="search-in" type="text"
-            placeholder="Search deity name, title or role…"
+            placeholder="Search deity name, title or roleâ€¦"
             value={q} onChange={e=>setQ(e.target.value)} />
           <div className="vtog">
             <button className={`vbtn ${view==='table'?'on':''}`} onClick={()=>setView('table')}>Table</button>
@@ -772,7 +774,7 @@ function App() {
         </div>
       )}
 
-      <div className="orn">✦ · ✦ · ✦</div>
+      <div className="orn">âœ¦ Â· âœ¦ Â· âœ¦</div>
 
       <div className={`detail ${panelOpen?'':'hidden'}`}>
         {sel && <>
@@ -781,7 +783,7 @@ function App() {
               <div className="d-name">{sel.name}</div>
               <div className="d-title">{sel.title}</div>
             </div>
-            <button className="close-btn" onClick={()=>setSel(null)}>✕ Close</button>
+            <button className="close-btn" onClick={()=>setSel(null)}>âœ• Close</button>
           </div>
           <div className="d-badges">
             <Badge type="al" id={sel.al}/>
@@ -799,3 +801,5 @@ ReactDOM.createRoot(document.getElementById('root')).render(<App/>);
 </script>
 </body>
 </html>
+
+
