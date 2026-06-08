@@ -955,41 +955,50 @@ text-transform: uppercase;
 @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
 .fade-in { animation: fadeIn 0.3s ease both; }
 
-/* Light theme override to match CoC investigator sheets */
+/* Light content theme with atmospheric background */
 :root {
-  --bg:        #ece3ce;
-  --bg2:       #f5eddb;
-  --surface:   #f7f1e3;
-  --surface2:  #efe4cd;
-  --surface3:  #e3d5b7;
-  --border:    #cdb995;
-  --border2:   #a88d61;
-  --gold:      #8b6914;
-  --gold-dim:  #9a7a33;
-  --gold-pale: #7a5e23;
-  --teal:      #2f6e63;
-  --teal-dim:  #3d7d71;
-  --teal-pale: #2f6e63;
+  --bg:        #151018;
+  --bg2:       #f2e7d0;
+  --surface:   #f6edda;
+  --surface2:  #eadcc0;
+  --surface3:  #decca8;
+  --border:    #b99f74;
+  --border2:   #92733d;
+  --gold:      #6f5118;
+  --gold-dim:  #7b5d26;
+  --gold-pale: #5f4612;
+  --teal:      #1f5f54;
+  --teal-dim:  #2b6f63;
+  --teal-pale: #1f5f54;
   --red:       #8b1a1a;
-  --red-bright:#a32222;
-  --text:      #2b2115;
-  --text-dim:  #5c4a31;
-  --text-pale: #1f170e;
-  --text-faint:#8f7a5b;
+  --red-bright:#9f1f1f;
+  --text:      #21170d;
+  --text-dim:  #45311a;
+  --text-pale: #1a1209;
+  --text-faint:#645033;
 }
 
 body {
   background:
-    radial-gradient(ellipse at top, rgba(139, 105, 20, 0.12) 0%, transparent 52%),
-    var(--bg);
+    radial-gradient(circle at 18% 6%, rgba(114, 183, 170, 0.2), transparent 24%),
+    radial-gradient(circle at 83% 11%, rgba(88, 70, 143, 0.24), transparent 27%),
+    radial-gradient(circle at 50% 100%, rgba(32, 73, 84, 0.22), transparent 48%),
+    linear-gradient(180deg, #141021 0%, #0d0a17 52%, #09070f 100%);
+  background-attachment: fixed;
 }
 
 body::before {
-  opacity: 0.2;
+  opacity: 0.28;
 }
 
 .header {
   box-shadow: 0 4px 22px rgba(61, 46, 30, 0.16);
+}
+
+.main {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-top: none;
 }
 
 .primer-btn:hover {
@@ -1004,6 +1013,53 @@ body::before {
   box-shadow: 0 20px 40px rgba(61, 46, 30, 0.2);
 }
 
+.header-subtitle,
+.nav-tab,
+.step-label,
+.stat-name,
+.stat-desc,
+.occ-desc,
+.insanity-desc,
+.combat-step-title,
+.combat-step-detail,
+.die-explain,
+.qr-note,
+.pull-attr,
+.formula-eq,
+.formula-label,
+.muted {
+  color: var(--text-dim);
+}
+
+.dir-nav-link,
+.nav-tab.active,
+.step-item.active .step-label,
+.card p,
+.diff-table td,
+.occ-name,
+.skill-chip,
+.overlay-body,
+.formula-box {
+  color: var(--text);
+}
+
+.card.teal,
+.die-box.bonus,
+.san-pip.ok {
+  background: rgba(43, 111, 99, 0.14);
+}
+
+.card.gold,
+.pull-quote {
+  background: rgba(123, 93, 38, 0.12);
+}
+
+.card.red,
+.die-box.penalty,
+.san-pip.warn {
+  background: rgba(159, 31, 31, 0.1);
+}
+
 ::-webkit-scrollbar-track {
   background: var(--surface2);
 }
@@ -1011,7 +1067,7 @@ body::before {
     <link rel='stylesheet' href='../assets/css/theme-cosmic90s.css'>
     <link rel='stylesheet' href='../assets/css/page-polish.css'>
 </head>
-<body class='theme-cosmic90s page-coc-player-primer'>
+<body class='page-coc-player-primer'>
 <nav class="dir-nav" aria-label="Delta Green Directory Navigation">
   <a class="dir-nav-link" href="index.html">Delta Green Hub</a>
   <a class="dir-nav-link" href="coc_character_sheets/index.html">CoC Sheets</a>
