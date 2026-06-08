@@ -452,7 +452,7 @@ function renderPips(id, current, max, cls){
 }
 function renderSkills(){
  const grid = document.getElementById('skillsGrid');
- grid.innerHTML = SKILLS.map(sk => {
+ grid.innerHTML = SKILLS.slice().sort((a,b)=>a.name.localeCompare(b.name, undefined, { sensitivity: 'base' })).map(sk => {
   const checked = state.skillChecks[sk.id] || false;
   const noteCls = sk.note === '★' ? 'skill-star' : sk.note === 'bg' ? 'skill-bg' : '';
   return `<div class="skill-item ${checked?'checked':''}" onclick="toggleSkill('${sk.id}')">

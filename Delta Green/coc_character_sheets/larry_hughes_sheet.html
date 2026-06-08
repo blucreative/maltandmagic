@@ -464,7 +464,7 @@ function f(p){return Math.floor(p/5);}
 function buildSkillList(){
   var list=document.getElementById('skillList');
   list.innerHTML='';
-  SKILLS.forEach(function(sk){
+  SKILLS.slice().sort(function(a,b){return a.name.localeCompare(b.name, undefined, { sensitivity: 'base' });}).forEach(function(sk){
     var show=true;
     if(currentFilter==='invested'&&!sk.invested) show=false;
     if(currentFilter==='combat'&&sk.cat!=='combat') show=false;

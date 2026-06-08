@@ -718,7 +718,7 @@ function renderSkills(){
   else if(pen===-20){  footer.textContent=`⚠ WP ${state.wp} PENALTY — all values shown with −20% applied`; footer.style.color='var(--rb)'; }
   else { footer.textContent='★ = Bonus skill  |  STR 13 → +1 Unarmed & Melee damage  |  DEX 17 → acts early in turn order'; footer.style.color=''; }
 
-  grid.innerHTML = SKILLS.map(sk=>{
+  grid.innerHTML = SKILLS.slice().sort((a,b)=>a.name.localeCompare(b.name, undefined, { sensitivity: 'base' })).map(sk=>{
     const checked  = state.skillChecks[sk.id]||false;
     const imp      = (state.skillImprovements||{})[sk.id]||0;
     const baseDisp = sk.pct + imp;
