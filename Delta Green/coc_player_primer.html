@@ -1060,6 +1060,38 @@ body::before {
   background: rgba(159, 31, 31, 0.1);
 }
 
+/* Header contrast pass: especially for Quick Reference */
+.header-title,
+.sec-title,
+.card-title,
+.overlay-title,
+.qr-val {
+  color: var(--text-pale);
+  text-shadow: none;
+}
+
+.sec-num,
+.deco-divider,
+.qr-label,
+.diff-table th,
+.build-table th,
+.tab-num,
+.header-eyebrow {
+  color: var(--gold-pale);
+}
+
+.deco-divider span {
+  background: var(--surface);
+}
+
+.qr-item {
+  background: #f3e8d2;
+}
+
+.qr-note {
+  color: var(--text-dim);
+}
+
 ::-webkit-scrollbar-track {
   background: var(--surface2);
 }
