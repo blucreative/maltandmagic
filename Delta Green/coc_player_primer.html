@@ -954,6 +954,59 @@ text-transform: uppercase;
 /* Animations */
 @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
 .fade-in { animation: fadeIn 0.3s ease both; }
+
+/* Light theme override to match CoC investigator sheets */
+:root {
+  --bg:        #ece3ce;
+  --bg2:       #f5eddb;
+  --surface:   #f7f1e3;
+  --surface2:  #efe4cd;
+  --surface3:  #e3d5b7;
+  --border:    #cdb995;
+  --border2:   #a88d61;
+  --gold:      #8b6914;
+  --gold-dim:  #9a7a33;
+  --gold-pale: #7a5e23;
+  --teal:      #2f6e63;
+  --teal-dim:  #3d7d71;
+  --teal-pale: #2f6e63;
+  --red:       #8b1a1a;
+  --red-bright:#a32222;
+  --text:      #2b2115;
+  --text-dim:  #5c4a31;
+  --text-pale: #1f170e;
+  --text-faint:#8f7a5b;
+}
+
+body {
+  background:
+    radial-gradient(ellipse at top, rgba(139, 105, 20, 0.12) 0%, transparent 52%),
+    var(--bg);
+}
+
+body::before {
+  opacity: 0.2;
+}
+
+.header {
+  box-shadow: 0 4px 22px rgba(61, 46, 30, 0.16);
+}
+
+.primer-btn:hover {
+  color: #1a120a;
+}
+
+.overlay-bg {
+  background: rgba(61, 46, 30, 0.42);
+}
+
+.overlay-card {
+  box-shadow: 0 20px 40px rgba(61, 46, 30, 0.2);
+}
+
+::-webkit-scrollbar-track {
+  background: var(--surface2);
+}
 </style>
     <link rel='stylesheet' href='../assets/css/theme-cosmic90s.css'>
     <link rel='stylesheet' href='../assets/css/page-polish.css'>
