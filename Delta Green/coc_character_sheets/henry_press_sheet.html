@@ -156,6 +156,12 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .nav-strip{max-width:1200px;margin:0 auto 12px auto;background:var(--ink);border:1px solid var(--g);padding:8px 12px;display:flex;flex-wrap:wrap;gap:8px}
 .nav-link{font-family:var(--fd);font-size:10px;letter-spacing:0.08em;text-transform:uppercase;color:var(--pp);text-decoration:none;border:1px solid #4a3a20;padding:4px 10px;transition:all 0.15s}
 .nav-link:hover{color:var(--p);border-color:var(--gb);background:rgba(139,105,20,0.2)}
+
+/* COMBAT TABLE */
+.combat-table{width:100%;border-collapse:collapse;font-size:13px}
+.combat-table th{background:var(--ink);color:var(--gb);font-family:var(--fd);font-size:9px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;padding:6px 8px;text-align:left;border:1px solid #3a2a14}
+.combat-table td{padding:6px 8px;border:1px solid var(--pp);color:var(--inkf);font-family:var(--ft);font-size:12px}
+.combat-table tr:nth-child(even) td{background:rgba(200,168,100,0.07)}
 </style>
     <link rel='stylesheet' href='../../assets/css/theme-cosmic90s.css'>
     <link rel='stylesheet' href='../../assets/css/page-polish.css'>
@@ -266,6 +272,24 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
       <div style="background:var(--ink);padding:7px 10px;text-align:center"><div style="font-family:var(--fd);font-size:8px;letter-spacing:0.12em;color:var(--g);text-transform:uppercase">Move Rate</div><div style="font-family:var(--ft);font-size:16px;color:var(--p);margin-top:3px">7</div></div>
       <div style="background:var(--ink);padding:7px 10px;text-align:center"><div style="font-family:var(--fd);font-size:8px;letter-spacing:0.12em;color:var(--g);text-transform:uppercase">Max SAN</div><div style="font-family:var(--ft);font-size:16px;color:var(--p);margin-top:3px">99</div></div>
     </div>
+  </div>
+
+  <!-- COMBAT -->
+  <div class="panel">
+    <div class="panel-title">Combat Scores</div>
+    <table class="combat-table">
+      <thead><tr><th>Combat Skill</th><th>%</th><th>Half</th><th>Fifth</th></tr></thead>
+      <tbody>
+        <tr><td>Dodge</td><td>30</td><td>15</td><td>6</td></tr>
+        <tr><td>Fighting (Brawl)</td><td>25</td><td>12</td><td>5</td></tr>
+        <tr><td>Fighting (Other)</td><td>15</td><td>7</td><td>3</td></tr>
+        <tr><td>Firearms (Handgun)</td><td>20</td><td>10</td><td>4</td></tr>
+        <tr><td>Firearms (Rifle/Shotgun)</td><td>25</td><td>12</td><td>5</td></tr>
+        <tr><td>Firearms (Submachine Gun)</td><td>15</td><td>7</td><td>3</td></tr>
+        <tr><td>Throw</td><td>20</td><td>10</td><td>4</td></tr>
+      </tbody>
+    </table>
+    <div style="margin-top:10px;font-family:var(--ft);font-size:11px;color:var(--inkm);font-style:italic">Damage Bonus: none &middot; Build: 0 &middot; Move: 7</div>
   </div>
 
   <!-- POSSESSIONS -->
