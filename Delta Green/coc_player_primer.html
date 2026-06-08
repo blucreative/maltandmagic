@@ -2212,7 +2212,22 @@ Everything you need at the table, distilled. When the Keeper says "Make a SAN ro
 
 function App() {
 const [tab, setTab] = useState('intro');
-const [showTutorial, setShowTutorial] = useState(true);
+const [showTutorial, setShowTutorial] = useState(() => {
+  try {
+    return localStorage.getItem('cocPrimerOrientationSeen') !== '1';
+  } catch (_) {
+    return true;
+  }
+});
+
+const closeTutorial = useCallback(() => {
+  try {
+    localStorage.setItem('cocPrimerOrientationSeen', '1');
+  } catch (_) {
+    // Ignore storage failures and just close the overlay.
+  }
+  setShowTutorial(false);
+}, []);
 
 const renderSection = () => {
 switch(tab) {
@@ -2228,7 +2243,7 @@ default:          return null;
 
 return (
 <>
-{showTutorial && <Tutorial onClose={()=>setShowTutorial(false)}/>}
+{showTutorial && <Tutorial onClose={closeTutorial}/>}
 
 
   <div className="header">
