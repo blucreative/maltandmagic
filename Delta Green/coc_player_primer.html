@@ -1092,6 +1092,24 @@ body::before {
   color: var(--text-dim);
 }
 
+/* Formula/info boxes: tighten contrast across the whole primer */
+.card .formula-box {
+  background: #f0e2c5;
+  border-color: #9b7b48;
+  color: #2b1e0d;
+}
+
+.card .formula-val {
+  color: #2a1a08;
+  font-weight: 700;
+}
+
+.card .formula-label.formula-eq,
+.card .small.muted,
+.card .occ-formula {
+  color: #3f2d17;
+}
+
 ::-webkit-scrollbar-track {
   background: var(--surface2);
 }
@@ -1383,7 +1401,7 @@ Five steps transform blank paper into a living, breathing investigator. Work thr
 
       <div className="grid-2 mt-4">
         <div>
-          <div className="card">
+          <div className="card derived-attr-card">
             <div className="card-title">Hit Points (HP)</div>
             <div className="formula-box">
               <span className="formula-val">(CON + SIZ) ÷ 10</span>
@@ -1391,7 +1409,7 @@ Five steps transform blank paper into a living, breathing investigator. Work thr
             </div>
             <p className="small muted">Measures physical durability. When HP reaches 0, the investigator is unconscious and dying.</p>
           </div>
-          <div className="card mt-4">
+          <div className="card derived-attr-card mt-4">
             <div className="card-title">Sanity (SAN)</div>
             <div className="formula-box">
               <span className="formula-val">Equals POW</span>
@@ -1399,7 +1417,7 @@ Five steps transform blank paper into a living, breathing investigator. Work thr
             </div>
             <p className="small muted">Maximum SAN = 99 minus Cthulhu Mythos skill. Magic Points = POW ÷ 5.</p>
           </div>
-          <div className="card mt-4">
+          <div className="card derived-attr-card mt-4">
             <div className="card-title">Movement Rate (MOV)</div>
             <div className="formula-box">
               <span className="formula-val">7 / 8 / 9</span>
