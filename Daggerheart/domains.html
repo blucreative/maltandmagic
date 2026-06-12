@@ -1,0 +1,802 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Daggerheart Domain Atlas</title>
+<meta name="description" content="A player-facing Daggerheart domain reference covering the nine core domains, class pairings, and how each domain shapes play.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Manrope:wght@400;500;600;700;800&family=Sora:wght@500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; }
+
+  :root {
+    --bg: #06070c;
+    --panel: rgba(18, 22, 34, 0.82);
+    --line: rgba(255, 255, 255, 0.1);
+    --text: #f5efe4;
+    --text-soft: #cbc3b4;
+    --text-dim: #958d81;
+    --hope: #f0c56b;
+    --fear: #d96f59;
+    --arcane: #8f8de2;
+    --verdant: #79bd82;
+    --shadow: 0 28px 72px rgba(0, 0, 0, 0.45);
+    --font-display: 'Sora', 'Manrope', system-ui, sans-serif;
+    --font-body: 'Manrope', system-ui, sans-serif;
+    --font-serif: 'Cinzel', Georgia, serif;
+    --radius-xl: 28px;
+    --radius-lg: 22px;
+    --radius-md: 16px;
+    --radius-sm: 999px;
+    --max: 1220px;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    margin: 0;
+    min-height: 100vh;
+    color: var(--text);
+    font-family: var(--font-body);
+    line-height: 1.6;
+    background:
+      radial-gradient(circle at 14% 12%, rgba(143, 141, 226, 0.18), transparent 30%),
+      radial-gradient(circle at 82% 15%, rgba(217, 111, 89, 0.16), transparent 28%),
+      radial-gradient(circle at 52% 100%, rgba(121, 189, 130, 0.13), transparent 38%),
+      linear-gradient(180deg, #070912 0%, #0a0d15 42%, #06070c 100%);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  body::before,
+  body::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  body::before {
+    background-image:
+      radial-gradient(circle, rgba(255,255,255,0.24) 1px, transparent 1px),
+      radial-gradient(circle, rgba(255,255,255,0.1) 1px, transparent 1px);
+    background-size: 220px 220px, 360px 360px;
+    background-position: 0 0, 60px 90px;
+    opacity: 0.18;
+  }
+
+  body::after {
+    background: linear-gradient(110deg, transparent 0%, rgba(255,255,255,0.03) 46%, transparent 100%);
+    mask: linear-gradient(180deg, transparent, black 12%, black 88%, transparent);
+    opacity: 0.48;
+  }
+
+  a { color: inherit; }
+
+  .page {
+    position: relative;
+    z-index: 1;
+  }
+
+  .shell {
+    width: min(calc(100% - 2rem), var(--max));
+    margin: 0 auto;
+  }
+
+  .topbar {
+    position: sticky;
+    top: 0.9rem;
+    z-index: 20;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    padding-top: 1rem;
+  }
+
+  .top-link,
+  .nav-link,
+  .cta-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.72rem 1rem;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--line);
+    text-decoration: none;
+    color: var(--text-soft);
+    background: rgba(9, 12, 20, 0.84);
+    backdrop-filter: blur(12px);
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    transition: transform 0.22s ease, border-color 0.22s ease, color 0.22s ease, background 0.22s ease;
+  }
+
+  .top-link:hover,
+  .top-link:focus-visible,
+  .nav-link:hover,
+  .nav-link:focus-visible,
+  .nav-link.is-active,
+  .cta-link:hover,
+  .cta-link:focus-visible {
+    color: var(--text);
+    border-color: rgba(240, 197, 107, 0.34);
+    background: rgba(240, 197, 107, 0.1);
+    outline: none;
+    transform: translateY(-1px);
+  }
+
+  .hero {
+    display: grid;
+    grid-template-columns: minmax(0, 1.3fr) minmax(280px, 0.82fr);
+    gap: 1.35rem;
+    padding: 2rem 0 1.3rem;
+  }
+
+  .hero-main,
+  .hero-side,
+  .section,
+  .nav-panel,
+  .cta-panel {
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-xl);
+    backdrop-filter: blur(16px);
+    box-shadow: var(--shadow);
+  }
+
+  .hero-main {
+    position: relative;
+    overflow: hidden;
+    padding: 2.35rem;
+    background:
+      radial-gradient(circle at top left, rgba(143, 141, 226, 0.25), transparent 30%),
+      radial-gradient(circle at 84% 15%, rgba(121, 189, 130, 0.16), transparent 24%),
+      linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0));
+  }
+
+  .hero-main::after {
+    content: "";
+    position: absolute;
+    inset: auto -8% -22% 25%;
+    height: 290px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(240, 197, 107, 0.18), transparent 68%);
+    filter: blur(20px);
+  }
+
+  h1,
+  h2,
+  h3,
+  strong {
+    font-family: var(--font-display);
+  }
+
+  .eyebrow,
+  .section-label,
+  .card-kicker,
+  .tiny-label,
+  .tag,
+  .matrix-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    color: var(--text-dim);
+    font-size: 0.73rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .eyebrow {
+    padding: 0.45rem 0.82rem;
+    border-radius: var(--radius-sm);
+    background: rgba(255,255,255,0.06);
+    border: 1px solid var(--line);
+    color: var(--hope);
+  }
+
+  .hero h1 {
+    margin: 1rem 0 0.8rem;
+    font-size: clamp(2.6rem, 5vw, 4.8rem);
+    line-height: 0.96;
+    letter-spacing: -0.045em;
+  }
+
+  .hero h1 span {
+    display: block;
+    margin-bottom: 0.52rem;
+    color: var(--hope);
+    font-family: var(--font-serif);
+    font-size: 0.42em;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .lede,
+  .hero-side p,
+  .section-copy,
+  .domain-card p,
+  .matrix-row p,
+  .build-card p,
+  .note,
+  .cta-panel p {
+    color: var(--text-soft);
+  }
+
+  .lede {
+    max-width: 58ch;
+    margin: 0;
+    font-size: 1.05rem;
+  }
+
+  .hero-actions,
+  .nav-list,
+  .chip-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.7rem;
+  }
+
+  .hero-actions {
+    margin-top: 1.35rem;
+  }
+
+  .cta-link.primary {
+    color: var(--bg);
+    background: linear-gradient(135deg, var(--hope), #ffdd9f);
+    border-color: transparent;
+  }
+
+  .cta-link.primary:hover,
+  .cta-link.primary:focus-visible {
+    color: var(--bg);
+    background: linear-gradient(135deg, #ffd58c, #ffe7c2);
+  }
+
+  .hero-side {
+    padding: 1.45rem;
+    display: grid;
+    gap: 1rem;
+    align-content: start;
+  }
+
+  .stat-grid,
+  .domain-grid,
+  .matrix-grid,
+  .build-grid,
+  .lens-grid {
+    display: grid;
+    gap: 1rem;
+  }
+
+  .stat-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .domain-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .matrix-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .build-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .lens-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+
+  .stat-card,
+  .domain-card,
+  .matrix-row,
+  .build-card,
+  .lens-card,
+  .note,
+  .cta-panel {
+    border-radius: var(--radius-lg);
+    border: 1px solid rgba(255,255,255,0.08);
+    background: rgba(255,255,255,0.04);
+  }
+
+  .stat-card,
+  .domain-card,
+  .matrix-row,
+  .build-card,
+  .lens-card,
+  .note {
+    padding: 1rem;
+  }
+
+  .stat-card span,
+  .pill,
+  .tag {
+    font-size: 0.76rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+
+  .stat-card span {
+    display: block;
+    color: var(--text-dim);
+    margin-bottom: 0.35rem;
+  }
+
+  .stat-card strong {
+    display: block;
+    font-size: 1.2rem;
+  }
+
+  .pill-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 1rem;
+  }
+
+  .pill,
+  .tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.48rem 0.72rem;
+    border-radius: var(--radius-sm);
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.08);
+    color: var(--text-soft);
+  }
+
+  .nav-panel,
+  .section,
+  .cta-panel {
+    padding: 1.25rem;
+  }
+
+  .nav-panel {
+    position: sticky;
+    top: 5rem;
+    margin-bottom: 1.2rem;
+  }
+
+  .nav-title {
+    margin: 0 0 0.85rem;
+    color: var(--text-dim);
+    font-size: 0.73rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
+  .layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 1.2rem;
+    padding-bottom: 4rem;
+  }
+
+  .section-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
+    gap: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  .section h2 {
+    margin: 0.15rem 0 0;
+    font-size: clamp(1.4rem, 3vw, 2rem);
+    letter-spacing: -0.03em;
+  }
+
+  .lens-card,
+  .domain-card,
+  .matrix-row,
+  .build-card {
+    transition: transform 0.24s ease, border-color 0.24s ease, background 0.24s ease, box-shadow 0.24s ease;
+  }
+
+  .lens-card:hover,
+  .domain-card:hover,
+  .matrix-row:hover,
+  .build-card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(240, 197, 107, 0.22);
+    background: rgba(255,255,255,0.055);
+    box-shadow: 0 18px 36px rgba(0, 0, 0, 0.22);
+  }
+
+  .domain-top,
+  .matrix-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: start;
+    gap: 0.8rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .domain-card h3,
+  .lens-card h3,
+  .build-card h3,
+  .matrix-row h3 {
+    margin: 0;
+    font-size: 1.02rem;
+  }
+
+  .card-list {
+    margin: 0.85rem 0 0;
+    padding-left: 1.1rem;
+    color: var(--text-soft);
+  }
+
+  .card-list li + li { margin-top: 0.35rem; }
+
+  .section-note { margin-top: 1rem; }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.55s ease, transform 0.55s ease;
+  }
+
+  .reveal.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .cta-panel {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 1rem;
+    align-items: center;
+    background: linear-gradient(135deg, rgba(143, 141, 226, 0.14), rgba(240, 197, 107, 0.07));
+  }
+
+  .footer {
+    padding-bottom: 3rem;
+    color: var(--text-dim);
+  }
+
+  @media (max-width: 1080px) {
+    .hero,
+    .domain-grid,
+    .matrix-grid,
+    .build-grid,
+    .lens-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .hero {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 760px) {
+    .domain-grid,
+    .matrix-grid,
+    .build-grid,
+    .lens-grid,
+    .stat-grid,
+    .cta-panel {
+      grid-template-columns: 1fr;
+    }
+
+    .hero-main,
+    .hero-side,
+    .nav-panel,
+    .section,
+    .cta-panel {
+      border-radius: 22px;
+    }
+
+    .section-head,
+    .domain-top,
+    .matrix-top {
+      flex-direction: column;
+      align-items: start;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    *, *::before, *::after { transition: none !important; animation: none !important; }
+  }
+</style>
+</head>
+<body>
+  <div class="page">
+    <div class="shell">
+      <div class="topbar">
+        <a class="top-link" href="../index.html">&#8592; All Game Worlds</a>
+        <a class="top-link" href="index.html">Daggerheart Primer</a>
+        <a class="top-link" href="classes.html">Class Archive</a>
+        <a class="top-link" href="campaign-frames.html">Campaign Frames</a>
+      </div>
+
+      <header class="hero reveal" id="top">
+        <section class="hero-main" aria-labelledby="domain-atlas-title">
+          <div class="eyebrow">Reference II: Domain Atlas</div>
+          <h1 id="domain-atlas-title"><span>Daggerheart</span>Domain Atlas</h1>
+          <p class="lede">
+            Domains are the tonal core of Daggerheart growth. They shape what kind of cards you reach for, what scenes you naturally influence,
+            and what your class feels like in play beyond pure statistics. This atlas compares the nine core domains so you can see the emotional
+            and mechanical flavor underneath the classes.
+          </p>
+          <div class="hero-actions">
+            <a class="cta-link primary" href="#domain-atlas">Browse all domains</a>
+            <a class="cta-link" href="#class-pairings">See class pairings</a>
+            <a class="cta-link" href="classes.html">Return to the class archive</a>
+          </div>
+        </section>
+
+        <aside class="hero-side reveal">
+          <p class="tiny-label">At a glance</p>
+          <div class="stat-grid">
+            <div class="stat-card"><span>Core domains</span><strong>9</strong></div>
+            <div class="stat-card"><span>Per class</span><strong>2</strong></div>
+            <div class="stat-card"><span>Identity</span><strong>Tone engine</strong></div>
+            <div class="stat-card"><span>Best use</span><strong>Guide your build</strong></div>
+          </div>
+          <div class="note">
+            <strong>Read this page like a mood board</strong>
+            <p>Two classes can both be “casters” or “supports,” but their domains decide whether that support feels scholarly, radiant, primal, sly, martial, or uncanny.</p>
+          </div>
+          <div class="pill-row" aria-label="Domain lenses">
+            <span class="pill">Magic expression</span>
+            <span class="pill">Scene pressure</span>
+            <span class="pill">Social texture</span>
+            <span class="pill">Combat identity</span>
+          </div>
+        </aside>
+      </header>
+
+      <nav class="nav-panel reveal" aria-label="Domain archive sections">
+        <p class="nav-title">Jump through the atlas</p>
+        <div class="nav-list" id="page-nav">
+          <a class="nav-link" href="#domain-lenses">Reading Domains</a>
+          <a class="nav-link" href="#domain-atlas">Domain Atlas</a>
+          <a class="nav-link" href="#class-pairings">Class Pairings</a>
+          <a class="nav-link" href="#build-sparks">Build Sparks</a>
+        </div>
+      </nav>
+
+      <main class="layout">
+        <section class="section reveal" id="domain-lenses">
+          <div class="section-head">
+            <div>
+              <p class="section-label">1. Reading Domains</p>
+              <h2>Think of domains as style, pressure, and worldview</h2>
+            </div>
+          </div>
+          <div class="lens-grid">
+            <article class="lens-card">
+              <p class="card-kicker">Power source</p>
+              <h3>Where does this feel come from?</h3>
+              <p>Arcana and Codex both touch magic, but one feels innate and raw while the other feels studied and intentional.</p>
+            </article>
+            <article class="lens-card">
+              <p class="card-kicker">Scene posture</p>
+              <h3>Does it push, shield, misdirect, or endure?</h3>
+              <p>Valor, Bone, and Blade may all touch combat, but they approach danger through very different instincts.</p>
+            </article>
+            <article class="lens-card">
+              <p class="card-kicker">Emotional texture</p>
+              <h3>What does this domain feel like at the table?</h3>
+              <p>Grace reads socially luminous, Midnight reads secretive, Splendor reads sacred and life-facing.</p>
+            </article>
+            <article class="lens-card">
+              <p class="card-kicker">Build promise</p>
+              <h3>What stories does it invite?</h3>
+              <p>A good domain choice should suggest moments you are excited to play, not just stronger numbers.</p>
+            </article>
+          </div>
+          <div class="note section-note">
+            <strong>Shortcut</strong>
+            <p>If you are choosing between two classes, compare their domains first. The better fit is often the class whose domains describe your fantasy more accurately.</p>
+          </div>
+        </section>
+
+        <section class="section reveal" id="domain-atlas">
+          <div class="section-head">
+            <div>
+              <p class="section-label">2. Domain Atlas</p>
+              <h2>The nine core domains and the energy they bring</h2>
+            </div>
+          </div>
+          <div class="domain-grid">
+            <article class="domain-card reveal">
+              <div class="domain-top"><h3>Arcana</h3><span class="tag">Instinctual magic</span></div>
+              <p>Arcana feels like power that already lives inside the body or the world. It is intimate, volatile, and expressive rather than methodical.</p>
+              <ul class="card-list">
+                <li>Best for players who want magic to feel dangerous, emotional, or wild.</li>
+                <li>Shared by Druid and Sorcerer.</li>
+                <li>Usually points toward transformation, elemental force, or uncanny impulse.</li>
+              </ul>
+            </article>
+            <article class="domain-card reveal">
+              <div class="domain-top"><h3>Blade</h3><span class="tag">Weapon mastery</span></div>
+              <p>Blade is martial precision. It carries confidence, technique, and clean threat, whether that shows up through swordplay, archery, or practiced violence.</p>
+              <ul class="card-list">
+                <li>Best for players who want control through skill instead of mysticism.</li>
+                <li>Shared by Guardian and Warrior.</li>
+                <li>Supports characters who look competent before they look flashy.</li>
+              </ul>
+            </article>
+            <article class="domain-card reveal">
+              <div class="domain-top"><h3>Bone</h3><span class="tag">Body and tactics</span></div>
+              <p>Bone is discipline, endurance, and battlefield sense. It is about knowing how bodies move, how danger lands, and how to stay present when pressure spikes.</p>
+              <ul class="card-list">
+                <li>Best for players who like tactical groundedness and physical credibility.</li>
+                <li>Shared by Ranger and Warrior.</li>
+                <li>Often reads relentless, trained, or predatory depending on the class around it.</li>
+              </ul>
+            </article>
+            <article class="domain-card reveal">
+              <div class="domain-top"><h3>Codex</h3><span class="tag">Learned magic</span></div>
+              <p>Codex is studied magical knowledge: books, sigils, formal learning, memory, and clever structure. It turns expertise into power.</p>
+              <ul class="card-list">
+                <li>Best for players who like prepared tools and thoughtful spell use.</li>
+                <li>Shared by Bard and Wizard.</li>
+                <li>Feels elegant, literate, and deliberate in fiction.</li>
+              </ul>
+            </article>
+            <article class="domain-card reveal">
+              <div class="domain-top"><h3>Grace</h3><span class="tag">Charisma and perception</span></div>
+              <p>Grace is about shaping what people notice, believe, and follow. It can be charming, glamorous, deceptive, or piercingly intuitive.</p>
+              <ul class="card-list">
+                <li>Best for players who want their personality to change scenes.</li>
+                <li>Shared by Bard and Rogue.</li>
+                <li>Creates characters who are socially dangerous in the best possible way.</li>
+              </ul>
+            </article>
+            <article class="domain-card reveal">
+              <div class="domain-top"><h3>Midnight</h3><span class="tag">Shadows and secrecy</span></div>
+              <p>Midnight governs hidden truths, stealth, obscurity, and misdirection. It is the domain of things glimpsed out of the corner of the eye.</p>
+              <ul class="card-list">
+                <li>Best for players who enjoy secrets, vanishing acts, and sharp reveals.</li>
+                <li>Shared by Rogue and Sorcerer.</li>
+                <li>Can read as either subtle menace or mystical mystery depending on context.</li>
+              </ul>
+            </article>
+            <article class="domain-card reveal">
+              <div class="domain-top"><h3>Sage</h3><span class="tag">Nature and vitality</span></div>
+              <p>Sage is living-world wisdom, vitality, ferocity, and rooted instinct. It points toward growth, the hunt, and nature as active force.</p>
+              <ul class="card-list">
+                <li>Best for players who want wilderness identity or primal attunement.</li>
+                <li>Shared by Druid and Ranger.</li>
+                <li>Often supports exploration, survival, and bestial momentum.</li>
+              </ul>
+            </article>
+            <article class="domain-card reveal">
+              <div class="domain-top"><h3>Splendor</h3><span class="tag">Life and death</span></div>
+              <p>Splendor carries healing, radiance, restoration, and direct contact with life’s fragile edge. It often feels sacred, luminous, and consequential.</p>
+              <ul class="card-list">
+                <li>Best for players who want miracles, rescue, and life-facing drama.</li>
+                <li>Shared by Seraph and Wizard.</li>
+                <li>Can feel noble, priestly, or mystically reverent without losing bite.</li>
+              </ul>
+            </article>
+            <article class="domain-card reveal">
+              <div class="domain-top"><h3>Valor</h3><span class="tag">Protection and force</span></div>
+              <p>Valor is courage made practical. It is about keeping danger off others, bracing under pressure, and making steadfastness feel active.</p>
+              <ul class="card-list">
+                <li>Best for players who want duty, defense, and visible backbone.</li>
+                <li>Shared by Guardian and Seraph.</li>
+                <li>Frequently defines the emotional center of a party.</li>
+              </ul>
+            </article>
+          </div>
+        </section>
+
+        <section class="section reveal" id="class-pairings">
+          <div class="section-head">
+            <div>
+              <p class="section-label">3. Class Pairings</p>
+              <h2>Every class through the lens of its two domains</h2>
+            </div>
+          </div>
+          <div class="matrix-grid">
+            <article class="matrix-row">
+              <div class="matrix-top"><h3>Bard</h3><span class="matrix-label">Grace + Codex</span></div>
+              <p>Social brilliance plus learned structure. The Bard feels like a performer, rhetorician, or manipulator whose art has technique behind it.</p>
+            </article>
+            <article class="matrix-row">
+              <div class="matrix-top"><h3>Druid</h3><span class="matrix-label">Sage + Arcana</span></div>
+              <p>Nature’s instinct fused with wild magic. The Druid feels alive, changeable, and closely bonded to place or transformation.</p>
+            </article>
+            <article class="matrix-row">
+              <div class="matrix-top"><h3>Guardian</h3><span class="matrix-label">Valor + Blade</span></div>
+              <p>Protective resolve expressed through trained weaponcraft. The Guardian protects because they know exactly how to stand and strike.</p>
+            </article>
+            <article class="matrix-row">
+              <div class="matrix-top"><h3>Ranger</h3><span class="matrix-label">Bone + Sage</span></div>
+              <p>Physical discipline plus living-world instinct. The Ranger feels like a hunter who reads danger with both body knowledge and natural attunement.</p>
+            </article>
+            <article class="matrix-row">
+              <div class="matrix-top"><h3>Rogue</h3><span class="matrix-label">Midnight + Grace</span></div>
+              <p>Secrets sharpened by social finesse. The Rogue disappears, deceives, reads the room, and exploits fractures with style.</p>
+            </article>
+            <article class="matrix-row">
+              <div class="matrix-top"><h3>Seraph</h3><span class="matrix-label">Splendor + Valor</span></div>
+              <p>Radiant compassion backed by courage. The Seraph feels sacred, brave, and strongly motivated by who deserves saving.</p>
+            </article>
+            <article class="matrix-row">
+              <div class="matrix-top"><h3>Sorcerer</h3><span class="matrix-label">Arcana + Midnight</span></div>
+              <p>Innate magic mixed with mystery and hidden force. The Sorcerer feels volatile, magnetic, and slightly dangerous even when helping.</p>
+            </article>
+            <article class="matrix-row">
+              <div class="matrix-top"><h3>Warrior</h3><span class="matrix-label">Blade + Bone</span></div>
+              <p>Technique paired with discipline. The Warrior is the clearest expression of martial mastery, grounded, consistent, and hard to shake.</p>
+            </article>
+            <article class="matrix-row">
+              <div class="matrix-top"><h3>Wizard</h3><span class="matrix-label">Codex + Splendor</span></div>
+              <p>Studied power meeting luminous life-facing magic. The Wizard feels like a scholar whose expertise can heal, protect, or solve elegantly.</p>
+            </article>
+          </div>
+        </section>
+
+        <section class="section reveal" id="build-sparks">
+          <div class="section-head">
+            <div>
+              <p class="section-label">4. Build Sparks</p>
+              <h2>Quick inspiration if you are still deciding</h2>
+            </div>
+          </div>
+          <div class="build-grid">
+            <article class="build-card">
+              <p class="card-kicker">For direct heroism</p>
+              <h3>Valor or Splendor</h3>
+              <p>Start here if you want your character to radiate courage, guardianship, healing, or open-hearted conviction.</p>
+            </article>
+            <article class="build-card">
+              <p class="card-kicker">For sharp cleverness</p>
+              <h3>Grace or Midnight</h3>
+              <p>Pick one of these if you want to outmaneuver scenes through charm, deception, stealth, or social intelligence.</p>
+            </article>
+            <article class="build-card">
+              <p class="card-kicker">For force of nature energy</p>
+              <h3>Arcana or Sage</h3>
+              <p>These domains suit players who want primal, instinctive, or wild-feeling scenes more than refined ceremony.</p>
+            </article>
+          </div>
+        </section>
+
+        <section class="cta-panel reveal" aria-labelledby="next-reference-title">
+          <div>
+            <p class="section-label">Continue the archive</p>
+            <h2 id="next-reference-title">Domains tell you how a character feels. Campaign frames tell you what kind of world will answer them back.</h2>
+            <p>Move to Campaign Frames to compare the broad story engines suggested in the core material, or head back to the Class Archive if you want to map a class choice onto these tones immediately.</p>
+          </div>
+          <div class="chip-row">
+            <a class="cta-link primary" href="campaign-frames.html">Open Campaign Frames</a>
+            <a class="cta-link" href="classes.html">Open Class Archive</a>
+          </div>
+        </section>
+      </main>
+
+      <footer class="footer">
+        <p>Player-facing guide based on the core Daggerheart domain structure in this archive. Use it to pick tone and build direction, then confirm details in full cards and class text.</p>
+      </footer>
+    </div>
+  </div>
+
+  <script>
+    const navLinks = document.querySelectorAll('#page-nav a');
+    const observedSections = Array.from(navLinks)
+      .map((link) => document.querySelector(link.getAttribute('href')))
+      .filter(Boolean);
+
+    const navObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        const id = `#${entry.target.id}`;
+        navLinks.forEach((link) => link.classList.toggle('is-active', link.getAttribute('href') === id));
+      });
+    }, { rootMargin: '-35% 0px -45% 0px', threshold: 0.01 });
+
+    observedSections.forEach((section) => navObserver.observe(section));
+
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        entry.target.classList.add('is-visible');
+        revealObserver.unobserve(entry.target);
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
+
+    document.querySelectorAll('.reveal').forEach((element) => revealObserver.observe(element));
+  </script>
+</body>
+</html>

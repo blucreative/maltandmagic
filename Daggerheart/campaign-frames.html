@@ -1,0 +1,777 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Daggerheart Campaign Frames</title>
+<meta name="description" content="A player-facing Daggerheart campaign frame reference covering the six core frames, their tone, story shape, and party fantasy.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Manrope:wght@400;500;600;700;800&family=Sora:wght@500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; }
+
+  :root {
+    --bg: #06070c;
+    --panel: rgba(18, 22, 34, 0.82);
+    --line: rgba(255, 255, 255, 0.1);
+    --text: #f5efe4;
+    --text-soft: #cbc3b4;
+    --text-dim: #958d81;
+    --hope: #f0c56b;
+    --fear: #d96f59;
+    --arcane: #8f8de2;
+    --storm: #72a6d8;
+    --shadow: 0 28px 72px rgba(0, 0, 0, 0.45);
+    --font-display: 'Sora', 'Manrope', system-ui, sans-serif;
+    --font-body: 'Manrope', system-ui, sans-serif;
+    --font-serif: 'Cinzel', Georgia, serif;
+    --radius-xl: 28px;
+    --radius-lg: 22px;
+    --radius-md: 16px;
+    --radius-sm: 999px;
+    --max: 1220px;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    margin: 0;
+    min-height: 100vh;
+    color: var(--text);
+    font-family: var(--font-body);
+    line-height: 1.6;
+    background:
+      radial-gradient(circle at 14% 12%, rgba(114, 166, 216, 0.16), transparent 30%),
+      radial-gradient(circle at 82% 15%, rgba(217, 111, 89, 0.18), transparent 28%),
+      radial-gradient(circle at 52% 100%, rgba(143, 141, 226, 0.12), transparent 38%),
+      linear-gradient(180deg, #070912 0%, #0a0d15 42%, #06070c 100%);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  body::before,
+  body::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  body::before {
+    background-image:
+      radial-gradient(circle, rgba(255,255,255,0.24) 1px, transparent 1px),
+      radial-gradient(circle, rgba(255,255,255,0.1) 1px, transparent 1px);
+    background-size: 220px 220px, 360px 360px;
+    background-position: 0 0, 60px 90px;
+    opacity: 0.18;
+  }
+
+  body::after {
+    background: linear-gradient(110deg, transparent 0%, rgba(255,255,255,0.03) 46%, transparent 100%);
+    mask: linear-gradient(180deg, transparent, black 12%, black 88%, transparent);
+    opacity: 0.48;
+  }
+
+  a { color: inherit; }
+
+  .page {
+    position: relative;
+    z-index: 1;
+  }
+
+  .shell {
+    width: min(calc(100% - 2rem), var(--max));
+    margin: 0 auto;
+  }
+
+  .topbar {
+    position: sticky;
+    top: 0.9rem;
+    z-index: 20;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    padding-top: 1rem;
+  }
+
+  .top-link,
+  .nav-link,
+  .filter-chip,
+  .cta-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.72rem 1rem;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--line);
+    text-decoration: none;
+    color: var(--text-soft);
+    background: rgba(9, 12, 20, 0.84);
+    backdrop-filter: blur(12px);
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    transition: transform 0.22s ease, border-color 0.22s ease, color 0.22s ease, background 0.22s ease;
+  }
+
+  .top-link:hover,
+  .top-link:focus-visible,
+  .nav-link:hover,
+  .nav-link:focus-visible,
+  .nav-link.is-active,
+  .filter-chip:hover,
+  .filter-chip:focus-visible,
+  .filter-chip.is-active,
+  .cta-link:hover,
+  .cta-link:focus-visible {
+    color: var(--text);
+    border-color: rgba(240, 197, 107, 0.34);
+    background: rgba(240, 197, 107, 0.1);
+    outline: none;
+    transform: translateY(-1px);
+  }
+
+  .hero {
+    display: grid;
+    grid-template-columns: minmax(0, 1.3fr) minmax(280px, 0.82fr);
+    gap: 1.35rem;
+    padding: 2rem 0 1.3rem;
+  }
+
+  .hero-main,
+  .hero-side,
+  .section,
+  .nav-panel,
+  .cta-panel {
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-xl);
+    backdrop-filter: blur(16px);
+    box-shadow: var(--shadow);
+  }
+
+  .hero-main {
+    position: relative;
+    overflow: hidden;
+    padding: 2.35rem;
+    background:
+      radial-gradient(circle at top left, rgba(114, 166, 216, 0.22), transparent 30%),
+      radial-gradient(circle at 84% 15%, rgba(217, 111, 89, 0.16), transparent 24%),
+      linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0));
+  }
+
+  .hero-main::after {
+    content: "";
+    position: absolute;
+    inset: auto -8% -22% 25%;
+    height: 290px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(240, 197, 107, 0.18), transparent 68%);
+    filter: blur(20px);
+  }
+
+  h1,
+  h2,
+  h3,
+  strong {
+    font-family: var(--font-display);
+  }
+
+  .eyebrow,
+  .section-label,
+  .card-kicker,
+  .tiny-label,
+  .tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    color: var(--text-dim);
+    font-size: 0.73rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .eyebrow {
+    padding: 0.45rem 0.82rem;
+    border-radius: var(--radius-sm);
+    background: rgba(255,255,255,0.06);
+    border: 1px solid var(--line);
+    color: var(--hope);
+  }
+
+  .hero h1 {
+    margin: 1rem 0 0.8rem;
+    font-size: clamp(2.6rem, 5vw, 4.8rem);
+    line-height: 0.96;
+    letter-spacing: -0.045em;
+  }
+
+  .hero h1 span {
+    display: block;
+    margin-bottom: 0.52rem;
+    color: var(--hope);
+    font-family: var(--font-serif);
+    font-size: 0.42em;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .lede,
+  .hero-side p,
+  .section-copy,
+  .frame-card p,
+  .guide-card p,
+  .prompt-card p,
+  .note,
+  .cta-panel p {
+    color: var(--text-soft);
+  }
+
+  .lede {
+    max-width: 58ch;
+    margin: 0;
+    font-size: 1.05rem;
+  }
+
+  .hero-actions,
+  .nav-list,
+  .filters,
+  .chip-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.7rem;
+  }
+
+  .hero-actions {
+    margin-top: 1.35rem;
+  }
+
+  .cta-link.primary {
+    color: var(--bg);
+    background: linear-gradient(135deg, var(--hope), #ffdd9f);
+    border-color: transparent;
+  }
+
+  .cta-link.primary:hover,
+  .cta-link.primary:focus-visible {
+    color: var(--bg);
+    background: linear-gradient(135deg, #ffd58c, #ffe7c2);
+  }
+
+  .hero-side {
+    padding: 1.45rem;
+    display: grid;
+    gap: 1rem;
+    align-content: start;
+  }
+
+  .stat-grid,
+  .frame-grid,
+  .guide-grid,
+  .prompt-grid {
+    display: grid;
+    gap: 1rem;
+  }
+
+  .stat-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .frame-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .guide-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .prompt-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+
+  .stat-card,
+  .frame-card,
+  .guide-card,
+  .prompt-card,
+  .note,
+  .cta-panel {
+    border-radius: var(--radius-lg);
+    border: 1px solid rgba(255,255,255,0.08);
+    background: rgba(255,255,255,0.04);
+  }
+
+  .stat-card,
+  .frame-card,
+  .guide-card,
+  .prompt-card,
+  .note {
+    padding: 1rem;
+  }
+
+  .stat-card span,
+  .pill,
+  .tag {
+    font-size: 0.76rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+
+  .stat-card span {
+    display: block;
+    color: var(--text-dim);
+    margin-bottom: 0.35rem;
+  }
+
+  .stat-card strong {
+    display: block;
+    font-size: 1.2rem;
+  }
+
+  .pill-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 1rem;
+  }
+
+  .pill,
+  .tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.48rem 0.72rem;
+    border-radius: var(--radius-sm);
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.08);
+    color: var(--text-soft);
+  }
+
+  .nav-panel,
+  .section,
+  .cta-panel {
+    padding: 1.25rem;
+  }
+
+  .nav-panel {
+    position: sticky;
+    top: 5rem;
+    margin-bottom: 1.2rem;
+  }
+
+  .nav-title {
+    margin: 0 0 0.85rem;
+    color: var(--text-dim);
+    font-size: 0.73rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
+  .layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 1.2rem;
+    padding-bottom: 4rem;
+  }
+
+  .section-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
+    gap: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  .section h2 {
+    margin: 0.15rem 0 0;
+    font-size: clamp(1.4rem, 3vw, 2rem);
+    letter-spacing: -0.03em;
+  }
+
+  .frame-card,
+  .guide-card,
+  .prompt-card {
+    transition: transform 0.24s ease, border-color 0.24s ease, background 0.24s ease, box-shadow 0.24s ease;
+  }
+
+  .frame-card:hover,
+  .guide-card:hover,
+  .prompt-card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(240, 197, 107, 0.22);
+    background: rgba(255,255,255,0.055);
+    box-shadow: 0 18px 36px rgba(0, 0, 0, 0.22);
+  }
+
+  .frame-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: start;
+    gap: 0.8rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .frame-card h3,
+  .guide-card h3,
+  .prompt-card h3 {
+    margin: 0;
+    font-size: 1.02rem;
+  }
+
+  .card-list {
+    margin: 0.85rem 0 0;
+    padding-left: 1.1rem;
+    color: var(--text-soft);
+  }
+
+  .card-list li + li { margin-top: 0.35rem; }
+
+  .filters {
+    margin-bottom: 1rem;
+  }
+
+  .filter-chip {
+    cursor: pointer;
+    font: inherit;
+  }
+
+  .is-hidden { display: none !important; }
+
+  .section-note { margin-top: 1rem; }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.55s ease, transform 0.55s ease;
+  }
+
+  .reveal.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .cta-panel {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 1rem;
+    align-items: center;
+    background: linear-gradient(135deg, rgba(114, 166, 216, 0.14), rgba(240, 197, 107, 0.07));
+  }
+
+  .footer {
+    padding-bottom: 3rem;
+    color: var(--text-dim);
+  }
+
+  @media (max-width: 1080px) {
+    .hero,
+    .frame-grid,
+    .guide-grid,
+    .prompt-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .hero {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 760px) {
+    .frame-grid,
+    .guide-grid,
+    .prompt-grid,
+    .stat-grid,
+    .cta-panel {
+      grid-template-columns: 1fr;
+    }
+
+    .hero-main,
+    .hero-side,
+    .nav-panel,
+    .section,
+    .cta-panel {
+      border-radius: 22px;
+    }
+
+    .section-head,
+    .frame-top {
+      flex-direction: column;
+      align-items: start;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    *, *::before, *::after { transition: none !important; animation: none !important; }
+  }
+</style>
+</head>
+<body>
+  <div class="page">
+    <div class="shell">
+      <div class="topbar">
+        <a class="top-link" href="../index.html">&#8592; All Game Worlds</a>
+        <a class="top-link" href="index.html">Daggerheart Primer</a>
+        <a class="top-link" href="classes.html">Class Archive</a>
+        <a class="top-link" href="domains.html">Domain Atlas</a>
+      </div>
+
+      <header class="hero reveal" id="top">
+        <section class="hero-main" aria-labelledby="frames-title">
+          <div class="eyebrow">Reference III: Campaign Frames</div>
+          <h1 id="frames-title"><span>Daggerheart</span>Campaign Frames</h1>
+          <p class="lede">
+            Campaign frames are the quickest way to decide what kind of fantasy story your table is actually telling. They tune mood,
+            pressure, and world assumptions before the first scene ever begins. This page turns the core frame lineup into a player-facing guide:
+            what each frame suggests, what kind of party thrives there, and how to choose the one that matches your group’s appetite.
+          </p>
+          <div class="hero-actions">
+            <a class="cta-link primary" href="#frame-atlas">Browse all frames</a>
+            <a class="cta-link" href="#how-to-choose">Choose by mood</a>
+            <a class="cta-link" href="classes.html">Pair a frame with classes</a>
+          </div>
+        </section>
+
+        <aside class="hero-side reveal">
+          <p class="tiny-label">At a glance</p>
+          <div class="stat-grid">
+            <div class="stat-card"><span>Core frames</span><strong>6</strong></div>
+            <div class="stat-card"><span>Primary use</span><strong>Set campaign tone</strong></div>
+            <div class="stat-card"><span>Best moment</span><strong>Session zero</strong></div>
+            <div class="stat-card"><span>Read as</span><strong>Story engine</strong></div>
+          </div>
+          <div class="note">
+            <strong>Important framing note</strong>
+            <p>These summaries are meant to help players and GMs align tone quickly. A frame is not a prison. It is a starting promise about what the world will push back with.</p>
+          </div>
+          <div class="pill-row" aria-label="Frame moods">
+            <span class="pill">Wild and haunted</span>
+            <span class="pill">War-torn and political</span>
+            <span class="pill">Dark and secretive</span>
+            <span class="pill">Weird and mythic</span>
+          </div>
+        </aside>
+      </header>
+
+      <nav class="nav-panel reveal" aria-label="Campaign frame sections">
+        <p class="nav-title">Jump through the frames</p>
+        <div class="nav-list" id="page-nav">
+          <a class="nav-link" href="#how-to-choose">How to Choose</a>
+          <a class="nav-link" href="#frame-atlas">Frame Atlas</a>
+          <a class="nav-link" href="#session-zero-prompts">Session Zero Prompts</a>
+          <a class="nav-link" href="#party-fit">Party Fit</a>
+        </div>
+      </nav>
+
+      <main class="layout">
+        <section class="section reveal" id="how-to-choose">
+          <div class="section-head">
+            <div>
+              <p class="section-label">1. Choosing a Frame</p>
+              <h2>Pick the pressure you want the world to apply</h2>
+            </div>
+          </div>
+          <div class="guide-grid">
+            <article class="guide-card">
+              <p class="card-kicker">If you want travel and myth</p>
+              <h3>Choose a frame with terrain as antagonist</h3>
+              <p>The Witherwild and Colossus of the Drylands both imply a world where the land itself shapes the campaign’s drama.</p>
+            </article>
+            <article class="guide-card">
+              <p class="card-kicker">If you want loyalty tests</p>
+              <h3>Choose a frame built on factions or corruption</h3>
+              <p>Five Banners Burning and The Age of Umbra suggest stories where allegiance, secrecy, and compromise have real weight.</p>
+            </article>
+            <article class="guide-card">
+              <p class="card-kicker">If you want a strong tonal hook</p>
+              <h3>Choose the frame with the clearest image in your head</h3>
+              <p>Beast Feast and Motherboard are especially powerful when your table wants a bolder, stranger identity from the start.</p>
+            </article>
+          </div>
+          <div class="note section-note">
+            <strong>Best practice</strong>
+            <p>At session zero, ask not only “What sounds cool?” but “What kind of complications do we want every few sessions?” The best frame is the one whose problems you are excited to keep seeing.</p>
+          </div>
+        </section>
+
+        <section class="section reveal" id="frame-atlas">
+          <div class="section-head">
+            <div>
+              <p class="section-label">2. Frame Atlas</p>
+              <h2>Six ways to point the campaign at a very different fantasy</h2>
+            </div>
+          </div>
+          <div class="filters" aria-label="Frame filters">
+            <button class="filter-chip is-active" type="button" data-filter="all">All frames</button>
+            <button class="filter-chip" type="button" data-filter="wild">Wild</button>
+            <button class="filter-chip" type="button" data-filter="war">Conflict</button>
+            <button class="filter-chip" type="button" data-filter="dark">Dark</button>
+            <button class="filter-chip" type="button" data-filter="weird">Weird</button>
+            <button class="filter-chip" type="button" data-filter="epic">Epic</button>
+          </div>
+          <div class="frame-grid" id="frame-grid">
+            <article class="frame-card reveal" data-kind="wild dark">
+              <div class="frame-top"><h3>The Witherwild</h3><span class="tag">Haunted wilds</span></div>
+              <p>A frame for tables that want nature to feel ancient, beautiful, and dangerous. Expect mystery, decay, primal magic, and a sense that the land remembers more than the people crossing it.</p>
+              <ul class="card-list">
+                <li>Best for Rangers, Druids, Guardians, and anyone tied to place or omen.</li>
+                <li>Strong if your group likes exploration with eerie emotional texture.</li>
+                <li>Questions it invites: What is rotting, and who is trying to survive it?</li>
+              </ul>
+            </article>
+            <article class="frame-card reveal" data-kind="war epic">
+              <div class="frame-top"><h3>Five Banners Burning</h3><span class="tag">Conflict and factions</span></div>
+              <p>A frame built for divided loyalties, clashing powers, and people asked to choose who they are when kingdoms, banners, or causes demand an answer.</p>
+              <ul class="card-list">
+                <li>Best for parties who enjoy politics, military pressure, and faction play.</li>
+                <li>Excellent for Seraphs, Guardians, Bards, and Rogues with strong convictions.</li>
+                <li>Questions it invites: What do you defend, and what will it cost?</li>
+              </ul>
+            </article>
+            <article class="frame-card reveal" data-kind="weird epic">
+              <div class="frame-top"><h3>Beast Feast</h3><span class="tag">Monsters and excess</span></div>
+              <p>A frame that reads loud, strange, and hungry. It suggests monstrous spectacle, oversized personalities, and fantasy that is willing to be a little dangerous and a little deliciously absurd.</p>
+              <ul class="card-list">
+                <li>Best for tables that like expressive characters and memorable set pieces.</li>
+                <li>Pairs well with bold Bards, Sorcerers, Warriors, and flamboyant Rogues.</li>
+                <li>Questions it invites: What appetite is driving the world out of balance?</li>
+              </ul>
+            </article>
+            <article class="frame-card reveal" data-kind="dark war">
+              <div class="frame-top"><h3>The Age of Umbra</h3><span class="tag">Shadowed fantasy</span></div>
+              <p>A frame of creeping darkness, hidden powers, and a world shaped by threat that does not always announce itself cleanly. It supports secrecy, suspicion, and slow-burn dread.</p>
+              <ul class="card-list">
+                <li>Best for groups who enjoy secrets, moral ambiguity, and uneasy alliances.</li>
+                <li>Pairs especially well with Rogues, Wizards, Sorcerers, and duty-bound Seraphs.</li>
+                <li>Questions it invites: What is already lost, and what shadow is still spreading?</li>
+              </ul>
+            </article>
+            <article class="frame-card reveal" data-kind="weird">
+              <div class="frame-top"><h3>Motherboard</h3><span class="tag">Genre-bending</span></div>
+              <p>A frame that signals Daggerheart can move beyond straightforward fantasy assumptions. It is ideal for tables that want strange premises, surprising metaphors, and a more experimental flavor of worldbuilding.</p>
+              <ul class="card-list">
+                <li>Best for groups comfortable co-authoring a weird world together.</li>
+                <li>Works beautifully with Wizards, Bards, Sorcerers, and inventive Guardians.</li>
+                <li>Questions it invites: What rules of reality are different here, and who benefits?</li>
+              </ul>
+            </article>
+            <article class="frame-card reveal" data-kind="epic wild">
+              <div class="frame-top"><h3>Colossus of the Drylands</h3><span class="tag">Epic traversal</span></div>
+              <p>A frame that suggests scale: vast spaces, immense obstacles, and a campaign built around movement through environments that feel too large to ignore. Travel becomes mythic action.</p>
+              <ul class="card-list">
+                <li>Best for parties who want journey, hardship, and awe as recurring pillars.</li>
+                <li>Pairs well with Rangers, Druids, Warriors, and any character built for endurance.</li>
+                <li>Questions it invites: What do you keep moving toward, and what does the world demand in return?</li>
+              </ul>
+            </article>
+          </div>
+        </section>
+
+        <section class="section reveal" id="session-zero-prompts">
+          <div class="section-head">
+            <div>
+              <p class="section-label">3. Session Zero Prompts</p>
+              <h2>Questions that help a frame lock into place</h2>
+            </div>
+          </div>
+          <div class="prompt-grid">
+            <article class="prompt-card">
+              <p class="card-kicker">Pressure</p>
+              <h3>What kind of trouble shows up often?</h3>
+              <p>Choose whether your campaign repeats war, wilderness, corruption, hunger, mystery, or impossible scale. Repetition is identity.</p>
+            </article>
+            <article class="prompt-card">
+              <p class="card-kicker">Promise</p>
+              <h3>What emotional color should victories have?</h3>
+              <p>Triumphant, bittersweet, defiant, eerie, or ecstatic. Naming this early helps every class and backstory click harder.</p>
+            </article>
+            <article class="prompt-card">
+              <p class="card-kicker">Party role</p>
+              <h3>Why is this group necessary?</h3>
+              <p>Are you scouts, rebels, escorts, survivors, pilgrims, or opportunists? The answer determines how the frame hits back.</p>
+            </article>
+          </div>
+        </section>
+
+        <section class="section reveal" id="party-fit">
+          <div class="section-head">
+            <div>
+              <p class="section-label">4. Party Fit</p>
+              <h2>Use these broad pairings if you want a fast recommendation</h2>
+            </div>
+          </div>
+          <div class="guide-grid">
+            <article class="guide-card">
+              <p class="card-kicker">For heroic defense stories</p>
+              <h3>Five Banners Burning or The Age of Umbra</h3>
+              <p>These frames reward characters with convictions, secrets, and the ability to hold the line when everything gets complicated.</p>
+            </article>
+            <article class="guide-card">
+              <p class="card-kicker">For primal or travel parties</p>
+              <h3>The Witherwild or Colossus of the Drylands</h3>
+              <p>Take these when your group wants terrain, survival, movement, and wonder to matter almost as much as direct conflict.</p>
+            </article>
+            <article class="guide-card">
+              <p class="card-kicker">For louder, stranger campaigns</p>
+              <h3>Beast Feast or Motherboard</h3>
+              <p>Pick these if your table loves strong aesthetic identity, unusual premises, and memorable character energy over grounded default fantasy.</p>
+            </article>
+          </div>
+        </section>
+
+        <section class="cta-panel reveal" aria-labelledby="next-reference-title">
+          <div>
+            <p class="section-label">Continue the archive</p>
+            <h2 id="next-reference-title">Once you know the campaign frame, the best next question is which class and domains feel native to that world.</h2>
+            <p>Loop back to the Class Archive and Domain Atlas to build characters that belong inside the pressure, imagery, and emotional promises your frame establishes.</p>
+          </div>
+          <div class="chip-row">
+            <a class="cta-link primary" href="classes.html">Open Class Archive</a>
+            <a class="cta-link" href="domains.html">Open Domain Atlas</a>
+          </div>
+        </section>
+      </main>
+
+      <footer class="footer">
+        <p>Player-facing guide based on the core campaign frame lineup in this archive. Use it to align tone and expectations, then shape session-zero details for your table.</p>
+      </footer>
+    </div>
+  </div>
+
+  <script>
+    const filterButtons = document.querySelectorAll('[data-filter]');
+    const frameCards = document.querySelectorAll('#frame-grid .frame-card');
+
+    filterButtons.forEach((button) => {
+      button.addEventListener('click', () => {
+        const filter = button.dataset.filter;
+        filterButtons.forEach((chip) => chip.classList.toggle('is-active', chip === button));
+
+        frameCards.forEach((card) => {
+          const kinds = (card.dataset.kind || '').split(' ');
+          const show = filter === 'all' || kinds.includes(filter);
+          card.classList.toggle('is-hidden', !show);
+        });
+      });
+    });
+
+    const navLinks = document.querySelectorAll('#page-nav a');
+    const observedSections = Array.from(navLinks)
+      .map((link) => document.querySelector(link.getAttribute('href')))
+      .filter(Boolean);
+
+    const navObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        const id = `#${entry.target.id}`;
+        navLinks.forEach((link) => link.classList.toggle('is-active', link.getAttribute('href') === id));
+      });
+    }, { rootMargin: '-35% 0px -45% 0px', threshold: 0.01 });
+
+    observedSections.forEach((section) => navObserver.observe(section));
+
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        entry.target.classList.add('is-visible');
+        revealObserver.unobserve(entry.target);
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
+
+    document.querySelectorAll('.reveal').forEach((element) => revealObserver.observe(element));
+  </script>
+</body>
+</html>

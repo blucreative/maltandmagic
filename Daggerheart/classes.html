@@ -1,0 +1,935 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Daggerheart Class Archive</title>
+<meta name="description" content="A player-facing Daggerheart class reference covering the nine core classes, their domains, party roles, and table feel.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Manrope:wght@400;500;600;700;800&family=Sora:wght@500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; }
+
+  :root {
+    --bg: #05070c;
+    --panel: rgba(18, 22, 34, 0.82);
+    --panel-strong: rgba(255, 255, 255, 0.05);
+    --line: rgba(255, 255, 255, 0.1);
+    --line-strong: rgba(255, 255, 255, 0.2);
+    --text: #f5efe4;
+    --text-soft: #c9c2b2;
+    --text-dim: #928a7d;
+    --hope: #efc268;
+    --fear: #d96e58;
+    --arcane: #8b87da;
+    --wild: #7bbf7e;
+    --shadow: 0 28px 72px rgba(0, 0, 0, 0.45);
+    --font-display: 'Sora', 'Manrope', system-ui, sans-serif;
+    --font-body: 'Manrope', system-ui, sans-serif;
+    --font-serif: 'Cinzel', Georgia, serif;
+    --radius-xl: 28px;
+    --radius-lg: 22px;
+    --radius-md: 16px;
+    --radius-sm: 999px;
+    --max: 1220px;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    margin: 0;
+    min-height: 100vh;
+    color: var(--text);
+    font-family: var(--font-body);
+    line-height: 1.6;
+    background:
+      radial-gradient(circle at 12% 10%, rgba(139, 135, 218, 0.18), transparent 30%),
+      radial-gradient(circle at 84% 18%, rgba(217, 110, 88, 0.18), transparent 28%),
+      radial-gradient(circle at 52% 100%, rgba(123, 191, 126, 0.13), transparent 38%),
+      linear-gradient(180deg, #060912 0%, #0a0d15 40%, #05070c 100%);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  body::before,
+  body::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  body::before {
+    background-image:
+      radial-gradient(circle, rgba(255,255,255,0.24) 1px, transparent 1px),
+      radial-gradient(circle, rgba(255,255,255,0.1) 1px, transparent 1px);
+    background-size: 220px 220px, 360px 360px;
+    background-position: 0 0, 60px 90px;
+    opacity: 0.18;
+  }
+
+  body::after {
+    background: linear-gradient(120deg, transparent 0%, rgba(255,255,255,0.03) 45%, transparent 100%);
+    mask: linear-gradient(180deg, transparent, black 12%, black 88%, transparent);
+    opacity: 0.5;
+  }
+
+  a { color: inherit; }
+
+  .page {
+    position: relative;
+    z-index: 1;
+  }
+
+  .shell {
+    width: min(calc(100% - 2rem), var(--max));
+    margin: 0 auto;
+  }
+
+  .topbar {
+    position: sticky;
+    top: 0.9rem;
+    z-index: 20;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    padding-top: 1rem;
+  }
+
+  .top-link,
+  .nav-link,
+  .filter-chip,
+  .cta-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.72rem 1rem;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--line);
+    text-decoration: none;
+    color: var(--text-soft);
+    background: rgba(9, 12, 20, 0.84);
+    backdrop-filter: blur(12px);
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    transition: transform 0.22s ease, border-color 0.22s ease, color 0.22s ease, background 0.22s ease;
+  }
+
+  .top-link:hover,
+  .top-link:focus-visible,
+  .nav-link:hover,
+  .nav-link:focus-visible,
+  .nav-link.is-active,
+  .filter-chip:hover,
+  .filter-chip:focus-visible,
+  .filter-chip.is-active,
+  .cta-link:hover,
+  .cta-link:focus-visible {
+    color: var(--text);
+    border-color: rgba(239, 194, 104, 0.34);
+    background: rgba(239, 194, 104, 0.1);
+    outline: none;
+    transform: translateY(-1px);
+  }
+
+  .hero {
+    display: grid;
+    grid-template-columns: minmax(0, 1.3fr) minmax(280px, 0.82fr);
+    gap: 1.35rem;
+    padding: 2rem 0 1.3rem;
+  }
+
+  .hero-main,
+  .hero-side,
+  .section,
+  .nav-panel,
+  .cta-panel {
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-xl);
+    backdrop-filter: blur(16px);
+    box-shadow: var(--shadow);
+  }
+
+  .hero-main {
+    position: relative;
+    overflow: hidden;
+    padding: 2.35rem;
+    background:
+      radial-gradient(circle at top left, rgba(139, 135, 218, 0.24), transparent 30%),
+      radial-gradient(circle at 82% 15%, rgba(217, 110, 88, 0.16), transparent 24%),
+      linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0));
+  }
+
+  .hero-main::after {
+    content: "";
+    position: absolute;
+    inset: auto -8% -22% 25%;
+    height: 290px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(239, 194, 104, 0.18), transparent 68%);
+    filter: blur(20px);
+  }
+
+  .eyebrow,
+  .section-label,
+  .card-kicker,
+  .card-meta,
+  .tiny-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    color: var(--text-dim);
+    font-size: 0.73rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .eyebrow {
+    padding: 0.45rem 0.82rem;
+    border-radius: var(--radius-sm);
+    background: rgba(255,255,255,0.06);
+    border: 1px solid var(--line);
+    color: var(--hope);
+  }
+
+  h1,
+  h2,
+  h3,
+  strong {
+    font-family: var(--font-display);
+  }
+
+  .hero h1 {
+    margin: 1rem 0 0.8rem;
+    font-size: clamp(2.7rem, 5vw, 4.9rem);
+    line-height: 0.96;
+    letter-spacing: -0.045em;
+  }
+
+  .hero h1 span {
+    display: block;
+    margin-bottom: 0.52rem;
+    color: var(--hope);
+    font-family: var(--font-serif);
+    font-size: 0.42em;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .lede,
+  .section-copy,
+  .hero-side p,
+  .card-body,
+  .note,
+  .pairing-card p,
+  .method-card p,
+  .cta-panel p {
+    color: var(--text-soft);
+  }
+
+  .lede {
+    max-width: 58ch;
+    margin: 0;
+    font-size: 1.05rem;
+  }
+
+  .hero-actions,
+  .nav-list,
+  .filters,
+  .chip-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.7rem;
+  }
+
+  .hero-actions {
+    margin-top: 1.35rem;
+  }
+
+  .cta-link {
+    letter-spacing: 0.08em;
+  }
+
+  .cta-link.primary {
+    color: var(--bg);
+    background: linear-gradient(135deg, var(--hope), #ffd89a);
+    border-color: transparent;
+  }
+
+  .cta-link.primary:hover,
+  .cta-link.primary:focus-visible {
+    color: var(--bg);
+    background: linear-gradient(135deg, #ffd38a, #ffe5bc);
+  }
+
+  .hero-side {
+    padding: 1.45rem;
+    display: grid;
+    gap: 1rem;
+    align-content: start;
+  }
+
+  .stat-grid,
+  .class-grid,
+  .mini-grid,
+  .pairing-grid,
+  .method-grid {
+    display: grid;
+    gap: 1rem;
+  }
+
+  .stat-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .class-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .mini-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .pairing-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .method-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+
+  .stat-card,
+  .class-card,
+  .mini-card,
+  .pairing-card,
+  .method-card,
+  .note,
+  .cta-panel {
+    border-radius: var(--radius-lg);
+    border: 1px solid rgba(255,255,255,0.08);
+    background: rgba(255,255,255,0.04);
+  }
+
+  .stat-card,
+  .class-card,
+  .mini-card,
+  .pairing-card,
+  .method-card,
+  .note {
+    padding: 1rem;
+  }
+
+  .stat-card span,
+  .pill,
+  .tag {
+    font-size: 0.76rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+
+  .stat-card span {
+    display: block;
+    color: var(--text-dim);
+    margin-bottom: 0.35rem;
+  }
+
+  .stat-card strong {
+    display: block;
+    font-size: 1.2rem;
+  }
+
+  .pill-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 1rem;
+  }
+
+  .pill,
+  .tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.48rem 0.72rem;
+    border-radius: var(--radius-sm);
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.08);
+    color: var(--text-soft);
+  }
+
+  .nav-panel,
+  .section,
+  .cta-panel {
+    padding: 1.25rem;
+  }
+
+  .nav-panel {
+    position: sticky;
+    top: 5rem;
+    margin-bottom: 1.2rem;
+  }
+
+  .nav-title {
+    margin: 0 0 0.85rem;
+    color: var(--text-dim);
+    font-size: 0.73rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
+  .layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 1.2rem;
+    padding-bottom: 4rem;
+  }
+
+  .section-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
+    gap: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  .section h2 {
+    margin: 0.15rem 0 0;
+    font-size: clamp(1.4rem, 3vw, 2rem);
+    letter-spacing: -0.03em;
+  }
+
+  .class-card,
+  .mini-card,
+  .pairing-card,
+  .method-card {
+    transition: transform 0.24s ease, border-color 0.24s ease, background 0.24s ease, box-shadow 0.24s ease;
+  }
+
+  .class-card:hover,
+  .class-card:focus-within,
+  .mini-card:hover,
+  .pairing-card:hover,
+  .method-card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(239, 194, 104, 0.22);
+    background: rgba(255,255,255,0.055);
+    box-shadow: 0 18px 36px rgba(0, 0, 0, 0.22);
+  }
+
+  .class-top,
+  .split-line {
+    display: flex;
+    justify-content: space-between;
+    gap: 0.8rem;
+    align-items: start;
+  }
+
+  .class-card h3,
+  .mini-card h3,
+  .pairing-card h3,
+  .method-card h3 {
+    margin: 0;
+    font-size: 1.02rem;
+  }
+
+  .class-card p,
+  .mini-card p,
+  .pairing-card p,
+  .method-card p,
+  .card-list {
+    margin: 0;
+  }
+
+  .card-list {
+    padding-left: 1.1rem;
+    color: var(--text-soft);
+  }
+
+  .card-list li + li { margin-top: 0.35rem; }
+
+  .class-stats {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin: 0.9rem 0 0.8rem;
+  }
+
+  .class-stat {
+    padding: 0.45rem 0.65rem;
+    border-radius: var(--radius-sm);
+    background: rgba(255,255,255,0.045);
+    border: 1px solid rgba(255,255,255,0.08);
+    color: var(--text-soft);
+    font-size: 0.78rem;
+    letter-spacing: 0.03em;
+  }
+
+  .section-note {
+    margin-top: 1rem;
+  }
+
+  .filters {
+    margin-bottom: 1rem;
+  }
+
+  .filter-chip {
+    cursor: pointer;
+    font: inherit;
+  }
+
+  .is-hidden { display: none !important; }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.55s ease, transform 0.55s ease;
+  }
+
+  .reveal.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .cta-panel {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 1rem;
+    align-items: center;
+    background: linear-gradient(135deg, rgba(139, 135, 218, 0.14), rgba(239, 194, 104, 0.07));
+  }
+
+  .footer {
+    padding-bottom: 3rem;
+    color: var(--text-dim);
+  }
+
+  @media (max-width: 1080px) {
+    .hero,
+    .class-grid,
+    .mini-grid,
+    .pairing-grid,
+    .method-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .hero {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 760px) {
+    .class-grid,
+    .mini-grid,
+    .pairing-grid,
+    .method-grid,
+    .stat-grid,
+    .cta-panel {
+      grid-template-columns: 1fr;
+    }
+
+    .hero-main,
+    .hero-side,
+    .nav-panel,
+    .section,
+    .cta-panel {
+      border-radius: 22px;
+    }
+
+    .section-head,
+    .split-line {
+      flex-direction: column;
+      align-items: start;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    *, *::before, *::after { transition: none !important; animation: none !important; }
+  }
+</style>
+</head>
+<body>
+  <div class="page">
+    <div class="shell">
+      <div class="topbar">
+        <a class="top-link" href="../index.html">&#8592; All Game Worlds</a>
+        <a class="top-link" href="index.html">Daggerheart Primer</a>
+        <a class="top-link" href="domains.html">Domain Atlas</a>
+        <a class="top-link" href="campaign-frames.html">Campaign Frames</a>
+      </div>
+
+      <header class="hero reveal" id="top">
+        <section class="hero-main" aria-labelledby="class-archive-title">
+          <div class="eyebrow">Reference I: Class Archive</div>
+          <h1 id="class-archive-title"><span>Daggerheart</span>Class Archive</h1>
+          <p class="lede">
+            Every Daggerheart class is a statement about how you want to drive scenes. Some classes anchor the front line,
+            some manipulate tone and positioning, and some reshape the battlefield with magic or devotion. This archive is a
+            player-facing map of the nine core classes: what each one feels like, what it brings to the party, and how to choose one fast.
+          </p>
+          <div class="hero-actions">
+            <a class="cta-link primary" href="#class-atlas">Browse the class atlas</a>
+            <a class="cta-link" href="domains.html">Compare the domains</a>
+            <a class="cta-link" href="campaign-frames.html">Match classes to campaign frames</a>
+          </div>
+        </section>
+
+        <aside class="hero-side reveal">
+          <p class="tiny-label">At a glance</p>
+          <div class="stat-grid">
+            <div class="stat-card"><span>Core classes</span><strong>9</strong></div>
+            <div class="stat-card"><span>Domains per class</span><strong>2</strong></div>
+            <div class="stat-card"><span>Lowest HP</span><strong>5</strong></div>
+            <div class="stat-card"><span>Highest HP</span><strong>7</strong></div>
+          </div>
+          <div class="note">
+            <strong>Fast read</strong>
+            <p>
+              Pick by fantasy first. If two classes both sound useful, choose the one whose scene energy you want most often:
+              protector, schemer, hunter, miracle-worker, or force of nature.
+            </p>
+          </div>
+          <div class="pill-row" aria-label="Role lenses">
+            <span class="pill">Frontline anchors</span>
+            <span class="pill">Precision strikers</span>
+            <span class="pill">Support engines</span>
+            <span class="pill">Arcane pressure</span>
+          </div>
+        </aside>
+      </header>
+
+      <nav class="nav-panel reveal" aria-label="Class archive sections">
+        <p class="nav-title">Jump through the archive</p>
+        <div class="nav-list" id="page-nav">
+          <a class="nav-link" href="#how-to-choose">How to Choose</a>
+          <a class="nav-link" href="#class-atlas">Class Atlas</a>
+          <a class="nav-link" href="#party-chemistry">Party Chemistry</a>
+          <a class="nav-link" href="#quick-picks">Quick Picks</a>
+        </div>
+      </nav>
+
+      <main class="layout">
+        <section class="section reveal" id="how-to-choose">
+          <div class="section-head">
+            <div>
+              <p class="section-label">1. How to Choose</p>
+              <h2>Choose the class that gives you the right kind of spotlight</h2>
+            </div>
+          </div>
+          <div class="method-grid">
+            <article class="method-card">
+              <p class="card-kicker">If you want to lead danger</p>
+              <h3>Play someone who can absorb pressure</h3>
+              <p>Guardian and Seraph naturally step into scenes where the party needs a shield, a vow, or a rescue button.</p>
+            </article>
+            <article class="method-card">
+              <p class="card-kicker">If you want control</p>
+              <h3>Play someone who changes the rhythm</h3>
+              <p>Bard, Rogue, Wizard, and Ranger all influence who gets the next clean angle, just through very different flavors.</p>
+            </article>
+            <article class="method-card">
+              <p class="card-kicker">If you want intensity</p>
+              <h3>Play someone who escalates the fiction</h3>
+              <p>Warrior, Sorcerer, and Druid thrive when the scene needs force, volatility, or a decisive swing.</p>
+            </article>
+          </div>
+          <div class="note section-note">
+            <strong>Best heuristic</strong>
+            <p>Ask which sentence feels best: “I save people,” “I make openings,” “I hit like a storm,” or “I solve problems with magic.” That answer usually narrows the field immediately.</p>
+          </div>
+        </section>
+
+        <section class="section reveal" id="class-atlas">
+          <div class="section-head">
+            <div>
+              <p class="section-label">2. Class Atlas</p>
+              <h2>The nine core classes at player speed</h2>
+            </div>
+          </div>
+
+          <div class="filters" aria-label="Class filters">
+            <button class="filter-chip is-active" type="button" data-filter="all">All classes</button>
+            <button class="filter-chip" type="button" data-filter="frontline">Frontline</button>
+            <button class="filter-chip" type="button" data-filter="control">Control</button>
+            <button class="filter-chip" type="button" data-filter="magic">Magic</button>
+            <button class="filter-chip" type="button" data-filter="support">Support</button>
+            <button class="filter-chip" type="button" data-filter="precision">Precision</button>
+          </div>
+
+          <div class="class-grid" id="class-grid">
+            <article class="class-card reveal" data-kind="support control magic">
+              <div class="class-top">
+                <h3>Bard</h3>
+                <span class="tag">Grace + Codex</span>
+              </div>
+              <p class="card-body">The Bard bends scenes with presence, wit, artistry, and social gravity. It is the class for players who want their words, timing, and confidence to matter as much as any blade.</p>
+              <div class="class-stats">
+                <span class="class-stat">Evasion 10</span>
+                <span class="class-stat">HP 5</span>
+                <span class="class-stat">Role: support controller</span>
+              </div>
+              <ul class="card-list">
+                <li>Best at giving allies openings and making enemies hesitate.</li>
+                <li>Strong if you love social play, momentum swings, and stylish saves.</li>
+                <li>Feels like a spotlight conductor rather than a passive backline caster.</li>
+              </ul>
+            </article>
+
+            <article class="class-card reveal" data-kind="magic support control">
+              <div class="class-top">
+                <h3>Druid</h3>
+                <span class="tag">Sage + Arcana</span>
+              </div>
+              <p class="card-body">The Druid channels primal force, elemental transformation, and living-world authority. It rewards players who want adaptability and a character identity tied tightly to place, instinct, and change.</p>
+              <div class="class-stats">
+                <span class="class-stat">Evasion 10</span>
+                <span class="class-stat">HP 6</span>
+                <span class="class-stat">Role: adaptive caster</span>
+              </div>
+              <ul class="card-list">
+                <li>Excellent when you want to flex between ferocity, resilience, and utility.</li>
+                <li>Works for players who like wild imagery and fiction-rich shapeshifting energy.</li>
+                <li>Brings primal texture to travel, survival, and magical conflict scenes.</li>
+              </ul>
+            </article>
+
+            <article class="class-card reveal" data-kind="frontline support">
+              <div class="class-top">
+                <h3>Guardian</h3>
+                <span class="tag">Valor + Blade</span>
+              </div>
+              <p class="card-body">The Guardian is the classic wall between danger and the people who matter. It is for players who enjoy taking the hit, dictating enemy attention, and making the team feel harder to break.</p>
+              <div class="class-stats">
+                <span class="class-stat">Evasion 9</span>
+                <span class="class-stat">HP 7</span>
+                <span class="class-stat">Role: protector</span>
+              </div>
+              <ul class="card-list">
+                <li>Best when the table needs a clear defender with moral and physical weight.</li>
+                <li>Turns survival into leadership rather than passive tanking.</li>
+                <li>Pairs well with fragile high-impact allies who need room to operate.</li>
+              </ul>
+            </article>
+
+            <article class="class-card reveal" data-kind="precision control support">
+              <div class="class-top">
+                <h3>Ranger</h3>
+                <span class="tag">Bone + Sage</span>
+              </div>
+              <p class="card-body">The Ranger thrives on pursuit, angle control, wilderness instinct, and patient pressure. It suits players who want to read the scene like a hunt and strike where it matters most.</p>
+              <div class="class-stats">
+                <span class="class-stat">Evasion 12</span>
+                <span class="class-stat">HP 6</span>
+                <span class="class-stat">Role: hunter-controller</span>
+              </div>
+              <ul class="card-list">
+                <li>Great for mobility, tracking, focus-fire, and companion-forward fiction.</li>
+                <li>Shines in campaigns with travel, danger signs, and layered terrain.</li>
+                <li>Feels methodical rather than flashy, but can dominate through positioning.</li>
+              </ul>
+            </article>
+
+            <article class="class-card reveal" data-kind="precision control support">
+              <div class="class-top">
+                <h3>Rogue</h3>
+                <span class="tag">Midnight + Grace</span>
+              </div>
+              <p class="card-body">The Rogue is all about leverage: being where nobody expected, knowing what nobody told you, and cashing in on the split-second weakness everyone else missed.</p>
+              <div class="class-stats">
+                <span class="class-stat">Evasion 12</span>
+                <span class="class-stat">HP 6</span>
+                <span class="class-stat">Role: infiltrator</span>
+              </div>
+              <ul class="card-list">
+                <li>Ideal for players who like stealth, improvisation, and tactical opportunism.</li>
+                <li>Brings immediate value in social infiltration as well as combat spikes.</li>
+                <li>Often feels like the party’s scalpel, scout, and troublemaker at once.</li>
+              </ul>
+            </article>
+
+            <article class="class-card reveal" data-kind="frontline support magic">
+              <div class="class-top">
+                <h3>Seraph</h3>
+                <span class="tag">Splendor + Valor</span>
+              </div>
+              <p class="card-body">The Seraph combines sacred presence, battlefield courage, healing, and miracle energy. It fits players who want to protect others without giving up dramatic authority or divine weight.</p>
+              <div class="class-stats">
+                <span class="class-stat">Evasion 9</span>
+                <span class="class-stat">HP 7</span>
+                <span class="class-stat">Role: holy bulwark</span>
+              </div>
+              <ul class="card-list">
+                <li>Excellent for rescue play, blessings, and emotional anchor moments.</li>
+                <li>Can feel like a paladin, battle-priest, or radiant guardian depending on fiction.</li>
+                <li>Especially strong in parties that want courage and healing in one seat.</li>
+              </ul>
+            </article>
+
+            <article class="class-card reveal" data-kind="magic control">
+              <div class="class-top">
+                <h3>Sorcerer</h3>
+                <span class="tag">Arcana + Midnight</span>
+              </div>
+              <p class="card-body">The Sorcerer wields power that already lives inside them. It is volatile, intimate, and dramatic, perfect for players who want magic to feel dangerous, emotional, and a little impossible to ignore.</p>
+              <div class="class-stats">
+                <span class="class-stat">Evasion 10</span>
+                <span class="class-stat">HP 6</span>
+                <span class="class-stat">Role: arcane striker</span>
+              </div>
+              <ul class="card-list">
+                <li>Great for explosive moments, identity conflict, and magical swagger.</li>
+                <li>Turns inner power into a roleplaying engine, not just a spell list.</li>
+                <li>Works best when you want to push scenes hotter rather than safer.</li>
+              </ul>
+            </article>
+
+            <article class="class-card reveal" data-kind="frontline precision">
+              <div class="class-top">
+                <h3>Warrior</h3>
+                <span class="tag">Blade + Bone</span>
+              </div>
+              <p class="card-body">The Warrior is the most direct expression of martial mastery: trained, dangerous, and reliable under pressure. It is for players who want a weapon-forward identity with room for personal style.</p>
+              <div class="class-stats">
+                <span class="class-stat">Evasion 11</span>
+                <span class="class-stat">HP 6</span>
+                <span class="class-stat">Role: weapons expert</span>
+              </div>
+              <ul class="card-list">
+                <li>Consistent, sturdy, and satisfying if you want action economy to feel clean.</li>
+                <li>Lets your tactics come from judgment and positioning rather than spell setup.</li>
+                <li>Often the easiest recommendation for a new player who wants to hit hard and stay relevant.</li>
+              </ul>
+            </article>
+
+            <article class="class-card reveal" data-kind="magic support control">
+              <div class="class-top">
+                <h3>Wizard</h3>
+                <span class="tag">Codex + Splendor</span>
+              </div>
+              <p class="card-body">The Wizard is deliberate magical expertise: learned power, elegant solutions, and a toolkit that rewards foresight. It is ideal for players who enjoy planning, versatility, and resourceful spell use.</p>
+              <div class="class-stats">
+                <span class="class-stat">Evasion 11</span>
+                <span class="class-stat">HP 5</span>
+                <span class="class-stat">Role: scholar-caster</span>
+              </div>
+              <ul class="card-list">
+                <li>Strong when you want utility, breadth, and clever answers.</li>
+                <li>Feels less reckless than Sorcerer and more prepared for complex scenes.</li>
+                <li>Often the best pick for players who love magical problem-solving.</li>
+              </ul>
+            </article>
+          </div>
+        </section>
+
+        <section class="section reveal" id="party-chemistry">
+          <div class="section-head">
+            <div>
+              <p class="section-label">3. Party Chemistry</p>
+              <h2>How classes tend to make each other shine</h2>
+            </div>
+          </div>
+          <div class="pairing-grid">
+            <article class="pairing-card">
+              <p class="card-kicker">Protection + impact</p>
+              <h3>Guardian or Seraph plus a swing class</h3>
+              <p>Put a defender beside Sorcerer, Bard, or Wizard when you want the party to feel brave enough to attempt difficult, flashy plays.</p>
+            </article>
+            <article class="pairing-card">
+              <p class="card-kicker">Setup + execution</p>
+              <h3>Bard or Rogue with Warrior or Ranger</h3>
+              <p>One class creates the angle, the other cashes it in. This combo is excellent if your group enjoys sharp teamwork and scene handoffs.</p>
+            </article>
+            <article class="pairing-card">
+              <p class="card-kicker">Wild card + stabilizer</p>
+              <h3>Druid or Sorcerer with Seraph or Bard</h3>
+              <p>Volatile or primal energy feels even better when another character can redirect momentum, repair damage, or calm the emotional weather.</p>
+            </article>
+          </div>
+          <div class="note section-note">
+            <strong>No dead roles</strong>
+            <p>Daggerheart is built so classes overlap in useful ways. You do not need a mandatory healer or a mandatory tank. What matters more is whether your party can create openings, survive pressure, and contribute to the fiction in distinct voices.</p>
+          </div>
+        </section>
+
+        <section class="section reveal" id="quick-picks">
+          <div class="section-head">
+            <div>
+              <p class="section-label">4. Quick Picks</p>
+              <h2>Use these if you want a recommendation in under thirty seconds</h2>
+            </div>
+          </div>
+          <div class="mini-grid">
+            <article class="mini-card">
+              <p class="card-kicker">Easiest starting point</p>
+              <h3>Warrior or Guardian</h3>
+              <p>Choose Warrior if you want direct offense. Choose Guardian if you want defense to feel active and important.</p>
+            </article>
+            <article class="mini-card">
+              <p class="card-kicker">Most social momentum</p>
+              <h3>Bard</h3>
+              <p>The Bard is a superb pick if you want to affect both conversations and combat without feeling locked into one mode.</p>
+            </article>
+            <article class="mini-card">
+              <p class="card-kicker">Most magical intensity</p>
+              <h3>Sorcerer or Wizard</h3>
+              <p>Take Sorcerer for dramatic inner power. Take Wizard for deliberate expertise and a deeper sense of preparation.</p>
+            </article>
+          </div>
+        </section>
+
+        <section class="cta-panel reveal" aria-labelledby="next-reference-title">
+          <div>
+            <p class="section-label">Continue the archive</p>
+            <h2 id="next-reference-title">Classes make more sense once you see the domain engines underneath them</h2>
+            <p>Use the Domain Atlas to compare Arcana, Blade, Bone, Codex, Grace, Midnight, Sage, Splendor, and Valor side by side, then jump into Campaign Frames to see which stories those classes want to inhabit.</p>
+          </div>
+          <div class="chip-row">
+            <a class="cta-link primary" href="domains.html">Open Domain Atlas</a>
+            <a class="cta-link" href="campaign-frames.html">Open Campaign Frames</a>
+          </div>
+        </section>
+      </main>
+
+      <footer class="footer">
+        <p>Player-facing guide based on the core Daggerheart class lineup in this archive. Use it to choose direction quickly, then confirm details in the full class text and cards.</p>
+      </footer>
+    </div>
+  </div>
+
+  <script>
+    const filterButtons = document.querySelectorAll('[data-filter]');
+    const classCards = document.querySelectorAll('#class-grid .class-card');
+
+    filterButtons.forEach((button) => {
+      button.addEventListener('click', () => {
+        const filter = button.dataset.filter;
+        filterButtons.forEach((chip) => chip.classList.toggle('is-active', chip === button));
+
+        classCards.forEach((card) => {
+          const kinds = (card.dataset.kind || '').split(' ');
+          const show = filter === 'all' || kinds.includes(filter);
+          card.classList.toggle('is-hidden', !show);
+        });
+      });
+    });
+
+    const navLinks = document.querySelectorAll('#page-nav a');
+    const observedSections = Array.from(navLinks)
+      .map((link) => document.querySelector(link.getAttribute('href')))
+      .filter(Boolean);
+
+    const navObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        const id = `#${entry.target.id}`;
+        navLinks.forEach((link) => link.classList.toggle('is-active', link.getAttribute('href') === id));
+      });
+    }, { rootMargin: '-35% 0px -45% 0px', threshold: 0.01 });
+
+    observedSections.forEach((section) => navObserver.observe(section));
+
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        entry.target.classList.add('is-visible');
+        revealObserver.unobserve(entry.target);
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
+
+    document.querySelectorAll('.reveal').forEach((element) => revealObserver.observe(element));
+  </script>
+</body>
+</html>

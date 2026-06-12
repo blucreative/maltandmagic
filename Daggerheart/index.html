@@ -3,137 +3,1199 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Daggerheart — Lore Vault</title>
-<meta name="description" content="Daggerheart campaign lore and player resources — coming soon to the Malt &amp; Magic lore vault.">
+<title>Daggerheart Player Primer</title>
+<meta name="description" content="A Daggerheart player primer covering tone, table expectations, character creation, classes, domains, combat flow, leveling, and campaign play.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Inter:wght@300;400;500;600&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Manrope:wght@400;500;600;700;800&family=Sora:wght@500;600;700;800&display=swap" rel="stylesheet">
 <style>
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  *, *::before, *::after { box-sizing: border-box; }
+
   :root {
-    --accent: #e08a5b;
-    --accent-soft: rgba(224, 138, 91, 0.14);
-    --bg: #07080d;
-    --surface: rgba(20, 23, 34, 0.62);
-    --border: rgba(255, 255, 255, 0.08);
-    --border-hi: rgba(255, 255, 255, 0.18);
-    --txt: #eef1f8;
-    --txt-2: #aab2c5;
-    --txt-3: #6b748c;
-    --font-display: 'Space Grotesk', 'Inter', system-ui, sans-serif;
+    --bg: #06070b;
+    --panel: rgba(17, 21, 32, 0.8);
+    --panel-soft: rgba(255, 255, 255, 0.04);
+    --line: rgba(255, 255, 255, 0.1);
+    --line-strong: rgba(255, 255, 255, 0.18);
+    --text: #f4efe5;
+    --text-soft: #c7bfaf;
+    --text-dim: #8e877c;
+    --hope: #f0c46e;
+    --fear: #df6a55;
+    --arcane: #8c89df;
+    --shadow: 0 24px 70px rgba(0, 0, 0, 0.45);
+    --font-display: 'Sora', 'Manrope', system-ui, sans-serif;
+    --font-body: 'Manrope', system-ui, sans-serif;
     --font-serif: 'Cinzel', Georgia, serif;
-    --font-body: 'Inter', system-ui, sans-serif;
+    --radius-xl: 28px;
+    --radius-lg: 20px;
+    --radius-md: 14px;
+    --radius-sm: 999px;
+    --max: 1180px;
   }
+
   html { scroll-behavior: smooth; }
+
   body {
-    background: var(--bg);
-    background-image:
-      radial-gradient(ellipse 70% 55% at 20% -5%, var(--accent-soft), transparent 60%),
-      radial-gradient(ellipse 60% 50% at 90% 110%, rgba(200,90,60,0.1), transparent 60%);
-    background-attachment: fixed;
-    color: var(--txt);
+    margin: 0;
+    min-height: 100vh;
+    color: var(--text);
     font-family: var(--font-body);
     line-height: 1.6;
-    min-height: 100vh;
-    display: grid;
-    place-items: center;
-    padding: 2rem 1.5rem;
+    background:
+      radial-gradient(circle at 12% 12%, rgba(140, 137, 223, 0.18), transparent 32%),
+      radial-gradient(circle at 88% 16%, rgba(223, 106, 85, 0.18), transparent 28%),
+      radial-gradient(circle at 50% 100%, rgba(240, 196, 110, 0.12), transparent 36%),
+      linear-gradient(180deg, #080910 0%, #0a0c13 32%, #06070b 100%);
     -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
   }
+
+  body::before,
+  body::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+  }
+
   body::before {
-    content: '';
-    position: fixed; inset: 0; pointer-events: none; z-index: 0;
     background-image:
-      radial-gradient(circle, rgba(255,255,255,0.7) 1px, transparent 1px),
-      radial-gradient(circle, rgba(255,255,255,0.4) 1px, transparent 1px);
-    background-size: 340px 340px, 200px 200px;
-    background-position: 30px 50px, 140px 180px;
-    opacity: 0.12;
+      radial-gradient(circle, rgba(255,255,255,0.26) 1px, transparent 1px),
+      radial-gradient(circle, rgba(255,255,255,0.12) 1px, transparent 1px);
+    background-size: 210px 210px, 340px 340px;
+    background-position: 0 0, 40px 80px;
+    opacity: 0.2;
   }
-  .card {
+
+  body::after {
+    background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.02) 50%, transparent 100%);
+    mask: linear-gradient(180deg, transparent, black 10%, black 90%, transparent);
+    opacity: 0.45;
+  }
+
+  a { color: inherit; }
+
+  .page {
     position: relative;
     z-index: 1;
-    max-width: 560px;
-    text-align: center;
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 22px;
-    padding: 3.4rem 2.6rem 3rem;
+  }
+
+  .shell {
+    width: min(calc(100% - 2rem), var(--max));
+    margin: 0 auto;
+  }
+
+  .back-link {
+    position: sticky;
+    top: 1rem;
+    z-index: 10;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55rem;
+    margin: 1.1rem 0 0;
+    padding: 0.72rem 1rem;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: var(--text-soft);
+    background: rgba(10, 12, 19, 0.82);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-sm);
     backdrop-filter: blur(12px);
+  }
+
+  .back-link:hover,
+  .back-link:focus-visible {
+    color: var(--hope);
+    border-color: var(--line-strong);
+    outline: none;
+  }
+
+  .hero {
+    padding: 3.3rem 0 1.8rem;
+  }
+
+  .hero-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.35fr) minmax(280px, 0.9fr);
+    gap: 1.4rem;
+    align-items: stretch;
+  }
+
+  .hero-main,
+  .hero-aside,
+  .section,
+  .nav-panel {
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-xl);
+    backdrop-filter: blur(16px);
+    box-shadow: var(--shadow);
+  }
+
+  .hero-main {
+    position: relative;
     overflow: hidden;
+    padding: 2.2rem;
+    background:
+      radial-gradient(circle at top left, rgba(140, 137, 223, 0.22), transparent 30%),
+      radial-gradient(circle at top right, rgba(223, 106, 85, 0.18), transparent 26%),
+      linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0));
   }
-  .card::after {
-    content: '';
-    position: absolute; top: 0; left: 0; right: 0; height: 3px;
-    background: linear-gradient(to right, transparent, var(--accent), transparent);
-    opacity: 0.6;
+
+  .hero-main::after {
+    content: "";
+    position: absolute;
+    inset: auto -6% -16% 30%;
+    height: 260px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(240, 196, 110, 0.18), transparent 66%);
+    filter: blur(18px);
   }
-  .glyph {
-    width: 64px; height: 64px; margin: 0 auto 1.6rem;
-    display: grid; place-items: center;
-    font-size: 30px; color: var(--accent);
-    border-radius: 18px;
-    background: var(--accent-soft);
-    border: 1px solid var(--border);
+
+  .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55rem;
+    padding: 0.45rem 0.8rem;
+    border-radius: var(--radius-sm);
+    background: rgba(255,255,255,0.06);
+    border: 1px solid var(--line);
+    color: var(--hope);
+    font-size: 0.76rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
   }
-  .system {
+
+  .hero h1 {
+    margin: 1rem 0 0.8rem;
     font-family: var(--font-display);
-    font-size: 11px; font-weight: 600;
-    letter-spacing: 0.2em; text-transform: uppercase;
-    color: var(--accent); margin-bottom: 0.6rem;
+    font-size: clamp(2.5rem, 5vw, 4.8rem);
+    line-height: 0.98;
+    letter-spacing: -0.045em;
   }
-  h1 {
+
+  .hero h1 span {
+    display: block;
+    color: var(--hope);
+    font-family: var(--font-serif);
+    font-size: 0.42em;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+  }
+
+  .lede {
+    max-width: 58ch;
+    font-size: 1.05rem;
+    color: var(--text-soft);
+    margin: 0;
+  }
+
+  .hero-points,
+  .stat-grid,
+  .atlas-grid,
+  .glance-grid,
+  .mini-grid,
+  .class-grid,
+  .domain-grid,
+  .frame-grid,
+  .option-grid,
+  .timeline,
+  .duality {
+    display: grid;
+    gap: 1rem;
+  }
+
+  .hero-points { grid-template-columns: repeat(3, minmax(0, 1fr)); margin-top: 1.7rem; }
+  .stat-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .atlas-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .glance-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .mini-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .class-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .domain-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .frame-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .option-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .duality { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+
+  .hero-point,
+  .stat-card,
+  .atlas-card,
+  .glance-card,
+  .mini-card,
+  .class-card,
+  .domain-card,
+  .frame-card,
+  .option-card,
+  .quote,
+  .callout,
+  .accordion,
+  .timeline-step,
+  .duality-card {
+    border: 1px solid rgba(255,255,255,0.08);
+    background: rgba(255,255,255,0.035);
+    border-radius: var(--radius-lg);
+  }
+
+  .hero-point,
+  .stat-card,
+  .atlas-card,
+  .glance-card,
+  .mini-card,
+  .class-card,
+  .domain-card,
+  .frame-card,
+  .option-card,
+  .quote,
+  .callout,
+  .timeline-step,
+  .duality-card {
+    padding: 1rem;
+  }
+
+  .hero-point strong,
+  .stat-card strong,
+  .atlas-card h3,
+  .section h2,
+  .mini-card h3,
+  .accordion summary,
+  .class-card h3,
+  .domain-card h3,
+  .frame-card h3,
+  .option-card h3,
+  .glance-card h3,
+  .timeline-step h3,
+  .duality-card h3,
+  .footer-strong {
     font-family: var(--font-display);
-    font-size: clamp(2rem, 6vw, 2.8rem);
-    font-weight: 700; letter-spacing: -0.02em;
-    color: var(--txt); margin-bottom: 1rem;
   }
-  .badge {
+
+  .hero-point strong {
+    display: block;
+    font-size: 0.92rem;
+    margin-bottom: 0.35rem;
+  }
+
+  .hero-point p,
+  .hero-aside p,
+  .section p,
+  .atlas-card p,
+  .mini-card p,
+  .class-card p,
+  .domain-card p,
+  .frame-card p,
+  .option-card p,
+  .glance-card p,
+  .timeline-step p,
+  .duality-card p {
+    margin: 0;
+    color: var(--text-soft);
+  }
+
+  .hero-aside {
+    padding: 1.5rem;
+    display: grid;
+    gap: 1rem;
+    align-content: start;
+  }
+
+  .aside-title,
+  .section-label,
+  .nav-title,
+  .tag,
+  .meta,
+  .quote cite,
+  .glance-card small {
+    color: var(--text-dim);
+    font-size: 0.73rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .stat-card span {
+    display: block;
+    color: var(--text-dim);
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    margin-bottom: 0.3rem;
+  }
+
+  .stat-card strong,
+  .glance-card strong {
+    display: block;
+    color: var(--text);
+  }
+
+  .stat-card strong { font-size: 1.25rem; }
+  .glance-card strong { font-size: 1.7rem; margin-bottom: 0.35rem; }
+
+  .pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.55rem;
+  }
+
+  .pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    padding: 0.55rem 0.8rem;
+    border-radius: var(--radius-sm);
+    background: rgba(255,255,255,0.045);
+    border: 1px solid rgba(255,255,255,0.08);
+    font-size: 0.84rem;
+    color: var(--text-soft);
+  }
+
+  .pill-dot {
+    width: 0.6rem;
+    height: 0.6rem;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--hope), var(--fear));
+    box-shadow: 0 0 14px rgba(240, 196, 110, 0.35);
+  }
+
+  .nav-wrap {
+    padding: 0.75rem 0 2rem;
+  }
+
+  .nav-panel {
+    position: sticky;
+    top: 4.8rem;
+    padding: 1rem;
+  }
+
+  .nav-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    margin-top: 0.8rem;
+  }
+
+  .nav-list a,
+  .filter-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.6rem 0.8rem;
+    border-radius: var(--radius-sm);
+    text-decoration: none;
+    color: var(--text-soft);
+    background: rgba(255,255,255,0.04);
+    border: 1px solid transparent;
+    font: inherit;
+    font-size: 0.82rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    cursor: pointer;
+  }
+
+  .nav-list a:hover,
+  .nav-list a:focus-visible,
+  .nav-list a.is-active,
+  .filter-chip:hover,
+  .filter-chip:focus-visible,
+  .filter-chip.is-active {
+    color: var(--text);
+    border-color: rgba(240, 196, 110, 0.3);
+    background: rgba(240, 196, 110, 0.08);
+    outline: none;
+  }
+
+  .layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 1.25rem;
+    padding-bottom: 4rem;
+  }
+
+  .section {
+    padding: 1.5rem;
+  }
+
+  .section-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
+    gap: 1rem;
+    margin-bottom: 1.1rem;
+  }
+
+  .section h2 {
+    margin: 0.15rem 0 0;
+    font-size: clamp(1.35rem, 3vw, 2rem);
+    letter-spacing: -0.03em;
+  }
+
+  .section-copy {
+    max-width: 64ch;
+  }
+
+  .callout {
+    display: grid;
+    gap: 0.65rem;
+    margin-top: 1rem;
+    background: linear-gradient(135deg, rgba(140, 137, 223, 0.12), rgba(255,255,255,0.03));
+  }
+
+  .callout strong,
+  .quote p { color: var(--text); }
+
+  .quote {
+    margin-top: 1rem;
+    background: linear-gradient(135deg, rgba(240, 196, 110, 0.08), rgba(223, 106, 85, 0.05));
+  }
+
+  .quote p { font-size: 1.04rem; }
+  .quote cite { display: inline-block; margin-top: 0.7rem; }
+
+  .timeline-step {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 0.95rem;
+    align-items: start;
+  }
+
+  .timeline-step strong {
+    display: inline-grid;
+    place-items: center;
+    width: 2.3rem;
+    height: 2.3rem;
+    border-radius: 50%;
+    background: linear-gradient(135deg, rgba(240, 196, 110, 0.22), rgba(223, 106, 85, 0.16));
+    color: var(--hope);
+    font-size: 0.95rem;
+    border: 1px solid rgba(240, 196, 110, 0.2);
+  }
+
+  .timeline-step h3 {
+    margin: 0 0 0.25rem;
+    font-size: 1rem;
+  }
+
+  .bullet-list {
+    margin: 0;
+    padding-left: 1.1rem;
+    color: var(--text-soft);
+  }
+
+  .bullet-list li + li { margin-top: 0.42rem; }
+
+  .duality-card.hope { box-shadow: inset 0 0 0 1px rgba(240, 196, 110, 0.12); }
+  .duality-card.fear { box-shadow: inset 0 0 0 1px rgba(223, 106, 85, 0.12); }
+
+  .duality-card h3 {
+    margin: 0 0 0.4rem;
+    font-size: 1rem;
+  }
+
+  .duality-card.hope h3 { color: var(--hope); }
+  .duality-card.fear h3 { color: var(--fear); }
+
+  .accordion-wrap {
+    display: grid;
+    gap: 0.9rem;
+  }
+
+  .accordion summary {
+    list-style: none;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem 1.1rem;
+    font-size: 0.98rem;
+  }
+
+  .accordion summary::-webkit-details-marker { display: none; }
+
+  .accordion summary span:last-child {
+    color: var(--hope);
+    font-size: 1.1rem;
+    transition: transform 0.2s ease;
+  }
+
+  .accordion[open] summary span:last-child { transform: rotate(45deg); }
+
+  .accordion-body {
+    padding: 0 1.1rem 1rem;
+    color: var(--text-soft);
+  }
+
+  .class-top,
+  .domain-top,
+  .frame-top,
+  .option-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: start;
+    gap: 0.8rem;
+    margin-bottom: 0.6rem;
+  }
+
+  .tag {
+    padding: 0.34rem 0.58rem;
+    border-radius: var(--radius-sm);
+    border: 1px solid rgba(255,255,255,0.08);
+    background: rgba(255,255,255,0.04);
+    white-space: nowrap;
+  }
+
+  .meta {
     display: inline-block;
-    font-family: var(--font-display);
-    font-size: 10px; font-weight: 600;
-    letter-spacing: 0.14em; text-transform: uppercase;
-    color: #d9b48a;
-    padding: 0.34rem 0.85rem; border-radius: 999px;
-    border: 1px solid rgba(217,180,138,0.32);
-    background: rgba(217,180,138,0.09);
-    margin-bottom: 1.6rem;
+    margin-top: 0.7rem;
+    color: var(--text-soft);
+    text-transform: none;
+    letter-spacing: 0;
+    font-size: 0.84rem;
   }
-  p.lead {
-    color: var(--txt-2); font-weight: 300;
-    font-size: 1.02rem; max-width: 44ch; margin: 0 auto;
+
+  .filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.55rem;
+    margin-bottom: 1rem;
   }
-  .back {
-    display: inline-flex; align-items: center; gap: 0.5rem;
-    margin-top: 2.2rem;
-    font-family: var(--font-display);
-    font-size: 12px; font-weight: 600;
-    letter-spacing: 0.12em; text-transform: uppercase;
-    text-decoration: none; color: var(--txt-2);
-    padding: 0.6rem 1.2rem; border-radius: 999px;
-    border: 1px solid var(--border);
-    transition: color 0.2s ease, border-color 0.2s ease, background 0.2s ease, gap 0.2s ease;
+
+  .atlas-card {
+    position: relative;
+    overflow: hidden;
+    text-decoration: none;
+    color: inherit;
+    display: grid;
+    gap: 0.65rem;
+    transition: transform 0.24s ease, border-color 0.24s ease, background 0.24s ease;
   }
-  .back:hover, .back:focus-visible {
-    color: var(--accent); border-color: var(--border-hi);
-    background: rgba(255,255,255,0.04); gap: 0.8rem; outline: none;
+
+  .atlas-card::after {
+    content: "";
+    position: absolute;
+    inset: auto -20% -50% 35%;
+    height: 140px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(240, 196, 110, 0.22), transparent 68%);
+    opacity: 0;
+    transition: opacity 0.24s ease;
+    pointer-events: none;
   }
+
+  .atlas-card h3 {
+    margin: 0;
+    font-size: 1.08rem;
+  }
+
+  .atlas-card:hover,
+  .atlas-card:focus-visible {
+    transform: translateY(-4px);
+    border-color: rgba(240, 196, 110, 0.28);
+    background: rgba(255,255,255,0.05);
+    outline: none;
+  }
+
+  .atlas-card:hover::after,
+  .atlas-card:focus-visible::after {
+    opacity: 1;
+  }
+
+  .atlas-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    color: var(--hope);
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.03em;
+  }
+
+  .reveal-card {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.52s ease, transform 0.52s ease;
+  }
+
+  .reveal-card.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .is-hidden { display: none !important; }
+
+  .footer {
+    padding: 0 0 3rem;
+    color: var(--text-dim);
+  }
+
+  .footer-card {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 1.15rem 1.2rem;
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--line);
+    background: rgba(255,255,255,0.03);
+  }
+
+  @media (max-width: 1080px) {
+    .hero-grid,
+    .atlas-grid,
+    .glance-grid,
+    .class-grid,
+    .domain-grid,
+    .frame-grid,
+    .option-grid,
+    .mini-grid,
+    .duality {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (max-width: 780px) {
+    .hero-grid,
+    .atlas-grid,
+    .glance-grid,
+    .class-grid,
+    .domain-grid,
+    .frame-grid,
+    .option-grid,
+    .mini-grid,
+    .duality,
+    .stat-grid,
+    .hero-points {
+      grid-template-columns: 1fr;
+    }
+
+    .hero-main,
+    .hero-aside,
+    .section,
+    .nav-panel {
+      border-radius: 22px;
+    }
+
+    .hero {
+      padding-top: 2.2rem;
+    }
+
+    .section-head,
+    .footer-card {
+      flex-direction: column;
+      align-items: start;
+    }
+  }
+
   @media (prefers-reduced-motion: reduce) {
-    * { transition: none !important; scroll-behavior: auto !important; }
+    html { scroll-behavior: auto; }
+    *, *::before, *::after { transition: none !important; animation: none !important; }
   }
 </style>
 </head>
 <body>
-  <main class="card">
-    <div class="glyph" aria-hidden="true">&#9670;</div>
-    <div class="system">Daggerheart</div>
-    <h1>Daggerheart</h1>
-    <div class="badge">Coming Soon</div>
-    <p class="lead">
-      A narrative-first fantasy of hope and fear. Campaign frames, ancestries, and
-      player tools will be archived here once the first session begins.
-    </p>
-    <a class="back" href="../index.html">&#8592; All Game Worlds</a>
-  </main>
+  <div class="page">
+    <div class="shell">
+      <a class="back-link" href="../index.html">&#8592; All Game Worlds</a>
+
+      <header class="hero" id="top">
+        <div class="hero-grid">
+          <section class="hero-main" aria-labelledby="primer-title">
+            <div class="eyebrow">Narrative fantasy of hope and fear</div>
+            <h1 id="primer-title"><span>Daggerheart</span>Player Primer</h1>
+            <p class="lede">
+              Daggerheart is a collaborative heroic fantasy RPG built for emotionally charged,
+              fiction-first adventures, fast-moving fights, and shared authorship at the table.
+              This primer is a practical guide for players: what the game feels like, how characters
+              are built, how the Hope and Fear engine works, and what to expect once play begins.
+            </p>
+
+            <div class="hero-points" aria-label="Primer highlights">
+              <article class="hero-point">
+                <strong>Fiction First</strong>
+                <p>Rules exist to support the story, not strangle it. Rulings over rules is part of the game's DNA.</p>
+              </article>
+              <article class="hero-point">
+                <strong>Hope and Fear</strong>
+                <p>Every action roll moves the story and changes momentum, even when you succeed at a cost.</p>
+              </article>
+              <article class="hero-point">
+                <strong>Shared Spotlight</strong>
+                <p>No rigid initiative loop. Scenes pass organically between players, allies, adversaries, and the GM.</p>
+              </article>
+            </div>
+          </section>
+
+          <aside class="hero-aside" aria-labelledby="at-a-glance-title">
+            <p class="aside-title" id="at-a-glance-title">At a Glance</p>
+            <div class="stat-grid">
+              <div class="stat-card">
+                <span>Best Table Size</span>
+                <strong>2-5 players</strong>
+              </div>
+              <div class="stat-card">
+                <span>Core Dice</span>
+                <strong>2d12 + polyhedrals</strong>
+              </div>
+              <div class="stat-card">
+                <span>Core Classes</span>
+                <strong>9</strong>
+              </div>
+              <div class="stat-card">
+                <span>Domains</span>
+                <strong>9</strong>
+              </div>
+            </div>
+
+            <p class="aside-title">What you bring</p>
+            <div class="pills">
+              <div class="pill"><span class="pill-dot"></span> Two different d12s</div>
+              <div class="pill"><span class="pill-dot"></span> One full polyhedral set</div>
+              <div class="pill"><span class="pill-dot"></span> Tokens to track bonuses and resources</div>
+              <div class="pill"><span class="pill-dot"></span> Character sheet, cards, and notes</div>
+            </div>
+
+            <div class="callout">
+              <strong>Design intent</strong>
+              <p>
+                Daggerheart aims at heroic fantasy with modern narrative tools, dramatic consequences,
+                collaborative worldbuilding, and combat that stays vivid without becoming grid-locked.
+              </p>
+            </div>
+          </aside>
+        </div>
+      </header>
+
+      <div class="nav-wrap">
+        <nav class="nav-panel" aria-label="Primer sections">
+          <p class="nav-title">Jump Through the Primer</p>
+          <div class="nav-list" id="page-nav">
+            <a href="#what-is-daggerheart">What It Is</a>
+            <a href="#table-culture">Table Culture</a>
+            <a href="#world-and-tone">World and Tone</a>
+            <a href="#making-your-character">Character Creation</a>
+            <a href="#classes-and-domains">Classes and Domains</a>
+            <a href="#reference-atlas">Reference Atlas</a>
+            <a href="#how-play-works">How Play Works</a>
+            <a href="#combat-and-survival">Combat and Survival</a>
+            <a href="#growth-and-campaigns">Growth and Campaigns</a>
+            <a href="#expanded-options">Expanded Options</a>
+          </div>
+        </nav>
+      </div>
+
+      <main class="layout">
+        <section class="section" id="reference-atlas">
+          <div class="section-head">
+            <div class="section-copy">
+              <p class="section-label">Reference Atlas</p>
+              <h2>Jump into dedicated Daggerheart deep dives</h2>
+            </div>
+          </div>
+
+          <div class="atlas-grid">
+            <a class="atlas-card reveal-card" href="classes.html">
+              <p class="section-label">Dedicated Page</p>
+              <h3>Class Archive</h3>
+              <p>Compare all nine classes with role filters, durability profiles, and fast pick guidance for new players.</p>
+              <span class="atlas-link">Open class reference &#8594;</span>
+            </a>
+            <a class="atlas-card reveal-card" href="domains.html">
+              <p class="section-label">Dedicated Page</p>
+              <h3>Domain Atlas</h3>
+              <p>Explore Arcana, Blade, Bone, Codex, Grace, Midnight, Sage, Splendor, and Valor side by side.</p>
+              <span class="atlas-link">Open domain reference &#8594;</span>
+            </a>
+            <a class="atlas-card reveal-card" href="campaign-frames.html">
+              <p class="section-label">Dedicated Page</p>
+              <h3>Campaign Frames</h3>
+              <p>Match table tone to frame style, from haunted wilds to war-torn factions and strange genre-bending arcs.</p>
+              <span class="atlas-link">Open frame reference &#8594;</span>
+            </a>
+          </div>
+        </section>
+
+        <section class="section" id="what-is-daggerheart">
+          <div class="section-head">
+            <div class="section-copy">
+              <p class="section-label">1. What It Is</p>
+              <h2>Collaborative fantasy, not tactical bureaucracy</h2>
+            </div>
+          </div>
+
+          <div class="glance-grid">
+            <article class="glance-card">
+              <small>Story Shape</small>
+              <strong>Heartfelt and epic</strong>
+              <p>Adventures swing between intimate character beats, big emotional decisions, and dangerous set-piece conflicts.</p>
+            </article>
+            <article class="glance-card">
+              <small>Rules Philosophy</small>
+              <strong>Rulings over rules</strong>
+              <p>The fiction decides what makes sense first; the mechanics resolve uncertainty without taking over the table.</p>
+            </article>
+            <article class="glance-card">
+              <small>Combat Feel</small>
+              <strong>Fast, fluid, cinematic</strong>
+              <p>No rigid initiative order or strict action economy. Spotlight and consequences keep battles moving.</p>
+            </article>
+            <article class="glance-card">
+              <small>Winning</small>
+              <strong>Tell something memorable</strong>
+              <p>Failure changes the story instead of dead-ending it. Even losses become fuel for the next turn of the campaign.</p>
+            </article>
+          </div>
+
+          <div class="quote">
+            <p>
+              Daggerheart is a collaborative fantasy roleplaying game of incredible magic and heroic adventure,
+              built to tell stories that are both emotionally grounded and spectacularly mythic.
+            </p>
+            <cite>Core rulebook: introduction and game overview</cite>
+          </div>
+        </section>
+
+        <section class="section" id="table-culture">
+          <div class="section-head">
+            <div class="section-copy">
+              <p class="section-label">2. Table Culture</p>
+              <h2>What players are expected to do</h2>
+            </div>
+          </div>
+
+          <div class="mini-grid">
+            <article class="mini-card">
+              <h3>Be a fan of your character</h3>
+              <p>Show off what they do best, but also let their flaws and messy choices matter. Growth comes from pressure.</p>
+            </article>
+            <article class="mini-card">
+              <h3>Spotlight your friends</h3>
+              <p>Set people up. Ask for help. Hand scenes across the table. Daggerheart works best when everyone gets turns to shine.</p>
+            </article>
+            <article class="mini-card">
+              <h3>Build the world together</h3>
+              <p>Players are not passive passengers. You help establish details, relationships, stakes, and the emotional shape of the campaign.</p>
+            </article>
+          </div>
+
+          <div class="callout">
+            <strong>Golden rule</strong>
+            <p>
+              Make the game your own. The core book explicitly frames the rules as tools for the table, not a cage.
+              If a ruling better serves the fiction and your group agrees, the game expects you to use it.
+            </p>
+          </div>
+
+          <div class="accordion-wrap" style="margin-top: 1rem;">
+            <details class="accordion" open>
+              <summary><span>Player principles from the core book</span><span>+</span></summary>
+              <div class="accordion-body">
+                <ul class="bullet-list">
+                  <li>Be a fan of your character and their journey.</li>
+                  <li>Spotlight your friends.</li>
+                  <li>Address the characters and address the players.</li>
+                  <li>Build the world together.</li>
+                  <li>Play to find out what happens.</li>
+                  <li>Hold on gently and leave room for the fiction to evolve.</li>
+                </ul>
+              </div>
+            </details>
+            <details class="accordion">
+              <summary><span>Safety and social contract</span><span>+</span></summary>
+              <div class="accordion-body">
+                <p>
+                  The rulebook is explicit that the table should be safe, respectful, and adjustable. Session zero,
+                  content boundaries, and safety tools are not optional polish. They are part of how the game expects a group to start well.
+                </p>
+              </div>
+            </details>
+          </div>
+        </section>
+
+        <section class="section" id="world-and-tone">
+          <div class="section-head">
+            <div class="section-copy">
+              <p class="section-label">3. World and Tone</p>
+              <h2>Big myth, flexible setting, personal stakes</h2>
+            </div>
+          </div>
+
+          <div class="mini-grid">
+            <article class="mini-card">
+              <h3>The Mortal Realm</h3>
+              <p>The main stage for adventure: land, sea, sky, factions, mortals, and the consequences of divine history.</p>
+            </article>
+            <article class="mini-card">
+              <h3>The Hallows Above</h3>
+              <p>Seat of the New Gods and divine territories, bound to sacrifice, influence, and distant intervention.</p>
+            </article>
+            <article class="mini-card">
+              <h3>The Circles Below</h3>
+              <p>Lower realms of banished power, corruption, violence, and the lingering shadow of the Divine War.</p>
+            </article>
+          </div>
+
+          <div class="callout">
+            <strong>How to read the setting</strong>
+            <p>
+              The core realms establish a shared mythic grammar for ancestries, demons, deities, magic, and danger,
+              but the book also encourages reflavoring and modification. Your table can use the core assumptions,
+              a campaign frame, or a custom world built together.
+            </p>
+          </div>
+        </section>
+
+        <section class="section" id="making-your-character">
+          <div class="section-head">
+            <div class="section-copy">
+              <p class="section-label">4. Character Creation</p>
+              <h2>Build a concept, then give it teeth</h2>
+            </div>
+          </div>
+
+          <div class="timeline">
+            <article class="timeline-step"><strong>1</strong><div><h3>Start with session zero and a character concept</h3><p>Come in with a simple premise first: a lost captain, a noble fugitive, a witch with dangerous obligations. Let the campaign tone shape the final version.</p></div></article>
+            <article class="timeline-step"><strong>2</strong><div><h3>Choose your class and subclass</h3><p>Your class defines your role, starting Evasion and Hit Points, core feature, Hope feature, and your two domains.</p></div></article>
+            <article class="timeline-step"><strong>3</strong><div><h3>Choose ancestry and community</h3><p>Ancestry shapes lineage and physicality. Community shapes what kind of place or culture formed you. Both grant meaningful features.</p></div></article>
+            <article class="timeline-step"><strong>4</strong><div><h3>Pick domains, cards, gear, and experiences</h3><p>Domain cards express the magical or martial themes your class uses. Gear and experiences make your version of that class specific.</p></div></article>
+            <article class="timeline-step"><strong>5</strong><div><h3>Answer background and connection questions</h3><p>Relationships are not afterthoughts. The game pushes you to define why this party matters to one another before the first crisis lands.</p></div></article>
+          </div>
+
+          <div class="quote">
+            <p>
+              Character creation is not only about picking a combat role. It is about deciding how your character looks at the world,
+              what they want, what they fear, and how they fit into the party’s emotional geometry.
+            </p>
+            <cite>Core rulebook: character creation guidance</cite>
+          </div>
+        </section>
+
+        <section class="section" id="classes-and-domains">
+          <div class="section-head">
+            <div class="section-copy">
+              <p class="section-label">5. Classes and Domains</p>
+              <h2>Nine core classes built from nine thematic domains</h2>
+            </div>
+          </div>
+
+          <div class="filters" aria-label="Class filters">
+            <button class="filter-chip is-active" type="button" data-filter="all">All classes</button>
+            <button class="filter-chip" type="button" data-filter="martial">Martial leaning</button>
+            <button class="filter-chip" type="button" data-filter="magic">Magic leaning</button>
+            <button class="filter-chip" type="button" data-filter="support">Support and control</button>
+          </div>
+
+          <div class="class-grid" id="class-grid">
+            <article class="class-card" data-kind="support magic"><div class="class-top"><h3>Bard</h3><span class="tag">Grace + Codex</span></div><p>Charismatic performers, manipulators, and scene-stealers who uplift allies and control momentum through presence and expression.</p><span class="meta">Starts at Evasion 10, Hit Points 5. Best if you want social gravity, support tools, and spotlight control.</span></article>
+            <article class="class-card" data-kind="magic support"><div class="class-top"><h3>Druid</h3><span class="tag">Sage + Arcana</span></div><p>Nature-bound shapeshifters and elemental channelers who protect, adapt, and turn the wild itself into a weapon.</p><span class="meta">Starts at Evasion 10, Hit Points 6. Best if you want flexible forms, primal magic, and wilderness identity.</span></article>
+            <article class="class-card" data-kind="martial support"><div class="class-top"><h3>Guardian</h3><span class="tag">Valor + Blade</span></div><p>Front-line protectors defined by fortitude, defense, and punishing anyone who harms their allies.</p><span class="meta">Starts at Evasion 9, Hit Points 7. Best if you want to absorb pressure and hold the line.</span></article>
+            <article class="class-card" data-kind="martial support"><div class="class-top"><h3>Ranger</h3><span class="tag">Bone + Sage</span></div><p>Hunters, trackers, and wilderness tacticians, often partnered with a companion and built for pursuit and control.</p><span class="meta">Starts at Evasion 12, Hit Points 6. Best if you want mobility, focus-fire, and predator energy.</span></article>
+            <article class="class-card" data-kind="martial support"><div class="class-top"><h3>Rogue</h3><span class="tag">Midnight + Grace</span></div><p>Thieves, infiltrators, and shadow-workers who strike from favorable angles and weaponize secrecy.</p><span class="meta">Starts at Evasion 12, Hit Points 6. Best if you want stealth, repositioning, and spike damage.</span></article>
+            <article class="class-card" data-kind="support magic"><div class="class-top"><h3>Seraph</h3><span class="tag">Splendor + Valor</span></div><p>Divine warriors and healers with sacred purpose, party-saving tools, and battlefield presence.</p><span class="meta">Starts at Evasion 9, Hit Points 7. Best if you want blessings, resilience, and holy intervention.</span></article>
+            <article class="class-card" data-kind="magic"><div class="class-top"><h3>Sorcerer</h3><span class="tag">Arcana + Midnight</span></div><p>Innate magic wielders learning to survive the force already living inside them, from illusion to elemental devastation.</p><span class="meta">Starts at Evasion 10, Hit Points 6. Best if you want volatile power and dramatic spell expression.</span></article>
+            <article class="class-card" data-kind="martial"><div class="class-top"><h3>Warrior</h3><span class="tag">Blade + Bone</span></div><p>Dedicated weapon masters built on training, aggression, and raw combat credibility.</p><span class="meta">Starts at Evasion 11, Hit Points 6. Best if you want consistent pressure and weapon-centric play.</span></article>
+            <article class="class-card" data-kind="magic support"><div class="class-top"><h3>Wizard</h3><span class="tag">Codex + Splendor</span></div><p>Studious spellcasters who bend preparation, magical expertise, and utility into elegant problem-solving.</p><span class="meta">Starts at Evasion 11, Hit Points 5. Best if you want breadth, planning, and deliberate magical choices.</span></article>
+          </div>
+
+          <div class="callout">
+            <strong>How domains work</strong>
+            <p>
+              Domains are the thematic engines behind class abilities and cards. Your class gives you access to two domains,
+              and those domains determine the tone of your growth more than a traditional feat tree ever could.
+            </p>
+          </div>
+
+          <div class="domain-grid" style="margin-top: 1rem;">
+            <article class="domain-card"><div class="domain-top"><h3>Arcana</h3><span class="tag">Instinctual magic</span></div><p>Raw, innate, enigmatic magical force. Potent, volatile, and elemental.</p></article>
+            <article class="domain-card"><div class="domain-top"><h3>Blade</h3><span class="tag">Weapon mastery</span></div><p>Precision, lethality, and martial control through blades, bows, and armscraft.</p></article>
+            <article class="domain-card"><div class="domain-top"><h3>Bone</h3><span class="tag">Body and tactics</span></div><p>Discipline of the body, battlefield prediction, and relentless physical control.</p></article>
+            <article class="domain-card"><div class="domain-top"><h3>Codex</h3><span class="tag">Learned magic</span></div><p>Books, formulae, written power, and deep study turned into versatile spellcraft.</p></article>
+            <article class="domain-card"><div class="domain-top"><h3>Grace</h3><span class="tag">Charisma and perception</span></div><p>Charm, rhetoric, deception, glamour, and the power to shape how people read reality.</p></article>
+            <article class="domain-card"><div class="domain-top"><h3>Midnight</h3><span class="tag">Shadows and secrecy</span></div><p>Obscurity, stealth, misdirection, hidden truths, and weaponized mystery.</p></article>
+            <article class="domain-card"><div class="domain-top"><h3>Sage</h3><span class="tag">Nature and vitality</span></div><p>Bestial force, earth-magic, ferocity, growth, and the power of the natural world.</p></article>
+            <article class="domain-card"><div class="domain-top"><h3>Splendor</h3><span class="tag">Life and death</span></div><p>Healing, restoration, sacred radiance, and direct influence over life’s edge.</p></article>
+            <article class="domain-card"><div class="domain-top"><h3>Valor</h3><span class="tag">Protection and force</span></div><p>Shielding, durability, and the power to hold danger away from those who matter.</p></article>
+          </div>
+        </section>
+
+        <section class="section" id="how-play-works">
+          <div class="section-head">
+            <div class="section-copy">
+              <p class="section-label">6. How Play Works</p>
+              <h2>Scenes, spotlight, and the duality engine</h2>
+            </div>
+          </div>
+
+          <div class="timeline">
+            <article class="timeline-step"><strong>A</strong><div><h3>The GM frames the situation</h3><p>You are given details, tension, environment, and pressure points. Players ask questions and add detail.</p></div></article>
+            <article class="timeline-step"><strong>B</strong><div><h3>The spotlight lands on someone</h3><p>Who acts next is driven by the fiction, not a strict turn queue. If it makes sense, you act.</p></div></article>
+            <article class="timeline-step"><strong>C</strong><div><h3>If the outcome matters, roll action dice</h3><p>Pick the appropriate trait, apply modifiers, roll the two d12 Duality Dice, and see both success and emotional momentum.</p></div></article>
+            <article class="timeline-step"><strong>D</strong><div><h3>The story changes</h3><p>Every roll should move the fiction. Nothing happens is not the intended default state of the game.</p></div></article>
+          </div>
+
+          <div class="duality" style="margin-top: 1rem;">
+            <article class="duality-card hope"><h3>Rolling with Hope</h3><p>If the Hope die is higher, you roll with Hope. On action rolls, you gain Hope even if you fail. Hope fuels helping allies, activating class Hope features, using experiences, and initiating tag-team moments.</p></article>
+            <article class="duality-card fear"><h3>Rolling with Fear</h3><p>If the Fear die is higher, the GM gains Fear and the scene complicates. You may still succeed, but the cost, danger, or collateral changes the shape of the moment.</p></article>
+          </div>
+
+          <div class="accordion-wrap" style="margin-top: 1rem;">
+            <details class="accordion" open>
+              <summary><span>The four-step action roll loop</span><span>+</span></summary>
+              <div class="accordion-body">
+                <ul class="bullet-list">
+                  <li>Pick the trait that best fits the move and set or learn the Difficulty.</li>
+                  <li>Add modifiers, experiences, help, and any advantage or disadvantage dice.</li>
+                  <li>Roll both d12 Duality Dice and total everything.</li>
+                  <li>Resolve both outcome and momentum: success or failure, plus Hope or Fear.</li>
+                </ul>
+              </div>
+            </details>
+            <details class="accordion">
+              <summary><span>Why this feels different from traditional initiative</span><span>+</span></summary>
+              <div class="accordion-body">
+                <p>Daggerheart intentionally avoids rigid rounds. That means players can chain fiction together, react more naturally, and hand off scenes in ways that feel more like dramatic momentum than bookkeeping.</p>
+              </div>
+            </details>
+          </div>
+        </section>
+
+        <section class="section" id="combat-and-survival">
+          <div class="section-head">
+            <div class="section-copy">
+              <p class="section-label">7. Combat and Survival</p>
+              <h2>How damage, pressure, and danger actually land</h2>
+            </div>
+          </div>
+
+          <div class="mini-grid">
+            <article class="mini-card"><h3>Evasion</h3><p>Your Evasion is the Difficulty enemies roll against. It can look like nimble dodging, timing, footing, shields, or magical warding.</p></article>
+            <article class="mini-card"><h3>Hit Points and thresholds</h3><p>Damage is compared against your thresholds. Minor marks 1 HP, Major marks 2 HP, and Severe marks 3 HP.</p></article>
+            <article class="mini-card"><h3>Stress</h3><p>Stress tracks strain, panic, overexertion, and magical or emotional pressure. Filling it makes you Vulnerable.</p></article>
+          </div>
+
+          <div class="glance-grid" style="margin-top: 1rem;">
+            <article class="glance-card"><small>Damage cadence</small><strong>Roll proficiency dice</strong><p>Successful attacks roll damage dice based on weapon or effect, often scaled by Proficiency.</p></article>
+            <article class="glance-card"><small>Critical hits</small><strong>Start from max dice</strong><p>Critical attack rolls deal the maximum possible result of the damage dice, then add a normal damage roll on top.</p></article>
+            <article class="glance-card"><small>Downtime</small><strong>Recovery matters</strong><p>Downtime is how you clear pressure, regain position, and make the campaign breathe between dangerous scenes.</p></article>
+            <article class="glance-card"><small>Death</small><strong>Story-facing, not casual</strong><p>Marking your last Hit Point pushes you into the game's death procedure rather than instantly erasing you.</p></article>
+          </div>
+
+          <div class="callout">
+            <strong>Story is consequence</strong>
+            <p>The rulebook is explicit: every roll changes the scene. A failed lockpick roll is not just “the door stays shut.” It becomes guards, alarm wards, time pressure, or a forced new approach.</p>
+          </div>
+        </section>
+
+        <section class="section" id="growth-and-campaigns">
+          <div class="section-head">
+            <div class="section-copy">
+              <p class="section-label">8. Growth and Campaigns</p>
+              <h2>How characters level and what kinds of campaigns the game supports</h2>
+            </div>
+          </div>
+
+          <div class="mini-grid">
+            <article class="mini-card"><h3>Tiered advancement</h3><p>Levels 1-10 are split into escalating tiers, with stronger subclass features, more cards, better thresholds, and sharper identities over time.</p></article>
+            <article class="mini-card"><h3>Level choices matter</h3><p>Advancement is not a single-track ladder. You choose among more Hit Points, more Stress, more Evasion, more Proficiency, more cards, or subclass growth.</p></article>
+            <article class="mini-card"><h3>Campaign frames</h3><p>The book includes distinct campaign structures that tune tone, assumptions, and worldbuilding from the start.</p></article>
+          </div>
+
+          <div class="frame-grid" style="margin-top: 1rem;">
+            <article class="frame-card"><div class="frame-top"><h3>The Witherwild</h3><span class="tag">Haunted wilds</span></div><p>Nature, decay, magic, and danger in an untamed frame that leans into primal mystery.</p></article>
+            <article class="frame-card"><div class="frame-top"><h3>Five Banners Burning</h3><span class="tag">Conflict and factions</span></div><p>Warring powers, divided loyalties, and political or military pressure.</p></article>
+            <article class="frame-card"><div class="frame-top"><h3>Beast Feast</h3><span class="tag">Monsters and excess</span></div><p>A frame that sounds built for bold tone, strange danger, and larger-than-life fantasy spectacle.</p></article>
+            <article class="frame-card"><div class="frame-top"><h3>The Age of Umbra</h3><span class="tag">Shadowed fantasy</span></div><p>Darkness, hidden powers, and a world shaped by deep encroaching threat.</p></article>
+            <article class="frame-card"><div class="frame-top"><h3>Motherboard</h3><span class="tag">Genre-bending</span></div><p>A frame that pushes beyond standard fantasy assumptions into stranger terrain.</p></article>
+            <article class="frame-card"><div class="frame-top"><h3>Colossus of the Drylands</h3><span class="tag">Epic traversal</span></div><p>Large-scale environmental stakes and a campaign premise built for memorable travel and danger.</p></article>
+          </div>
+        </section>
+
+        <section class="section" id="expanded-options">
+          <div class="section-head">
+            <div class="section-copy">
+              <p class="section-label">9. Expanded Options</p>
+              <h2>What the added Void PDFs suggest for future play</h2>
+            </div>
+          </div>
+
+          <p class="section-copy">
+            The extra sourcebooks in your Daggerheart folder are not the main rules reference, but they are useful signals for the kind of expansion space you can support here.
+            They point toward future subpages, option indexes, or campaign-specific handouts once you decide how much of that material you want live in the lore hub.
+          </p>
+
+          <div class="option-grid" style="margin-top: 1rem;">
+            <article class="option-card"><div class="option-top"><h3>Witch</h3><span class="tag">The Void</span></div><p>A new class option built around charms, hexes, communion, and occult atmosphere.</p></article>
+            <article class="option-card"><div class="option-top"><h3>Assassin</h3><span class="tag">The Void</span></div><p>An alternate class option focused on stealth, marked targets, extraction, and lethality.</p></article>
+            <article class="option-card"><div class="option-top"><h3>Heritage</h3><span class="tag">Player options</span></div><p>Supplemental ancestry and community support that could justify a dedicated options reference later.</p></article>
+            <article class="option-card"><div class="option-top"><h3>Transformations</h3><span class="tag">Narrative upgrades</span></div><p>Optional, high-impact identity changes with both benefits and drawbacks, best introduced deliberately by the GM.</p></article>
+          </div>
+
+          <div class="callout">
+            <strong>Archive expansion direction</strong>
+            <p>This primer now connects to dedicated class, domain, and campaign-frame references. Next additions can follow the same pattern for optional Void material so onboarding stays clean while deeper lore stays browsable.</p>
+          </div>
+        </section>
+      </main>
+
+      <footer class="footer">
+        <div class="footer-card">
+          <div>
+            <strong class="footer-strong" style="display:block; margin-bottom:0.25rem; color: var(--text);">Malt &amp; Magic: Daggerheart Archive</strong>
+            <span>This primer is a player-facing gateway, not a full rules replacement.</span>
+          </div>
+          <div>
+            <span>Primary source used: Daggerheart Core Rulebook, plus the supporting Void option PDFs in the added sourcebook folder.</span>
+          </div>
+        </div>
+      </footer>
+    </div>
+  </div>
+
+  <script>
+    const filterButtons = document.querySelectorAll('[data-filter]');
+    const classCards = document.querySelectorAll('#class-grid .class-card');
+
+    filterButtons.forEach((button) => {
+      button.addEventListener('click', () => {
+        const filter = button.dataset.filter;
+        filterButtons.forEach((chip) => chip.classList.toggle('is-active', chip === button));
+
+        classCards.forEach((card) => {
+          const kinds = (card.dataset.kind || '').split(' ');
+          const show = filter === 'all' || kinds.includes(filter);
+          card.classList.toggle('is-hidden', !show);
+        });
+      });
+    });
+
+    const navLinks = document.querySelectorAll('#page-nav a');
+    const observedSections = Array.from(navLinks)
+      .map((link) => document.querySelector(link.getAttribute('href')))
+      .filter(Boolean);
+
+    const navObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        const id = `#${entry.target.id}`;
+        navLinks.forEach((link) => link.classList.toggle('is-active', link.getAttribute('href') === id));
+      });
+    }, { rootMargin: '-35% 0px -45% 0px', threshold: 0.01 });
+
+    observedSections.forEach((section) => navObserver.observe(section));
+
+    const revealCards = document.querySelectorAll('.reveal-card');
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        entry.target.classList.add('is-visible');
+        revealObserver.unobserve(entry.target);
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
+
+    revealCards.forEach((card) => revealObserver.observe(card));
+  </script>
 </body>
 </html>
