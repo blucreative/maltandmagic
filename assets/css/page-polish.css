@@ -231,6 +231,43 @@ body.theme-cosmic90s.page-tony-mills-sheet .nav-link {
   font-size: 11px;
 }
 
+/* CoC combat tables: force readable contrast against cosmic theme table defaults */
+body.theme-cosmic90s.page-henry-press-sheet .combat-table,
+body.theme-cosmic90s.page-larry-hughes-sheet .combat-table,
+body.theme-cosmic90s.page-shen-flownder-sheet .combat-table,
+body.theme-cosmic90s.page-tony-mills-sheet .combat-table {
+  width: 100%;
+  background: #f4ead8;
+  border: 1px solid #8f7a58;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+body.theme-cosmic90s.page-henry-press-sheet .combat-table th,
+body.theme-cosmic90s.page-larry-hughes-sheet .combat-table th,
+body.theme-cosmic90s.page-shen-flownder-sheet .combat-table th,
+body.theme-cosmic90s.page-tony-mills-sheet .combat-table th {
+  background: #22170f;
+  color: #d1ad57;
+  border-color: #4a3a24;
+}
+
+body.theme-cosmic90s.page-henry-press-sheet .combat-table td,
+body.theme-cosmic90s.page-larry-hughes-sheet .combat-table td,
+body.theme-cosmic90s.page-shen-flownder-sheet .combat-table td,
+body.theme-cosmic90s.page-tony-mills-sheet .combat-table td {
+  color: #25190f;
+  border-color: #8f7a58;
+  background: #f4ead8;
+}
+
+body.theme-cosmic90s.page-henry-press-sheet .combat-table tr:nth-child(even) td,
+body.theme-cosmic90s.page-larry-hughes-sheet .combat-table tr:nth-child(even) td,
+body.theme-cosmic90s.page-shen-flownder-sheet .combat-table tr:nth-child(even) td,
+body.theme-cosmic90s.page-tony-mills-sheet .combat-table tr:nth-child(even) td {
+  background: #efe2cc;
+}
+
 /* Delta Green military pages: dossier-like spacing and compact headings */
 body.theme-military90s :is(h1, h2, h3) {
   margin-top: 0.95em;

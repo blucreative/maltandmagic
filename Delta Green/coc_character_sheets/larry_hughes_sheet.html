@@ -277,11 +277,11 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
     <table class="combat-table">
       <thead><tr><th>Weapon</th><th>Damage</th><th>Attacks</th><th>Range</th></tr></thead>
       <tbody>
-        <tr><td>Brawl</td><td>1D3 + DB</td><td>1</td><td>Melee</td></tr>
-        <tr><td>Hammer</td><td>1D6 + DB</td><td>1</td><td>Melee</td></tr>
+        <tr><td>Brawl</td><td>1D3</td><td>1</td><td>Melee</td></tr>
+        <tr><td>Hammer</td><td>1D6</td><td>1</td><td>Melee</td></tr>
       </tbody>
     </table>
-    <div style="margin-top:10px;font-family:var(--ft);font-size:11px;color:var(--inkm);font-style:italic">Fighting (Brawl) base 25% &middot; No invested points in combat skills &middot; DB: 0</div>
+    <div style="margin-top:10px;font-family:var(--ft);font-size:11px;color:var(--inkm);font-style:italic">Fighting (Brawl) base 25% &middot; No invested points in combat skills &middot; Damage Bonus: none &middot; Build: 0</div>
   </div>
 
   <!-- POSSESSIONS -->
@@ -464,7 +464,7 @@ function f(p){return Math.floor(p/5);}
 function buildSkillList(){
   var list=document.getElementById('skillList');
   list.innerHTML='';
-  SKILLS.forEach(function(sk){
+  SKILLS.slice().sort(function(a,b){return a.name.localeCompare(b.name, undefined, { sensitivity: 'base' });}).forEach(function(sk){
     var show=true;
     if(currentFilter==='invested'&&!sk.invested) show=false;
     if(currentFilter==='combat'&&sk.cat!=='combat') show=false;
