@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Daggerheart — Lore Vault</title>
+<meta name="description" content="Daggerheart campaign lore and player resources — coming soon to the Malt &amp; Magic lore vault.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Inter:wght@300;400;500;600&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --accent: #e08a5b;
+    --accent-soft: rgba(224, 138, 91, 0.14);
+    --bg: #07080d;
+    --surface: rgba(20, 23, 34, 0.62);
+    --border: rgba(255, 255, 255, 0.08);
+    --border-hi: rgba(255, 255, 255, 0.18);
+    --txt: #eef1f8;
+    --txt-2: #aab2c5;
+    --txt-3: #6b748c;
+    --font-display: 'Space Grotesk', 'Inter', system-ui, sans-serif;
+    --font-serif: 'Cinzel', Georgia, serif;
+    --font-body: 'Inter', system-ui, sans-serif;
+  }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg);
+    background-image:
+      radial-gradient(ellipse 70% 55% at 20% -5%, var(--accent-soft), transparent 60%),
+      radial-gradient(ellipse 60% 50% at 90% 110%, rgba(200,90,60,0.1), transparent 60%);
+    background-attachment: fixed;
+    color: var(--txt);
+    font-family: var(--font-body);
+    line-height: 1.6;
+    min-height: 100vh;
+    display: grid;
+    place-items: center;
+    padding: 2rem 1.5rem;
+    -webkit-font-smoothing: antialiased;
+  }
+  body::before {
+    content: '';
+    position: fixed; inset: 0; pointer-events: none; z-index: 0;
+    background-image:
+      radial-gradient(circle, rgba(255,255,255,0.7) 1px, transparent 1px),
+      radial-gradient(circle, rgba(255,255,255,0.4) 1px, transparent 1px);
+    background-size: 340px 340px, 200px 200px;
+    background-position: 30px 50px, 140px 180px;
+    opacity: 0.12;
+  }
+  .card {
+    position: relative;
+    z-index: 1;
+    max-width: 560px;
+    text-align: center;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 22px;
+    padding: 3.4rem 2.6rem 3rem;
+    backdrop-filter: blur(12px);
+    overflow: hidden;
+  }
+  .card::after {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; height: 3px;
+    background: linear-gradient(to right, transparent, var(--accent), transparent);
+    opacity: 0.6;
+  }
+  .glyph {
+    width: 64px; height: 64px; margin: 0 auto 1.6rem;
+    display: grid; place-items: center;
+    font-size: 30px; color: var(--accent);
+    border-radius: 18px;
+    background: var(--accent-soft);
+    border: 1px solid var(--border);
+  }
+  .system {
+    font-family: var(--font-display);
+    font-size: 11px; font-weight: 600;
+    letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--accent); margin-bottom: 0.6rem;
+  }
+  h1 {
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 6vw, 2.8rem);
+    font-weight: 700; letter-spacing: -0.02em;
+    color: var(--txt); margin-bottom: 1rem;
+  }
+  .badge {
+    display: inline-block;
+    font-family: var(--font-display);
+    font-size: 10px; font-weight: 600;
+    letter-spacing: 0.14em; text-transform: uppercase;
+    color: #d9b48a;
+    padding: 0.34rem 0.85rem; border-radius: 999px;
+    border: 1px solid rgba(217,180,138,0.32);
+    background: rgba(217,180,138,0.09);
+    margin-bottom: 1.6rem;
+  }
+  p.lead {
+    color: var(--txt-2); font-weight: 300;
+    font-size: 1.02rem; max-width: 44ch; margin: 0 auto;
+  }
+  .back {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    margin-top: 2.2rem;
+    font-family: var(--font-display);
+    font-size: 12px; font-weight: 600;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    text-decoration: none; color: var(--txt-2);
+    padding: 0.6rem 1.2rem; border-radius: 999px;
+    border: 1px solid var(--border);
+    transition: color 0.2s ease, border-color 0.2s ease, background 0.2s ease, gap 0.2s ease;
+  }
+  .back:hover, .back:focus-visible {
+    color: var(--accent); border-color: var(--border-hi);
+    background: rgba(255,255,255,0.04); gap: 0.8rem; outline: none;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    * { transition: none !important; scroll-behavior: auto !important; }
+  }
+</style>
+</head>
+<body>
+  <main class="card">
+    <div class="glyph" aria-hidden="true">&#9670;</div>
+    <div class="system">Daggerheart</div>
+    <h1>Daggerheart</h1>
+    <div class="badge">Coming Soon</div>
+    <p class="lead">
+      A narrative-first fantasy of hope and fear. Campaign frames, ancestries, and
+      player tools will be archived here once the first session begins.
+    </p>
+    <a class="back" href="../index.html">&#8592; All Game Worlds</a>
+  </main>
+</body>
+</html>
