@@ -1023,6 +1023,7 @@
             <div class="hero-actions">
               <button class="hero-button primary" id="orientation-launch" type="button">⊞ Orientation</button>
               <a class="hero-button" href="#first-character-runway">Build Your First Character</a>
+              <a class="hero-button" href="character-sheet.html">Open Character Sheet</a>
               <a class="hero-button" href="#reference-atlas">Open the Reference Atlas</a>
             </div>
 
@@ -1133,6 +1134,12 @@
               <h3>Campaign Frames</h3>
               <p>Match table tone to frame style, from haunted wilds to war-torn factions and strange genre-bending arcs.</p>
               <span class="atlas-link">Open frame reference &#8594;</span>
+            </a>
+            <a class="atlas-card reveal-card" href="void-options.html">
+              <p class="section-label">Dedicated Page</p>
+              <h3>Void Options</h3>
+              <p>Bring Witch, Assassin, Heritage support, and Transformations into the same live character-building flow as the core game.</p>
+              <span class="atlas-link">Open Void reference &#8594;</span>
             </a>
           </div>
         </section>
@@ -1349,6 +1356,8 @@
                 <button class="chooser-button" type="button" data-choice="wild">Channel primal force</button>
                 <button class="chooser-button" type="button" data-choice="arcane">Solve problems with magic</button>
                 <button class="chooser-button" type="button" data-choice="holy">Play hope and miracles</button>
+                <button class="chooser-button" type="button" data-choice="occult">Play occult bargains</button>
+                <button class="chooser-button" type="button" data-choice="lethal">Play target-focused lethality</button>
               </div>
             </article>
 
@@ -1361,6 +1370,7 @@
               <div class="quick-links">
                 <a class="hero-button" href="classes.html">Read class profiles</a>
                 <a class="hero-button" href="domains.html">Check domain tone</a>
+                <a class="hero-button" href="void-options.html">Open Void options</a>
               </div>
             </aside>
           </div>
@@ -1404,6 +1414,7 @@
             </div>
             <div class="worksheet-actions">
               <button class="hero-button" id="worksheet-clear" type="button">Clear worksheet</button>
+              <a class="hero-button" href="character-sheet.html">Open Character Sheet</a>
               <a class="hero-button" href="classes.html">Open Class Archive</a>
               <a class="hero-button" href="campaign-frames.html">Open Campaign Frames</a>
             </div>
@@ -1564,15 +1575,15 @@
           </p>
 
           <div class="option-grid" style="margin-top: 1rem;">
-            <article class="option-card"><div class="option-top"><h3>Witch</h3><span class="tag">The Void</span></div><p>A new class option built around charms, hexes, communion, and occult atmosphere.</p></article>
-            <article class="option-card"><div class="option-top"><h3>Assassin</h3><span class="tag">The Void</span></div><p>An alternate class option focused on stealth, marked targets, extraction, and lethality.</p></article>
-            <article class="option-card"><div class="option-top"><h3>Heritage</h3><span class="tag">Player options</span></div><p>Supplemental ancestry and community support that could justify a dedicated options reference later.</p></article>
-            <article class="option-card"><div class="option-top"><h3>Transformations</h3><span class="tag">Narrative upgrades</span></div><p>Optional, high-impact identity changes with both benefits and drawbacks, best introduced deliberately by the GM.</p></article>
+            <article class="option-card"><div class="option-top"><h3>Witch</h3><span class="tag">The Void</span></div><p>A live class option built around charms, hexes, communion, and occult atmosphere when your table opens Void material.</p></article>
+            <article class="option-card"><div class="option-top"><h3>Assassin</h3><span class="tag">The Void</span></div><p>A live class option focused on stealth, marked targets, extraction, and lethal mission pressure.</p></article>
+            <article class="option-card"><div class="option-top"><h3>Heritage</h3><span class="tag">Player options</span></div><p>Supplemental ancestry and community support that should be surfaced at session zero if your table wants a wider lineage menu.</p></article>
+            <article class="option-card"><div class="option-top"><h3>Transformations</h3><span class="tag">Narrative upgrades</span></div><p>High-impact identity changes with both benefits and drawbacks, best introduced deliberately as part of campaign planning or discovery.</p></article>
           </div>
 
           <div class="callout">
             <strong>Archive expansion direction</strong>
-            <p>This primer now connects to dedicated class, domain, and campaign-frame references. Next additions can follow the same pattern for optional Void material so onboarding stays clean while deeper lore stays browsable.</p>
+            <p>This primer now connects to dedicated class, domain, campaign-frame, and Void option references. That keeps onboarding clean while still treating Witch, Assassin, Heritage support, and Transformations as real player-facing content when your table wants them live.</p>
           </div>
         </section>
       </main>
@@ -1734,6 +1745,14 @@
       holy: {
         title: 'Seraph, with Bard as your alternate',
         body: 'Choose Seraph if you want hope, courage, healing, and visible devotion in the middle of danger. Switch to Bard if you want to uplift people through charisma and scene-command instead of miracles.'
+      },
+      occult: {
+        title: 'Witch, with Sorcerer as your alternate',
+        body: 'Choose Witch if you want occult bargains, charms, hexes, and intimate strange power. Switch to Sorcerer if you want supernatural intensity without the same covenant-shaped atmosphere.'
+      },
+      lethal: {
+        title: 'Assassin, with Rogue as your alternate',
+        body: 'Choose Assassin if you want target-focused lethality, extraction pressure, and a sharper mission profile. Switch to Rogue if you want stealth and leverage with a broader trickster identity.'
       }
     };
 

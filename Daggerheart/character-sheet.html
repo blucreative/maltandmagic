@@ -1,0 +1,1171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Daggerheart Character Sheet</title>
+<meta name="description" content="A standalone Daggerheart character sheet that imports primer worksheet notes, supports core and Void class options, and saves locally.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Manrope:wght@400;500;600;700;800&family=Sora:wght@500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; }
+
+  :root {
+    --bg: #06070c;
+    --panel: rgba(18, 22, 34, 0.84);
+    --panel-soft: rgba(255,255,255,0.04);
+    --line: rgba(255,255,255,0.1);
+    --line-strong: rgba(255,255,255,0.18);
+    --text: #f5efe4;
+    --text-soft: #cbc3b4;
+    --text-dim: #958d81;
+    --hope: #f0c56b;
+    --fear: #d96f59;
+    --arcane: #8f8de2;
+    --void: #9270df;
+    --shadow: 0 28px 72px rgba(0,0,0,0.45);
+    --font-display: 'Sora', 'Manrope', system-ui, sans-serif;
+    --font-body: 'Manrope', system-ui, sans-serif;
+    --font-serif: 'Cinzel', Georgia, serif;
+    --radius-xl: 28px;
+    --radius-lg: 22px;
+    --radius-md: 16px;
+    --radius-sm: 999px;
+    --max: 1240px;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    margin: 0;
+    min-height: 100vh;
+    color: var(--text);
+    font-family: var(--font-body);
+    line-height: 1.6;
+    background:
+      radial-gradient(circle at 12% 10%, rgba(143, 141, 226, 0.18), transparent 30%),
+      radial-gradient(circle at 84% 18%, rgba(217, 111, 89, 0.16), transparent 28%),
+      radial-gradient(circle at 50% 100%, rgba(240, 197, 107, 0.12), transparent 36%),
+      linear-gradient(180deg, #060912 0%, #0a0d15 40%, #05070c 100%);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  body::before,
+  body::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  body::before {
+    background-image:
+      radial-gradient(circle, rgba(255,255,255,0.22) 1px, transparent 1px),
+      radial-gradient(circle, rgba(255,255,255,0.09) 1px, transparent 1px);
+    background-size: 220px 220px, 360px 360px;
+    background-position: 0 0, 60px 90px;
+    opacity: 0.18;
+  }
+
+  body::after {
+    background: linear-gradient(110deg, transparent 0%, rgba(255,255,255,0.03) 46%, transparent 100%);
+    mask: linear-gradient(180deg, transparent, black 12%, black 88%, transparent);
+    opacity: 0.48;
+  }
+
+  a { color: inherit; }
+
+  .page {
+    position: relative;
+    z-index: 1;
+  }
+
+  .shell {
+    width: min(calc(100% - 2rem), var(--max));
+    margin: 0 auto;
+  }
+
+  .topbar {
+    position: sticky;
+    top: 0.9rem;
+    z-index: 20;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    padding-top: 1rem;
+  }
+
+  .nav-chip,
+  .action-btn,
+  .stat-chip,
+  .orientation-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.45rem;
+    padding: 0.72rem 1rem;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--line);
+    text-decoration: none;
+    color: var(--text-soft);
+    background: rgba(9, 12, 20, 0.84);
+    backdrop-filter: blur(12px);
+    font: inherit;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: transform 0.22s ease, border-color 0.22s ease, color 0.22s ease, background 0.22s ease;
+  }
+
+  .nav-chip:hover,
+  .nav-chip:focus-visible,
+  .action-btn:hover,
+  .action-btn:focus-visible,
+  .orientation-btn:hover,
+  .orientation-btn:focus-visible {
+    color: var(--text);
+    border-color: rgba(240, 197, 107, 0.34);
+    background: rgba(240, 197, 107, 0.1);
+    outline: none;
+    transform: translateY(-1px);
+  }
+
+  .action-btn.primary,
+  .orientation-btn.primary {
+    color: #18120b;
+    border-color: transparent;
+    background: linear-gradient(135deg, var(--hope), #ffdd9f);
+  }
+
+  .action-btn.primary:hover,
+  .action-btn.primary:focus-visible,
+  .orientation-btn.primary:hover,
+  .orientation-btn.primary:focus-visible {
+    color: #18120b;
+    background: linear-gradient(135deg, #ffd58c, #ffe7c2);
+  }
+
+  .hero,
+  .panel,
+  .summary-card,
+  .sheet-card,
+  .orientation-dialog {
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-xl);
+    backdrop-filter: blur(16px);
+    box-shadow: var(--shadow);
+  }
+
+  .hero {
+    display: grid;
+    grid-template-columns: minmax(0, 1.25fr) minmax(280px, 0.82fr);
+    gap: 1.2rem;
+    margin-top: 1rem;
+    padding: 1.6rem;
+    position: relative;
+    overflow: hidden;
+    background:
+      radial-gradient(circle at top left, rgba(143, 141, 226, 0.22), transparent 30%),
+      radial-gradient(circle at 84% 15%, rgba(217, 111, 89, 0.16), transparent 24%),
+      linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0));
+  }
+
+  .hero::after {
+    content: "";
+    position: absolute;
+    inset: auto -8% -26% 22%;
+    height: 280px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(240, 197, 107, 0.18), transparent 68%);
+    filter: blur(20px);
+  }
+
+  .eyebrow,
+  .section-label,
+  .field-label,
+  .tiny-label,
+  .orientation-kicker,
+  .orientation-counter,
+  .helper-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    color: var(--text-dim);
+    font-size: 0.73rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .eyebrow {
+    padding: 0.45rem 0.82rem;
+    border-radius: var(--radius-sm);
+    background: rgba(255,255,255,0.06);
+    border: 1px solid var(--line);
+    color: var(--hope);
+  }
+
+  h1, h2, h3, strong { font-family: var(--font-display); }
+
+  .hero h1 {
+    margin: 1rem 0 0.8rem;
+    font-size: clamp(2.4rem, 5vw, 4.6rem);
+    line-height: 0.96;
+    letter-spacing: -0.045em;
+  }
+
+  .hero h1 span {
+    display: block;
+    margin-bottom: 0.52rem;
+    color: var(--hope);
+    font-family: var(--font-serif);
+    font-size: 0.42em;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .lede,
+  .hero-side p,
+  .section-copy,
+  .field-help,
+  .summary-card p,
+  .orientation-body,
+  .save-note {
+    color: var(--text-soft);
+  }
+
+  .lede {
+    max-width: 60ch;
+    margin: 0;
+    font-size: 1.02rem;
+  }
+
+  .hero-actions,
+  .sheet-actions,
+  .stat-grid,
+  .summary-grid,
+  .section-grid,
+  .field-grid,
+  .orientation-actions,
+  .orientation-dots {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+
+  .hero-actions { margin-top: 1.35rem; }
+
+  .hero-side {
+    display: grid;
+    gap: 1rem;
+    align-content: start;
+  }
+
+  .stat-grid,
+  .summary-grid,
+  .field-grid,
+  .section-grid {
+    display: grid;
+    gap: 1rem;
+  }
+
+  .stat-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .summary-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .field-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .section-grid { grid-template-columns: minmax(0, 1.15fr) minmax(300px, 0.85fr); }
+
+  .summary-card,
+  .sheet-card,
+  .panel {
+    padding: 1rem;
+  }
+
+  .summary-card,
+  .sheet-card {
+    border-radius: var(--radius-lg);
+    border: 1px solid rgba(255,255,255,0.08);
+    background: rgba(255,255,255,0.04);
+  }
+
+  .stat-card {
+    border-radius: var(--radius-lg);
+    border: 1px solid rgba(255,255,255,0.08);
+    background: rgba(255,255,255,0.04);
+    padding: 1rem;
+  }
+
+  .stat-card span {
+    display: block;
+    color: var(--text-dim);
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    margin-bottom: 0.3rem;
+  }
+
+  .stat-card strong,
+  .summary-card strong {
+    display: block;
+    color: var(--text);
+  }
+
+  .stat-card strong { font-size: 1.15rem; }
+  .summary-card strong { font-size: 1.45rem; margin-bottom: 0.35rem; }
+
+  .layout {
+    display: grid;
+    gap: 1.2rem;
+    padding: 1.25rem 0 4rem;
+  }
+
+  .panel {
+    padding: 1.25rem;
+  }
+
+  .section-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
+    gap: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  .section h2,
+  .panel h2 {
+    margin: 0.15rem 0 0;
+    font-size: clamp(1.35rem, 3vw, 2rem);
+    letter-spacing: -0.03em;
+  }
+
+  .field-grid.three { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+
+  .field {
+    display: grid;
+    gap: 0.45rem;
+  }
+
+  .field.full {
+    grid-column: 1 / -1;
+  }
+
+  .field label {
+    color: var(--text-dim);
+    font-size: 0.73rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .field input,
+  .field select,
+  .field textarea {
+    width: 100%;
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: var(--radius-md);
+    background: rgba(6, 8, 14, 0.74);
+    color: var(--text);
+    font: inherit;
+    padding: 0.8rem 0.9rem;
+    outline: none;
+    transition: border-color 0.18s ease, background 0.18s ease;
+  }
+
+  .field input:focus,
+  .field select:focus,
+  .field textarea:focus {
+    border-color: rgba(240, 197, 107, 0.34);
+    background: rgba(8, 11, 18, 0.9);
+  }
+
+  .field textarea {
+    min-height: 7rem;
+    resize: vertical;
+  }
+
+  .helper {
+    margin-top: 1rem;
+    padding: 1rem;
+    border-radius: var(--radius-md);
+    border: 1px solid rgba(255,255,255,0.08);
+    background: linear-gradient(135deg, rgba(143, 141, 226, 0.12), rgba(255,255,255,0.03));
+  }
+
+  .helper h3 {
+    margin: 0 0 0.35rem;
+    font-size: 1rem;
+  }
+
+  .helper p,
+  .helper ul {
+    margin: 0;
+    color: var(--text-soft);
+  }
+
+  .helper ul {
+    padding-left: 1.1rem;
+    margin-top: 0.65rem;
+  }
+
+  .helper ul li + li { margin-top: 0.35rem; }
+
+  .sheet-actions {
+    margin-top: 1rem;
+  }
+
+  .status-line {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.7rem;
+    align-items: center;
+    margin-top: 1rem;
+    color: var(--text-dim);
+    font-size: 0.85rem;
+  }
+
+  .status-dot {
+    width: 0.7rem;
+    height: 0.7rem;
+    border-radius: 50%;
+    background: var(--hope);
+    box-shadow: 0 0 12px rgba(240,197,107,0.35);
+  }
+
+  .pill-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.55rem;
+  }
+
+  .pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    padding: 0.55rem 0.8rem;
+    border-radius: var(--radius-sm);
+    background: rgba(255,255,255,0.045);
+    border: 1px solid rgba(255,255,255,0.08);
+    font-size: 0.84rem;
+    color: var(--text-soft);
+  }
+
+  .pill.void { border-color: rgba(146,112,223,0.45); color: #d7cbff; }
+  .pill.core { border-color: rgba(240,197,107,0.35); }
+
+  .orientation-shell {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 1.25rem;
+    background: rgba(4,5,9,0.86);
+    backdrop-filter: blur(10px);
+  }
+
+  .orientation-shell.is-open { display: flex; }
+
+  .orientation-dialog {
+    width: min(100%, 620px);
+    padding: 1.4rem;
+    border: 1px solid var(--line-strong);
+    background:
+      radial-gradient(circle at top left, rgba(143,141,226,0.24), transparent 34%),
+      radial-gradient(circle at 86% 18%, rgba(217,111,89,0.14), transparent 28%),
+      rgba(12,14,22,0.98);
+  }
+
+  .orientation-title {
+    margin: 0.55rem 0 0.35rem;
+    font-family: var(--font-display);
+    font-size: clamp(1.45rem, 4vw, 2rem);
+    letter-spacing: -0.035em;
+  }
+
+  .orientation-body { min-height: 8rem; }
+  .orientation-body p { margin: 0; }
+  .orientation-body p + p { margin-top: 0.8rem; }
+  .orientation-dots { justify-content: center; margin: 1rem 0; }
+  .orientation-dot {
+    width: 0.72rem;
+    height: 0.72rem;
+    border-radius: 50%;
+    border: 1px solid rgba(255,255,255,0.24);
+    background: transparent;
+    padding: 0;
+    cursor: pointer;
+  }
+  .orientation-dot.is-active { background: var(--hope); border-color: var(--hope); }
+
+  .footer {
+    padding-bottom: 3rem;
+    color: var(--text-dim);
+  }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.45s ease, transform 0.45s ease;
+  }
+  .reveal.is-visible { opacity: 1; transform: translateY(0); }
+
+  @media (max-width: 1080px) {
+    .hero,
+    .summary-grid,
+    .field-grid.three,
+    .section-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .hero { grid-template-columns: 1fr; }
+    .section-grid { grid-template-columns: 1fr; }
+  }
+
+  @media (max-width: 760px) {
+    .summary-grid,
+    .field-grid,
+    .field-grid.three,
+    .stat-grid,
+    .section-grid { grid-template-columns: 1fr; }
+    .hero,
+    .panel,
+    .summary-card,
+    .sheet-card,
+    .orientation-dialog { border-radius: 22px; }
+    .section-head { flex-direction: column; align-items: start; }
+  }
+
+  @media print {
+    .topbar,
+    .hero-actions,
+    .sheet-actions,
+    .orientation-shell { display: none !important; }
+    body { background: white; color: black; }
+    .hero,
+    .panel,
+    .summary-card,
+    .sheet-card { box-shadow: none; background: white; border-color: #bbb; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    *, *::before, *::after { transition: none !important; animation: none !important; }
+  }
+</style>
+</head>
+<body>
+  <div class="orientation-shell" id="orientation-shell" aria-hidden="true">
+    <div class="orientation-dialog" role="dialog" aria-modal="true" aria-labelledby="orientation-title" aria-describedby="orientation-body">
+      <div class="orientation-kicker">First Visit Orientation</div>
+      <div class="orientation-counter" id="orientation-counter">Step 1 of 4</div>
+      <h2 class="orientation-title" id="orientation-title">Welcome to the Character Sheet</h2>
+      <div class="orientation-body" id="orientation-body"></div>
+      <div class="orientation-dots" id="orientation-dots" aria-label="Orientation steps"></div>
+      <div class="orientation-actions">
+        <button class="orientation-btn" id="orientation-back" type="button">&#8592; Back</button>
+        <button class="orientation-btn primary" id="orientation-next" type="button">Next &#8594;</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="page">
+    <div class="shell">
+      <div class="topbar">
+        <a class="nav-chip" href="../index.html">&#8592; All Game Worlds</a>
+        <a class="nav-chip" href="index.html">Daggerheart Primer</a>
+        <a class="nav-chip" href="classes.html">Class Archive</a>
+        <a class="nav-chip" href="void-options.html">Void Options</a>
+      </div>
+
+      <header class="hero reveal">
+        <section>
+          <div class="eyebrow">Playable Draft Sheet</div>
+          <h1><span>Daggerheart</span>Character Sheet</h1>
+          <p class="lede">This sheet reads your Daggerheart primer worksheet, supports the core classes plus Witch and Assassin, and saves locally so a player can move from concept to a usable draft without leaving the site.</p>
+          <div class="hero-actions">
+            <button class="action-btn primary" id="import-primer" type="button">Import Primer Notes</button>
+            <button class="action-btn" id="open-orientation" type="button">⊞ Orientation</button>
+            <button class="action-btn" id="export-sheet" type="button">Export JSON</button>
+            <button class="action-btn" id="clear-sheet" type="button">Clear Sheet</button>
+          </div>
+          <div class="status-line">
+            <span class="status-dot"></span>
+            <span class="save-note" id="save-note">Autosaves locally in this browser.</span>
+          </div>
+        </section>
+        <aside class="hero-side">
+          <div class="stat-grid">
+            <div class="stat-card"><span>Supported classes</span><strong>Core + Void</strong></div>
+            <div class="stat-card"><span>Primer handoff</span><strong>Automatic</strong></div>
+            <div class="stat-card"><span>Save mode</span><strong>Local browser</strong></div>
+            <div class="stat-card"><span>Best use</span><strong>First playable draft</strong></div>
+          </div>
+          <div class="summary-card">
+            <span class="tiny-label">Imported worksheet</span>
+            <strong id="worksheet-status">Waiting for primer notes</strong>
+            <p>This page will pull concept, class guess, frame fit, drives, and party ties from the primer worksheet whenever they exist.</p>
+          </div>
+        </aside>
+      </header>
+
+      <main class="layout">
+        <section class="panel reveal">
+          <div class="section-head">
+            <div class="section-copy">
+              <p class="section-label">Identity</p>
+              <h2>Start with who this character is</h2>
+            </div>
+          </div>
+          <div class="field-grid three">
+            <div class="field">
+              <label for="character-name">Character name</label>
+              <input id="character-name" name="characterName" type="text" placeholder="Name your character">
+            </div>
+            <div class="field">
+              <label for="character-pronouns">Pronouns</label>
+              <input id="character-pronouns" name="pronouns" type="text" placeholder="they/them">
+            </div>
+            <div class="field">
+              <label for="player-name">Player</label>
+              <input id="player-name" name="playerName" type="text" placeholder="Player name">
+            </div>
+            <div class="field full">
+              <label for="character-concept">One-line concept</label>
+              <input id="character-concept" name="concept" type="text" placeholder="A haunted sky-knight who still answers impossible vows">
+            </div>
+            <div class="field full">
+              <label for="character-look">Look and immediate vibe</label>
+              <textarea id="character-look" name="look" placeholder="How do they read at first glance? Armor, scars, rituals, symbols, posture, energy."></textarea>
+            </div>
+          </div>
+        </section>
+
+        <section class="panel reveal">
+          <div class="section-head">
+            <div class="section-copy">
+              <p class="section-label">Build</p>
+              <h2>Choose your class lane, lineage, and campaign fit</h2>
+            </div>
+          </div>
+          <div class="section-grid">
+            <div class="sheet-card">
+              <div class="field-grid">
+                <div class="field">
+                  <label for="character-class">Class</label>
+                  <select id="character-class" name="className"></select>
+                </div>
+                <div class="field">
+                  <label for="character-subclass">Subclass or path</label>
+                  <input id="character-subclass" name="subclass" type="text" placeholder="Optional draft note">
+                </div>
+                <div class="field">
+                  <label for="character-ancestry">Ancestry</label>
+                  <input id="character-ancestry" name="ancestry" type="text" placeholder="Core or Heritage option">
+                </div>
+                <div class="field">
+                  <label for="character-community">Community</label>
+                  <input id="character-community" name="community" type="text" placeholder="Where were they formed?">
+                </div>
+                <div class="field">
+                  <label for="character-frame">Campaign frame fit</label>
+                  <input id="character-frame" name="frame" type="text" placeholder="Five Banners Burning">
+                </div>
+                <div class="field">
+                  <label for="character-domains">Domains or vibe</label>
+                  <input id="character-domains" name="domains" type="text" placeholder="Valor + Splendor">
+                </div>
+              </div>
+              <div class="helper">
+                <span class="helper-label">Class summary</span>
+                <h3 id="class-summary-title">Guardian</h3>
+                <p id="class-summary-body">Protector-focused frontline anchor that holds pressure off the party.</p>
+                <div class="pill-row" id="class-summary-pills"></div>
+              </div>
+            </div>
+            <aside class="sheet-card">
+              <span class="helper-label">Core and Void support</span>
+              <h3>What this sheet handles</h3>
+              <ul>
+                <li>All nine core classes.</li>
+                <li>Void class support for Witch and Assassin.</li>
+                <li>Core ancestry/community plus Heritage-ready notes.</li>
+                <li>Transformation tracking as a campaign note rather than hidden content.</li>
+              </ul>
+              <div class="sheet-actions">
+                <a class="action-btn" href="classes.html">Compare classes</a>
+                <a class="action-btn" href="void-options.html">Review Void options</a>
+              </div>
+            </aside>
+          </div>
+        </section>
+
+        <section class="panel reveal">
+          <div class="section-head">
+            <div class="section-copy">
+              <p class="section-label">Combat Profile</p>
+              <h2>Track the essentials for a first usable sheet</h2>
+            </div>
+          </div>
+          <div class="summary-grid">
+            <div class="summary-card">
+              <span class="tiny-label">Evasion</span>
+              <strong id="summary-evasion">9</strong>
+              <p id="summary-evasion-note">Starter value from selected class when available.</p>
+            </div>
+            <div class="summary-card">
+              <span class="tiny-label">Hit Points</span>
+              <strong id="summary-hp">7</strong>
+              <p id="summary-hp-note">Starter value from selected class when available.</p>
+            </div>
+            <div class="summary-card">
+              <span class="tiny-label">Stress</span>
+              <strong id="summary-stress">Manual</strong>
+              <p>Track this with your table or class packet.</p>
+            </div>
+            <div class="summary-card">
+              <span class="tiny-label">Source</span>
+              <strong id="summary-source">Core</strong>
+              <p id="summary-source-note">Void options stay supported here too.</p>
+            </div>
+          </div>
+          <div class="field-grid three" style="margin-top: 1rem;">
+            <div class="field">
+              <label for="manual-evasion">Manual Evasion override</label>
+              <input id="manual-evasion" name="manualEvasion" type="number" min="0" step="1" placeholder="Optional">
+            </div>
+            <div class="field">
+              <label for="manual-hp">Manual HP override</label>
+              <input id="manual-hp" name="manualHp" type="number" min="0" step="1" placeholder="Optional">
+            </div>
+            <div class="field">
+              <label for="manual-proficiency">Proficiency or notes</label>
+              <input id="manual-proficiency" name="proficiency" type="text" placeholder="Track manually if needed">
+            </div>
+          </div>
+        </section>
+
+        <section class="panel reveal">
+          <div class="section-head">
+            <div class="section-copy">
+              <p class="section-label">Story Hooks</p>
+              <h2>Bring over the primer notes that make the character playable</h2>
+            </div>
+          </div>
+          <div class="field-grid">
+            <div class="field full">
+              <label for="character-drive">What do they want?</label>
+              <textarea id="character-drive" name="drive" placeholder="What promise, obsession, grief, or duty drives them forward?"></textarea>
+            </div>
+            <div class="field full">
+              <label for="character-connection">Why do they stay with the party?</label>
+              <textarea id="character-connection" name="connection" placeholder="Who do they trust, who worries them, and what keeps them bound to the group?"></textarea>
+            </div>
+            <div class="field full">
+              <label for="character-experiences">Experiences, gear hooks, and standout details</label>
+              <textarea id="character-experiences" name="experiences" placeholder="Record gear ideas, experiences, card concepts, and any transformations or Heritage notes here."></textarea>
+            </div>
+            <div class="field full">
+              <label for="character-notes">Open notes</label>
+              <textarea id="character-notes" name="notes" placeholder="Session-zero agreements, transformation flags, ancestry questions, or anything else worth carrying forward."></textarea>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <footer class="footer">
+        <p>This is a player-facing draft sheet designed to bridge the Daggerheart primer into actual character prep. It saves locally, supports core and Void class decisions, and is meant to be refined at the table rather than replace your full rules text.</p>
+      </footer>
+    </div>
+  </div>
+
+  <script>
+    const PRIMER_WORKSHEET_KEY = 'daggerheartPrimerWorksheet';
+    const SHEET_STORAGE_KEY = 'daggerheartCharacterSheet';
+    const SHEET_ORIENTATION_KEY = 'daggerheartSheetOrientationSeen';
+
+    const CLASS_DATA = {
+      Bard: {
+        source: 'Core',
+        evasion: 10,
+        hp: 5,
+        domains: 'Grace + Codex',
+        summary: 'Social engine and support controller with strong momentum shaping.'
+      },
+      Druid: {
+        source: 'Core',
+        evasion: 10,
+        hp: 6,
+        domains: 'Sage + Arcana',
+        summary: 'Primal caster with adaptable forms, elemental identity, and wilderness weight.'
+      },
+      Guardian: {
+        source: 'Core',
+        evasion: 9,
+        hp: 7,
+        domains: 'Valor + Blade',
+        summary: 'Frontline protector built to absorb pressure and defend the party.'
+      },
+      Ranger: {
+        source: 'Core',
+        evasion: 12,
+        hp: 6,
+        domains: 'Bone + Sage',
+        summary: 'Hunter-controller with mobility, pursuit instincts, and terrain leverage.'
+      },
+      Rogue: {
+        source: 'Core',
+        evasion: 12,
+        hp: 6,
+        domains: 'Midnight + Grace',
+        summary: 'Precision infiltrator who thrives on angles, leverage, and sudden payoff.'
+      },
+      Seraph: {
+        source: 'Core',
+        evasion: 9,
+        hp: 7,
+        domains: 'Splendor + Valor',
+        summary: 'Holy bulwark with rescue energy, courage, and visible devotion.'
+      },
+      Sorcerer: {
+        source: 'Core',
+        evasion: 10,
+        hp: 6,
+        domains: 'Arcana + Midnight',
+        summary: 'Innate arcane striker with volatile power and dramatic magical expression.'
+      },
+      Warrior: {
+        source: 'Core',
+        evasion: 11,
+        hp: 6,
+        domains: 'Blade + Bone',
+        summary: 'Weapon-first fighter with reliable pressure and straightforward mastery.'
+      },
+      Wizard: {
+        source: 'Core',
+        evasion: 11,
+        hp: 5,
+        domains: 'Codex + Splendor',
+        summary: 'Prepared utility caster with studied power and elegant problem-solving.'
+      },
+      Witch: {
+        source: 'Void',
+        evasion: null,
+        hp: null,
+        domains: 'Use the Void packet and table agreement',
+        summary: 'Occult caster focused on charms, hexes, communion, and uncanny bargains.'
+      },
+      Assassin: {
+        source: 'Void',
+        evasion: null,
+        hp: null,
+        domains: 'Use the Void packet and table agreement',
+        summary: 'Lethal infiltrator built for marked targets, stealth pressure, and extraction play.'
+      }
+    };
+
+    const ORIENTATION_STEPS = [
+      {
+        title: 'Welcome to the Character Sheet',
+        body: [
+          'This sheet is the handoff point from the Daggerheart primer into actual character prep.',
+          'It reads your worksheet, supports both core and Void class options, and saves locally in your browser.'
+        ]
+      },
+      {
+        title: 'Import primer notes first',
+        body: [
+          'Use Import Primer Notes to pull in your concept, likely class, frame fit, drives, and party ties from the primer.',
+          'That keeps your character identity continuous instead of rebuilding it from scratch.'
+        ]
+      },
+      {
+        title: 'Core and Void both work here',
+        body: [
+          'The class menu includes all nine core classes plus Witch and Assassin.',
+          'Core classes auto-suggest starter Evasion and Hit Points from the primer archive; Void classes remain editable so you can set values from the relevant packet and table agreement.'
+        ]
+      },
+      {
+        title: 'This is a playable draft, not a locked final sheet',
+        body: [
+          'Use this page to get to a strong first-session version quickly, then refine anything your table wants to finalize from the full rules text.',
+          'Reopen Orientation any time from the hero bar if you need the short version again.'
+        ]
+      }
+    ];
+
+    const classSelect = document.getElementById('character-class');
+    const summaryTitle = document.getElementById('class-summary-title');
+    const summaryBody = document.getElementById('class-summary-body');
+    const summaryPills = document.getElementById('class-summary-pills');
+    const summaryEvasion = document.getElementById('summary-evasion');
+    const summaryHp = document.getElementById('summary-hp');
+    const summaryEvasionNote = document.getElementById('summary-evasion-note');
+    const summaryHpNote = document.getElementById('summary-hp-note');
+    const summarySource = document.getElementById('summary-source');
+    const summarySourceNote = document.getElementById('summary-source-note');
+    const worksheetStatus = document.getElementById('worksheet-status');
+    const saveNote = document.getElementById('save-note');
+    const importPrimerButton = document.getElementById('import-primer');
+    const exportSheetButton = document.getElementById('export-sheet');
+    const clearSheetButton = document.getElementById('clear-sheet');
+    const openOrientationButton = document.getElementById('open-orientation');
+    const orientationShell = document.getElementById('orientation-shell');
+    const orientationTitle = document.getElementById('orientation-title');
+    const orientationCounter = document.getElementById('orientation-counter');
+    const orientationBody = document.getElementById('orientation-body');
+    const orientationDots = document.getElementById('orientation-dots');
+    const orientationBack = document.getElementById('orientation-back');
+    const orientationNext = document.getElementById('orientation-next');
+    const manualEvasion = document.getElementById('manual-evasion');
+    const manualHp = document.getElementById('manual-hp');
+    const sheetFields = Array.from(document.querySelectorAll('input[name], select[name], textarea[name]'));
+    let orientationStep = 0;
+
+    function populateClassSelect() {
+      const names = Object.keys(CLASS_DATA);
+      classSelect.innerHTML = names.map((name) => `<option value="${name}">${name}</option>`).join('');
+    }
+
+    function renderClassSummary() {
+      const className = classSelect.value || 'Guardian';
+      const classData = CLASS_DATA[className];
+      summaryTitle.textContent = className;
+      summaryBody.textContent = classData.summary;
+      summaryPills.innerHTML = `
+        <span class="pill ${classData.source === 'Void' ? 'void' : 'core'}">${classData.source}</span>
+        <span class="pill">${classData.domains}</span>
+      `;
+
+      const evasionValue = manualEvasion.value ? Number(manualEvasion.value) : classData.evasion;
+      const hpValue = manualHp.value ? Number(manualHp.value) : classData.hp;
+
+      if (Number.isFinite(evasionValue)) {
+        summaryEvasion.textContent = String(evasionValue);
+        summaryEvasionNote.textContent = manualEvasion.value ? 'Manual override in effect.' : 'Starter value from selected class.';
+      } else {
+        summaryEvasion.textContent = 'Table set';
+        summaryEvasionNote.textContent = 'Void option: confirm with the relevant packet and your table.';
+      }
+
+      if (Number.isFinite(hpValue)) {
+        summaryHp.textContent = String(hpValue);
+        summaryHpNote.textContent = manualHp.value ? 'Manual override in effect.' : 'Starter value from selected class.';
+      } else {
+        summaryHp.textContent = 'Table set';
+        summaryHpNote.textContent = 'Void option: confirm with the relevant packet and your table.';
+      }
+
+      summarySource.textContent = classData.source;
+      summarySourceNote.textContent = classData.source === 'Void'
+        ? 'This choice comes from the Void material and may need table confirmation.'
+        : 'This choice uses the core primer reference values.';
+    }
+
+    function gatherSheetData() {
+      const payload = {};
+      sheetFields.forEach((field) => {
+        payload[field.name] = field.value;
+      });
+      return payload;
+    }
+
+    function saveSheetData() {
+      try {
+        localStorage.setItem(SHEET_STORAGE_KEY, JSON.stringify(gatherSheetData()));
+        saveNote.textContent = `Autosaved locally at ${new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}.`;
+      } catch (_) {
+        saveNote.textContent = 'Could not save locally in this browser.';
+      }
+    }
+
+    function loadSheetData() {
+      try {
+        const raw = localStorage.getItem(SHEET_STORAGE_KEY);
+        if (!raw) return false;
+        const parsed = JSON.parse(raw);
+        sheetFields.forEach((field) => {
+          field.value = parsed[field.name] || '';
+        });
+        return true;
+      } catch (_) {
+        // Ignore corrupt storage.
+        return false;
+      }
+    }
+
+    function importPrimerData(force = false) {
+      try {
+        const raw = localStorage.getItem(PRIMER_WORKSHEET_KEY);
+        if (!raw) {
+          worksheetStatus.textContent = 'No primer worksheet found yet';
+          return;
+        }
+        const primer = JSON.parse(raw);
+
+        const conceptField = document.getElementById('character-concept');
+        const classField = document.getElementById('character-class');
+        const domainsField = document.getElementById('character-domains');
+        const frameField = document.getElementById('character-frame');
+        const driveField = document.getElementById('character-drive');
+        const connectionField = document.getElementById('character-connection');
+
+        if (primer.concept && (force || !conceptField.value)) conceptField.value = primer.concept;
+        if (primer.class && (force || !classField.value)) classField.value = normalizeClassName(primer.class);
+        if (primer.domains && (force || !domainsField.value)) domainsField.value = primer.domains;
+        if (primer.frame && (force || !frameField.value)) frameField.value = primer.frame;
+        if (primer.drive && (force || !driveField.value)) driveField.value = primer.drive;
+        if (primer.connection && (force || !connectionField.value)) connectionField.value = primer.connection;
+
+        worksheetStatus.textContent = force ? 'Primer worksheet imported' : 'Primer worksheet linked';
+        renderClassSummary();
+        saveSheetData();
+      } catch (_) {
+        worksheetStatus.textContent = 'Primer worksheet could not be imported';
+      }
+    }
+
+    function normalizeClassName(value) {
+      if (!value) return classSelect.value;
+      const lower = value.toLowerCase();
+      const match = Object.keys(CLASS_DATA).find((name) => lower.includes(name.toLowerCase()));
+      return match || classSelect.value;
+    }
+
+    function clearSheet() {
+      sheetFields.forEach((field) => {
+        field.value = '';
+      });
+      classSelect.value = 'Guardian';
+      worksheetStatus.textContent = 'Sheet cleared';
+      try {
+        localStorage.removeItem(SHEET_STORAGE_KEY);
+      } catch (_) {
+        // Ignore storage failures.
+      }
+      renderClassSummary();
+    }
+
+    function exportSheet() {
+      const blob = new Blob([JSON.stringify(gatherSheetData(), null, 2)], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = 'daggerheart-character-sheet.json';
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      URL.revokeObjectURL(url);
+    }
+
+    function renderOrientation() {
+      const stepData = ORIENTATION_STEPS[orientationStep];
+      orientationTitle.textContent = stepData.title;
+      orientationCounter.textContent = `Step ${orientationStep + 1} of ${ORIENTATION_STEPS.length}`;
+      orientationBody.innerHTML = stepData.body.map((paragraph) => `<p>${paragraph}</p>`).join('');
+      orientationDots.innerHTML = ORIENTATION_STEPS.map((_, index) => `
+        <button class="orientation-dot${index === orientationStep ? ' is-active' : ''}" type="button" aria-label="Go to orientation step ${index + 1}" data-step="${index}"></button>
+      `).join('');
+      orientationBack.style.display = orientationStep === 0 ? 'none' : 'inline-flex';
+      orientationNext.textContent = orientationStep === ORIENTATION_STEPS.length - 1 ? 'Begin \u2192' : 'Next \u2192';
+    }
+
+    function openOrientation(resetStep = false) {
+      if (resetStep) orientationStep = 0;
+      renderOrientation();
+      orientationShell.classList.add('is-open');
+      orientationShell.setAttribute('aria-hidden', 'false');
+    }
+
+    function closeOrientation(markSeen = true) {
+      orientationShell.classList.remove('is-open');
+      orientationShell.setAttribute('aria-hidden', 'true');
+      if (markSeen) {
+        try {
+          localStorage.setItem(SHEET_ORIENTATION_KEY, '1');
+        } catch (_) {
+          // Ignore storage failures.
+        }
+      }
+    }
+
+    populateClassSelect();
+    const hasSavedSheet = loadSheetData();
+    if (!classSelect.value) classSelect.value = 'Guardian';
+    renderClassSummary();
+    importPrimerData(!hasSavedSheet);
+
+    sheetFields.forEach((field) => {
+      field.addEventListener('input', () => {
+        if (field === classSelect || field === manualEvasion || field === manualHp) {
+          renderClassSummary();
+        }
+        saveSheetData();
+      });
+      field.addEventListener('change', () => {
+        if (field === classSelect || field === manualEvasion || field === manualHp) {
+          renderClassSummary();
+        }
+        saveSheetData();
+      });
+    });
+
+    importPrimerButton.addEventListener('click', () => importPrimerData(true));
+    exportSheetButton.addEventListener('click', exportSheet);
+    clearSheetButton.addEventListener('click', clearSheet);
+    openOrientationButton.addEventListener('click', () => openOrientation(true));
+
+    orientationBack.addEventListener('click', () => {
+      if (orientationStep === 0) return;
+      orientationStep -= 1;
+      renderOrientation();
+    });
+
+    orientationNext.addEventListener('click', () => {
+      if (orientationStep < ORIENTATION_STEPS.length - 1) {
+        orientationStep += 1;
+        renderOrientation();
+        return;
+      }
+      closeOrientation(true);
+    });
+
+    orientationDots.addEventListener('click', (event) => {
+      const button = event.target.closest('[data-step]');
+      if (!button) return;
+      orientationStep = Number(button.dataset.step);
+      renderOrientation();
+    });
+
+    orientationShell.addEventListener('click', (event) => {
+      if (event.target === orientationShell) closeOrientation(true);
+    });
+
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape' && orientationShell.classList.contains('is-open')) {
+        closeOrientation(true);
+      }
+    });
+
+    try {
+      const hasSeenOrientation = localStorage.getItem(SHEET_ORIENTATION_KEY) === '1';
+      if (!hasSeenOrientation) openOrientation(true);
+    } catch (_) {
+      openOrientation(true);
+    }
+
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        entry.target.classList.add('is-visible');
+        revealObserver.unobserve(entry.target);
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
+
+    document.querySelectorAll('.reveal').forEach((element) => revealObserver.observe(element));
+  </script>
+</body>
+</html>

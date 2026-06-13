@@ -1,0 +1,780 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Daggerheart Void Options</title>
+<meta name="description" content="A player-facing Daggerheart Void options guide covering Witch, Assassin, Heritage options, and Transformations as live character-building choices.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Manrope:wght@400;500;600;700;800&family=Sora:wght@500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; }
+  :root {
+    --bg: #06070c;
+    --panel: rgba(18, 22, 34, 0.82);
+    --line: rgba(255, 255, 255, 0.1);
+    --line-strong: rgba(255, 255, 255, 0.18);
+    --text: #f5efe4;
+    --text-soft: #cbc3b4;
+    --text-dim: #958d81;
+    --hope: #f0c56b;
+    --fear: #d96f59;
+    --shadow: 0 28px 72px rgba(0, 0, 0, 0.45);
+    --font-display: 'Sora', 'Manrope', system-ui, sans-serif;
+    --font-body: 'Manrope', system-ui, sans-serif;
+    --font-serif: 'Cinzel', Georgia, serif;
+    --radius-xl: 28px;
+    --radius-lg: 22px;
+    --radius-md: 16px;
+    --radius-sm: 999px;
+    --max: 1220px;
+  }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    min-height: 100vh;
+    color: var(--text);
+    font-family: var(--font-body);
+    line-height: 1.6;
+    background:
+      radial-gradient(circle at 12% 10%, rgba(142, 114, 217, 0.18), transparent 30%),
+      radial-gradient(circle at 84% 18%, rgba(217, 111, 89, 0.16), transparent 28%),
+      radial-gradient(circle at 52% 100%, rgba(240, 197, 107, 0.12), transparent 38%),
+      linear-gradient(180deg, #060912 0%, #0a0d15 40%, #05070c 100%);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+  body::before,
+  body::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+  }
+  body::before {
+    background-image:
+      radial-gradient(circle, rgba(255,255,255,0.24) 1px, transparent 1px),
+      radial-gradient(circle, rgba(255,255,255,0.1) 1px, transparent 1px);
+    background-size: 220px 220px, 360px 360px;
+    background-position: 0 0, 60px 90px;
+    opacity: 0.18;
+  }
+  body::after {
+    background: linear-gradient(110deg, transparent 0%, rgba(255,255,255,0.03) 46%, transparent 100%);
+    mask: linear-gradient(180deg, transparent, black 12%, black 88%, transparent);
+    opacity: 0.48;
+  }
+  a { color: inherit; }
+  .page { position: relative; z-index: 1; }
+  .shell { width: min(calc(100% - 2rem), var(--max)); margin: 0 auto; }
+  .topbar {
+    position: sticky;
+    top: 0.9rem;
+    z-index: 20;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    padding-top: 1rem;
+  }
+  .top-link,
+  .nav-link,
+  .cta-link,
+  .hero-button,
+  .orientation-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.72rem 1rem;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--line);
+    text-decoration: none;
+    color: var(--text-soft);
+    background: rgba(9, 12, 20, 0.84);
+    backdrop-filter: blur(12px);
+    font: inherit;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: transform 0.22s ease, border-color 0.22s ease, color 0.22s ease, background 0.22s ease;
+  }
+  .top-link:hover,
+  .top-link:focus-visible,
+  .nav-link:hover,
+  .nav-link:focus-visible,
+  .nav-link.is-active,
+  .cta-link:hover,
+  .cta-link:focus-visible,
+  .hero-button:hover,
+  .hero-button:focus-visible,
+  .orientation-button:hover,
+  .orientation-button:focus-visible {
+    color: var(--text);
+    border-color: rgba(240, 197, 107, 0.34);
+    background: rgba(240, 197, 107, 0.1);
+    outline: none;
+    transform: translateY(-1px);
+  }
+  .cta-link.primary,
+  .orientation-button.primary {
+    color: var(--bg);
+    background: linear-gradient(135deg, var(--hope), #ffdd9f);
+    border-color: transparent;
+  }
+  .cta-link.primary:hover,
+  .cta-link.primary:focus-visible,
+  .orientation-button.primary:hover,
+  .orientation-button.primary:focus-visible {
+    color: var(--bg);
+    background: linear-gradient(135deg, #ffd58c, #ffe7c2);
+  }
+  .hero {
+    display: grid;
+    grid-template-columns: minmax(0, 1.3fr) minmax(280px, 0.82fr);
+    gap: 1.35rem;
+    padding: 2rem 0 1.3rem;
+  }
+  .hero-main,
+  .hero-side,
+  .section,
+  .nav-panel,
+  .cta-panel {
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-xl);
+    backdrop-filter: blur(16px);
+    box-shadow: var(--shadow);
+  }
+  .hero-main {
+    position: relative;
+    overflow: hidden;
+    padding: 2.35rem;
+    background:
+      radial-gradient(circle at top left, rgba(142, 114, 217, 0.24), transparent 30%),
+      radial-gradient(circle at 84% 15%, rgba(217, 111, 89, 0.16), transparent 24%),
+      linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0));
+  }
+  .hero-main::after {
+    content: "";
+    position: absolute;
+    inset: auto -8% -22% 25%;
+    height: 290px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(240, 197, 107, 0.18), transparent 68%);
+    filter: blur(20px);
+  }
+  h1, h2, h3, strong { font-family: var(--font-display); }
+  .eyebrow,
+  .section-label,
+  .card-kicker,
+  .tiny-label,
+  .tag,
+  .orientation-kicker,
+  .orientation-counter {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    color: var(--text-dim);
+    font-size: 0.73rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+  .eyebrow {
+    padding: 0.45rem 0.82rem;
+    border-radius: var(--radius-sm);
+    background: rgba(255,255,255,0.06);
+    border: 1px solid var(--line);
+    color: var(--hope);
+  }
+  .hero h1 {
+    margin: 1rem 0 0.8rem;
+    font-size: clamp(2.6rem, 5vw, 4.8rem);
+    line-height: 0.96;
+    letter-spacing: -0.045em;
+  }
+  .hero h1 span {
+    display: block;
+    margin-bottom: 0.52rem;
+    color: var(--hope);
+    font-family: var(--font-serif);
+    font-size: 0.42em;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+  .lede,
+  .hero-side p,
+  .section-copy,
+  .option-card p,
+  .guide-card p,
+  .note,
+  .cta-panel p,
+  .orientation-body {
+    color: var(--text-soft);
+  }
+  .lede { max-width: 58ch; margin: 0; font-size: 1.05rem; }
+  .hero-actions,
+  .nav-list,
+  .chip-row,
+  .orientation-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.7rem;
+  }
+  .hero-actions { margin-top: 1.35rem; }
+  .orientation-actions { justify-content: flex-end; }
+  .hero-side {
+    padding: 1.45rem;
+    display: grid;
+    gap: 1rem;
+    align-content: start;
+  }
+  .stat-grid,
+  .option-grid,
+  .guide-grid,
+  .feature-grid {
+    display: grid;
+    gap: 1rem;
+  }
+  .stat-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .option-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .guide-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .feature-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .stat-card,
+  .option-card,
+  .guide-card,
+  .feature-card,
+  .note,
+  .cta-panel {
+    border-radius: var(--radius-lg);
+    border: 1px solid rgba(255,255,255,0.08);
+    background: rgba(255,255,255,0.04);
+  }
+  .stat-card,
+  .option-card,
+  .guide-card,
+  .feature-card,
+  .note { padding: 1rem; }
+  .stat-card span,
+  .pill,
+  .tag {
+    font-size: 0.76rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+  .stat-card span { display: block; color: var(--text-dim); margin-bottom: 0.35rem; }
+  .stat-card strong { display: block; font-size: 1.2rem; }
+  .pill-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 1rem;
+  }
+  .pill,
+  .tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.48rem 0.72rem;
+    border-radius: var(--radius-sm);
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.08);
+    color: var(--text-soft);
+  }
+  .nav-panel,
+  .section,
+  .cta-panel { padding: 1.25rem; }
+  .nav-panel {
+    position: sticky;
+    top: 5rem;
+    margin-bottom: 1.2rem;
+  }
+  .nav-title {
+    margin: 0 0 0.85rem;
+    color: var(--text-dim);
+    font-size: 0.73rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+  .layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 1.2rem;
+    padding-bottom: 4rem;
+  }
+  .section-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
+    gap: 1rem;
+    margin-bottom: 1rem;
+  }
+  .section h2 {
+    margin: 0.15rem 0 0;
+    font-size: clamp(1.4rem, 3vw, 2rem);
+    letter-spacing: -0.03em;
+  }
+  .option-card,
+  .guide-card,
+  .feature-card {
+    transition: transform 0.24s ease, border-color 0.24s ease, background 0.24s ease, box-shadow 0.24s ease;
+  }
+  .option-card:hover,
+  .guide-card:hover,
+  .feature-card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(240, 197, 107, 0.22);
+    background: rgba(255,255,255,0.055);
+    box-shadow: 0 18px 36px rgba(0, 0, 0, 0.22);
+  }
+  .option-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: start;
+    gap: 0.8rem;
+    margin-bottom: 0.75rem;
+  }
+  .option-card h3,
+  .guide-card h3,
+  .feature-card h3 { margin: 0; font-size: 1.02rem; }
+  .card-list {
+    margin: 0.85rem 0 0;
+    padding-left: 1.1rem;
+    color: var(--text-soft);
+  }
+  .card-list li + li { margin-top: 0.35rem; }
+  .section-note { margin-top: 1rem; }
+  .reveal {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.55s ease, transform 0.55s ease;
+  }
+  .reveal.is-visible { opacity: 1; transform: translateY(0); }
+  .cta-panel {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 1rem;
+    align-items: center;
+    background: linear-gradient(135deg, rgba(142, 114, 217, 0.14), rgba(240, 197, 107, 0.07));
+  }
+  .orientation-shell {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 1.25rem;
+    background: rgba(4, 5, 9, 0.86);
+    backdrop-filter: blur(10px);
+  }
+  .orientation-shell.is-open { display: flex; }
+  .orientation-dialog {
+    width: min(100%, 620px);
+    padding: 1.4rem;
+    border-radius: var(--radius-xl);
+    border: 1px solid var(--line-strong);
+    background:
+      radial-gradient(circle at top left, rgba(142, 114, 217, 0.24), transparent 34%),
+      radial-gradient(circle at 86% 18%, rgba(217, 111, 89, 0.14), transparent 28%),
+      rgba(12, 14, 22, 0.98);
+    box-shadow: 0 28px 80px rgba(0, 0, 0, 0.56);
+  }
+  .orientation-title {
+    margin: 0.55rem 0 0.35rem;
+    font-family: var(--font-display);
+    font-size: clamp(1.45rem, 4vw, 2rem);
+    letter-spacing: -0.035em;
+  }
+  .orientation-body { min-height: 8rem; }
+  .orientation-body p { margin: 0; }
+  .orientation-body p + p { margin-top: 0.8rem; }
+  .orientation-dots {
+    display: flex;
+    justify-content: center;
+    gap: 0.45rem;
+    margin: 1rem 0;
+  }
+  .orientation-dot {
+    width: 0.72rem;
+    height: 0.72rem;
+    border-radius: 50%;
+    border: 1px solid rgba(255,255,255,0.24);
+    background: transparent;
+    padding: 0;
+    cursor: pointer;
+  }
+  .orientation-dot.is-active { background: var(--hope); border-color: var(--hope); }
+  .footer { padding-bottom: 3rem; color: var(--text-dim); }
+  @media (max-width: 1080px) {
+    .hero,
+    .option-grid,
+    .guide-grid,
+    .feature-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .hero { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 760px) {
+    .option-grid,
+    .guide-grid,
+    .feature-grid,
+    .stat-grid,
+    .cta-panel { grid-template-columns: 1fr; }
+    .hero-main,
+    .hero-side,
+    .nav-panel,
+    .section,
+    .cta-panel { border-radius: 22px; }
+    .section-head,
+    .option-top { flex-direction: column; align-items: start; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    *, *::before, *::after { transition: none !important; animation: none !important; }
+  }
+</style>
+</head>
+<body>
+  <div class="orientation-shell" id="orientation-shell" aria-hidden="true">
+    <div class="orientation-dialog" role="dialog" aria-modal="true" aria-labelledby="orientation-title" aria-describedby="orientation-body">
+      <div class="orientation-kicker">First Visit Orientation</div>
+      <div class="orientation-counter" id="orientation-counter">Step 1 of 4</div>
+      <h2 class="orientation-title" id="orientation-title">Welcome to Void Options</h2>
+      <div class="orientation-body" id="orientation-body"></div>
+      <div class="orientation-dots" id="orientation-dots" aria-label="Orientation steps"></div>
+      <div class="orientation-actions">
+        <button class="orientation-button" id="orientation-back" type="button">&#8592; Back</button>
+        <button class="orientation-button primary" id="orientation-next" type="button">Next &#8594;</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="page">
+    <div class="shell">
+      <div class="topbar">
+        <a class="top-link" href="../index.html">&#8592; All Game Worlds</a>
+        <a class="top-link" href="index.html">Daggerheart Primer</a>
+        <a class="top-link" href="classes.html">Class Archive</a>
+        <a class="top-link" href="domains.html">Domain Atlas</a>
+        <a class="top-link" href="campaign-frames.html">Campaign Frames</a>
+      </div>
+
+      <header class="hero reveal" id="top">
+        <section class="hero-main" aria-labelledby="void-options-title">
+          <div class="eyebrow">Reference IV: Void Options</div>
+          <h1 id="void-options-title"><span>Daggerheart</span>Void Character Options</h1>
+          <p class="lede">
+            The Void material is not just a future add-on. It expands live player choice with new class directions,
+            supplemental lineage support, and high-impact character transformations. Use this page when your table wants
+            to treat Witch, Assassin, Heritage options, and Transformations as part of the actual character-building menu.
+          </p>
+          <div class="hero-actions">
+            <button class="hero-button" id="orientation-launch" type="button">⊞ Orientation</button>
+            <a class="cta-link primary" href="#void-class-options">Browse Void class options</a>
+            <a class="cta-link" href="#supplemental-options">See supplemental options</a>
+            <a class="cta-link" href="classes.html">Compare with core classes</a>
+          </div>
+        </section>
+
+        <aside class="hero-side reveal">
+          <p class="tiny-label">At a glance</p>
+          <div class="stat-grid">
+            <div class="stat-card"><span>Additional classes</span><strong>2</strong></div>
+            <div class="stat-card"><span>Supplemental lanes</span><strong>Heritage, Transformations</strong></div>
+            <div class="stat-card"><span>Best use</span><strong>Optional live content</strong></div>
+            <div class="stat-card"><span>Table check</span><strong>Session zero first</strong></div>
+          </div>
+          <div class="note">
+            <strong>Use with intent</strong>
+            <p>These options work best when the table agrees early whether Void material is fully open, selectively open, or reserved for specific campaign tones.</p>
+          </div>
+          <div class="pill-row" aria-label="Void option lenses">
+            <span class="pill">Occult atmosphere</span>
+            <span class="pill">Assassination pressure</span>
+            <span class="pill">Lineage expansion</span>
+            <span class="pill">Identity shifts</span>
+          </div>
+        </aside>
+      </header>
+
+      <nav class="nav-panel reveal" aria-label="Void options sections">
+        <p class="nav-title">Jump through the Void options</p>
+        <div class="nav-list" id="page-nav">
+          <a class="nav-link" href="#how-to-use">How to Use</a>
+          <a class="nav-link" href="#void-class-options">Void Classes</a>
+          <a class="nav-link" href="#supplemental-options">Supplemental Options</a>
+          <a class="nav-link" href="#table-guidance">Table Guidance</a>
+        </div>
+      </nav>
+
+      <main class="layout">
+        <section class="section reveal" id="how-to-use">
+          <div class="section-head">
+            <div>
+              <p class="section-label">1. How to Use</p>
+              <h2>Treat the Void material as an explicit campaign choice, not hidden bonus content</h2>
+            </div>
+          </div>
+          <div class="guide-grid">
+            <article class="guide-card">
+              <p class="card-kicker">If you want more occult texture</p>
+              <h3>Open Witch early</h3>
+              <p>Witch belongs on the same decision table as the core classes when your group wants charms, hexes, strange bargains, and communion-heavy play.</p>
+            </article>
+            <article class="guide-card">
+              <p class="card-kicker">If you want sharper lethality</p>
+              <h3>Open Assassin intentionally</h3>
+              <p>Assassin fits best when stealth, marked targets, extraction pressure, and violent precision suit the campaign rather than distorting it.</p>
+            </article>
+            <article class="guide-card">
+              <p class="card-kicker">If you want more identity variance</p>
+              <h3>Use Heritage and Transformations as live tools</h3>
+              <p>These options widen ancestry support and late-stage identity shifts, making them character-defining rather than optional trivia.</p>
+            </article>
+          </div>
+        </section>
+
+        <section class="section reveal" id="void-class-options">
+          <div class="section-head">
+            <div>
+              <p class="section-label">2. Void Classes</p>
+              <h2>Witch and Assassin belong in the class conversation when the table allows Void content</h2>
+            </div>
+          </div>
+          <div class="option-grid">
+            <article class="option-card">
+              <div class="option-top"><h3>Witch</h3><span class="tag">The Void class</span></div>
+              <p>The Witch is built for players who want occult atmosphere, charms, hexes, communion, and the feeling that power comes with intimacy and risk.</p>
+              <ul class="card-list">
+                <li>Best for players who want personal magic to feel ritual, uncanny, and relational.</li>
+                <li>Strong fit for darker, stranger, or more folkloric campaign tones.</li>
+                <li>Often appeals to players who are deciding between Bard, Druid, and Sorcerer but want something more haunted or covenant-shaped.</li>
+              </ul>
+            </article>
+            <article class="option-card">
+              <div class="option-top"><h3>Assassin</h3><span class="tag">The Void class</span></div>
+              <p>The Assassin focuses on stealth, marked targets, extraction, and lethal precision. It is the option for players who want sharper mission pressure than a generalist Rogue implies.</p>
+              <ul class="card-list">
+                <li>Best for players who want hit-and-fade pressure, pursuit payoff, and target-focused scenes.</li>
+                <li>Strong fit for intrigue, covert operations, vendettas, and campaigns where timing matters.</li>
+                <li>Often appeals to players choosing between Rogue and Ranger who want a more explicitly lethal identity.</li>
+              </ul>
+            </article>
+          </div>
+          <div class="note section-note">
+            <strong>Practical build advice</strong>
+            <p>If Void classes are open, players should compare Witch against the game’s other occult or primal casters, and Assassin against the stealth-forward core options, before locking a concept. That keeps the choice grounded in scene feel instead of novelty alone.</p>
+          </div>
+        </section>
+
+        <section class="section reveal" id="supplemental-options">
+          <div class="section-head">
+            <div>
+              <p class="section-label">3. Supplemental Options</p>
+              <h2>Heritage and Transformations widen who a character can become</h2>
+            </div>
+          </div>
+          <div class="feature-grid">
+            <article class="feature-card">
+              <p class="card-kicker">Supplemental ancestry support</p>
+              <h3>Heritage</h3>
+              <p>Heritage options expand the ancestry and community space available to players. They matter most when your table wants a wider menu of lineage identity than the base core assumptions provide.</p>
+            </article>
+            <article class="feature-card">
+              <p class="card-kicker">Narrative identity shift</p>
+              <h3>Transformations</h3>
+              <p>Transformations are high-impact upgrades that come with both upside and cost. They are best treated as meaningful identity events rather than casual bonus pick-ups.</p>
+            </article>
+          </div>
+          <div class="note section-note">
+            <strong>When to surface these</strong>
+            <p>Bring Heritage into session zero when lineage breadth matters up front. Bring Transformations into campaign planning when the table is interested in irreversible or identity-shifting developments during play.</p>
+          </div>
+        </section>
+
+        <section class="section reveal" id="table-guidance">
+          <div class="section-head">
+            <div>
+              <p class="section-label">4. Table Guidance</p>
+              <h2>Decide how open the Void menu is before character creation starts</h2>
+            </div>
+          </div>
+          <div class="guide-grid">
+            <article class="guide-card">
+              <p class="card-kicker">Open by default</p>
+              <h3>Use all options as live player content</h3>
+              <p>Best for tables already committed to wider tonal range and more expansive build diversity.</p>
+            </article>
+            <article class="guide-card">
+              <p class="card-kicker">Selective open</p>
+              <h3>Approve by campaign tone</h3>
+              <p>Best when Witch, Assassin, or Transformations fit some campaign frames strongly but feel out of place in others.</p>
+            </article>
+            <article class="guide-card">
+              <p class="card-kicker">Delayed unlock</p>
+              <h3>Reserve some material for discovery</h3>
+              <p>Best when Transformations or certain Void-flavored heritage pieces are meant to arrive through play rather than at character creation.</p>
+            </article>
+          </div>
+        </section>
+
+        <section class="cta-panel reveal" aria-labelledby="next-reference-title">
+          <div>
+            <p class="section-label">Continue the archive</p>
+            <h2 id="next-reference-title">Once Void material is in scope, compare it directly against the core classes and your campaign frame before making a final build.</h2>
+            <p>Use the Class Archive to compare Witch and Assassin against the core lineup, then return to the Primer if you want the quicker first-character runway.</p>
+          </div>
+          <div class="chip-row">
+            <a class="cta-link primary" href="classes.html">Open Class Archive</a>
+            <a class="cta-link" href="index.html">Return to Primer</a>
+          </div>
+        </section>
+      </main>
+
+      <footer class="footer">
+        <p>Player-facing guide based on the Void character material already referenced in this archive. Use it as live build support when your table chooses to include those options alongside the core game.</p>
+      </footer>
+    </div>
+  </div>
+
+  <script>
+    const ORIENTATION_SEEN_KEY = 'daggerheartVoidOrientationSeen';
+    const orientationSteps = [
+      {
+        title: 'Welcome to Void Options',
+        body: [
+          'This page promotes the Void material from side-note status into live character-building support.',
+          'Use it when your table wants Witch, Assassin, Heritage support, and Transformations available during actual player setup.'
+        ]
+      },
+      {
+        title: 'Void classes are real class choices',
+        body: [
+          'Witch and Assassin should be compared against the core class lineup, not treated as hidden extras.',
+          'That means players should weigh their tone, scene feel, and campaign fit the same way they would for Bard or Rogue.'
+        ]
+      },
+      {
+        title: 'Supplemental options change identity',
+        body: [
+          'Heritage and Transformations are not filler options. They directly affect who a character can be and how dramatically that identity may evolve.',
+          'Bring them into session-zero discussion before anyone assumes the core-only baseline.'
+        ]
+      },
+      {
+        title: 'Best next move',
+        body: [
+          'Compare Void classes against the core class archive, then confirm campaign fit before locking anything in.',
+          'Reopen Orientation anytime from the hero bar if you want the summary again.'
+        ]
+      }
+    ];
+
+    const orientationShell = document.getElementById('orientation-shell');
+    const orientationTitle = document.getElementById('orientation-title');
+    const orientationCounter = document.getElementById('orientation-counter');
+    const orientationBody = document.getElementById('orientation-body');
+    const orientationDots = document.getElementById('orientation-dots');
+    const orientationBack = document.getElementById('orientation-back');
+    const orientationNext = document.getElementById('orientation-next');
+    const orientationLaunch = document.getElementById('orientation-launch');
+    let orientationStep = 0;
+
+    function renderOrientation() {
+      const stepData = orientationSteps[orientationStep];
+      orientationTitle.textContent = stepData.title;
+      orientationCounter.textContent = `Step ${orientationStep + 1} of ${orientationSteps.length}`;
+      orientationBody.innerHTML = stepData.body.map((paragraph) => `<p>${paragraph}</p>`).join('');
+      orientationDots.innerHTML = orientationSteps.map((_, index) => `
+        <button class="orientation-dot${index === orientationStep ? ' is-active' : ''}" type="button" aria-label="Go to orientation step ${index + 1}" data-step="${index}"></button>
+      `).join('');
+      orientationBack.style.display = orientationStep === 0 ? 'none' : 'inline-flex';
+      orientationNext.textContent = orientationStep === orientationSteps.length - 1 ? 'Begin \u2192' : 'Next \u2192';
+    }
+
+    function openOrientation(resetStep = false) {
+      if (resetStep) orientationStep = 0;
+      renderOrientation();
+      orientationShell.classList.add('is-open');
+      orientationShell.setAttribute('aria-hidden', 'false');
+    }
+
+    function closeOrientation(markSeen = true) {
+      orientationShell.classList.remove('is-open');
+      orientationShell.setAttribute('aria-hidden', 'true');
+      if (markSeen) {
+        try {
+          localStorage.setItem(ORIENTATION_SEEN_KEY, '1');
+        } catch (_) {
+          // Ignore storage failures and keep the page usable.
+        }
+      }
+    }
+
+    orientationLaunch.addEventListener('click', () => openOrientation(true));
+    orientationBack.addEventListener('click', () => {
+      if (orientationStep === 0) return;
+      orientationStep -= 1;
+      renderOrientation();
+    });
+    orientationNext.addEventListener('click', () => {
+      if (orientationStep < orientationSteps.length - 1) {
+        orientationStep += 1;
+        renderOrientation();
+        return;
+      }
+      closeOrientation(true);
+    });
+    orientationDots.addEventListener('click', (event) => {
+      const button = event.target.closest('[data-step]');
+      if (!button) return;
+      orientationStep = Number(button.dataset.step);
+      renderOrientation();
+    });
+    orientationShell.addEventListener('click', (event) => {
+      if (event.target === orientationShell) closeOrientation(true);
+    });
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape' && orientationShell.classList.contains('is-open')) {
+        closeOrientation(true);
+      }
+    });
+
+    try {
+      const hasSeenOrientation = localStorage.getItem(ORIENTATION_SEEN_KEY) === '1';
+      if (!hasSeenOrientation) openOrientation(true);
+    } catch (_) {
+      openOrientation(true);
+    }
+
+    const navLinks = document.querySelectorAll('#page-nav a');
+    const observedSections = Array.from(navLinks)
+      .map((link) => document.querySelector(link.getAttribute('href')))
+      .filter(Boolean);
+
+    const navObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        const id = `#${entry.target.id}`;
+        navLinks.forEach((link) => link.classList.toggle('is-active', link.getAttribute('href') === id));
+      });
+    }, { rootMargin: '-35% 0px -45% 0px', threshold: 0.01 });
+
+    observedSections.forEach((section) => navObserver.observe(section));
+
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        entry.target.classList.add('is-visible');
+        revealObserver.unobserve(entry.target);
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
+
+    document.querySelectorAll('.reveal').forEach((element) => revealObserver.observe(element));
+  </script>
+</body>
+</html>
