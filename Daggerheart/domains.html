@@ -476,8 +476,9 @@
 
   .reveal {
     opacity: 0;
-    transform: translateY(24px);
-    transition: opacity 0.55s ease, transform 0.55s ease;
+    transform: translateY(12px);
+    transition: opacity 0.34s ease, transform 0.34s ease;
+    will-change: opacity, transform;
   }
 
   .reveal.is-visible {
@@ -1050,7 +1051,7 @@
         entry.target.classList.add('is-visible');
         revealObserver.unobserve(entry.target);
       });
-    }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
+    }, { threshold: 0.01, rootMargin: '18% 0px 18% 0px' });
 
     document.querySelectorAll('.reveal').forEach((element) => revealObserver.observe(element));
   </script>

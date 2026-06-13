@@ -596,8 +596,14 @@
     display: flex;
     justify-content: space-between;
     align-items: start;
-    gap: 0.8rem;
+    flex-wrap: wrap;
+    gap: 0.55rem 0.8rem;
     margin-bottom: 0.6rem;
+  }
+
+  .option-top h3 {
+    flex: 1 1 10rem;
+    min-width: 0;
   }
 
   .tag {
@@ -605,7 +611,9 @@
     border-radius: var(--radius-sm);
     border: 1px solid rgba(255,255,255,0.08);
     background: rgba(255,255,255,0.04);
-    white-space: nowrap;
+    white-space: normal;
+    max-width: 100%;
+    line-height: 1.15;
   }
 
   .meta {
@@ -904,8 +912,9 @@
 
   .reveal-card {
     opacity: 0;
-    transform: translateY(20px);
-    transition: opacity 0.52s ease, transform 0.52s ease;
+    transform: translateY(12px);
+    transition: opacity 0.34s ease, transform 0.34s ease;
+    will-change: opacity, transform;
   }
 
   .reveal-card.is-visible {
@@ -1848,7 +1857,7 @@
         entry.target.classList.add('is-visible');
         revealObserver.unobserve(entry.target);
       });
-    }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
+    }, { threshold: 0.01, rootMargin: '18% 0px 18% 0px' });
 
     revealCards.forEach((card) => revealObserver.observe(card));
   </script>
