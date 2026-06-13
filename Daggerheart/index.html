@@ -197,6 +197,65 @@
     margin: 0;
   }
 
+  .hero-actions,
+  .orientation-actions,
+  .quick-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.7rem;
+  }
+
+  .hero-actions {
+    margin-top: 1.4rem;
+  }
+
+  .hero-button,
+  .orientation-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.72rem 1rem;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--line);
+    background: rgba(255,255,255,0.045);
+    color: var(--text-soft);
+    text-decoration: none;
+    font: inherit;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: transform 0.22s ease, border-color 0.22s ease, background 0.22s ease, color 0.22s ease;
+  }
+
+  .hero-button:hover,
+  .hero-button:focus-visible,
+  .orientation-button:hover,
+  .orientation-button:focus-visible {
+    color: var(--text);
+    background: rgba(240, 196, 110, 0.08);
+    border-color: rgba(240, 196, 110, 0.3);
+    outline: none;
+    transform: translateY(-1px);
+  }
+
+  .hero-button.primary,
+  .orientation-button.primary {
+    color: #16110a;
+    border-color: transparent;
+    background: linear-gradient(135deg, #f0c46e, #ffdca0);
+  }
+
+  .hero-button.primary:hover,
+  .hero-button.primary:focus-visible,
+  .orientation-button.primary:hover,
+  .orientation-button.primary:focus-visible {
+    color: #16110a;
+    background: linear-gradient(135deg, #ffd38a, #ffe7c2);
+  }
+
   .hero-points,
   .stat-grid,
   .atlas-grid,
@@ -565,6 +624,234 @@
     margin-bottom: 1rem;
   }
 
+  .quickstart-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.1fr) minmax(280px, 0.9fr);
+    gap: 1rem;
+  }
+
+  .quickstart-card,
+  .worksheet-card,
+  .chooser-card,
+  .orientation-panel {
+    padding: 1rem;
+    border-radius: var(--radius-lg);
+    border: 1px solid rgba(255,255,255,0.08);
+    background: rgba(255,255,255,0.04);
+  }
+
+  .quickstart-card h3,
+  .worksheet-card h3,
+  .chooser-card h3,
+  .orientation-panel h3,
+  .orientation-title,
+  .orientation-step {
+    font-family: var(--font-display);
+  }
+
+  .quickstart-card h3,
+  .worksheet-card h3,
+  .chooser-card h3,
+  .orientation-panel h3 {
+    margin: 0 0 0.5rem;
+    font-size: 1.02rem;
+  }
+
+  .checklist {
+    margin: 0;
+    padding-left: 1.1rem;
+    color: var(--text-soft);
+  }
+
+  .checklist li + li {
+    margin-top: 0.45rem;
+  }
+
+  .quick-links {
+    margin-top: 0.9rem;
+  }
+
+  .chooser-grid,
+  .worksheet-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem;
+  }
+
+  .chooser-options {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    margin-top: 0.85rem;
+  }
+
+  .chooser-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.65rem 0.8rem;
+    border-radius: var(--radius-sm);
+    border: 1px solid rgba(255,255,255,0.1);
+    background: rgba(255,255,255,0.035);
+    color: var(--text-soft);
+    font: inherit;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    cursor: pointer;
+    transition: transform 0.2s ease, border-color 0.2s ease, background 0.2s ease, color 0.2s ease;
+  }
+
+  .chooser-button:hover,
+  .chooser-button:focus-visible,
+  .chooser-button.is-active {
+    transform: translateY(-1px);
+    border-color: rgba(240, 196, 110, 0.28);
+    background: rgba(240, 196, 110, 0.08);
+    color: var(--text);
+    outline: none;
+  }
+
+  .recommendation-box {
+    margin-top: 1rem;
+    padding: 1rem;
+    border-radius: var(--radius-md);
+    background: linear-gradient(135deg, rgba(140, 137, 223, 0.12), rgba(255,255,255,0.02));
+    border: 1px solid rgba(255,255,255,0.08);
+  }
+
+  .recommendation-box strong {
+    display: block;
+    margin-bottom: 0.45rem;
+  }
+
+  .worksheet-grid {
+    margin-top: 1rem;
+  }
+
+  .worksheet-field {
+    display: grid;
+    gap: 0.45rem;
+  }
+
+  .worksheet-field label {
+    color: var(--text-dim);
+    font-size: 0.73rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .worksheet-field textarea,
+  .worksheet-field input {
+    width: 100%;
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: var(--radius-md);
+    background: rgba(6, 8, 14, 0.72);
+    color: var(--text);
+    font: inherit;
+    padding: 0.8rem 0.9rem;
+    resize: vertical;
+    min-height: 3rem;
+  }
+
+  .worksheet-field textarea {
+    min-height: 7rem;
+  }
+
+  .worksheet-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.7rem;
+    margin-top: 1rem;
+  }
+
+  .orientation-panel {
+    background: linear-gradient(135deg, rgba(140, 137, 223, 0.12), rgba(240, 196, 110, 0.06));
+  }
+
+  .orientation-shell {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 1.25rem;
+    background: rgba(4, 5, 9, 0.86);
+    backdrop-filter: blur(10px);
+  }
+
+  .orientation-shell.is-open {
+    display: flex;
+  }
+
+  .orientation-dialog {
+    width: min(100%, 620px);
+    padding: 1.4rem;
+    border-radius: var(--radius-xl);
+    border: 1px solid var(--line-strong);
+    background:
+      radial-gradient(circle at top left, rgba(140, 137, 223, 0.2), transparent 36%),
+      radial-gradient(circle at 85% 18%, rgba(223, 106, 85, 0.16), transparent 28%),
+      rgba(12, 14, 22, 0.98);
+    box-shadow: 0 28px 80px rgba(0, 0, 0, 0.56);
+  }
+
+  .orientation-kicker,
+  .orientation-counter {
+    color: var(--text-dim);
+    font-size: 0.73rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
+  .orientation-title {
+    margin: 0.55rem 0 0.35rem;
+    font-size: clamp(1.45rem, 4vw, 2rem);
+    letter-spacing: -0.035em;
+  }
+
+  .orientation-body {
+    color: var(--text-soft);
+    min-height: 8.5rem;
+  }
+
+  .orientation-body p {
+    margin: 0;
+  }
+
+  .orientation-body p + p {
+    margin-top: 0.8rem;
+  }
+
+  .orientation-dots {
+    display: flex;
+    justify-content: center;
+    gap: 0.45rem;
+    margin: 1rem 0;
+  }
+
+  .orientation-dot {
+    width: 0.72rem;
+    height: 0.72rem;
+    border-radius: 50%;
+    border: 1px solid rgba(255,255,255,0.24);
+    background: transparent;
+    padding: 0;
+    cursor: pointer;
+  }
+
+  .orientation-dot.is-active {
+    background: var(--hope);
+    border-color: var(--hope);
+  }
+
+  .orientation-actions {
+    justify-content: flex-end;
+  }
+
   .atlas-card {
     position: relative;
     overflow: hidden;
@@ -645,6 +932,9 @@
 
   @media (max-width: 1080px) {
     .hero-grid,
+    .quickstart-grid,
+    .chooser-grid,
+    .worksheet-grid,
     .atlas-grid,
     .glance-grid,
     .class-grid,
@@ -659,6 +949,9 @@
 
   @media (max-width: 780px) {
     .hero-grid,
+    .quickstart-grid,
+    .chooser-grid,
+    .worksheet-grid,
     .atlas-grid,
     .glance-grid,
     .class-grid,
@@ -697,6 +990,20 @@
 </style>
 </head>
 <body>
+  <div class="orientation-shell" id="orientation-shell" aria-hidden="true">
+    <div class="orientation-dialog" role="dialog" aria-modal="true" aria-labelledby="orientation-title" aria-describedby="orientation-body">
+      <div class="orientation-kicker">First Visit Orientation</div>
+      <div class="orientation-counter" id="orientation-counter">Step 1 of 5</div>
+      <h2 class="orientation-title" id="orientation-title">Welcome to Daggerheart</h2>
+      <div class="orientation-body" id="orientation-body"></div>
+      <div class="orientation-dots" id="orientation-dots" aria-label="Orientation steps"></div>
+      <div class="orientation-actions">
+        <button class="orientation-button" id="orientation-back" type="button">&#8592; Back</button>
+        <button class="orientation-button primary" id="orientation-next" type="button">Next &#8594;</button>
+      </div>
+    </div>
+  </div>
+
   <div class="page">
     <div class="shell">
       <a class="back-link" href="../index.html">&#8592; All Game Worlds</a>
@@ -712,6 +1019,12 @@
               This primer is a practical guide for players: what the game feels like, how characters
               are built, how the Hope and Fear engine works, and what to expect once play begins.
             </p>
+
+            <div class="hero-actions">
+              <button class="hero-button primary" id="orientation-launch" type="button">⊞ Orientation</button>
+              <a class="hero-button" href="#first-character-runway">Build Your First Character</a>
+              <a class="hero-button" href="#reference-atlas">Open the Reference Atlas</a>
+            </div>
 
             <div class="hero-points" aria-label="Primer highlights">
               <article class="hero-point">
@@ -765,6 +1078,11 @@
                 collaborative worldbuilding, and combat that stays vivid without becoming grid-locked.
               </p>
             </div>
+
+            <div class="orientation-panel">
+              <h3>New here?</h3>
+              <p>Run the Orientation once, then use the character runway below to move from concept to class, domains, and campaign fit.</p>
+            </div>
           </aside>
         </div>
       </header>
@@ -777,6 +1095,7 @@
             <a href="#table-culture">Table Culture</a>
             <a href="#world-and-tone">World and Tone</a>
             <a href="#making-your-character">Character Creation</a>
+            <a href="#first-character-runway">First Character</a>
             <a href="#classes-and-domains">Classes and Domains</a>
             <a href="#reference-atlas">Reference Atlas</a>
             <a href="#how-play-works">How Play Works</a>
@@ -973,6 +1292,124 @@
           </div>
         </section>
 
+        <section class="section" id="first-character-runway">
+          <div class="section-head">
+            <div class="section-copy">
+              <p class="section-label">4A. First Character Runway</p>
+              <h2>Use this order if you want to build a playable character without overthinking it</h2>
+            </div>
+          </div>
+
+          <div class="quickstart-grid">
+            <article class="quickstart-card">
+              <h3>Fast build checklist</h3>
+              <ol class="checklist">
+                <li>Write a one-line concept that sounds fun in scenes, not just in combat.</li>
+                <li>Choose the class whose spotlight feels right: protector, schemer, hunter, miracle-worker, or force of nature.</li>
+                <li>Use the class domains to confirm tone. If the domains do not match your fantasy, switch classes now.</li>
+                <li>Pick ancestry and community that explain where your character learned to survive.</li>
+                <li>Choose gear, cards, and experiences that make your version of the class specific rather than generic.</li>
+                <li>Finish with party ties: who you trust, who worries you, and why this group matters.</li>
+              </ol>
+            </article>
+
+            <aside class="quickstart-card">
+              <h3>Best shortcut for new players</h3>
+              <p>Start from class fantasy first, then use domains and campaign frame to sharpen the edges. Daggerheart rewards emotional clarity more than build math.</p>
+              <div class="quick-links">
+                <a class="hero-button" href="classes.html">Compare Classes</a>
+                <a class="hero-button" href="domains.html">Compare Domains</a>
+                <a class="hero-button" href="campaign-frames.html">Check Campaign Frames</a>
+              </div>
+            </aside>
+          </div>
+
+          <div class="callout">
+            <strong>Decision rule</strong>
+            <p>If you are stuck between two builds, choose the one that suggests clearer relationships, clearer flaws, and clearer scene energy. The system will support that character better than a mechanically tidy but emotionally blank option.</p>
+          </div>
+        </section>
+
+        <section class="section" id="class-chooser">
+          <div class="section-head">
+            <div class="section-copy">
+              <p class="section-label">4B. Class Chooser</p>
+              <h2>If you know your vibe but not your class, start here</h2>
+            </div>
+          </div>
+
+          <div class="chooser-grid">
+            <article class="chooser-card">
+              <h3>Pick the kind of spotlight you want most often</h3>
+              <p>Choose one and the primer will point you toward the strongest starting fit, plus a second option if you want a nearby variation.</p>
+              <div class="chooser-options" id="class-chooser-options">
+                <button class="chooser-button is-active" type="button" data-choice="protect">Protect people</button>
+                <button class="chooser-button" type="button" data-choice="influence">Control the scene</button>
+                <button class="chooser-button" type="button" data-choice="precision">Strike from the best angle</button>
+                <button class="chooser-button" type="button" data-choice="wild">Channel primal force</button>
+                <button class="chooser-button" type="button" data-choice="arcane">Solve problems with magic</button>
+                <button class="chooser-button" type="button" data-choice="holy">Play hope and miracles</button>
+              </div>
+            </article>
+
+            <aside class="chooser-card">
+              <h3>Your recommendation</h3>
+              <div class="recommendation-box" id="class-chooser-result">
+                <strong>Guardian, with Seraph as your alternate</strong>
+                <p>Choose Guardian if you want to stand between danger and the party. Switch to Seraph if you want that same protective instinct with more sacred rescue energy and healing weight.</p>
+              </div>
+              <div class="quick-links">
+                <a class="hero-button" href="classes.html">Read class profiles</a>
+                <a class="hero-button" href="domains.html">Check domain tone</a>
+              </div>
+            </aside>
+          </div>
+        </section>
+
+        <section class="section" id="character-worksheet">
+          <div class="section-head">
+            <div class="section-copy">
+              <p class="section-label">4C. Character Worksheet</p>
+              <h2>Sketch the character here before you commit to the full sheet</h2>
+            </div>
+          </div>
+
+          <article class="worksheet-card">
+            <p class="section-copy">These notes save in your browser on this device so players can rough out a concept before moving to a full character sheet.</p>
+            <div class="worksheet-grid">
+              <div class="worksheet-field">
+                <label for="worksheet-concept">One-line concept</label>
+                <input id="worksheet-concept" name="concept" type="text" placeholder="A disgraced sky-knight hunting the truth behind a divine war oath">
+              </div>
+              <div class="worksheet-field">
+                <label for="worksheet-class">Probable class or classes</label>
+                <input id="worksheet-class" name="class" type="text" placeholder="Guardian, Seraph, or Warrior">
+              </div>
+              <div class="worksheet-field">
+                <label for="worksheet-domains">Domain vibe</label>
+                <input id="worksheet-domains" name="domains" type="text" placeholder="Valor and Splendor, or Blade and Bone">
+              </div>
+              <div class="worksheet-field">
+                <label for="worksheet-frame">Campaign fit</label>
+                <input id="worksheet-frame" name="frame" type="text" placeholder="Five Banners Burning or Age of Umbra">
+              </div>
+              <div class="worksheet-field">
+                <label for="worksheet-drive">What do they want?</label>
+                <textarea id="worksheet-drive" name="drive" placeholder="What personal promise, obsession, grief, or duty is driving them forward?"></textarea>
+              </div>
+              <div class="worksheet-field">
+                <label for="worksheet-connection">Why do they stay with the party?</label>
+                <textarea id="worksheet-connection" name="connection" placeholder="Who do they trust, who worries them, and what keeps them bound to the group?"></textarea>
+              </div>
+            </div>
+            <div class="worksheet-actions">
+              <button class="hero-button" id="worksheet-clear" type="button">Clear worksheet</button>
+              <a class="hero-button" href="classes.html">Open Class Archive</a>
+              <a class="hero-button" href="campaign-frames.html">Open Campaign Frames</a>
+            </div>
+          </article>
+        </section>
+
         <section class="section" id="classes-and-domains">
           <div class="section-head">
             <div class="section-copy">
@@ -1155,6 +1592,205 @@
   </div>
 
   <script>
+    const ORIENTATION_SEEN_KEY = 'daggerheartPrimerOrientationSeen';
+    const WORKSHEET_STORAGE_KEY = 'daggerheartPrimerWorksheet';
+    const orientationSteps = [
+      {
+        title: 'Welcome to Daggerheart',
+        body: [
+          'This primer is your player-facing gateway to the system. It explains what Daggerheart feels like, how the Hope and Fear engine works, and how to move from concept to character without drowning in rules text.',
+          'Use Orientation first if you are new, then jump to Character Creation and the First Character Runway to build with confidence.'
+        ]
+      },
+      {
+        title: 'Start with story, not optimization',
+        body: [
+          'Daggerheart is fiction-first. Begin with a concept you want to perform in scenes: a haunted scout, a divine duelist, a charming liar, a wild-hearted protector.',
+          'The strongest first characters are emotionally readable before they are mechanically detailed.'
+        ]
+      },
+      {
+        title: 'Class and domains are your identity engine',
+        body: [
+          'Pick the class that gives you the right spotlight, then confirm it by checking the two domains tied to that class.',
+          'If the class sounds right but the domains do not, keep looking. Domains determine the tone of your growth.'
+        ]
+      },
+      {
+        title: 'Use the primer in this order',
+        body: [
+          'Read What It Is for tone, Character Creation for sequence, First Character Runway for the fastest build path, then use the Reference Atlas for deeper comparison.',
+          'That path gets most new players to a solid first character quickly.'
+        ]
+      },
+      {
+        title: 'What to do next',
+        body: [
+          'After this overlay, jump to Build Your First Character if you want step-by-step guidance, or reopen Orientation anytime from the hero if you want the summary again.',
+          'Once your concept feels real, the class, domain, and campaign-frame pages will help you sharpen it.'
+        ]
+      }
+    ];
+
+    const orientationShell = document.getElementById('orientation-shell');
+    const orientationTitle = document.getElementById('orientation-title');
+    const orientationCounter = document.getElementById('orientation-counter');
+    const orientationBody = document.getElementById('orientation-body');
+    const orientationDots = document.getElementById('orientation-dots');
+    const orientationBack = document.getElementById('orientation-back');
+    const orientationNext = document.getElementById('orientation-next');
+    const orientationLaunch = document.getElementById('orientation-launch');
+    let orientationStep = 0;
+
+    function renderOrientation() {
+      const stepData = orientationSteps[orientationStep];
+      orientationTitle.textContent = stepData.title;
+      orientationCounter.textContent = `Step ${orientationStep + 1} of ${orientationSteps.length}`;
+      orientationBody.innerHTML = stepData.body.map((paragraph) => `<p>${paragraph}</p>`).join('');
+      orientationDots.innerHTML = orientationSteps.map((_, index) => `
+        <button class="orientation-dot${index === orientationStep ? ' is-active' : ''}" type="button" aria-label="Go to orientation step ${index + 1}" data-step="${index}"></button>
+      `).join('');
+      orientationBack.style.display = orientationStep === 0 ? 'none' : 'inline-flex';
+      orientationNext.textContent = orientationStep === orientationSteps.length - 1 ? 'Begin \u2192' : 'Next \u2192';
+    }
+
+    function openOrientation(resetStep = false) {
+      if (resetStep) orientationStep = 0;
+      renderOrientation();
+      orientationShell.classList.add('is-open');
+      orientationShell.setAttribute('aria-hidden', 'false');
+    }
+
+    function closeOrientation(markSeen = true) {
+      orientationShell.classList.remove('is-open');
+      orientationShell.setAttribute('aria-hidden', 'true');
+      if (markSeen) {
+        try {
+          localStorage.setItem(ORIENTATION_SEEN_KEY, '1');
+        } catch (_) {
+          // Ignore storage failures and keep the page usable.
+        }
+      }
+    }
+
+    orientationLaunch.addEventListener('click', () => openOrientation(true));
+    orientationBack.addEventListener('click', () => {
+      if (orientationStep === 0) return;
+      orientationStep -= 1;
+      renderOrientation();
+    });
+    orientationNext.addEventListener('click', () => {
+      if (orientationStep < orientationSteps.length - 1) {
+        orientationStep += 1;
+        renderOrientation();
+        return;
+      }
+      closeOrientation(true);
+    });
+    orientationDots.addEventListener('click', (event) => {
+      const button = event.target.closest('[data-step]');
+      if (!button) return;
+      orientationStep = Number(button.dataset.step);
+      renderOrientation();
+    });
+    orientationShell.addEventListener('click', (event) => {
+      if (event.target === orientationShell) closeOrientation(true);
+    });
+
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape' && orientationShell.classList.contains('is-open')) {
+        closeOrientation(true);
+      }
+    });
+
+    try {
+      const hasSeenOrientation = localStorage.getItem(ORIENTATION_SEEN_KEY) === '1';
+      if (!hasSeenOrientation) openOrientation(true);
+    } catch (_) {
+      openOrientation(true);
+    }
+
+    const classChooserMap = {
+      protect: {
+        title: 'Guardian, with Seraph as your alternate',
+        body: 'Choose Guardian if you want to stand between danger and the party. Switch to Seraph if you want that same protective instinct with more sacred rescue energy and healing weight.'
+      },
+      influence: {
+        title: 'Bard, with Wizard as your alternate',
+        body: 'Choose Bard if you want to shape momentum through presence, setup, and social gravity. Switch to Wizard if you want that control to feel more studied, deliberate, and utility-rich.'
+      },
+      precision: {
+        title: 'Rogue, with Ranger as your alternate',
+        body: 'Choose Rogue if you want stealth, leverage, and sudden payoff. Switch to Ranger if you want the same angle-hunting instinct with more pursuit, tracking, and wilderness credibility.'
+      },
+      wild: {
+        title: 'Druid, with Ranger as your alternate',
+        body: 'Choose Druid if you want primal magic, transformation, and nature as identity. Switch to Ranger if you want that wild edge to become more disciplined, mobile, and hunter-shaped.'
+      },
+      arcane: {
+        title: 'Wizard, with Sorcerer as your alternate',
+        body: 'Choose Wizard if you want broad magical problem-solving and preparation. Switch to Sorcerer if you want your magic to feel innate, risky, and emotionally volatile.'
+      },
+      holy: {
+        title: 'Seraph, with Bard as your alternate',
+        body: 'Choose Seraph if you want hope, courage, healing, and visible devotion in the middle of danger. Switch to Bard if you want to uplift people through charisma and scene-command instead of miracles.'
+      }
+    };
+
+    const chooserButtons = document.querySelectorAll('#class-chooser-options [data-choice]');
+    const chooserResult = document.getElementById('class-chooser-result');
+
+    function renderClassChoice(choice) {
+      const result = classChooserMap[choice] || classChooserMap.protect;
+      chooserButtons.forEach((button) => button.classList.toggle('is-active', button.dataset.choice === choice));
+      chooserResult.innerHTML = `<strong>${result.title}</strong><p>${result.body}</p>`;
+    }
+
+    chooserButtons.forEach((button) => {
+      button.addEventListener('click', () => renderClassChoice(button.dataset.choice));
+    });
+
+    const worksheetFields = document.querySelectorAll('#character-worksheet input, #character-worksheet textarea');
+    const worksheetClear = document.getElementById('worksheet-clear');
+
+    function saveWorksheet() {
+      const payload = {};
+      worksheetFields.forEach((field) => {
+        payload[field.name] = field.value;
+      });
+      try {
+        localStorage.setItem(WORKSHEET_STORAGE_KEY, JSON.stringify(payload));
+      } catch (_) {
+        // Ignore storage failures and keep the page usable.
+      }
+    }
+
+    try {
+      const rawWorksheet = localStorage.getItem(WORKSHEET_STORAGE_KEY);
+      if (rawWorksheet) {
+        const parsedWorksheet = JSON.parse(rawWorksheet);
+        worksheetFields.forEach((field) => {
+          field.value = parsedWorksheet[field.name] || '';
+        });
+      }
+    } catch (_) {
+      // Ignore corrupt or unavailable storage.
+    }
+
+    worksheetFields.forEach((field) => field.addEventListener('input', saveWorksheet));
+    worksheetClear.addEventListener('click', () => {
+      worksheetFields.forEach((field) => {
+        field.value = '';
+      });
+      try {
+        localStorage.removeItem(WORKSHEET_STORAGE_KEY);
+      } catch (_) {
+        // Ignore storage failures and keep the page usable.
+      }
+    });
+
+    renderClassChoice('protect');
+
     const filterButtons = document.querySelectorAll('[data-filter]');
     const classCards = document.querySelectorAll('#class-grid .class-card');
 

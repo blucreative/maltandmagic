@@ -240,6 +240,7 @@
   }
 
   .hero-actions,
+  .orientation-actions,
   .nav-list,
   .filters,
   .chip-row {
@@ -254,6 +255,54 @@
 
   .cta-link {
     letter-spacing: 0.08em;
+  }
+
+  .hero-button,
+  .orientation-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.45rem;
+    padding: 0.72rem 1rem;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--line);
+    text-decoration: none;
+    color: var(--text-soft);
+    background: rgba(9, 12, 20, 0.84);
+    backdrop-filter: blur(12px);
+    font: inherit;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: transform 0.22s ease, border-color 0.22s ease, color 0.22s ease, background 0.22s ease;
+  }
+
+  .hero-button:hover,
+  .hero-button:focus-visible,
+  .orientation-button:hover,
+  .orientation-button:focus-visible {
+    color: var(--text);
+    border-color: rgba(239, 194, 104, 0.34);
+    background: rgba(239, 194, 104, 0.1);
+    outline: none;
+    transform: translateY(-1px);
+  }
+
+  .hero-button.primary,
+  .orientation-button.primary {
+    color: var(--bg);
+    background: linear-gradient(135deg, var(--hope), #ffd89a);
+    border-color: transparent;
+  }
+
+  .hero-button.primary:hover,
+  .hero-button.primary:focus-visible,
+  .orientation-button.primary:hover,
+  .orientation-button.primary:focus-visible {
+    color: var(--bg);
+    background: linear-gradient(135deg, #ffd38a, #ffe5bc);
   }
 
   .cta-link.primary {
@@ -491,6 +540,89 @@
     background: linear-gradient(135deg, rgba(139, 135, 218, 0.14), rgba(239, 194, 104, 0.07));
   }
 
+  .orientation-shell {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 1.25rem;
+    background: rgba(4, 5, 9, 0.86);
+    backdrop-filter: blur(10px);
+  }
+
+  .orientation-shell.is-open {
+    display: flex;
+  }
+
+  .orientation-dialog {
+    width: min(100%, 620px);
+    padding: 1.4rem;
+    border-radius: var(--radius-xl);
+    border: 1px solid var(--line-strong);
+    background:
+      radial-gradient(circle at top left, rgba(139, 135, 218, 0.24), transparent 34%),
+      radial-gradient(circle at 86% 18%, rgba(217, 110, 88, 0.14), transparent 28%),
+      rgba(12, 14, 22, 0.98);
+    box-shadow: 0 28px 80px rgba(0, 0, 0, 0.56);
+  }
+
+  .orientation-kicker,
+  .orientation-counter {
+    color: var(--text-dim);
+    font-size: 0.73rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
+  .orientation-title {
+    margin: 0.55rem 0 0.35rem;
+    font-family: var(--font-display);
+    font-size: clamp(1.45rem, 4vw, 2rem);
+    letter-spacing: -0.035em;
+  }
+
+  .orientation-body {
+    color: var(--text-soft);
+    min-height: 8rem;
+  }
+
+  .orientation-body p {
+    margin: 0;
+  }
+
+  .orientation-body p + p {
+    margin-top: 0.8rem;
+  }
+
+  .orientation-dots {
+    display: flex;
+    justify-content: center;
+    gap: 0.45rem;
+    margin: 1rem 0;
+  }
+
+  .orientation-dot {
+    width: 0.72rem;
+    height: 0.72rem;
+    border-radius: 50%;
+    border: 1px solid rgba(255,255,255,0.24);
+    background: transparent;
+    padding: 0;
+    cursor: pointer;
+  }
+
+  .orientation-dot.is-active {
+    background: var(--hope);
+    border-color: var(--hope);
+  }
+
+  .orientation-actions {
+    justify-content: flex-end;
+  }
+
   .footer {
     padding-bottom: 3rem;
     color: var(--text-dim);
@@ -542,6 +674,20 @@
 </style>
 </head>
 <body>
+  <div class="orientation-shell" id="orientation-shell" aria-hidden="true">
+    <div class="orientation-dialog" role="dialog" aria-modal="true" aria-labelledby="orientation-title" aria-describedby="orientation-body">
+      <div class="orientation-kicker">First Visit Orientation</div>
+      <div class="orientation-counter" id="orientation-counter">Step 1 of 4</div>
+      <h2 class="orientation-title" id="orientation-title">Welcome to the Class Archive</h2>
+      <div class="orientation-body" id="orientation-body"></div>
+      <div class="orientation-dots" id="orientation-dots" aria-label="Orientation steps"></div>
+      <div class="orientation-actions">
+        <button class="orientation-button" id="orientation-back" type="button">&#8592; Back</button>
+        <button class="orientation-button primary" id="orientation-next" type="button">Next &#8594;</button>
+      </div>
+    </div>
+  </div>
+
   <div class="page">
     <div class="shell">
       <div class="topbar">
@@ -561,6 +707,7 @@
             player-facing map of the nine core classes: what each one feels like, what it brings to the party, and how to choose one fast.
           </p>
           <div class="hero-actions">
+            <button class="hero-button" id="orientation-launch" type="button">⊞ Orientation</button>
             <a class="cta-link primary" href="#class-atlas">Browse the class atlas</a>
             <a class="cta-link" href="domains.html">Compare the domains</a>
             <a class="cta-link" href="campaign-frames.html">Match classes to campaign frames</a>
@@ -890,6 +1037,115 @@
   </div>
 
   <script>
+    const ORIENTATION_SEEN_KEY = 'daggerheartClassesOrientationSeen';
+    const orientationSteps = [
+      {
+        title: 'Welcome to the Class Archive',
+        body: [
+          'This page is here to help players compare the nine core classes quickly without scanning the full book first.',
+          'Use it when you know the general kind of hero you want to play but need a sharper starting fit.'
+        ]
+      },
+      {
+        title: 'Start with spotlight, not just role',
+        body: [
+          'Ask what kind of scenes you want most often: protecting people, steering momentum, stalking targets, or unleashing magic.',
+          'That answer matters more than chasing the most efficient statline.'
+        ]
+      },
+      {
+        title: 'Use domains as your tie-breaker',
+        body: [
+          'If two classes both sound right, compare the two domains attached to each class.',
+          'Domains reveal how that class will feel over time, not just what it does at level 1.'
+        ]
+      },
+      {
+        title: 'Best next move',
+        body: [
+          'Filter the class atlas, read the party chemistry section, then jump to the Domain Atlas or Campaign Frames page if you need a second pass on tone.',
+          'Reopen this Orientation anytime from the hero bar.'
+        ]
+      }
+    ];
+
+    const orientationShell = document.getElementById('orientation-shell');
+    const orientationTitle = document.getElementById('orientation-title');
+    const orientationCounter = document.getElementById('orientation-counter');
+    const orientationBody = document.getElementById('orientation-body');
+    const orientationDots = document.getElementById('orientation-dots');
+    const orientationBack = document.getElementById('orientation-back');
+    const orientationNext = document.getElementById('orientation-next');
+    const orientationLaunch = document.getElementById('orientation-launch');
+    let orientationStep = 0;
+
+    function renderOrientation() {
+      const stepData = orientationSteps[orientationStep];
+      orientationTitle.textContent = stepData.title;
+      orientationCounter.textContent = `Step ${orientationStep + 1} of ${orientationSteps.length}`;
+      orientationBody.innerHTML = stepData.body.map((paragraph) => `<p>${paragraph}</p>`).join('');
+      orientationDots.innerHTML = orientationSteps.map((_, index) => `
+        <button class="orientation-dot${index === orientationStep ? ' is-active' : ''}" type="button" aria-label="Go to orientation step ${index + 1}" data-step="${index}"></button>
+      `).join('');
+      orientationBack.style.display = orientationStep === 0 ? 'none' : 'inline-flex';
+      orientationNext.textContent = orientationStep === orientationSteps.length - 1 ? 'Begin \u2192' : 'Next \u2192';
+    }
+
+    function openOrientation(resetStep = false) {
+      if (resetStep) orientationStep = 0;
+      renderOrientation();
+      orientationShell.classList.add('is-open');
+      orientationShell.setAttribute('aria-hidden', 'false');
+    }
+
+    function closeOrientation(markSeen = true) {
+      orientationShell.classList.remove('is-open');
+      orientationShell.setAttribute('aria-hidden', 'true');
+      if (markSeen) {
+        try {
+          localStorage.setItem(ORIENTATION_SEEN_KEY, '1');
+        } catch (_) {
+          // Ignore storage failures and keep the page usable.
+        }
+      }
+    }
+
+    orientationLaunch.addEventListener('click', () => openOrientation(true));
+    orientationBack.addEventListener('click', () => {
+      if (orientationStep === 0) return;
+      orientationStep -= 1;
+      renderOrientation();
+    });
+    orientationNext.addEventListener('click', () => {
+      if (orientationStep < orientationSteps.length - 1) {
+        orientationStep += 1;
+        renderOrientation();
+        return;
+      }
+      closeOrientation(true);
+    });
+    orientationDots.addEventListener('click', (event) => {
+      const button = event.target.closest('[data-step]');
+      if (!button) return;
+      orientationStep = Number(button.dataset.step);
+      renderOrientation();
+    });
+    orientationShell.addEventListener('click', (event) => {
+      if (event.target === orientationShell) closeOrientation(true);
+    });
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape' && orientationShell.classList.contains('is-open')) {
+        closeOrientation(true);
+      }
+    });
+
+    try {
+      const hasSeenOrientation = localStorage.getItem(ORIENTATION_SEEN_KEY) === '1';
+      if (!hasSeenOrientation) openOrientation(true);
+    } catch (_) {
+      openOrientation(true);
+    }
+
     const filterButtons = document.querySelectorAll('[data-filter]');
     const classCards = document.querySelectorAll('#class-grid .class-card');
 
