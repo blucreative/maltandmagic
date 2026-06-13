@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>The Cosmere - Lore Vault</title>
-<meta name="description" content="A player-facing Cosmere primer with first-visit orientation and character creation guidance for the Malt & Magic lore vault.">
+<meta name="description" content="A player-facing Cosmere primer with quick reference guidance, first-visit orientation, and character creation help for the Malt & Magic lore vault.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -12,19 +12,19 @@
   *, *::before, *::after { box-sizing: border-box; }
   html { scroll-behavior: smooth; }
   :root {
-    --bg: #07080d;
-    --bg-2: #11141f;
-    --surface: rgba(18, 21, 31, 0.74);
-    --surface-2: rgba(24, 27, 41, 0.88);
-    --border: rgba(255, 255, 255, 0.09);
-    --border-strong: rgba(255, 255, 255, 0.16);
-    --text: #f2efe8;
-    --text-soft: #bcc1d1;
-    --text-dim: #81879a;
-    --gold: #f1c46c;
-    --violet: #a892f2;
-    --teal: #78d6d1;
-    --rose: #ef8da7;
+    --bg: #050912;
+    --bg-2: #10182a;
+    --surface: rgba(10, 17, 29, 0.84);
+    --surface-2: rgba(14, 22, 38, 0.9);
+    --border: rgba(198, 216, 255, 0.12);
+    --border-strong: rgba(198, 216, 255, 0.22);
+    --text: #f5f2ea;
+    --text-soft: #cad4e7;
+    --text-dim: #8e99af;
+    --gold: #d6b36d;
+    --violet: #9db2ff;
+    --teal: #75d7e0;
+    --rose: #cf8ea1;
     --shadow: 0 28px 80px rgba(0, 0, 0, 0.36);
     --radius-lg: 26px;
     --radius-md: 18px;
@@ -40,10 +40,10 @@
     font-family: var(--font-body);
     line-height: 1.6;
     background:
-      radial-gradient(ellipse 90% 60% at 15% -10%, rgba(168, 146, 242, 0.18), transparent 62%),
-      radial-gradient(ellipse 80% 55% at 92% 15%, rgba(120, 214, 209, 0.12), transparent 58%),
-      radial-gradient(ellipse 70% 50% at 50% 115%, rgba(241, 196, 108, 0.08), transparent 55%),
-      linear-gradient(180deg, #08090f 0%, #0d0f16 42%, #07080d 100%);
+      radial-gradient(ellipse 90% 60% at 15% -10%, rgba(157, 178, 255, 0.18), transparent 62%),
+      radial-gradient(ellipse 80% 55% at 92% 15%, rgba(117, 215, 224, 0.14), transparent 58%),
+      radial-gradient(ellipse 70% 50% at 50% 115%, rgba(214, 179, 109, 0.08), transparent 55%),
+      linear-gradient(180deg, #060b16 0%, #09101d 42%, #04070d 100%);
     background-attachment: fixed;
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
@@ -55,7 +55,7 @@
     pointer-events: none;
     background-image:
       radial-gradient(circle, rgba(255,255,255,0.55) 1px, transparent 1px),
-      radial-gradient(circle, rgba(255,255,255,0.32) 1px, transparent 1px);
+      radial-gradient(circle, rgba(198, 216, 255, 0.35) 1px, transparent 1px);
     background-size: 340px 340px, 220px 220px;
     background-position: 30px 60px, 120px 180px;
     opacity: 0.11;
@@ -131,11 +131,21 @@
     content: '';
     position: absolute;
     inset: 0;
-    background: linear-gradient(135deg, rgba(168, 146, 242, 0.12), transparent 42%, rgba(241, 196, 108, 0.09));
+    background: linear-gradient(135deg, rgba(157, 178, 255, 0.12), transparent 42%, rgba(214, 179, 109, 0.08));
     pointer-events: none;
   }
   .hero-main {
     padding: 2rem;
+  }
+
+  .stormlight-panel {
+    border: 1px solid rgba(157, 178, 255, 0.18);
+    background: linear-gradient(180deg, rgba(14, 22, 38, 0.96), rgba(8, 14, 24, 0.94));
+  }
+
+  .mistborn-panel {
+    border: 1px solid rgba(214, 179, 109, 0.18);
+    background: linear-gradient(180deg, rgba(22, 18, 20, 0.94), rgba(10, 11, 16, 0.94));
   }
   .hero-kicker,
   .section-label,
@@ -428,6 +438,42 @@
     margin-top: 1rem;
     background: rgba(255,255,255,0.03);
   }
+
+  .campaign-lanes {
+    margin-top: 1rem;
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--border);
+    overflow: hidden;
+  }
+
+  .campaign-lanes > summary {
+    list-style: none;
+    cursor: pointer;
+    padding: 1rem 1.1rem;
+    font-family: var(--font-display);
+    font-size: 0.78rem;
+    font-weight: 800;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--gold);
+    background: rgba(255,255,255,0.03);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .campaign-lanes > summary::-webkit-details-marker { display: none; }
+
+  .campaign-lanes > summary::after {
+    content: 'Open';
+    float: right;
+    color: var(--text-dim);
+  }
+
+  .campaign-lanes[open] > summary::after { content: 'Hide'; }
+
+  .campaign-lanes-body {
+    padding: 1rem;
+    background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0));
+  }
   .note-card strong {
     display: block;
     margin-bottom: 0.35rem;
@@ -683,6 +729,9 @@
         </p>
         <div class="cta-row">
           <a class="primary-btn" href="#orientation-guide">Open primer orientation</a>
+          <a class="ghost-btn" href="#quick-reference">Quick reference</a>
+          <a class="ghost-btn" href="#stormlight-campaigns">Stormlight campaigns</a>
+          <a class="ghost-btn" href="#mistborn-campaigns">Mistborn placeholder</a>
           <a class="ghost-btn" href="#character-creation">Build a character</a>
           <a class="ghost-btn" href="#primer-overview">Read the primer</a>
         </div>
@@ -712,6 +761,132 @@
         </div>
       </aside>
     </header>
+
+    <section class="section panel" id="quick-reference">
+      <div class="section-head">
+        <div class="section-copy">
+          <div class="section-label">Quick reference</div>
+          <h2>The shortest path from setting to playable character</h2>
+        </div>
+      </div>
+      <p class="section-copy">
+        Treat this as the player cheat sheet. Start with the campaign world, define the character's role, decide where their power comes from, and end with one bond and one hook that the table can use immediately.
+      </p>
+      <div class="primer-grid">
+        <article class="info-card">
+          <h3>1. Choose the world</h3>
+          <p>The Cosmere is connected, but each campaign still needs a concrete world, culture, and tone. That choice defines the starting assumptions for the character.</p>
+        </article>
+        <article class="info-card">
+          <h3>2. Define the role</h3>
+          <p>Decide what the character does in scenes before worrying about the exact details: protector, scout, scholar, negotiator, mystic, or something stranger.</p>
+        </article>
+        <article class="info-card">
+          <h3>3. Name the power source</h3>
+          <p>Power should come from somewhere clear: a discipline, a bond, a world-specific gift, or an Investiture expression that makes sense in the fiction.</p>
+        </article>
+        <article class="info-card">
+          <h3>4. Lock the hook</h3>
+          <p>Finish with one unresolved problem and one important relationship. If the GM can use both in the first session, the character is ready.</p>
+        </article>
+      </div>
+      <div class="note-card">
+        <strong>Player rule of thumb</strong>
+        <p>If the table already has a specific world or magic model, use that as the final authority. This page is the fast-start companion, not the last word over your group's campaign notes.</p>
+      </div>
+    </section>
+
+    <details class="campaign-lanes" id="campaign-lanes">
+      <summary>Campaign lanes: Stormlight and Mistborn</summary>
+      <div class="campaign-lanes-body">
+        <section class="section panel stormlight-panel" id="stormlight-campaigns">
+          <div class="section-head">
+            <div class="section-copy">
+              <div class="section-label">Stormlight campaigns</div>
+              <h2>Go deeper where the current sourcebooks already give you material</h2>
+            </div>
+          </div>
+          <p class="section-copy">
+            Use this section when you already know the table is playing Stormlight. It should become the Roshar-specific lane built from the starter rules, world guide, handbook, and scenario material.
+          </p>
+          <div class="primer-grid">
+            <article class="info-card">
+              <h3>Starter rules</h3>
+              <p>Teach new players how the game expects them to approach scenes, powers, and momentum.</p>
+            </article>
+            <article class="info-card">
+              <h3>Campaign tone</h3>
+              <p>Lean into oaths, battlefield pressure, radiant growth, and the emotional cost of carrying power.</p>
+            </article>
+            <article class="info-card">
+              <h3>What to spotlight</h3>
+              <p>Spren, bonds, Shardplate, Shardblades, highstorms, and the social shape of Roshar.</p>
+            </article>
+            <article class="info-card">
+              <h3>Sourcebook anchor</h3>
+              <p>Stormlight handbook, world guide, starter rules, and scenario material already exist in the sourcebooks root.</p>
+            </article>
+          </div>
+          <div class="world-grid">
+            <article class="check-card">
+              <div class="step">Guide</div>
+              <h3>Roshar at the table</h3>
+              <p>Build around broken systems, living magic, and visible consequences.</p>
+            </article>
+            <article class="check-card">
+              <div class="step">Guide</div>
+              <h3>Campaign priorities</h3>
+              <p>Focus on ideals, relationships, and becoming greater without losing yourself.</p>
+            </article>
+            <article class="check-card">
+              <div class="step">Guide</div>
+              <h3>Player takeaway</h3>
+              <p>This should tell players how Stormlight differs from the broad Cosmere intro.</p>
+            </article>
+          </div>
+        </section>
+
+        <section class="section panel mistborn-panel" id="mistborn-campaigns">
+          <div class="section-head">
+            <div class="section-copy">
+              <div class="section-label">Mistborn campaigns</div>
+              <h2>Placeholder area for the later release window</h2>
+            </div>
+          </div>
+          <p class="section-copy">
+            Mistborn is intentionally a placeholder for now. The campaign space is reserved so the page can be expanded later this year once the books release.
+          </p>
+          <div class="orientation-banner">
+            <p>
+              This section will eventually become the Mistborn-specific campaign path, with its own primer notes, player guidance, and reference links.
+            </p>
+            <div class="pill-row">
+              <span class="pill-link">Coming later this year</span>
+              <span class="pill-link">Placeholder only</span>
+              <span class="pill-link">Reserved for release content</span>
+            </div>
+          </div>
+          <div class="primer-grid">
+            <article class="info-card">
+              <h3>Expected focus</h3>
+              <p>Urban tension, heists, crews, metal-driven powers, and fast tactical play.</p>
+            </article>
+            <article class="info-card">
+              <h3>Current status</h3>
+              <p>No full rules text yet. Leave the space ready so the page feels intentional instead of incomplete.</p>
+            </article>
+            <article class="info-card">
+              <h3>What players should know</h3>
+              <p>Use the general Cosmere primer and quick reference above until the books land.</p>
+            </article>
+            <article class="info-card">
+              <h3>What happens next</h3>
+              <p>This placeholder becomes the campaign-specific guide for Mistborn character creation and table rules.</p>
+            </article>
+          </div>
+        </section>
+      </div>
+    </details>
 
     <section class="section panel" id="primer-overview">
       <div class="section-head">

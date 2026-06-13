@@ -12,17 +12,17 @@
   *, *::before, *::after { box-sizing: border-box; }
 
   :root {
-    --bg: #06070b;
-    --panel: rgba(17, 21, 32, 0.8);
-    --panel-soft: rgba(255, 255, 255, 0.04);
-    --line: rgba(255, 255, 255, 0.1);
-    --line-strong: rgba(255, 255, 255, 0.18);
-    --text: #f4efe5;
-    --text-soft: #c7bfaf;
-    --text-dim: #8e877c;
-    --hope: #f0c46e;
-    --fear: #df6a55;
-    --arcane: #8c89df;
+    --bg: #080502;
+    --panel: rgba(22, 17, 14, 0.84);
+    --panel-soft: rgba(255, 255, 255, 0.05);
+    --line: rgba(241, 196, 110, 0.12);
+    --line-strong: rgba(241, 196, 110, 0.22);
+    --text: #f7efe1;
+    --text-soft: #d1c4b1;
+    --text-dim: #9d8f80;
+    --hope: #f1c46e;
+    --fear: #d86b54;
+    --arcane: #8d7be3;
     --shadow: 0 24px 70px rgba(0, 0, 0, 0.45);
     --font-display: 'Sora', 'Manrope', system-ui, sans-serif;
     --font-body: 'Manrope', system-ui, sans-serif;
@@ -43,10 +43,10 @@
     font-family: var(--font-body);
     line-height: 1.6;
     background:
-      radial-gradient(circle at 12% 12%, rgba(140, 137, 223, 0.18), transparent 32%),
-      radial-gradient(circle at 88% 16%, rgba(223, 106, 85, 0.18), transparent 28%),
-      radial-gradient(circle at 50% 100%, rgba(240, 196, 110, 0.12), transparent 36%),
-      linear-gradient(180deg, #080910 0%, #0a0c13 32%, #06070b 100%);
+      radial-gradient(circle at 12% 12%, rgba(241, 196, 110, 0.14), transparent 30%),
+      radial-gradient(circle at 88% 16%, rgba(216, 107, 84, 0.18), transparent 26%),
+      radial-gradient(circle at 50% 100%, rgba(141, 123, 227, 0.1), transparent 34%),
+      linear-gradient(180deg, #120d09 0%, #090604 36%, #050302 100%);
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
   }
@@ -62,8 +62,8 @@
 
   body::before {
     background-image:
-      radial-gradient(circle, rgba(255,255,255,0.26) 1px, transparent 1px),
-      radial-gradient(circle, rgba(255,255,255,0.12) 1px, transparent 1px);
+      radial-gradient(circle, rgba(255,255,255,0.22) 1px, transparent 1px),
+      radial-gradient(circle, rgba(241,196,110,0.16) 1px, transparent 1px);
     background-size: 210px 210px, 340px 340px;
     background-position: 0 0, 40px 80px;
     opacity: 0.2;
@@ -142,8 +142,8 @@
     overflow: hidden;
     padding: 2.2rem;
     background:
-      radial-gradient(circle at top left, rgba(140, 137, 223, 0.22), transparent 30%),
-      radial-gradient(circle at top right, rgba(223, 106, 85, 0.18), transparent 26%),
+      radial-gradient(circle at top left, rgba(241, 196, 110, 0.2), transparent 30%),
+      radial-gradient(circle at top right, rgba(216, 107, 84, 0.16), transparent 26%),
       linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0));
   }
 
@@ -587,6 +587,42 @@
   .accordion-body {
     padding: 0 1.1rem 1rem;
     color: var(--text-soft);
+  }
+
+  .deep-dive {
+    margin-top: 1rem;
+    border-radius: var(--radius-xl);
+    border: 1px solid var(--line);
+    background: rgba(255,255,255,0.03);
+    overflow: hidden;
+  }
+
+  .deep-dive > summary {
+    list-style: none;
+    cursor: pointer;
+    padding: 1rem 1.2rem;
+    font-family: var(--font-display);
+    font-size: 0.8rem;
+    font-weight: 800;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--hope);
+    border-bottom: 1px solid var(--line);
+    background: linear-gradient(135deg, rgba(241,196,110,0.12), rgba(255,255,255,0.02));
+  }
+
+  .deep-dive > summary::-webkit-details-marker { display: none; }
+
+  .deep-dive > summary::after {
+    content: 'Open';
+    float: right;
+    color: var(--text-dim);
+  }
+
+  .deep-dive[open] > summary::after { content: 'Hide'; }
+
+  .deep-dive-body {
+    padding: 1rem;
   }
 
   .class-top,
@@ -1101,22 +1137,77 @@
         <nav class="nav-panel" aria-label="Primer sections">
           <p class="nav-title">Jump Through the Primer</p>
           <div class="nav-list" id="page-nav">
-            <a href="#what-is-daggerheart">What It Is</a>
-            <a href="#table-culture">Table Culture</a>
-            <a href="#world-and-tone">World and Tone</a>
+            <a href="#quick-reference">Quick Reference</a>
             <a href="#making-your-character">Character Creation</a>
             <a href="#first-character-runway">First Character</a>
-            <a href="#classes-and-domains">Classes and Domains</a>
             <a href="#reference-atlas">Reference Atlas</a>
-            <a href="#how-play-works">How Play Works</a>
-            <a href="#combat-and-survival">Combat and Survival</a>
-            <a href="#growth-and-campaigns">Growth and Campaigns</a>
-            <a href="#expanded-options">Expanded Options</a>
+            <a href="#deeper-reference">Deeper Reference</a>
           </div>
         </nav>
       </div>
 
       <main class="layout">
+        <section class="section" id="quick-reference">
+          <div class="section-head">
+            <div class="section-copy">
+              <p class="section-label">0. Quick Reference</p>
+              <h2>The minimum rules a player needs at the table</h2>
+            </div>
+          </div>
+
+          <p class="section-copy">
+            Use this section at the table. It is the shortest version of the game: what to roll, what Hope and Fear do, and what a player should care about before deeper reading.
+          </p>
+
+          <div class="glance-grid">
+            <article class="glance-card">
+              <small>Action rolls</small>
+              <strong>Roll 2d12 + modifiers</strong>
+              <p>Pick the trait, add help or bonuses, and roll both d12 when the fiction is uncertain.</p>
+            </article>
+            <article class="glance-card">
+              <small>Hope</small>
+              <strong>Momentum for players</strong>
+              <p>Hope is your resource for helping allies, triggering features, and pushing the scene.</p>
+            </article>
+            <article class="glance-card">
+              <small>Fear</small>
+              <strong>Complications for the GM</strong>
+              <p>Fear belongs to the GM and turns success into consequences, pressure, or a new problem.</p>
+            </article>
+            <article class="glance-card">
+              <small>Build basics</small>
+              <strong>Class, domains, ancestry, community</strong>
+              <p>Those four choices set your character's role, style, and the kind of story they naturally pull toward.</p>
+            </article>
+          </div>
+
+          <div class="accordion-wrap" style="margin-top: 1rem;">
+            <details class="accordion" open>
+              <summary><span>What a player should do in play</span><span>+</span></summary>
+              <div class="accordion-body">
+                <ul class="bullet-list">
+                  <li>Say what you do in the fiction, not just the move you want to make.</li>
+                  <li>Roll when the outcome matters and let the result change the scene.</li>
+                  <li>Spend Hope to help, push, or keep momentum moving.</li>
+                  <li>Expect Fear to add pressure, cost, or a new complication.</li>
+                </ul>
+              </div>
+            </details>
+            <details class="accordion">
+              <summary><span>What a new character needs first</span><span>+</span></summary>
+              <div class="accordion-body">
+                <ul class="bullet-list">
+                  <li>A class fantasy that matches the role you want at the table.</li>
+                  <li>Two domains that reinforce that fantasy.</li>
+                  <li>An ancestry and community that explain where the character comes from.</li>
+                  <li>One connection or flaw that makes the character easy to bring into scenes.</li>
+                </ul>
+              </div>
+            </details>
+          </div>
+        </section>
+
         <section class="section" id="reference-atlas">
           <div class="section-head">
             <div class="section-copy">
@@ -1430,6 +1521,9 @@
           </article>
         </section>
 
+        <details class="deep-dive" id="deeper-reference">
+          <summary>Deeper Reference: classes, play flow, combat, growth, and expansion</summary>
+          <div class="deep-dive-body">
         <section class="section" id="classes-and-domains">
           <div class="section-head">
             <div class="section-copy">
@@ -1595,6 +1689,8 @@
             <p>This primer now connects to dedicated class, domain, campaign-frame, and Void option references. That keeps onboarding clean while still treating Witch, Assassin, Heritage support, and Transformations as real player-facing content when your table wants them live.</p>
           </div>
         </section>
+          </div>
+        </details>
       </main>
 
       <footer class="footer">
