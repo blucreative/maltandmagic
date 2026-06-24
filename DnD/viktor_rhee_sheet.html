@@ -41,6 +41,12 @@
 
   * { box-sizing: border-box; margin: 0; padding: 0; }
 
+  html,
+  body {
+    max-width: 100%;
+    overflow-x: clip;
+  }
+
   body {
     background: #0e1a0c;
     background-image:
@@ -82,11 +88,13 @@
   .tooltip {
     position: relative;
     z-index: 1;
+    width: min(1400px, 100%);
+    margin-inline: auto;
   }
 
   /* ===== HEADER ===== */
   .sheet-header {
-    background: linear-gradient(180deg, #091006 0%, #172415 55%, #10190e 100%);
+    background: linear-gradient(180deg, rgba(12,23,11,0.96) 0%, rgba(18,32,17,0.94) 65%, rgba(14,24,13,0.94) 100%);
     border-bottom: 2px solid var(--gold-dim);
     padding: 16px 24px;
     display: flex;
@@ -147,10 +155,11 @@
   /* ===== NAV TABS ===== */
   .nav-tabs {
     display: flex;
-    background: #0d1a0b;
+    background: rgba(13, 26, 11, 0.9);
     border-bottom: 1px solid var(--forest-border);
     padding: 0 24px;
     gap: 4px;
+    backdrop-filter: blur(6px);
   }
   .tab-btn {
     font-family: 'Barlow Condensed', sans-serif;
@@ -175,10 +184,12 @@
   .tab-panel.active { display: block; }
 
   /* ===== MAIN GRID ===== */
-  .sheet-body { padding: 20px 24px; }
+  .sheet-body {
+    padding: 20px 24px 28px;
+  }
   .dashboard-grid {
     display: grid;
-    grid-template-columns: 200px 1fr 280px;
+    grid-template-columns: minmax(210px, 250px) minmax(420px, 1fr) minmax(250px, 310px);
     grid-template-rows: auto auto auto;
     gap: 16px;
     align-items: start;
@@ -186,16 +197,16 @@
 
   /* ===== PANELS ===== */
   .panel {
-    background: var(--card-bg);
+    background: linear-gradient(180deg, rgba(35,48,32,0.9), rgba(27,38,25,0.88));
     border: 1px solid var(--card-border);
-    border-radius: 6px;
+    border-radius: 10px;
     overflow: visible;
-    box-shadow: inset 0 1px 0 rgba(255,255,255,0.02), 0 8px 18px rgba(0,0,0,0.15);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.03), 0 14px 24px rgba(0,0,0,0.18);
   }
   .panel-header {
-    background: rgba(201,168,76,0.08);
+    background: linear-gradient(180deg, rgba(201,168,76,0.1), rgba(201,168,76,0.04));
     border-bottom: 1px solid var(--card-border);
-    padding: 8px 14px;
+    padding: 9px 14px;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -787,21 +798,23 @@
   .tooltip {
     position: fixed;
     z-index: 9999;
-    max-width: 360px;
-    min-width: 240px;
-    background: var(--tooltip-bg);
-    border: 1px solid var(--gold-dim);
-    border-radius: 6px;
+    width: min(360px, calc(100vw - 24px));
+    max-height: min(68vh, 520px);
+    overflow: auto;
+    background: rgba(17, 25, 16, 0.95);
+    border: 1px solid rgba(201, 168, 76, 0.55);
+    border-radius: 10px;
     padding: 14px 16px;
-    box-shadow: 0 8px 32px rgba(0,0,0,0.6);
+    box-shadow: 0 16px 38px rgba(0,0,0,0.45);
+    backdrop-filter: blur(8px);
     pointer-events: none;
     opacity: 0;
-    transform: translateY(4px);
-    transition: opacity 0.15s, transform 0.15s;
+    transform: translateY(8px) scale(0.985);
+    transition: opacity 0.14s, transform 0.14s;
   }
   .tooltip.visible {
     opacity: 1;
-    transform: translateY(0);
+    transform: translateY(0) scale(1);
   }
   .tooltip-name {
     font-family: 'Cinzel', serif;
@@ -818,14 +831,14 @@
     font-weight: 600;
     letter-spacing: 1.5px;
     text-transform: uppercase;
-    color: var(--text-dim);
+    color: #95ac88;
     margin-bottom: 8px;
   }
   .tooltip-body {
     font-family: 'IM Fell English', serif;
     font-size: 12px;
-    color: var(--parchment-dark);
-    line-height: 1.6;
+    color: #d7d1b4;
+    line-height: 1.55;
   }
   .tooltip-body strong {
     color: var(--gold);
@@ -845,10 +858,10 @@
   .tooltip-stat {
     font-family: 'Barlow Condensed', sans-serif;
     font-size: 10px;
-    color: var(--text-dim);
+    color: #9db090;
   }
   .tooltip-stat span {
-    color: var(--text-secondary);
+    color: #e1d3a3;
     font-weight: 600;
   }
 
@@ -1105,7 +1118,7 @@
   .condition-badge.inactive { background: rgba(58,79,53,0.15); border-color: rgba(58,79,53,0.3); color: var(--text-dim); }
 
   /* Scrollbar */
-  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar { width: 8px; height: 8px; }
   ::-webkit-scrollbar-track { background: rgba(26,34,24,0.3); }
   ::-webkit-scrollbar-thumb { background: var(--forest-border); border-radius: 3px; }
   ::-webkit-scrollbar-thumb:hover { background: var(--gold-dim); }
@@ -1164,6 +1177,7 @@
       overflow-x: auto;
       padding: 0 8px;
       gap: 0;
+      scrollbar-width: thin;
     }
     .tab-btn {
       white-space: nowrap;
@@ -1190,6 +1204,9 @@
     }
     .combat-stat {
       min-width: 45%;
+    }
+    .tooltip {
+      width: calc(100vw - 16px);
     }
   }
 </style>
@@ -2170,7 +2187,8 @@ function switchTab(id) {
   document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
   document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
   document.getElementById('tab-' + id).classList.add('active');
-  event.target.classList.add('active');
+  const activeBtn = document.querySelector(`.tab-btn[onclick="switchTab('${id}')"]`);
+  if (activeBtn) activeBtn.classList.add('active');
 }
 
 // ===== TOOLTIP ENGINE =====
@@ -2179,9 +2197,11 @@ const ttName = document.getElementById('tt-name');
 const ttType = document.getElementById('tt-type');
 const ttBody = document.getElementById('tt-body');
 const ttStats = document.getElementById('tt-stats');
-let tooltipTarget = null;
+let activeTooltipEl = null;
+let lastMouseX = 0;
+let lastMouseY = 0;
 
-function showTooltip(data, el) {
+function showTooltip(data) {
   ttName.textContent = data.name;
   ttType.textContent = data.type || '';
   ttBody.innerHTML = (data.body || '').replace(/\n/g, '<br>');
@@ -2191,38 +2211,86 @@ function showTooltip(data, el) {
   } else {
     ttStats.style.display = 'none';
   }
-  positionTooltip(el);
   tooltip.classList.add('visible');
 }
 
-function positionTooltip(el) {
-  const rect = el.getBoundingClientRect();
-  const tw = 360;
-  const th = tooltip.offsetHeight || 200;
-  let left = rect.right + 10;
-  let top = rect.top;
-  if (left + tw > window.innerWidth - 10) left = rect.left - tw - 10;
-  if (top + th > window.innerHeight - 10) top = window.innerHeight - th - 10;
-  if (top < 10) top = 10;
-  tooltip.style.left = Math.max(10, left) + 'px';
-  tooltip.style.top = top + 'px';
+function positionTooltip(x, y) {
+  const pad = 12;
+  const rect = tooltip.getBoundingClientRect();
+  let left = x + 16;
+  let top = y + 14;
+  if (left + rect.width > window.innerWidth - pad) left = x - rect.width - 16;
+  if (top + rect.height > window.innerHeight - pad) top = y - rect.height - 16;
+  if (left < pad) left = pad;
+  if (top < pad) top = pad;
+  tooltip.style.left = Math.round(left) + 'px';
+  tooltip.style.top = Math.round(top) + 'px';
 }
 
 function hideTooltip() {
   tooltip.classList.remove('visible');
+  activeTooltipEl = null;
 }
 
-document.addEventListener('mousemove', (e) => {
+function getTooltipData(el) {
+  if (!el) return null;
+  return TOOLTIPS[el.dataset.tooltip] || null;
+}
+
+function activateTooltip(el, x, y) {
+  const data = getTooltipData(el);
+  if (!data) return;
+  activeTooltipEl = el;
+  showTooltip(data);
+  positionTooltip(x, y);
+}
+
+document.addEventListener('mouseover', (e) => {
   const el = e.target.closest('[data-tooltip]');
-  if (el) {
-    const key = el.dataset.tooltip;
-    const data = TOOLTIPS[key];
-    if (data) {
-      showTooltip(data, el);
-      return;
-    }
+  if (!el) return;
+  lastMouseX = e.clientX;
+  lastMouseY = e.clientY;
+  activateTooltip(el, lastMouseX, lastMouseY);
+});
+
+document.addEventListener('mousemove', (e) => {
+  if (!activeTooltipEl) return;
+  lastMouseX = e.clientX;
+  lastMouseY = e.clientY;
+  positionTooltip(lastMouseX, lastMouseY);
+});
+
+document.addEventListener('mouseout', (e) => {
+  if (!activeTooltipEl) return;
+  const nextEl = e.relatedTarget;
+  if (nextEl && activeTooltipEl.contains(nextEl)) {
+    return;
   }
   hideTooltip();
+});
+
+document.addEventListener('focusin', (e) => {
+  const el = e.target.closest('[data-tooltip]');
+  if (!el) return;
+  const rect = el.getBoundingClientRect();
+  activateTooltip(el, rect.left + rect.width / 2, rect.top + rect.height / 2);
+});
+
+document.addEventListener('focusout', () => {
+  hideTooltip();
+});
+
+window.addEventListener('scroll', () => {
+  if (activeTooltipEl) {
+    const rect = activeTooltipEl.getBoundingClientRect();
+    positionTooltip(rect.left + rect.width / 2, rect.top + rect.height / 2);
+  }
+}, { passive: true });
+
+window.addEventListener('resize', () => {
+  if (!activeTooltipEl) return;
+  const rect = activeTooltipEl.getBoundingClientRect();
+  positionTooltip(rect.left + rect.width / 2, rect.top + rect.height / 2);
 });
 
 // ===== HP =====
