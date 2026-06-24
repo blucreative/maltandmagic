@@ -91,6 +91,15 @@
     margin-inline: auto;
   }
 
+  .tooltip-layer {
+    position: fixed;
+    inset: 0;
+    z-index: 2147483647;
+    pointer-events: none;
+    overflow: hidden;
+    isolation: isolate;
+  }
+
   /* ===== HEADER ===== */
   .sheet-header {
     background: linear-gradient(180deg, rgba(12,23,11,0.96) 0%, rgba(18,32,17,0.94) 65%, rgba(14,24,13,0.94) 100%);
@@ -822,8 +831,8 @@
 
   /* ===== TOOLTIP / OVERLAY ===== */
   .tooltip {
-    position: fixed;
-    z-index: 2147483647;
+    position: absolute;
+    z-index: 1;
     top: 0;
     left: 0;
     margin: 0;
@@ -841,6 +850,7 @@
     opacity: 0;
     transform: translateY(8px) scale(0.985);
     transition: opacity 0.14s, transform 0.14s;
+    will-change: transform, top, left;
   }
   .tooltip.visible {
     opacity: 1;
@@ -1243,12 +1253,14 @@
 </head>
 <body class="theme-fantasy page-dnd-character-sheet page-viktor-rhee-sheet">
 
-<!-- TOOLTIP (global) -->
-<div id="tooltip" class="tooltip">
-  <div class="tooltip-name" id="tt-name"></div>
-  <div class="tooltip-type" id="tt-type"></div>
-  <div id="tt-stats" class="tooltip-stats" style="display:none"></div>
-  <div class="tooltip-body" id="tt-body"></div>
+<!-- TOOLTIP (global portal layer) -->
+<div id="tooltip-layer" class="tooltip-layer" aria-hidden="true">
+  <div id="tooltip" class="tooltip" role="tooltip">
+    <div class="tooltip-name" id="tt-name"></div>
+    <div class="tooltip-type" id="tt-type"></div>
+    <div id="tt-stats" class="tooltip-stats" style="display:none"></div>
+    <div class="tooltip-body" id="tt-body"></div>
+  </div>
 </div>
 
 <!-- ===== HEADER ===== -->
@@ -2233,6 +2245,7 @@ function switchTab(id) {
 
 // ===== TOOLTIP ENGINE =====
 const tooltip = document.getElementById('tooltip');
+const tooltipLayer = document.getElementById('tooltip-layer');
 const ttName = document.getElementById('tt-name');
 const ttType = document.getElementById('tt-type');
 const ttBody = document.getElementById('tt-body');
@@ -2263,6 +2276,12 @@ function positionTooltip(x, y) {
   if (top + rect.height > window.innerHeight - pad) top = y - rect.height - 16;
   if (left < pad) left = pad;
   if (top < pad) top = pad;
+
+  // Keep tooltip in the dedicated top-layer portal.
+  if (tooltip.parentElement !== tooltipLayer && tooltipLayer) {
+    tooltipLayer.appendChild(tooltip);
+  }
+
   tooltip.style.left = Math.round(left) + 'px';
   tooltip.style.top = Math.round(top) + 'px';
 }
