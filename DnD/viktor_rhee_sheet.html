@@ -748,6 +748,91 @@
   }
   .spell-meta span { display: flex; align-items: center; gap: 3px; }
 
+  .spell-actions {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 8px;
+    flex-wrap: wrap;
+  }
+  .cast-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 5px 12px;
+    border-radius: 4px;
+    border: 1px solid var(--gold-dim);
+    background: rgba(201,168,76,0.10);
+    color: var(--gold-light);
+    cursor: pointer;
+    transition: all 0.15s;
+    white-space: nowrap;
+  }
+  .cast-btn:hover:not(:disabled) {
+    border-color: var(--gold);
+    background: rgba(201,168,76,0.20);
+    color: #f4ddac;
+  }
+  .cast-btn:active:not(:disabled) { transform: translateY(1px); }
+  .cast-btn:disabled {
+    cursor: not-allowed;
+    opacity: 0.55;
+    border-color: rgba(95,113,107,0.4);
+    background: rgba(24,34,20,0.5);
+    color: var(--text-dim);
+  }
+  .cast-btn.is-active {
+    border-color: rgba(126,200,126,0.7);
+    background: rgba(90,155,90,0.18);
+    color: #89cf89;
+    opacity: 1;
+  }
+  .cast-btn.end {
+    border-color: rgba(180,90,90,0.45);
+    background: rgba(120,40,40,0.14);
+    color: #e0a0a0;
+  }
+  .cast-btn.end:hover:not(:disabled) {
+    border-color: rgba(200,100,100,0.7);
+    background: rgba(150,50,50,0.22);
+    color: #f0b8b8;
+  }
+  .cast-toast {
+    position: fixed !important;
+    z-index: 2147483646 !important;
+    left: 50%;
+    bottom: 26px;
+    transform: translate(-50%, 18px);
+    max-width: min(420px, calc(100vw - 32px));
+    padding: 11px 18px;
+    border-radius: 8px;
+    border: 1px solid rgba(201,168,76,0.55);
+    background: rgba(17,25,16,0.96);
+    color: var(--text-primary);
+    font-family: 'Barlow', sans-serif;
+    font-size: 13px;
+    line-height: 1.35;
+    text-align: center;
+    box-shadow: 0 14px 34px rgba(0,0,0,0.5);
+    backdrop-filter: blur(8px);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s, transform 0.2s;
+  }
+  .cast-toast.show {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+  .cast-toast.error {
+    border-color: rgba(200,90,90,0.7);
+    color: #f0c0c0;
+  }
+
   /* ===== FEATURES / TRAITS ===== */
   .feature-card {
     background: rgba(26,34,24,0.6);
@@ -1870,9 +1955,12 @@
             <span>⌛ 1 Minute</span>
             <span>🔮 V,S,M</span>
           </div>
+          <div class="spell-actions">
+            <button class="cast-btn" data-cast="jump" onclick="castSpell('jump')">⚡ Cast</button>
+          </div>
         </div>
 
-        <div class="spell-card prepared" id="spell-longstrider-card" data-tooltip="spell-longstrider" onclick="toggleSpellEffect('longstrider')">
+        <div class="spell-card prepared" id="spell-longstrider-card" data-tooltip="spell-longstrider">
           <div class="spell-header">
             <div class="spell-name">Longstrider</div>
             <span class="spell-level-badge">1st</span>
@@ -1884,9 +1972,13 @@
             <span>⌛ 1 Hour</span>
             <span>🔮 V,S,M</span>
           </div>
+          <div class="spell-actions">
+            <button class="cast-btn" data-cast="longstrider" onclick="castSpell('longstrider')">⚡ Cast</button>
+            <button class="cast-btn end" data-end="longstrider" onclick="endSpell('longstrider')" style="display:none;">End</button>
+          </div>
         </div>
 
-        <div class="spell-card prepared" id="spell-anticipate-card" data-tooltip="spell-anticipate" onclick="toggleSpellEffect('anticipate')">
+        <div class="spell-card prepared" id="spell-anticipate-card" data-tooltip="spell-anticipate">
           <div class="spell-header">
             <div class="spell-name">Anticipate Weakness</div>
             <span class="spell-level-badge">1st</span>
@@ -1898,11 +1990,15 @@
             <span>⌛ Instantaneous</span>
             <span>🔮 V,S</span>
           </div>
+          <div class="spell-actions">
+            <button class="cast-btn" data-cast="anticipate" onclick="castSpell('anticipate')">⚡ Cast</button>
+            <button class="cast-btn end" data-end="anticipate" onclick="endSpell('anticipate')" style="display:none;">End</button>
+          </div>
         </div>
 
         <div style="margin-top:12px;margin-bottom:6px;">
           <div style="font-family:'Barlow Condensed',sans-serif;font-size:9px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:#5a9b5a;margin-bottom:8px;">Always Prepared (Favoured Enemy)</div>
-          <div class="spell-card always-prepared" id="spell-hm-card" data-tooltip="spell-hunters-mark" onclick="toggleHuntersMark()">
+          <div class="spell-card always-prepared" id="spell-hm-card" data-tooltip="spell-hunters-mark">
             <div class="spell-header">
               <div class="spell-name">Hunter's Mark</div>
               <span class="spell-level-badge" style="border-color:rgba(90,155,90,0.4);color:#5a9b5a;">Always</span>
@@ -1916,10 +2012,14 @@
             </div>
             <div style="margin-top:6px;">
               <div class="resource-track">
-                <div class="resource-pip available" onclick="event.stopPropagation();toggleResource(this)" title="Use 1"></div>
-                <div class="resource-pip available" onclick="event.stopPropagation();toggleResource(this)" title="Use 2"></div>
+                <div class="resource-pip available" onclick="toggleResource(this)" title="Free use 1"></div>
+                <div class="resource-pip available" onclick="toggleResource(this)" title="Free use 2"></div>
                 <span class="resource-label">2 / Long Rest (no slot needed)</span>
               </div>
+            </div>
+            <div class="spell-actions">
+              <button class="cast-btn" data-cast="huntersMark" onclick="castHuntersMark()">⚡ Cast</button>
+              <button class="cast-btn end" data-end="huntersMark" onclick="endHuntersMark()" style="display:none;">End</button>
             </div>
           </div>
         </div>
@@ -2405,7 +2505,7 @@ const TOOLTIPS = {
 </script>
 
 <script>
-const SHEET_UI_VERSION = '3.1.1';
+const SHEET_UI_VERSION = '3.2.0';
 
 // ===== TABS =====
 function switchTab(id) {
@@ -2749,6 +2849,8 @@ function refreshDerivedStats() {
       el.className = 'adv-indicator';
     }
   });
+
+  refreshSpellAvailability();
 }
 
 function toggleFeatureEffect(name) {
@@ -2768,6 +2870,123 @@ function toggleSpellEffect(name) {
   }
   refreshDerivedStats();
   saveSheetState();
+}
+
+// ===== SPELL CASTING =====
+const SPELLS = {
+  jump:        { name: 'Jump',                level: 1, effect: null },
+  longstrider: { name: 'Longstrider',         level: 1, effect: 'longstrider' },
+  anticipate:  { name: 'Anticipate Weakness', level: 1, effect: 'anticipate' },
+};
+
+const ORDINALS = ['0th','1st','2nd','3rd','4th','5th','6th','7th','8th','9th'];
+function ordinal(n) { return ORDINALS[n] || `${n}th`; }
+
+// Spell-tab pips (s-slot-*) are canonical; toggleSlot() syncs the combat-tab twins.
+function spellSlotPips(level) {
+  return Array.from(document.querySelectorAll(`.slot-pip[id^="s-slot-${level}"]`));
+}
+function remainingSlots(level) {
+  return spellSlotPips(level).filter(p => p.classList.contains('available')).length;
+}
+function consumeSlot(level) {
+  const pip = spellSlotPips(level).find(p => p.classList.contains('available'));
+  if (!pip) return false;
+  toggleSlot(pip.id);
+  return true;
+}
+
+let castToastTimer = null;
+function castToast(msg, isError = false) {
+  const el = document.getElementById('castToast');
+  if (!el) return;
+  el.textContent = msg;
+  el.classList.toggle('error', !!isError);
+  el.classList.add('show');
+  clearTimeout(castToastTimer);
+  castToastTimer = setTimeout(() => el.classList.remove('show'), 2400);
+}
+
+function castSpell(key) {
+  const spell = SPELLS[key];
+  if (!spell) return;
+  if (spell.effect && sheetState[spell.effect]) {
+    castToast(`${spell.name} is already active.`);
+    return;
+  }
+  if (!consumeSlot(spell.level)) {
+    castToast(`No ${ordinal(spell.level)}-level spell slots remaining.`, true);
+    return;
+  }
+  if (spell.effect) sheetState[spell.effect] = true;
+  refreshDerivedStats();
+  saveSheetState();
+  const left = remainingSlots(spell.level);
+  castToast(`${spell.name} cast — ${ordinal(spell.level)}-level slot spent (${left} remaining).`);
+}
+
+function endSpell(key) {
+  const spell = SPELLS[key];
+  if (!spell || !spell.effect || !sheetState[spell.effect]) return;
+  sheetState[spell.effect] = false;
+  refreshDerivedStats();
+  saveSheetState();
+  castToast(`${spell.name} ended. The spent slot is not refunded.`);
+}
+
+function castHuntersMark() {
+  if (huntersMark) { castToast("Hunter's Mark is already active."); return; }
+  const card = document.getElementById('spell-hm-card');
+  const freePip = card ? card.querySelector('.resource-pip.available') : null;
+  let usedFree = false;
+  if (freePip) {
+    freePip.classList.remove('available');
+    freePip.classList.add('used');
+    usedFree = true;
+  } else if (!consumeSlot(1)) {
+    castToast("No free uses or 1st-level slots left for Hunter's Mark.", true);
+    return;
+  }
+  huntersMark = false;   // toggleHuntersMark() flips this to true and activates UI
+  toggleHuntersMark();
+  castToast(usedFree
+    ? "Hunter's Mark cast — 1 free use spent (no slot)."
+    : "Hunter's Mark cast — 1st-level slot spent.");
+}
+
+function endHuntersMark() {
+  if (!huntersMark) return;
+  toggleHuntersMark();   // flips to false and saves
+  castToast("Hunter's Mark ended (concentration dropped).");
+}
+
+function refreshSpellAvailability() {
+  Object.entries(SPELLS).forEach(([key, spell]) => {
+    const castBtn = document.querySelector(`.cast-btn[data-cast="${key}"]`);
+    const endBtn = document.querySelector(`.cast-btn[data-end="${key}"]`);
+    const active = !!(spell.effect && sheetState[spell.effect]);
+    const slots = remainingSlots(spell.level);
+    if (castBtn) {
+      castBtn.disabled = active || slots <= 0;
+      castBtn.classList.toggle('is-active', active);
+      castBtn.textContent = active ? '✓ Active' : (slots <= 0 ? '✗ No Slots' : '⚡ Cast');
+    }
+    if (endBtn) endBtn.style.display = active ? 'inline-flex' : 'none';
+  });
+
+  const hmCast = document.querySelector('.cast-btn[data-cast="huntersMark"]');
+  const hmEnd = document.querySelector('.cast-btn[data-end="huntersMark"]');
+  const hmCard = document.getElementById('spell-hm-card');
+  const freeLeft = hmCard ? hmCard.querySelectorAll('.resource-pip.available').length : 0;
+  const slotLeft = remainingSlots(1);
+  if (hmCast) {
+    hmCast.disabled = huntersMark || (freeLeft <= 0 && slotLeft <= 0);
+    hmCast.classList.toggle('is-active', huntersMark);
+    hmCast.textContent = huntersMark
+      ? '✓ Active'
+      : (freeLeft <= 0 && slotLeft <= 0) ? '✗ No Uses' : '⚡ Cast';
+  }
+  if (hmEnd) hmEnd.style.display = huntersMark ? 'inline-flex' : 'none';
 }
 
 function applyHP(sign) {
@@ -2799,6 +3018,7 @@ function toggleSlot(id) {
     twinEl.classList.remove('used','available');
     twinEl.classList.add(el.classList.contains('used') ? 'used' : 'available');
   }
+  if (typeof refreshSpellAvailability === 'function') refreshSpellAvailability();
   saveSheetState();
 }
 
@@ -2806,6 +3026,7 @@ function toggleSlot(id) {
 function toggleResource(el) {
   el.classList.toggle('used');
   el.classList.toggle('available');
+  if (typeof refreshSpellAvailability === 'function') refreshSpellAvailability();
   saveSheetState();
 }
 
@@ -2956,5 +3177,7 @@ function longRest() {
 
 loadSheetState();
 </script>
+
+<div id="castToast" class="cast-toast" role="status" aria-live="polite"></div>
 </body>
 </html>
