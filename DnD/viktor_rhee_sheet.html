@@ -1,0 +1,2403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Viktor Rhee — Ranger 2 | Malt & Magic</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=IM+Fell+English:ital@0;1&family=Barlow:wght@300;400;500;600&family=Barlow+Condensed:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/css/theme-fantasy.css">
+<link rel="stylesheet" href="../assets/css/page-polish.css">
+<style>
+  :root {
+    --forest-dark: #1a2218;
+    --forest-mid: #243020;
+    --forest-panel: #1f2a1c;
+    --forest-border: #3a4f35;
+    --forest-accent: #4a6741;
+    --gold: #c9a84c;
+    --gold-light: #e8c96a;
+    --gold-dim: #7a6228;
+    --parchment: #e8dfc8;
+    --parchment-dark: #c9bfa0;
+    --text-primary: #e8dfc8;
+    --text-secondary: #a09878;
+    --text-dim: #6a6050;
+    --danger: #8b2f2f;
+    --danger-light: #c0392b;
+    --success: #3a6b3a;
+    --success-light: #5a9b5a;
+    --hp-bar: #6b2020;
+    --section-bg: rgba(26,34,24,0.85);
+    --card-bg: rgba(31,42,28,0.9);
+    --card-border: rgba(201,168,76,0.25);
+    --tooltip-bg: #12180f;
+    --advantage: #2e5c2e;
+    --disadvantage: #5c2e2e;
+    --steel: #8fa29a;
+    --steel-dim: #5f716b;
+    --ember: #c26f3a;
+    --paper-grain: rgba(224, 208, 170, 0.05);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: #0e1a0c;
+    background-image:
+      radial-gradient(ellipse at 16% 18%, rgba(56, 78, 50, 0.38) 0%, transparent 50%),
+      radial-gradient(ellipse at 80% 74%, rgba(38, 58, 34, 0.32) 0%, transparent 52%),
+      linear-gradient(180deg, #0c130a 0%, #131f11 50%, #0a1309 100%);
+    color: var(--text-primary);
+    font-family: 'Barlow', sans-serif;
+    font-size: 14px;
+    min-height: 100vh;
+    line-height: 1.4;
+    position: relative;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    background-image:
+      radial-gradient(circle at 25% 20%, rgba(194,111,58,0.09) 0 24%, transparent 40%),
+      linear-gradient(115deg, transparent 0%, rgba(143,162,154,0.08) 49%, transparent 52%),
+      repeating-linear-gradient(20deg, transparent 0, transparent 42px, rgba(224,208,170,0.025) 42px, rgba(224,208,170,0.025) 43px);
+    z-index: 0;
+  }
+
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    background: radial-gradient(circle at center, transparent 55%, rgba(0,0,0,0.52) 100%);
+    z-index: 0;
+  }
+
+  .sheet-header,
+  .nav-tabs,
+  .sheet-body,
+  .tooltip {
+    position: relative;
+    z-index: 1;
+  }
+
+  /* ===== HEADER ===== */
+  .sheet-header {
+    background: linear-gradient(180deg, #091006 0%, #172415 55%, #10190e 100%);
+    border-bottom: 2px solid var(--gold-dim);
+    padding: 16px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.3);
+  }
+  .sheet-header::after {
+    content: 'FORESTER DOSSIER';
+    position: absolute;
+    right: 24px;
+    bottom: 4px;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 9px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: rgba(143, 162, 154, 0.46);
+  }
+  .char-name {
+    font-family: 'Cinzel', serif;
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--gold-light);
+    letter-spacing: 2px;
+    text-shadow: 0 0 20px rgba(201,168,76,0.3);
+  }
+  .char-meta {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+  }
+  .char-meta-item {
+    text-align: center;
+  }
+  .char-meta-item .label {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 9px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--text-dim);
+  }
+  .char-meta-item .value {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--gold);
+  }
+  .meta-divider {
+    width: 1px;
+    height: 30px;
+    background: var(--gold-dim);
+    opacity: 0.3;
+  }
+
+  /* ===== NAV TABS ===== */
+  .nav-tabs {
+    display: flex;
+    background: #0d1a0b;
+    border-bottom: 1px solid var(--forest-border);
+    padding: 0 24px;
+    gap: 4px;
+  }
+  .tab-btn {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    background: none;
+    border: none;
+    border-bottom: 2px solid transparent;
+    padding: 10px 16px 8px;
+    cursor: pointer;
+    transition: color 0.2s, border-color 0.2s;
+  }
+  .tab-btn:hover { color: var(--gold); }
+  .tab-btn.active {
+    color: var(--gold-light);
+    border-bottom-color: var(--gold);
+  }
+  .tab-panel { display: none; }
+  .tab-panel.active { display: block; }
+
+  /* ===== MAIN GRID ===== */
+  .sheet-body { padding: 20px 24px; }
+  .dashboard-grid {
+    display: grid;
+    grid-template-columns: 200px 1fr 280px;
+    grid-template-rows: auto auto auto;
+    gap: 16px;
+    align-items: start;
+  }
+
+  /* ===== PANELS ===== */
+  .panel {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 6px;
+    overflow: visible;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.02), 0 8px 18px rgba(0,0,0,0.15);
+  }
+  .panel-header {
+    background: rgba(201,168,76,0.08);
+    border-bottom: 1px solid var(--card-border);
+    padding: 8px 14px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .panel-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--gold);
+  }
+  .panel-body { padding: 14px; }
+
+  /* ===== ABILITY SCORES ===== */
+  .ability-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+  .ability-score {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 10px;
+    background: rgba(26,34,24,0.6);
+    border: 1px solid rgba(58,79,53,0.4);
+    border-radius: 4px;
+    cursor: default;
+    position: relative;
+  }
+  .ability-score:hover { border-color: var(--gold-dim); }
+  .ability-name {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    width: 26px;
+    flex-shrink: 0;
+  }
+  .ability-num {
+    font-family: 'Cinzel', serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--text-primary);
+    width: 36px;
+    text-align: center;
+    flex-shrink: 0;
+  }
+  .ability-mod {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--gold-light);
+    width: 26px;
+    text-align: center;
+    background: rgba(201,168,76,0.1);
+    border: 1px solid rgba(201,168,76,0.2);
+    border-radius: 3px;
+    padding: 2px 0;
+  }
+  .save-indicator {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    border: 1px solid var(--text-dim);
+    flex-shrink: 0;
+    margin-left: auto;
+  }
+  .save-indicator.proficient { background: var(--gold); border-color: var(--gold); }
+
+  /* ===== HP ===== */
+  .hp-display {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 8px;
+    margin-bottom: 12px;
+  }
+  .hp-box {
+    text-align: center;
+    padding: 10px 6px;
+    background: rgba(26,34,24,0.6);
+    border: 1px solid rgba(58,79,53,0.4);
+    border-radius: 4px;
+  }
+  .hp-box .hp-label {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 8px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    display: block;
+    margin-bottom: 4px;
+  }
+  .hp-box .hp-value {
+    font-family: 'Cinzel', serif;
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--text-primary);
+  }
+  .hp-box .hp-value.current { color: #7ec87e; }
+  .hp-box .hp-value.temp { color: #7eb8c8; }
+  .hp-input {
+    width: 100%;
+    text-align: center;
+    background: rgba(26,34,24,0.8);
+    border: 1px solid var(--forest-border);
+    border-radius: 4px;
+    color: var(--text-primary);
+    font-family: 'Cinzel', serif;
+    font-size: 20px;
+    font-weight: 700;
+    padding: 4px;
+  }
+  .hp-input:focus { outline: 1px solid var(--gold); }
+  .hp-controls {
+    display: flex;
+    gap: 6px;
+    margin-bottom: 10px;
+  }
+  .hp-btn {
+    flex: 1;
+    padding: 6px;
+    background: none;
+    border: 1px solid var(--forest-border);
+    border-radius: 4px;
+    color: var(--text-secondary);
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .hp-btn:hover { border-color: var(--gold-dim); color: var(--gold); }
+  .hp-btn.heal { border-color: rgba(90,155,90,0.4); color: #5a9b5a; }
+  .hp-btn.heal:hover { background: rgba(90,155,90,0.1); }
+  .hp-btn.damage { border-color: rgba(139,47,47,0.4); color: #c05050; }
+  .hp-btn.damage:hover { background: rgba(139,47,47,0.1); }
+  .hp-bar-wrap {
+    height: 6px;
+    background: rgba(26,34,24,0.8);
+    border-radius: 3px;
+    border: 1px solid rgba(58,79,53,0.3);
+    overflow: hidden;
+    margin-bottom: 10px;
+  }
+  .hp-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #4a8b4a, #7ec87e);
+    border-radius: 3px;
+    transition: width 0.4s ease;
+  }
+  .hp-delta-input {
+    display: flex;
+    gap: 6px;
+    align-items: center;
+  }
+  .hp-delta-input input {
+    flex: 1;
+    background: rgba(26,34,24,0.8);
+    border: 1px solid var(--forest-border);
+    border-radius: 4px;
+    color: var(--text-primary);
+    font-family: 'Barlow', sans-serif;
+    font-size: 14px;
+    padding: 6px 10px;
+    text-align: center;
+  }
+  .hp-delta-input input:focus { outline: 1px solid var(--gold); }
+
+  /* ===== COMBAT STATS ROW ===== */
+  .combat-row {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 14px;
+    flex-wrap: wrap;
+  }
+  .combat-stat {
+    flex: 1;
+    min-width: 60px;
+    text-align: center;
+    padding: 10px 8px;
+    background: rgba(26,34,24,0.7);
+    border: 1px solid rgba(58,79,53,0.5);
+    border-radius: 4px;
+  }
+  .combat-stat .cs-val {
+    font-family: 'Cinzel', serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--gold-light);
+    display: block;
+  }
+  .combat-stat .cs-label {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--text-dim);
+  }
+
+  /* ===== DEATH SAVES ===== */
+  .death-saves {
+    display: flex;
+    gap: 12px;
+    padding: 8px 0;
+  }
+  .death-save-row {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .death-save-row .ds-label {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--text-dim);
+  }
+  .death-pips {
+    display: flex;
+    gap: 6px;
+  }
+  .death-pip {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    border: 1px solid var(--text-dim);
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .death-pip.success.filled { background: #5a9b5a; border-color: #5a9b5a; }
+  .death-pip.failure.filled { background: var(--danger-light); border-color: var(--danger-light); }
+
+  /* ===== SKILLS ===== */
+  .skill-list { display: flex; flex-direction: column; gap: 2px; }
+  .skill-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 4px 6px;
+    border-radius: 3px;
+    cursor: default;
+    transition: background 0.1s;
+  }
+  .skill-item:hover { background: rgba(58,79,53,0.2); }
+  .skill-prof {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    border: 1px solid var(--text-dim);
+    flex-shrink: 0;
+  }
+  .skill-prof.proficient { background: var(--gold); border-color: var(--gold); }
+  .skill-prof.expertise { background: var(--gold-light); border-color: var(--gold-light); box-shadow: 0 0 4px rgba(232,201,106,0.5); }
+  .skill-mod {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--gold-light);
+    width: 24px;
+    text-align: right;
+    flex-shrink: 0;
+  }
+  .skill-name {
+    font-family: 'Barlow', sans-serif;
+    font-size: 12px;
+    color: var(--text-secondary);
+    flex: 1;
+  }
+  .skill-attr {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 9px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--text-dim);
+  }
+
+  /* ===== WEAPONS ===== */
+  .weapon-card {
+    background: rgba(26,34,24,0.7);
+    border: 1px solid rgba(58,79,53,0.5);
+    border-radius: 5px;
+    padding: 10px 12px;
+    margin-bottom: 8px;
+    position: relative;
+  }
+  .weapon-card:last-child { margin-bottom: 0; }
+  .weapon-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 6px;
+  }
+  .weapon-name {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--text-primary);
+    letter-spacing: 0.5px;
+  }
+  .weapon-stats {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    margin-bottom: 6px;
+  }
+  .weapon-hit {
+    font-family: 'Cinzel', serif;
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--gold-light);
+  }
+  .weapon-hit-label {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 9px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--text-dim);
+  }
+  .weapon-damage {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-secondary);
+    border-left: 1px solid rgba(58,79,53,0.5);
+    padding-left: 10px;
+    margin-left: 4px;
+  }
+  .weapon-props {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    margin-top: 6px;
+  }
+  .wprop {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    padding: 2px 6px;
+    background: rgba(58,79,53,0.3);
+    border: 1px solid rgba(58,79,53,0.4);
+    border-radius: 3px;
+    color: var(--text-dim);
+    cursor: pointer;
+    position: relative;
+  }
+  .wprop:hover { color: var(--gold); border-color: var(--gold-dim); }
+  .weapon-mastery-tag {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 2px 8px;
+    background: rgba(201,168,76,0.15);
+    border: 1px solid rgba(201,168,76,0.3);
+    border-radius: 3px;
+    color: var(--gold);
+    cursor: pointer;
+    position: relative;
+  }
+  .range-toggle {
+    display: flex;
+    gap: 4px;
+    align-items: center;
+  }
+  .range-btn {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 10px;
+    font-weight: 600;
+    padding: 3px 8px;
+    background: none;
+    border: 1px solid rgba(58,79,53,0.5);
+    border-radius: 3px;
+    color: var(--text-dim);
+    cursor: pointer;
+    transition: all 0.15s;
+    letter-spacing: 0.5px;
+  }
+  .range-btn.active {
+    background: rgba(74,103,65,0.3);
+    border-color: var(--forest-accent);
+    color: var(--text-primary);
+  }
+  .range-btn.disadvantage-active {
+    background: rgba(139,47,47,0.2);
+    border-color: rgba(192,80,80,0.5);
+    color: #c05050;
+  }
+  .adv-toggle-wrap {
+    display: flex;
+    gap: 4px;
+    margin-top: 6px;
+  }
+  .adv-btn {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 3px 8px;
+    background: none;
+    border: 1px solid rgba(58,79,53,0.3);
+    border-radius: 3px;
+    color: var(--text-dim);
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .adv-btn.adv.active { background: rgba(46,92,46,0.3); border-color: rgba(90,155,90,0.5); color: #7ec87e; }
+  .adv-btn.dis.active { background: rgba(92,46,46,0.3); border-color: rgba(192,80,80,0.5); color: #c05050; }
+  .adv-indicator {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 10px;
+    padding: 3px 8px;
+    border-radius: 3px;
+    letter-spacing: 0.5px;
+  }
+  .adv-indicator.advantage { background: rgba(46,92,46,0.2); color: #7ec87e; }
+  .adv-indicator.disadvantage { background: rgba(92,46,46,0.2); color: #c05050; }
+  .hm-active {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 10px;
+    padding: 2px 8px;
+    background: rgba(201,168,76,0.1);
+    border: 1px solid rgba(201,168,76,0.3);
+    border-radius: 3px;
+    color: var(--gold);
+    cursor: pointer;
+  }
+  .hm-active.on { background: rgba(201,168,76,0.2); border-color: rgba(201,168,76,0.5); }
+
+  /* ===== SPELLS ===== */
+  .spell-slot-track {
+    display: flex;
+    gap: 6px;
+    margin-bottom: 12px;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  .spell-slot-label {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    width: 60px;
+    flex-shrink: 0;
+  }
+  .slot-pip {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    border: 1px solid var(--gold-dim);
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .slot-pip.used { background: transparent; border-color: rgba(122,98,40,0.4); }
+  .slot-pip.available { background: var(--gold); border-color: var(--gold); }
+
+  .spell-card {
+    background: rgba(26,34,24,0.7);
+    border: 1px solid rgba(58,79,53,0.4);
+    border-radius: 5px;
+    padding: 10px 12px;
+    margin-bottom: 6px;
+    position: relative;
+    cursor: pointer;
+    transition: border-color 0.15s;
+  }
+  .spell-card:hover { border-color: var(--gold-dim); }
+  .spell-card.prepared { border-left: 2px solid var(--gold); }
+  .spell-card.always-prepared { border-left: 2px solid #5a9b5a; }
+  .spell-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 4px;
+  }
+  .spell-name {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--text-primary);
+    letter-spacing: 0.5px;
+    flex: 1;
+  }
+  .spell-level-badge {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 10px;
+    font-weight: 600;
+    padding: 1px 6px;
+    background: rgba(58,79,53,0.3);
+    border: 1px solid rgba(58,79,53,0.5);
+    border-radius: 3px;
+    color: var(--text-dim);
+  }
+  .spell-meta {
+    display: flex;
+    gap: 12px;
+    font-family: 'Barlow', sans-serif;
+    font-size: 11px;
+    color: var(--text-dim);
+    flex-wrap: wrap;
+  }
+  .spell-meta span { display: flex; align-items: center; gap: 3px; }
+
+  /* ===== FEATURES / TRAITS ===== */
+  .feature-card {
+    background: rgba(26,34,24,0.6);
+    border: 1px solid rgba(58,79,53,0.4);
+    border-radius: 5px;
+    padding: 10px 12px;
+    margin-bottom: 6px;
+    position: relative;
+    cursor: pointer;
+    transition: border-color 0.15s;
+  }
+  .feature-card:hover { border-color: var(--gold-dim); }
+  .feature-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    justify-content: space-between;
+  }
+  .feature-name {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--gold);
+    letter-spacing: 0.5px;
+    flex: 1;
+  }
+  .feature-source {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    padding: 1px 6px;
+    background: rgba(58,79,53,0.2);
+    border-radius: 3px;
+    white-space: nowrap;
+  }
+  .feature-summary {
+    font-family: 'Barlow', sans-serif;
+    font-size: 12px;
+    color: var(--text-dim);
+    margin-top: 4px;
+    line-height: 1.5;
+  }
+  .resource-track {
+    display: flex;
+    gap: 4px;
+    margin-top: 6px;
+    align-items: center;
+  }
+  .resource-pip {
+    width: 12px;
+    height: 12px;
+    border-radius: 2px;
+    border: 1px solid var(--gold-dim);
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .resource-pip.used { background: transparent; border-color: rgba(122,98,40,0.3); }
+  .resource-pip.available { background: var(--gold); border-color: var(--gold); }
+  .resource-label {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 9px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    margin-left: 4px;
+  }
+
+  /* ===== TOOLTIP / OVERLAY ===== */
+  .tooltip {
+    position: fixed;
+    z-index: 9999;
+    max-width: 360px;
+    min-width: 240px;
+    background: var(--tooltip-bg);
+    border: 1px solid var(--gold-dim);
+    border-radius: 6px;
+    padding: 14px 16px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.6);
+    pointer-events: none;
+    opacity: 0;
+    transform: translateY(4px);
+    transition: opacity 0.15s, transform 0.15s;
+  }
+  .tooltip.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .tooltip-name {
+    font-family: 'Cinzel', serif;
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--gold-light);
+    margin-bottom: 4px;
+    border-bottom: 1px solid rgba(201,168,76,0.2);
+    padding-bottom: 8px;
+  }
+  .tooltip-type {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    margin-bottom: 8px;
+  }
+  .tooltip-body {
+    font-family: 'IM Fell English', serif;
+    font-size: 12px;
+    color: var(--parchment-dark);
+    line-height: 1.6;
+  }
+  .tooltip-body strong {
+    color: var(--gold);
+    font-family: 'Barlow', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+  }
+  .tooltip-stats {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6px;
+    margin: 8px 0;
+    padding: 8px;
+    background: rgba(58,79,53,0.15);
+    border-radius: 4px;
+  }
+  .tooltip-stat {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 10px;
+    color: var(--text-dim);
+  }
+  .tooltip-stat span {
+    color: var(--text-secondary);
+    font-weight: 600;
+  }
+
+  .currency-bar {
+    display: flex;
+    gap: 10px;
+    padding: 10px 14px;
+    background: rgba(26,34,24,0.6);
+    border: 1px solid rgba(201,168,76,0.15);
+    border-radius: 5px;
+    margin-bottom: 12px;
+    flex-wrap: wrap;
+  }
+  .currency-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .currency-coin {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    border: 1px solid;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 8px;
+    font-weight: 700;
+  }
+  .currency-coin.gp { border-color: var(--gold); color: var(--gold); }
+  .currency-coin.sp { border-color: #a0a0a0; color: #a0a0a0; }
+  .currency-coin.cp { border-color: #8b6520; color: #8b6520; }
+  .currency-coin.ep { border-color: #7090b0; color: #7090b0; }
+  .currency-coin.pp { border-color: #c0c0e0; color: #c0c0e0; }
+  .currency-value {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-primary);
+  }
+
+  /* ===== PASSIVE SENSES ===== */
+  .passive-row {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 6px;
+    align-items: center;
+    padding: 6px 10px;
+    background: rgba(26,34,24,0.5);
+    border: 1px solid rgba(58,79,53,0.3);
+    border-radius: 4px;
+  }
+  .passive-val {
+    font-family: 'Cinzel', serif;
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--gold-light);
+    width: 32px;
+    text-align: center;
+    flex-shrink: 0;
+  }
+  .passive-name {
+    font-family: 'Barlow', sans-serif;
+    font-size: 12px;
+    color: var(--text-secondary);
+  }
+
+  /* ===== PROFICIENCIES ===== */
+  .prof-section { margin-bottom: 10px; }
+  .prof-section-label {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--gold-dim);
+    margin-bottom: 4px;
+  }
+  .prof-list {
+    font-family: 'Barlow', sans-serif;
+    font-size: 12px;
+    color: var(--text-dim);
+    line-height: 1.7;
+  }
+
+  /* ===== LORE ===== */
+  .lore-section {
+    background: rgba(26,34,24,0.6);
+    border: 1px solid rgba(58,79,53,0.3);
+    border-radius: 5px;
+    padding: 14px;
+    margin-bottom: 12px;
+  }
+  .lore-label {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--gold-dim);
+    margin-bottom: 8px;
+  }
+  .lore-text {
+    font-family: 'IM Fell English', serif;
+    font-size: 13px;
+    color: var(--text-dim);
+    line-height: 1.7;
+    font-style: italic;
+  }
+  .char-details-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6px;
+    margin-bottom: 12px;
+  }
+  .char-detail-item {
+    padding: 8px 10px;
+    background: rgba(26,34,24,0.5);
+    border: 1px solid rgba(58,79,53,0.3);
+    border-radius: 4px;
+  }
+  .char-detail-item .detail-label {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--text-dim);
+  }
+  .char-detail-item .detail-value {
+    font-family: 'Barlow', sans-serif;
+    font-size: 13px;
+    color: var(--text-secondary);
+    margin-top: 2px;
+  }
+
+  /* ===== DIVIDERS ===== */
+  .section-divider {
+    height: 1px;
+    background: rgba(201,168,76,0.1);
+    margin: 12px 0;
+  }
+
+  /* ===== REST BUTTONS ===== */
+  .rest-btns {
+    display: flex;
+    gap: 6px;
+  }
+  .rest-btn {
+    flex: 1;
+    padding: 7px 10px;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    background: none;
+    border: 1px solid var(--forest-border);
+    border-radius: 4px;
+    color: var(--text-dim);
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .rest-btn.short:hover { border-color: var(--gold-dim); color: var(--gold); background: rgba(201,168,76,0.05); }
+  .rest-btn.long:hover { border-color: rgba(90,155,90,0.5); color: #5a9b5a; background: rgba(90,155,90,0.05); }
+
+  /* ===== INITIATIVE SECTION ===== */
+  .init-box {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 10px;
+    background: rgba(26,34,24,0.7);
+    border: 1px solid rgba(58,79,53,0.5);
+    border-radius: 4px;
+    margin-bottom: 10px;
+  }
+  .init-val {
+    font-family: 'Cinzel', serif;
+    font-size: 30px;
+    font-weight: 700;
+    color: var(--gold-light);
+  }
+  .init-label {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 9px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--text-dim);
+  }
+
+  /* ===== HUNTER'S MARK indicator ===== */
+  .hm-banner {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 7px 12px;
+    background: rgba(201,168,76,0.05);
+    border: 1px solid rgba(201,168,76,0.2);
+    border-radius: 4px;
+    margin-bottom: 8px;
+    cursor: pointer;
+  }
+  .hm-banner.active {
+    background: rgba(201,168,76,0.12);
+    border-color: rgba(201,168,76,0.4);
+  }
+  .hm-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    border: 1px solid var(--gold-dim);
+    flex-shrink: 0;
+  }
+  .hm-dot.on { background: var(--gold); border-color: var(--gold); }
+  .hm-text {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    flex: 1;
+  }
+  .hm-banner.active .hm-text { color: var(--gold); }
+  .hm-bonus {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 11px;
+    color: var(--gold-dim);
+  }
+  .hm-banner.active .hm-bonus { color: var(--gold-light); }
+
+  /* Condition badges */
+  .conditions-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    margin-top: 6px;
+  }
+  .condition-badge {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    padding: 2px 8px;
+    border-radius: 3px;
+    cursor: pointer;
+    border: 1px solid;
+    transition: all 0.15s;
+  }
+  .condition-badge.active { background: rgba(139,47,47,0.3); border-color: rgba(192,80,80,0.5); color: #c05050; }
+  .condition-badge.inactive { background: rgba(58,79,53,0.15); border-color: rgba(58,79,53,0.3); color: var(--text-dim); }
+
+  /* Scrollbar */
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: rgba(26,34,24,0.3); }
+  ::-webkit-scrollbar-thumb { background: var(--forest-border); border-radius: 3px; }
+  ::-webkit-scrollbar-thumb:hover { background: var(--gold-dim); }
+
+  /* Expandable */
+  .expand-toggle {
+    cursor: pointer;
+    user-select: none;
+  }
+  .expand-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+  }
+  .expand-content.open { max-height: 1000px; }
+  .expand-arrow {
+    font-size: 10px;
+    color: var(--text-dim);
+    transition: transform 0.2s;
+    display: inline-block;
+  }
+  .expand-toggle.open .expand-arrow { transform: rotate(90deg); }
+
+  /* Section grid helpers */
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .three-col { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+
+  @media (max-width: 1180px) {
+    .dashboard-grid {
+      grid-template-columns: 1fr;
+    }
+    .sheet-header {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 12px;
+      padding-bottom: 24px;
+    }
+    .char-meta {
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .meta-divider {
+      display: none;
+    }
+    .sheet-header::after {
+      right: 20px;
+      bottom: 6px;
+    }
+  }
+
+  @media (max-width: 920px) {
+    .sheet-body {
+      padding: 14px;
+    }
+    .nav-tabs {
+      overflow-x: auto;
+      padding: 0 8px;
+      gap: 0;
+    }
+    .tab-btn {
+      white-space: nowrap;
+      padding: 10px 12px 8px;
+      font-size: 11px;
+    }
+    .two-col,
+    .three-col {
+      grid-template-columns: 1fr;
+    }
+    #tab-spells .sheet-body > div,
+    #tab-features .sheet-body > div {
+      grid-template-columns: 1fr !important;
+    }
+  }
+
+  @media (max-width: 560px) {
+    .char-name {
+      font-size: 22px;
+      letter-spacing: 1px;
+    }
+    .combat-row {
+      gap: 6px;
+    }
+    .combat-stat {
+      min-width: 45%;
+    }
+  }
+</style>
+</head>
+<body class="theme-fantasy page-dnd-character-sheet page-viktor-rhee-sheet">
+
+<!-- TOOLTIP (global) -->
+<div id="tooltip" class="tooltip">
+  <div class="tooltip-name" id="tt-name"></div>
+  <div class="tooltip-type" id="tt-type"></div>
+  <div id="tt-stats" class="tooltip-stats" style="display:none"></div>
+  <div class="tooltip-body" id="tt-body"></div>
+</div>
+
+<!-- ===== HEADER ===== -->
+<div class="sheet-header">
+  <div>
+    <div class="char-name">Viktor Rhee</div>
+    <div style="font-family:'Barlow Condensed',sans-serif;font-size:11px;color:var(--text-dim);letter-spacing:1px;margin-top:2px;">
+      Orc · Lawful Neutral · Male · 18 · 7ft · 366 lbs
+    </div>
+  </div>
+  <div class="char-meta">
+    <div class="char-meta-item">
+      <div class="label">Class & Level</div>
+      <div class="value">Ranger 2</div>
+    </div>
+    <div class="meta-divider"></div>
+    <div class="char-meta-item">
+      <div class="label">Background</div>
+      <div class="value">Soldier</div>
+    </div>
+    <div class="meta-divider"></div>
+    <div class="char-meta-item">
+      <div class="label">Player</div>
+      <div class="value">VikingHodge</div>
+    </div>
+    <div class="meta-divider"></div>
+    <div class="char-meta-item">
+      <div class="label">Prof Bonus</div>
+      <div class="value">+2</div>
+    </div>
+    <div class="meta-divider"></div>
+    <div class="char-meta-item">
+      <div class="label">Experience</div>
+      <div class="value">Milestone</div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== NAV ===== -->
+<div class="nav-tabs">
+  <button class="tab-btn active" onclick="switchTab('combat')">⚔ Combat</button>
+  <button class="tab-btn" onclick="switchTab('spells')">✦ Spells</button>
+  <button class="tab-btn" onclick="switchTab('features')">◈ Features & Traits</button>
+  <button class="tab-btn" onclick="switchTab('inventory')">⊠ Inventory</button>
+  <button class="tab-btn" onclick="switchTab('lore')">☽ Lore & Notes</button>
+</div>
+
+<!-- ======================================================= -->
+<!-- TAB: COMBAT -->
+<!-- ======================================================= -->
+<div id="tab-combat" class="tab-panel active">
+<div class="sheet-body">
+<div class="dashboard-grid">
+
+  <!-- LEFT: ABILITY SCORES + SAVES -->
+  <div style="display:flex;flex-direction:column;gap:14px;">
+
+    <div class="panel">
+      <div class="panel-header"><span class="panel-title">Ability Scores</span></div>
+      <div class="panel-body">
+        <div class="ability-grid">
+          <div class="ability-score" data-tooltip="strength">
+            <span class="ability-name">STR</span>
+            <span class="ability-num">14</span>
+            <span class="ability-mod">+2</span>
+            <div class="save-indicator proficient" title="Proficient Save"></div>
+          </div>
+          <div class="ability-score" data-tooltip="dexterity">
+            <span class="ability-name">DEX</span>
+            <span class="ability-num">17</span>
+            <span class="ability-mod">+3</span>
+            <div class="save-indicator proficient" title="Proficient Save"></div>
+          </div>
+          <div class="ability-score" data-tooltip="constitution">
+            <span class="ability-name">CON</span>
+            <span class="ability-num">12</span>
+            <span class="ability-mod">+1</span>
+            <div class="save-indicator" title="Not Proficient"></div>
+          </div>
+          <div class="ability-score" data-tooltip="intelligence">
+            <span class="ability-name">INT</span>
+            <span class="ability-num">10</span>
+            <span class="ability-mod">+0</span>
+            <div class="save-indicator" title="Not Proficient"></div>
+          </div>
+          <div class="ability-score" data-tooltip="wisdom">
+            <span class="ability-name">WIS</span>
+            <span class="ability-num">14</span>
+            <span class="ability-mod">+2</span>
+            <div class="save-indicator" title="Not Proficient"></div>
+          </div>
+          <div class="ability-score" data-tooltip="charisma">
+            <span class="ability-name">CHA</span>
+            <span class="ability-num">8</span>
+            <span class="ability-mod">−1</span>
+            <div class="save-indicator" title="Not Proficient"></div>
+          </div>
+        </div>
+        <div class="section-divider"></div>
+        <div style="font-family:'Barlow Condensed',sans-serif;font-size:9px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--gold-dim);margin-bottom:6px;">Saving Throws</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:4px;">
+          <div class="skill-item"><div class="skill-prof proficient"></div><span class="skill-mod">+4</span><span class="skill-name">Strength</span></div>
+          <div class="skill-item"><div class="skill-prof proficient"></div><span class="skill-mod">+5</span><span class="skill-name">Dexterity</span></div>
+          <div class="skill-item"><div class="skill-prof"></div><span class="skill-mod">+1</span><span class="skill-name">Constitution</span></div>
+          <div class="skill-item"><div class="skill-prof"></div><span class="skill-mod">+0</span><span class="skill-name">Intelligence</span></div>
+          <div class="skill-item"><div class="skill-prof"></div><span class="skill-mod">+2</span><span class="skill-name">Wisdom</span></div>
+          <div class="skill-item"><div class="skill-prof"></div><span class="skill-mod">−1</span><span class="skill-name">Charisma</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PASSIVE SENSES -->
+    <div class="panel">
+      <div class="panel-header"><span class="panel-title">Senses</span></div>
+      <div class="panel-body">
+        <div class="passive-row"><span class="passive-val">14</span><span class="passive-name">Passive Perception</span></div>
+        <div class="passive-row"><span class="passive-val">12</span><span class="passive-name">Passive Insight</span></div>
+        <div class="passive-row"><span class="passive-val">12</span><span class="passive-name">Passive Investigation</span></div>
+        <div style="margin-top:8px;padding:6px 10px;background:rgba(26,34,24,0.5);border:1px solid rgba(58,79,53,0.3);border-radius:4px;">
+          <span style="font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:600;color:var(--gold);">Darkvision</span>
+          <span style="font-family:'Barlow',sans-serif;font-size:11px;color:var(--text-dim);margin-left:6px;">120 ft.</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- CENTRE: COMBAT + WEAPONS + SKILLS -->
+  <div style="display:flex;flex-direction:column;gap:14px;">
+
+    <!-- COMBAT STATS -->
+    <div class="panel">
+      <div class="panel-header"><span class="panel-title">Combat</span>
+        <div class="rest-btns">
+          <button class="rest-btn short" onclick="shortRest()">Short Rest</button>
+          <button class="rest-btn long" onclick="longRest()">Long Rest</button>
+        </div>
+      </div>
+      <div class="panel-body">
+        <div class="combat-row">
+          <div class="combat-stat"><span class="cs-val">16</span><span class="cs-label">Armour Class</span></div>
+          <div class="combat-stat"><span class="cs-val">+3</span><span class="cs-label">Initiative</span></div>
+          <div class="combat-stat"><span class="cs-val">30ft</span><span class="cs-label">Speed</span></div>
+          <div class="combat-stat"><span class="cs-val">+2</span><span class="cs-label">Prof Bonus</span></div>
+          <div class="combat-stat"><span class="cs-val">2d10</span><span class="cs-label">Hit Dice</span></div>
+        </div>
+
+        <!-- HP -->
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:10px;">
+          <div class="hp-box">
+            <span class="hp-label">Max HP</span>
+            <div class="hp-value">17</div>
+          </div>
+          <div class="hp-box">
+            <span class="hp-label">Current HP</span>
+            <input class="hp-input current" id="currentHP" type="number" value="17" min="0" max="17" onchange="updateHPBar()">
+          </div>
+          <div class="hp-box">
+            <span class="hp-label">Temp HP</span>
+            <input class="hp-input temp" id="tempHP" type="number" value="0" min="0">
+          </div>
+        </div>
+        <div class="hp-bar-wrap"><div class="hp-bar-fill" id="hpBar" style="width:100%"></div></div>
+        <div class="hp-delta-input">
+          <input type="number" id="hpDelta" placeholder="Amount" min="0">
+          <button class="hp-btn heal" onclick="applyHP(1)">+ Heal</button>
+          <button class="hp-btn damage" onclick="applyHP(-1)">− Damage</button>
+        </div>
+
+        <div class="section-divider"></div>
+
+        <!-- DEATH SAVES -->
+        <div style="display:flex;align-items:center;justify-content:space-between;">
+          <div style="font-family:'Barlow Condensed',sans-serif;font-size:9px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--text-dim);">Death Saves</div>
+          <div class="death-saves">
+            <div class="death-save-row">
+              <div class="ds-label">Successes</div>
+              <div class="death-pips">
+                <div class="death-pip success" onclick="togglePip(this,'success')" title="Success 1"></div>
+                <div class="death-pip success" onclick="togglePip(this,'success')" title="Success 2"></div>
+                <div class="death-pip success" onclick="togglePip(this,'success')" title="Success 3"></div>
+              </div>
+            </div>
+            <div class="death-save-row">
+              <div class="ds-label">Failures</div>
+              <div class="death-pips">
+                <div class="death-pip failure" onclick="togglePip(this,'failure')" title="Failure 1"></div>
+                <div class="death-pip failure" onclick="togglePip(this,'failure')" title="Failure 2"></div>
+                <div class="death-pip failure" onclick="togglePip(this,'failure')" title="Failure 3"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="section-divider"></div>
+
+        <!-- CONDITIONS -->
+        <div style="font-family:'Barlow Condensed',sans-serif;font-size:9px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--text-dim);margin-bottom:4px;">Conditions</div>
+        <div class="conditions-row">
+          <div class="condition-badge inactive" onclick="toggleCondition(this)">Prone</div>
+          <div class="condition-badge inactive" onclick="toggleCondition(this)">Blinded</div>
+          <div class="condition-badge inactive" onclick="toggleCondition(this)">Stunned</div>
+          <div class="condition-badge inactive" onclick="toggleCondition(this)">Frightened</div>
+          <div class="condition-badge inactive" onclick="toggleCondition(this)">Poisoned</div>
+          <div class="condition-badge inactive" onclick="toggleCondition(this)">Restrained</div>
+          <div class="condition-badge inactive" onclick="toggleCondition(this)">Incapacitated</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- HUNTER'S MARK -->
+    <div class="hm-banner" id="hmBanner" onclick="toggleHuntersMark()">
+      <div class="hm-dot" id="hmDot"></div>
+      <span class="hm-text">Hunter's Mark</span>
+      <span class="hm-bonus" id="hmBonus">Inactive — +1d6 damage when active</span>
+    </div>
+
+    <!-- WEAPONS -->
+    <div class="panel">
+      <div class="panel-header"><span class="panel-title">Weapon Attacks</span></div>
+      <div class="panel-body">
+
+        <!-- BATTLEAXE -->
+        <div class="weapon-card">
+          <div class="weapon-header">
+            <span class="weapon-name">Battleaxe</span>
+            <div style="display:flex;gap:6px;align-items:center;">
+              <div class="range-toggle">
+                <button class="range-btn active" onclick="setMeleeRange('battleaxe','melee',this)">Melee</button>
+                <button class="range-btn" onclick="setMeleeRange('battleaxe','versatile',this)">Versatile</button>
+              </div>
+            </div>
+          </div>
+          <div class="weapon-stats">
+            <div>
+              <div class="weapon-hit" id="battleaxe-hit">+4</div>
+              <div class="weapon-hit-label">To Hit</div>
+            </div>
+            <div class="weapon-damage" id="battleaxe-dmg">1d8+2 Slashing</div>
+            <div id="hm-battleaxe" style="display:none;margin-left:6px;font-family:'Barlow Condensed',sans-serif;font-size:11px;color:var(--gold);">+1d6</div>
+          </div>
+          <div class="adv-toggle-wrap">
+            <button class="adv-btn adv" onclick="toggleAdv('battleaxe','adv',this)">Advantage</button>
+            <button class="adv-btn dis" onclick="toggleAdv('battleaxe','dis',this)">Disadvantage</button>
+            <span class="adv-indicator" id="battleaxe-adv-label"></span>
+          </div>
+          <div class="weapon-props">
+            <span class="wprop" data-tooltip="martial">Martial</span>
+            <span class="wprop" data-tooltip="versatile">Versatile</span>
+            <span class="weapon-mastery-tag" data-tooltip="topple">Topple ✦</span>
+            <span class="wprop" data-tooltip="savage-attacker">Savage Attacker</span>
+          </div>
+        </div>
+
+        <!-- HAND CROSSBOW -->
+        <div class="weapon-card">
+          <div class="weapon-header">
+            <span class="weapon-name">Crossbow, Hand</span>
+            <div class="range-toggle">
+              <button class="range-btn active" onclick="setCrossbow('normal',this)">Normal (30ft)</button>
+              <button class="range-btn" onclick="setCrossbow('long',this)">Long (120ft)</button>
+            </div>
+          </div>
+          <div class="weapon-stats">
+            <div>
+              <div class="weapon-hit" id="crossbow-hit">+5</div>
+              <div class="weapon-hit-label">To Hit</div>
+            </div>
+            <div class="weapon-damage" id="crossbow-dmg">1d6+3 Piercing</div>
+            <div id="hm-crossbow" style="display:none;margin-left:6px;font-family:'Barlow Condensed',sans-serif;font-size:11px;color:var(--gold);">+1d6</div>
+          </div>
+          <div class="adv-toggle-wrap">
+            <button class="adv-btn adv" onclick="toggleAdv('crossbow','adv',this)">Advantage</button>
+            <button class="adv-btn dis" onclick="toggleAdv('crossbow','dis',this)">Disadvantage</button>
+            <span class="adv-indicator" id="crossbow-adv-label"></span>
+          </div>
+          <div id="crossbow-range-note" style="display:none;font-family:'Barlow Condensed',sans-serif;font-size:10px;color:#c05050;margin-top:4px;">
+            ⚠ Long range — toggle Disadvantage above if not countered
+          </div>
+          <div class="weapon-props">
+            <span class="wprop" data-tooltip="ammunition">Ammunition</span>
+            <span class="wprop" data-tooltip="range">Range (30/120)</span>
+            <span class="wprop" data-tooltip="light">Light</span>
+            <span class="wprop" data-tooltip="loading">Loading</span>
+            <span class="weapon-mastery-tag" data-tooltip="vex">Vex ✦</span>
+            <span class="wprop" data-tooltip="savage-attacker">Savage Attacker</span>
+          </div>
+        </div>
+
+        <!-- UNARMED STRIKE -->
+        <div class="weapon-card">
+          <div class="weapon-header">
+            <span class="weapon-name">Unarmed Strike</span>
+          </div>
+          <div class="weapon-stats">
+            <div>
+              <div class="weapon-hit">+4</div>
+              <div class="weapon-hit-label">To Hit</div>
+            </div>
+            <div class="weapon-damage">3 Bludgeoning</div>
+            <div id="hm-unarmed" style="display:none;margin-left:6px;font-family:'Barlow Condensed',sans-serif;font-size:11px;color:var(--gold);">+1d6</div>
+          </div>
+          <div class="weapon-props">
+            <span class="wprop" data-tooltip="unarmed">Unarmed</span>
+          </div>
+        </div>
+
+        <div style="margin-top:8px;font-family:'Barlow Condensed',sans-serif;font-size:10px;color:var(--text-dim);">
+          ✦ Weapon Mastery — hover to see mastery property
+        </div>
+      </div>
+    </div>
+
+    <!-- SPELLCASTING QUICK REF -->
+    <div class="panel">
+      <div class="panel-header"><span class="panel-title">Spellcasting</span></div>
+      <div class="panel-body">
+        <div style="display:flex;gap:10px;margin-bottom:10px;">
+          <div class="combat-stat"><span class="cs-val">WIS</span><span class="cs-label">Ability</span></div>
+          <div class="combat-stat"><span class="cs-val">12</span><span class="cs-label">Spell Save DC</span></div>
+          <div class="combat-stat"><span class="cs-val">+4</span><span class="cs-label">Spell Attack</span></div>
+        </div>
+        <div class="spell-slot-track">
+          <span class="spell-slot-label">1st Level</span>
+          <div class="slot-pip available" id="slot-1a" onclick="toggleSlot('slot-1a')" title="Slot 1"></div>
+          <div class="slot-pip available" id="slot-1b" onclick="toggleSlot('slot-1b')" title="Slot 2"></div>
+          <span style="font-family:'Barlow Condensed',sans-serif;font-size:10px;color:var(--text-dim);margin-left:4px;">2 slots</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- RIGHT: SKILLS -->
+  <div style="display:flex;flex-direction:column;gap:14px;">
+
+    <div class="panel">
+      <div class="panel-header"><span class="panel-title">Skills</span></div>
+      <div class="panel-body" style="padding:10px 10px;">
+        <div class="skill-list">
+          <div class="skill-item"><div class="skill-prof proficient"></div><span class="skill-mod">+3</span><span class="skill-name">Acrobatics</span><span class="skill-attr">DEX</span></div>
+          <div class="skill-item"><div class="skill-prof"></div><span class="skill-mod">+2</span><span class="skill-name">Animal Handling</span><span class="skill-attr">WIS</span></div>
+          <div class="skill-item"><div class="skill-prof"></div><span class="skill-mod">+0</span><span class="skill-name">Arcana</span><span class="skill-attr">INT</span></div>
+          <div class="skill-item"><div class="skill-prof expertise"></div><span class="skill-mod">+6</span><span class="skill-name">Athletics</span><span class="skill-attr">STR</span></div>
+          <div class="skill-item"><div class="skill-prof"></div><span class="skill-mod">−1</span><span class="skill-name">Deception</span><span class="skill-attr">CHA</span></div>
+          <div class="skill-item"><div class="skill-prof"></div><span class="skill-mod">+0</span><span class="skill-name">History</span><span class="skill-attr">INT</span></div>
+          <div class="skill-item"><div class="skill-prof"></div><span class="skill-mod">+2</span><span class="skill-name">Insight</span><span class="skill-attr">WIS</span></div>
+          <div class="skill-item"><div class="skill-prof proficient"></div><span class="skill-mod">+1</span><span class="skill-name">Intimidation</span><span class="skill-attr">CHA</span></div>
+          <div class="skill-item"><div class="skill-prof proficient"></div><span class="skill-mod">+2</span><span class="skill-name">Investigation</span><span class="skill-attr">INT</span></div>
+          <div class="skill-item"><div class="skill-prof"></div><span class="skill-mod">+2</span><span class="skill-name">Medicine</span><span class="skill-attr">WIS</span></div>
+          <div class="skill-item"><div class="skill-prof"></div><span class="skill-mod">+0</span><span class="skill-name">Nature</span><span class="skill-attr">INT</span></div>
+          <div class="skill-item"><div class="skill-prof expertise"></div><span class="skill-mod">+4</span><span class="skill-name">Perception</span><span class="skill-attr">WIS</span></div>
+          <div class="skill-item"><div class="skill-prof"></div><span class="skill-mod">−1</span><span class="skill-name">Performance</span><span class="skill-attr">CHA</span></div>
+          <div class="skill-item"><div class="skill-prof"></div><span class="skill-mod">−1</span><span class="skill-name">Persuasion</span><span class="skill-attr">CHA</span></div>
+          <div class="skill-item"><div class="skill-prof"></div><span class="skill-mod">+0</span><span class="skill-name">Religion</span><span class="skill-attr">INT</span></div>
+          <div class="skill-item"><div class="skill-prof proficient"></div><span class="skill-mod">+3</span><span class="skill-name">Sleight of Hand</span><span class="skill-attr">DEX</span></div>
+          <div class="skill-item"><div class="skill-prof proficient"></div><span class="skill-mod">+3</span><span class="skill-name">Stealth</span><span class="skill-attr">DEX</span></div>
+          <div class="skill-item"><div class="skill-prof proficient"></div><span class="skill-mod">+4</span><span class="skill-name">Survival</span><span class="skill-attr">WIS</span></div>
+        </div>
+        <div class="section-divider"></div>
+        <div style="display:flex;gap:8px;font-family:'Barlow Condensed',sans-serif;font-size:9px;color:var(--text-dim);">
+          <span>● Proficient</span>
+          <span style="color:var(--gold-light);">◉ Expertise</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- PROFICIENCIES -->
+    <div class="panel">
+      <div class="panel-header"><span class="panel-title">Proficiencies</span></div>
+      <div class="panel-body">
+        <div class="prof-section"><div class="prof-section-label">Armour</div><div class="prof-list">Light, Medium, Shields</div></div>
+        <div class="prof-section"><div class="prof-section-label">Weapons</div><div class="prof-list">Simple, Martial</div></div>
+        <div class="prof-section"><div class="prof-section-label">Tools</div><div class="prof-list">Dice Set</div></div>
+        <div class="prof-section"><div class="prof-section-label">Languages</div><div class="prof-list">Common, Common Sign Language, Dwarvish, Elvish, Goblin</div></div>
+      </div>
+    </div>
+
+  </div>
+
+</div><!-- /dashboard-grid -->
+</div><!-- /sheet-body -->
+</div><!-- /tab-combat -->
+
+<!-- ======================================================= -->
+<!-- TAB: SPELLS -->
+<!-- ======================================================= -->
+<div id="tab-spells" class="tab-panel">
+<div class="sheet-body">
+  <div style="display:grid;grid-template-columns:240px 1fr;gap:16px;align-items:start;">
+
+    <div style="display:flex;flex-direction:column;gap:14px;">
+      <div class="panel">
+        <div class="panel-header"><span class="panel-title">Spellcasting</span></div>
+        <div class="panel-body">
+          <div class="combat-row" style="flex-direction:column;gap:8px;">
+            <div class="combat-stat" style="width:100%;flex:none;"><span class="cs-val">WIS</span><span class="cs-label">Casting Ability</span></div>
+            <div style="display:flex;gap:8px;">
+              <div class="combat-stat"><span class="cs-val">12</span><span class="cs-label">Save DC</span></div>
+              <div class="combat-stat"><span class="cs-val">+4</span><span class="cs-label">Spell Atk</span></div>
+            </div>
+          </div>
+          <div class="section-divider"></div>
+          <div style="font-family:'Barlow Condensed',sans-serif;font-size:9px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--gold-dim);margin-bottom:8px;">Spell Slots</div>
+          <div class="spell-slot-track" style="flex-direction:column;align-items:flex-start;">
+            <div style="display:flex;align-items:center;gap:8px;">
+              <span class="spell-slot-label">1st</span>
+              <div class="slot-pip available" id="s-slot-1a" onclick="toggleSlot('s-slot-1a')" title="Slot 1"></div>
+              <div class="slot-pip available" id="s-slot-1b" onclick="toggleSlot('s-slot-1b')" title="Slot 2"></div>
+              <span style="font-family:'Barlow Condensed',sans-serif;font-size:10px;color:var(--text-dim);">2 slots</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="panel-header">
+        <span class="panel-title">Prepared Spells — 1st Level (2 Slots)</span>
+      </div>
+      <div class="panel-body">
+        <div style="font-family:'Barlow Condensed',sans-serif;font-size:9px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--gold-dim);margin-bottom:8px;">1st Level</div>
+
+        <div class="spell-card prepared" data-tooltip="spell-jump">
+          <div class="spell-header">
+            <div class="spell-name">Jump</div>
+            <span class="spell-level-badge">1st</span>
+          </div>
+          <div class="spell-meta">
+            <span>⏱ 1 Bonus Action</span>
+            <span>📏 Touch</span>
+            <span>⌛ 1 Minute</span>
+            <span>🔮 V,S,M</span>
+          </div>
+        </div>
+
+        <div class="spell-card prepared" data-tooltip="spell-longstrider">
+          <div class="spell-header">
+            <div class="spell-name">Longstrider</div>
+            <span class="spell-level-badge">1st</span>
+          </div>
+          <div class="spell-meta">
+            <span>⏱ 1 Action</span>
+            <span>📏 Touch</span>
+            <span>⌛ 1 Hour</span>
+            <span>🔮 V,S,M</span>
+          </div>
+        </div>
+
+        <div class="spell-card prepared" data-tooltip="spell-anticipate">
+          <div class="spell-header">
+            <div class="spell-name">Anticipate Weakness</div>
+            <span class="spell-level-badge">1st</span>
+          </div>
+          <div class="spell-meta">
+            <span>⏱ 1 Bonus Action</span>
+            <span>📏 Self</span>
+            <span>⌛ Instantaneous</span>
+            <span>🔮 V,S</span>
+          </div>
+        </div>
+
+        <div style="margin-top:12px;margin-bottom:6px;">
+          <div style="font-family:'Barlow Condensed',sans-serif;font-size:9px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:#5a9b5a;margin-bottom:8px;">Always Prepared (Favoured Enemy)</div>
+          <div class="spell-card always-prepared" data-tooltip="spell-hunters-mark">
+            <div class="spell-header">
+              <div class="spell-name">Hunter's Mark</div>
+              <span class="spell-level-badge" style="border-color:rgba(90,155,90,0.4);color:#5a9b5a;">Always</span>
+            </div>
+            <div class="spell-meta">
+              <span>⏱ 1 Bonus Action</span>
+              <span>📏 90 ft.</span>
+              <span>⌛ Conc. up to 1hr</span>
+              <span>🔮 V</span>
+            </div>
+            <div style="margin-top:6px;">
+              <div class="resource-track">
+                <div class="resource-pip available" onclick="toggleResource(this)" title="Use 1"></div>
+                <div class="resource-pip available" onclick="toggleResource(this)" title="Use 2"></div>
+                <span class="resource-label">2 / Long Rest (no slot needed)</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ======================================================= -->
+<!-- TAB: FEATURES & TRAITS -->
+<!-- ======================================================= -->
+<div id="tab-features" class="tab-panel">
+<div class="sheet-body">
+<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;align-items:start;">
+
+  <!-- RANGER FEATURES -->
+  <div class="panel">
+    <div class="panel-header"><span class="panel-title">Ranger Features</span></div>
+    <div class="panel-body">
+
+      <div class="feature-card" data-tooltip="feat-favored-enemy">
+        <div class="feature-header">
+          <span class="feature-name">Favoured Enemy</span>
+          <span class="feature-source">Ranger</span>
+        </div>
+        <div class="feature-summary">Hunter's Mark always prepared. Cast without a spell slot 2× per Long Rest.</div>
+        <div class="resource-track">
+          <div class="resource-pip available" onclick="toggleResource(this)"></div>
+          <div class="resource-pip available" onclick="toggleResource(this)"></div>
+          <span class="resource-label">2 / Long Rest</span>
+        </div>
+      </div>
+
+      <div class="feature-card" data-tooltip="feat-weapon-mastery">
+        <div class="feature-header">
+          <span class="feature-name">Weapon Mastery</span>
+          <span class="feature-source">Ranger</span>
+        </div>
+        <div class="feature-summary">Apply mastery property to your equipped weapons. Topple (Battleaxe) and Vex (Hand Crossbow).</div>
+      </div>
+
+      <div class="feature-card" data-tooltip="feat-deft-explorer">
+        <div class="feature-header">
+          <span class="feature-name">Deft Explorer</span>
+          <span class="feature-source">Ranger</span>
+        </div>
+        <div class="feature-summary">Expertise in one skill (Athletics). Know two additional languages.</div>
+      </div>
+
+      <div class="feature-card" data-tooltip="feat-fighting-style">
+        <div class="feature-header">
+          <span class="feature-name">Fighting Style</span>
+          <span class="feature-source">Ranger</span>
+        </div>
+        <div class="feature-summary">Chosen Fighting Style feat (br-2024).</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ORC TRAITS -->
+  <div class="panel">
+    <div class="panel-header"><span class="panel-title">Orc Species Traits</span></div>
+    <div class="panel-body">
+
+      <div class="feature-card">
+        <div class="feature-header">
+          <span class="feature-name">Creature Type</span>
+          <span class="feature-source">Orc</span>
+        </div>
+        <div class="feature-summary">You are a Humanoid.</div>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-header">
+          <span class="feature-name">Size &amp; Speed</span>
+          <span class="feature-source">Orc</span>
+        </div>
+        <div class="feature-summary">Medium. Speed 30 ft.</div>
+      </div>
+
+      <div class="feature-card" data-tooltip="feat-adrenaline-rush">
+        <div class="feature-header">
+          <span class="feature-name">Adrenaline Rush</span>
+          <span class="feature-source">Orc</span>
+        </div>
+        <div class="feature-summary">Bonus Action: take Dash, gain 2 Temp HP. Recharges on Short or Long Rest.</div>
+        <div class="resource-track">
+          <div class="resource-pip available" onclick="toggleResource(this)"></div>
+          <div class="resource-pip available" onclick="toggleResource(this)"></div>
+          <span class="resource-label">2 / Short or Long Rest</span>
+        </div>
+      </div>
+
+      <div class="feature-card" data-tooltip="feat-darkvision">
+        <div class="feature-header">
+          <span class="feature-name">Darkvision</span>
+          <span class="feature-source">Orc</span>
+        </div>
+        <div class="feature-summary">See in dim light as bright light, darkness as dim light, up to 120 ft. You cannot discern colour in darkness.</div>
+      </div>
+
+      <div class="feature-card" data-tooltip="feat-relentless-endurance">
+        <div class="feature-header">
+          <span class="feature-name">Relentless Endurance</span>
+          <span class="feature-source">Orc</span>
+        </div>
+        <div class="feature-summary">Once per Long Rest: when reduced to 0 HP but not killed outright, drop to 1 HP instead.</div>
+        <div class="resource-track">
+          <div class="resource-pip available" onclick="toggleResource(this)"></div>
+          <span class="resource-label">1 / Long Rest</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- FEATS -->
+  <div class="panel">
+    <div class="panel-header"><span class="panel-title">Feats &amp; Weapon Mastery</span></div>
+    <div class="panel-body">
+
+      <div class="feature-card" data-tooltip="feat-defense">
+        <div class="feature-header">
+          <span class="feature-name">Defense</span>
+          <span class="feature-source">Feat</span>
+        </div>
+        <div class="feature-summary">+1 to AC when wearing Light, Medium, or Heavy armour. (AC = 16 with Studded Leather)</div>
+      </div>
+
+      <div class="feature-card" data-tooltip="feat-savage-attacker">
+        <div class="feature-header">
+          <span class="feature-name">Savage Attacker</span>
+          <span class="feature-source">Feat</span>
+        </div>
+        <div class="feature-summary">Once per turn on a weapon hit: roll damage dice twice, use either roll.</div>
+      </div>
+
+      <div class="feature-card" data-tooltip="feat-soldier-asi">
+        <div class="feature-header">
+          <span class="feature-name">Soldier ASI</span>
+          <span class="feature-source">Background</span>
+        </div>
+        <div class="feature-summary">Increase two ability scores (+2 / +1). Applied to STR and DEX.</div>
+      </div>
+
+      <div style="margin-top:4px;margin-bottom:6px;font-family:'Barlow Condensed',sans-serif;font-size:9px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--gold-dim);">Weapon Mastery Properties</div>
+
+      <div class="feature-card" data-tooltip="topple">
+        <div class="feature-header">
+          <span class="feature-name">Topple (Battleaxe)</span>
+          <span class="feature-source">Mastery</span>
+        </div>
+        <div class="feature-summary">On hit: target makes CON save (DC 8 + 2 + STR mod = DC 12). Fail → Prone condition.</div>
+      </div>
+
+      <div class="feature-card" data-tooltip="vex">
+        <div class="feature-header">
+          <span class="feature-name">Vex (Hand Crossbow)</span>
+          <span class="feature-source">Mastery</span>
+        </div>
+        <div class="feature-summary">On hit with damage: Advantage on your next attack roll against that creature before your next turn ends.</div>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+</div>
+</div>
+
+<!-- ======================================================= -->
+<!-- TAB: INVENTORY -->
+<!-- ======================================================= -->
+<div id="tab-inventory" class="tab-panel">
+<div class="sheet-body">
+
+  <div class="inventory-hud">
+    <div>
+      <div class="hud-title">Field Loadout Deck</div>
+      <div class="hud-sub">Foresters standard issue plus personal hunting kit.</div>
+    </div>
+    <div style="font-family:'Barlow Condensed',sans-serif;font-size:11px;color:var(--text-dim);letter-spacing:1px;text-transform:uppercase;">
+      Prepared Cards: <span style="color:var(--gold);">18</span>
+    </div>
+  </div>
+
+  <div class="currency-bar">
+    <div class="currency-item"><div class="currency-coin pp">PP</div><span class="currency-value">0</span></div>
+    <div class="currency-item"><div class="currency-coin gp">GP</div><span class="currency-value">21</span></div>
+    <div class="currency-item"><div class="currency-coin ep">EP</div><span class="currency-value">0</span></div>
+    <div class="currency-item"><div class="currency-coin sp">SP</div><span class="currency-value">0</span></div>
+    <div class="currency-item"><div class="currency-coin cp">CP</div><span class="currency-value">0</span></div>
+    <div style="margin-left:auto;font-family:'Barlow Condensed',sans-serif;font-size:11px;color:var(--text-dim);">
+      Weight: <span style="color:var(--text-secondary);">109.5 lb</span> /
+      Encumbered: <span style="color:var(--text-secondary);">210 lb</span> /
+      Push: <span style="color:var(--text-secondary);">420 lb</span>
+    </div>
+  </div>
+
+  <div style="font-family:'Barlow Condensed',sans-serif;font-size:9px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--gold-dim);margin-bottom:8px;">Equipment</div>
+  <div class="inventory-grid">
+
+    <div class="item-card signature" data-tooltip="item-studded-leather">
+      <div class="card-topline"><span class="item-type">Armour</span><span class="item-weight">13 lb</span></div>
+      <div class="item-main"><span class="item-icon">🛡</span><div><div class="item-name">Studded Leather</div><div class="item-qty">Qty: 1 · Worn</div></div></div>
+      <div class="item-tags"><span class="item-tag">AC 16 Ready</span><span class="item-tag">Light Armour</span></div>
+      <div class="item-note">Forester issue cuirass, tailored for speed on woodland patrol.</div>
+    </div>
+
+    <div class="item-card signature" data-tooltip="item-crossbow">
+      <div class="card-topline"><span class="item-type">Weapon</span><span class="item-weight">3 lb</span></div>
+      <div class="item-main"><span class="item-icon">🏹</span><div><div class="item-name">Crossbow, Hand</div><div class="item-qty">Qty: 1</div></div></div>
+      <div class="item-tags"><span class="item-tag">Vex</span><span class="item-tag">30/120</span><span class="item-tag">Light</span></div>
+      <div class="item-note">Primary pursuit weapon for quick marks and controlled openings.</div>
+    </div>
+
+    <div class="item-card signature" data-tooltip="item-battleaxe">
+      <div class="card-topline"><span class="item-type">Weapon</span><span class="item-weight">4 lb</span></div>
+      <div class="item-main"><span class="item-icon">⚔</span><div><div class="item-name">Battleaxe</div><div class="item-qty">Qty: 1</div></div></div>
+      <div class="item-tags"><span class="item-tag">Topple</span><span class="item-tag">Versatile</span></div>
+      <div class="item-note">Close-quarters breaker for forcing enemies to the ground.</div>
+    </div>
+
+    <div class="item-card">
+      <div class="card-topline"><span class="item-type">Container</span><span class="item-weight">5 lb</span></div>
+      <div class="item-main"><span class="item-icon">🎒</span><div><div class="item-name">Backpack</div><div class="item-qty">Qty: 1</div></div></div>
+      <div class="item-note">Holds field rations, tools, and spare travel kit.</div>
+    </div>
+
+    <div class="item-card">
+      <div class="card-topline"><span class="item-type">Ammunition</span><span class="item-weight">1 lb</span></div>
+      <div class="item-main"><span class="item-icon">📦</span><div><div class="item-name">Crossbow Bolt Case</div><div class="item-qty">Qty: 1</div></div></div>
+      <div class="item-tags"><span class="item-tag">Ready Access</span></div>
+      <div class="item-note">Hard case keeps bolts dry while moving through marsh and rain.</div>
+    </div>
+
+    <div class="item-card magic">
+      <div class="card-topline"><span class="item-type">Spell Focus</span><span class="item-weight">-</span></div>
+      <div class="item-main"><span class="item-icon">🌿</span><div><div class="item-name">Sprig of Mistletoe</div><div class="item-qty">Qty: 1</div></div></div>
+      <div class="item-tags"><span class="item-tag">Druidic Component</span></div>
+      <div class="item-note">Used to center ranger rites before the hunt.</div>
+    </div>
+
+    <div class="item-card">
+      <div class="card-topline"><span class="item-type">Apparel</span><span class="item-weight">4 lb</span></div>
+      <div class="item-main"><span class="item-icon">👕</span><div><div class="item-name">Traveller's Clothes</div><div class="item-qty">Qty: 1</div></div></div>
+      <div class="item-note">Neutral-toned layers for travel between civilized roads and woodland patrols.</div>
+    </div>
+
+    <div class="item-card">
+      <div class="card-topline"><span class="item-type">Tool</span><span class="item-weight">-</span></div>
+      <div class="item-main"><span class="item-icon">🎲</span><div><div class="item-name">Dice Set</div><div class="item-qty">Qty: 1</div></div></div>
+      <div class="item-note">Soldier's leisure kit for long watches and barracks downtime.</div>
+    </div>
+
+    <div class="item-card">
+      <div class="card-topline"><span class="item-type">Consumable</span><span class="item-weight">2 lb</span></div>
+      <div class="item-main"><span class="item-icon">🫙</span><div><div class="item-name">Oil</div><div class="item-qty">Qty: 2</div></div></div>
+      <div class="item-tags"><span class="item-tag">Utility</span><span class="item-tag">Fire Prep</span></div>
+      <div class="item-note">For traps, torches, and emergency burn lanes.</div>
+    </div>
+
+    <div class="item-card">
+      <div class="card-topline"><span class="item-type">Consumable</span><span class="item-weight">20 lb</span></div>
+      <div class="item-main"><span class="item-icon">🧺</span><div><div class="item-name">Rations</div><div class="item-qty">Qty: 10</div></div></div>
+      <div class="item-tags"><span class="item-tag">10 Days</span></div>
+      <div class="item-note">Dry stock to support deep-range operations without supply lines.</div>
+    </div>
+
+    <div class="item-card">
+      <div class="card-topline"><span class="item-type">Utility</span><span class="item-weight">5 lb</span></div>
+      <div class="item-main"><span class="item-icon">🪢</span><div><div class="item-name">Rope</div><div class="item-qty">Qty: 1</div></div></div>
+      <div class="item-note">Standard 50 ft coil for ascent, restraint, and rescue pulls.</div>
+    </div>
+
+    <div class="item-card">
+      <div class="card-topline"><span class="item-type">Camp Gear</span><span class="item-weight">7 lb</span></div>
+      <div class="item-main"><span class="item-icon">🛏</span><div><div class="item-name">Bedroll</div><div class="item-qty">Qty: 1</div></div></div>
+      <div class="item-note">Compact sleep rig for trail camps and overnight scout posts.</div>
+    </div>
+
+    <div class="item-card">
+      <div class="card-topline"><span class="item-type">Utility</span><span class="item-weight">1 lb</span></div>
+      <div class="item-main"><span class="item-icon">📦</span><div><div class="item-name">Tinderbox</div><div class="item-qty">Qty: 1</div></div></div>
+      <div class="item-note">Spark kit for controlled campfires and signal flame.</div>
+    </div>
+
+    <div class="item-card">
+      <div class="card-topline"><span class="item-type">Light Source</span><span class="item-weight">10 lb</span></div>
+      <div class="item-main"><span class="item-icon">🕯</span><div><div class="item-name">Torch</div><div class="item-qty">Qty: 10</div></div></div>
+      <div class="item-tags"><span class="item-tag">1h Burn</span></div>
+      <div class="item-note">Reliable illumination when darkvision alone is not enough for detail work.</div>
+    </div>
+
+    <div class="item-card">
+      <div class="card-topline"><span class="item-type">Consumable</span><span class="item-weight">5 lb</span></div>
+      <div class="item-main"><span class="item-icon">🫗</span><div><div class="item-name">Waterskin</div><div class="item-qty">Qty: 1</div></div></div>
+      <div class="item-note">Full carry volume for one day of hard marching.</div>
+    </div>
+
+    <div class="item-card">
+      <div class="card-topline"><span class="item-type">Tactical</span><span class="item-weight">25 lb</span></div>
+      <div class="item-main"><span class="item-icon">🪤</span><div><div class="item-name">Hunting Trap</div><div class="item-qty">Qty: 1</div></div></div>
+      <div class="item-tags"><span class="item-tag">Control</span><span class="item-tag">Ambush</span></div>
+      <div class="item-note">Heavy steel jaw trap for choke points and perimeter denial.</div>
+    </div>
+
+    <div class="item-card magic" data-tooltip="item-healers-kit">
+      <div class="card-topline"><span class="item-type">Support</span><span class="item-weight">3 lb</span></div>
+      <div class="item-main"><span class="item-icon">🩹</span><div><div class="item-name">Healer's Kit</div><div class="item-qty">Qty: 1</div></div></div>
+      <div class="item-tags"><span class="item-tag">10 Uses</span><span class="item-tag">Stabilize</span></div>
+      <div class="item-note">Emergency trauma kit for keeping squadmates breathing.</div>
+    </div>
+
+    <div class="item-card">
+      <div class="card-topline"><span class="item-type">Ammunition</span><span class="item-weight">1.5 lb</span></div>
+      <div class="item-main"><span class="item-icon">🏹</span><div><div class="item-name">Bolts</div><div class="item-qty">Qty: 20</div></div></div>
+      <div class="item-tags"><span class="item-tag">Standard Stock</span></div>
+      <div class="item-note">Enough for a short engagement before scavenging and recovery.</div>
+    </div>
+
+  </div>
+
+  <div style="margin-top:20px;font-family:'Barlow Condensed',sans-serif;font-size:9px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--gold-dim);margin-bottom:8px;">Attuned Magic Items</div>
+  <div style="font-family:'Barlow',sans-serif;font-size:12px;color:var(--text-dim);padding:16px;background:rgba(26,34,24,0.4);border:1px dashed rgba(58,79,53,0.3);border-radius:5px;text-align:center;">
+    No attuned magic items
+  </div>
+
+</div>
+</div>
+
+<!-- ======================================================= -->
+<!-- TAB: LORE & NOTES -->
+<!-- ======================================================= -->
+<div id="tab-lore" class="tab-panel">
+<div class="sheet-body">
+<div class="two-col">
+
+  <div style="display:flex;flex-direction:column;gap:14px;">
+    <div class="panel">
+      <div class="panel-header"><span class="panel-title">Character Details</span></div>
+      <div class="panel-body">
+        <div class="char-details-grid">
+          <div class="char-detail-item"><div class="detail-label">Gender</div><div class="detail-value">Male</div></div>
+          <div class="char-detail-item"><div class="detail-label">Age</div><div class="detail-value">18</div></div>
+          <div class="char-detail-item"><div class="detail-label">Alignment</div><div class="detail-value">Lawful Neutral</div></div>
+          <div class="char-detail-item"><div class="detail-label">Faith</div><div class="detail-value">Arcturius - Marti</div></div>
+          <div class="char-detail-item"><div class="detail-label">Size</div><div class="detail-value">Medium</div></div>
+          <div class="char-detail-item"><div class="detail-label">Height</div><div class="detail-value">7 Feet</div></div>
+          <div class="char-detail-item"><div class="detail-label">Weight</div><div class="detail-value">366 lbs</div></div>
+          <div class="char-detail-item"><div class="detail-label">Skin</div><div class="detail-value">Grey</div></div>
+          <div class="char-detail-item"><div class="detail-label">Eyes</div><div class="detail-value">Grey</div></div>
+          <div class="char-detail-item"><div class="detail-label">Hair</div><div class="detail-value">Dark Dreadlocks</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="panel-header"><span class="panel-title">Personality</span></div>
+      <div class="panel-body">
+        <div class="lore-section">
+          <div class="lore-label">Traits</div>
+          <div class="lore-text">Loyal. Trust my gut and instincts.</div>
+        </div>
+        <div class="lore-section">
+          <div class="lore-label">Ideals</div>
+          <div class="lore-text">My sense of purpose is what drives me. Victory above all else, except at the expense of my team.</div>
+        </div>
+        <div class="lore-section">
+          <div class="lore-label">Bonds</div>
+          <div class="lore-text">The brotherhood above all else. I have trained my whole life for this.</div>
+        </div>
+        <div class="lore-section" style="margin-bottom:0;">
+          <div class="lore-label">Flaws</div>
+          <div class="lore-text">Loyal to a fault. Quick to anger if I cannot figure it out.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="panel-header"><span class="panel-title">Allies &amp; Organizations</span></div>
+      <div class="panel-body">
+        <div class="lore-section">
+          <div class="lore-label">Allies</div>
+          <div class="lore-text">Foresters of Greywood · Monster Hunting Faction of the Empire</div>
+        </div>
+        <div class="lore-section" style="margin-bottom:0;">
+          <div class="lore-label">Organizations</div>
+          <div class="lore-text">The Foresters of Greywood</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div style="display:flex;flex-direction:column;gap:14px;">
+    <div class="panel">
+      <div class="panel-header"><span class="panel-title">Character Backstory</span></div>
+      <div class="panel-body">
+        <div class="lore-text">I was born and raised in Greywood, groomed and trained from birth as part of the Foresters, like my mother and father and their mother and father before them. It is tradition to only have one child per family — people do have more than one child as they are allowed to, but it is easier to focus solely on one child to train them and get them to live up to their potential. I am an only child.</div>
+        <br>
+        <div class="lore-text">It has been a generational tradition in Greywood to train and be hunters and protectors, but the reasons why have become more myth and legend, and our decrees and oaths are more ritualistic and of a bygone era. Over time, what we originally started out as hundreds of years ago has evolved to become what is now known as The Foresters. The aim was always to become a member of the monster hunting factions, so I can protect from a greater sphere of influence outside of The Foresters and my immediate home. I believe that the bonds of brotherhood and team can be as strong as blood.</div>
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="panel-header"><span class="panel-title">Additional Notes</span></div>
+      <div class="panel-body">
+        <textarea style="width:100%;min-height:180px;background:rgba(26,34,24,0.6);border:1px solid rgba(58,79,53,0.4);border-radius:4px;color:var(--text-secondary);font-family:'IM Fell English',serif;font-size:13px;font-style:italic;padding:10px;resize:vertical;line-height:1.6;" placeholder="Notes, campaign events, important NPCs..."></textarea>
+      </div>
+    </div>
+  </div>
+
+</div>
+</div>
+</div>
+
+<!-- ======================================================= -->
+<!-- TOOLTIP DATA (hidden) -->
+<!-- ======================================================= -->
+<script>
+const TOOLTIPS = {
+
+  // ABILITY SCORES
+  strength: { name: "Strength", type: "Ability Score", body: "Measures physical power. Used for melee attack rolls, Athletics checks, and carrying capacity. Viktor's STR of 14 gives a +2 modifier.", stats: {"Score":"14","Modifier":"+2","Save":"+4 (Prof)"} },
+  dexterity: { name: "Dexterity", type: "Ability Score", body: "Measures agility, reflexes, and balance. Used for ranged attacks, AC, Initiative, Stealth, and Acrobatics. Viktor's DEX of 17 gives a +3 modifier.", stats: {"Score":"17","Modifier":"+3","Save":"+5 (Prof)"} },
+  constitution: { name: "Constitution", type: "Ability Score", body: "Measures health and stamina. Used for HP and concentration checks.", stats: {"Score":"12","Modifier":"+1","Save":"+1"} },
+  intelligence: { name: "Intelligence", type: "Ability Score", body: "Measures memory and reasoning.", stats: {"Score":"10","Modifier":"+0","Save":"+0"} },
+  wisdom: { name: "Wisdom", type: "Ability Score", body: "Measures perception and insight. Viktor's spellcasting ability as a Ranger.", stats: {"Score":"14","Modifier":"+2","Save":"+2","Spellcasting":"Yes"} },
+  charisma: { name: "Charisma", type: "Ability Score", body: "Measures force of personality. Viktor's lowest score, reflecting his more straightforward nature.", stats: {"Score":"8","Modifier":"−1","Save":"−1"} },
+
+  // WEAPON PROPERTIES
+  martial: { name: "Martial Weapon", type: "Weapon Property", body: "Requires Martial Weapons proficiency. Viktor is proficient." },
+  versatile: { name: "Versatile", type: "Weapon Property", body: "This weapon can be used with one or two hands. When wielded with two hands, use the higher damage die (1d10 for Battleaxe instead of 1d8)." },
+  ammunition: { name: "Ammunition", type: "Weapon Property", body: "You can make a ranged attack only if you have ammunition to fire. Drawing the ammunition is part of the attack. You can recover half your expended ammunition by searching the battlefield after combat." },
+  range: { name: "Range (30/120)", type: "Weapon Property", body: "The first number is normal range (no penalty). The second is long range — attacks at long range are made with Disadvantage. Viktor can choose to toggle Disadvantage manually per the agreed per-shot toggle." },
+  light: { name: "Light", type: "Weapon Property", body: "When you take the Attack action and attack with a Light weapon, you can make one extra attack as a Bonus Action with a different Light weapon. You don't add your ability modifier to the damage of that Bonus Action attack unless it's positive." },
+  loading: { name: "Loading", type: "Weapon Property", body: "You can fire only one piece of ammunition from this weapon when you use an action, bonus action, or reaction, regardless of the number of attacks you can normally make." },
+  unarmed: { name: "Unarmed Strike", type: "Weapon Property", body: "Viktor's Unarmed Strike deals 3 Bludgeoning damage. This is calculated as 1 + STR modifier (2), giving a base of 3. Not affected by Weapon Mastery." },
+
+  // WEAPON MASTERIES
+  topple: { name: "Topple", type: "Weapon Mastery — Battleaxe", body: "When you hit a creature with this weapon, you can force it to make a Constitution saving throw (DC = 8 + your Proficiency Bonus + the ability modifier used to make the attack). Viktor's Topple DC = 8 + 2 + 2 = DC 12. On a failed save, the creature has the Prone condition.", stats: {"Mastery DC":"12 (CON save)","Effect":"Prone on fail","Trigger":"On hit"} },
+  vex: { name: "Vex", type: "Weapon Mastery — Hand Crossbow", body: "If you hit a creature with the Hand Crossbow and deal damage to it, you have Advantage on your next attack roll against that creature before the end of your next turn. Stacks excellently with Hunter's Mark.", stats: {"Effect":"Advantage on next attack","Duration":"Until your next turn ends","Trigger":"On hit + damage"} },
+
+  // WEAPON ITEMS
+  "item-studded-leather": { name: "Studded Leather Armour", type: "Light Armour", body: "AC = 12 + DEX modifier. Viktor's DEX gives +3, plus the Defense feat adds +1, for a total AC of 16 (12 + 3 + 1). Weighs 13 lb.", stats: {"Base AC":"12","DEX Bonus":"+3","Defense Feat":"+1","Total AC":"16","Weight":"13 lb"} },
+  "item-crossbow": { name: "Hand Crossbow", type: "Martial Ranged Weapon", body: "Ammunition, Light, Loading. Range (30/120). Viktor's mastery property: Vex. On a hit, gain Advantage on your next attack against the same target.", stats: {"Damage":"1d6 Piercing","Range":"30 / 120 ft.","To Hit":"+5","Weight":"3 lb"} },
+  "item-battleaxe": { name: "Battleaxe", type: "Martial Melee Weapon", body: "Versatile (1d10 two-handed). Viktor's mastery property: Topple. On a hit, force CON save DC 12 or target is Prone.", stats: {"Damage":"1d8+2 / 1d10+2","To Hit":"+4","Weight":"4 lb","Mastery":"Topple"} },
+  "item-healers-kit": { name: "Healer's Kit", type: "Adventuring Gear", body: "This kit is a leather pouch containing bandages, salves, and splints. As an action, you can expend one use to stabilise a creature that has 0 HP, without needing to make a Wisdom (Medicine) check. The kit has 10 uses." },
+
+  // SAVAGE ATTACKER
+  "savage-attacker": { name: "Savage Attacker", type: "Feat (PHB 2024 p.201)", body: "Once per turn when you hit a target with a weapon, you can roll the weapon's damage dice twice and use either roll against the target. Great synergy with Hunter's Mark — roll both and pick the highest total before adding the 1d6 mark damage." },
+
+  // RANGER FEATURES
+  "feat-favored-enemy": { name: "Favoured Enemy", type: "Ranger Feature (PHB 2024 p.119)", body: "You always have Hunter's Mark prepared, and you can cast it without expending a spell slot. You can cast it this way a number of times equal to your Wisdom modifier (2), and you regain all expended uses when you finish a Long Rest.", stats: {"Free Casts":"2 / Long Rest","Spell":"Hunter's Mark","Slot Required":"No (for free casts)"} },
+  "feat-weapon-mastery": { name: "Weapon Mastery", type: "Ranger Feature (PHB 2024 p.120)", body: "Your training with weapons allows you to use the mastery property of two kinds of weapons of your choice with which you are proficient. Viktor has chosen Battleaxe (Topple) and Hand Crossbow (Vex). You can change your chosen weapons when you finish a Long Rest." },
+  "feat-deft-explorer": { name: "Deft Explorer", type: "Ranger Feature (PHB 2024 p.120)", body: "You gain Expertise in one of your skill proficiencies of your choice. Viktor chose Athletics (+6, double proficiency). You also know two additional languages of your choice — Viktor knows Elvish and Goblin as his bonus languages." },
+  "feat-fighting-style": { name: "Fighting Style", type: "Ranger Feature (PHB 2024 p.120)", body: "You adopt a particular style of fighting as your specialty. Gained as a feat from the ranger feature list (br-2024). The specific style selected should be confirmed with the DM." },
+
+  // ORC TRAITS
+  "feat-adrenaline-rush": { name: "Adrenaline Rush", type: "Orc Trait (PHB 2024 p.195)", body: "You can take the Dash action as a Bonus Action. When you do, you gain 2 Temporary HP. You can use this trait a number of times equal to your Proficiency Bonus (2), and you regain all expended uses when you finish a Short or Long Rest.", stats: {"Uses":"2 / Short or Long Rest","Action":"Bonus Action","Benefit":"Dash + 2 Temp HP"} },
+  "feat-darkvision": { name: "Darkvision", type: "Orc Trait (PHB 2024 p.195)", body: "You have Darkvision with a range of 120 ft. Within that range, you can see in dim light as if it were bright light, and in darkness as if it were dim light. You can't discern colour in darkness, only shades of grey.", stats: {"Range":"120 ft.","Dim Light":"Treated as Bright","Darkness":"Treated as Dim"} },
+  "feat-relentless-endurance": { name: "Relentless Endurance", type: "Orc Trait (PHB 2024 p.195)", body: "When you are reduced to 0 Hit Points but not killed outright, you can drop to 1 HP instead. Once you use this trait, you can't do so again until you finish a Long Rest.", stats: {"Uses":"1 / Long Rest","Trigger":"Reduced to 0 HP","Effect":"Drop to 1 HP instead"} },
+
+  // SOLDIER FEATS
+  "feat-defense": { name: "Defense", type: "Feat (PHB 2024 p.209)", body: "Prerequisite: Proficiency with Light, Medium, or Heavy armour.\n\nYou gain a +1 bonus to Armour Class while you are wearing armour. Viktor's base Studded Leather AC of 15 (12 + DEX 3) becomes 16 with this feat.", stats: {"Bonus":"+1 AC","Requirement":"Wearing armour","Viktor's AC":"16 (12+3+1)"} },
+  "feat-savage-attacker": { name: "Savage Attacker", type: "Feat (PHB 2024 p.201)", body: "Prerequisite: None.\n\nOnce per turn when you hit a target with a weapon, you can roll the weapon's damage dice twice and use either roll against the target. Note: this applies to the weapon dice only — static modifiers (+2, +3, Hunter's Mark 1d6) are added only once after you choose your preferred roll.", stats: {"Frequency":"Once per turn","Applies To":"Weapon damage dice","Excludes":"Flat bonuses & Hunter's Mark"} },
+  "feat-soldier-asi": { name: "Soldier — Ability Score Improvement", type: "Background Feature (PHB 2024 p.185)", body: "Viktor's Soldier background grants an Ability Score Improvement: increase two ability scores by a combined total of +3 (one score +2, another +1). Applied to Strength (+2) and Dexterity (+1), bringing them to their current values." },
+
+  // SPELLS
+  "spell-jump": { name: "Jump", type: "1st-Level Transmutation (Ranger)", body: "You touch a willing creature. Until the spell ends, the target's jump distance is tripled.\n\nUseful for traversal, escaping grapples by leaping away, or reaching elevated terrain out of melee range.", stats: {"Cast Time":"1 Bonus Action","Range":"Touch","Duration":"1 Minute","Components":"V, S, M (a grasshopper's hind leg)"} },
+  "spell-longstrider": { name: "Longstrider", type: "1st-Level Transmutation (Ranger)", body: "You touch a creature. Its speed increases by 10 feet until the spell ends.\n\nViktor can cast this on himself before combat to reach 40ft speed, or on allies for tactical repositioning. Lasts a full hour — cast before adventuring.", stats: {"Cast Time":"1 Action","Range":"Touch","Duration":"1 Hour","Components":"V, S, M (a pinch of dirt)","Effect":"+10 ft. Speed"} },
+  "spell-anticipate": { name: "Anticipate Weakness", type: "1st-Level Divination (Ranger)", body: "You study a creature you can see within 60 feet and anticipate weaknesses in its fighting stance or armour. Until the start of your next turn, your attacks against that creature score a critical hit on a roll of 19 or 20 on the d20.", stats: {"Cast Time":"1 Bonus Action","Range":"Self","Duration":"Instantaneous","Components":"V, S","Effect":"Crits on 19-20 vs. target"} },
+  "spell-hunters-mark": { name: "Hunter's Mark", type: "1st-Level Divination (Ranger) — Always Prepared", body: "You choose a creature you can see within range and mystically mark it as your quarry. Until the spell ends, you deal an extra 1d6 damage to the target whenever you hit it with a weapon attack, and you have Advantage on any Perception or Survival check you make to find it.\n\nIf the target drops to 0 HP before this spell ends, you can use a Bonus Action to mark a new creature.\n\nConcentration. Viktor can cast this without a spell slot 2× per Long Rest via Favoured Enemy.", stats: {"Cast Time":"1 Bonus Action","Range":"90 ft.","Duration":"Concentration, up to 1 hr","Bonus Damage":"+1d6 on hit","Free Casts":"2 / Long Rest","Concentration":"Yes"} },
+
+  // ITEMS  
+  "item-healers-kit": { name: "Healer's Kit", type: "Adventuring Gear", body: "10 uses. As an action, spend 1 use to stabilise a creature at 0 HP without making a Medicine check. Weighs 3 lb.", stats: {"Uses":"10","Action":"1 Action","Effect":"Stabilise 0 HP creature"} },
+};
+</script>
+
+<script>
+// ===== TABS =====
+function switchTab(id) {
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-' + id).classList.add('active');
+  event.target.classList.add('active');
+}
+
+// ===== TOOLTIP ENGINE =====
+const tooltip = document.getElementById('tooltip');
+const ttName = document.getElementById('tt-name');
+const ttType = document.getElementById('tt-type');
+const ttBody = document.getElementById('tt-body');
+const ttStats = document.getElementById('tt-stats');
+let tooltipTarget = null;
+
+function showTooltip(data, el) {
+  ttName.textContent = data.name;
+  ttType.textContent = data.type || '';
+  ttBody.innerHTML = (data.body || '').replace(/\n/g, '<br>');
+  if (data.stats) {
+    ttStats.style.display = 'grid';
+    ttStats.innerHTML = Object.entries(data.stats).map(([k,v]) => `<div class="tooltip-stat">${k}: <span>${v}</span></div>`).join('');
+  } else {
+    ttStats.style.display = 'none';
+  }
+  positionTooltip(el);
+  tooltip.classList.add('visible');
+}
+
+function positionTooltip(el) {
+  const rect = el.getBoundingClientRect();
+  const tw = 360;
+  const th = tooltip.offsetHeight || 200;
+  let left = rect.right + 10;
+  let top = rect.top;
+  if (left + tw > window.innerWidth - 10) left = rect.left - tw - 10;
+  if (top + th > window.innerHeight - 10) top = window.innerHeight - th - 10;
+  if (top < 10) top = 10;
+  tooltip.style.left = Math.max(10, left) + 'px';
+  tooltip.style.top = top + 'px';
+}
+
+function hideTooltip() {
+  tooltip.classList.remove('visible');
+}
+
+document.addEventListener('mousemove', (e) => {
+  const el = e.target.closest('[data-tooltip]');
+  if (el) {
+    const key = el.dataset.tooltip;
+    const data = TOOLTIPS[key];
+    if (data) {
+      showTooltip(data, el);
+      return;
+    }
+  }
+  hideTooltip();
+});
+
+// ===== HP =====
+function updateHPBar() {
+  const cur = parseInt(document.getElementById('currentHP').value) || 0;
+  const max = 17;
+  const pct = Math.min(100, Math.max(0, (cur / max) * 100));
+  const bar = document.getElementById('hpBar');
+  bar.style.width = pct + '%';
+  if (pct > 50) bar.style.background = 'linear-gradient(90deg,#4a8b4a,#7ec87e)';
+  else if (pct > 25) bar.style.background = 'linear-gradient(90deg,#8b7a20,#c0a830)';
+  else bar.style.background = 'linear-gradient(90deg,#8b2f2f,#c05050)';
+}
+
+function applyHP(sign) {
+  const delta = parseInt(document.getElementById('hpDelta').value) || 0;
+  const cur = parseInt(document.getElementById('currentHP').value) || 0;
+  const newVal = Math.min(17, Math.max(0, cur + sign * delta));
+  document.getElementById('currentHP').value = newVal;
+  document.getElementById('hpDelta').value = '';
+  updateHPBar();
+}
+
+// ===== DEATH SAVES =====
+function togglePip(el, type) {
+  el.classList.toggle('filled');
+}
+
+// ===== SPELL SLOTS =====
+function toggleSlot(id) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  el.classList.toggle('used');
+  el.classList.toggle('available');
+  // Sync twin slots
+  const twin = id.startsWith('slot-') ? 's-' + id : id.replace('s-slot-','slot-');
+  const twinEl = document.getElementById(twin);
+  if (twinEl) {
+    twinEl.classList.remove('used','available');
+    twinEl.classList.add(el.classList.contains('used') ? 'used' : 'available');
+  }
+}
+
+// ===== RESOURCES =====
+function toggleResource(el) {
+  el.classList.toggle('used');
+  el.classList.toggle('available');
+}
+
+// ===== CONDITIONS =====
+function toggleCondition(el) {
+  el.classList.toggle('active');
+  el.classList.toggle('inactive');
+}
+
+// ===== HUNTER'S MARK =====
+let huntersMark = false;
+function toggleHuntersMark() {
+  huntersMark = !huntersMark;
+  const banner = document.getElementById('hmBanner');
+  const dot = document.getElementById('hmDot');
+  const bonus = document.getElementById('hmBonus');
+  banner.classList.toggle('active', huntersMark);
+  dot.classList.toggle('on', huntersMark);
+  bonus.textContent = huntersMark ? 'Active — +1d6 damage on hit' : 'Inactive — +1d6 damage when active';
+  ['battleaxe','crossbow','unarmed'].forEach(w => {
+    const el = document.getElementById('hm-' + w);
+    if (el) el.style.display = huntersMark ? 'inline' : 'none';
+  });
+}
+
+// ===== WEAPON RANGE =====
+const weaponState = {
+  battleaxe: { mode: 'melee', adv: 'none' },
+  crossbow: { mode: 'normal', adv: 'none' }
+};
+
+function setMeleeRange(weapon, mode, btn) {
+  weaponState[weapon].mode = mode;
+  btn.closest('.range-toggle').querySelectorAll('.range-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  updateWeaponDisplay(weapon);
+}
+
+function setCrossbow(mode, btn) {
+  weaponState.crossbow.mode = mode;
+  btn.closest('.range-toggle').querySelectorAll('.range-btn').forEach(b => {
+    b.classList.remove('active','disadvantage-active');
+  });
+  const note = document.getElementById('crossbow-range-note');
+  if (mode === 'long') {
+    btn.classList.add('disadvantage-active');
+    note.style.display = 'block';
+  } else {
+    btn.classList.add('active');
+    note.style.display = 'none';
+  }
+  updateWeaponDisplay('crossbow');
+}
+
+function toggleAdv(weapon, type, btn) {
+  const state = weaponState[weapon];
+  if (state.adv === type) {
+    state.adv = 'none';
+    btn.classList.remove('active');
+  } else {
+    state.adv = type;
+    btn.closest('.adv-toggle-wrap').querySelectorAll('.adv-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+  }
+  updateWeaponDisplay(weapon);
+}
+
+function updateWeaponDisplay(weapon) {
+  const state = weaponState[weapon];
+  const advLabel = document.getElementById(weapon + '-adv-label');
+
+  if (weapon === 'battleaxe') {
+    const hitEl = document.getElementById('battleaxe-hit');
+    const dmgEl = document.getElementById('battleaxe-dmg');
+    if (state.mode === 'versatile') {
+      hitEl.textContent = '+4';
+      dmgEl.textContent = '1d10+2 Slashing (2H)';
+    } else {
+      hitEl.textContent = '+4';
+      dmgEl.textContent = '1d8+2 Slashing';
+    }
+  }
+
+  if (weapon === 'crossbow') {
+    const hitEl = document.getElementById('crossbow-hit');
+    // Long range does NOT change the +to-hit — disadvantage is rolled separately
+    hitEl.textContent = '+5';
+  }
+
+  if (advLabel) {
+    if (state.adv === 'adv') {
+      advLabel.textContent = 'Advantage';
+      advLabel.className = 'adv-indicator advantage';
+    } else if (state.adv === 'dis') {
+      advLabel.textContent = 'Disadvantage';
+      advLabel.className = 'adv-indicator disadvantage';
+    } else {
+      advLabel.textContent = '';
+      advLabel.className = 'adv-indicator';
+    }
+  }
+}
+
+// ===== REST =====
+function shortRest() {
+  // Recharge Adrenaline Rush
+  document.querySelectorAll('.resource-pip').forEach(p => {
+    // Only auto-reset the adrenaline rush; others are manual
+  });
+  alert('Short Rest taken.\n\n• Adrenaline Rush: 2 charges restored\n• Hunter\'s Mark free casts: unchanged (Long Rest)\n\nHit Dice available to spend: 2d10\nRemember to manually spend Hit Dice and update Current HP.');
+}
+
+function longRest() {
+  document.getElementById('currentHP').value = 17;
+  updateHPBar();
+  // Reset spell slots
+  ['slot-1a','slot-1b','s-slot-1a','s-slot-1b'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) { el.classList.remove('used'); el.classList.add('available'); }
+  });
+  // Reset all resource pips
+  document.querySelectorAll('.resource-pip').forEach(p => {
+    p.classList.remove('used');
+    p.classList.add('available');
+  });
+  // Reset death saves
+  document.querySelectorAll('.death-pip').forEach(p => p.classList.remove('filled'));
+  alert('Long Rest completed!\n\n• HP restored to 17/17\n• Spell slots restored (2×1st)\n• Hunter\'s Mark free casts restored (2)\n• Adrenaline Rush restored (2)\n• Relentless Endurance restored\n• All conditions cleared (clear manually if needed)');
+}
+</script>
+</body>
+</html>
