@@ -93,12 +93,7 @@
   }
 
   .tooltip-layer {
-    position: fixed;
-    inset: 0;
-    z-index: 2147483647;
-    pointer-events: none;
-    overflow: visible;
-    isolation: isolate;
+    display: contents;
   }
 
   /* ===== HEADER ===== */
@@ -159,6 +154,21 @@
     height: 30px;
     background: var(--gold-dim);
     opacity: 0.3;
+  }
+  .ui-version-badge {
+    position: absolute;
+    top: 10px;
+    right: 14px;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 10px;
+    letter-spacing: 1.1px;
+    text-transform: uppercase;
+    padding: 3px 7px;
+    border-radius: 7px;
+    border: 1px solid rgba(143, 162, 154, 0.35);
+    color: #b9c8c2;
+    background: rgba(15, 22, 18, 0.65);
+    pointer-events: none;
   }
 
   /* ===== NAV TABS ===== */
@@ -832,8 +842,8 @@
 
   /* ===== TOOLTIP / OVERLAY ===== */
   .tooltip {
-    position: absolute;
-    z-index: 1;
+    position: fixed;
+    z-index: 2147483647 !important;
     top: 0;
     left: 0;
     margin: 0;
@@ -1226,7 +1236,7 @@
 
   .sheet-header {
     border-bottom-color: rgba(201, 168, 76, 0.5);
-    border-radius: 0 0 16px 16px;
+    border-radius: 0 0 10px 10px;
     background:
       linear-gradient(180deg, rgba(10, 18, 16, 0.95), rgba(13, 24, 20, 0.92)),
       radial-gradient(circle at 8% 10%, rgba(143, 162, 154, 0.14), transparent 35%);
@@ -1238,9 +1248,9 @@
   }
 
   .panel {
-    border-radius: 14px;
+    border-radius: 10px;
     border-color: rgba(201, 168, 76, 0.24);
-    box-shadow: inset 0 1px 0 rgba(255,255,255,0.04), 0 16px 30px rgba(0,0,0,0.2);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.04), 0 10px 18px rgba(0,0,0,0.18);
   }
 
   .panel-header {
@@ -1253,20 +1263,40 @@
   }
 
   .tab-btn {
-    border: 1px solid transparent;
-    border-radius: 999px;
-    padding: 8px 14px;
-    transition: color 0.2s, border-color 0.2s, background 0.2s;
+    border: 1px solid rgba(143, 162, 154, 0.22);
+    border-radius: 8px;
+    padding: 8px 12px;
+    background: linear-gradient(180deg, rgba(20, 30, 23, 0.8), rgba(15, 24, 19, 0.75));
+    transition: color 0.2s, border-color 0.2s, background 0.2s, transform 0.12s;
   }
 
   .tab-btn:hover {
-    border-color: rgba(201, 168, 76, 0.3);
-    background: rgba(201, 168, 76, 0.08);
+    border-color: rgba(201, 168, 76, 0.36);
+    background: linear-gradient(180deg, rgba(34, 48, 35, 0.84), rgba(24, 35, 26, 0.82));
+    transform: translateY(-1px);
   }
 
   .tab-btn.active {
-    border-color: rgba(201, 168, 76, 0.46);
-    background: linear-gradient(180deg, rgba(201, 168, 76, 0.18), rgba(201, 168, 76, 0.1));
+    border-color: rgba(201, 168, 76, 0.58);
+    background: linear-gradient(180deg, rgba(201, 168, 76, 0.18), rgba(115, 98, 46, 0.24));
+    color: #f1da9b;
+  }
+
+  .hp-btn,
+  .rest-btn,
+  .range-btn,
+  .adv-btn {
+    border-radius: 8px;
+    border-width: 1px;
+    border-style: solid;
+    background: linear-gradient(180deg, rgba(18, 28, 20, 0.78), rgba(12, 20, 15, 0.72));
+  }
+
+  .hp-btn:hover,
+  .rest-btn:hover,
+  .range-btn:hover,
+  .adv-btn:hover {
+    transform: translateY(-1px);
   }
 
   .weapon-card,
@@ -1279,11 +1309,12 @@
   .passive-row,
   .combat-stat,
   .hp-box {
-    border-radius: 12px;
+    border-radius: 8px;
   }
 
   .item-card {
     min-height: 170px;
+    border-radius: 10px;
   }
 
   .combat-stat {
@@ -1402,6 +1433,7 @@
 
 <!-- ===== HEADER ===== -->
 <div class="sheet-header">
+  <div id="uiVersionBadge" class="ui-version-badge">UI v0.0.0</div>
   <div>
     <div class="char-name">Viktor Rhee</div>
     <div style="font-family:'Barlow Condensed',sans-serif;font-size:11px;color:var(--text-dim);letter-spacing:1px;margin-top:2px;">
@@ -2370,6 +2402,8 @@ const TOOLTIPS = {
 </script>
 
 <script>
+const SHEET_UI_VERSION = '3.1.0';
+
 // ===== TABS =====
 function switchTab(id) {
   document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
@@ -2382,7 +2416,6 @@ function switchTab(id) {
 
 // ===== TOOLTIP ENGINE =====
 const tooltip = document.getElementById('tooltip');
-const tooltipLayer = document.getElementById('tooltip-layer');
 const ttName = document.getElementById('tt-name');
 const ttType = document.getElementById('tt-type');
 const ttBody = document.getElementById('tt-body');
@@ -2414,11 +2447,6 @@ function positionTooltip(x, y) {
   if (left < pad) left = pad;
   if (top < pad) top = pad;
 
-  // Keep tooltip in the dedicated top-layer portal.
-  if (tooltip.parentElement !== tooltipLayer && tooltipLayer) {
-    tooltipLayer.appendChild(tooltip);
-  }
-
   tooltip.style.left = Math.round(left) + 'px';
   tooltip.style.top = Math.round(top) + 'px';
 }
@@ -2436,6 +2464,12 @@ function getTooltipData(el) {
 function activateTooltip(el, x, y) {
   const data = getTooltipData(el);
   if (!data) return;
+  // Ensure tooltip is rendered at document root to avoid stacking-context bugs.
+  if (tooltip.parentElement !== document.body) {
+    document.body.appendChild(tooltip);
+  }
+  // Keep as last body child for deterministic paint order.
+  document.body.appendChild(tooltip);
   activeTooltipEl = el;
   showTooltip(data);
   positionTooltip(x, y);
@@ -2548,6 +2582,12 @@ function saveSheetState() {
 }
 
 function loadSheetState() {
+  const versionBadge = document.getElementById('uiVersionBadge');
+  if (versionBadge) versionBadge.textContent = `UI v${SHEET_UI_VERSION}`;
+  if (!document.title.includes(`UI v${SHEET_UI_VERSION}`)) {
+    document.title = `${document.title} · UI v${SHEET_UI_VERSION}`;
+  }
+
   try {
     const raw = localStorage.getItem(SHEET_STORAGE_KEY);
     if (!raw) {
