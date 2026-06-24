@@ -690,6 +690,11 @@
   .spell-card:hover { border-color: var(--gold-dim); }
   .spell-card.prepared { border-left: 2px solid var(--gold); }
   .spell-card.always-prepared { border-left: 2px solid #5a9b5a; }
+  .spell-card.effect-active {
+    border-color: rgba(126, 200, 126, 0.7);
+    box-shadow: inset 0 0 0 1px rgba(126, 200, 126, 0.22), 0 0 0 1px rgba(126, 200, 126, 0.1);
+    background: linear-gradient(180deg, rgba(34, 56, 30, 0.72), rgba(26, 42, 23, 0.68));
+  }
   .spell-header {
     display: flex;
     align-items: center;
@@ -736,6 +741,28 @@
     transition: border-color 0.15s;
   }
   .feature-card:hover { border-color: var(--gold-dim); }
+  .feature-card.effect-active {
+    border-color: rgba(232, 201, 106, 0.6);
+    box-shadow: inset 0 0 0 1px rgba(232, 201, 106, 0.2);
+    background: linear-gradient(180deg, rgba(44, 50, 28, 0.74), rgba(30, 38, 24, 0.66));
+  }
+  .status-pill {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    border: 1px solid rgba(90, 155, 90, 0.45);
+    background: rgba(90, 155, 90, 0.12);
+    color: #89cf89;
+    padding: 2px 7px;
+    border-radius: 999px;
+  }
+  .status-pill.off {
+    border-color: rgba(95, 113, 107, 0.45);
+    background: rgba(24, 34, 20, 0.5);
+    color: var(--text-dim);
+  }
   .feature-header {
     display: flex;
     align-items: flex-start;
@@ -1359,11 +1386,14 @@
       </div>
       <div class="panel-body">
         <div class="combat-row">
-          <div class="combat-stat"><span class="cs-val">16</span><span class="cs-label">Armour Class</span></div>
-          <div class="combat-stat"><span class="cs-val">+3</span><span class="cs-label">Initiative</span></div>
-          <div class="combat-stat"><span class="cs-val">30ft</span><span class="cs-label">Speed</span></div>
+          <div class="combat-stat"><span class="cs-val" id="acVal">16</span><span class="cs-label">Armour Class</span></div>
+          <div class="combat-stat"><span class="cs-val" id="initiativeVal">+3</span><span class="cs-label">Initiative</span></div>
+          <div class="combat-stat"><span class="cs-val" id="speedVal">30ft</span><span class="cs-label">Speed</span></div>
           <div class="combat-stat"><span class="cs-val">+2</span><span class="cs-label">Prof Bonus</span></div>
           <div class="combat-stat"><span class="cs-val">2d10</span><span class="cs-label">Hit Dice</span></div>
+        </div>
+        <div id="combatEffectReadout" style="font-family:'Barlow Condensed',sans-serif;font-size:10px;letter-spacing:1px;color:var(--text-dim);margin:-4px 0 10px;">
+          No temporary combat effects active.
         </div>
 
         <!-- HP -->
@@ -1538,8 +1568,8 @@
       <div class="panel-body">
         <div style="display:flex;gap:10px;margin-bottom:10px;">
           <div class="combat-stat"><span class="cs-val">WIS</span><span class="cs-label">Ability</span></div>
-          <div class="combat-stat"><span class="cs-val">12</span><span class="cs-label">Spell Save DC</span></div>
-          <div class="combat-stat"><span class="cs-val">+4</span><span class="cs-label">Spell Attack</span></div>
+          <div class="combat-stat"><span class="cs-val" id="spellDcQuick">12</span><span class="cs-label">Spell Save DC</span></div>
+          <div class="combat-stat"><span class="cs-val" id="spellAtkQuick">+4</span><span class="cs-label">Spell Attack</span></div>
         </div>
         <div class="spell-slot-track">
           <span class="spell-slot-label">1st Level</span>
@@ -1617,8 +1647,8 @@
           <div class="combat-row" style="flex-direction:column;gap:8px;">
             <div class="combat-stat" style="width:100%;flex:none;"><span class="cs-val">WIS</span><span class="cs-label">Casting Ability</span></div>
             <div style="display:flex;gap:8px;">
-              <div class="combat-stat"><span class="cs-val">12</span><span class="cs-label">Save DC</span></div>
-              <div class="combat-stat"><span class="cs-val">+4</span><span class="cs-label">Spell Atk</span></div>
+              <div class="combat-stat"><span class="cs-val" id="spellDcFull">12</span><span class="cs-label">Save DC</span></div>
+              <div class="combat-stat"><span class="cs-val" id="spellAtkFull">+4</span><span class="cs-label">Spell Atk</span></div>
             </div>
           </div>
           <div class="section-divider"></div>
@@ -1655,10 +1685,11 @@
           </div>
         </div>
 
-        <div class="spell-card prepared" data-tooltip="spell-longstrider">
+        <div class="spell-card prepared" id="spell-longstrider-card" data-tooltip="spell-longstrider" onclick="toggleSpellEffect('longstrider')">
           <div class="spell-header">
             <div class="spell-name">Longstrider</div>
             <span class="spell-level-badge">1st</span>
+            <span class="status-pill off" id="longstrider-pill">Inactive</span>
           </div>
           <div class="spell-meta">
             <span>⏱ 1 Action</span>
@@ -1668,10 +1699,11 @@
           </div>
         </div>
 
-        <div class="spell-card prepared" data-tooltip="spell-anticipate">
+        <div class="spell-card prepared" id="spell-anticipate-card" data-tooltip="spell-anticipate" onclick="toggleSpellEffect('anticipate')">
           <div class="spell-header">
             <div class="spell-name">Anticipate Weakness</div>
             <span class="spell-level-badge">1st</span>
+            <span class="status-pill off" id="anticipate-pill">Inactive</span>
           </div>
           <div class="spell-meta">
             <span>⏱ 1 Bonus Action</span>
@@ -1683,10 +1715,11 @@
 
         <div style="margin-top:12px;margin-bottom:6px;">
           <div style="font-family:'Barlow Condensed',sans-serif;font-size:9px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:#5a9b5a;margin-bottom:8px;">Always Prepared (Favoured Enemy)</div>
-          <div class="spell-card always-prepared" data-tooltip="spell-hunters-mark">
+          <div class="spell-card always-prepared" id="spell-hm-card" data-tooltip="spell-hunters-mark" onclick="toggleHuntersMark()">
             <div class="spell-header">
               <div class="spell-name">Hunter's Mark</div>
               <span class="spell-level-badge" style="border-color:rgba(90,155,90,0.4);color:#5a9b5a;">Always</span>
+              <span class="status-pill off" id="hm-pill">Inactive</span>
             </div>
             <div class="spell-meta">
               <span>⏱ 1 Bonus Action</span>
@@ -1696,8 +1729,8 @@
             </div>
             <div style="margin-top:6px;">
               <div class="resource-track">
-                <div class="resource-pip available" onclick="toggleResource(this)" title="Use 1"></div>
-                <div class="resource-pip available" onclick="toggleResource(this)" title="Use 2"></div>
+                <div class="resource-pip available" onclick="event.stopPropagation();toggleResource(this)" title="Use 1"></div>
+                <div class="resource-pip available" onclick="event.stopPropagation();toggleResource(this)" title="Use 2"></div>
                 <span class="resource-label">2 / Long Rest (no slot needed)</span>
               </div>
             </div>
@@ -1766,7 +1799,7 @@
     <div class="panel-header"><span class="panel-title">Orc Species Traits</span></div>
     <div class="panel-body">
 
-      <div class="feature-card">
+      <div class="feature-card" data-tooltip="feat-creature-type">
         <div class="feature-header">
           <span class="feature-name">Creature Type</span>
           <span class="feature-source">Orc</span>
@@ -1774,7 +1807,7 @@
         <div class="feature-summary">You are a Humanoid.</div>
       </div>
 
-      <div class="feature-card">
+      <div class="feature-card" data-tooltip="feat-size-speed">
         <div class="feature-header">
           <span class="feature-name">Size &amp; Speed</span>
           <span class="feature-source">Orc</span>
@@ -1823,10 +1856,11 @@
     <div class="panel-header"><span class="panel-title">Feats &amp; Weapon Mastery</span></div>
     <div class="panel-body">
 
-      <div class="feature-card" data-tooltip="feat-defense">
+      <div class="feature-card" id="feat-defense-card" data-tooltip="feat-defense" onclick="toggleFeatureEffect('defense')">
         <div class="feature-header">
           <span class="feature-name">Defense</span>
           <span class="feature-source">Feat</span>
+          <span class="status-pill" id="defense-pill">Active</span>
         </div>
         <div class="feature-summary">+1 to AC when wearing Light, Medium, or Heavy armour. (AC = 16 with Studded Leather)</div>
       </div>
@@ -2169,6 +2203,8 @@ const TOOLTIPS = {
   "feat-defense": { name: "Defense", type: "Feat (PHB 2024 p.209)", body: "Prerequisite: Proficiency with Light, Medium, or Heavy armour.\n\nYou gain a +1 bonus to Armour Class while you are wearing armour. Viktor's base Studded Leather AC of 15 (12 + DEX 3) becomes 16 with this feat.", stats: {"Bonus":"+1 AC","Requirement":"Wearing armour","Viktor's AC":"16 (12+3+1)"} },
   "feat-savage-attacker": { name: "Savage Attacker", type: "Feat (PHB 2024 p.201)", body: "Prerequisite: None.\n\nOnce per turn when you hit a target with a weapon, you can roll the weapon's damage dice twice and use either roll against the target. Note: this applies to the weapon dice only — static modifiers (+2, +3, Hunter's Mark 1d6) are added only once after you choose your preferred roll.", stats: {"Frequency":"Once per turn","Applies To":"Weapon damage dice","Excludes":"Flat bonuses & Hunter's Mark"} },
   "feat-soldier-asi": { name: "Soldier — Ability Score Improvement", type: "Background Feature (PHB 2024 p.185)", body: "Viktor's Soldier background grants an Ability Score Improvement: increase two ability scores by a combined total of +3 (one score +2, another +1). Applied to Strength (+2) and Dexterity (+1), bringing them to their current values." },
+  "feat-creature-type": { name: "Creature Type", type: "Orc Species Trait", body: "Viktor is a Humanoid. Effects that target Humanoids apply to him unless another effect changes creature type." },
+  "feat-size-speed": { name: "Size & Speed", type: "Orc Species Trait", body: "Viktor is Medium with a base walking speed of 30 feet. Longstrider can temporarily increase this by 10 feet while active.", stats: {"Size":"Medium","Base Speed":"30 ft","Longstrider":"40 ft while active"} },
 
   // SPELLS
   "spell-jump": { name: "Jump", type: "1st-Level Transmutation (Ranger)", body: "You touch a willing creature. Until the spell ends, the target's jump distance is tripled.\n\nUseful for traversal, escaping grapples by leaping away, or reaching elevated terrain out of melee range.", stats: {"Cast Time":"1 Bonus Action","Range":"Touch","Duration":"1 Minute","Components":"V, S, M (a grasshopper's hind leg)"} },
@@ -2189,6 +2225,7 @@ function switchTab(id) {
   document.getElementById('tab-' + id).classList.add('active');
   const activeBtn = document.querySelector(`.tab-btn[onclick="switchTab('${id}')"]`);
   if (activeBtn) activeBtn.classList.add('active');
+  saveSheetState();
 }
 
 // ===== TOOLTIP ENGINE =====
@@ -2303,6 +2340,233 @@ function updateHPBar() {
   if (pct > 50) bar.style.background = 'linear-gradient(90deg,#4a8b4a,#7ec87e)';
   else if (pct > 25) bar.style.background = 'linear-gradient(90deg,#8b7a20,#c0a830)';
   else bar.style.background = 'linear-gradient(90deg,#8b2f2f,#c05050)';
+  saveSheetState();
+}
+
+// ===== REACTIVE SHEET STATE =====
+const sheetState = {
+  defense: true,
+  longstrider: false,
+  anticipate: false,
+  huntersMark: false,
+};
+
+const baseStats = {
+  acNoDefense: 15,
+  speed: 30,
+  spellDc: 12,
+  spellAttack: 4,
+};
+
+const SHEET_STORAGE_KEY = 'maltandmagic:dnd:viktor-rhee-sheet:v1';
+
+function saveSheetState() {
+  try {
+    const state = {
+      sheetState,
+      huntersMark,
+      weaponState,
+      hp: {
+        current: document.getElementById('currentHP')?.value || '17',
+        temp: document.getElementById('tempHP')?.value || '0',
+      },
+      slots: Array.from(document.querySelectorAll('.slot-pip')).map((el, idx) => ({
+        id: el.id || `slot-index-${idx}`,
+        used: el.classList.contains('used'),
+      })),
+      resources: Array.from(document.querySelectorAll('.resource-pip')).map(el => el.classList.contains('used')),
+      deaths: Array.from(document.querySelectorAll('.death-pip')).map(el => el.classList.contains('filled')),
+      conditions: Array.from(document.querySelectorAll('.condition-badge')).map(el => ({
+        name: (el.textContent || '').trim(),
+        active: el.classList.contains('active'),
+      })),
+      activeTab: document.querySelector('.tab-panel.active')?.id || 'tab-combat',
+    };
+    localStorage.setItem(SHEET_STORAGE_KEY, JSON.stringify(state));
+  } catch (err) {
+    console.warn('Could not save sheet state:', err);
+  }
+}
+
+function loadSheetState() {
+  try {
+    const raw = localStorage.getItem(SHEET_STORAGE_KEY);
+    if (!raw) {
+      refreshDerivedStats();
+      updateHPBar();
+      return;
+    }
+
+    const saved = JSON.parse(raw);
+
+    if (saved.sheetState && typeof saved.sheetState === 'object') {
+      Object.assign(sheetState, saved.sheetState);
+    }
+
+    huntersMark = !!(saved.huntersMark || sheetState.huntersMark);
+    sheetState.huntersMark = huntersMark;
+
+    if (saved.weaponState?.battleaxe) {
+      weaponState.battleaxe = { ...weaponState.battleaxe, ...saved.weaponState.battleaxe };
+    }
+    if (saved.weaponState?.crossbow) {
+      weaponState.crossbow = { ...weaponState.crossbow, ...saved.weaponState.crossbow };
+    }
+
+    if (saved.hp) {
+      const currentHP = document.getElementById('currentHP');
+      const tempHP = document.getElementById('tempHP');
+      if (currentHP) currentHP.value = saved.hp.current ?? '17';
+      if (tempHP) tempHP.value = saved.hp.temp ?? '0';
+    }
+
+    if (Array.isArray(saved.slots)) {
+      saved.slots.forEach(slot => {
+        const el = slot.id ? document.getElementById(slot.id) : null;
+        if (!el) return;
+        el.classList.remove('used', 'available');
+        el.classList.add(slot.used ? 'used' : 'available');
+      });
+    }
+
+    if (Array.isArray(saved.resources)) {
+      document.querySelectorAll('.resource-pip').forEach((el, idx) => {
+        const used = !!saved.resources[idx];
+        el.classList.toggle('used', used);
+        el.classList.toggle('available', !used);
+      });
+    }
+
+    if (Array.isArray(saved.deaths)) {
+      document.querySelectorAll('.death-pip').forEach((el, idx) => {
+        el.classList.toggle('filled', !!saved.deaths[idx]);
+      });
+    }
+
+    if (Array.isArray(saved.conditions)) {
+      const map = new Map(saved.conditions.map(c => [c.name, !!c.active]));
+      document.querySelectorAll('.condition-badge').forEach(el => {
+        const key = (el.textContent || '').trim();
+        const active = map.get(key) || false;
+        el.classList.toggle('active', active);
+        el.classList.toggle('inactive', !active);
+      });
+    }
+
+    refreshDerivedStats();
+    updateWeaponDisplay('battleaxe');
+    updateWeaponDisplay('crossbow');
+
+    const battleaxeModeBtn = document.querySelector(`button[onclick="setMeleeRange('battleaxe','${weaponState.battleaxe.mode}',this)"]`);
+    if (battleaxeModeBtn) {
+      battleaxeModeBtn.closest('.range-toggle')?.querySelectorAll('.range-btn').forEach(b => b.classList.remove('active'));
+      battleaxeModeBtn.classList.add('active');
+    }
+
+    const crossbowNormalBtn = document.querySelector("button[onclick=\"setCrossbow('normal',this)\"]");
+    const crossbowLongBtn = document.querySelector("button[onclick=\"setCrossbow('long',this)\"]");
+    const crossbowNote = document.getElementById('crossbow-range-note');
+    if (crossbowNormalBtn && crossbowLongBtn) {
+      [crossbowNormalBtn, crossbowLongBtn].forEach(b => b.classList.remove('active', 'disadvantage-active'));
+      if (weaponState.crossbow.mode === 'long') {
+        crossbowLongBtn.classList.add('disadvantage-active');
+        if (crossbowNote) crossbowNote.style.display = 'block';
+      } else {
+        crossbowNormalBtn.classList.add('active');
+        if (crossbowNote) crossbowNote.style.display = 'none';
+      }
+    }
+
+    const savedTab = (saved.activeTab || 'tab-combat').replace('tab-', '');
+    switchTab(savedTab);
+  } catch (err) {
+    console.warn('Could not load sheet state:', err);
+    refreshDerivedStats();
+    updateHPBar();
+  }
+}
+
+function setStatusPill(id, active, onText = 'Active', offText = 'Inactive') {
+  const pill = document.getElementById(id);
+  if (!pill) return;
+  pill.textContent = active ? onText : offText;
+  pill.classList.toggle('off', !active);
+}
+
+function refreshDerivedStats() {
+  const ac = baseStats.acNoDefense + (sheetState.defense ? 1 : 0);
+  const speed = baseStats.speed + (sheetState.longstrider ? 10 : 0);
+
+  const acEl = document.getElementById('acVal');
+  const speedEl = document.getElementById('speedVal');
+  if (acEl) acEl.textContent = String(ac);
+  if (speedEl) speedEl.textContent = `${speed}ft`;
+
+  ['spellDcQuick', 'spellDcFull'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.textContent = String(baseStats.spellDc);
+  });
+  ['spellAtkQuick', 'spellAtkFull'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.textContent = `+${baseStats.spellAttack}`;
+  });
+
+  const effectReadout = document.getElementById('combatEffectReadout');
+  if (effectReadout) {
+    const effects = [];
+    if (sheetState.defense) effects.push('Defense +1 AC');
+    if (sheetState.longstrider) effects.push('Longstrider +10 ft Speed');
+    if (sheetState.huntersMark) effects.push('Hunter\'s Mark +1d6 on weapon hit');
+    if (sheetState.anticipate) effects.push('Anticipate Weakness: crit on 19-20 (next attack window)');
+    effectReadout.textContent = effects.length ? `Active Effects: ${effects.join(' | ')}` : 'No temporary combat effects active.';
+  }
+
+  const longCard = document.getElementById('spell-longstrider-card');
+  if (longCard) longCard.classList.toggle('effect-active', sheetState.longstrider);
+  const antCard = document.getElementById('spell-anticipate-card');
+  if (antCard) antCard.classList.toggle('effect-active', sheetState.anticipate);
+  const hmCard = document.getElementById('spell-hm-card');
+  if (hmCard) hmCard.classList.toggle('effect-active', sheetState.huntersMark);
+  const defenseCard = document.getElementById('feat-defense-card');
+  if (defenseCard) defenseCard.classList.toggle('effect-active', sheetState.defense);
+
+  setStatusPill('longstrider-pill', sheetState.longstrider);
+  setStatusPill('anticipate-pill', sheetState.anticipate);
+  setStatusPill('hm-pill', sheetState.huntersMark);
+  setStatusPill('defense-pill', sheetState.defense);
+
+  const critText = sheetState.anticipate ? '19-20 crit range active' : '';
+  const battleaxeAdv = document.getElementById('battleaxe-adv-label');
+  const crossbowAdv = document.getElementById('crossbow-adv-label');
+  [battleaxeAdv, crossbowAdv].forEach(el => {
+    if (!el) return;
+    if (!el.textContent && critText) {
+      el.textContent = critText;
+      el.className = 'adv-indicator advantage';
+    } else if (el.textContent === '19-20 crit range active' && !critText) {
+      el.textContent = '';
+      el.className = 'adv-indicator';
+    }
+  });
+}
+
+function toggleFeatureEffect(name) {
+  if (name === 'defense') {
+    sheetState.defense = !sheetState.defense;
+    refreshDerivedStats();
+    saveSheetState();
+  }
+}
+
+function toggleSpellEffect(name) {
+  if (name === 'longstrider') {
+    sheetState.longstrider = !sheetState.longstrider;
+  }
+  if (name === 'anticipate') {
+    sheetState.anticipate = !sheetState.anticipate;
+  }
+  refreshDerivedStats();
+  saveSheetState();
 }
 
 function applyHP(sign) {
@@ -2312,11 +2576,13 @@ function applyHP(sign) {
   document.getElementById('currentHP').value = newVal;
   document.getElementById('hpDelta').value = '';
   updateHPBar();
+  saveSheetState();
 }
 
 // ===== DEATH SAVES =====
 function togglePip(el, type) {
   el.classList.toggle('filled');
+  saveSheetState();
 }
 
 // ===== SPELL SLOTS =====
@@ -2332,24 +2598,28 @@ function toggleSlot(id) {
     twinEl.classList.remove('used','available');
     twinEl.classList.add(el.classList.contains('used') ? 'used' : 'available');
   }
+  saveSheetState();
 }
 
 // ===== RESOURCES =====
 function toggleResource(el) {
   el.classList.toggle('used');
   el.classList.toggle('available');
+  saveSheetState();
 }
 
 // ===== CONDITIONS =====
 function toggleCondition(el) {
   el.classList.toggle('active');
   el.classList.toggle('inactive');
+  saveSheetState();
 }
 
 // ===== HUNTER'S MARK =====
 let huntersMark = false;
 function toggleHuntersMark() {
   huntersMark = !huntersMark;
+  sheetState.huntersMark = huntersMark;
   const banner = document.getElementById('hmBanner');
   const dot = document.getElementById('hmDot');
   const bonus = document.getElementById('hmBonus');
@@ -2360,6 +2630,8 @@ function toggleHuntersMark() {
     const el = document.getElementById('hm-' + w);
     if (el) el.style.display = huntersMark ? 'inline' : 'none';
   });
+  refreshDerivedStats();
+  saveSheetState();
 }
 
 // ===== WEAPON RANGE =====
@@ -2373,6 +2645,7 @@ function setMeleeRange(weapon, mode, btn) {
   btn.closest('.range-toggle').querySelectorAll('.range-btn').forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
   updateWeaponDisplay(weapon);
+  saveSheetState();
 }
 
 function setCrossbow(mode, btn) {
@@ -2389,6 +2662,7 @@ function setCrossbow(mode, btn) {
     note.style.display = 'none';
   }
   updateWeaponDisplay('crossbow');
+  saveSheetState();
 }
 
 function toggleAdv(weapon, type, btn) {
@@ -2402,6 +2676,7 @@ function toggleAdv(weapon, type, btn) {
     btn.classList.add('active');
   }
   updateWeaponDisplay(weapon);
+  saveSheetState();
 }
 
 function updateWeaponDisplay(weapon) {
@@ -2433,6 +2708,9 @@ function updateWeaponDisplay(weapon) {
     } else if (state.adv === 'dis') {
       advLabel.textContent = 'Disadvantage';
       advLabel.className = 'adv-indicator disadvantage';
+    } else if (sheetState.anticipate) {
+      advLabel.textContent = '19-20 crit range active';
+      advLabel.className = 'adv-indicator advantage';
     } else {
       advLabel.textContent = '';
       advLabel.className = 'adv-indicator';
@@ -2464,8 +2742,18 @@ function longRest() {
   });
   // Reset death saves
   document.querySelectorAll('.death-pip').forEach(p => p.classList.remove('filled'));
+  if (sheetState.longstrider) sheetState.longstrider = false;
+  if (sheetState.anticipate) sheetState.anticipate = false;
+  if (sheetState.huntersMark) {
+    huntersMark = true;
+    toggleHuntersMark();
+  }
+  refreshDerivedStats();
+  saveSheetState();
   alert('Long Rest completed!\n\n• HP restored to 17/17\n• Spell slots restored (2×1st)\n• Hunter\'s Mark free casts restored (2)\n• Adrenaline Rush restored (2)\n• Relentless Endurance restored\n• All conditions cleared (clear manually if needed)');
 }
+
+loadSheetState();
 </script>
 </body>
 </html>
