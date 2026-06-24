@@ -841,8 +841,11 @@
   }
 
   /* ===== TOOLTIP / OVERLAY ===== */
+  /* position + z-index forced: theme-fantasy.css has `body.theme-fantasy > *
+     { position: relative; z-index: 1; }` which would otherwise win on
+     specificity and drop the tooltip into normal flow at the bottom of body. */
   .tooltip {
-    position: fixed;
+    position: fixed !important;
     z-index: 2147483647 !important;
     top: 0;
     left: 0;
@@ -2402,7 +2405,7 @@ const TOOLTIPS = {
 </script>
 
 <script>
-const SHEET_UI_VERSION = '3.1.0';
+const SHEET_UI_VERSION = '3.1.1';
 
 // ===== TABS =====
 function switchTab(id) {
@@ -2464,12 +2467,11 @@ function getTooltipData(el) {
 function activateTooltip(el, x, y) {
   const data = getTooltipData(el);
   if (!data) return;
-  // Ensure tooltip is rendered at document root to avoid stacking-context bugs.
+  // Render the tooltip as a direct child of <body> so it escapes any
+  // ancestor stacking context. Only re-parent if needed.
   if (tooltip.parentElement !== document.body) {
     document.body.appendChild(tooltip);
   }
-  // Keep as last body child for deterministic paint order.
-  document.body.appendChild(tooltip);
   activeTooltipEl = el;
   showTooltip(data);
   positionTooltip(x, y);
