@@ -137,6 +137,11 @@
     font-family:'Inter', sans-serif; font-size:11.5px; letter-spacing:0.1em;
     text-transform:uppercase; color:var(--ink-soft);
   }
+  .sticky-crumb a{
+    color:var(--gold-bright);
+    text-decoration:none;
+  }
+  .sticky-crumb a:hover{ text-decoration:underline; }
   .sticky-crumb span{ color:var(--gold-bright); }
   @media (max-width:900px){ .sticky-crumb{padding:12px 20px;} }
 
@@ -297,6 +302,11 @@
 
     <div class="nav-divider"></div>
 
+    <div class="nav-group-label">Repository</div>
+    <ul class="nav-list">
+      <li><a href="../index.html">Lore Repository Home</a></li>
+    </ul>
+
     <div class="nav-group-label">The Setting</div>
     <ul class="nav-list">
       <li><a href="#characters">Session Zero</a></li>
@@ -329,7 +339,7 @@
 
   <main>
 
-    <div class="sticky-crumb" id="crumb">Bridge Nine · <span>Session Guide</span></div>
+    <div class="sticky-crumb" id="crumb"><a href="../index.html">Lore Repository</a> · Bridge Nine · <span>Session Guide</span></div>
 
     <div class="content-pad">
 
