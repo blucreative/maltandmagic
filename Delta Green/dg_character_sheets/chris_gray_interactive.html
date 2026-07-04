@@ -21,7 +21,7 @@
   --ft:'Special Elite',cursive;
 }
 html{font-size:13px;background:var(--bg)}
-body{color:var(--tx);font-family:var(--fn);min-height:100vh;padding:12px}
+body{color:var(--tx);font-family:var(--fn);min-height:100vh;padding:12px;background:var(--bg)}
 body::before{content:'';position:fixed;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(0,0,0,.05) 3px,rgba(0,0,0,.05) 4px);pointer-events:none;z-index:9999}
 .page{max-width:960px;margin:0 auto;display:flex;flex-direction:column;gap:10px}
 .row{display:grid;gap:10px}
@@ -41,9 +41,9 @@ body::before{content:'';position:fixed;inset:0;background:repeating-linear-gradi
 .diamond{width:26px;height:26px;border:2px solid var(--gb);transform:rotate(45deg);position:relative}
 .diamond::after{content:'';position:absolute;inset:5px;background:var(--gb)}
 .hd-info{padding:10px 14px}
-.hd-title{font:700 24px/1 var(--fd);letter-spacing:5px;color:var(--gb);text-shadow:0 0 20px rgba(92,184,92,.3)}
-.hd-name{font:700 16px/1.2 var(--fd);letter-spacing:2px;color:var(--txb);margin-top:3px}
-.hd-name .cs{color:var(--gb)}
+.hd-title{font:700 26px/.85 var(--fd);letter-spacing:3px;color:var(--txb)}
+.hd-name{font:600 17px/1.1 var(--fd);letter-spacing:2px;color:var(--gb);margin-top:4px}
+.cs{color:var(--ab)}
 .hd-sub{font-size:9px;letter-spacing:2px;color:var(--txd);margin-top:4px}
 .hd-stamps{padding:10px 14px;display:flex;flex-direction:column;align-items:flex-end;justify-content:center;gap:4px}
 .stamp{font-size:8px;letter-spacing:1.5px;padding:2px 7px;border:1px solid;text-transform:uppercase;white-space:nowrap}
@@ -51,12 +51,12 @@ body::before{content:'';position:fixed;inset:0;background:repeating-linear-gradi
 .s-grn{color:var(--gb);border-color:var(--g);background:var(--gg)}
 .s-amb{color:var(--ab);border-color:var(--am);background:rgba(138,96,0,.1)}
 .s-blu{color:var(--bb);border-color:var(--bl);background:rgba(26,58,106,.15)}
-.save-bar{background:var(--bg3);border:1px solid var(--bd);padding:7px 14px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px}
+.save-bar{background:var(--sf);border:1px solid var(--bd);padding:7px 14px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px}
 .save-status{font-size:10px;color:var(--txd);letter-spacing:1px}
 .save-status .dot{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--gb);margin-right:6px;animation:pulse 2s ease infinite}
 @keyframes pulse{0%,100%{opacity:.4}50%{opacity:1}}
 .btn-row{display:flex;gap:8px;flex-wrap:wrap}
-.btn{background:none;border:1px solid var(--bd2);color:var(--txd);font:11px var(--fn);letter-spacing:1px;padding:5px 12px;cursor:pointer;transition:all .15s;text-transform:uppercase}
+.btn{background:var(--bg);border:1px solid var(--bd2);color:var(--tx);font:9px var(--fn);letter-spacing:1px;padding:5px 12px;cursor:pointer;transition:all .15s;text-transform:uppercase}
 .btn:hover{border-color:var(--gb);color:var(--gb);background:var(--gg)}
 .btn.danger{border-color:var(--red);color:var(--rb)}
 .btn.danger:hover{background:rgba(139,26,26,.15)}
@@ -108,10 +108,11 @@ body::before{content:'';position:fixed;inset:0;background:repeating-linear-gradi
 .san-alert{background:rgba(139,26,26,.15);border:1px solid var(--red);padding:8px 10px;margin-top:8px;font-size:10px;color:var(--rb);display:none}
 .san-alert.show{display:block}
 .san-drop-note{font-size:9px;color:var(--txd);margin-top:4px;letter-spacing:1px}
-.skills-grid{display:grid;grid-template-columns:1fr 1fr;gap:0}
+.skills-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:0}
+@media(max-width:760px){.skills-grid{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:480px){.skills-grid{grid-template-columns:1fr}}
 .skill-item{display:flex;align-items:center;gap:8px;padding:4px 10px;border-bottom:1px solid rgba(30,46,30,.5);border-right:1px solid rgba(30,46,30,.5);cursor:pointer;transition:background .1s;user-select:none}
-.skill-item:nth-child(even){border-right:none}
+.skill-item:nth-child(odd){background:var(--bg2)}
 .skill-item:hover{background:var(--sf2)}
 .skill-item.checked{background:rgba(184,134,0,.08)}
 .skill-cb{width:13px;height:13px;border:1px solid var(--bd2);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:10px;color:var(--ab)}
@@ -199,6 +200,10 @@ body::before{content:'';position:fixed;inset:0;background:repeating-linear-gradi
 .effect-tag.crit{color:var(--rb);border-color:var(--red);background:rgba(139,26,26,.15)}
 .effect-tag.warn{color:var(--ab);border-color:var(--am);background:rgba(138,96,0,.1)}
 .effect-tag.info{color:var(--bb);border-color:var(--bl);background:rgba(26,58,106,.12)}
+.skill-search-wrap{padding:6px 12px;border-bottom:1px solid var(--bd);background:var(--sf2)}
+.skill-search{width:100%;background:var(--bg);border:1px solid var(--bd2);color:var(--tx);font:11px var(--fn);padding:5px 8px;outline:none;letter-spacing:.5px}
+.skill-search:focus{border-color:var(--gb)}
+.skill-search::placeholder{color:var(--txd)}
 .adapted-banner{background:var(--gg);border:1px solid var(--gd);padding:7px 10px;display:flex;align-items:flex-start;gap:8px;margin-top:10px}
 .adapted-banner .icon{color:var(--gb);font-size:13px;flex-shrink:0;margin-top:1px}
 .adapted-banner p{font-size:10px;color:var(--tx);line-height:1.5}
@@ -367,6 +372,9 @@ body::before{content:'';position:fixed;inset:0;background:repeating-linear-gradi
 <!-- SKILLS -->
 <div class="panel">
   <div class="panel-hd"><h3>04 // SKILLS</h3><span>★ bonus | Click to mark failed roll | Improve at debrief if roll > rating</span></div>
+  <div class="skill-search-wrap">
+    <input type="text" class="skill-search" id="skillSearch" placeholder="Filter skills..." oninput="filterSkills(this.value)">
+  </div>
   <div class="skills-grid" id="skillsGrid"></div>
   <div class="skill-footer" id="skillFooter">★ = Bonus skill applied &nbsp;|&nbsp; STR 15 → +1 to Unarmed &amp; Melee damage &nbsp;|&nbsp; Occult +10% from Captivity background</div>
 </div>
@@ -594,6 +602,28 @@ const SKILLS = [
   {id:'stealth',     name:'Stealth',                pct:30, tier:'m', note:''},
   {id:'occult',      name:'Occult',                 pct:20, tier:'l', note:'bg'},
   {id:'humint',      name:'HUMINT',                 pct:10, tier:'l', note:''},
+  {id:'criminology', name:'Criminology',            pct:0,  tier:'l', note:''},
+  {id:'law',         name:'Law',                    pct:0,  tier:'l', note:''},
+  {id:'medicine',    name:'Medicine',               pct:0,  tier:'l', note:''},
+  {id:'computer',    name:'Computer Science',       pct:0,  tier:'l', note:''},
+  {id:'sigint',      name:'SIGINT',                 pct:0,  tier:'l', note:''},
+  {id:'accounting',  name:'Accounting',             pct:10, tier:'l', note:''},
+  {id:'anthropology',name:'Anthropology',           pct:0,  tier:'l', note:''},
+  {id:'archaeology', name:'Archaeology',            pct:0,  tier:'l', note:''},
+  {id:'art',         name:'Art (type)',              pct:0,  tier:'l', note:''},
+  {id:'artillery',   name:'Artillery',              pct:0,  tier:'l', note:''},
+  {id:'craft',       name:'Craft (type)',            pct:0,  tier:'l', note:''},
+  {id:'disguise',    name:'Disguise',               pct:10, tier:'l', note:''},
+  {id:'forlang',     name:'Foreign Language (type)',pct:0,  tier:'l', note:''},
+  {id:'forensics',   name:'Forensics',              pct:0,  tier:'l', note:''},
+  {id:'heavymach',   name:'Heavy Machinery',        pct:10, tier:'l', note:''},
+  {id:'history',     name:'History',                pct:10, tier:'l', note:''},
+  {id:'pharmacy',    name:'Pharmacy',               pct:0,  tier:'l', note:''},
+  {id:'pilot',       name:'Pilot (type)',            pct:0,  tier:'l', note:''},
+  {id:'psychotherapy',name:'Psychotherapy',         pct:10, tier:'l', note:''},
+  {id:'ride',        name:'Ride',                   pct:10, tier:'l', note:''},
+  {id:'science',     name:'Science (type)',         pct:0,  tier:'l', note:''},
+  {id:'surgery',     name:'Surgery',                pct:0,  tier:'l', note:''},
   {id:'unnatural',   name:'Unnatural',              pct:0,  tier:'l', note:'⚠'},
 ];
 
@@ -606,6 +636,7 @@ const MOTIVATIONS = [
 ];
 
 let state = {};
+let skillFilter = '';
 
 function saveState(){
   state.lastSaved = new Date().toISOString();
@@ -687,6 +718,8 @@ function renderEffectsBanner(){
   banner.innerHTML=`<div class="effect-banner" style="border-color:var(--red);background:rgba(139,26,26,.08)">${effects.map(e=>`<div class="effect-tag ${e.cls}">⚠ ${e.txt}</div>`).join('')}</div>`;
 }
 
+function filterSkills(q){ skillFilter = q.toLowerCase().trim(); renderSkills(); }
+
 function renderSkills(){
   const grid = document.getElementById('skillsGrid');
   const footer = document.getElementById('skillFooter');
@@ -695,7 +728,7 @@ function renderSkills(){
   else if(pen===-20){  footer.textContent=`⚠ WP ${state.wp} PENALTY — all values shown with −20% applied`; footer.style.color='var(--rb)'; }
   else { footer.textContent="★ = Bonus skill  |  STR 15 → +1 Unarmed & Melee damage  |  Occult +10% from Captivity background"; footer.style.color=''; }
 
-  grid.innerHTML = SKILLS.map(sk=>{
+  grid.innerHTML = SKILLS.slice().sort((a,b)=>a.name.localeCompare(b.name, undefined, { sensitivity: 'base' })).filter(sk=>!skillFilter||sk.name.toLowerCase().includes(skillFilter)).map(sk=>{
     const checked  = state.skillChecks[sk.id]||false;
     const imp      = (state.skillImprovements||{})[sk.id]||0;
     const baseDisp = sk.pct + imp;

@@ -77,6 +77,10 @@ body::before{content:'';position:fixed;inset:0;background:repeating-linear-gradi
 /* ── TOAST AND MODALS ─────────────────────────────────────── */
 .toast{position:fixed;bottom:20px;right:20px;background:var(--sf2);border:1px solid var(--gb);color:var(--gb);font:11px var(--fn);letter-spacing:1px;padding:10px 18px;z-index:10000;opacity:0;transition:opacity .3s;pointer-events:none}.toast.show{opacity:1}.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.85);z-index:1000;display:none;align-items:center;justify-content:center;padding:20px}.modal-overlay.show{display:flex}.modal-box{background:var(--sf);border:1px solid var(--bd2);max-width:520px;width:100%;padding:18px}.modal-title{font:600 18px var(--fd);letter-spacing:2px;color:var(--gb);margin-bottom:10px}.modal-body{font-size:12px;line-height:1.6;color:var(--tx);margin-bottom:16px}.modal-btns{display:flex;justify-content:flex-end;gap:8px}
 @keyframes pulse{50%{opacity:.55}}
+.skill-search-wrap{padding:6px 12px;border-bottom:1px solid var(--bd);background:var(--sf2)}
+.skill-search{width:100%;background:var(--bg);border:1px solid var(--bd2);color:var(--tx);font:11px var(--fn);padding:5px 8px;outline:none;letter-spacing:.5px}
+.skill-search:focus{border-color:var(--gb)}
+.skill-search::placeholder{color:var(--txd)}
 @media print{@page{size:A4;margin:10mm}html,body{background:#080e08!important;color:#b0c8b0!important;padding:0!important;font-size:11px!important}body::before{display:none}.save-bar,.toast,.modal-overlay,.top-nav,.btn,.btn-row,.tr-btn,.disorder-add,.disorder-remove{display:none!important}.page{max-width:100%;gap:6px}.panel{break-inside:avoid;page-break-inside:avoid;background:#111a11!important;border:1px solid #1e2e1e!important}.main-hd{background:#162016!important;border-left:4px solid #5cb85c!important}.panel-hd{background:#162016!important;border-bottom:1px solid #2a3e2a!important}.skill-item:nth-child(odd){background:#0b120b!important}.wpn-tbl th{background:#080e08!important}.wpn-tbl tr:nth-child(even) td{background:#111a11!important}}
 </style>
     <link rel='stylesheet' href='../../assets/css/theme-military90s.css'>
@@ -200,6 +204,9 @@ body::before{content:'';position:fixed;inset:0;background:repeating-linear-gradi
  <!-- SKILLS -->
  <div class="panel">
   <div class="panel-hd"><h3>04 // Skills</h3><span>Click to mark FAILED rolls · Debrief to improve</span></div>
+  <div class="skill-search-wrap">
+   <input type="text" class="skill-search" id="skillSearch" placeholder="Filter skills..." oninput="filterSkills(this.value)">
+  </div>
   <div class="skills-grid" id="skillsGrid"></div>
   <div class="skill-footer">★ = Bonus skill applied &nbsp;|&nbsp; bg = Background modifier &nbsp;|&nbsp; STR 14 → +1 to Unarmed &amp; Melee damage &nbsp;|&nbsp; Unnatural: 0% (no Agent adapts to the Unnatural)</div>
  </div>
@@ -310,8 +317,26 @@ const SKILLS = [
  {id:'computer', name:'Computer Science', pct:0, tier:'l', note:''},
  {id:'demolitions', name:'Demolitions', pct:0, tier:'l', note:''},
  {id:'heavyweapons', name:'Heavy Weapons', pct:0, tier:'l', note:''},
- {id:'sigint', name:'SIGINT', pct:0, tier:'l', note:''},
- {id:'unnatural', name:'Unnatural', pct:0, tier:'l', note:'⚠'}
+ {id:'accounting',    name:'Accounting',              pct:10, tier:'l', note:''},
+ {id:'anthropology',  name:'Anthropology',            pct:0,  tier:'l', note:''},
+ {id:'archaeology',   name:'Archaeology',             pct:0,  tier:'l', note:''},
+ {id:'art',           name:'Art (type)',               pct:0,  tier:'l', note:''},
+ {id:'artillery',     name:'Artillery',               pct:0,  tier:'l', note:''},
+ {id:'craft',         name:'Craft (type)',             pct:0,  tier:'l', note:''},
+ {id:'disguise',      name:'Disguise',                pct:10, tier:'l', note:''},
+ {id:'forlang',       name:'Foreign Language (type)', pct:0,  tier:'l', note:''},
+ {id:'forensics',     name:'Forensics',               pct:0,  tier:'l', note:''},
+ {id:'heavymach',     name:'Heavy Machinery',         pct:10, tier:'l', note:''},
+ {id:'history',       name:'History',                 pct:10, tier:'l', note:''},
+ {id:'milsci',        name:'Military Science (type)', pct:0,  tier:'l', note:''},
+ {id:'pharmacy',      name:'Pharmacy',                pct:0,  tier:'l', note:''},
+ {id:'pilot',         name:'Pilot (type)',             pct:0,  tier:'l', note:''},
+ {id:'psychotherapy', name:'Psychotherapy',           pct:10, tier:'l', note:''},
+ {id:'ride',          name:'Ride',                    pct:10, tier:'l', note:''},
+ {id:'science',       name:'Science (type)',          pct:0,  tier:'l', note:''},
+ {id:'sigint',        name:'SIGINT',                  pct:0,  tier:'l', note:''},
+ {id:'surgery',       name:'Surgery',                 pct:0,  tier:'l', note:''},
+ {id:'unnatural',     name:'Unnatural',               pct:0,  tier:'l', note:'⚠'}
 ];
 
 const GEAR = [
@@ -343,11 +368,12 @@ const MOTIVATIONS = [
 
 const START_BONDS = [
  {id:'b1', name:'Former commanding officer', score:7, note:'The man who pulled Spork into Delta Green. Complicated.'},
- {id:'b2', name:'Christopher \'Mad Dog\' Gray', score:7, note:'The men he\'d die for. The only people he fully trusts.'}
+ {id:'b2', name:'Christopher \'Mad Dog\' Gray', score:7, note:'Surviving squad member. The one he\'d die for without hesitation.'}
 ];
 
 let state = defaultState();
 let saveTimer = null;
+let skillFilter = '';
 
 function defaultState(){
  return {
@@ -450,9 +476,12 @@ function renderPips(id, current, max, cls){
   row.appendChild(pip);
  }
 }
+function filterSkills(q){ skillFilter = q.toLowerCase().trim(); renderSkills(); }
 function renderSkills(){
  const grid = document.getElementById('skillsGrid');
- grid.innerHTML = SKILLS.slice().sort((a,b)=>a.name.localeCompare(b.name, undefined, { sensitivity: 'base' })).map(sk => {
+ const _sorted = SKILLS.slice().sort((a,b)=>a.name.localeCompare(b.name, undefined, { sensitivity: 'base' }));
+ const _list = skillFilter ? _sorted.filter(sk=>sk.name.toLowerCase().includes(skillFilter)) : _sorted;
+ grid.innerHTML = _list.map(sk => {
   const checked = state.skillChecks[sk.id] || false;
   const noteCls = sk.note === '★' ? 'skill-star' : sk.note === 'bg' ? 'skill-bg' : '';
   return `<div class="skill-item ${checked?'checked':''}" onclick="toggleSkill('${sk.id}')">
