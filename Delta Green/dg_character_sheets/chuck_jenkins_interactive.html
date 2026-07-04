@@ -68,16 +68,14 @@ body::before{content:'';position:fixed;inset:0;background:repeating-linear-gradi
 .btn.secondary:hover{border-color:var(--bd2);color:var(--tx);background:var(--sf2)}
 .session-badge{font-size:9px;letter-spacing:2px;color:var(--ab);border:1px solid var(--am);padding:2px 7px}
 .stat-tbl{width:100%;border-collapse:collapse}
-.stat-tbl th{font-size:8px;letter-spacing:2px;color:var(--g);padding:4px 8px;text-align:left;border-bottom:1px solid var(--bd);font-weight:normal}
-.stat-tbl th:not(:first-child){text-align:center}
-.stat-tbl td{padding:5px 8px;border-bottom:1px solid rgba(30,46,30,.6);font-size:11px}
+.stat-tbl th{font:600 8px var(--fd);letter-spacing:2px;color:var(--txd);text-align:left;border-bottom:1px solid var(--bd);padding:4px}
+.stat-tbl td{padding:5px 4px;border-bottom:1px solid rgba(30,46,30,.6)}
 .stat-tbl tr:last-child td{border-bottom:none}
-.stat-tbl td.sn{color:var(--txd);letter-spacing:.5px}
-.stat-tbl td.sv{text-align:center;font:700 19px/1 var(--fd);color:var(--txb)}
-.stat-tbl td.sv.lo{color:var(--rb)}
-.stat-tbl td.sv.hi{color:var(--gb)}
-.stat-tbl td.x5{text-align:center;color:var(--gb);font-size:12px}
-.stat-tbl td.ft{font-size:10px;font-family:var(--ft);color:var(--ab)}
+.stat-name{color:var(--txb)}
+.stat-score{font:700 20px/1 var(--fd);color:var(--gb);text-align:center}
+.stat-x5{font:600 14px/1 var(--fd);color:var(--ab);text-align:center}
+.stat-note{font-size:10px;color:var(--txd)}
+.foot-note{font-size:9px;color:var(--txd);line-height:1.5;margin-top:8px;border-left:2px solid var(--bd2);padding-left:8px}
 .tracker{margin-bottom:14px}
 .tracker:last-child{margin-bottom:0}
 .tr-head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:5px}
@@ -125,7 +123,7 @@ body::before{content:'';position:fixed;inset:0;background:repeating-linear-gradi
 .skill-pct.h{color:#8dc88d}
 .skill-pct.m{color:var(--tx)}
 .skill-pct.l{color:var(--txd)}
-.skill-note{font-size:8px;color:var(--txd);margin-left:2px}
+.skill-note{font-size:8px;color:var(--ab);margin-left:2px}
 .skill-footer{padding:6px 10px;font-size:9px;color:var(--txd);letter-spacing:.5px;border-top:1px solid var(--bd)}
 .skill-pct.penalised{text-decoration:line-through;color:var(--txd)!important;font-size:10px}
 .skill-effective{font:bold 14px/1 var(--fd);color:var(--rb)!important;margin-left:4px}
@@ -296,14 +294,14 @@ body::before{content:'';position:fixed;inset:0;background:repeating-linear-gradi
     <div class="panel-hd"><h3>02 // STATISTICS</h3><span>Navy Operative Array</span></div>
     <div class="panel-body">
       <table class="stat-tbl">
-        <thead><tr><th>STATISTIC</th><th>SCORE</th><th>×5%</th><th>NOTES</th></tr></thead>
+        <thead><tr><th>Stat</th><th>Score</th><th>×5%</th><th>Notes</th></tr></thead>
         <tbody>
-          <tr><td class="sn">Strength (STR)</td><td class="sv">13</td><td class="x5">65%</td><td class="ft">Hidden strength</td></tr>
-          <tr><td class="sn">Constitution (CON)</td><td class="sv">14</td><td class="x5">70%</td><td class="ft">Relentless</td></tr>
-          <tr><td class="sn">Dexterity (DEX)</td><td class="sv hi">17</td><td class="x5" style="color:var(--gb);font-weight:bold">85%</td><td class="ft">Big guy be nimble</td></tr>
-          <tr><td class="sn">Intelligence (INT)</td><td class="sv">10</td><td class="x5">50%</td><td class="ft">Perceptive</td></tr>
-          <tr><td class="sn">Power (POW)</td><td class="sv">10</td><td class="x5">50%</td><td class="ft">—</td></tr>
-          <tr><td class="sn">Charisma (CHA)</td><td class="sv lo">8</td><td class="x5" style="color:#e05050">40%</td><td class="ft">Keeps it professional</td></tr>
+          <tr><td class="stat-name">Strength (STR)</td><td class="stat-score">13</td><td class="stat-x5">65%</td><td class="stat-note">Hidden strength</td></tr>
+          <tr><td class="stat-name">Constitution (CON)</td><td class="stat-score">14</td><td class="stat-x5">70%</td><td class="stat-note">Relentless</td></tr>
+          <tr><td class="stat-name">Dexterity (DEX)</td><td class="stat-score">17</td><td class="stat-x5">85%</td><td class="stat-note">Big guy be nimble</td></tr>
+          <tr><td class="stat-name">Intelligence (INT)</td><td class="stat-score">10</td><td class="stat-x5">50%</td><td class="stat-note">Perceptive</td></tr>
+          <tr><td class="stat-name">Power (POW)</td><td class="stat-score">10</td><td class="stat-x5">50%</td><td class="stat-note">—</td></tr>
+          <tr><td class="stat-name">Charisma (CHA)</td><td class="stat-score">8</td><td class="stat-x5">40%</td><td class="stat-note">Keeps it professional</td></tr>
         </tbody>
       </table>
       <p style="font-size:9px;color:var(--txd);margin-top:8px">DEX 17 exceptional. STR 13 = +1 melee/unarmed damage. CHA 8 — below threshold; bonds start low.</p>
