@@ -2070,12 +2070,13 @@
         <div class="feature-summary">Expertise in one skill (Athletics). Know two additional languages.</div>
       </div>
 
-      <div class="feature-card" data-tooltip="feat-fighting-style">
+      <div class="feature-card" id="feat-defense-card" data-tooltip="feat-fighting-style" onclick="toggleFeatureEffect('defense')">
         <div class="feature-header">
-          <span class="feature-name">Fighting Style</span>
+          <span class="feature-name">Fighting Style: Defense</span>
           <span class="feature-source">Ranger</span>
+          <span class="status-pill" id="defense-pill">Active</span>
         </div>
-        <div class="feature-summary">Chosen Fighting Style feat (br-2024).</div>
+        <div class="feature-summary">+1 to AC while wearing armour. (AC = 16 with Studded Leather)</div>
       </div>
 
     </div>
@@ -2142,15 +2143,6 @@
   <div class="panel">
     <div class="panel-header"><span class="panel-title">Feats &amp; Weapon Mastery</span></div>
     <div class="panel-body">
-
-      <div class="feature-card" id="feat-defense-card" data-tooltip="feat-defense" onclick="toggleFeatureEffect('defense')">
-        <div class="feature-header">
-          <span class="feature-name">Defense</span>
-          <span class="feature-source">Feat</span>
-          <span class="status-pill" id="defense-pill">Active</span>
-        </div>
-        <div class="feature-summary">+1 to AC when wearing Light, Medium, or Heavy armour. (AC = 16 with Studded Leather)</div>
-      </div>
 
       <div class="feature-card" data-tooltip="feat-savage-attacker">
         <div class="feature-header">
@@ -2479,7 +2471,7 @@ const TOOLTIPS = {
   "feat-favored-enemy": { name: "Favoured Enemy", type: "Ranger Feature (PHB 2024 p.119)", body: "You always have Hunter's Mark prepared, and you can cast it without expending a spell slot. You can cast it this way a number of times equal to your Wisdom modifier (2), and you regain all expended uses when you finish a Long Rest.", stats: {"Free Casts":"2 / Long Rest","Spell":"Hunter's Mark","Slot Required":"No (for free casts)"} },
   "feat-weapon-mastery": { name: "Weapon Mastery", type: "Ranger Feature (PHB 2024 p.120)", body: "Your training with weapons allows you to use the mastery property of two kinds of weapons of your choice with which you are proficient. Viktor has chosen Battleaxe (Topple) and Hand Crossbow (Vex). You can change your chosen weapons when you finish a Long Rest." },
   "feat-deft-explorer": { name: "Deft Explorer", type: "Ranger Feature (PHB 2024 p.120)", body: "You gain Expertise in one of your skill proficiencies of your choice. Viktor chose Athletics (+6, double proficiency). You also know two additional languages of your choice — Viktor knows Elvish and Goblin as his bonus languages." },
-  "feat-fighting-style": { name: "Fighting Style", type: "Ranger Feature (PHB 2024 p.120)", body: "You adopt a particular style of fighting as your specialty. Gained as a feat from the ranger feature list (br-2024). The specific style selected should be confirmed with the DM." },
+  "feat-fighting-style": { name: "Fighting Style: Defense", type: "Ranger Feature (PHB 2024 p.120)", body: "You adopt a particular style of fighting as your specialty. Viktor's chosen Fighting Style is Defense: while wearing armour, you gain a +1 bonus to Armour Class. His base Studded Leather AC of 15 (12 + DEX 3) becomes 16.", stats: {"Style":"Defense","Bonus":"+1 AC","Requirement":"Wearing armour","Viktor's AC":"16 (12+3+1)"} },
 
   // ORC TRAITS
   "feat-adrenaline-rush": { name: "Adrenaline Rush", type: "Orc Trait (PHB 2024 p.195)", body: "You can take the Dash action as a Bonus Action. When you do, you gain 2 Temporary HP. You can use this trait a number of times equal to your Proficiency Bonus (2), and you regain all expended uses when you finish a Short or Long Rest.", stats: {"Uses":"2 / Short or Long Rest","Action":"Bonus Action","Benefit":"Dash + 2 Temp HP"} },
