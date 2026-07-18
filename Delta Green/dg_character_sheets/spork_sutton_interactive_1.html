@@ -63,7 +63,7 @@ body::before{content:'';position:fixed;inset:0;background:repeating-linear-gradi
 .skills-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:0}@media(max-width:760px){.skills-grid{grid-template-columns:repeat(2,1fr)}}@media(max-width:460px){.skills-grid{grid-template-columns:1fr}}
 .skill-item{display:flex;align-items:center;gap:7px;padding:6px 8px;border-right:1px solid rgba(30,46,30,.5);border-bottom:1px solid rgba(30,46,30,.5);cursor:pointer;user-select:none}.skill-item:nth-child(odd){background:var(--bg2)}.skill-item:hover{background:var(--sf2)}.skill-item.checked{background:rgba(184,134,0,.08)}.skill-check{width:13px;height:13px;border:1px solid var(--bd2);flex-shrink:0;color:var(--ab);display:flex;align-items:center;justify-content:center;font-size:10px}.skill-name{font-size:10px;color:var(--tx);flex:1}.skill-pct{font:600 13px/1 var(--fd);color:var(--gb);min-width:32px;text-align:right}.skill-star{color:var(--ab);font-size:9px}.skill-bg{color:var(--bb);font-size:9px}.skill-footer{font-size:9px;color:var(--txd);padding:8px 12px;line-height:1.5;border-top:1px solid var(--bd)}
 /* ── BONDS ────────────────────────────────────────────────── */
-.bond-item{display:grid;grid-template-columns:1fr auto;gap:8px;padding:8px 0;border-bottom:1px solid rgba(30,46,30,.5)}.bond-item:last-child{border-bottom:none}.bond-name{font-size:11px;color:var(--txb)}.bond-controls{display:flex;align-items:center;gap:5px}.bond-btn{width:20px;height:20px;background:var(--bg);border:1px solid var(--bd2);color:var(--tx);cursor:pointer}.bond-btn:hover{color:var(--gb);border-color:var(--gb)}.bond-score{font:700 24px/1 var(--fd);color:var(--ab);min-width:28px;text-align:center}.bond-score.zero{color:var(--rb)}.bond-note{font-size:10px;color:var(--txd);grid-column:1/-1;line-height:1.5;padding-left:4px}
+.bond-item{background:var(--bg);border:1px solid var(--bd);padding:10px 12px;margin-bottom:8px;position:relative}.bond-item::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--ab)}.bond-item:last-child{margin-bottom:0}.bond-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:4px}.bond-name{font-size:12px;color:var(--txb);padding-left:4px}.bond-controls{display:flex;align-items:center;gap:5px}.bond-score{font:700 24px/1 var(--fd);color:var(--ab);min-width:28px;text-align:center}.bond-score.zero{color:var(--rb)}.bond-note{font-size:10px;color:var(--txd);padding-left:4px;line-height:1.5}
 /* ── MOTIVATIONS AND DISORDERS ────────────────────────────── */
 .motiv-item{display:flex;align-items:center;gap:8px;padding:7px 10px;border-bottom:1px solid rgba(30,46,30,.5);cursor:pointer;user-select:none}.motiv-item:last-child{border-bottom:none}.motiv-item:hover{background:var(--sf2)}.motiv-item.crossed .motiv-text{text-decoration:line-through;color:var(--txd);opacity:.6}.motiv-check{width:13px;height:13px;border:1px solid var(--bd2);flex-shrink:0}.motiv-text{font-size:11px;color:var(--tx);flex:1}.disorder-item{padding:6px 10px;font-size:11px;color:var(--rb);background:rgba(139,26,26,.08);border:1px solid rgba(139,26,26,.3);margin-bottom:6px;display:flex;justify-content:space-between;align-items:center}.disorder-remove{background:none;border:none;color:var(--rb);cursor:pointer;font-size:14px;padding:0 2px}.disorder-add{width:100%;background:none;border:1px dashed rgba(139,26,26,.4);color:var(--rb);font:11px var(--fn);padding:6px;cursor:pointer;text-align:left;letter-spacing:1px;margin-top:6px}.disorder-add:hover{background:rgba(139,26,26,.1);border-style:solid}.disorder-add input{background:none;border:none;outline:none;color:var(--rb);font:11px var(--fn);width:100%}
 /* ── INCIDENTS ────────────────────────────────────────────── */
@@ -77,6 +77,10 @@ body::before{content:'';position:fixed;inset:0;background:repeating-linear-gradi
 /* ── TOAST AND MODALS ─────────────────────────────────────── */
 .toast{position:fixed;bottom:20px;right:20px;background:var(--sf2);border:1px solid var(--gb);color:var(--gb);font:11px var(--fn);letter-spacing:1px;padding:10px 18px;z-index:10000;opacity:0;transition:opacity .3s;pointer-events:none}.toast.show{opacity:1}.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.85);z-index:1000;display:none;align-items:center;justify-content:center;padding:20px}.modal-overlay.show{display:flex}.modal-box{background:var(--sf);border:1px solid var(--bd2);max-width:520px;width:100%;padding:18px}.modal-title{font:600 18px var(--fd);letter-spacing:2px;color:var(--gb);margin-bottom:10px}.modal-body{font-size:12px;line-height:1.6;color:var(--tx);margin-bottom:16px}.modal-btns{display:flex;justify-content:flex-end;gap:8px}
 @keyframes pulse{50%{opacity:.55}}
+.skill-search-wrap{padding:6px 12px;border-bottom:1px solid var(--bd);background:var(--sf2)}
+.skill-search{width:100%;background:var(--bg);border:1px solid var(--bd2);color:var(--tx);font:11px var(--fn);padding:5px 8px;outline:none;letter-spacing:.5px}
+.skill-search:focus{border-color:var(--gb)}
+.skill-search::placeholder{color:var(--txd)}
 @media print{@page{size:A4;margin:10mm}html,body{background:#080e08!important;color:#b0c8b0!important;padding:0!important;font-size:11px!important}body::before{display:none}.save-bar,.toast,.modal-overlay,.top-nav,.btn,.btn-row,.tr-btn,.disorder-add,.disorder-remove{display:none!important}.page{max-width:100%;gap:6px}.panel{break-inside:avoid;page-break-inside:avoid;background:#111a11!important;border:1px solid #1e2e1e!important}.main-hd{background:#162016!important;border-left:4px solid #5cb85c!important}.panel-hd{background:#162016!important;border-bottom:1px solid #2a3e2a!important}.skill-item:nth-child(odd){background:#0b120b!important}.wpn-tbl th{background:#080e08!important}.wpn-tbl tr:nth-child(even) td{background:#111a11!important}}
 </style>
     <link rel='stylesheet' href='../../assets/css/theme-military90s.css'>
@@ -200,29 +204,45 @@ body::before{content:'';position:fixed;inset:0;background:repeating-linear-gradi
  <!-- SKILLS -->
  <div class="panel">
   <div class="panel-hd"><h3>04 // Skills</h3><span>Click to mark FAILED rolls · Debrief to improve</span></div>
+  <div class="skill-search-wrap">
+   <input type="text" class="skill-search" id="skillSearch" placeholder="Filter skills..." oninput="filterSkills(this.value)">
+  </div>
   <div class="skills-grid" id="skillsGrid"></div>
   <div class="skill-footer">★ = Bonus skill applied &nbsp;|&nbsp; bg = Background modifier &nbsp;|&nbsp; STR 14 → +1 to Unarmed &amp; Melee damage &nbsp;|&nbsp; Unnatural: 0% (no Agent adapts to the Unnatural)</div>
  </div>
 
- <!-- PSYCH + INCIDENTS -->
+ <!-- INCIDENTS + BONDS -->
  <div class="row r2">
-  <!-- BONDS -->
+  <!-- SAN INCIDENTS -->
   <div class="panel">
-   <div class="panel-hd"><h3>05 // Bonds</h3><span>2 Bonds · Start score: CHA 7</span></div>
-   <div class="panel-body" id="bondsPanel"></div>
-   <div class="panel-body" style="padding-top:0">
-    <div class="divider">SAN Incident Tracking</div>
+   <div class="panel-hd"><h3>05 // SAN INCIDENTS</h3><span>3× without insanity = adapted</span></div>
+   <div class="panel-body">
     <div class="incident-row"><div class="incident-label">Violence</div><div class="incident-boxes"><div class="inc-box adapted-v">✓</div><span class="adapted-tag">ADAPTED</span></div></div>
     <div class="incident-row"><div class="incident-label">Helplessness</div><div class="incident-boxes" id="helplessBoxes"></div></div>
+    <p style="font-size:9px;color:var(--txd);margin-top:10px;line-height:1.5">Adapt to Violence → −1D6 CHA permanently, each Bond drops same. Adapt to Helplessness → −1D6 POW permanently.</p>
    </div>
   </div>
 
+  <!-- BONDS -->
+  <div class="panel">
+   <div class="panel-hd"><h3>06 // BONDS</h3><span>2 Bonds · Start score: CHA 7</span></div>
+   <div class="panel-body" id="bondsPanel"></div>
+  </div>
+ </div>
+
+ <!-- MOTIVATIONS + DISORDERS -->
+ <div class="row r2">
   <!-- MOTIVATIONS -->
   <div class="panel">
-   <div class="panel-hd"><h3>06 // Motivations &amp; Disorders</h3><span>Click to cross out when hit Breaking Point</span></div>
+   <div class="panel-hd"><h3>07 // MOTIVATIONS</h3><span>Cross out when BP hit — replace with disorder</span></div>
    <div class="panel-body">
     <div id="motivationsPanel"></div>
-    <div class="divider">Disorders</div>
+   </div>
+  </div>
+  <!-- DISORDERS -->
+  <div class="panel">
+   <div class="panel-hd"><h3>07b // DISORDERS</h3><span>Gained when SAN hits Breaking Point</span></div>
+   <div class="panel-body">
     <div id="disordersPanel"></div>
     <button class="disorder-add" id="addDisorderBtn" onclick="startAddDisorder()">+ RECORD NEW DISORDER</button>
    </div>
@@ -310,8 +330,26 @@ const SKILLS = [
  {id:'computer', name:'Computer Science', pct:0, tier:'l', note:''},
  {id:'demolitions', name:'Demolitions', pct:0, tier:'l', note:''},
  {id:'heavyweapons', name:'Heavy Weapons', pct:0, tier:'l', note:''},
- {id:'sigint', name:'SIGINT', pct:0, tier:'l', note:''},
- {id:'unnatural', name:'Unnatural', pct:0, tier:'l', note:'⚠'}
+ {id:'accounting',    name:'Accounting',              pct:10, tier:'l', note:''},
+ {id:'anthropology',  name:'Anthropology',            pct:0,  tier:'l', note:''},
+ {id:'archaeology',   name:'Archaeology',             pct:0,  tier:'l', note:''},
+ {id:'art',           name:'Art (type)',               pct:0,  tier:'l', note:''},
+ {id:'artillery',     name:'Artillery',               pct:0,  tier:'l', note:''},
+ {id:'craft',         name:'Craft (type)',             pct:0,  tier:'l', note:''},
+ {id:'disguise',      name:'Disguise',                pct:10, tier:'l', note:''},
+ {id:'forlang',       name:'Foreign Language (type)', pct:0,  tier:'l', note:''},
+ {id:'forensics',     name:'Forensics',               pct:0,  tier:'l', note:''},
+ {id:'heavymach',     name:'Heavy Machinery',         pct:10, tier:'l', note:''},
+ {id:'history',       name:'History',                 pct:10, tier:'l', note:''},
+ {id:'milsci',        name:'Military Science (type)', pct:0,  tier:'l', note:''},
+ {id:'pharmacy',      name:'Pharmacy',                pct:0,  tier:'l', note:''},
+ {id:'pilot',         name:'Pilot (type)',             pct:0,  tier:'l', note:''},
+ {id:'psychotherapy', name:'Psychotherapy',           pct:10, tier:'l', note:''},
+ {id:'ride',          name:'Ride',                    pct:10, tier:'l', note:''},
+ {id:'science',       name:'Science (type)',          pct:0,  tier:'l', note:''},
+ {id:'sigint',        name:'SIGINT',                  pct:0,  tier:'l', note:''},
+ {id:'surgery',       name:'Surgery',                 pct:0,  tier:'l', note:''},
+ {id:'unnatural',     name:'Unnatural',               pct:0,  tier:'l', note:'⚠'}
 ];
 
 const GEAR = [
@@ -343,11 +381,12 @@ const MOTIVATIONS = [
 
 const START_BONDS = [
  {id:'b1', name:'Former commanding officer', score:7, note:'The man who pulled Spork into Delta Green. Complicated.'},
- {id:'b2', name:'Surviving squad members', score:7, note:'The men he\'d die for. The only people he fully trusts.'}
+ {id:'b2', name:'Christopher \'Mad Dog\' Gray', score:7, note:'Surviving squad member. The one he\'d die for without hesitation.'}
 ];
 
 let state = defaultState();
 let saveTimer = null;
+let skillFilter = '';
 
 function defaultState(){
  return {
@@ -450,9 +489,12 @@ function renderPips(id, current, max, cls){
   row.appendChild(pip);
  }
 }
+function filterSkills(q){ skillFilter = q.toLowerCase().trim(); renderSkills(); }
 function renderSkills(){
  const grid = document.getElementById('skillsGrid');
- grid.innerHTML = SKILLS.slice().sort((a,b)=>a.name.localeCompare(b.name, undefined, { sensitivity: 'base' })).map(sk => {
+ const _sorted = SKILLS.slice().sort((a,b)=>a.name.localeCompare(b.name, undefined, { sensitivity: 'base' }));
+ const _list = skillFilter ? _sorted.filter(sk=>sk.name.toLowerCase().includes(skillFilter)) : _sorted;
+ grid.innerHTML = _list.map(sk => {
   const checked = state.skillChecks[sk.id] || false;
   const noteCls = sk.note === '★' ? 'skill-star' : sk.note === 'bg' ? 'skill-bg' : '';
   return `<div class="skill-item ${checked?'checked':''}" onclick="toggleSkill('${sk.id}')">
@@ -465,8 +507,10 @@ function renderSkills(){
 function renderBonds(){
  const panel = document.getElementById('bondsPanel');
  panel.innerHTML = state.bonds.map((b,i) => `<div class="bond-item">
-  <div class="bond-name">${escapeHtml(b.name)}</div>
-  <div class="bond-controls"><button class="bond-btn" onclick="adjustBond(${i},-1)">−</button><div class="bond-score ${b.score<=0?'zero':''}">${b.score}</div><button class="bond-btn" onclick="adjustBond(${i},1)">+</button></div>
+  <div class="bond-top">
+   <div class="bond-name">${escapeHtml(b.name)}</div>
+   <div class="bond-controls"><button class="tr-btn minus" onclick="adjustBond(${i},-1)">−</button><div class="bond-score ${b.score<=0?'zero':''}">${b.score}</div><button class="tr-btn" onclick="adjustBond(${i},1)">+</button></div>
+  </div>
   <div class="bond-note">${escapeHtml(b.note)}</div>
  </div>`).join('');
 }

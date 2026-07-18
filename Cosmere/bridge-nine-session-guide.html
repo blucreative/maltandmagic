@@ -1,0 +1,894 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bridge Nine — Session Guide</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Cinzel:wght@400;500;600;700&family=Crimson+Pro:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy-deep:#070d1f;
+    --navy:#0e1a3a;
+    --navy-panel:#13234d;
+    --navy-panel-2:#0e1c42;
+    --gold:#c9a45c;
+    --gold-bright:#e9cf8e;
+    --gold-dim:#8a7240;
+    --ink:#e9e3d2;
+    --ink-muted:#9fb0d6;
+    --ink-soft:#7689b0;
+    --rule-line:rgba(201,164,92,0.22);
+    --red:#9a3b3b;
+    --red-bright:#c4534f;
+    --green:#5c9b80;
+    --radius:10px;
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+
+  body{
+    margin:0;
+    background:
+      radial-gradient(ellipse at 18% -10%, rgba(60,90,160,0.22), transparent 50%),
+      radial-gradient(ellipse at 92% 8%, rgba(120,90,40,0.10), transparent 45%),
+      var(--navy-deep);
+    color:var(--ink);
+    font-family:'Crimson Pro', serif;
+    font-size:17px;
+    line-height:1.55;
+    min-height:100vh;
+  }
+
+  /* ---------- scroll progress ---------- */
+  #scrollbar{
+    position:fixed; top:0; left:0; height:2.5px; width:0%;
+    background:linear-gradient(90deg, var(--gold-dim), var(--gold-bright));
+    z-index:200;
+    transition:width .08s linear;
+  }
+
+  /* ---------- Layout shell ---------- */
+  .shell{
+    display:grid;
+    grid-template-columns:clamp(240px, 20vw, 310px) minmax(0, 1fr);
+    min-height:100vh;
+    max-width:1660px;
+    margin:0 auto;
+  }
+  .mobile-nav-toggle{ display:none; }
+  @media (max-width:900px){
+    .shell{grid-template-columns:1fr; max-width:none;}
+    .mobile-nav-toggle{
+      position:sticky;
+      top:0;
+      z-index:130;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      width:100%;
+      border:0;
+      border-bottom:1px solid var(--rule-line);
+      padding:14px 16px;
+      margin:0;
+      background:rgba(7,13,31,0.95);
+      backdrop-filter:blur(10px);
+      color:var(--gold-bright);
+      font-family:'Inter', sans-serif;
+      font-size:11px;
+      letter-spacing:0.12em;
+      text-transform:uppercase;
+      cursor:pointer;
+    }
+    .mobile-nav-toggle .icon{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      width:30px;
+      height:30px;
+      border:1px solid var(--gold-dim);
+      border-radius:6px;
+      font-size:15px;
+      line-height:1;
+    }
+    nav.sidebar{
+      position:sticky;
+      top:59px;
+      width:100%;
+      height:auto;
+      max-height:0;
+      overflow:hidden;
+      padding:0 16px;
+      border-right:0;
+      border-bottom:1px solid transparent;
+      z-index:120;
+      transition:max-height .28s ease, padding .2s ease, border-color .2s ease;
+    }
+    body.nav-open nav.sidebar{
+      max-height:72vh;
+      overflow-y:auto;
+      padding:16px;
+      border-bottom-color:var(--rule-line);
+    }
+  }
+
+  /* ---------- Sidebar ---------- */
+  nav.sidebar{
+    position:sticky; top:0; height:100vh; overflow-y:auto;
+    background:linear-gradient(180deg, var(--navy) 0%, var(--navy-deep) 100%);
+    border-right:1px solid var(--rule-line);
+    padding:26px 16px 40px;
+    scrollbar-width:thin;
+    scrollbar-color:var(--gold-dim) transparent;
+  }
+  nav.sidebar::-webkit-scrollbar{width:6px;}
+  nav.sidebar::-webkit-scrollbar-thumb{background:var(--gold-dim); border-radius:4px;}
+
+  .sigil{ width:58px; height:58px; margin:0 auto 12px; display:block; }
+  .brand{ text-align:center; margin-bottom:4px; }
+  .brand .eyebrow{
+    font-family:'Inter', sans-serif; letter-spacing:0.22em; font-size:9.5px;
+    color:var(--gold-dim); text-transform:uppercase;
+  }
+  .brand h1{
+    font-family:'Cinzel Decorative', serif; font-size:21px; color:var(--gold-bright);
+    margin:4px 0 0; text-align:center; letter-spacing:0.02em;
+  }
+
+  .nav-divider{ height:1px; background:linear-gradient(90deg, transparent, var(--rule-line), transparent); margin:16px 0; }
+
+  .nav-group-label{
+    font-family:'Inter', sans-serif; font-size:10px; letter-spacing:0.16em;
+    text-transform:uppercase; color:var(--ink-soft); padding:14px 12px 6px;
+  }
+  .nav-list{ list-style:none; margin:0; padding:0; }
+  .nav-list li{ margin-bottom:1px; }
+  .nav-list a{
+    display:block; padding:8px 12px; border-radius:6px; color:var(--ink-muted);
+    text-decoration:none; font-family:'Inter', sans-serif; font-size:13px;
+    letter-spacing:0.01em; border-left:2px solid transparent; transition:all .15s ease;
+  }
+  .nav-list a:hover, .nav-list a.active{
+    color:var(--gold-bright); background:rgba(201,164,92,0.08); border-left:2px solid var(--gold);
+  }
+
+  .die-widget{
+    margin-top:22px; padding:16px 14px 18px; background:var(--navy-panel);
+    border:1px solid var(--rule-line); border-radius:var(--radius); text-align:center;
+  }
+  .die-widget .label{
+    font-family:'Inter', sans-serif; font-size:10px; letter-spacing:0.16em;
+    color:var(--gold-dim); text-transform:uppercase; margin-bottom:10px;
+  }
+  .die-face{
+    width:56px; height:56px; margin:0 auto 10px; border:2px solid var(--gold);
+    border-radius:10px; display:flex; align-items:center; justify-content:center;
+    font-family:'Cinzel', serif; font-size:24px; color:var(--gold-bright);
+    background:radial-gradient(circle at 35% 30%, rgba(201,164,92,0.18), transparent 70%);
+    transition:transform .4s ease;
+  }
+  .die-face.rolling{ animation:spin .5s ease; }
+  @keyframes spin{ 0%{transform:rotate(0deg) scale(1);} 50%{transform:rotate(180deg) scale(1.08);} 100%{transform:rotate(360deg) scale(1);} }
+  .die-face.opportunity{ border-color:var(--green); color:#bfe3cf; box-shadow:0 0 16px rgba(92,155,128,0.4); }
+  .die-face.complication{ border-color:var(--red-bright); color:#f0c7c4; box-shadow:0 0 16px rgba(196,83,79,0.4); }
+  .die-result{ font-family:'Inter', sans-serif; font-size:10.5px; letter-spacing:0.04em; color:var(--ink-muted); min-height:14px; }
+
+  button.roll-btn{
+    margin-top:12px; background:transparent; border:1px solid var(--gold-dim);
+    color:var(--gold-bright); font-family:'Inter', sans-serif; font-size:11px;
+    letter-spacing:0.08em; text-transform:uppercase; padding:8px 14px;
+    border-radius:6px; cursor:pointer; transition:all .15s ease;
+  }
+  button.roll-btn:hover{ background:rgba(201,164,92,0.12); border-color:var(--gold); }
+
+  /* ---------- Main ---------- */
+  main{ padding:0 0 100px; width:100%; max-width:none; min-width:0; }
+
+  .sticky-crumb{
+    position:sticky; top:0; z-index:50;
+    backdrop-filter:blur(10px);
+    background:rgba(7,13,31,0.78);
+    border-bottom:1px solid var(--rule-line);
+    padding:12px clamp(20px, 3.2vw, 56px);
+    font-family:'Inter', sans-serif; font-size:11.5px; letter-spacing:0.1em;
+    text-transform:uppercase; color:var(--ink-soft);
+  }
+  .sticky-crumb a{
+    color:var(--gold-bright);
+    text-decoration:none;
+  }
+  .sticky-crumb a:hover{ text-decoration:underline; }
+  .sticky-crumb span{ color:var(--gold-bright); }
+  @media (max-width:900px){ .sticky-crumb{top:59px; padding:10px 16px;} }
+
+  .content-pad{
+    padding:0 clamp(20px, 3.2vw, 56px);
+    max-width:1280px;
+    margin:0 auto;
+  }
+  @media (max-width:900px){ .content-pad{padding:0 16px;} }
+
+  .hero{ position:relative; padding:40px 0 28px; border-bottom:1px solid var(--rule-line); margin-bottom:48px; }
+  .hero .eyebrow{ font-family:'Inter', sans-serif; letter-spacing:0.22em; font-size:11px; color:var(--gold-dim); text-transform:uppercase; }
+  .hero h1{ font-family:'Cinzel Decorative', serif; font-size:clamp(32px, 5vw, 50px); color:var(--gold-bright); margin:8px 0 10px; line-height:1.05; }
+  .hero p.sub{ color:var(--ink-muted); font-size:17px; font-style:italic; max-width:580px; margin:0; }
+
+  section.block{ margin-bottom:64px; scroll-margin-top:64px; }
+
+  .section-head{ display:flex; align-items:baseline; gap:14px; margin-bottom:20px; }
+  .section-head .num{ font-family:'Cinzel Decorative', serif; font-size:13px; color:var(--gold-dim); }
+  .section-head h2{ font-family:'Cinzel', serif; font-size:25px; color:var(--gold-bright); margin:0; letter-spacing:0.02em; }
+  .section-head .rule{ flex:1; height:1px; background:linear-gradient(90deg, var(--rule-line), transparent); }
+
+  p{ color:var(--ink); margin:0 0 14px; }
+  .lede{ color:var(--ink-muted); font-style:italic; margin-bottom:24px; max-width:700px; }
+
+  /* ---------- Cards ---------- */
+  .card-grid{ display:grid; grid-template-columns:repeat(auto-fit, minmax(270px, 1fr)); gap:16px; }
+  .card{
+    background:var(--navy-panel); border:1px solid var(--rule-line); border-radius:var(--radius);
+    padding:20px 22px; position:relative; overflow:hidden;
+    transition:transform .18s ease, border-color .18s ease, box-shadow .18s ease;
+  }
+  .card:hover{ transform:translateY(-2px); border-color:var(--gold-dim); box-shadow:0 10px 28px rgba(0,0,0,0.35); }
+  .card::before{
+    content:""; position:absolute; top:0; left:0; width:100%; height:3px;
+    background:linear-gradient(90deg, var(--gold-dim), var(--gold-bright), var(--gold-dim)); opacity:0.7;
+  }
+  .card h3{ font-family:'Cinzel', serif; font-size:18px; color:var(--gold-bright); margin:0 0 2px; }
+  .card .role-tag{
+    font-family:'Inter', sans-serif; font-size:10px; letter-spacing:0.12em; text-transform:uppercase;
+    color:var(--ink-muted); margin-bottom:12px; display:block;
+  }
+  .card .traits{ font-size:14.5px; color:var(--ink-muted); margin-bottom:10px; }
+  .card .goal{ font-size:15px; margin-bottom:10px; }
+  .card .goal b{ color:var(--gold); font-family:'Inter', sans-serif; font-weight:600; font-size:10.5px; letter-spacing:0.08em; text-transform:uppercase; display:block; margin-bottom:3px;}
+  .card .combat-note{ font-size:14px; color:var(--ink-muted); border-top:1px solid var(--rule-line); padding-top:10px; margin-top:10px; }
+
+  .lore-card{
+    background:var(--navy-panel); border:1px solid var(--rule-line); border-radius:var(--radius);
+    padding:18px 20px;
+  }
+  .lore-card h3{ font-family:'Cinzel', serif; font-size:16px; color:var(--gold-bright); margin:0 0 8px; }
+  .lore-card p{ font-size:15px; color:var(--ink-muted); margin:0; }
+
+  /* ---------- Tables ---------- */
+  table{ width:100%; border-collapse:collapse; margin-bottom:8px; font-size:15.5px; }
+  thead th{
+    font-family:'Inter', sans-serif; font-size:10.5px; letter-spacing:0.08em; text-transform:uppercase;
+    color:var(--gold-dim); text-align:left; padding:9px 14px; border-bottom:1px solid var(--rule-line);
+  }
+  tbody td{ padding:10px 14px; border-bottom:1px solid rgba(201,164,92,0.08); color:var(--ink); vertical-align:top; }
+  tbody tr:hover{ background:rgba(201,164,92,0.04); }
+  .table-wrap{ background:var(--navy-panel); border:1px solid var(--rule-line); border-radius:var(--radius); overflow:hidden; margin-bottom:18px; }
+
+  /* ---------- cost badges ---------- */
+  .cost{
+    display:inline-flex; align-items:center; justify-content:center;
+    min-width:24px; height:22px; padding:0 6px;
+    border-radius:5px; font-family:'Inter', sans-serif; font-size:11px; font-weight:600;
+    border:1px solid var(--gold-dim); color:var(--gold-bright); background:rgba(201,164,92,0.08);
+    margin-right:8px;
+  }
+  .cost.zero{ color:var(--ink-soft); border-color:var(--rule-line); background:transparent; }
+  .cost.reaction{ border-color:var(--green); color:#bfe3cf; background:rgba(92,155,128,0.1); }
+  .action-name{ font-weight:600; color:var(--gold-bright); }
+
+  .legend-row{
+    display:flex; flex-wrap:wrap; gap:18px; margin-bottom:18px;
+    font-family:'Inter', sans-serif; font-size:12.5px; color:var(--ink-muted);
+  }
+  .legend-row .item{ display:flex; align-items:center; gap:6px; }
+
+  /* ---------- Two-column ---------- */
+  .two-col{ display:grid; grid-template-columns:1fr 1fr; gap:24px; }
+  @media (max-width:720px){ .two-col{grid-template-columns:1fr;} }
+
+  .mini-panel{ background:var(--navy-panel); border:1px solid var(--rule-line); border-radius:var(--radius); padding:18px 20px; }
+  .mini-panel h4{ font-family:'Cinzel', serif; font-size:14px; color:var(--gold-bright); margin:0 0 10px; letter-spacing:0.03em; }
+  .mini-panel ul{ margin:0; padding-left:18px; }
+  .mini-panel li{ margin-bottom:6px; }
+
+  .formula{
+    display:inline-block; font-family:'Cinzel', serif; background:var(--navy-deep);
+    border:1px solid var(--gold-dim); color:var(--gold-bright); padding:10px 18px;
+    border-radius:8px; letter-spacing:0.04em; margin:6px 0 18px;
+  }
+
+  /* ---------- Episodes ---------- */
+  .episode{ background:var(--navy-panel); border:1px solid var(--rule-line); border-radius:12px; padding:24px 26px; margin-bottom:22px; }
+  .episode-head{ display:flex; justify-content:space-between; align-items:baseline; flex-wrap:wrap; gap:8px; margin-bottom:4px; }
+  .episode-head h3{ font-family:'Cinzel', serif; font-size:20px; color:var(--gold-bright); margin:0; }
+  .episode-head .runtime{ font-family:'Inter', sans-serif; font-size:10.5px; letter-spacing:0.08em; color:var(--ink-muted); text-transform:uppercase; }
+  .episode .tagline{ color:var(--ink-muted); font-style:italic; margin-bottom:18px; }
+
+  .beat-list{ list-style:none; margin:0; padding:0; counter-reset:beat; }
+  .beat-list li{ counter-increment:beat; position:relative; padding:10px 0 10px 38px; border-bottom:1px dashed var(--rule-line); }
+  .beat-list li:last-child{ border-bottom:none; }
+  .beat-list li::before{
+    content:counter(beat); position:absolute; left:0; top:10px; width:24px; height:24px;
+    border:1px solid var(--gold-dim); border-radius:50%; display:flex; align-items:center; justify-content:center;
+    font-family:'Cinzel', serif; font-size:11px; color:var(--gold-bright);
+  }
+  .beat-list b{ color:var(--gold-bright); }
+  .beat-list .gm-note{ display:block; color:var(--ink-muted); font-size:14px; margin-top:3px; }
+  .cut-tag{
+    display:inline-block; font-family:'Inter', sans-serif; font-size:9px; letter-spacing:0.06em;
+    text-transform:uppercase; color:var(--red-bright); border:1px solid var(--red); border-radius:4px;
+    padding:1px 6px; margin-left:8px; vertical-align:middle;
+  }
+
+  .pull-list{ list-style:none; margin:0; padding:0; display:grid; gap:10px; }
+  .pull-list li{ background:var(--navy-panel); border-left:3px solid var(--gold); border-radius:0 8px 8px 0; padding:12px 18px; font-style:italic; font-size:16px; }
+
+  footer{
+    text-align:center; padding:40px 0 10px; color:var(--gold-dim);
+    font-family:'Inter', sans-serif; font-size:10.5px; letter-spacing:0.16em;
+    text-transform:uppercase; border-top:1px solid var(--rule-line); margin:0 56px;
+  }
+  @media (max-width:900px){ footer{margin:0 16px;} }
+
+  .glyph-divider{ display:flex; align-items:center; justify-content:center; gap:14px; margin:0 0 40px; color:var(--gold-dim); }
+  .glyph-divider .line{ flex:1; height:1px; background:linear-gradient(90deg, transparent, var(--rule-line), transparent);}
+  .glyph-divider svg{ width:20px; height:20px; opacity:0.7; }
+
+  .back-top{
+    position:fixed; bottom:22px; right:22px; width:42px; height:42px; border-radius:50%;
+    background:var(--navy-panel); border:1px solid var(--gold-dim); color:var(--gold-bright);
+    display:flex; align-items:center; justify-content:center; cursor:pointer;
+    opacity:0; pointer-events:none; transition:opacity .2s ease; z-index:100;
+    font-size:16px;
+  }
+  .back-top.show{ opacity:1; pointer-events:auto; }
+</style>
+</head>
+<body>
+
+<div id="scrollbar"></div>
+
+<div class="shell">
+
+  <button class="mobile-nav-toggle" id="mobileNavToggle" aria-controls="bridgeNav" aria-expanded="false" type="button">
+    <span>Bridge Nine Menu</span>
+    <span class="icon" aria-hidden="true">☰</span>
+  </button>
+
+  <nav class="sidebar" id="bridgeNav">
+    <svg class="sigil" viewBox="0 0 100 100" fill="none">
+      <circle cx="50" cy="50" r="46" stroke="#c9a45c" stroke-width="1.5" opacity="0.5"/>
+      <path d="M50 14 L78 70 L22 70 Z" stroke="#e9cf8e" stroke-width="2" fill="none"/>
+      <circle cx="50" cy="46" r="9" stroke="#e9cf8e" stroke-width="2" fill="none"/>
+      <path d="M50 4 L50 14 M50 86 L50 96 M4 50 L14 50 M86 50 L96 50" stroke="#c9a45c" stroke-width="1.5"/>
+    </svg>
+    <div class="brand">
+      <div class="eyebrow">Cosmere RPG · Plotweaver</div>
+      <h1>Bridge Nine</h1>
+    </div>
+
+    <div class="nav-divider"></div>
+
+    <div class="nav-group-label">Repository</div>
+    <ul class="nav-list">
+      <li><a href="../index.html">Lore Repository Home</a></li>
+    </ul>
+
+    <div class="nav-group-label">The Setting</div>
+    <ul class="nav-list">
+      <li><a href="#characters">Session Zero</a></li>
+      <li><a href="#world">World Primer</a></li>
+    </ul>
+
+    <div class="nav-group-label">The Rules</div>
+    <ul class="nav-list">
+      <li><a href="#mechanic">Core Mechanic</a></li>
+      <li><a href="#paths">Heroic Paths</a></li>
+      <li><a href="#plotdie">The Plot Die</a></li>
+      <li><a href="#actions">Actions &amp; Reactions</a></li>
+      <li><a href="#conditions">Conditions</a></li>
+      <li><a href="#injury">Injury Rolls</a></li>
+    </ul>
+
+    <div class="nav-group-label">The Night's Run</div>
+    <ul class="nav-list">
+      <li><a href="#episodes">Episode Guide</a></li>
+      <li><a href="#campfire">Campfire Prompts</a></li>
+    </ul>
+
+    <div class="die-widget">
+      <div class="label">Plot Die Roller</div>
+      <div class="die-face" id="dieFace">—</div>
+      <div class="die-result" id="dieResult">tap to raise the stakes</div>
+      <button class="roll-btn" onclick="rollDie()">Roll d6</button>
+    </div>
+  </nav>
+
+  <main>
+
+    <div class="sticky-crumb" id="crumb"><a href="../index.html">Lore Repository</a> · Bridge Nine · <span>Session Guide</span></div>
+
+    <div class="content-pad">
+
+      <div class="hero">
+        <div class="eyebrow">An Actual Play Miniseries · Two Episodes</div>
+        <h1>Survive the Shattered Plains</h1>
+        <p class="sub">Session reference for cast and crew — the world, the rules, and the night's run-of-show, condensed from the Cosmere RPG core materials and the Bridge Nine adventure.</p>
+      </div>
+
+      <!-- ============ CHARACTERS ============ -->
+      <section class="block" id="characters">
+        <div class="section-head"><span class="num">I.</span><h2>Session Zero — Pick a Survivor</h2><div class="rule"></div></div>
+        <p class="lede">Six pre-generated 1st-level characters, ready to play. Pick one, give it a name and face if you like, and keep its stated goal — that's what gives the story its shape tonight.</p>
+
+        <div class="card-grid">
+          <div class="card">
+            <h3>Abena</h3>
+            <span class="role-tag">Hunter Path</span>
+            <div class="traits">Compassionate · Perceptive · Independent</div>
+            <div class="goal"><b>Goal</b>Gain respect as a highly skilled scout.</div>
+            <div class="combat-note">Tracks foes and drops them with powerful ranged attacks.</div>
+          </div>
+          <div class="card">
+            <h3>Jomari</h3>
+            <span class="role-tag">Agent Path</span>
+            <div class="traits">Proud · Impulsive · Ambitious</div>
+            <div class="goal"><b>Goal</b>Earn freedom or escape the bridge crew.</div>
+            <div class="combat-note">A thief with a knack for close scrapes — strikes fast, leaves foes stunned.</div>
+          </div>
+          <div class="card">
+            <h3>Palinor</h3>
+            <span class="role-tag">Leader Path</span>
+            <div class="traits">Inspiring · Earnest · Self-Righteous</div>
+            <div class="goal"><b>Goal</b>Get promoted to sergeant.</div>
+            <div class="combat-note">Strengthens allies and fights well on the defensive.</div>
+          </div>
+          <div class="card">
+            <h3>Talani</h3>
+            <span class="role-tag">Envoy Path</span>
+            <div class="traits">Dedicated · Thoughtful · Sympathetic</div>
+            <div class="goal"><b>Goal</b>Learn more about the listener (Parshendi) people.</div>
+            <div class="combat-note">Well-rounded — profound inner strength, brings out the best in others.</div>
+          </div>
+          <div class="card">
+            <h3>Vedd</h3>
+            <span class="role-tag">Warrior Path</span>
+            <div class="traits">Protective · Short-Tempered · Self-Sacrificing</div>
+            <div class="goal"><b>Goal</b>Help the other members of Bridge Nine.</div>
+            <div class="combat-note">Grizzled front-line fighter — hands him anything sharp, he'll use it.</div>
+          </div>
+          <div class="card">
+            <h3>Zvynda</h3>
+            <span class="role-tag">Scholar Path</span>
+            <div class="traits">Curious · Creative · Self-Righteous</div>
+            <div class="goal"><b>Goal</b>Research ancient fabrial technology.</div>
+            <div class="combat-note">Expert knowledge supports allies in almost any situation.</div>
+          </div>
+        </div>
+      </section>
+
+      <div class="glyph-divider">
+        <div class="line"></div>
+        <svg viewBox="0 0 24 24" fill="none" stroke="#c9a45c" stroke-width="1.2"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="3"/></svg>
+        <div class="line"></div>
+      </div>
+
+      <!-- ============ WORLD PRIMER ============ -->
+      <section class="block" id="world">
+        <div class="section-head"><span class="num">II.</span><h2>World Primer — Welcome to Roshar</h2><div class="rule"></div></div>
+        <p class="lede">A fast briefing for anyone in the room (or watching at home) who hasn't read the novels. Everything here is common knowledge to a citizen of eastern Roshar — no spoilers.</p>
+
+        <div class="card-grid">
+          <div class="lore-card">
+            <h3>Highstorms &amp; Stormlight</h3>
+            <p>Hurricane-force storms roll across Roshar from east to west roughly once every five days. They're violent enough to hurl boulders — but they also infuse the world with Stormlight, the energy behind magic, Shardplate, and fabrial devices.</p>
+          </div>
+          <div class="lore-card">
+            <h3>Spheres</h3>
+            <p>Gemstones sealed in glass are Roshar's universal currency. Infused with Stormlight they glow for days, doubling as a light source — merchants are wary of "dun" spheres that have run dark.</p>
+          </div>
+          <div class="lore-card">
+            <h3>Spren</h3>
+            <p>Spirit-like manifestations that react to emotion and nature: lifespren hover over healthy plants, angerspren pool like blood at a soldier's feet, windspren chase anything moving fast. Mostly background texture — except for the rare, sapient Radiant spren who seek out worthy people to bond.</p>
+          </div>
+          <div class="lore-card">
+            <h3>Shardbearers</h3>
+            <p>Shardblades cut through anything non-living and kill with a single strike. Shardplate deflects a Blade and grants superhuman strength and speed. A single Shardbearer can turn a battle — nations go to war over one set.</p>
+          </div>
+          <div class="lore-card">
+            <h3>The Vorin Church</h3>
+            <p>Eastern Roshar's dominant religion. Ardent priests serve commoners and nobles alike. Vorinism enforces a rigid caste system — lighteyed nobility over darkeyed commoners — and reversed gender roles: women read, scheme, and scholar; men fight. Slavery is legal and common.</p>
+          </div>
+          <div class="lore-card">
+            <h3>The Alethi</h3>
+            <p>Bridge Nine's setting. A militaristic, honor-obsessed kingdom recently unified under House Kholin. Highprinces still jockey for status through duels and border skirmishes. Soldiers sometimes succumb to the Thrill — a battle-fury that strips away restraint.</p>
+          </div>
+          <div class="lore-card">
+            <h3>The Listeners</h3>
+            <p>Called "Parshendi" by the Alethi, these red-black-white marbled people are sapient cousins of the enslaved parshmen. They fight in singing warpairs, field their own Shardbearers, and fiercely defend the Shattered Plains as their home.</p>
+          </div>
+          <div class="lore-card">
+            <h3>The Shattered Plains</h3>
+            <p>A vast expanse of wind-carved chasms and plateaus on Alethkar's eastern edge. Chasmfiends — armored apex predators — roam the depths guarding gemhearts worth a fortune. It's the site of an uneasy, ongoing war between the Alethi and the listeners — and exactly where tonight's story begins.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ CORE MECHANIC ============ -->
+      <section class="block" id="mechanic">
+        <div class="section-head"><span class="num">III.</span><h2>The Core Mechanic</h2><div class="rule"></div></div>
+        <p class="lede">Every skill test in the Cosmere RPG works the same way.</p>
+
+        <span class="formula">d20 + attribute + skill ranks</span>
+
+        <div class="two-col">
+          <div class="mini-panel">
+            <h4>Difficulty</h4>
+            <ul>
+              <li><b>DC 10</b> — an average test</li>
+              <li><b>DC 15</b> — a challenging test</li>
+              <li>Beat the DC, you succeed. Simple as that.</li>
+            </ul>
+          </div>
+          <div class="mini-panel">
+            <h4>Raising the Stakes</h4>
+            <ul>
+              <li>On risky, dramatic, or plot-critical tests, add the <b>plot die</b> to the roll.</li>
+              <li>It can swing a result toward triumph or disaster — that's the point.</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ HEROIC PATHS ============ -->
+      <section class="block" id="paths">
+        <div class="section-head"><span class="num">IV.</span><h2>Heroic Paths</h2><div class="rule"></div></div>
+        <p class="lede">Reference only — tonight's cast is using pregenerated characters, but this is what each one is built from, and what you'd choose from if building an original character later.</p>
+
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Path</th><th>Theme</th><th>Specialties</th></tr></thead>
+            <tbody>
+              <tr><td><b>Agent</b></td><td>A talented operative who solves problems with a keen mind or deft hand.</td><td>Investigator · Spy · Thief</td></tr>
+              <tr><td><b>Envoy</b></td><td>An insightful negotiator who adeptly influences others.</td><td>Diplomat · Faithful · Mentor</td></tr>
+              <tr><td><b>Hunter</b></td><td>A skilled sharpshooter and outdoorsperson who seeks and eliminates problems.</td><td>Archer · Assassin · Tracker</td></tr>
+              <tr><td><b>Leader</b></td><td>A poised commander who directs and guides others to be their best.</td><td>Champion · Officer · Politico</td></tr>
+              <tr><td><b>Scholar</b></td><td>An adroit thinker who excels at planning and building.</td><td>Artifabrian · Strategist · Surgeon</td></tr>
+              <tr><td><b>Warrior</b></td><td>A fighter who relies on skill, brute strength, or indomitable will.</td><td>Duelist · Shardbearer · Soldier</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p style="color:var(--ink-muted); font-size:14.5px;">Full characters invest points across six attributes — Strength, Speed, Intellect, Willpower, Awareness, Presence — then define a purpose, an obstacle, and short-term goals.</p>
+      </section>
+
+      <!-- ============ PLOT DIE ============ -->
+      <section class="block" id="plotdie">
+        <div class="section-head"><span class="num">V.</span><h2>The Plot Die</h2><div class="rule"></div></div>
+        <p class="lede">A standard d6 doubles as the plot die. Use the widget in the sidebar at the table, or map results by hand:</p>
+
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Roll</th><th>Result</th></tr></thead>
+            <tbody>
+              <tr><td>1 – 2</td><td>Complication (two faces)</td></tr>
+              <tr><td>3 – 4</td><td>Blank — no effect</td></tr>
+              <tr><td>5 – 6</td><td>Opportunity (two faces)</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="two-col">
+          <div class="mini-panel">
+            <h4>Spending an Opportunity <span style="color:var(--ink-soft); font-weight:400;">(or a natural 20)</span></h4>
+            <ul>
+              <li><b>Aid an Ally</b> — their next test gains advantage</li>
+              <li><b>Collect Yourself</b> — recover 1 focus</li>
+              <li><b>Critically Hit</b> — turn a hit into a critical hit</li>
+              <li><b>Influence the Narrative</b> — a positive plot twist</li>
+            </ul>
+          </div>
+          <div class="mini-panel">
+            <h4>Facing a Complication <span style="color:var(--ink-soft); font-weight:400;">(or a natural 1)</span></h4>
+            <ul>
+              <li><b>Hinder an Ally</b> — the next PC test gains disadvantage</li>
+              <li><b>Become Distracted</b> — lose 1 focus</li>
+              <li><b>Influence the Narrative</b> — a negative plot twist</li>
+              <li>GM's call — keep it cinematic, not punitive</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="two-col" style="margin-top:18px;">
+          <div class="mini-panel">
+            <h4>Plot Twists — Combat</h4>
+            <ul>
+              <li><b>Opportunity:</b> friendly reinforcements arrive; a wounded enemy flees; a bystander escapes; an enemy drops their weapon; a spren manifests and helps you.</li>
+              <li><b>Complication:</b> enemy reinforcements arrive; an NPC is knocked out; an ally is endangered; you drop or damage your gear; a spren manifests and distracts you.</li>
+            </ul>
+          </div>
+          <div class="mini-panel">
+            <h4>Plot Twists — Conversation</h4>
+            <ul>
+              <li><b>Opportunity:</b> you recall a helpful fact; an observer is impressed; a spren reveals something unexpected; you cover your real intentions.</li>
+              <li><b>Complication:</b> something you "knew" turns out false; an observer is scornful; a spren embarrasses you; you accidentally reveal a secret.</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ ACTIONS ============ -->
+      <section class="block" id="actions">
+        <div class="section-head"><span class="num">VI.</span><h2>Actions &amp; Reactions</h2><div class="rule"></div></div>
+        <p class="lede">Fast turns grant <b style="color:var(--gold-bright);">2 actions</b>; slow turns grant <b style="color:var(--gold-bright);">3 actions</b>. PCs always act before NPCs of the same speed. Everyone gains one reaction per round.</p>
+
+        <div class="legend-row">
+          <div class="item"><span class="cost">1</span> costs one action</div>
+          <div class="item"><span class="cost">2</span> costs two actions</div>
+          <div class="item"><span class="cost zero">0</span> free — no action cost</div>
+          <div class="item"><span class="cost reaction">R</span> a reaction, usable once per round</div>
+        </div>
+
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th style="width:60px;"></th><th>Action</th><th>Effect</th></tr></thead>
+            <tbody>
+              <tr><td><span class="cost">1</span></td><td class="action-name">Brace</td><td>Raise your shield or take cover — all attacks against you gain disadvantage.</td></tr>
+              <tr><td><span class="cost">1</span></td><td class="action-name">Disengage</td><td>Move 5 feet without triggering Reactive Strikes.</td></tr>
+              <tr><td><span class="cost">1</span></td><td class="action-name">Gain Advantage</td><td>Test a skill against the target's matching defense. Succeed, and your next different-skill test against them gains advantage.</td></tr>
+              <tr><td><span class="cost">1</span></td><td class="action-name">Interact / Use a Skill</td><td>Interact with the environment or use a non-attack skill.</td></tr>
+              <tr><td><span class="cost">1</span></td><td class="action-name">Move</td><td>Move up to your movement rate. Usable multiple times per turn.</td></tr>
+              <tr><td><span class="cost">1</span></td><td class="action-name">Strike</td><td>Make one attack. Spend 2 focus to strike with a second weapon; spend 1 focus to graze on a miss.</td></tr>
+              <tr><td><span class="cost">2</span></td><td class="action-name">Grapple</td><td>Test Athletics vs. the target's Physical defense. Succeed, and they're Restrained while within your reach.</td></tr>
+              <tr><td><span class="cost">1*</span></td><td class="action-name">Ready</td><td>Prepare a 1-cost action to use later, triggered by another action or a condition.</td></tr>
+              <tr><td><span class="cost">2</span></td><td class="action-name">Recover</td><td>Once per scene, roll your recovery die to regain health and/or focus.</td></tr>
+              <tr><td><span class="cost">2</span></td><td class="action-name">Shove</td><td>Test Athletics vs. the target's Physical defense. Succeed, and move them 5 feet.</td></tr>
+              <tr><td><span class="cost zero">0</span></td><td class="action-name">Banter</td><td>Talk, without making a test.</td></tr>
+              <tr><td><span class="cost zero">0</span></td><td class="action-name">Drop</td><td>Release something from your grip.</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th style="width:60px;"></th><th>Reaction</th><th>Effect</th></tr></thead>
+            <tbody>
+              <tr><td><span class="cost reaction">R</span></td><td class="action-name">Aid</td><td>Before an ally's test, spend 1 focus to grant them advantage.</td></tr>
+              <tr><td><span class="cost reaction">R</span></td><td class="action-name">Avoid Danger</td><td>Test Agility to dodge a collision or fall (DC 15, or equal to an enemy's roll).</td></tr>
+              <tr><td><span class="cost reaction">R</span></td><td class="action-name">Dodge</td><td>When targeted with an attack, spend 1 focus to give it disadvantage.</td></tr>
+              <tr><td><span class="cost reaction">R</span></td><td class="action-name">Reactive Strike</td><td>When an enemy leaves your reach, spend 1 focus to strike them.</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- ============ CONDITIONS ============ -->
+      <section class="block" id="conditions">
+        <div class="section-head"><span class="num">VII.</span><h2>Conditions at a Glance</h2><div class="rule"></div></div>
+
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Condition</th><th>Effect</th></tr></thead>
+            <tbody>
+              <tr><td><b>Afflicted</b></td><td>You take the specified damage at the end of each of your turns.</td></tr>
+              <tr><td><b>Determined</b></td><td>When you fail a test, you may add an Opportunity to it — then the condition ends.</td></tr>
+              <tr><td><b>Disoriented</b></td><td>No reactions; Perception-type tests gain disadvantage.</td></tr>
+              <tr><td><b>Empowered</b></td><td>Advantage on all tests for the rest of the scene; Investiture refills each turn.</td></tr>
+              <tr><td><b>Enhanced</b></td><td>Gain a stated attribute bonus (doesn't change defenses, health, focus, or Investiture).</td></tr>
+              <tr><td><b>Exhausted [−n]</b></td><td>Cumulative penalty on every test; reduce by 1 per long rest.</td></tr>
+              <tr><td><b>Focused</b></td><td>Your abilities cost 1 fewer focus.</td></tr>
+              <tr><td><b>Immobilized</b></td><td>Movement rate 0 — you can't move or be moved.</td></tr>
+              <tr><td><b>Prone</b></td><td>Slowed; melee attacks against you get advantage. Brace without cover. Stand for 5 ft. of movement.</td></tr>
+              <tr><td><b>Restrained</b></td><td>Movement rate 0; disadvantage on all tests except escaping your bonds.</td></tr>
+              <tr><td><b>Slowed</b></td><td>Movement rate halved.</td></tr>
+              <tr><td><b>Stunned</b></td><td>Two fewer actions on your turn; no reaction.</td></tr>
+              <tr><td><b>Surprised</b></td><td>No reaction at combat's start, no fast turn, one fewer action.</td></tr>
+              <tr><td><b>Unconscious</b></td><td>Prone, movement 0, can't act — until healed or end of any turn.</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- ============ INJURY ============ -->
+      <section class="block" id="injury">
+        <div class="section-head"><span class="num">VIII.</span><h2>Injury Rolls</h2><div class="rule"></div></div>
+        <p class="lede">d20 + armor deflect + ability modifiers − 5 per existing injury.</p>
+
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Result</th><th>Outcome</th></tr></thead>
+            <tbody>
+              <tr><td>−6 or lower</td><td>Death.</td></tr>
+              <tr><td>−5 to 0</td><td>Permanent injury.</td></tr>
+              <tr><td>1 to 5</td><td>Vicious injury — lasts 6d6 days.</td></tr>
+              <tr><td>6 to 15</td><td>Shallow injury — lasts 1d6 days.</td></tr>
+              <tr><td>16+</td><td>Flesh wound — lasts the rest of the day.</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p style="color:var(--ink-muted); font-size:14.5px;">Then pick (or roll d8 for) an effect: Exhausted [−1] or [−2], Slowed, Disoriented, Surprised, or usable only one hand.</p>
+      </section>
+
+      <div class="glyph-divider">
+        <div class="line"></div>
+        <svg viewBox="0 0 24 24" fill="none" stroke="#c9a45c" stroke-width="1.2"><path d="M12 2 L20 20 L4 20 Z"/></svg>
+        <div class="line"></div>
+      </div>
+
+      <!-- ============ EPISODE GUIDE ============ -->
+      <section class="block" id="episodes">
+        <div class="section-head"><span class="num">IX.</span><h2>Episode Guide</h2><div class="rule"></div></div>
+        <p class="lede">Two two-hour episodes, recorded in one night. Episode 1 is survival and action; Episode 2 turns to mystery and exploration. <span class="cut-tag">cut</span> marks beats to trim or compress if the clock is tight.</p>
+
+        <div class="episode">
+          <div class="episode-head">
+            <h3>Episode One — "Bridge Nine"</h3>
+            <span class="runtime">~2 Hours · Action / Survival</span>
+          </div>
+          <p class="tagline">A routine expedition ends in a fall, a betrayal, and a chase through the dark.</p>
+          <ol class="beat-list">
+            <li><b>Prologue &amp; roles.</b> Read the opening, assign expedition roles. <span class="gm-note">Keep to 5–10 minutes — this is table setup, not a scene.</span></li>
+            <li><b>The Journey.</b> Cross the bridge; the chull spooks. Deduction/Survival or Leadership tests set up advantage for what's coming.</li>
+            <li><b>The Attack.</b> The chasmfiend surfaces, the bridge collapses. Raise the stakes on every Agility/Athletics test. <span class="gm-note">This is your cold open — let it be loud.</span></li>
+            <li><b>Survivors &amp; First Impressions.</b> Establish who's left: Selinar, Varda, Matal, Doral, Aran, Khesh. One physical detail per PC.</li>
+            <li><b>Picking up the Pieces.</b> Search for survivors, food, water, tools. <span class="gm-note">Offer 2 of the 6 options rather than the full menu.</span> <span class="cut-tag">trim</span></li>
+            <li><b>Fight!</b> Selinar succumbs to the Thrill and turns on Doral. Combat or a tense Persuasion/Leadership stand-down.</li>
+            <li><b>Chasmfiend Pursuit → Taking Flight.</b> The chull is eaten; the beast returns. Run the escape endeavor — 6 successes before 4 failures. <span class="gm-note">Your centerpiece set piece — narrate every roll.</span></li>
+            <li><b>Safe for Now.</b> The party squeezes through the crevice. <b>End the episode here</b> — hard cut before Matal opens her map.</li>
+          </ol>
+        </div>
+
+        <div class="episode">
+          <div class="episode-head">
+            <h3>Episode Two — "The Lost Shrine"</h3>
+            <span class="runtime">~2 Hours · Mystery / Exploration</span>
+          </div>
+          <p class="tagline">A night's rest, a forgotten shrine, and a choice about how the story ends.</p>
+          <ol class="beat-list">
+            <li><b>Cold open recap.</b> Thirty seconds on what happened, then straight into A Night's Rest — see Campfire Prompts below.</li>
+            <li><b>To the Ruins.</b> Matal's map points northeast. Pass the three bodies in the water — a quiet, eerie beat before the dungeon.</li>
+            <li><b>The Lost Shrine — Ground Floor.</b> Climb the rubble, find a light source, enter the dark.</li>
+            <li><b>Stairway.</b> Cremling nests, Agility tests, possible swarm. <span class="gm-note">Resolve the swarm in one fast exchange rather than a full 3-round grind.</span> <span class="cut-tag">trim</span></li>
+            <li><b>Top Floor — The Glyphs.</b> The Willshaper statue and the Soulcaster puzzle. Run the endeavor as a quick narrated montage rather than test-by-test if energy's flagging. <span class="cut-tag">optional trim</span></li>
+            <li><b>The Surface.</b> Exit north (surprised) or south (safe) — singers are waiting either way.</li>
+            <li><b>Encountering the Singers.</b> Fight, or talk Vexla down. Let the table's tone from Episode 1 decide which way this leans.</li>
+            <li><b>The Way Home.</b> Twelve hours to the warcamps, then the final plateau encounter — or a peaceful arrival.</li>
+            <li><b>Epilogue.</b> Resolve the Soulcaster's fate, advance everyone to 2nd level, and land the ending. Since this is standalone, tie it off clean — no dangling threads.</li>
+          </ol>
+        </div>
+      </section>
+
+      <!-- ============ CAMPFIRE ============ -->
+      <section class="block" id="campfire">
+        <div class="section-head"><span class="num">X.</span><h2>Campfire Prompts</h2><div class="rule"></div></div>
+        <p class="lede">Before the party sleeps, give each player one of these — answered in a sentence or two, in character or out. Don't dig deeper than that; the goal is texture, not a backstory episode.</p>
+
+        <ul class="pull-list">
+          <li>"Which of you has committed a crime? What was the crime?"</li>
+          <li>"Who among you betrayed or failed a loved one? What happened to them?"</li>
+          <li>"Who here has been wrongly condemned? Why were you falsely accused?"</li>
+          <li>"Which of you has survived another tragedy like this? What were the circumstances?"</li>
+          <li>"Who here is in love? Who is your loved one, and are the feelings mutual?"</li>
+          <li>"Which of you has an enemy? Why have they sworn to kill you?"</li>
+        </ul>
+
+        <div class="mini-panel" style="margin-top:20px;">
+          <h4>Spren Watch — quiet GM tracking</h4>
+          <ul>
+            <li><b>Tone</b> (lightspren) favors characters who seek freedom — fighting unjust treatment, freeing the bound, mercy toward listeners.</li>
+            <li><b>Aeliran</b> (honorspren) favors characters who embody protection — shielding the weak, risking harm for someone vulnerable.</li>
+            <li>Mark privately through both episodes. Whoever's marked most by the epilogue may take the First Ideal (Windrunner or Willshaper) going to 2nd level.</li>
+          </ul>
+        </div>
+      </section>
+
+      <footer>Life Before Death · Strength Before Weakness · Journey Before Destination</footer>
+
+    </div>
+  </main>
+</div>
+
+<div class="back-top" id="backTop" onclick="window.scrollTo({top:0, behavior:'smooth'})">↑</div>
+
+<script>
+  const mobileToggle = document.getElementById('mobileNavToggle');
+  const mobileNav = document.getElementById('bridgeNav');
+  const bodyEl = document.body;
+
+  function setNavOpenState(isOpen){
+    bodyEl.classList.toggle('nav-open', isOpen);
+    if(mobileToggle){
+      mobileToggle.setAttribute('aria-expanded', String(isOpen));
+      const icon = mobileToggle.querySelector('.icon');
+      if(icon){ icon.textContent = isOpen ? '✕' : '☰'; }
+    }
+  }
+
+  if(mobileToggle){
+    mobileToggle.addEventListener('click', ()=>{
+      setNavOpenState(!bodyEl.classList.contains('nav-open'));
+    });
+  }
+
+  document.addEventListener('click', (event)=>{
+    if(!window.matchMedia('(max-width: 900px)').matches){ return; }
+    if(!bodyEl.classList.contains('nav-open')){ return; }
+    if(mobileToggle && mobileToggle.contains(event.target)){ return; }
+    if(mobileNav && mobileNav.contains(event.target)){ return; }
+    setNavOpenState(false);
+  });
+
+  document.addEventListener('keydown', (event)=>{
+    if(event.key !== 'Escape'){ return; }
+    if(!window.matchMedia('(max-width: 900px)').matches){ return; }
+    if(!bodyEl.classList.contains('nav-open')){ return; }
+    setNavOpenState(false);
+  });
+
+  function rollDie(){
+    const face = document.getElementById('dieFace');
+    const result = document.getElementById('dieResult');
+    face.classList.remove('opportunity','complication');
+    face.classList.add('rolling');
+
+    setTimeout(()=>{
+      const roll = Math.floor(Math.random()*6)+1;
+      face.classList.remove('rolling');
+      if(roll <= 2){
+        face.textContent = '✺';
+        face.classList.add('complication');
+        result.textContent = 'Complication';
+      } else if(roll >= 5){
+        face.textContent = '◈';
+        face.classList.add('opportunity');
+        result.textContent = 'Opportunity';
+      } else {
+        face.textContent = '—';
+        result.textContent = 'No effect';
+      }
+    }, 420);
+  }
+
+  // active nav highlighting + sticky crumb + scroll progress + back-to-top
+  const links = document.querySelectorAll('.nav-list a');
+  const sections = document.querySelectorAll('section.block');
+  const crumb = document.getElementById('crumb');
+  const backTop = document.getElementById('backTop');
+
+  links.forEach(link=>{
+    link.addEventListener('click', ()=>{
+      if(window.matchMedia('(max-width: 900px)').matches){
+        setNavOpenState(false);
+      }
+    });
+  });
+
+  const observer = new IntersectionObserver((entries)=>{
+    entries.forEach(entry=>{
+      if(entry.isIntersecting){
+        const id = entry.target.getAttribute('id');
+        links.forEach(l=>{
+          l.classList.toggle('active', l.getAttribute('href') === '#'+id);
+        });
+        const activeLink = document.querySelector('.nav-list a.active');
+        if(activeLink){ crumb.innerHTML = 'Bridge Nine · <span>'+activeLink.textContent+'</span>'; }
+      }
+    });
+  }, {rootMargin:'-15% 0px -70% 0px'});
+  sections.forEach(s=>observer.observe(s));
+
+  window.addEventListener('scroll', ()=>{
+    const h = document.documentElement;
+    const scrolled = (h.scrollTop) / (h.scrollHeight - h.clientHeight) * 100;
+    document.getElementById('scrollbar').style.width = scrolled + '%';
+    backTop.classList.toggle('show', h.scrollTop > 600);
+  });
+
+  window.addEventListener('resize', ()=>{
+    if(!window.matchMedia('(max-width: 900px)').matches){
+      setNavOpenState(false);
+    }
+  });
+</script>
+
+</body>
+</html>
