@@ -116,20 +116,24 @@
     position: relative; z-index: 2;
     background: rgba(18,10,30,0.97);
     border-bottom: 1px solid var(--briar-border);
-    display: flex; gap: 0; padding: 0 20px;
-    max-width: 100%; overflow-x: auto;
+    display: flex; gap: 8px; padding: 6px 14px;
+    max-width: 100%; overflow-x: clip;
+    flex-wrap: wrap;
     justify-content: center;
+    scrollbar-width: none;
   }
+  .tab-bar::-webkit-scrollbar { display: none; }
   .tab-btn {
+    appearance: none;
     font-family: 'Barlow Condensed', sans-serif; font-size: 12px; font-weight: 600;
     letter-spacing: 2px; text-transform: uppercase;
-    color: var(--text-dim); background: none; border: none;
-    padding: 10px 16px; cursor: pointer; white-space: nowrap;
-    border-bottom: 2px solid transparent; margin-bottom: -1px;
-    transition: color 0.2s, border-color 0.2s;
+    color: var(--text-secondary); background: transparent; border: none;
+    min-height: unset; padding: 4px 6px; cursor: pointer; white-space: nowrap;
+    text-decoration: none;
+    transition: color 0.2s, text-shadow 0.2s;
   }
   .tab-btn:hover { color: var(--gold); }
-  .tab-btn.active { color: var(--gold); border-bottom-color: var(--rose); }
+  .tab-btn.active { color: var(--gold-light); text-shadow: 0 0 10px rgba(192,85,138,0.35); }
 
   /* ===== PANELS ===== */
   .tab-panel { display: none; position: relative; z-index: 1; }
@@ -406,6 +410,33 @@
     background: linear-gradient(90deg, rgba(24,15,37,0.86), rgba(29,16,43,0.74));
     border-color: rgba(107,58,138,0.36);
   }
+  body.page-lygas-cantor-sheet .inventory-builder {
+    background: rgba(22,12,34,0.55);
+    border-color: rgba(107,58,138,0.44);
+  }
+  body.page-lygas-cantor-sheet .inventory-input {
+    background: rgba(18,10,28,0.82);
+    border-color: rgba(107,58,138,0.45);
+    color: var(--parchment);
+  }
+  body.page-lygas-cantor-sheet .inventory-input::placeholder {
+    color: var(--text-dim);
+  }
+  body.page-lygas-cantor-sheet .inventory-add-btn {
+    background: rgba(192,85,138,0.16);
+    border-color: rgba(192,85,138,0.5);
+    color: var(--gold-light);
+  }
+  body.page-lygas-cantor-sheet .inventory-remove-btn {
+    background: rgba(122,53,88,0.28);
+    border-color: rgba(192,85,138,0.56);
+    color: #f2c7da;
+  }
+  body.page-lygas-cantor-sheet .inventory-empty {
+    background: rgba(20,12,32,0.62);
+    border-color: rgba(107,58,138,0.42);
+    color: var(--text-secondary);
+  }
 
   /* ===== MOBILE ===== */
   @media (max-width: 768px) {
@@ -500,11 +531,11 @@
 
 <!-- ======= TABS ======= -->
 <nav class="tab-bar">
-  <button class="tab-btn active" onclick="switchTab('combat')">⚔ Combat</button>
-  <button class="tab-btn" onclick="switchTab('spells')">✦ Spells</button>
-  <button class="tab-btn" onclick="switchTab('features')">❧ Features</button>
-  <button class="tab-btn" onclick="switchTab('inventory')">⊠ Inventory</button>
-  <button class="tab-btn" onclick="switchTab('notes')">✎ Notes</button>
+  <a href="#tab-combat" class="tab-btn active" data-tab="combat" onclick="switchTab('combat'); return false;">⚔ Combat</a>
+  <a href="#tab-spells" class="tab-btn" data-tab="spells" onclick="switchTab('spells'); return false;">✦ Spells</a>
+  <a href="#tab-features" class="tab-btn" data-tab="features" onclick="switchTab('features'); return false;">❧ Features</a>
+  <a href="#tab-inventory" class="tab-btn" data-tab="inventory" onclick="switchTab('inventory'); return false;">⊠ Inventory</a>
+  <a href="#tab-notes" class="tab-btn" data-tab="notes" onclick="switchTab('notes'); return false;">✎ Notes</a>
 </nav>
 
 <!-- ======================================================= -->
@@ -1284,7 +1315,7 @@ function switchTab(name) {
   document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
   document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
   document.getElementById(`tab-${name}`)?.classList.add('active');
-  document.querySelector(`[onclick="switchTab('${name}')"]`)?.classList.add('active');
+  document.querySelector(`.tab-btn[data-tab="${name}"]`)?.classList.add('active');
   saveSheetState();
 }
 
