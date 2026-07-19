@@ -1,0 +1,1567 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lygas Cantor — Fighter 1 / Warlock 1 | Malt &amp; Magic</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=IM+Fell+English:ital@0;1&family=Barlow:wght@300;400;500;600&family=Barlow+Condensed:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/css/theme-fantasy.css">
+<link rel="stylesheet" href="../assets/css/page-polish.css">
+<style>
+  :root {
+    --briar-dark: #120a1e;
+    --briar-mid: #1a1028;
+    --briar-panel: #160e24;
+    --briar-border: #3d1f5a;
+    --briar-accent: #6b3a8a;
+    --gold: #c9a07a;
+    --gold-light: #e8c49a;
+    --gold-dim: #7a6248;
+    --rose: #c0558a;
+    --rose-dim: #7a3558;
+    --parchment: #e8ddc8;
+    --parchment-dark: #c9bfa0;
+    --text-primary: #e8ddc8;
+    --text-secondary: #a094b8;
+    --text-dim: #5a526a;
+    --danger: #8b2f4a;
+    --danger-light: #c03960;
+    --success: #2d5a3a;
+    --success-light: #4a8a5a;
+    --hp-bar: #6b2040;
+    --section-bg: rgba(18,10,30,0.85);
+    --card-bg: rgba(26,16,40,0.9);
+    --card-border: rgba(201,160,122,0.25);
+    --tooltip-bg: #0e0818;
+    --advantage: #2e3a5c;
+    --disadvantage: #5c2e2e;
+    --steel: #9a90aa;
+    --steel-dim: #6a6075;
+    --ember: #c26f3a;
+    --locked-bg: rgba(30,20,50,0.5);
+    --locked-border: rgba(80,60,100,0.25);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { max-width: 100%; overflow-x: clip; }
+
+  body {
+    background: #0a0614;
+    background-image:
+      radial-gradient(ellipse at 15% 20%, rgba(107,58,138,0.25) 0%, transparent 50%),
+      radial-gradient(ellipse at 82% 70%, rgba(192,85,138,0.15) 0%, transparent 48%),
+      linear-gradient(180deg, #080412 0%, #0e0820 50%, #070310 100%);
+    color: var(--text-primary);
+    font-family: 'Barlow', sans-serif;
+    font-size: 14px;
+    min-height: 100vh;
+    line-height: 1.4;
+    position: relative;
+  }
+
+  body::before {
+    content: '';
+    position: fixed; inset: 0;
+    pointer-events: none;
+    background-image:
+      radial-gradient(circle at 20% 15%, rgba(192,85,138,0.08) 0 24%, transparent 40%),
+      repeating-linear-gradient(20deg, transparent 0, transparent 42px, rgba(201,160,122,0.018) 42px, rgba(201,160,122,0.018) 43px);
+    z-index: 0;
+  }
+
+  /* ===== HEADER ===== */
+  .sheet-header {
+    position: relative; z-index: 2;
+    background: linear-gradient(180deg, rgba(18,10,30,0.98) 0%, rgba(22,14,36,0.96) 100%);
+    border-bottom: 1px solid var(--briar-border);
+    padding: 16px 20px 12px;
+  }
+  .sheet-header::after {
+    content: '';
+    position: absolute; bottom: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--rose), var(--gold), var(--rose), transparent);
+    opacity: 0.4;
+  }
+  .header-inner { max-width: 1200px; margin: 0 auto; display: flex; align-items: flex-start; gap: 16px; flex-wrap: wrap; }
+  .header-name { flex: 1; min-width: 180px; }
+  .char-name {
+    font-family: 'Cinzel', serif; font-size: 28px; font-weight: 700;
+    color: var(--gold-light); letter-spacing: 1px; line-height: 1;
+  }
+  .char-sub {
+    font-family: 'Barlow Condensed', sans-serif; font-size: 13px; font-weight: 400;
+    color: var(--text-secondary); letter-spacing: 2px; text-transform: uppercase;
+    margin-top: 4px;
+  }
+  .char-sub span { color: var(--rose); }
+  .header-stats { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; }
+  .hstat { text-align: center; padding: 6px 10px; background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 6px; min-width: 56px; }
+  .hstat-val { font-family: 'Cinzel', serif; font-size: 18px; font-weight: 600; color: var(--gold); display: block; }
+  .hstat-lbl { font-family: 'Barlow Condensed', sans-serif; font-size: 9px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--text-dim); }
+  .hp-display { min-width: 110px; }
+  .hp-inputs { display: flex; gap: 4px; align-items: center; margin-bottom: 3px; }
+  .hp-input { background: transparent; border: none; border-bottom: 1px solid var(--briar-border); color: var(--gold); font-family: 'Cinzel', serif; font-size: 18px; font-weight: 600; width: 48px; text-align: center; padding: 2px; }
+  .hp-input:focus { outline: none; border-bottom-color: var(--gold); }
+  .hp-sep { color: var(--text-dim); font-size: 14px; }
+  .hp-bar-wrap { height: 4px; background: rgba(255,255,255,0.08); border-radius: 2px; overflow: hidden; }
+  .hp-bar { height: 100%; border-radius: 2px; transition: width 0.3s, background 0.3s; }
+  .header-nav { display: flex; align-items: center; gap: 8px; }
+  .nav-link { font-family: 'Barlow Condensed', sans-serif; font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--text-dim); text-decoration: none; padding: 4px 8px; border: 1px solid var(--locked-border); border-radius: 4px; transition: color 0.2s, border-color 0.2s; }
+  .nav-link:hover { color: var(--gold); border-color: var(--gold-dim); }
+
+  /* ===== TAB BAR ===== */
+  .tab-bar {
+    position: relative; z-index: 2;
+    background: rgba(18,10,30,0.97);
+    border-bottom: 1px solid var(--briar-border);
+    display: flex; gap: 0; padding: 0 20px;
+    max-width: 100%; overflow-x: auto;
+  }
+  .tab-btn {
+    font-family: 'Barlow Condensed', sans-serif; font-size: 12px; font-weight: 600;
+    letter-spacing: 2px; text-transform: uppercase;
+    color: var(--text-dim); background: none; border: none;
+    padding: 10px 16px; cursor: pointer; white-space: nowrap;
+    border-bottom: 2px solid transparent; margin-bottom: -1px;
+    transition: color 0.2s, border-color 0.2s;
+  }
+  .tab-btn:hover { color: var(--gold); }
+  .tab-btn.active { color: var(--gold); border-bottom-color: var(--rose); }
+
+  /* ===== PANELS ===== */
+  .tab-panel { display: none; position: relative; z-index: 1; }
+  .tab-panel.active { display: block; }
+  .sheet-body { max-width: 1200px; margin: 0 auto; padding: 16px 20px; }
+  .panel {
+    background: var(--card-bg); border: 1px solid var(--card-border);
+    border-radius: 8px; overflow: hidden;
+  }
+  .panel-header {
+    background: rgba(255,255,255,0.04); border-bottom: 1px solid var(--card-border);
+    padding: 8px 12px; display: flex; align-items: center; gap: 8px;
+  }
+  .panel-title {
+    font-family: 'Barlow Condensed', sans-serif; font-size: 10px; font-weight: 600;
+    letter-spacing: 2.5px; text-transform: uppercase; color: var(--gold-dim);
+  }
+  .panel-body { padding: 12px; }
+  .section-divider { height: 1px; background: var(--card-border); margin: 10px 0; }
+
+  /* ===== ABILITY SCORES ===== */
+  .ability-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 6px; }
+  .ability-block {
+    background: rgba(255,255,255,0.03); border: 1px solid var(--briar-border);
+    border-radius: 6px; padding: 6px 8px; text-align: center; cursor: pointer; transition: border-color 0.2s;
+  }
+  .ability-block:hover { border-color: var(--gold-dim); }
+  .ability-label { font-family: 'Barlow Condensed', sans-serif; font-size: 8px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; color: var(--text-dim); }
+  .ability-score { font-family: 'Cinzel', serif; font-size: 20px; font-weight: 700; color: var(--parchment); line-height: 1; margin: 1px 0; }
+  .ability-mod { font-family: 'Barlow Condensed', sans-serif; font-size: 13px; font-weight: 600; color: var(--gold); }
+
+  /* ===== SAVES & SKILLS ===== */
+  .save-row, .skill-row {
+    display: flex; align-items: center; gap: 6px;
+    padding: 2px 4px; border-radius: 3px; font-size: 12px;
+  }
+  .save-row:hover, .skill-row:hover { background: rgba(255,255,255,0.03); }
+  .prof-dot { width: 8px; height: 8px; border-radius: 50%; border: 1px solid var(--text-dim); flex-shrink: 0; }
+  .prof-dot.proficient { background: var(--gold); border-color: var(--gold); }
+  .prof-dot.expertise { background: var(--rose); border-color: var(--rose); box-shadow: 0 0 4px rgba(192,85,138,0.6); }
+  .save-name, .skill-name { flex: 1; color: var(--text-primary); font-size: 12px; }
+  .skill-attr { font-family: 'Barlow Condensed', sans-serif; font-size: 9px; color: var(--text-dim); letter-spacing: 1px; }
+  .save-val, .skill-val { font-family: 'Barlow Condensed', sans-serif; font-size: 12px; font-weight: 600; color: var(--gold); min-width: 28px; text-align: right; }
+  .save-val.proficient, .skill-val.proficient { color: var(--gold-light); }
+
+  /* ===== COMBAT STATS ===== */
+  .combat-row { display: flex; gap: 8px; flex-wrap: wrap; }
+  .combat-stat { background: rgba(255,255,255,0.04); border: 1px solid var(--card-border); border-radius: 6px; padding: 8px 10px; text-align: center; flex: 1; min-width: 60px; }
+  .cs-val { font-family: 'Cinzel', serif; font-size: 20px; font-weight: 700; color: var(--gold); display: block; line-height: 1; }
+  .cs-label { font-family: 'Barlow Condensed', sans-serif; font-size: 9px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--text-dim); display: block; margin-top: 3px; }
+  .combat-effect-readout { font-size: 11px; color: var(--rose); font-style: italic; min-height: 16px; margin-top: 8px; }
+
+  /* ===== WEAPONS ===== */
+  .weapon-row { padding: 8px 10px; border-bottom: 1px solid rgba(255,255,255,0.04); display: grid; grid-template-columns: 1fr auto auto auto; gap: 8px; align-items: center; }
+  .weapon-row:last-child { border-bottom: none; }
+  .weapon-name { font-weight: 500; color: var(--parchment); font-size: 13px; }
+  .weapon-badge { font-family: 'Barlow Condensed', sans-serif; font-size: 9px; letter-spacing: 1px; text-transform: uppercase; color: var(--text-dim); background: rgba(255,255,255,0.04); border-radius: 3px; padding: 1px 4px; }
+  .weapon-hit { font-family: 'Cinzel', serif; font-size: 14px; font-weight: 600; color: var(--rose); text-align: center; }
+  .weapon-dmg { font-family: 'Barlow Condensed', sans-serif; font-size: 12px; font-weight: 600; color: var(--gold); text-align: center; }
+  .weapon-type { font-size: 10px; color: var(--text-dim); text-align: right; }
+  .adv-indicator { font-family: 'Barlow Condensed', sans-serif; font-size: 9px; letter-spacing: 1px; text-transform: uppercase; color: var(--text-dim); margin-top: 2px; }
+  .adv-indicator.advantage { color: var(--success-light); }
+  .adv-indicator.disadvantage { color: var(--danger-light); }
+
+  /* ===== HEX TARGET ===== */
+  .hex-indicator {
+    display: flex; align-items: center; gap: 8px; padding: 6px 10px;
+    background: rgba(107,58,138,0.15); border: 1px solid rgba(107,58,138,0.35);
+    border-radius: 6px; margin-top: 8px;
+  }
+  .hex-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--briar-accent); box-shadow: 0 0 6px var(--briar-accent); flex-shrink: 0; }
+  .hex-label { font-family: 'Barlow Condensed', sans-serif; font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--text-secondary); }
+  .hex-target-input { background: transparent; border: none; border-bottom: 1px solid var(--briar-border); color: var(--parchment); font-size: 12px; font-family: 'Barlow', sans-serif; flex: 1; padding: 2px 4px; min-width: 80px; }
+  .hex-target-input:focus { outline: none; border-bottom-color: var(--briar-accent); }
+  .hex-dmg-badge { font-family: 'Barlow Condensed', sans-serif; font-size: 10px; font-weight: 600; color: var(--briar-accent); background: rgba(107,58,138,0.2); border-radius: 3px; padding: 2px 6px; }
+
+  /* ===== SPELL SECTION ===== */
+  .spell-slot-track { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+  .spell-slot-label { font-family: 'Barlow Condensed', sans-serif; font-size: 10px; letter-spacing: 1px; color: var(--text-dim); min-width: 24px; }
+  .slot-pip {
+    width: 14px; height: 14px; border-radius: 50%;
+    border: 2px solid var(--gold-dim); cursor: pointer;
+    transition: background 0.2s, border-color 0.2s, box-shadow 0.2s;
+  }
+  .slot-pip.available { background: rgba(201,160,122,0.2); border-color: var(--gold); }
+  .slot-pip.available:hover { background: rgba(201,160,122,0.4); box-shadow: 0 0 4px rgba(201,160,122,0.4); }
+  .slot-pip.used { background: rgba(255,255,255,0.05); border-color: var(--text-dim); }
+
+  .spell-card {
+    background: rgba(255,255,255,0.03); border: 1px solid var(--card-border);
+    border-left: 2px solid var(--briar-border);
+    border-radius: 6px; padding: 10px 12px; margin-bottom: 8px; cursor: pointer;
+    transition: border-color 0.2s;
+  }
+  .spell-card:hover { border-color: var(--gold-dim); }
+  .spell-card.prepared { border-left-color: var(--gold); }
+  .spell-card.always-prepared { border-left-color: var(--rose); }
+  .spell-card.effect-active { border-color: var(--briar-accent); background: rgba(107,58,138,0.12); box-shadow: 0 0 8px rgba(107,58,138,0.15); }
+  .spell-card.cantrip { border-left-color: var(--steel); }
+  .spell-card.locked-preview { opacity: 0.4; pointer-events: none; border-left-color: var(--text-dim); }
+  .spell-header { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; }
+  .spell-name { font-weight: 600; color: var(--parchment); font-size: 13px; flex: 1; }
+  .spell-level-badge { font-family: 'Barlow Condensed', sans-serif; font-size: 9px; letter-spacing: 1px; color: var(--gold-dim); border: 1px solid var(--gold-dim); border-radius: 3px; padding: 1px 5px; text-transform: uppercase; }
+  .spell-meta { display: flex; flex-wrap: wrap; gap: 6px; font-size: 11px; color: var(--text-secondary); margin-bottom: 6px; }
+  .spell-actions { display: flex; gap: 6px; }
+  .cast-btn {
+    font-family: 'Barlow Condensed', sans-serif; font-size: 10px; font-weight: 600;
+    letter-spacing: 1.5px; text-transform: uppercase;
+    background: rgba(201,160,122,0.12); border: 1px solid var(--gold-dim);
+    color: var(--gold); border-radius: 4px; padding: 4px 10px; cursor: pointer;
+    transition: background 0.2s;
+  }
+  .cast-btn:hover { background: rgba(201,160,122,0.25); }
+  .cast-btn.end { background: rgba(139,47,74,0.15); border-color: var(--danger); color: var(--danger-light); }
+  .cast-btn.end:hover { background: rgba(139,47,74,0.3); }
+
+  /* ===== STATUS PILLS ===== */
+  .status-pill {
+    font-family: 'Barlow Condensed', sans-serif; font-size: 9px; font-weight: 600;
+    letter-spacing: 1.5px; text-transform: uppercase; border-radius: 10px;
+    padding: 2px 7px; border: 1px solid var(--success);
+    color: var(--success-light); background: rgba(45,90,58,0.2);
+  }
+  .status-pill.off { color: var(--text-dim); border-color: var(--text-dim); background: transparent; }
+  .status-pill.conc { color: var(--briar-accent); border-color: var(--briar-accent); background: rgba(107,58,138,0.2); }
+
+  /* ===== FEATURES ===== */
+  .feature-card {
+    background: rgba(255,255,255,0.03); border: 1px solid var(--card-border);
+    border-left: 2px solid var(--gold-dim);
+    border-radius: 6px; padding: 10px 12px; margin-bottom: 8px;
+    transition: border-color 0.2s;
+  }
+  .feature-card:hover { border-color: var(--gold-dim); }
+  .feature-card.effect-active { border-left-color: var(--rose); background: rgba(192,85,138,0.08); }
+  .feature-card.locked { opacity: 0.42; border-left-color: var(--text-dim); }
+  .feature-header { display: flex; align-items: center; gap: 8px; margin-bottom: 4px; }
+  .feature-name { font-weight: 600; color: var(--parchment); font-size: 13px; flex: 1; }
+  .feature-source { font-family: 'Barlow Condensed', sans-serif; font-size: 9px; letter-spacing: 1px; color: var(--text-dim); text-transform: uppercase; }
+  .feature-source.gloamthorn { color: var(--rose-dim); }
+  .feature-source.locked-label { color: var(--text-dim); font-style: italic; }
+  .feature-summary { font-size: 12px; color: var(--text-secondary); line-height: 1.5; }
+
+  /* ===== RESOURCE TRACK ===== */
+  .resource-track { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; margin-top: 6px; }
+  .resource-pip {
+    width: 12px; height: 12px; border-radius: 50%; cursor: pointer;
+    border: 2px solid var(--gold-dim); transition: background 0.2s;
+  }
+  .resource-pip.available { background: rgba(201,160,122,0.25); border-color: var(--gold); }
+  .resource-pip.available:hover { background: rgba(201,160,122,0.45); }
+  .resource-pip.used { background: transparent; border-color: var(--text-dim); }
+  .resource-label { font-family: 'Barlow Condensed', sans-serif; font-size: 10px; color: var(--text-dim); letter-spacing: 0.5px; }
+
+  /* ===== CONDITIONS ===== */
+  .condition-badge {
+    font-family: 'Barlow Condensed', sans-serif; font-size: 10px; font-weight: 600;
+    letter-spacing: 1px; text-transform: uppercase; border-radius: 4px;
+    padding: 3px 8px; cursor: pointer; border: 1px solid var(--briar-border);
+    color: var(--text-dim); background: rgba(255,255,255,0.03);
+    transition: all 0.2s;
+  }
+  .condition-badge.active { color: var(--danger-light); border-color: var(--danger); background: rgba(139,47,74,0.2); }
+  .condition-badge.inactive { opacity: 0.5; }
+
+  /* ===== PROFICIENCY LIST ===== */
+  .prof-section-title { font-family: 'Barlow Condensed', sans-serif; font-size: 9px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; color: var(--gold-dim); margin-bottom: 4px; }
+  .prof-list { font-size: 11px; color: var(--text-secondary); line-height: 1.6; }
+
+  /* ===== REST BUTTONS ===== */
+  .rest-btn {
+    font-family: 'Barlow Condensed', sans-serif; font-size: 10px; font-weight: 600;
+    letter-spacing: 1.5px; text-transform: uppercase; border-radius: 4px;
+    padding: 5px 12px; cursor: pointer; border: 1px solid;
+    transition: background 0.2s;
+  }
+  .rest-btn.short { color: var(--steel); border-color: var(--steel-dim); background: rgba(154,144,170,0.08); }
+  .rest-btn.short:hover { background: rgba(154,144,170,0.18); }
+  .rest-btn.long { color: var(--briar-accent); border-color: var(--briar-accent); background: rgba(107,58,138,0.1); }
+  .rest-btn.long:hover { background: rgba(107,58,138,0.2); }
+
+  /* ===== TOAST ===== */
+  #castToast {
+    position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%) translateY(80px);
+    background: rgba(22,14,36,0.97); border: 1px solid var(--briar-border);
+    color: var(--parchment); font-family: 'Barlow Condensed', sans-serif;
+    font-size: 13px; letter-spacing: 1px; padding: 10px 20px; border-radius: 6px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.5); z-index: 100;
+    transition: transform 0.3s, opacity 0.3s; opacity: 0;
+  }
+  #castToast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
+  #castToast.error { border-color: var(--danger); color: var(--danger-light); }
+
+  /* ===== TOOLTIP ===== */
+  #tooltip {
+    position: fixed; z-index: 200; pointer-events: none;
+    background: var(--tooltip-bg); border: 1px solid var(--briar-border);
+    border-radius: 8px; padding: 12px 14px; max-width: 280px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.6); opacity: 0; transition: opacity 0.15s;
+  }
+  #tooltip.visible { opacity: 1; }
+  .tt-name { font-family: 'Cinzel', serif; font-size: 14px; font-weight: 600; color: var(--gold-light); margin-bottom: 2px; }
+  .tt-type { font-family: 'Barlow Condensed', sans-serif; font-size: 10px; color: var(--text-dim); letter-spacing: 1px; margin-bottom: 8px; }
+  .tt-body { font-size: 12px; color: var(--text-secondary); line-height: 1.5; margin-bottom: 8px; white-space: pre-wrap; }
+  .tt-stats { display: grid; grid-template-columns: auto 1fr; gap: 2px 8px; }
+  .tt-key { font-family: 'Barlow Condensed', sans-serif; font-size: 10px; color: var(--text-dim); letter-spacing: 0.5px; }
+  .tt-val { font-size: 11px; color: var(--parchment); }
+
+  /* ===== NOTES ===== */
+  .notes-area {
+    width: 100%; min-height: 300px; background: rgba(255,255,255,0.03);
+    border: 1px solid var(--briar-border); border-radius: 6px;
+    color: var(--text-primary); font-family: 'Barlow', sans-serif; font-size: 13px;
+    padding: 12px; resize: vertical; line-height: 1.6;
+  }
+  .notes-area:focus { outline: none; border-color: var(--briar-accent); }
+
+  /* ===== MOBILE ===== */
+  @media (max-width: 768px) {
+    .sheet-body { padding: 10px 12px; }
+    .char-name { font-size: 22px; }
+    .header-stats { gap: 6px; }
+    .hstat { padding: 4px 7px; min-width: 46px; }
+    .hstat-val { font-size: 15px; }
+    .tab-btn { padding: 8px 10px; font-size: 10px; letter-spacing: 1px; }
+    .ability-grid { grid-template-columns: repeat(3, 1fr); }
+    .weapon-row { grid-template-columns: 1fr auto auto; }
+    .weapon-type { display: none; }
+  }
+
+  /* ===== PACT SLOT SPECIAL STYLING ===== */
+  .pact-slot-label { font-family: 'Barlow Condensed', sans-serif; font-size: 9px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--rose-dim); margin-bottom: 4px; }
+  .pact-note { font-family: 'Barlow Condensed', sans-serif; font-size: 9px; color: var(--text-dim); letter-spacing: 0.5px; margin-top: 4px; font-style: italic; }
+
+  /* ===== DUAL CLASS DIVIDER ===== */
+  .class-divider {
+    font-family: 'Barlow Condensed', sans-serif; font-size: 9px; font-weight: 600;
+    letter-spacing: 2.5px; text-transform: uppercase; color: var(--text-dim);
+    border-bottom: 1px solid var(--card-border); padding-bottom: 4px; margin-bottom: 8px; margin-top: 12px;
+  }
+  .class-divider:first-child { margin-top: 0; }
+  .class-divider.fighter { color: var(--steel); border-color: rgba(154,144,170,0.25); }
+  .class-divider.warlock { color: var(--briar-accent); border-color: rgba(107,58,138,0.35); }
+  .class-divider.gloamthorn { color: var(--rose-dim); border-color: rgba(192,85,138,0.25); }
+  .class-divider.human { color: var(--gold-dim); border-color: rgba(201,160,122,0.25); }
+
+  /* ===== PASSIVE SENSES ===== */
+  .passive-row { display: flex; justify-content: space-between; align-items: center; padding: 3px 0; font-size: 12px; }
+  .passive-val { font-family: 'Barlow Condensed', sans-serif; font-size: 14px; font-weight: 600; color: var(--gold); }
+
+  /* ===== UI VERSION ===== */
+  #uiVersionBadge { font-family: 'Barlow Condensed', sans-serif; font-size: 9px; color: var(--text-dim); letter-spacing: 1px; }
+</style>
+</head>
+
+<body>
+
+<!-- ======= HEADER ======= -->
+<header class="sheet-header">
+  <div class="header-inner">
+    <div class="header-name">
+      <div class="char-name">Lygas Cantor</div>
+      <div class="char-sub">Fighter 1 / <span>Warlock 1</span> · Human · Charlatan · Milestone</div>
+    </div>
+
+    <div class="header-stats">
+      <div class="hstat">
+        <span class="hstat-val" id="acVal">15</span>
+        <span class="hstat-lbl">AC</span>
+      </div>
+      <div class="hstat hp-display">
+        <div class="hp-inputs">
+          <input type="number" class="hp-input" id="currentHP" value="19" min="0" max="99" oninput="updateHPBar()">
+          <span class="hp-sep">/</span>
+          <span class="hstat-val" style="font-size:14px; padding-top:4px;">19</span>
+        </div>
+        <div class="hp-bar-wrap"><div class="hp-bar" id="hpBar" style="width:100%;"></div></div>
+        <span class="hstat-lbl">HP</span>
+      </div>
+      <div class="hstat">
+        <span class="hstat-val">+4</span>
+        <span class="hstat-lbl">Initiative</span>
+      </div>
+      <div class="hstat">
+        <span class="hstat-val" id="speedVal">30ft</span>
+        <span class="hstat-lbl">Speed</span>
+      </div>
+      <div class="hstat">
+        <span class="hstat-val">+2</span>
+        <span class="hstat-lbl">Prof Bonus</span>
+      </div>
+      <div class="hstat">
+        <span class="hstat-val" id="spellDcQuick">14</span>
+        <span class="hstat-lbl">Spell DC</span>
+      </div>
+      <div class="hstat">
+        <span class="hstat-val" id="spellAtkQuick">+6</span>
+        <span class="hstat-lbl">Spell Atk</span>
+      </div>
+    </div>
+
+    <div class="header-nav">
+      <a class="nav-link" href="index.html">← Campaign</a>
+      <span id="uiVersionBadge"></span>
+    </div>
+  </div>
+</header>
+
+<!-- ======= TABS ======= -->
+<nav class="tab-bar">
+  <button class="tab-btn active" onclick="switchTab('combat')">⚔ Combat</button>
+  <button class="tab-btn" onclick="switchTab('spells')">✦ Spells</button>
+  <button class="tab-btn" onclick="switchTab('features')">❧ Features</button>
+  <button class="tab-btn" onclick="switchTab('notes')">✎ Notes</button>
+</nav>
+
+<!-- ======================================================= -->
+<!-- TAB: COMBAT -->
+<!-- ======================================================= -->
+<div id="tab-combat" class="tab-panel active">
+<div class="sheet-body">
+  <div style="display:grid; grid-template-columns:220px 1fr 200px; gap:16px; align-items:start;">
+
+    <!-- LEFT: Ability scores + saves + skills -->
+    <div style="display:flex;flex-direction:column;gap:12px;">
+
+      <!-- Ability Scores -->
+      <div class="panel">
+        <div class="panel-header"><span class="panel-title">Abilities</span></div>
+        <div class="panel-body">
+          <div class="ability-grid">
+            <div class="ability-block" data-tooltip="ability-str"><div class="ability-label">STR</div><div class="ability-score">10</div><div class="ability-mod">+0</div></div>
+            <div class="ability-block" data-tooltip="ability-dex"><div class="ability-label">DEX</div><div class="ability-score">14</div><div class="ability-mod">+2</div></div>
+            <div class="ability-block" data-tooltip="ability-con"><div class="ability-label">CON</div><div class="ability-score">14</div><div class="ability-mod">+2</div></div>
+            <div class="ability-block" data-tooltip="ability-int"><div class="ability-label">INT</div><div class="ability-score">12</div><div class="ability-mod">+1</div></div>
+            <div class="ability-block" data-tooltip="ability-wis"><div class="ability-label">WIS</div><div class="ability-score">12</div><div class="ability-mod">+1</div></div>
+            <div class="ability-block" data-tooltip="ability-cha"><div class="ability-label">CHA</div><div class="ability-score">18</div><div class="ability-mod">+4</div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Saving Throws -->
+      <div class="panel">
+        <div class="panel-header"><span class="panel-title">Saving Throws</span></div>
+        <div class="panel-body" style="padding:8px 12px;">
+          <div class="save-row"><div class="prof-dot proficient"></div><span class="save-name">Strength</span><span class="save-val proficient">+2</span></div>
+          <div class="save-row"><div class="prof-dot"></div><span class="save-name">Dexterity</span><span class="save-val">+2</span></div>
+          <div class="save-row"><div class="prof-dot proficient"></div><span class="save-name">Constitution</span><span class="save-val proficient">+4</span></div>
+          <div class="save-row"><div class="prof-dot"></div><span class="save-name">Intelligence</span><span class="save-val">+1</span></div>
+          <div class="save-row"><div class="prof-dot proficient"></div><span class="save-name">Wisdom</span><span class="save-val proficient">+3</span></div>
+          <div class="save-row"><div class="prof-dot proficient"></div><span class="save-name">Charisma</span><span class="save-val proficient">+6</span></div>
+          <div style="margin-top:6px; font-size:10px; color:var(--text-dim); font-style:italic;">Fighter: STR, CON · Warlock: WIS, CHA</div>
+        </div>
+      </div>
+
+      <!-- Skills -->
+      <div class="panel">
+        <div class="panel-header"><span class="panel-title">Skills</span></div>
+        <div class="panel-body" style="padding:6px 12px;">
+          <div class="skill-row"><div class="prof-dot"></div><span class="skill-name">Acrobatics</span><span class="skill-attr">DEX</span><span class="skill-val">+2</span></div>
+          <div class="skill-row"><div class="prof-dot"></div><span class="skill-name">Animal Handling</span><span class="skill-attr">WIS</span><span class="skill-val">+1</span></div>
+          <div class="skill-row"><div class="prof-dot"></div><span class="skill-name">Arcana</span><span class="skill-attr">INT</span><span class="skill-val">+1</span></div>
+          <div class="skill-row"><div class="prof-dot proficient"></div><span class="skill-name">Athletics</span><span class="skill-attr">STR</span><span class="skill-val proficient">+2</span></div>
+          <div class="skill-row"><div class="prof-dot proficient"></div><span class="skill-name">Deception</span><span class="skill-attr">CHA</span><span class="skill-val proficient">+6</span></div>
+          <div class="skill-row"><div class="prof-dot"></div><span class="skill-name">History</span><span class="skill-attr">INT</span><span class="skill-val">+1</span></div>
+          <div class="skill-row"><div class="prof-dot proficient"></div><span class="skill-name">Insight</span><span class="skill-attr">WIS</span><span class="skill-val proficient">+3</span></div>
+          <div class="skill-row"><div class="prof-dot proficient"></div><span class="skill-name">Intimidation</span><span class="skill-attr">CHA</span><span class="skill-val proficient">+6</span></div>
+          <div class="skill-row"><div class="prof-dot"></div><span class="skill-name">Investigation</span><span class="skill-attr">INT</span><span class="skill-val">+1</span></div>
+          <div class="skill-row"><div class="prof-dot"></div><span class="skill-name">Medicine</span><span class="skill-attr">WIS</span><span class="skill-val">+1</span></div>
+          <div class="skill-row"><div class="prof-dot"></div><span class="skill-name">Nature</span><span class="skill-attr">INT</span><span class="skill-val">+1</span></div>
+          <div class="skill-row"><div class="prof-dot"></div><span class="skill-name">Perception</span><span class="skill-attr">WIS</span><span class="skill-val">+1</span></div>
+          <div class="skill-row"><div class="prof-dot"></div><span class="skill-name">Performance</span><span class="skill-attr">CHA</span><span class="skill-val">+4</span></div>
+          <div class="skill-row"><div class="prof-dot proficient"></div><span class="skill-name">Persuasion</span><span class="skill-attr">CHA</span><span class="skill-val proficient">+6</span></div>
+          <div class="skill-row"><div class="prof-dot"></div><span class="skill-name">Religion</span><span class="skill-attr">INT</span><span class="skill-val">+1</span></div>
+          <div class="skill-row"><div class="prof-dot proficient"></div><span class="skill-name">Sleight of Hand</span><span class="skill-attr">DEX</span><span class="skill-val proficient">+4</span></div>
+          <div class="skill-row"><div class="prof-dot proficient"></div><span class="skill-name">Stealth</span><span class="skill-attr">DEX</span><span class="skill-val proficient">+4</span></div>
+          <div class="skill-row"><div class="prof-dot"></div><span class="skill-name">Survival</span><span class="skill-attr">WIS</span><span class="skill-val">+1</span></div>
+        </div>
+      </div>
+
+    </div><!-- end left col -->
+
+    <!-- CENTER: Combat + weapons + conditions -->
+    <div style="display:flex;flex-direction:column;gap:12px;">
+
+      <!-- Hit Points (full) -->
+      <div class="panel">
+        <div class="panel-header"><span class="panel-title">Hit Points</span></div>
+        <div class="panel-body">
+          <div class="combat-row" style="gap:12px; align-items:center;">
+            <div style="flex:1;">
+              <div style="font-family:'Barlow Condensed',sans-serif;font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:var(--text-dim);margin-bottom:4px;">Current / Max</div>
+              <div style="display:flex;gap:6px;align-items:center;">
+                <input type="number" class="hp-input" id="currentHP2" value="19" min="0" max="99" oninput="syncHP(this)" style="font-size:24px;width:60px;">
+                <span style="color:var(--text-dim);font-size:18px;">/</span>
+                <span style="font-family:'Cinzel',serif;font-size:20px;font-weight:700;color:var(--gold);">19</span>
+              </div>
+              <div class="hp-bar-wrap" style="margin-top:6px;height:5px;"><div class="hp-bar" id="hpBar2" style="width:100%;"></div></div>
+            </div>
+            <div>
+              <div style="font-family:'Barlow Condensed',sans-serif;font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:var(--text-dim);margin-bottom:4px;">Temp HP</div>
+              <input type="number" class="hp-input" id="tempHP" value="0" min="0" max="99" style="font-size:18px;width:48px;border-bottom-color:var(--steel-dim);">
+            </div>
+            <div>
+              <div style="font-family:'Barlow Condensed',sans-serif;font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:var(--text-dim);margin-bottom:4px;">Hit Dice</div>
+              <div style="font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:600;color:var(--steel);">1d10 + 1d8</div>
+            </div>
+          </div>
+          <!-- Death saves -->
+          <div style="margin-top:10px;display:flex;align-items:center;gap:12px;">
+            <span style="font-family:'Barlow Condensed',sans-serif;font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:var(--text-dim);">Death Saves</span>
+            <div style="display:flex;gap:4px;">
+              <span style="font-size:10px;color:var(--success-light);">✦</span>
+              <div class="death-pip" onclick="toggleDeath(this)" style="width:14px;height:14px;border-radius:50%;border:2px solid var(--success);cursor:pointer;transition:background 0.2s;"></div>
+              <div class="death-pip" onclick="toggleDeath(this)" style="width:14px;height:14px;border-radius:50%;border:2px solid var(--success);cursor:pointer;transition:background 0.2s;"></div>
+              <div class="death-pip" onclick="toggleDeath(this)" style="width:14px;height:14px;border-radius:50%;border:2px solid var(--success);cursor:pointer;transition:background 0.2s;"></div>
+            </div>
+            <div style="display:flex;gap:4px;">
+              <span style="font-size:10px;color:var(--danger-light);">✦</span>
+              <div class="death-pip" onclick="toggleDeath(this)" style="width:14px;height:14px;border-radius:50%;border:2px solid var(--danger);cursor:pointer;transition:background 0.2s;"></div>
+              <div class="death-pip" onclick="toggleDeath(this)" style="width:14px;height:14px;border-radius:50%;border:2px solid var(--danger);cursor:pointer;transition:background 0.2s;"></div>
+              <div class="death-pip" onclick="toggleDeath(this)" style="width:14px;height:14px;border-radius:50%;border:2px solid var(--danger);cursor:pointer;transition:background 0.2s;"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Weapons -->
+      <div class="panel">
+        <div class="panel-header">
+          <span class="panel-title">Weapon Attacks</span>
+          <span style="font-family:'Barlow Condensed',sans-serif;font-size:9px;color:var(--text-dim);margin-left:auto;">Two-Weapon Fighting · Nick (free off-hand attack)</span>
+        </div>
+        <div class="weapon-row">
+          <div>
+            <div class="weapon-name">Fear</div>
+            <div style="display:flex;gap:4px;margin-top:2px;">
+              <span class="weapon-badge">Pact · CHA</span>
+              <span class="weapon-badge">Finesse · Light · Nick</span>
+            </div>
+            <div class="adv-indicator" id="fear-adv-label"></div>
+          </div>
+          <div class="weapon-hit">+6</div>
+          <div class="weapon-dmg">1d6+4</div>
+          <div class="weapon-type">Slashing</div>
+        </div>
+        <div class="weapon-row">
+          <div>
+            <div class="weapon-name">Hunger</div>
+            <div style="display:flex;gap:4px;margin-top:2px;">
+              <span class="weapon-badge">Pact · CHA</span>
+              <span class="weapon-badge">Finesse · Light · Nick</span>
+            </div>
+            <div class="adv-indicator" id="hunger-adv-label"></div>
+          </div>
+          <div class="weapon-hit">+6</div>
+          <div class="weapon-dmg">1d6+4</div>
+          <div class="weapon-type">Slashing</div>
+        </div>
+        <div class="weapon-row">
+          <div>
+            <div class="weapon-name">Unarmed Strike</div>
+            <div class="adv-indicator"></div>
+          </div>
+          <div class="weapon-hit">+2</div>
+          <div class="weapon-dmg">1</div>
+          <div class="weapon-type">Bludgeoning</div>
+        </div>
+        <!-- Hex target tracker -->
+        <div class="hex-indicator" id="hexIndicator" style="display:none; margin:8px 10px;">
+          <div class="hex-dot"></div>
+          <span class="hex-label">Hex Target</span>
+          <input type="text" class="hex-target-input" id="hexTargetInput" placeholder="creature name…" oninput="saveSheetState()">
+          <span class="hex-dmg-badge">+1d6 Necrotic</span>
+        </div>
+      </div>
+
+      <!-- Combat Active Effects Readout -->
+      <div class="panel">
+        <div class="panel-header"><span class="panel-title">Active Effects</span></div>
+        <div class="panel-body">
+          <div class="combat-effect-readout" id="combatEffectReadout">No temporary combat effects active.</div>
+          <div style="display:flex;gap:8px;margin-top:10px;">
+            <button class="rest-btn short" onclick="shortRest()">Short Rest</button>
+            <button class="rest-btn long" onclick="longRest()">Long Rest</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Conditions -->
+      <div class="panel">
+        <div class="panel-header"><span class="panel-title">Conditions</span></div>
+        <div class="panel-body">
+          <div style="display:flex;flex-wrap:wrap;gap:6px;" id="conditionBadges">
+            <div class="condition-badge inactive" onclick="this.classList.toggle('active');this.classList.toggle('inactive');saveSheetState()">Blinded</div>
+            <div class="condition-badge inactive" onclick="this.classList.toggle('active');this.classList.toggle('inactive');saveSheetState()">Charmed</div>
+            <div class="condition-badge inactive" onclick="this.classList.toggle('active');this.classList.toggle('inactive');saveSheetState()">Deafened</div>
+            <div class="condition-badge inactive" onclick="this.classList.toggle('active');this.classList.toggle('inactive');saveSheetState()">Exhausted</div>
+            <div class="condition-badge inactive" onclick="this.classList.toggle('active');this.classList.toggle('inactive');saveSheetState()">Frightened</div>
+            <div class="condition-badge inactive" onclick="this.classList.toggle('active');this.classList.toggle('inactive');saveSheetState()">Grappled</div>
+            <div class="condition-badge inactive" onclick="this.classList.toggle('active');this.classList.toggle('inactive');saveSheetState()">Incapacitated</div>
+            <div class="condition-badge inactive" onclick="this.classList.toggle('active');this.classList.toggle('inactive');saveSheetState()">Invisible</div>
+            <div class="condition-badge inactive" onclick="this.classList.toggle('active');this.classList.toggle('inactive');saveSheetState()">Paralyzed</div>
+            <div class="condition-badge inactive" onclick="this.classList.toggle('active');this.classList.toggle('inactive');saveSheetState()">Poisoned</div>
+            <div class="condition-badge inactive" onclick="this.classList.toggle('active');this.classList.toggle('inactive');saveSheetState()">Prone</div>
+            <div class="condition-badge inactive" onclick="this.classList.toggle('active');this.classList.toggle('inactive');saveSheetState()">Restrained</div>
+            <div class="condition-badge inactive" onclick="this.classList.toggle('active');this.classList.toggle('inactive');saveSheetState()">Stunned</div>
+          </div>
+          <div style="margin-top:6px; font-size:10px; color:var(--text-dim);">Concentration: <span id="concTracker" style="color:var(--briar-accent);">—</span></div>
+        </div>
+      </div>
+
+    </div><!-- end center col -->
+
+    <!-- RIGHT: Proficiencies + Senses + Quick spellcasting -->
+    <div style="display:flex;flex-direction:column;gap:12px;">
+
+      <!-- Senses -->
+      <div class="panel">
+        <div class="panel-header"><span class="panel-title">Senses</span></div>
+        <div class="panel-body">
+          <div class="passive-row"><span>Passive Perception</span><span class="passive-val">11</span></div>
+          <div class="passive-row"><span>Passive Insight</span><span class="passive-val">13</span></div>
+          <div class="passive-row"><span>Passive Investigation</span><span class="passive-val">11</span></div>
+        </div>
+      </div>
+
+      <!-- Quick spellcasting -->
+      <div class="panel">
+        <div class="panel-header"><span class="panel-title">Spellcasting</span></div>
+        <div class="panel-body">
+          <div class="combat-row" style="flex-direction:column;gap:8px;">
+            <div class="combat-stat" style="width:100%;flex:none;"><span class="cs-val">CHA</span><span class="cs-label">Casting Ability</span></div>
+            <div style="display:flex;gap:8px;">
+              <div class="combat-stat"><span class="cs-val" id="spellDcFull">14</span><span class="cs-label">Save DC</span></div>
+              <div class="combat-stat"><span class="cs-val" id="spellAtkFull">+6</span><span class="cs-label">Spell Atk</span></div>
+            </div>
+          </div>
+          <div class="section-divider"></div>
+          <div class="pact-slot-label">Pact Magic</div>
+          <div class="spell-slot-track">
+            <span class="spell-slot-label">L1</span>
+            <div class="slot-pip available" id="s-slot-1a" onclick="toggleSlot('s-slot-1a')" title="Pact Slot 1"></div>
+            <span style="font-family:'Barlow Condensed',sans-serif;font-size:10px;color:var(--text-dim);">1 slot</span>
+          </div>
+          <div class="pact-note">Recovers on Short or Long Rest</div>
+        </div>
+      </div>
+
+      <!-- Proficiencies -->
+      <div class="panel">
+        <div class="panel-header"><span class="panel-title">Proficiencies</span></div>
+        <div class="panel-body">
+          <div class="prof-section-title">Armor</div>
+          <div class="prof-list">Light, Medium, Heavy, Shields</div>
+          <div class="section-divider"></div>
+          <div class="prof-section-title">Weapons</div>
+          <div class="prof-list">Simple, Martial</div>
+          <div class="section-divider"></div>
+          <div class="prof-section-title">Tools</div>
+          <div class="prof-list">Forgery Kit, Thieves' Tools</div>
+          <div class="section-divider"></div>
+          <div class="prof-section-title">Languages</div>
+          <div class="prof-list">Common, Common Sign Language, Dwarvish</div>
+        </div>
+      </div>
+
+      <!-- Equipment -->
+      <div class="panel">
+        <div class="panel-header"><span class="panel-title">Equipment</span></div>
+        <div class="panel-body">
+          <div class="prof-list" style="line-height:1.8;">
+            Fear (scimitar, pact)<br>
+            Hunger (scimitar, pact)<br>
+            Chain Shirt (AC 13+DEX)<br>
+            Dagger<br>
+            Thieves' Tools<br>
+            Costume · Fine Clothes<br>
+            Forgery Kit
+          </div>
+          <div style="margin-top:8px;font-size:10px;color:var(--text-dim);">43 lb carried · 165 lb encumbered</div>
+        </div>
+      </div>
+
+    </div><!-- end right col -->
+
+  </div>
+</div>
+</div><!-- end tab-combat -->
+
+
+<!-- ======================================================= -->
+<!-- TAB: SPELLS -->
+<!-- ======================================================= -->
+<div id="tab-spells" class="tab-panel">
+<div class="sheet-body">
+  <div style="display:grid;grid-template-columns:240px 1fr;gap:16px;align-items:start;">
+
+    <!-- Spellcasting stats sidebar -->
+    <div style="display:flex;flex-direction:column;gap:14px;">
+      <div class="panel">
+        <div class="panel-header"><span class="panel-title">Spellcasting</span></div>
+        <div class="panel-body">
+          <div class="combat-row" style="flex-direction:column;gap:8px;">
+            <div class="combat-stat" style="width:100%;flex:none;"><span class="cs-val">CHA</span><span class="cs-label">Casting Ability</span></div>
+            <div style="display:flex;gap:8px;">
+              <div class="combat-stat"><span class="cs-val">14</span><span class="cs-label">Save DC</span></div>
+              <div class="combat-stat"><span class="cs-val">+6</span><span class="cs-label">Spell Atk</span></div>
+            </div>
+          </div>
+          <div class="section-divider"></div>
+          <div class="pact-slot-label">Pact Magic Slots</div>
+          <div class="spell-slot-track" style="flex-direction:column;align-items:flex-start;">
+            <div style="display:flex;align-items:center;gap:8px;">
+              <span class="spell-slot-label">1st</span>
+              <div class="slot-pip available" id="s-slot-1a-sp" onclick="toggleSlot('s-slot-1a')" title="Pact Slot 1"></div>
+              <span style="font-family:'Barlow Condensed',sans-serif;font-size:10px;color:var(--text-dim);">1 slot</span>
+            </div>
+          </div>
+          <div class="pact-note">Short or Long Rest recovery</div>
+        </div>
+      </div>
+
+      <!-- Gloamthorn Spells preview -->
+      <div class="panel">
+        <div class="panel-header"><span class="panel-title">Gloamthorn Spells</span></div>
+        <div class="panel-body">
+          <div style="font-size:11px;color:var(--rose-dim);font-style:italic;margin-bottom:8px;">Always-prepared (unlocks at Warlock 3)</div>
+          <div style="font-size:11px;color:var(--text-dim);line-height:2;">
+            <div style="opacity:0.4;">Lv 3: Command, Faerie Fire,<br>Misty Step, Suggestion</div>
+            <div style="opacity:0.3;">Lv 5: Blink, Fireball</div>
+            <div style="opacity:0.25;">Lv 7: Fire Shield, Greater Invisibility</div>
+            <div style="opacity:0.2;">Lv 9: Geas, Seeming</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Spell list -->
+    <div class="panel">
+      <div class="panel-header">
+        <span class="panel-title">Spells — Warlock 1</span>
+      </div>
+      <div class="panel-body">
+
+        <!-- Cantrips -->
+        <div style="font-family:'Barlow Condensed',sans-serif;font-size:9px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--text-dim);margin-bottom:8px;">Cantrips (At Will)</div>
+
+        <div class="spell-card cantrip" data-tooltip="spell-prestidigitation">
+          <div class="spell-header">
+            <div class="spell-name">Prestidigitation</div>
+            <span class="spell-level-badge">Cantrip</span>
+          </div>
+          <div class="spell-meta">
+            <span>⏱ 1 Action</span>
+            <span>📏 10 ft.</span>
+            <span>⌛ Up to 1 hr</span>
+            <span>🔮 V,S</span>
+          </div>
+        </div>
+
+        <div class="spell-card cantrip" data-tooltip="spell-magehand">
+          <div class="spell-header">
+            <div class="spell-name">Mage Hand</div>
+            <span class="spell-level-badge">Cantrip</span>
+          </div>
+          <div class="spell-meta">
+            <span>⏱ 1 Action</span>
+            <span>📏 30 ft.</span>
+            <span>⌛ 1 Minute</span>
+            <span>🔮 V,S</span>
+          </div>
+        </div>
+
+        <!-- Level 1 -->
+        <div style="font-family:'Barlow Condensed',sans-serif;font-size:9px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--text-dim);margin:12px 0 8px;">1st Level — 1 Pact Slot</div>
+
+        <div class="spell-card prepared effect-active" id="spell-hex-card" data-tooltip="spell-hex">
+          <div class="spell-header">
+            <div class="spell-name">Hex</div>
+            <span class="spell-level-badge">1st</span>
+            <span class="status-pill off" id="hex-pill">Inactive</span>
+          </div>
+          <div class="spell-meta">
+            <span>⏱ Bonus Action</span>
+            <span>📏 90 ft.</span>
+            <span>⌛ Conc. 1 hr</span>
+            <span>🔮 V,S,M</span>
+          </div>
+          <div style="font-size:11px;color:var(--text-secondary);margin-bottom:6px;">+1d6 Necrotic on hit · target has Disadv. on chosen ability checks · move on kill (no slot)</div>
+          <div id="hex-target-display" style="display:none;font-size:11px;color:var(--briar-accent);margin-bottom:6px;">Target: <span id="hex-target-show">—</span></div>
+          <div class="spell-actions">
+            <button class="cast-btn" onclick="castSpell('hex')">⚡ Cast</button>
+            <button class="cast-btn end" id="hex-end-btn" onclick="endSpell('hex')" style="display:none;">End</button>
+          </div>
+        </div>
+
+        <div class="spell-card prepared" id="spell-charm-card" data-tooltip="spell-charm">
+          <div class="spell-header">
+            <div class="spell-name">Charm Person</div>
+            <span class="spell-level-badge">1st</span>
+          </div>
+          <div class="spell-meta">
+            <span>⏱ 1 Action</span>
+            <span>📏 30 ft.</span>
+            <span>⌛ 1 Hour</span>
+            <span>🔮 V,S</span>
+          </div>
+          <div style="font-size:11px;color:var(--text-secondary);margin-bottom:6px;">WIS save DC 14 · target Charmed (Humanoids only)</div>
+          <div class="spell-actions">
+            <button class="cast-btn" onclick="castSpell('charm')">⚡ Cast</button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</div>
+</div><!-- end tab-spells -->
+
+
+<!-- ======================================================= -->
+<!-- TAB: FEATURES -->
+<!-- ======================================================= -->
+<div id="tab-features" class="tab-panel">
+<div class="sheet-body">
+  <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;align-items:start;">
+
+    <!-- FIGHTER FEATURES -->
+    <div class="panel">
+      <div class="panel-header"><span class="panel-title">Fighter Features</span></div>
+      <div class="panel-body">
+
+        <div class="class-divider fighter">⚔ Fighter 1</div>
+
+        <div class="feature-card" id="feat-secondwind-card" data-tooltip="feat-secondwind">
+          <div class="feature-header">
+            <span class="feature-name">Second Wind</span>
+            <span class="feature-source">Fighter</span>
+          </div>
+          <div class="feature-summary">Bonus Action: regain 1d10+1 HP. 2 uses per Long Rest; regain 1 on Short Rest.</div>
+          <div class="resource-track" style="margin-top:8px;">
+            <div class="resource-pip available" id="sw-pip-1" onclick="toggleResource(this)" title="Second Wind 1"></div>
+            <div class="resource-pip available" id="sw-pip-2" onclick="toggleResource(this)" title="Second Wind 2"></div>
+            <span class="resource-label">2 / Long Rest (1 on Short Rest)</span>
+          </div>
+        </div>
+
+        <div class="feature-card" data-tooltip="feat-twf">
+          <div class="feature-header">
+            <span class="feature-name">Two-Weapon Fighting</span>
+            <span class="feature-source">Fighter · Feat</span>
+          </div>
+          <div class="feature-summary">When you make an extra attack with a Light weapon using the Nick mastery, you can add your ability modifier to the damage. Both scimitars (Fear & Hunger) benefit.</div>
+        </div>
+
+        <div class="feature-card" data-tooltip="feat-weaponmastery">
+          <div class="feature-header">
+            <span class="feature-name">Weapon Mastery</span>
+            <span class="feature-source">Fighter</span>
+          </div>
+          <div class="feature-summary">
+            Scimitar — <strong>Nick:</strong> Make the extra Light attack as part of the Attack action.<br>
+            Handaxe — <strong>Vex:</strong> Advantage on next attack against target after a hit.<br>
+            Pistol — <strong>Vex:</strong> Same as Handaxe.
+          </div>
+        </div>
+
+        <div class="feature-card" data-tooltip="feat-alert">
+          <div class="feature-header">
+            <span class="feature-name">Alert</span>
+            <span class="feature-source">Feat</span>
+          </div>
+          <div class="feature-summary">+2 bonus to Initiative rolls. Once per combat: swap your Initiative with one willing creature after rolling.</div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- WARLOCK FEATURES -->
+    <div class="panel">
+      <div class="panel-header"><span class="panel-title">Warlock Features</span></div>
+      <div class="panel-body">
+
+        <div class="class-divider warlock">⬡ Warlock 1</div>
+
+        <div class="feature-card" data-tooltip="feat-pactblade">
+          <div class="feature-header">
+            <span class="feature-name">Pact of the Blade</span>
+            <span class="feature-source">Eldritch Invocation</span>
+          </div>
+          <div class="feature-summary">
+            <strong>Conjure (Bonus Action):</strong> Summon a pact weapon (any Simple or Martial Melee). Use CHA for attack and damage instead of STR/DEX.<br><br>
+            <strong>Bond (Bonus Action):</strong> Touch a magic weapon to bond with it (can't bond to attuned/bonded items).<br><br>
+            Fear and Hunger are bonded scimitars.
+          </div>
+        </div>
+
+        <div class="feature-card" data-tooltip="feat-pactmagic">
+          <div class="feature-header">
+            <span class="feature-name">Pact Magic</span>
+            <span class="feature-source">Warlock</span>
+          </div>
+          <div class="feature-summary">1 × Level 1 spell slot. Recovers on Short or Long Rest. Spellcasting ability: CHA (mod +4).</div>
+          <div style="margin-top:8px;display:flex;align-items:center;gap:8px;">
+            <div class="slot-pip available" id="feat-slot-1" onclick="toggleSlot('s-slot-1a')" title="Pact Slot 1"></div>
+            <span class="resource-label">1 Pact Slot · Short/Long Rest</span>
+          </div>
+        </div>
+
+        <!-- Gloamthorn Court — locked preview -->
+        <div class="class-divider gloamthorn">🌹 Gloamthorn Court (unlocks at Warlock 3)</div>
+
+        <div class="feature-card locked" data-tooltip="feat-briarstep">
+          <div class="feature-header">
+            <span class="feature-name">Briarstep Blessing</span>
+            <span class="feature-source locked-label">Warlock 3 required</span>
+          </div>
+          <div class="feature-summary">Free Misty Step (CHA mod/day, min 1). On kill: gain CHA mod + Warlock level Temp HP (once/turn).</div>
+        </div>
+
+        <div class="feature-card locked">
+          <div class="feature-header">
+            <span class="feature-name">Gloamthorn Spells</span>
+            <span class="feature-source locked-label">Warlock 3 required</span>
+          </div>
+          <div class="feature-summary">Always-prepared: Command, Faerie Fire, Misty Step, Suggestion (Lv 3); Blink, Fireball (Lv 5); Fire Shield, Greater Invisibility (Lv 7); Geas, Seeming (Lv 9).</div>
+        </div>
+
+        <div class="feature-card locked">
+          <div class="feature-header">
+            <span class="feature-name">Cruel Fortune</span>
+            <span class="feature-source locked-label">Warlock 6 required</span>
+          </div>
+          <div class="feature-summary">Add 1d10 to an ability check or save after rolling (CHA mod/day, once per roll).</div>
+        </div>
+
+        <div class="feature-card locked">
+          <div class="feature-header">
+            <span class="feature-name">Blighted Resilience</span>
+            <span class="feature-source locked-label">Warlock 10 required</span>
+          </div>
+          <div class="feature-summary">Resistance to a chosen damage type (not Force). Swap on Short or Long Rest.</div>
+        </div>
+
+        <div class="feature-card locked">
+          <div class="feature-header">
+            <span class="feature-name">Cast Through the Briar</span>
+            <span class="feature-source locked-label">Warlock 14 required</span>
+          </div>
+          <div class="feature-summary">On hit: CHA save (DC 14) or target takes 8d10 Psychic (non-Fiend/Fey) and is Incapacitated 1 turn. Recharge via Pact Magic slot.</div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- HUMAN TRAITS + BACKGROUND + MISC -->
+    <div class="panel">
+      <div class="panel-header"><span class="panel-title">Species, Background &amp; Feats</span></div>
+      <div class="panel-body">
+
+        <div class="class-divider human">◈ Human</div>
+
+        <div class="feature-card">
+          <div class="feature-header">
+            <span class="feature-name">Resourceful</span>
+            <span class="feature-source">Human</span>
+          </div>
+          <div class="feature-summary">Gain Heroic Inspiration whenever you finish a Long Rest.</div>
+          <div class="resource-track" style="margin-top:8px;">
+            <div class="resource-pip available" onclick="toggleResource(this)" title="Heroic Inspiration"></div>
+            <span class="resource-label">Heroic Inspiration</span>
+          </div>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-header">
+            <span class="feature-name">Skillful</span>
+            <span class="feature-source">Human</span>
+          </div>
+          <div class="feature-summary">Proficiency in one additional skill of your choice.</div>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-header">
+            <span class="feature-name">Versatile</span>
+            <span class="feature-source">Human</span>
+          </div>
+          <div class="feature-summary">Gain an Origin feat of your choice.</div>
+        </div>
+
+        <div class="class-divider" style="color:var(--text-secondary);border-color:rgba(160,148,184,0.2);">✦ Charlatan Background</div>
+
+        <div class="feature-card">
+          <div class="feature-header">
+            <span class="feature-name">False Identity</span>
+            <span class="feature-source">Charlatan</span>
+          </div>
+          <div class="feature-summary">You have a false identity with forged documents and an established persona. Forgery Kit proficiency.</div>
+        </div>
+
+        <div class="class-divider" style="color:var(--text-secondary);border-color:rgba(160,148,184,0.2);">◆ Feats</div>
+
+        <div class="feature-card">
+          <div class="feature-header">
+            <span class="feature-name">Skilled</span>
+            <span class="feature-source">Feat</span>
+          </div>
+          <div class="feature-summary">Proficiency in any combination of 3 skills or tools. Repeatable.</div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</div>
+</div><!-- end tab-features -->
+
+
+<!-- ======================================================= -->
+<!-- TAB: NOTES -->
+<!-- ======================================================= -->
+<div id="tab-notes" class="tab-panel">
+<div class="sheet-body">
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+    <div class="panel">
+      <div class="panel-header"><span class="panel-title">Character Notes</span></div>
+      <div class="panel-body">
+        <textarea class="notes-area" id="charNotes" placeholder="Personality, bonds, ideals, flaws…" oninput="saveSheetState()"></textarea>
+      </div>
+    </div>
+    <div class="panel">
+      <div class="panel-header"><span class="panel-title">Session Notes</span></div>
+      <div class="panel-body">
+        <textarea class="notes-area" id="sessionNotes" placeholder="Current session notes, active plots…" oninput="saveSheetState()"></textarea>
+      </div>
+    </div>
+  </div>
+</div>
+</div><!-- end tab-notes -->
+
+
+<!-- Toast + Tooltip -->
+<div id="castToast"></div>
+<div id="tooltip">
+  <div class="tt-name" id="ttName"></div>
+  <div class="tt-type" id="ttType"></div>
+  <div class="tt-body" id="ttBody"></div>
+  <div class="tt-stats" id="ttStats"></div>
+</div>
+
+
+<script>
+const SHEET_UI_VERSION = '1.0';
+const SHEET_STORAGE_KEY = 'maltandmagic:dnd:lygas-cantor-sheet:v1';
+
+// ===== STATE =====
+const sheetState = {
+  hex: false,
+  hexTarget: '',
+  charm: false,
+  secondWindUsed: 0,
+  defense: false,
+};
+
+const baseStats = {
+  ac: 15,
+  speed: 30,
+  spellDc: 14,
+  spellAttack: 4,
+};
+
+// ===== TAB SWITCHING =====
+function switchTab(name) {
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById(`tab-${name}`)?.classList.add('active');
+  document.querySelector(`[onclick="switchTab('${name}')"]`)?.classList.add('active');
+  saveSheetState();
+}
+
+// ===== HP =====
+function updateHPBar() {
+  const curr = parseInt(document.getElementById('currentHP')?.value) || 0;
+  const max = 19;
+  const pct = Math.max(0, Math.min(100, (curr / max) * 100));
+  ['hpBar', 'hpBar2'].forEach(id => {
+    const bar = document.getElementById(id);
+    if (!bar) return;
+    bar.style.width = pct + '%';
+    if (pct > 50) bar.style.background = 'linear-gradient(90deg,#4a3a7a,#7a5aaa)';
+    else if (pct > 25) bar.style.background = 'linear-gradient(90deg,#8b7a20,#c0a830)';
+    else bar.style.background = 'linear-gradient(90deg,#8b2f4a,#c03960)';
+  });
+  saveSheetState();
+}
+
+function syncHP(el) {
+  const other = el.id === 'currentHP' ? 'currentHP2' : 'currentHP';
+  const otherEl = document.getElementById(other);
+  if (otherEl) otherEl.value = el.value;
+  updateHPBar();
+}
+
+// ===== SLOT MANAGEMENT =====
+const SLOT_SYNC_MAP = {
+  's-slot-1a': ['s-slot-1a', 's-slot-1a-sp', 'feat-slot-1'],
+};
+
+function toggleSlot(id) {
+  const peers = SLOT_SYNC_MAP[id] || [id];
+  const canonical = document.getElementById(id);
+  if (!canonical) return;
+  const nowUsed = canonical.classList.contains('available');
+  peers.forEach(pid => {
+    const el = document.getElementById(pid);
+    if (!el) return;
+    el.classList.toggle('used', nowUsed);
+    el.classList.toggle('available', !nowUsed);
+  });
+  saveSheetState();
+}
+
+function remainingSlots() {
+  const pip = document.getElementById('s-slot-1a');
+  return pip?.classList.contains('available') ? 1 : 0;
+}
+
+function consumeSlot() {
+  if (remainingSlots() === 0) return false;
+  toggleSlot('s-slot-1a');
+  return true;
+}
+
+function restoreSlots() {
+  const peers = SLOT_SYNC_MAP['s-slot-1a'];
+  peers.forEach(pid => {
+    const el = document.getElementById(pid);
+    if (!el) return;
+    el.classList.add('available');
+    el.classList.remove('used');
+  });
+}
+
+// ===== RESOURCE PIPS =====
+function toggleResource(el) {
+  el.classList.toggle('used');
+  el.classList.toggle('available');
+  saveSheetState();
+}
+
+// ===== DEATH SAVES =====
+function toggleDeath(el) {
+  el.classList.toggle('filled');
+  const isSave = el.style.borderColor.includes('success') || el.style.border?.includes('success');
+  if (el.classList.contains('filled')) {
+    el.style.background = el.style.borderColor.includes('39,96') ? 'var(--success)' : 'var(--danger)';
+  } else {
+    el.style.background = '';
+  }
+  saveSheetState();
+}
+
+// ===== DERIVED STATS =====
+function refreshDerivedStats() {
+  const acEl = document.getElementById('acVal');
+  if (acEl) acEl.textContent = String(baseStats.ac);
+
+  const speedEl = document.getElementById('speedVal');
+  if (speedEl) speedEl.textContent = `${baseStats.speed}ft`;
+
+  ['spellDcQuick','spellDcFull'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.textContent = String(baseStats.spellDc);
+  });
+  ['spellAtkQuick','spellAtkFull'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.textContent = `+${baseStats.spellAttack}`;
+  });
+
+  // Active effects readout
+  const readout = document.getElementById('combatEffectReadout');
+  if (readout) {
+    const effects = [];
+    if (sheetState.hex) effects.push(`Hex active → +1d6 Necrotic on hit${sheetState.hexTarget ? ` (${sheetState.hexTarget})` : ''}`);
+    if (sheetState.charm) effects.push('Charm Person active');
+    readout.textContent = effects.length ? `Active: ${effects.join(' | ')}` : 'No temporary combat effects active.';
+  }
+
+  // Hex UI
+  const hexCard = document.getElementById('spell-hex-card');
+  if (hexCard) hexCard.classList.toggle('effect-active', sheetState.hex);
+  const hexPill = document.getElementById('hex-pill');
+  if (hexPill) {
+    hexPill.textContent = sheetState.hex ? 'Active' : 'Inactive';
+    hexPill.classList.toggle('off', !sheetState.hex);
+    hexPill.classList.toggle('conc', sheetState.hex);
+  }
+  const hexEndBtn = document.getElementById('hex-end-btn');
+  if (hexEndBtn) hexEndBtn.style.display = sheetState.hex ? 'inline-block' : 'none';
+  const hexIndicator = document.getElementById('hexIndicator');
+  if (hexIndicator) hexIndicator.style.display = sheetState.hex ? 'flex' : 'none';
+  const hexTargetDisplay = document.getElementById('hex-target-display');
+  if (hexTargetDisplay) hexTargetDisplay.style.display = sheetState.hex && sheetState.hexTarget ? 'block' : 'none';
+  const hexTargetShow = document.getElementById('hex-target-show');
+  if (hexTargetShow) hexTargetShow.textContent = sheetState.hexTarget || '—';
+  const hexTargetInput = document.getElementById('hexTargetInput');
+  if (hexTargetInput) hexTargetInput.value = sheetState.hexTarget || '';
+
+  // Concentration tracker
+  const concEl = document.getElementById('concTracker');
+  if (concEl) {
+    if (sheetState.hex) concEl.textContent = 'Hex';
+    else concEl.textContent = '—';
+  }
+}
+
+// ===== SPELL CASTING =====
+const SPELLS = {
+  hex:   { name: 'Hex',          level: 1, effect: 'hex',   conc: true },
+  charm: { name: 'Charm Person', level: 1, effect: 'charm',  conc: false },
+};
+
+let castToastTimer = null;
+function castToast(msg, isError = false) {
+  const el = document.getElementById('castToast');
+  if (!el) return;
+  el.textContent = msg;
+  el.classList.toggle('error', !!isError);
+  el.classList.add('show');
+  clearTimeout(castToastTimer);
+  castToastTimer = setTimeout(() => el.classList.remove('show'), 2400);
+}
+
+function castSpell(key) {
+  const spell = SPELLS[key];
+  if (!spell) return;
+  if (spell.effect && sheetState[spell.effect]) {
+    castToast(`${spell.name} is already active.`);
+    return;
+  }
+  if (spell.conc && sheetState.hex) {
+    castToast('You are already concentrating on Hex. End it first.', true);
+    return;
+  }
+  if (!consumeSlot()) {
+    castToast('No Pact Magic slot remaining.', true);
+    return;
+  }
+  if (spell.effect) sheetState[spell.effect] = true;
+  refreshDerivedStats();
+  saveSheetState();
+  const left = remainingSlots();
+  castToast(`${spell.name} cast — slot spent (${left} remaining).`);
+}
+
+function endSpell(key) {
+  const spell = SPELLS[key];
+  if (!spell || !spell.effect || !sheetState[spell.effect]) return;
+  sheetState[spell.effect] = false;
+  if (key === 'hex') {
+    sheetState.hexTarget = '';
+    const inp = document.getElementById('hexTargetInput');
+    if (inp) inp.value = '';
+  }
+  refreshDerivedStats();
+  saveSheetState();
+  castToast(`${spell.name} ended. Slot is not refunded.`);
+}
+
+// ===== REST =====
+function shortRest() {
+  // Pact Magic: recover on Short Rest
+  restoreSlots();
+  // Second Wind: recover 1 use
+  const sw1 = document.getElementById('sw-pip-1');
+  const sw2 = document.getElementById('sw-pip-2');
+  const used = [sw1, sw2].filter(p => p?.classList.contains('used'));
+  if (used.length > 0) {
+    used[0].classList.remove('used');
+    used[0].classList.add('available');
+  }
+  refreshDerivedStats();
+  saveSheetState();
+  alert('Short Rest taken.\n\n• Pact Magic slot: restored\n• Second Wind: 1 use restored\n\nHit Dice to spend: 1d10 (Fighter) + 1d8 (Warlock)\nUpdate Current HP manually after spending dice.');
+}
+
+function longRest() {
+  document.getElementById('currentHP').value = 19;
+  document.getElementById('currentHP2').value = 19;
+  updateHPBar();
+  // Restore pact slot
+  restoreSlots();
+  // Restore Second Wind (all 2)
+  document.querySelectorAll('#sw-pip-1, #sw-pip-2').forEach(p => {
+    p?.classList.remove('used');
+    p?.classList.add('available');
+  });
+  // Restore all resource pips
+  document.querySelectorAll('.resource-pip').forEach(p => {
+    p.classList.remove('used');
+    p.classList.add('available');
+  });
+  // Clear death saves
+  document.querySelectorAll('.death-pip').forEach(p => {
+    p.classList.remove('filled');
+    p.style.background = '';
+  });
+  // End concentration
+  if (sheetState.hex) endSpell('hex');
+  sheetState.charm = false;
+  refreshDerivedStats();
+  saveSheetState();
+  castToast('Long Rest complete — all resources restored.');
+}
+
+// ===== PERSISTENCE =====
+function saveSheetState() {
+  try {
+    const hexInp = document.getElementById('hexTargetInput');
+    if (hexInp) sheetState.hexTarget = hexInp.value;
+
+    const data = {
+      sheetState,
+      hp: {
+        current: document.getElementById('currentHP')?.value || '19',
+        temp: document.getElementById('tempHP')?.value || '0',
+      },
+      slots: [{ id: 's-slot-1a', used: document.getElementById('s-slot-1a')?.classList.contains('used') }],
+      resources: Array.from(document.querySelectorAll('.resource-pip')).map(el => el.classList.contains('used')),
+      deaths: Array.from(document.querySelectorAll('.death-pip')).map(el => el.classList.contains('filled')),
+      conditions: Array.from(document.querySelectorAll('.condition-badge')).map(el => ({
+        name: (el.textContent || '').trim(),
+        active: el.classList.contains('active'),
+      })),
+      notes: {
+        char: document.getElementById('charNotes')?.value || '',
+        session: document.getElementById('sessionNotes')?.value || '',
+      },
+      activeTab: document.querySelector('.tab-panel.active')?.id || 'tab-combat',
+    };
+    localStorage.setItem(SHEET_STORAGE_KEY, JSON.stringify(data));
+  } catch (e) { console.warn('Save failed:', e); }
+}
+
+function loadSheetState() {
+  const vb = document.getElementById('uiVersionBadge');
+  if (vb) vb.textContent = `UI v${SHEET_UI_VERSION}`;
+
+  try {
+    const raw = localStorage.getItem(SHEET_STORAGE_KEY);
+    if (!raw) { refreshDerivedStats(); updateHPBar(); return; }
+    const saved = JSON.parse(raw);
+
+    if (saved.sheetState) Object.assign(sheetState, saved.sheetState);
+
+    if (saved.hp) {
+      const c = document.getElementById('currentHP');
+      const c2 = document.getElementById('currentHP2');
+      const t = document.getElementById('tempHP');
+      if (c) c.value = saved.hp.current ?? '19';
+      if (c2) c2.value = saved.hp.current ?? '19';
+      if (t) t.value = saved.hp.temp ?? '0';
+    }
+
+    if (Array.isArray(saved.slots)) {
+      saved.slots.forEach(s => {
+        const peers = SLOT_SYNC_MAP[s.id] || [s.id];
+        peers.forEach(pid => {
+          const el = document.getElementById(pid);
+          if (!el) return;
+          el.classList.toggle('used', s.used);
+          el.classList.toggle('available', !s.used);
+        });
+      });
+    }
+
+    if (Array.isArray(saved.resources)) {
+      document.querySelectorAll('.resource-pip').forEach((el, idx) => {
+        el.classList.toggle('used', !!saved.resources[idx]);
+        el.classList.toggle('available', !saved.resources[idx]);
+      });
+    }
+
+    if (Array.isArray(saved.conditions)) {
+      const map = new Map(saved.conditions.map(c => [c.name, !!c.active]));
+      document.querySelectorAll('.condition-badge').forEach(el => {
+        const key = (el.textContent || '').trim();
+        const active = map.get(key) || false;
+        el.classList.toggle('active', active);
+        el.classList.toggle('inactive', !active);
+      });
+    }
+
+    if (saved.notes) {
+      const cn = document.getElementById('charNotes');
+      const sn = document.getElementById('sessionNotes');
+      if (cn) cn.value = saved.notes.char || '';
+      if (sn) sn.value = saved.notes.session || '';
+    }
+
+    const savedTab = (saved.activeTab || 'tab-combat').replace('tab-', '');
+    switchTab(savedTab);
+
+  } catch (e) {
+    console.warn('Load failed:', e);
+    refreshDerivedStats();
+    updateHPBar();
+  }
+
+  refreshDerivedStats();
+  updateHPBar();
+}
+
+// ===== TOOLTIP SYSTEM =====
+const TOOLTIPS = {
+  'spell-hex': {
+    name: 'Hex',
+    type: '1st-Level Enchantment (Warlock) — SRD 5.2.1',
+    body: 'You place a curse on a creature within range. Until the spell ends, you deal an extra 1d6 Necrotic damage whenever you hit the target with an attack roll. Also, choose one ability when you cast the spell; the target has Disadvantage on ability checks made with the chosen ability.\n\nIf the target drops to 0 HP before this spell ends, you can take a Bonus Action to curse a new creature.',
+    stats: { 'Cast Time': 'Bonus Action', 'Range': '90 ft.', 'Duration': 'Conc., up to 1 hr', 'Components': 'V, S, M', 'Concentration': 'Yes' }
+  },
+  'spell-charm': {
+    name: 'Charm Person',
+    type: '1st-Level Enchantment (Warlock) — SRD 5.2.1',
+    body: 'One Humanoid you can see within range makes a Wisdom saving throw (DC 14). On a failed save, the target has the Charmed condition until the spell ends or until you or your allies deal damage to it. The Charmed creature is Friendly to you.',
+    stats: { 'Cast Time': '1 Action', 'Range': '30 ft.', 'Duration': '1 hour', 'Components': 'V, S', 'Save': 'WIS DC 14' }
+  },
+  'spell-prestidigitation': {
+    name: 'Prestidigitation',
+    type: 'Transmutation Cantrip (Warlock) — SRD 5.2.1',
+    body: 'You create a magical effect within range: harmless sensory effects, light or extinguish a flame, clean or soil a small object, chill/warm/flavour material, create a small mark, or create a nonmagical trinket.',
+    stats: { 'Cast Time': '1 Action', 'Range': '10 ft.', 'Duration': 'Up to 1 hr', 'Components': 'V, S' }
+  },
+  'spell-magehand': {
+    name: 'Mage Hand',
+    type: 'Conjuration Cantrip (Warlock) — SRD 5.2.1',
+    body: 'A spectral, floating hand appears. It can manipulate objects, open unlocked doors, stow/retrieve items, or pour vials. Can\'t attack or carry more than 10 lb.',
+    stats: { 'Cast Time': '1 Action', 'Range': '30 ft.', 'Duration': '1 Minute', 'Components': 'V, S' }
+  },
+  'feat-secondwind': {
+    name: 'Second Wind',
+    type: 'Fighter Feature — SRD 5.2.1',
+    body: 'As a Bonus Action, draw upon physical and mental stamina to regain 1d10 + 1 HP. 2 uses per Long Rest; regain 1 use on a Short Rest.',
+    stats: { 'Action': 'Bonus Action', 'Recovery': '1d10 + 1 HP', 'Uses': '2 / Long Rest', 'Partial': '1 recovered on Short Rest' }
+  },
+  'feat-pactblade': {
+    name: 'Pact of the Blade',
+    type: 'Eldritch Invocation (Warlock) — SRD 5.2.1',
+    body: 'Conjure a pact weapon (Bonus Action) — any Simple or Martial Melee weapon. Or bond with a magic weapon you touch (Bonus Action). Use CHA for attack and damage rolls with the bonded weapon. Bond ends if weapon is >5 ft away for 1 min, you die, or you use this feature again.',
+    stats: { 'Action': 'Bonus Action', 'Ability': 'CHA for attack/damage', 'Damage Types': 'Necrotic/Psychic/Radiant or normal' }
+  },
+  'feat-pactmagic': {
+    name: 'Pact Magic',
+    type: 'Warlock Feature — SRD 5.2.1',
+    body: 'Spell slots that are all the same level. Regain all expended slots on Short or Long Rest. At level 1: 1 slot of level 1.',
+    stats: { 'Slots': '1 × Level 1', 'Recovery': 'Short or Long Rest', 'Ability': 'CHA', 'DC': '14', 'Atk': '+6' }
+  },
+  'feat-twf': {
+    name: 'Two-Weapon Fighting',
+    type: 'Fighting Style Feat — SRD 5.2.1',
+    body: 'When you make an extra attack as a result of using a Light weapon\'s Nick mastery property, you can add your ability modifier to that attack\'s damage roll. Applies to both Fear and Hunger.',
+    stats: {}
+  },
+  'feat-weaponmastery': {
+    name: 'Weapon Mastery',
+    type: 'Fighter Feature — SRD 5.2.1',
+    body: 'Scimitar: Nick — When you make the extra attack from the Light property, you can make it as part of the Attack action instead of a Bonus Action.\nHandaxe: Vex — On a hit, gain Advantage on your next attack roll against that creature before the end of your next turn.\nPistol: Vex — Same as Handaxe.',
+    stats: { 'Scimitar': 'Nick (free off-hand in Attack action)', 'Handaxe': 'Vex (Advantage on next attack)', 'Pistol': 'Vex' }
+  },
+  'feat-alert': {
+    name: 'Alert',
+    type: 'Feat — SRD 5.2.1',
+    body: '+2 bonus to Initiative rolls. Once per combat immediately after rolling Initiative, you can swap your result with the Initiative of one willing creature.',
+    stats: { 'Initiative Bonus': '+2', 'Initiative Swap': '1 / combat' }
+  },
+  'feat-briarstep': {
+    name: 'Briarstep Blessing',
+    type: 'Gloamthorn Court Lv 3 — Campaign',
+    body: 'Cast Misty Step without a slot (CHA mod times / Long Rest, min 1). Once per turn when you reduce a hostile creature to 0 HP, gain Temp HP equal to CHA mod + Warlock level.',
+    stats: { 'Misty Step Uses': 'CHA mod / Long Rest (min 1)', 'Temp HP on Kill': 'CHA mod + Warlock level', 'Unlocks At': 'Warlock 3' }
+  },
+};
+
+function showTooltip(key, event) {
+  const data = TOOLTIPS[key];
+  if (!data) return;
+  const tt = document.getElementById('tooltip');
+  document.getElementById('ttName').textContent = data.name;
+  document.getElementById('ttType').textContent = data.type;
+  document.getElementById('ttBody').textContent = data.body;
+  const statsEl = document.getElementById('ttStats');
+  statsEl.innerHTML = '';
+  Object.entries(data.stats || {}).forEach(([k, v]) => {
+    const kEl = document.createElement('div'); kEl.className = 'tt-key'; kEl.textContent = k;
+    const vEl = document.createElement('div'); vEl.className = 'tt-val'; vEl.textContent = v;
+    statsEl.appendChild(kEl); statsEl.appendChild(vEl);
+  });
+  tt.classList.add('visible');
+  positionTooltip(event);
+}
+
+function positionTooltip(event) {
+  const tt = document.getElementById('tooltip');
+  const x = Math.min(event.clientX + 12, window.innerWidth - 300);
+  const y = Math.min(event.clientY + 12, window.innerHeight - 200);
+  tt.style.left = x + 'px';
+  tt.style.top = y + 'px';
+}
+
+function hideTooltip() {
+  document.getElementById('tooltip')?.classList.remove('visible');
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  // Bind tooltips
+  document.querySelectorAll('[data-tooltip]').forEach(el => {
+    el.addEventListener('mouseenter', e => showTooltip(el.getAttribute('data-tooltip'), e));
+    el.addEventListener('mousemove', positionTooltip);
+    el.addEventListener('mouseleave', hideTooltip);
+  });
+
+  // Hex target input live sync
+  const hexInp = document.getElementById('hexTargetInput');
+  if (hexInp) hexInp.addEventListener('input', () => {
+    sheetState.hexTarget = hexInp.value;
+    refreshDerivedStats();
+    saveSheetState();
+  });
+
+  loadSheetState();
+});
+</script>
+
+</body>
+</html>
