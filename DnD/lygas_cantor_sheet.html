@@ -346,6 +346,20 @@
   }
   .notes-area:focus { outline: none; border-color: var(--briar-accent); }
 
+  /* ===== CURRENCY COINS ===== */
+  .currency-item { display: flex; align-items: center; gap: 6px; }
+  .currency-coin {
+    width: 16px; height: 16px; border-radius: 50%; border: 1px solid;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Barlow Condensed', sans-serif; font-size: 8px; font-weight: 700;
+  }
+  .currency-coin.gp { border-color: var(--gold); color: var(--gold); }
+  .currency-coin.sp { border-color: #a0a0a0; color: #a0a0a0; }
+  .currency-coin.cp { border-color: #8b6520; color: #8b6520; }
+  .currency-coin.ep { border-color: #7090b0; color: #7090b0; }
+  .currency-coin.pp { border-color: #c0c0e0; color: #c0c0e0; }
+  .currency-value { font-family: 'Barlow Condensed', sans-serif; font-size: 14px; font-weight: 600; color: var(--text-primary); }
+
   /* ===== MOBILE ===== */
   @media (max-width: 768px) {
     .sheet-body { padding: 10px 12px; }
@@ -384,7 +398,7 @@
 </style>
 </head>
 
-<body>
+<body class="theme-fantasy page-dnd-character-sheet page-lygas-cantor-sheet">
 
 <!-- ======= HEADER ======= -->
 <header class="sheet-header">
@@ -442,6 +456,7 @@
   <button class="tab-btn active" onclick="switchTab('combat')">⚔ Combat</button>
   <button class="tab-btn" onclick="switchTab('spells')">✦ Spells</button>
   <button class="tab-btn" onclick="switchTab('features')">❧ Features</button>
+  <button class="tab-btn" onclick="switchTab('inventory')">⊠ Inventory</button>
   <button class="tab-btn" onclick="switchTab('notes')">✎ Notes</button>
 </nav>
 
@@ -693,23 +708,6 @@
           <div class="section-divider"></div>
           <div class="prof-section-title">Languages</div>
           <div class="prof-list">Common, Common Sign Language, Dwarvish</div>
-        </div>
-      </div>
-
-      <!-- Equipment -->
-      <div class="panel">
-        <div class="panel-header"><span class="panel-title">Equipment</span></div>
-        <div class="panel-body">
-          <div class="prof-list" style="line-height:1.8;">
-            Fear (scimitar, pact)<br>
-            Hunger (scimitar, pact)<br>
-            Chain Shirt (AC 13+DEX)<br>
-            Dagger<br>
-            Thieves' Tools<br>
-            Costume · Fine Clothes<br>
-            Forgery Kit
-          </div>
-          <div style="margin-top:8px;font-size:10px;color:var(--text-dim);">43 lb carried · 165 lb encumbered</div>
         </div>
       </div>
 
@@ -1047,6 +1045,117 @@
   </div>
 </div>
 </div><!-- end tab-features -->
+
+
+<!-- ======================================================= -->
+<!-- TAB: INVENTORY -->
+<!-- ======================================================= -->
+<div id="tab-inventory" class="tab-panel">
+<div class="sheet-body">
+
+  <div class="inventory-hud">
+    <div>
+      <div class="hud-title">Charlatan's Kit</div>
+      <div class="hud-sub">Stolen finery, tools of deception, and well-worn weapons.</div>
+    </div>
+    <div style="font-family:'Barlow Condensed',sans-serif;font-size:11px;color:var(--text-dim);letter-spacing:1px;text-transform:uppercase;">
+      Gear: <span style="color:var(--gold);">11 items</span>
+    </div>
+  </div>
+
+  <div class="currency-bar">
+    <div class="currency-item"><div class="currency-coin pp">PP</div><span class="currency-value">0</span></div>
+    <div class="currency-item"><div class="currency-coin gp">GP</div><span class="currency-value">18</span></div>
+    <div class="currency-item"><div class="currency-coin ep">EP</div><span class="currency-value">0</span></div>
+    <div class="currency-item"><div class="currency-coin sp">SP</div><span class="currency-value">0</span></div>
+    <div class="currency-item"><div class="currency-coin cp">CP</div><span class="currency-value">0</span></div>
+    <div style="margin-left:auto;font-family:'Barlow Condensed',sans-serif;font-size:11px;color:var(--text-dim);">
+      Weight: <span style="color:var(--text-secondary);">43 lb</span> /
+      Encumbered: <span style="color:var(--text-secondary);">165 lb</span> /
+      Push: <span style="color:var(--text-secondary);">330 lb</span>
+    </div>
+  </div>
+
+  <div style="font-family:'Barlow Condensed',sans-serif;font-size:9px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--gold-dim);margin-bottom:8px;">Equipment</div>
+  <div class="inventory-grid">
+
+    <div class="item-card signature">
+      <div class="card-topline"><span class="item-type">Weapon</span><span class="item-weight">2 lb</span></div>
+      <div class="item-main"><span class="item-icon">⚔</span><div><div class="item-name">Fear (Scimitar)</div><div class="item-qty">Bonded Pact Blade</div></div></div>
+      <div class="item-tags"><span class="item-tag">Finesse</span><span class="item-tag">Light</span><span class="item-tag">Nick</span></div>
+      <div class="item-note">Bonded to Lygas through Pact of the Blade. Wickedly serrated, carved with briar thorns.</div>
+    </div>
+
+    <div class="item-card signature">
+      <div class="card-topline"><span class="item-type">Weapon</span><span class="item-weight">2 lb</span></div>
+      <div class="item-main"><span class="item-icon">⚔</span><div><div class="item-name">Hunger (Scimitar)</div><div class="item-qty">Bonded Pact Blade</div></div></div>
+      <div class="item-tags"><span class="item-tag">Finesse</span><span class="item-tag">Light</span><span class="item-tag">Nick</span></div>
+      <div class="item-note">Companion blade to Fear. Enchanted to bond through Pact of the Blade covenant.</div>
+    </div>
+
+    <div class="item-card">
+      <div class="card-topline"><span class="item-type">Armour</span><span class="item-weight">10 lb</span></div>
+      <div class="item-main"><span class="item-icon">🛡</span><div><div class="item-name">Chain Shirt</div><div class="item-qty">AC 13 + DEX</div></div></div>
+      <div class="item-tags"><span class="item-tag">Medium Armour</span><span class="item-tag">Stealth</span></div>
+      <div class="item-note">Light chain mesh worn beneath fine clothes. Bought with charlatan's gold.</div>
+    </div>
+
+    <div class="item-card">
+      <div class="card-topline"><span class="item-type">Weapon</span><span class="item-weight">1 lb</span></div>
+      <div class="item-main"><span class="item-icon">🗡</span><div><div class="item-name">Dagger</div><div class="item-qty">Qty: 1</div></div></div>
+      <div class="item-tags"><span class="item-tag">Finesse</span><span class="item-tag">Light</span></div>
+      <div class="item-note">Backup blade concealed in boot. Simple iron, well-maintained.</div>
+    </div>
+
+    <div class="item-card">
+      <div class="card-topline"><span class="item-type">Tool</span><span class="item-weight">1 lb</span></div>
+      <div class="item-main"><span class="item-icon">🔓</span><div><div class="item-name">Thieves' Tools</div><div class="item-qty">Qty: 1</div></div></div>
+      <div class="item-tags"><span class="item-tag">Lock Pick</span><span class="item-tag">Skilled</span></div>
+      <div class="item-note">Complete kit for opening locks and disarming traps. Marks of many cities on the leather case.</div>
+    </div>
+
+    <div class="item-card">
+      <div class="card-topline"><span class="item-type">Apparel</span><span class="item-weight">3 lb</span></div>
+      <div class="item-main"><span class="item-icon">👔</span><div><div class="item-name">Costume · Fine Clothes</div><div class="item-qty">Qty: 1</div></div></div>
+      <div class="item-tags"><span class="item-tag">Deception</span><span class="item-tag">Performance</span></div>
+      <div class="item-note">Silk and velvet in jewel tones. Perfect for a charlatan's false identity.</div>
+    </div>
+
+    <div class="item-card">
+      <div class="card-topline"><span class="item-type">Tool</span><span class="item-weight">5 lb</span></div>
+      <div class="item-main"><span class="item-icon">✒</span><div><div class="item-name">Forgery Kit</div><div class="item-qty">Qty: 1</div></div></div>
+      <div class="item-tags"><span class="item-tag">Documents</span><span class="item-tag">Seals</span></div>
+      <div class="item-note">Inks, parchments, seal stamps, and reference papers for creating false credentials.</div>
+    </div>
+
+    <div class="item-card">
+      <div class="card-topline"><span class="item-type">Container</span><span class="item-weight">5 lb</span></div>
+      <div class="item-main"><span class="item-icon">🎒</span><div><div class="item-name">Backpack</div><div class="item-qty">Qty: 1</div></div></div>
+      <div class="item-note">Worn leather pack holding travel essentials, spare rope, and personal effects.</div>
+    </div>
+
+    <div class="item-card">
+      <div class="card-topline"><span class="item-type">Utility</span><span class="item-weight">5 lb</span></div>
+      <div class="item-main"><span class="item-icon">🪢</span><div><div class="item-name">Rope</div><div class="item-qty">Qty: 1 · 50 ft</div></div></div>
+      <div class="item-note">Silk rope for climbing and restraint. Quiet and reliable.</div>
+    </div>
+
+    <div class="item-card">
+      <div class="card-topline"><span class="item-type">Consumable</span><span class="item-weight">2 lb</span></div>
+      <div class="item-main"><span class="item-icon">🧺</span><div><div class="item-name">Rations</div><div class="item-qty">Qty: 2 days</div></div></div>
+      <div class="item-note">Dried travel food for quick meals on the road.</div>
+    </div>
+
+    <div class="item-card">
+      <div class="card-topline"><span class="item-type">Utility</span><span class="item-weight">2 lb</span></div>
+      <div class="item-main"><span class="item-icon">🫗</span><div><div class="item-name">Waterskin</div><div class="item-qty">Qty: 1</div></div></div>
+      <div class="item-note">Full carry volume for travel between water sources.</div>
+    </div>
+
+  </div>
+
+</div>
+</div><!-- end tab-inventory -->
 
 
 <!-- ======================================================= -->
