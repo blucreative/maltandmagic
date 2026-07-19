@@ -90,8 +90,8 @@
     font-family: 'Cinzel', serif; font-size: 28px; font-weight: 700;
     color: var(--gold-light); letter-spacing: 1px; line-height: 1;
   }
-  .char-sub {
-    font-family: 'Barlow Condensed', sans-serif; font-size: 13px; font-weight: 400;
+    display: flex; gap: 8px; padding: 6px 14px;
+    max-width: 100%; overflow-x: clip;
     color: var(--text-secondary); letter-spacing: 2px; text-transform: uppercase;
     margin-top: 4px;
   }
@@ -1208,6 +1208,19 @@
 
   </div>
 
+  <div class="inventory-builder">
+    <div style="font-family:'Barlow Condensed',sans-serif;font-size:9px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--gold-dim);margin-bottom:8px;">Picked Up During Play</div>
+    <div class="inventory-form">
+      <input id="customItemName" class="inventory-input" type="text" placeholder="Item name">
+      <input id="customItemQty" class="inventory-input" type="text" placeholder="Qty">
+      <input id="customItemWeight" class="inventory-input" type="text" placeholder="Weight">
+      <input id="customItemNote" class="inventory-input" type="text" placeholder="Short note (optional)">
+      <button class="inventory-add-btn" type="button" onclick="addCustomInventoryItem()">Add Item</button>
+    </div>
+    <div id="customInventoryList" class="inventory-grid" style="margin-top:10px;"></div>
+    <div id="customInventoryEmpty" class="inventory-empty">No picked-up items yet.</div>
+  </div>
+
 </div>
 </div><!-- end tab-inventory -->
 
@@ -1256,6 +1269,7 @@ const sheetState = {
   charm: false,
   secondWindUsed: 0,
   defense: false,
+  customItems: [],
 };
 
 const baseStats = {
@@ -1509,6 +1523,96 @@ function longRest() {
   castToast('Long Rest complete — all resources restored.');
 }
 
+// ===== CUSTOM INVENTORY =====
+function renderCustomInventoryItems() {
+  const list = document.getElementById('customInventoryList');
+  const empty = document.getElementById('customInventoryEmpty');
+  if (!list || !empty) return;
+
+  const items = Array.isArray(sheetState.customItems) ? sheetState.customItems : [];
+  list.innerHTML = '';
+
+  if (!items.length) {
+    empty.style.display = 'block';
+    return;
+  }
+
+  empty.style.display = 'none';
+
+  items.forEach(item => {
+    const card = document.createElement('div');
+    card.className = 'item-card custom-item-card';
+
+    const top = document.createElement('div');
+    top.className = 'card-topline';
+    top.innerHTML = `<span class="item-type">Picked Up</span><span class="item-weight">${item.weight || '-'}</span>`;
+
+    const main = document.createElement('div');
+    main.className = 'item-main';
+    main.innerHTML = `<span class="item-icon">🎒</span><div><div class="item-name"></div><div class="item-qty"></div></div>`;
+    main.querySelector('.item-name').textContent = item.name;
+    main.querySelector('.item-qty').textContent = `Qty: ${item.qty || '1'}`;
+
+    const note = document.createElement('div');
+    note.className = 'item-note';
+    note.textContent = item.note || 'Added during play.';
+
+    const actions = document.createElement('div');
+    actions.style.marginTop = '8px';
+    const removeBtn = document.createElement('button');
+    removeBtn.type = 'button';
+    removeBtn.className = 'inventory-remove-btn';
+    removeBtn.textContent = 'Remove';
+    removeBtn.onclick = () => removeCustomInventoryItem(item.id);
+    actions.appendChild(removeBtn);
+
+    card.appendChild(top);
+    card.appendChild(main);
+    card.appendChild(note);
+    card.appendChild(actions);
+    list.appendChild(card);
+  });
+}
+
+function addCustomInventoryItem() {
+  const nameEl = document.getElementById('customItemName');
+  const qtyEl = document.getElementById('customItemQty');
+  const weightEl = document.getElementById('customItemWeight');
+  const noteEl = document.getElementById('customItemNote');
+  if (!nameEl || !qtyEl || !weightEl || !noteEl) return;
+
+  const name = nameEl.value.trim();
+  if (!name) {
+    castToast('Enter an item name first.', true);
+    return;
+  }
+
+  if (!Array.isArray(sheetState.customItems)) sheetState.customItems = [];
+  sheetState.customItems.push({
+    id: `${Date.now()}-${Math.random().toString(16).slice(2)}`,
+    name,
+    qty: qtyEl.value.trim() || '1',
+    weight: weightEl.value.trim() || '-',
+    note: noteEl.value.trim(),
+  });
+
+  nameEl.value = '';
+  qtyEl.value = '';
+  weightEl.value = '';
+  noteEl.value = '';
+
+  renderCustomInventoryItems();
+  saveSheetState();
+  castToast('Item added to picked-up inventory.');
+}
+
+function removeCustomInventoryItem(id) {
+  if (!Array.isArray(sheetState.customItems)) return;
+  sheetState.customItems = sheetState.customItems.filter(item => item.id !== id);
+  renderCustomInventoryItems();
+  saveSheetState();
+}
+
 // ===== PERSISTENCE =====
 function saveSheetState() {
   try {
@@ -1548,6 +1652,7 @@ function loadSheetState() {
     const saved = JSON.parse(raw);
 
     if (saved.sheetState) Object.assign(sheetState, saved.sheetState);
+    if (!Array.isArray(sheetState.customItems)) sheetState.customItems = [];
 
     if (saved.hp) {
       const c = document.getElementById('currentHP');
@@ -1605,6 +1710,7 @@ function loadSheetState() {
 
   refreshDerivedStats();
   updateHPBar();
+  renderCustomInventoryItems();
 }
 
 // ===== TOOLTIP SYSTEM =====

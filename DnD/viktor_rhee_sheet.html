@@ -2346,6 +2346,19 @@
 
   </div>
 
+  <div class="inventory-builder">
+    <div style="font-family:'Barlow Condensed',sans-serif;font-size:9px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--gold-dim);margin-bottom:8px;">Picked Up During Play</div>
+    <div class="inventory-form">
+      <input id="vCustomItemName" class="inventory-input" type="text" placeholder="Item name">
+      <input id="vCustomItemQty" class="inventory-input" type="text" placeholder="Qty">
+      <input id="vCustomItemWeight" class="inventory-input" type="text" placeholder="Weight">
+      <input id="vCustomItemNote" class="inventory-input" type="text" placeholder="Short note (optional)">
+      <button class="inventory-add-btn" type="button" onclick="addViktorCustomItem()">Add Item</button>
+    </div>
+    <div id="vCustomInventoryList" class="inventory-grid" style="margin-top:10px;"></div>
+    <div id="vCustomInventoryEmpty" class="inventory-empty">No picked-up items yet.</div>
+  </div>
+
   <div style="margin-top:20px;font-family:'Barlow Condensed',sans-serif;font-size:9px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--gold-dim);margin-bottom:8px;">Attuned Magic Items</div>
   <div style="font-family:'Barlow',sans-serif;font-size:12px;color:var(--text-dim);padding:16px;background:rgba(26,34,24,0.4);border:1px dashed rgba(58,79,53,0.3);border-radius:5px;text-align:center;">
     No attuned magic items
@@ -2654,6 +2667,91 @@ const baseStats = {
 };
 
 const SHEET_STORAGE_KEY = 'maltandmagic:dnd:viktor-rhee-sheet:v1';
+let customInventoryItems = [];
+
+function renderViktorCustomItems() {
+  const list = document.getElementById('vCustomInventoryList');
+  const empty = document.getElementById('vCustomInventoryEmpty');
+  if (!list || !empty) return;
+
+  list.innerHTML = '';
+  if (!customInventoryItems.length) {
+    empty.style.display = 'block';
+    return;
+  }
+
+  empty.style.display = 'none';
+  customInventoryItems.forEach(item => {
+    const card = document.createElement('div');
+    card.className = 'item-card custom-item-card';
+
+    const top = document.createElement('div');
+    top.className = 'card-topline';
+    top.innerHTML = `<span class="item-type">Picked Up</span><span class="item-weight">${item.weight || '-'}</span>`;
+
+    const main = document.createElement('div');
+    main.className = 'item-main';
+    main.innerHTML = `<span class="item-icon">🎒</span><div><div class="item-name"></div><div class="item-qty"></div></div>`;
+    main.querySelector('.item-name').textContent = item.name;
+    main.querySelector('.item-qty').textContent = `Qty: ${item.qty || '1'}`;
+
+    const note = document.createElement('div');
+    note.className = 'item-note';
+    note.textContent = item.note || 'Added during play.';
+
+    const actions = document.createElement('div');
+    actions.style.marginTop = '8px';
+    const removeBtn = document.createElement('button');
+    removeBtn.type = 'button';
+    removeBtn.className = 'inventory-remove-btn';
+    removeBtn.textContent = 'Remove';
+    removeBtn.onclick = () => removeViktorCustomItem(item.id);
+    actions.appendChild(removeBtn);
+
+    card.appendChild(top);
+    card.appendChild(main);
+    card.appendChild(note);
+    card.appendChild(actions);
+    list.appendChild(card);
+  });
+}
+
+function addViktorCustomItem() {
+  const nameEl = document.getElementById('vCustomItemName');
+  const qtyEl = document.getElementById('vCustomItemQty');
+  const weightEl = document.getElementById('vCustomItemWeight');
+  const noteEl = document.getElementById('vCustomItemNote');
+  if (!nameEl || !qtyEl || !weightEl || !noteEl) return;
+
+  const name = nameEl.value.trim();
+  if (!name) {
+    castToast('Enter an item name first.', true);
+    return;
+  }
+
+  customInventoryItems.push({
+    id: `${Date.now()}-${Math.random().toString(16).slice(2)}`,
+    name,
+    qty: qtyEl.value.trim() || '1',
+    weight: weightEl.value.trim() || '-',
+    note: noteEl.value.trim(),
+  });
+
+  nameEl.value = '';
+  qtyEl.value = '';
+  weightEl.value = '';
+  noteEl.value = '';
+
+  renderViktorCustomItems();
+  saveSheetState();
+  castToast('Item added to picked-up inventory.');
+}
+
+function removeViktorCustomItem(id) {
+  customInventoryItems = customInventoryItems.filter(item => item.id !== id);
+  renderViktorCustomItems();
+  saveSheetState();
+}
 
 function saveSheetState() {
   try {
@@ -2675,6 +2773,7 @@ function saveSheetState() {
         name: (el.textContent || '').trim(),
         active: el.classList.contains('active'),
       })),
+      customInventoryItems,
       activeTab: document.querySelector('.tab-panel.active')?.id || 'tab-combat',
     };
     localStorage.setItem(SHEET_STORAGE_KEY, JSON.stringify(state));
@@ -2699,6 +2798,10 @@ function loadSheetState() {
     }
 
     const saved = JSON.parse(raw);
+
+    if (Array.isArray(saved.customInventoryItems)) {
+      customInventoryItems = saved.customInventoryItems;
+    }
 
     if (saved.sheetState && typeof saved.sheetState === 'object') {
       Object.assign(sheetState, saved.sheetState);
@@ -2785,6 +2888,8 @@ function loadSheetState() {
     refreshDerivedStats();
     updateHPBar();
   }
+
+  renderViktorCustomItems();
 }
 
 function setStatusPill(id, active, onText = 'Active', offText = 'Inactive') {
