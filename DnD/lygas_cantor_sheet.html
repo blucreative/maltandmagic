@@ -7,6 +7,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=IM+Fell+English:ital@0;1&family=Barlow:wght@300;400;500;600&family=Barlow+Condensed:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../assets/css/theme-fantasy.css">
 <link rel="stylesheet" href="../assets/css/page-polish.css">
+<script defer src="../assets/js/a11y-sheet-helpers.js"></script>
 <style>
   :root {
     --briar-dark: #120a1e;
@@ -360,6 +361,52 @@
   .currency-coin.pp { border-color: #c0c0e0; color: #c0c0e0; }
   .currency-value { font-family: 'Barlow Condensed', sans-serif; font-size: 14px; font-weight: 600; color: var(--text-primary); }
 
+  /* ===== LYGAS INVENTORY THEME OVERRIDES ===== */
+  body.page-lygas-cantor-sheet .inventory-hud {
+    background: linear-gradient(90deg, rgba(26,16,40,0.86), rgba(20,12,32,0.84));
+    border-color: rgba(107,58,138,0.45);
+  }
+  body.page-lygas-cantor-sheet .inventory-grid {
+    gap: 14px;
+  }
+  body.page-lygas-cantor-sheet .item-card {
+    background:
+      linear-gradient(165deg, rgba(26,16,40,0.95), rgba(17,11,28,0.94)),
+      repeating-linear-gradient(0deg, transparent 0, transparent 2px, rgba(201,160,122,0.03) 3px, transparent 4px);
+    border-color: rgba(107,58,138,0.5);
+  }
+  body.page-lygas-cantor-sheet .item-card::before {
+    background: linear-gradient(90deg, transparent, rgba(192,85,138,0.58), transparent);
+  }
+  body.page-lygas-cantor-sheet .item-card:hover {
+    border-color: rgba(192,85,138,0.7);
+    box-shadow: 0 10px 18px rgba(0,0,0,0.35), 0 0 0 1px rgba(192,85,138,0.2);
+  }
+  body.page-lygas-cantor-sheet .item-card.signature {
+    border-color: rgba(201,160,122,0.7);
+    box-shadow: inset 0 0 0 1px rgba(201,160,122,0.22);
+  }
+  body.page-lygas-cantor-sheet .item-card.magic {
+    border-color: rgba(192,85,138,0.72);
+    box-shadow: inset 0 0 0 1px rgba(192,85,138,0.24);
+  }
+  body.page-lygas-cantor-sheet .item-type,
+  body.page-lygas-cantor-sheet .item-tag {
+    color: var(--text-secondary);
+  }
+  body.page-lygas-cantor-sheet .item-tag {
+    border-color: rgba(107,58,138,0.42);
+    background: rgba(24,14,36,0.68);
+  }
+  body.page-lygas-cantor-sheet .item-note {
+    color: var(--parchment-dark);
+    border-top-color: rgba(107,58,138,0.38);
+  }
+  body.page-lygas-cantor-sheet .currency-bar {
+    background: linear-gradient(90deg, rgba(24,15,37,0.86), rgba(29,16,43,0.74));
+    border-color: rgba(107,58,138,0.36);
+  }
+
   /* ===== MOBILE ===== */
   @media (max-width: 768px) {
     .sheet-body { padding: 10px 12px; }
@@ -475,7 +522,7 @@
         <div class="panel-header"><span class="panel-title">Abilities</span></div>
         <div class="panel-body">
           <div class="ability-grid">
-            <div class="ability-block" data-tooltip="ability-str"><div class="ability-label">STR</div><div class="ability-score">10</div><div class="ability-mod">+0</div></div>
+            <div class="ability-block" data-tooltip="ability-str"><div class="ability-label">STR</div><div class="ability-score">11</div><div class="ability-mod">+0</div></div>
             <div class="ability-block" data-tooltip="ability-dex"><div class="ability-label">DEX</div><div class="ability-score">14</div><div class="ability-mod">+2</div></div>
             <div class="ability-block" data-tooltip="ability-con"><div class="ability-label">CON</div><div class="ability-score">14</div><div class="ability-mod">+2</div></div>
             <div class="ability-block" data-tooltip="ability-int"><div class="ability-label">INT</div><div class="ability-score">12</div><div class="ability-mod">+1</div></div>
@@ -493,9 +540,9 @@
           <div class="save-row"><div class="prof-dot"></div><span class="save-name">Dexterity</span><span class="save-val">+2</span></div>
           <div class="save-row"><div class="prof-dot proficient"></div><span class="save-name">Constitution</span><span class="save-val proficient">+4</span></div>
           <div class="save-row"><div class="prof-dot"></div><span class="save-name">Intelligence</span><span class="save-val">+1</span></div>
-          <div class="save-row"><div class="prof-dot proficient"></div><span class="save-name">Wisdom</span><span class="save-val proficient">+3</span></div>
-          <div class="save-row"><div class="prof-dot proficient"></div><span class="save-name">Charisma</span><span class="save-val proficient">+6</span></div>
-          <div style="margin-top:6px; font-size:10px; color:var(--text-dim); font-style:italic;">Fighter: STR, CON · Warlock: WIS, CHA</div>
+          <div class="save-row"><div class="prof-dot"></div><span class="save-name">Wisdom</span><span class="save-val">+1</span></div>
+          <div class="save-row"><div class="prof-dot"></div><span class="save-name">Charisma</span><span class="save-val">+4</span></div>
+          <div style="margin-top:6px; font-size:10px; color:var(--text-dim); font-style:italic;">Proficient saves: Strength, Constitution</div>
         </div>
       </div>
 
@@ -506,10 +553,10 @@
           <div class="skill-row"><div class="prof-dot"></div><span class="skill-name">Acrobatics</span><span class="skill-attr">DEX</span><span class="skill-val">+2</span></div>
           <div class="skill-row"><div class="prof-dot"></div><span class="skill-name">Animal Handling</span><span class="skill-attr">WIS</span><span class="skill-val">+1</span></div>
           <div class="skill-row"><div class="prof-dot"></div><span class="skill-name">Arcana</span><span class="skill-attr">INT</span><span class="skill-val">+1</span></div>
-          <div class="skill-row"><div class="prof-dot proficient"></div><span class="skill-name">Athletics</span><span class="skill-attr">STR</span><span class="skill-val proficient">+2</span></div>
+          <div class="skill-row"><div class="prof-dot"></div><span class="skill-name">Athletics</span><span class="skill-attr">STR</span><span class="skill-val">+2</span></div>
           <div class="skill-row"><div class="prof-dot proficient"></div><span class="skill-name">Deception</span><span class="skill-attr">CHA</span><span class="skill-val proficient">+6</span></div>
           <div class="skill-row"><div class="prof-dot"></div><span class="skill-name">History</span><span class="skill-attr">INT</span><span class="skill-val">+1</span></div>
-          <div class="skill-row"><div class="prof-dot proficient"></div><span class="skill-name">Insight</span><span class="skill-attr">WIS</span><span class="skill-val proficient">+3</span></div>
+          <div class="skill-row"><div class="prof-dot"></div><span class="skill-name">Insight</span><span class="skill-attr">WIS</span><span class="skill-val">+3</span></div>
           <div class="skill-row"><div class="prof-dot proficient"></div><span class="skill-name">Intimidation</span><span class="skill-attr">CHA</span><span class="skill-val proficient">+6</span></div>
           <div class="skill-row"><div class="prof-dot"></div><span class="skill-name">Investigation</span><span class="skill-attr">INT</span><span class="skill-val">+1</span></div>
           <div class="skill-row"><div class="prof-dot"></div><span class="skill-name">Medicine</span><span class="skill-attr">WIS</span><span class="skill-val">+1</span></div>
@@ -518,8 +565,8 @@
           <div class="skill-row"><div class="prof-dot"></div><span class="skill-name">Performance</span><span class="skill-attr">CHA</span><span class="skill-val">+4</span></div>
           <div class="skill-row"><div class="prof-dot proficient"></div><span class="skill-name">Persuasion</span><span class="skill-attr">CHA</span><span class="skill-val proficient">+6</span></div>
           <div class="skill-row"><div class="prof-dot"></div><span class="skill-name">Religion</span><span class="skill-attr">INT</span><span class="skill-val">+1</span></div>
-          <div class="skill-row"><div class="prof-dot proficient"></div><span class="skill-name">Sleight of Hand</span><span class="skill-attr">DEX</span><span class="skill-val proficient">+4</span></div>
-          <div class="skill-row"><div class="prof-dot proficient"></div><span class="skill-name">Stealth</span><span class="skill-attr">DEX</span><span class="skill-val proficient">+4</span></div>
+          <div class="skill-row"><div class="prof-dot"></div><span class="skill-name">Sleight of Hand</span><span class="skill-attr">DEX</span><span class="skill-val">+4</span></div>
+          <div class="skill-row"><div class="prof-dot"></div><span class="skill-name">Stealth</span><span class="skill-attr">DEX</span><span class="skill-val">+4</span></div>
           <div class="skill-row"><div class="prof-dot"></div><span class="skill-name">Survival</span><span class="skill-attr">WIS</span><span class="skill-val">+1</span></div>
         </div>
       </div>
@@ -579,7 +626,7 @@
         </div>
         <div class="weapon-row">
           <div>
-            <div class="weapon-name">Fear</div>
+            <div class="weapon-name">Luck</div>
             <div style="display:flex;gap:4px;margin-top:2px;">
               <span class="weapon-badge">Pact · CHA</span>
               <span class="weapon-badge">Finesse · Light · Nick</span>
@@ -592,7 +639,7 @@
         </div>
         <div class="weapon-row">
           <div>
-            <div class="weapon-name">Hunger</div>
+            <div class="weapon-name">Judgement</div>
             <div style="display:flex;gap:4px;margin-top:2px;">
               <span class="weapon-badge">Pact · CHA</span>
               <span class="weapon-badge">Finesse · Light · Nick</span>
@@ -881,7 +928,15 @@
             <span class="feature-name">Two-Weapon Fighting</span>
             <span class="feature-source">Fighter · Feat</span>
           </div>
-          <div class="feature-summary">When you make an extra attack with a Light weapon using the Nick mastery, you can add your ability modifier to the damage. Both scimitars (Fear & Hunger) benefit.</div>
+          <div class="feature-summary">When you make an extra attack with a Light weapon using the Nick mastery, you can add your ability modifier to the damage. Both scimitars (Luck & Judgement) benefit.</div>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-header">
+            <span class="feature-name">Fighting Style</span>
+            <span class="feature-source">Fighter</span>
+          </div>
+          <div class="feature-summary">Gain one Fighting Style feat at Fighter level 1. Chosen style: Two-Weapon Fighting.</div>
         </div>
 
         <div class="feature-card" data-tooltip="feat-weaponmastery">
@@ -922,8 +977,16 @@
           <div class="feature-summary">
             <strong>Conjure (Bonus Action):</strong> Summon a pact weapon (any Simple or Martial Melee). Use CHA for attack and damage instead of STR/DEX.<br><br>
             <strong>Bond (Bonus Action):</strong> Touch a magic weapon to bond with it (can't bond to attuned/bonded items).<br><br>
-            Fear and Hunger are bonded scimitars.
+            Luck and Judgement are bonded scimitars.
           </div>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-header">
+            <span class="feature-name">Eldritch Invocations</span>
+            <span class="feature-source">Warlock</span>
+          </div>
+          <div class="feature-summary">Forbidden magical techniques known through your patron. Pact of the Blade is one of your invocations.</div>
         </div>
 
         <div class="feature-card" data-tooltip="feat-pactmagic">
@@ -1039,6 +1102,14 @@
           <div class="feature-summary">Proficiency in any combination of 3 skills or tools. Repeatable.</div>
         </div>
 
+        <div class="feature-card">
+          <div class="feature-header">
+            <span class="feature-name">Charlatan ASI</span>
+            <span class="feature-source">Background</span>
+          </div>
+          <div class="feature-summary">Background ability increases applied as +2 Charisma and +1 Constitution.</div>
+        </div>
+
       </div>
     </div>
 
@@ -1059,16 +1130,16 @@
       <div class="hud-sub">Stolen finery, tools of deception, and well-worn weapons.</div>
     </div>
     <div style="font-family:'Barlow Condensed',sans-serif;font-size:11px;color:var(--text-dim);letter-spacing:1px;text-transform:uppercase;">
-      Gear: <span style="color:var(--gold);">11 items</span>
+      Gear: <span style="color:var(--gold);">8 items</span>
     </div>
   </div>
 
   <div class="currency-bar">
-    <div class="currency-item"><div class="currency-coin pp">PP</div><span class="currency-value">0</span></div>
-    <div class="currency-item"><div class="currency-coin gp">GP</div><span class="currency-value">18</span></div>
-    <div class="currency-item"><div class="currency-coin ep">EP</div><span class="currency-value">0</span></div>
-    <div class="currency-item"><div class="currency-coin sp">SP</div><span class="currency-value">0</span></div>
-    <div class="currency-item"><div class="currency-coin cp">CP</div><span class="currency-value">0</span></div>
+    <div class="currency-item"><div class="currency-coin pp">PP</div><span class="currency-value">-</span></div>
+    <div class="currency-item"><div class="currency-coin gp">GP</div><span class="currency-value">-</span></div>
+    <div class="currency-item"><div class="currency-coin ep">EP</div><span class="currency-value">-</span></div>
+    <div class="currency-item"><div class="currency-coin sp">SP</div><span class="currency-value">-</span></div>
+    <div class="currency-item"><div class="currency-coin cp">CP</div><span class="currency-value">-</span></div>
     <div style="margin-left:auto;font-family:'Barlow Condensed',sans-serif;font-size:11px;color:var(--text-dim);">
       Weight: <span style="color:var(--text-secondary);">43 lb</span> /
       Encumbered: <span style="color:var(--text-secondary);">165 lb</span> /
@@ -1080,21 +1151,21 @@
   <div class="inventory-grid">
 
     <div class="item-card signature">
-      <div class="card-topline"><span class="item-type">Weapon</span><span class="item-weight">2 lb</span></div>
-      <div class="item-main"><span class="item-icon">⚔</span><div><div class="item-name">Fear (Scimitar)</div><div class="item-qty">Bonded Pact Blade</div></div></div>
+      <div class="card-topline"><span class="item-type">Weapon</span><span class="item-weight">3 lb</span></div>
+      <div class="item-main"><span class="item-icon">⚔</span><div><div class="item-name">Luck (Scimitar)</div><div class="item-qty">Bonded Pact Blade</div></div></div>
       <div class="item-tags"><span class="item-tag">Finesse</span><span class="item-tag">Light</span><span class="item-tag">Nick</span></div>
       <div class="item-note">Bonded to Lygas through Pact of the Blade. Wickedly serrated, carved with briar thorns.</div>
     </div>
 
     <div class="item-card signature">
-      <div class="card-topline"><span class="item-type">Weapon</span><span class="item-weight">2 lb</span></div>
-      <div class="item-main"><span class="item-icon">⚔</span><div><div class="item-name">Hunger (Scimitar)</div><div class="item-qty">Bonded Pact Blade</div></div></div>
+      <div class="card-topline"><span class="item-type">Weapon</span><span class="item-weight">3 lb</span></div>
+      <div class="item-main"><span class="item-icon">⚔</span><div><div class="item-name">Judgement (Scimitar)</div><div class="item-qty">Bonded Pact Blade</div></div></div>
       <div class="item-tags"><span class="item-tag">Finesse</span><span class="item-tag">Light</span><span class="item-tag">Nick</span></div>
-      <div class="item-note">Companion blade to Fear. Enchanted to bond through Pact of the Blade covenant.</div>
+      <div class="item-note">Companion blade to Luck. Enchanted to bond through Pact of the Blade covenant.</div>
     </div>
 
     <div class="item-card">
-      <div class="card-topline"><span class="item-type">Armour</span><span class="item-weight">10 lb</span></div>
+      <div class="card-topline"><span class="item-type">Armour</span><span class="item-weight">20 lb</span></div>
       <div class="item-main"><span class="item-icon">🛡</span><div><div class="item-name">Chain Shirt</div><div class="item-qty">AC 13 + DEX</div></div></div>
       <div class="item-tags"><span class="item-tag">Medium Armour</span><span class="item-tag">Stealth</span></div>
       <div class="item-note">Light chain mesh worn beneath fine clothes. Bought with charlatan's gold.</div>
@@ -1115,10 +1186,17 @@
     </div>
 
     <div class="item-card">
-      <div class="card-topline"><span class="item-type">Apparel</span><span class="item-weight">3 lb</span></div>
-      <div class="item-main"><span class="item-icon">👔</span><div><div class="item-name">Costume · Fine Clothes</div><div class="item-qty">Qty: 1</div></div></div>
-      <div class="item-tags"><span class="item-tag">Deception</span><span class="item-tag">Performance</span></div>
-      <div class="item-note">Silk and velvet in jewel tones. Perfect for a charlatan's false identity.</div>
+      <div class="card-topline"><span class="item-type">Apparel</span><span class="item-weight">4 lb</span></div>
+      <div class="item-main"><span class="item-icon">🎭</span><div><div class="item-name">Costume</div><div class="item-qty">Qty: 1</div></div></div>
+      <div class="item-tags"><span class="item-tag">Deception</span><span class="item-tag">Persona</span></div>
+      <div class="item-note">Wearable identity kit for frauds, performances, and social infiltration.</div>
+    </div>
+
+    <div class="item-card">
+      <div class="card-topline"><span class="item-type">Apparel</span><span class="item-weight">6 lb</span></div>
+      <div class="item-main"><span class="item-icon">👔</span><div><div class="item-name">Fine Clothes</div><div class="item-qty">Qty: 1</div></div></div>
+      <div class="item-tags"><span class="item-tag">Formal</span><span class="item-tag">Social</span></div>
+      <div class="item-note">Well-tailored attire used when Lygas needs to pass as nobility or a court official.</div>
     </div>
 
     <div class="item-card">
@@ -1126,30 +1204,6 @@
       <div class="item-main"><span class="item-icon">✒</span><div><div class="item-name">Forgery Kit</div><div class="item-qty">Qty: 1</div></div></div>
       <div class="item-tags"><span class="item-tag">Documents</span><span class="item-tag">Seals</span></div>
       <div class="item-note">Inks, parchments, seal stamps, and reference papers for creating false credentials.</div>
-    </div>
-
-    <div class="item-card">
-      <div class="card-topline"><span class="item-type">Container</span><span class="item-weight">5 lb</span></div>
-      <div class="item-main"><span class="item-icon">🎒</span><div><div class="item-name">Backpack</div><div class="item-qty">Qty: 1</div></div></div>
-      <div class="item-note">Worn leather pack holding travel essentials, spare rope, and personal effects.</div>
-    </div>
-
-    <div class="item-card">
-      <div class="card-topline"><span class="item-type">Utility</span><span class="item-weight">5 lb</span></div>
-      <div class="item-main"><span class="item-icon">🪢</span><div><div class="item-name">Rope</div><div class="item-qty">Qty: 1 · 50 ft</div></div></div>
-      <div class="item-note">Silk rope for climbing and restraint. Quiet and reliable.</div>
-    </div>
-
-    <div class="item-card">
-      <div class="card-topline"><span class="item-type">Consumable</span><span class="item-weight">2 lb</span></div>
-      <div class="item-main"><span class="item-icon">🧺</span><div><div class="item-name">Rations</div><div class="item-qty">Qty: 2 days</div></div></div>
-      <div class="item-note">Dried travel food for quick meals on the road.</div>
-    </div>
-
-    <div class="item-card">
-      <div class="card-topline"><span class="item-type">Utility</span><span class="item-weight">2 lb</span></div>
-      <div class="item-main"><span class="item-icon">🫗</span><div><div class="item-name">Waterskin</div><div class="item-qty">Qty: 1</div></div></div>
-      <div class="item-note">Full carry volume for travel between water sources.</div>
     </div>
 
   </div>
@@ -1208,7 +1262,7 @@ const baseStats = {
   ac: 15,
   speed: 30,
   spellDc: 14,
-  spellAttack: 4,
+  spellAttack: 6,
 };
 
 // ===== TAB SWITCHING =====
@@ -1588,7 +1642,7 @@ const TOOLTIPS = {
   'feat-pactblade': {
     name: 'Pact of the Blade',
     type: 'Eldritch Invocation (Warlock) — SRD 5.2.1',
-    body: 'Conjure a pact weapon (Bonus Action) — any Simple or Martial Melee weapon. Or bond with a magic weapon you touch (Bonus Action). Use CHA for attack and damage rolls with the bonded weapon. Bond ends if weapon is >5 ft away for 1 min, you die, or you use this feature again.',
+    body: 'Conjure a pact weapon (Bonus Action) — any Simple or Martial Melee weapon. Or bond with a magic weapon you touch (Bonus Action). Use CHA for attack and damage rolls with the bonded weapon. Bond ends if weapon is >5 ft away for 1 min, you die, or you use this feature again. Lygas currently has bonded scimitars named Luck and Judgement.',
     stats: { 'Action': 'Bonus Action', 'Ability': 'CHA for attack/damage', 'Damage Types': 'Necrotic/Psychic/Radiant or normal' }
   },
   'feat-pactmagic': {
@@ -1600,7 +1654,7 @@ const TOOLTIPS = {
   'feat-twf': {
     name: 'Two-Weapon Fighting',
     type: 'Fighting Style Feat — SRD 5.2.1',
-    body: 'When you make an extra attack as a result of using a Light weapon\'s Nick mastery property, you can add your ability modifier to that attack\'s damage roll. Applies to both Fear and Hunger.',
+    body: 'When you make an extra attack as a result of using a Light weapon\'s Nick mastery property, you can add your ability modifier to that attack\'s damage roll. Applies to both Luck and Judgement.',
     stats: {}
   },
   'feat-weaponmastery': {

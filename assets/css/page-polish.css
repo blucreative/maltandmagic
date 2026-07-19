@@ -77,8 +77,27 @@ body[class*='page-'] :is(input[type='text'], input[type='number'], input[type='s
 }
 
 body[class*='page-'] :is(a, button, input, select, textarea):focus-visible {
-  outline: 2px solid currentColor;
+  outline: 2px solid #f4ddac;
   outline-offset: 2px;
+  box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.45);
+}
+
+body[class*='page-'] :is(a, button, input, select, textarea):focus {
+  scroll-margin: 1rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  body[class*='page-'] *,
+  body[class*='page-'] *::before,
+  body[class*='page-'] *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }
 
 /* Fantasy pages: lore readability and heading cadence */
