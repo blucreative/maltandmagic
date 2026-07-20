@@ -7,11 +7,34 @@ description: Use the official D&D 5e (2024) SRD 5.2.1 markdown corpus as the pri
 
 Use this skill whenever the sheet needs rules-accurate structure for spells, conditions, rests, class features, and resource tracking. **Accuracy is mandatory — never invent spells, class features, or mechanics. If a spell or feature cannot be found in the SRD, it must not appear as rules-accurate content.**
 
-## Authoritative Source
+## Source Priority
+
+### Primary Authoritative Source
 
 Repository: `https://github.com/downfallx/dnd-5e-srd-markdown`
 
 This is the official D&D 5e (2024) SRD 5.2.1 converted to markdown. Licensed under CC BY 4.0 by Wizards of the Coast. Use the raw content URLs below to fetch data directly.
+
+### Secondary Supplemental Source
+
+Repository: `https://github.com/lyoei/dnd-5e-2024`
+
+Use this as a supplemental lookup/index when the SRD source does not cover the needed structure, when you need broader 2024 PHB/DMG organization, or when you need a fast directory-oriented pointer to likely files. This repository is community-maintained and many entries are marked `needs-source-check`, so it is **not authoritative RAW**.
+
+Use its raw content URLs in this format:
+
+- `https://raw.githubusercontent.com/lyoei/dnd-5e-2024/main/classes/<file>.md`
+- `https://raw.githubusercontent.com/lyoei/dnd-5e-2024/main/spells/<level>/<file>.md`
+- `https://raw.githubusercontent.com/lyoei/dnd-5e-2024/main/rules/<topic>/<file>.md`
+- `https://raw.githubusercontent.com/lyoei/dnd-5e-2024/main/2024-vs-2014.md`
+
+Treat this repository as a research aid only:
+
+- Prefer it for discovery, cross-reference, and topic navigation.
+- Prefer entries marked `verified` over `partially-verified` or `needs-source-check`.
+- Never let it override the SRD when the SRD covers the rule.
+- If it conflicts with the SRD, the SRD wins.
+- If it provides non-SRD material, label it explicitly as supplemental or homebrew-adjacent reference rather than rules-accurate canon.
 
 ## Raw Content URLs (fetch these directly)
 
@@ -28,16 +51,19 @@ This is the official D&D 5e (2024) SRD 5.2.1 converted to markdown. Licensed und
 
 When asked to verify or implement a spell or class feature:
 
-1. **Fetch the SRD source.** Use `fetch_webpage` with the appropriate raw URL above.
-2. **Search for the spell/feature by exact name.** If it is not found in the SRD, it does not exist in the official rules.
-3. **Extract the exact entry.** Capture: casting time, range, components, duration, and effect text.
-4. **Cross-check against class spell list.** Confirm the spell appears under the correct class's spell list section in `classes.md`.
-5. **Flag any content not in the SRD.** Label it explicitly as homebrew or custom content — never present it as rules-accurate.
-6. **Implement only SRD-confirmed mechanics.** Convert evidence into:
+1. **Fetch the SRD source first.** Use `fetch_webpage` with the appropriate raw URL above.
+2. **Search for the spell/feature by exact name in the SRD.** If it is found there, treat that as ground truth.
+3. **Use the secondary source only when needed.** If the SRD does not cover the needed topic, use `https://github.com/lyoei/dnd-5e-2024` to locate likely files, broader organization, or supplemental 2024 references.
+4. **Extract the exact evidence.** Capture: casting time, range, components, duration, effect text, and source status when using the secondary repository.
+5. **Cross-check against class spell list.** Confirm the spell appears under the correct class's spell list section in `classes.md` when the spell is in SRD scope.
+6. **Flag any content not in the SRD.** Label it explicitly as supplemental, homebrew, custom, or unverified as appropriate — never present it as rules-accurate SRD canon.
+7. **Implement only SRD-confirmed mechanics as rules-accurate defaults.** Convert evidence into:
    - State fields (what the sheet tracks)
    - Triggers (how the effect activates/deactivates)
    - Effects on derived stats (AC, speed, damage, etc.)
    - Reset conditions (short rest, long rest, end of turn, etc.)
+
+If the requested mechanic is outside SRD scope but present in the supplemental source, surface that status clearly before implementing behavior.
 
 ## Class Spell List Lookup Pattern
 
@@ -84,6 +110,7 @@ Confirmed from `classes.md` → `### Ranger Spell List` → `#### Level 1 Ranger
 - Do not invent spells. If a spell name cannot be found in `spells.md`, it must not appear on a character sheet.
 - Do not invent class features. All features must be verifiable in `classes.md`.
 - For uncertain wording, quote the SRD excerpt directly before implementing any behavior.
+- Use the `lyoei/dnd-5e-2024` repository only as a secondary research source and cite its verification status when relying on it.
 - Keep the app static-site compatible (no backend required).
 - Label any homebrew or custom content explicitly as non-SRD.
 
@@ -92,6 +119,7 @@ Confirmed from `classes.md` → `### Ranger Spell List` → `#### Level 1 Ranger
 For each researched mechanic, produce:
 - `Mechanic`: short name
 - `SRD Evidence`: raw URL + section heading + key quote
+- `Supplemental Evidence`: optional raw URL + file status (`verified`, `partially-verified`, or `needs-source-check`) + key summary
 - `State Model`: fields required in session state
 - `UI Controls`: buttons/toggles/counters needed
 - `Reset Logic`: when and how values reset
