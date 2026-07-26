@@ -165,24 +165,28 @@ body::before {
 .sec-tools  .sec-tag   { background: rgba(100,153,184,0.14); color: #b9d8ec; border-color: rgba(135,186,217,0.32); }
 
 /* archive section */
-.archive-toggle {
+/* scoped with .section to override theme-fantasy.css `body.theme-fantasy button` (spec 0,1,2) */
+.section .archive-toggle {
   display: flex;
-  align-items: baseline;
-  gap: 0.9rem;
+  align-items: center;
+  gap: 1rem;
   margin-bottom: 1.25rem;
-  padding-bottom: 0.7rem;
-  border-bottom: 1px solid var(--border);
-  background: transparent;
-  border: none;
+  padding: 0.95rem 1.35rem;
+  background: var(--surface);
+  border: 1px solid var(--border-mid);
+  border-radius: 10px;
+  box-shadow: none;
   color: inherit;
   font-family: inherit;
   cursor: pointer;
   width: 100%;
-  transition: opacity 0.2s ease;
+  transition: background 0.2s ease, border-color 0.2s ease;
 }
 
-.archive-toggle:hover {
-  opacity: 0.8;
+.section .archive-toggle:hover {
+  background: var(--surface2);
+  border-color: var(--border-hi);
+  opacity: 1;
 }
 
 .archive-title {
