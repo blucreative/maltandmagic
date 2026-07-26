@@ -1272,6 +1272,22 @@
   .condition-badge.active { background: rgba(139,47,47,0.3); border-color: rgba(192,80,80,0.5); color: #c05050; }
   .condition-badge.inactive { background: rgba(58,79,53,0.15); border-color: rgba(58,79,53,0.3); color: var(--text-dim); }
 
+  /* Exhaustion + condition effects */
+  .exhaustion-control { display:flex; align-items:center; gap:8px; margin-top:10px; flex-wrap:wrap; }
+  .exh-title { font-family:'Barlow Condensed',sans-serif; font-size:10px; font-weight:600; letter-spacing:1.5px; text-transform:uppercase; color:var(--text-dim); border-bottom:1px dotted var(--gold-dim); cursor:help; }
+  .exh-btn { width:22px; height:22px; border-radius:6px; border:1px solid var(--forest-border); background:rgba(18,24,15,0.7); color:var(--gold); cursor:pointer; font-size:15px; line-height:1; display:flex; align-items:center; justify-content:center; transition:all .15s; padding:0; }
+  .exh-btn:hover { border-color:var(--gold-dim); color:var(--gold-light); background:rgba(74,103,65,0.15); }
+  .exh-readout { font-family:'Barlow Condensed',sans-serif; font-size:11px; letter-spacing:1px; color:var(--text-secondary); }
+  .exh-level { font-weight:700; color:var(--gold-light); }
+  .exh-level.danger { color:var(--danger-light); }
+  .condition-effects { margin-top:10px; padding:8px 11px; border:1px solid var(--forest-border); border-radius:8px; background:rgba(18,24,15,0.5); font-family:'Barlow Condensed',sans-serif; font-size:11px; line-height:1.55; color:var(--text-secondary); }
+  .condition-effects .ce-line { display:block; margin:1px 0; }
+  .condition-effects .ce-head { color:var(--gold-light); font-weight:700; letter-spacing:1px; text-transform:uppercase; font-size:10px; margin-bottom:3px; }
+  .condition-effects .ce-adv { color:#5fce9a; font-weight:600; }
+  .condition-effects .ce-dis { color:#c05050; font-weight:600; }
+  .condition-effects .ce-none { color:var(--text-dim); }
+  .weapon-hit.stat-modified, .cs-val.stat-modified { color: var(--danger-light) !important; }
+
   /* Scrollbar */
   ::-webkit-scrollbar { width: 8px; height: 8px; }
   ::-webkit-scrollbar-track { background: rgba(26,34,24,0.3); }
@@ -1738,14 +1754,28 @@
         <!-- CONDITIONS -->
         <div style="font-family:'Barlow Condensed',sans-serif;font-size:9px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--text-dim);margin-bottom:4px;">Conditions</div>
         <div class="conditions-row">
-          <div class="condition-badge inactive" onclick="toggleCondition(this)">Prone</div>
-          <div class="condition-badge inactive" onclick="toggleCondition(this)">Blinded</div>
-          <div class="condition-badge inactive" onclick="toggleCondition(this)">Stunned</div>
-          <div class="condition-badge inactive" onclick="toggleCondition(this)">Frightened</div>
-          <div class="condition-badge inactive" onclick="toggleCondition(this)">Poisoned</div>
-          <div class="condition-badge inactive" onclick="toggleCondition(this)">Restrained</div>
-          <div class="condition-badge inactive" onclick="toggleCondition(this)">Incapacitated</div>
+          <div class="condition-badge inactive" data-condition="Blinded" data-tooltip="cond-blinded" onclick="toggleCondition(this)">Blinded</div>
+          <div class="condition-badge inactive" data-condition="Charmed" data-tooltip="cond-charmed" onclick="toggleCondition(this)">Charmed</div>
+          <div class="condition-badge inactive" data-condition="Deafened" data-tooltip="cond-deafened" onclick="toggleCondition(this)">Deafened</div>
+          <div class="condition-badge inactive" data-condition="Frightened" data-tooltip="cond-frightened" onclick="toggleCondition(this)">Frightened</div>
+          <div class="condition-badge inactive" data-condition="Grappled" data-tooltip="cond-grappled" onclick="toggleCondition(this)">Grappled</div>
+          <div class="condition-badge inactive" data-condition="Incapacitated" data-tooltip="cond-incapacitated" onclick="toggleCondition(this)">Incapacitated</div>
+          <div class="condition-badge inactive" data-condition="Invisible" data-tooltip="cond-invisible" onclick="toggleCondition(this)">Invisible</div>
+          <div class="condition-badge inactive" data-condition="Paralyzed" data-tooltip="cond-paralyzed" onclick="toggleCondition(this)">Paralyzed</div>
+          <div class="condition-badge inactive" data-condition="Petrified" data-tooltip="cond-petrified" onclick="toggleCondition(this)">Petrified</div>
+          <div class="condition-badge inactive" data-condition="Poisoned" data-tooltip="cond-poisoned" onclick="toggleCondition(this)">Poisoned</div>
+          <div class="condition-badge inactive" data-condition="Prone" data-tooltip="cond-prone" onclick="toggleCondition(this)">Prone</div>
+          <div class="condition-badge inactive" data-condition="Restrained" data-tooltip="cond-restrained" onclick="toggleCondition(this)">Restrained</div>
+          <div class="condition-badge inactive" data-condition="Stunned" data-tooltip="cond-stunned" onclick="toggleCondition(this)">Stunned</div>
+          <div class="condition-badge inactive" data-condition="Unconscious" data-tooltip="cond-unconscious" onclick="toggleCondition(this)">Unconscious</div>
         </div>
+        <div class="exhaustion-control">
+          <span class="exh-title" data-tooltip="cond-exhaustion">Exhaustion</span>
+          <button class="exh-btn" onclick="setExhaustion(-1)" aria-label="Decrease exhaustion level">−</button>
+          <span class="exh-readout">Level <span class="exh-level" id="exhLevel">0</span> / 6</span>
+          <button class="exh-btn" onclick="setExhaustion(1)" aria-label="Increase exhaustion level">+</button>
+        </div>
+        <div class="condition-effects" id="conditionEffects"><span class="ce-none">No active conditions. Toggle a condition or raise Exhaustion to see its effects here.</span></div>
       </div>
     </div>
 
@@ -1774,7 +1804,7 @@
           </div>
           <div class="weapon-stats">
             <div>
-              <div class="weapon-hit" id="battleaxe-hit">+4</div>
+              <div class="weapon-hit" id="battleaxe-hit" data-base="4">+4</div>
               <div class="weapon-hit-label">To Hit</div>
             </div>
             <div class="weapon-damage" id="battleaxe-dmg">1d8+2 Slashing</div>
@@ -1804,7 +1834,7 @@
           </div>
           <div class="weapon-stats">
             <div>
-              <div class="weapon-hit" id="crossbow-hit">+5</div>
+              <div class="weapon-hit" id="crossbow-hit" data-base="5">+5</div>
               <div class="weapon-hit-label">To Hit</div>
             </div>
             <div class="weapon-damage" id="crossbow-dmg">1d6+3 Piercing</div>
@@ -1835,7 +1865,7 @@
           </div>
           <div class="weapon-stats">
             <div>
-              <div class="weapon-hit">+4</div>
+              <div class="weapon-hit" data-base="4">+4</div>
               <div class="weapon-hit-label">To Hit</div>
             </div>
             <div class="weapon-damage">3 Bludgeoning</div>
@@ -2475,6 +2505,23 @@
 <script>
 const TOOLTIPS = {
 
+  // CONDITIONS
+  "cond-blinded": { name:"Blinded", type:"Condition", body:"You can't see and automatically fail any ability check that requires sight. Attack rolls against you have Advantage, and your attack rolls have Disadvantage.", stats:{"Your attacks":"Disadvantage","Attacks vs you":"Advantage"} },
+  "cond-charmed": { name:"Charmed", type:"Condition", body:"You can't attack the charmer or target it with harmful abilities or magical effects. The charmer has Advantage on any ability check to interact with you socially.", stats:{"Can't":"Harm the charmer","Charmer":"Social Advantage"} },
+  "cond-deafened": { name:"Deafened", type:"Condition", body:"You can't hear and automatically fail any ability check that requires hearing.", stats:{"Effect":"Auto-fail hearing checks"} },
+  "cond-frightened": { name:"Frightened", type:"Condition", body:"You have Disadvantage on ability checks and attack rolls while the source of fear is within line of sight. You can't willingly move closer to the source of fear.", stats:{"Attacks & checks":"Disadvantage","Movement":"Can't approach source"} },
+  "cond-grappled": { name:"Grappled", type:"Condition", body:"Your Speed is 0 and can't increase. You have Disadvantage on attack rolls against any target other than the grappler. The grappler can drag or carry you.", stats:{"Speed":"0","Attacks":"Disadv. vs non-grappler"} },
+  "cond-incapacitated": { name:"Incapacitated", type:"Condition", body:"You can't take any action, Bonus Action, or Reaction, your Concentration is broken, and you can't speak. If you're Incapacitated when you roll Initiative, you have Disadvantage on the roll.", stats:{"Actions":"None","Concentration":"Broken"} },
+  "cond-invisible": { name:"Invisible", type:"Condition", body:"You aren't affected by effects that require the target to be seen. Attack rolls against you have Disadvantage, and your attack rolls have Advantage. You have Advantage on Initiative rolls.", stats:{"Your attacks":"Advantage","Attacks vs you":"Disadvantage"} },
+  "cond-paralyzed": { name:"Paralyzed", type:"Condition", body:"You have the Incapacitated condition and a Speed of 0. You automatically fail Strength and Dexterity saving throws. Attack rolls against you have Advantage, and any attack that hits you from within 5 feet is a Critical Hit.", stats:{"Speed":"0","STR/DEX saves":"Auto-fail","Attacks vs you":"Advantage (crit ≤5 ft)"} },
+  "cond-petrified": { name:"Petrified", type:"Condition", body:"You are transformed into a solid inanimate substance. You have the Incapacitated condition and a Speed of 0, you automatically fail STR and DEX saves, attacks against you have Advantage, you have Resistance to all damage, and you're immune to the Poisoned condition.", stats:{"Speed":"0","STR/DEX saves":"Auto-fail","Damage":"Resist all"} },
+  "cond-poisoned": { name:"Poisoned", type:"Condition", body:"You have Disadvantage on attack rolls and ability checks.", stats:{"Attacks & checks":"Disadvantage"} },
+  "cond-prone": { name:"Prone", type:"Condition", body:"Your only movement options are to crawl or to spend half your Speed to stand up. You have Disadvantage on attack rolls. An attack roll against you has Advantage if the attacker is within 5 feet, otherwise Disadvantage.", stats:{"Your attacks":"Disadvantage","Attacks vs you":"Adv ≤5 ft / Disadv beyond"} },
+  "cond-restrained": { name:"Restrained", type:"Condition", body:"Your Speed is 0 and can't increase. You have Disadvantage on attack rolls and on Dexterity saving throws. Attack rolls against you have Advantage.", stats:{"Speed":"0","Your attacks":"Disadvantage","DEX saves":"Disadvantage"} },
+  "cond-stunned": { name:"Stunned", type:"Condition", body:"You have the Incapacitated condition. You automatically fail Strength and Dexterity saving throws, and attack rolls against you have Advantage.", stats:{"Actions":"None","STR/DEX saves":"Auto-fail","Attacks vs you":"Advantage"} },
+  "cond-unconscious": { name:"Unconscious", type:"Condition", body:"You have the Incapacitated and Prone conditions, drop what you're holding, and have a Speed of 0. You automatically fail STR and DEX saves, attacks against you have Advantage, and any hit from within 5 feet is a Critical Hit.", stats:{"Speed":"0","STR/DEX saves":"Auto-fail","Attacks vs you":"Advantage (crit ≤5 ft)"} },
+  "cond-exhaustion": { name:"Exhaustion", type:"Condition (Leveled 1–6)", body:"Cumulative. Each level reduces every D20 Test (attack rolls, ability checks, and saving throws) by 2× your Exhaustion level, and reduces your Speed by 5× your level. At level 6 you die. A Long Rest removes one level.", stats:{"D20 Tests":"−2 × level","Speed":"−5 ft × level","Level 6":"Death","Recover":"−1 per Long Rest"} },
+
   // ABILITY SCORES
   strength: { name: "Strength", type: "Ability Score", body: "Measures physical power. Used for melee attack rolls, Athletics checks, and carrying capacity. Viktor's STR of 14 gives a +2 modifier.", stats: {"Score":"14","Modifier":"+2","Save":"+4 (Prof)"} },
   dexterity: { name: "Dexterity", type: "Ability Score", body: "Measures agility, reflexes, and balance. Used for ranged attacks, AC, Initiative, Stealth, and Acrobatics. Viktor's DEX of 17 gives a +3 modifier.", stats: {"Score":"17","Modifier":"+3","Save":"+5 (Prof)"} },
@@ -2790,6 +2837,7 @@ function saveSheetState() {
         name: (el.textContent || '').trim(),
         active: el.classList.contains('active'),
       })),
+      exhaustion: exhaustionLevel,
       customInventoryItems,
       activeTab: document.querySelector('.tab-panel.active')?.id || 'tab-combat',
     };
@@ -2874,6 +2922,8 @@ function loadSheetState() {
       });
     }
 
+    if (typeof saved.exhaustion === 'number') exhaustionLevel = Math.max(0, Math.min(6, saved.exhaustion));
+
     refreshDerivedStats();
     updateWeaponDisplay('battleaxe');
     updateWeaponDisplay('crossbow');
@@ -2923,7 +2973,7 @@ function refreshDerivedStats() {
   const acEl = document.getElementById('acVal');
   const speedEl = document.getElementById('speedVal');
   if (acEl) acEl.textContent = String(ac);
-  if (speedEl) speedEl.textContent = `${speed}ft`;
+  if (speedEl) { speedEl.dataset.base = String(speed); speedEl.textContent = `${speed}ft`; }
 
   ['spellDcQuick', 'spellDcFull'].forEach(id => {
     const el = document.getElementById(id);
@@ -2957,7 +3007,6 @@ function refreshDerivedStats() {
   setStatusPill('anticipate-pill', sheetState.anticipate);
   setStatusPill('hm-pill', sheetState.huntersMark);
   setStatusPill('defense-pill', sheetState.defense);
-
   const critText = sheetState.anticipate ? '19-20 crit range active' : '';
   const battleaxeAdv = document.getElementById('battleaxe-adv-label');
   const crossbowAdv = document.getElementById('crossbow-adv-label');
@@ -2973,6 +3022,7 @@ function refreshDerivedStats() {
   });
 
   refreshSpellAvailability();
+  applyConditionEffects();
 }
 
 function toggleFeatureEffect(name) {
@@ -3152,10 +3202,162 @@ function toggleResource(el) {
   saveSheetState();
 }
 
+// ===== CONDITIONS ENGINE =====
+let exhaustionLevel = 0;
+
+const CONDITION_EFFECTS = {
+  Blinded:      { atk:'dis', def:'adv', note:'Auto-fails any ability check that requires sight.' },
+  Charmed:      { note:"Can't attack or harm the charmer; the charmer has Advantage on social checks against you." },
+  Deafened:     { note:'Auto-fails any ability check that requires hearing.' },
+  Frightened:   { atk:'dis', chk:'dis', note:"Can't willingly move closer to the source of fear while it's in sight." },
+  Grappled:     { speed0:true, note:'Disadvantage on attack rolls against any target other than the grappler.' },
+  Incapacitated:{ incap:true },
+  Invisible:    { atk:'adv', def:'dis', note:'Advantage on Initiative; unaffected by effects that require sight.' },
+  Paralyzed:    { incap:true, speed0:true, def:'adv', failStrDex:true, note:'Any hit from within 5 ft. is a Critical Hit.' },
+  Petrified:    { incap:true, speed0:true, def:'adv', failStrDex:true, note:'Resistance to all damage; immune to the Poisoned condition.' },
+  Poisoned:     { atk:'dis', chk:'dis' },
+  Prone:        { atk:'dis', note:'Attacks against you have Advantage within 5 ft., Disadvantage beyond. Stand up by spending half your Speed.' },
+  Restrained:   { speed0:true, atk:'dis', def:'adv', dexSaveDis:true },
+  Stunned:      { incap:true, def:'adv', failStrDex:true },
+  Unconscious:  { incap:true, speed0:true, def:'adv', failStrDex:true, note:"Also Prone; drops held items; hits from within 5 ft. are Critical Hits." },
+};
+
+function activeConditions() {
+  return Array.from(document.querySelectorAll('.condition-badge.active'))
+    .map(el => el.dataset.condition || (el.textContent || '').trim());
+}
+
+function advDisNet(adv, dis) {
+  if (adv && dis) return 'cancel';
+  if (adv) return 'adv';
+  if (dis) return 'dis';
+  return 'none';
+}
+
+function fmtSigned(n) { return (n >= 0 ? '+' : '−') + Math.abs(n); }
+
+function setExhaustion(delta) {
+  exhaustionLevel = Math.max(0, Math.min(6, exhaustionLevel + delta));
+  applyConditionEffects();
+  saveSheetState();
+}
+
+function applyConditionEffects() {
+  const active = activeConditions();
+  const has = name => active.includes(name);
+  const exhPenalty = exhaustionLevel * 2;
+
+  const exhEl = document.getElementById('exhLevel');
+  if (exhEl) {
+    exhEl.textContent = exhaustionLevel;
+    exhEl.classList.toggle('danger', exhaustionLevel >= 3);
+  }
+
+  let speed0 = false, incap = false, failStrDex = false, dexSaveDis = false;
+  const atkAdvSrc = [], atkDisSrc = [], defAdvSrc = [], defDisSrc = [], chkDisSrc = [];
+  active.forEach(name => {
+    const e = CONDITION_EFFECTS[name];
+    if (!e) return;
+    if (e.speed0) speed0 = true;
+    if (e.incap) incap = true;
+    if (e.failStrDex) failStrDex = true;
+    if (e.dexSaveDis) dexSaveDis = true;
+    if (e.atk === 'adv') atkAdvSrc.push(name);
+    if (e.atk === 'dis') atkDisSrc.push(name);
+    if (e.def === 'adv') defAdvSrc.push(name);
+    if (e.def === 'dis') defDisSrc.push(name);
+    if (e.chk === 'dis') chkDisSrc.push(name);
+  });
+
+  // ----- SPEED (base is set by refreshDerivedStats incl. Longstrider) -----
+  const speedEl = document.getElementById('speedVal');
+  if (speedEl) {
+    const base = parseInt(speedEl.dataset.base || '30', 10);
+    let sp = base;
+    if (speed0) sp = 0;
+    else if (exhaustionLevel > 0) sp = Math.max(0, base - 5 * exhaustionLevel);
+    speedEl.textContent = sp + 'ft';
+    speedEl.classList.toggle('stat-modified', sp !== base);
+  }
+
+  // ----- WEAPON TO-HIT (Exhaustion penalty) -----
+  document.querySelectorAll('.weapon-hit[data-base]').forEach(el => {
+    const base = parseInt(el.dataset.base, 10);
+    el.textContent = fmtSigned(base - exhPenalty);
+    el.classList.toggle('stat-modified', exhPenalty !== 0);
+  });
+
+  // ----- READOUT -----
+  const readout = document.getElementById('conditionEffects');
+  if (!readout) return;
+  if (active.length === 0 && exhaustionLevel === 0) {
+    readout.innerHTML = '<span class="ce-none">No active conditions. Toggle a condition or raise Exhaustion to see its effects here.</span>';
+    return;
+  }
+
+  const lines = [];
+  const activeLabels = active.slice();
+  if (exhaustionLevel > 0) activeLabels.push('Exhaustion ' + exhaustionLevel);
+  lines.push(`<span class="ce-line ce-head">Active: ${activeLabels.join(', ') || '—'}</span>`);
+
+  if (exhaustionLevel >= 6) {
+    lines.push('<span class="ce-line ce-dis"><b>Exhaustion 6 — the character dies.</b></span>');
+  }
+
+  // Your attack rolls
+  const atkParts = [];
+  const netAtk = advDisNet(atkAdvSrc.length, atkDisSrc.length);
+  if (netAtk === 'adv') atkParts.push(`<span class="ce-adv">Advantage</span> (${atkAdvSrc.join(', ')})`);
+  else if (netAtk === 'dis') atkParts.push(`<span class="ce-dis">Disadvantage</span> (${atkDisSrc.join(', ')})`);
+  else if (netAtk === 'cancel') atkParts.push(`<span class="ce-none">Advantage &amp; Disadvantage cancel → roll normally</span> (${[...atkAdvSrc, ...atkDisSrc].join(', ')})`);
+  if (exhPenalty) atkParts.push(`<span class="ce-dis">−${exhPenalty} to hit</span> (Exhaustion)`);
+  if (atkParts.length) lines.push(`<span class="ce-line"><b>Your attacks:</b> ${atkParts.join(' · ')}</span>`);
+
+  // Attacks against you
+  const defParts = [];
+  const netDef = advDisNet(defAdvSrc.length, defDisSrc.length);
+  if (netDef === 'adv') defParts.push(`<span class="ce-dis">Advantage</span> (${defAdvSrc.join(', ')})`);
+  else if (netDef === 'dis') defParts.push(`<span class="ce-adv">Disadvantage</span> (${defDisSrc.join(', ')})`);
+  else if (netDef === 'cancel') defParts.push(`<span class="ce-none">Advantage &amp; Disadvantage cancel</span> (${[...defAdvSrc, ...defDisSrc].join(', ')})`);
+  if (has('Prone')) defParts.push('Prone: <span class="ce-dis">Advantage ≤5 ft</span>, <span class="ce-adv">Disadvantage beyond</span>');
+  if (defParts.length) lines.push(`<span class="ce-line"><b>Attacks vs you:</b> ${defParts.join(' · ')}</span>`);
+
+  // Ability checks
+  const chkParts = [];
+  if (chkDisSrc.length) chkParts.push(`<span class="ce-dis">Disadvantage</span> (${chkDisSrc.join(', ')})`);
+  if (exhPenalty) chkParts.push(`<span class="ce-dis">−${exhPenalty}</span> (Exhaustion)`);
+  if (has('Blinded')) chkParts.push('auto-fail sight-based checks');
+  if (has('Deafened')) chkParts.push('auto-fail hearing-based checks');
+  if (chkParts.length) lines.push(`<span class="ce-line"><b>Ability checks:</b> ${chkParts.join(' · ')}</span>`);
+
+  // Saving throws
+  const saveParts = [];
+  if (exhPenalty) saveParts.push(`<span class="ce-dis">−${exhPenalty}</span> on all saves (Exhaustion)`);
+  if (dexSaveDis) saveParts.push('<span class="ce-dis">Disadvantage</span> on DEX saves (Restrained)');
+  if (failStrDex) saveParts.push('<span class="ce-dis">auto-fail</span> STR &amp; DEX saves');
+  if (saveParts.length) lines.push(`<span class="ce-line"><b>Saving throws:</b> ${saveParts.join(' · ')}</span>`);
+
+  // Speed note
+  if (speed0) lines.push('<span class="ce-line"><b>Speed:</b> <span class="ce-dis">0 ft</span> (can\'t move).</span>');
+  else if (exhaustionLevel > 0) lines.push(`<span class="ce-line"><b>Speed:</b> reduced by ${5 * exhaustionLevel} ft (Exhaustion).</span>`);
+
+  // Action economy
+  if (incap) lines.push('<span class="ce-line ce-dis"><b>Incapacitated:</b> no Action, Bonus Action, or Reaction; Concentration broken.</span>');
+
+  // Per-condition notes
+  active.forEach(name => {
+    const e = CONDITION_EFFECTS[name];
+    if (e && e.note) lines.push(`<span class="ce-line"><b>${name}:</b> ${e.note}</span>`);
+  });
+
+  readout.innerHTML = lines.join('');
+}
+
 // ===== CONDITIONS =====
 function toggleCondition(el) {
   el.classList.toggle('active');
   el.classList.toggle('inactive');
+  applyConditionEffects();
   saveSheetState();
 }
 
@@ -3260,6 +3462,7 @@ function updateWeaponDisplay(weapon) {
       advLabel.className = 'adv-indicator';
     }
   }
+  applyConditionEffects();
 }
 
 // ===== REST =====
@@ -3292,9 +3495,12 @@ function longRest() {
     huntersMark = true;
     toggleHuntersMark();
   }
+  // Long Rest removes one level of Exhaustion
+  const exhReduced = exhaustionLevel > 0;
+  if (exhReduced) exhaustionLevel -= 1;
   refreshDerivedStats();
   saveSheetState();
-  alert('Long Rest completed!\n\n• HP restored to 17/17\n• Spell slots restored (2×1st)\n• Hunter\'s Mark free casts restored (2)\n• Adrenaline Rush restored (2)\n• Relentless Endurance restored\n• All conditions cleared (clear manually if needed)');
+  alert('Long Rest completed!\n\n• HP restored to 17/17\n• Spell slots restored (2×1st)\n• Hunter\'s Mark free casts restored (2)\n• Adrenaline Rush restored (2)\n• Relentless Endurance restored' + (exhReduced ? '\n• Exhaustion reduced by 1 (now ' + exhaustionLevel + ')' : '') + '\n• All conditions cleared (clear manually if needed)');
 }
 
 loadSheetState();
