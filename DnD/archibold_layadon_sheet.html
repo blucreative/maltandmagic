@@ -1,0 +1,2922 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Archibold Layadon — Fighter 2 | Malt & Magic</title>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=IM+Fell+English:ital@0;1&family=Barlow:wght@300;400;500;600&family=Barlow+Condensed:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/css/theme-fantasy.css">
+<link rel="stylesheet" href="../assets/css/page-polish.css">
+<script defer src="../assets/js/a11y-sheet-helpers.js"></script>
+<style>
+  :root {
+    /* Arcane Archer / moonlit-indigo palette */
+    --forest-dark: #0d1226;
+    --forest-mid: #161d38;
+    --forest-panel: #121a33;
+    --forest-border: #33406a;
+    --forest-accent: #4a6fae;
+    --gold: #8fb2dc;
+    --gold-light: #c3dbf3;
+    --gold-dim: #45577e;
+    --parchment: #e6ecf7;
+    --parchment-dark: #b9c4dc;
+    --text-primary: #e6ecf7;
+    --text-secondary: #9fadca;
+    --text-dim: #6b7799;
+    --danger: #8b2f4a;
+    --danger-light: #c0405f;
+    --success: #3a7d6b;
+    --success-light: #5aa88a;
+    --hp-bar: #6b2038;
+    --section-bg: rgba(13,18,38,0.85);
+    --card-bg: rgba(18,26,51,0.9);
+    --card-border: rgba(143,178,220,0.22);
+    --tooltip-bg: #0a1024;
+    --advantage: #2e5c4c;
+    --disadvantage: #5c2e2e;
+    --steel: #9fb0d0;
+    --steel-dim: #5f6f95;
+    --arcane: #9a7fe0;
+    --arcane-glow: #b9a2f0;
+    --paper-grain: rgba(200, 214, 240, 0.05);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html,
+  body {
+    max-width: 100%;
+    overflow-x: clip;
+  }
+
+  body {
+    background: #070a18;
+    background-image:
+      radial-gradient(ellipse at 18% 16%, rgba(74, 111, 174, 0.30) 0%, transparent 52%),
+      radial-gradient(ellipse at 84% 80%, rgba(154, 127, 224, 0.18) 0%, transparent 54%),
+      linear-gradient(180deg, #070a18 0%, #101838 52%, #070a18 100%);
+    color: var(--text-primary);
+    font-family: 'Barlow', sans-serif;
+    font-size: 14px;
+    min-height: 100vh;
+    line-height: 1.4;
+    position: relative;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    background-image:
+      radial-gradient(circle at 24% 20%, rgba(143,178,220,0.08) 0 24%, transparent 40%),
+      linear-gradient(115deg, transparent 0%, rgba(154,127,224,0.07) 49%, transparent 52%),
+      repeating-linear-gradient(20deg, transparent 0, transparent 42px, rgba(200,214,240,0.022) 42px, rgba(200,214,240,0.022) 43px);
+    z-index: 0;
+  }
+
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    background: radial-gradient(circle at center, transparent 55%, rgba(0,0,0,0.55) 100%);
+    z-index: 0;
+  }
+
+  .sheet-header,
+  .nav-tabs,
+  .sheet-body {
+    position: relative;
+    z-index: 1;
+    width: min(1400px, 100%);
+    margin-inline: auto;
+  }
+
+  .tooltip-layer {
+    display: contents;
+  }
+
+  /* ===== HEADER ===== */
+  .sheet-header {
+    background: linear-gradient(180deg, rgba(7,10,24,0.96) 0%, rgba(16,24,56,0.94) 65%, rgba(7,10,24,0.94) 100%);
+    border-bottom: 2px solid var(--gold-dim);
+    padding: 16px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.35);
+  }
+  .sheet-header::after {
+    content: 'NOCK · DRAW · LOOSE';
+    position: absolute;
+    right: 24px;
+    bottom: 4px;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 9px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: rgba(159, 176, 208, 0.46);
+  }
+  .char-name {
+    font-family: 'Cinzel', serif;
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--gold-light);
+    letter-spacing: 2px;
+    text-shadow: 0 0 20px rgba(143,178,220,0.32);
+  }
+  .char-meta {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+  }
+  .char-meta-item {
+    text-align: center;
+  }
+  .char-meta-item .label {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 9px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--text-dim);
+  }
+  .char-meta-item .value {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--gold);
+  }
+  .meta-divider {
+    width: 1px;
+    height: 30px;
+    background: var(--gold-dim);
+    opacity: 0.35;
+  }
+  .ui-version-badge {
+    position: absolute;
+    top: 10px;
+    right: 14px;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 10px;
+    letter-spacing: 1.1px;
+    text-transform: uppercase;
+    padding: 3px 7px;
+    border-radius: 7px;
+    border: 1px solid rgba(159, 176, 208, 0.35);
+    color: #b9c4dc;
+    background: rgba(10, 16, 36, 0.65);
+    pointer-events: none;
+  }
+
+  .back-link {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 1.4px;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    text-decoration: none;
+    border: 1px solid rgba(159, 176, 208, 0.28);
+    border-radius: 7px;
+    padding: 5px 10px;
+    transition: color 0.2s, border-color 0.2s;
+    white-space: nowrap;
+  }
+  .back-link:hover { color: var(--gold); border-color: var(--gold-dim); }
+
+  /* ===== NAV TABS ===== */
+  .nav-tabs {
+    display: flex;
+    background: rgba(8, 12, 28, 0.9);
+    border-bottom: 1px solid var(--forest-border);
+    padding: 0 24px;
+    gap: 4px;
+    backdrop-filter: blur(6px);
+  }
+  .tab-btn {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    background: none;
+    border: none;
+    border-bottom: 2px solid transparent;
+    padding: 10px 16px 8px;
+    cursor: pointer;
+    transition: color 0.2s, border-color 0.2s;
+  }
+  .tab-btn:hover { color: var(--gold); }
+  .tab-btn.active {
+    color: var(--gold-light);
+    border-bottom-color: var(--gold);
+  }
+  .tab-panel { display: none; }
+  .tab-panel.active { display: block; }
+
+  /* ===== MAIN GRID ===== */
+  .sheet-body {
+    padding: 20px 24px 28px;
+  }
+  .dashboard-grid {
+    display: grid;
+    grid-template-columns: minmax(210px, 250px) minmax(420px, 1fr) minmax(250px, 310px);
+    grid-template-rows: auto auto auto;
+    gap: 16px;
+    align-items: start;
+  }
+
+  /* ===== PANELS ===== */
+  .panel {
+    background: linear-gradient(180deg, rgba(22,29,56,0.9), rgba(15,22,45,0.88));
+    border: 1px solid var(--card-border);
+    border-radius: 10px;
+    overflow: visible;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.03), 0 14px 24px rgba(0,0,0,0.2);
+  }
+  .panel-header {
+    background: linear-gradient(180deg, rgba(143,178,220,0.1), rgba(143,178,220,0.04));
+    border-bottom: 1px solid var(--card-border);
+    padding: 9px 14px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .panel-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--gold);
+  }
+  .panel-body { padding: 14px; }
+
+  /* ===== ABILITY SCORES ===== */
+  .ability-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+  .ability-score {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 10px;
+    background: rgba(16,22,46,0.6);
+    border: 1px solid rgba(51,64,106,0.4);
+    border-radius: 4px;
+    cursor: default;
+    position: relative;
+  }
+  .ability-score:hover { border-color: var(--gold-dim); }
+  .ability-name {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    width: 26px;
+    flex-shrink: 0;
+  }
+  .ability-num {
+    font-family: 'Cinzel', serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--text-primary);
+    width: 36px;
+    text-align: center;
+    flex-shrink: 0;
+  }
+  .ability-mod {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--gold-light);
+    width: 26px;
+    text-align: center;
+    background: rgba(143,178,220,0.1);
+    border: 1px solid rgba(143,178,220,0.2);
+    border-radius: 3px;
+    padding: 2px 0;
+  }
+  .save-indicator {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    border: 1px solid var(--text-dim);
+    flex-shrink: 0;
+    margin-left: auto;
+  }
+  .save-indicator.proficient { background: var(--gold); border-color: var(--gold); }
+
+  /* ===== HP ===== */
+  .hp-box {
+    text-align: center;
+    padding: 10px 6px;
+    background: rgba(16,22,46,0.6);
+    border: 1px solid rgba(51,64,106,0.4);
+    border-radius: 4px;
+  }
+  .hp-box .hp-label {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 8px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    display: block;
+    margin-bottom: 4px;
+  }
+  .hp-box .hp-value {
+    font-family: 'Cinzel', serif;
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--text-primary);
+  }
+  .hp-box .hp-value.current { color: #8fc4ee; }
+  .hp-box .hp-value.temp { color: #a9b8e8; }
+  .hp-input {
+    width: 100%;
+    text-align: center;
+    background: rgba(10,16,36,0.8);
+    border: 1px solid var(--forest-border);
+    border-radius: 4px;
+    color: var(--text-primary);
+    font-family: 'Cinzel', serif;
+    font-size: 20px;
+    font-weight: 700;
+    padding: 4px;
+  }
+  .hp-input:focus { outline: 1px solid var(--gold); }
+  .hp-btn {
+    flex: 1;
+    padding: 6px;
+    background: none;
+    border: 1px solid var(--forest-border);
+    border-radius: 4px;
+    color: var(--text-secondary);
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .hp-btn:hover { border-color: var(--gold-dim); color: var(--gold); }
+  .hp-btn.heal { border-color: rgba(90,168,138,0.4); color: #5aa88a; }
+  .hp-btn.heal:hover { background: rgba(90,168,138,0.1); }
+  .hp-btn.damage { border-color: rgba(192,64,95,0.4); color: #c0405f; }
+  .hp-btn.damage:hover { background: rgba(192,64,95,0.1); }
+  .hp-bar-wrap {
+    height: 6px;
+    background: rgba(10,16,36,0.8);
+    border-radius: 3px;
+    border: 1px solid rgba(51,64,106,0.3);
+    overflow: hidden;
+    margin-bottom: 10px;
+  }
+  .hp-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #3a7fb8, #7fc0e8);
+    border-radius: 3px;
+    transition: width 0.4s ease;
+  }
+  .hp-delta-input {
+    display: flex;
+    gap: 6px;
+    align-items: center;
+  }
+  .hp-delta-input input {
+    flex: 1;
+    background: rgba(10,16,36,0.8);
+    border: 1px solid var(--forest-border);
+    border-radius: 4px;
+    color: var(--text-primary);
+    font-family: 'Barlow', sans-serif;
+    font-size: 14px;
+    padding: 6px 10px;
+    text-align: center;
+  }
+  .hp-delta-input input:focus { outline: 1px solid var(--gold); }
+
+  /* ===== COMBAT STATS ROW ===== */
+  .combat-row {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 14px;
+    flex-wrap: wrap;
+  }
+  .combat-stat {
+    flex: 1;
+    min-width: 60px;
+    text-align: center;
+    padding: 10px 8px;
+    background: rgba(16,22,46,0.7);
+    border: 1px solid rgba(51,64,106,0.5);
+    border-radius: 4px;
+  }
+  .combat-stat .cs-val {
+    font-family: 'Cinzel', serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--gold-light);
+    display: block;
+  }
+  .combat-stat .cs-label {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--text-dim);
+  }
+
+  /* ===== DEATH SAVES ===== */
+  .death-saves {
+    display: flex;
+    gap: 12px;
+    padding: 8px 0;
+  }
+  .death-save-row {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .death-save-row .ds-label {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--text-dim);
+  }
+  .death-pips {
+    display: flex;
+    gap: 6px;
+  }
+  .death-pip {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    border: 1px solid var(--text-dim);
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .death-pip.success.filled { background: #5aa88a; border-color: #5aa88a; }
+  .death-pip.failure.filled { background: var(--danger-light); border-color: var(--danger-light); }
+
+  /* ===== SKILLS ===== */
+  .skill-list { display: flex; flex-direction: column; gap: 2px; }
+  .skill-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 4px 6px;
+    border-radius: 3px;
+    cursor: default;
+    transition: background 0.1s;
+  }
+  .skill-item:hover { background: rgba(51,64,106,0.2); }
+  .skill-prof {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    border: 1px solid var(--text-dim);
+    flex-shrink: 0;
+  }
+  .skill-prof.proficient { background: var(--gold); border-color: var(--gold); }
+  .skill-prof.expertise { background: var(--gold-light); border-color: var(--gold-light); box-shadow: 0 0 4px rgba(195,219,243,0.5); }
+  .skill-mod {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--gold-light);
+    width: 24px;
+    text-align: right;
+    flex-shrink: 0;
+  }
+  .skill-name {
+    font-family: 'Barlow', sans-serif;
+    font-size: 12px;
+    color: var(--text-secondary);
+    flex: 1;
+  }
+  .skill-attr {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 9px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--text-dim);
+  }
+
+  /* ===== WEAPONS ===== */
+  .weapon-card {
+    background: rgba(16,22,46,0.7);
+    border: 1px solid rgba(51,64,106,0.5);
+    border-radius: 5px;
+    padding: 10px 12px;
+    margin-bottom: 8px;
+    position: relative;
+  }
+  .weapon-card:last-child { margin-bottom: 0; }
+  .weapon-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 6px;
+    gap: 8px;
+  }
+  .weapon-name {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--text-primary);
+    letter-spacing: 0.5px;
+  }
+  .weapon-stats {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    margin-bottom: 6px;
+  }
+  .weapon-hit {
+    font-family: 'Cinzel', serif;
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--gold-light);
+  }
+  .weapon-hit-label {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 9px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--text-dim);
+  }
+  .weapon-damage {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-secondary);
+    border-left: 1px solid rgba(51,64,106,0.5);
+    padding-left: 10px;
+    margin-left: 4px;
+  }
+  .weapon-range {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 11px;
+    color: var(--text-dim);
+    margin-left: 4px;
+  }
+  .weapon-props {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    margin-top: 6px;
+  }
+  .wprop {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    padding: 2px 6px;
+    background: rgba(51,64,106,0.3);
+    border: 1px solid rgba(51,64,106,0.4);
+    border-radius: 3px;
+    color: var(--text-dim);
+    cursor: pointer;
+    position: relative;
+  }
+  .wprop:hover { color: var(--gold); border-color: var(--gold-dim); }
+  .weapon-mastery-tag {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 2px 8px;
+    background: rgba(143,178,220,0.15);
+    border: 1px solid rgba(143,178,220,0.3);
+    border-radius: 3px;
+    color: var(--gold);
+    cursor: pointer;
+    position: relative;
+  }
+  .adv-toggle-wrap {
+    display: flex;
+    gap: 4px;
+    margin-top: 6px;
+    align-items: center;
+  }
+  .adv-btn {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 3px 8px;
+    background: none;
+    border: 1px solid rgba(51,64,106,0.3);
+    border-radius: 3px;
+    color: var(--text-dim);
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .adv-btn.adv.active { background: rgba(46,92,76,0.3); border-color: rgba(90,206,154,0.5); color: #5fce9a; }
+  .adv-btn.dis.active { background: rgba(92,46,46,0.3); border-color: rgba(192,80,80,0.5); color: #c05050; }
+  .adv-indicator {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 10px;
+    padding: 3px 8px;
+    border-radius: 3px;
+    letter-spacing: 0.5px;
+  }
+  .adv-indicator.advantage { background: rgba(46,92,76,0.2); color: #5fce9a; }
+  .adv-indicator.disadvantage { background: rgba(92,46,46,0.2); color: #c05050; }
+
+  /* ===== FLAG NOTE ===== */
+  .flag-note {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 10px;
+    letter-spacing: 0.5px;
+    color: var(--arcane-glow);
+    line-height: 1.5;
+  }
+
+  /* ===== TOAST ===== */
+  .cast-toast {
+    position: fixed !important;
+    z-index: 2147483646 !important;
+    left: 50%;
+    bottom: 26px;
+    transform: translate(-50%, 18px);
+    max-width: min(420px, calc(100vw - 32px));
+    padding: 11px 18px;
+    border-radius: 8px;
+    border: 1px solid rgba(143,178,220,0.55);
+    background: rgba(10,16,36,0.96);
+    color: var(--text-primary);
+    font-family: 'Barlow', sans-serif;
+    font-size: 13px;
+    line-height: 1.35;
+    text-align: center;
+    box-shadow: 0 14px 34px rgba(0,0,0,0.55);
+    backdrop-filter: blur(8px);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s, transform 0.2s;
+  }
+  .cast-toast.show {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+  .cast-toast.error {
+    border-color: rgba(200,90,90,0.7);
+    color: #f0c0c0;
+  }
+
+  /* ===== FEATURES / TRAITS ===== */
+  .feature-card {
+    background: rgba(16,22,46,0.6);
+    border: 1px solid rgba(51,64,106,0.4);
+    border-radius: 5px;
+    padding: 10px 12px;
+    margin-bottom: 6px;
+    position: relative;
+    cursor: pointer;
+    transition: border-color 0.15s;
+  }
+  .feature-card:hover { border-color: var(--gold-dim); }
+  .feature-card.arcane {
+    border-color: rgba(154, 127, 224, 0.4);
+    box-shadow: inset 0 0 0 1px rgba(154, 127, 224, 0.12);
+    background: linear-gradient(180deg, rgba(28, 22, 54, 0.72), rgba(18, 20, 44, 0.66));
+  }
+  .status-pill {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    border: 1px solid rgba(90, 168, 138, 0.45);
+    background: rgba(90, 168, 138, 0.12);
+    color: #7fd0b0;
+    padding: 2px 7px;
+    border-radius: 999px;
+  }
+  .status-pill.off {
+    border-color: rgba(95, 111, 149, 0.45);
+    background: rgba(16, 22, 46, 0.5);
+    color: var(--text-dim);
+  }
+  .status-pill.arcane {
+    border-color: rgba(154, 127, 224, 0.5);
+    background: rgba(154, 127, 224, 0.14);
+    color: var(--arcane-glow);
+  }
+  .feature-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    justify-content: space-between;
+  }
+  .feature-name {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--gold);
+    letter-spacing: 0.5px;
+    flex: 1;
+  }
+  .feature-source {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    padding: 1px 6px;
+    background: rgba(51,64,106,0.2);
+    border-radius: 3px;
+    white-space: nowrap;
+  }
+  .feature-source.arcane {
+    color: var(--arcane-glow);
+    background: rgba(154,127,224,0.16);
+  }
+  .feature-summary {
+    font-family: 'Barlow', sans-serif;
+    font-size: 12px;
+    color: var(--text-dim);
+    margin-top: 4px;
+    line-height: 1.5;
+  }
+  .resource-track {
+    display: flex;
+    gap: 4px;
+    margin-top: 6px;
+    align-items: center;
+  }
+  .resource-pip {
+    width: 14px;
+    height: 14px;
+    border-radius: 3px;
+    border: 1px solid var(--gold-dim);
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .resource-pip.used { background: transparent; border-color: rgba(69,87,126,0.5); }
+  .resource-pip.available { background: var(--gold); border-color: var(--gold); }
+  .resource-pip[data-res="lucky"].available { background: var(--arcane); border-color: var(--arcane); }
+  .resource-label {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 9px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    margin-left: 4px;
+  }
+
+  /* ===== ARCANE ARCHER PREVIEW ===== */
+  .aa-preview-banner {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 16px;
+    background: linear-gradient(90deg, rgba(154,127,224,0.14), rgba(74,111,174,0.08));
+    border: 1px solid rgba(154,127,224,0.4);
+    border-radius: 10px;
+    margin-bottom: 16px;
+  }
+  .aa-preview-banner .aa-glyph { font-size: 22px; }
+  .aa-preview-banner .aa-title {
+    font-family: 'Cinzel', serif;
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--arcane-glow);
+    letter-spacing: 1px;
+  }
+  .aa-preview-banner .aa-sub {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 11px;
+    letter-spacing: 1px;
+    color: var(--text-secondary);
+  }
+  .aa-stat-strip {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 10px;
+    margin-bottom: 16px;
+  }
+  .aa-stat {
+    text-align: center;
+    padding: 10px 6px;
+    background: rgba(16,22,46,0.7);
+    border: 1px solid rgba(154,127,224,0.3);
+    border-radius: 6px;
+  }
+  .aa-stat .aa-val {
+    font-family: 'Cinzel', serif;
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--arcane-glow);
+    display: block;
+  }
+  .aa-stat .aa-lbl {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--text-dim);
+  }
+  .aa-shot-tag {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    padding: 1px 6px;
+    border-radius: 3px;
+    border: 1px solid rgba(154,127,224,0.4);
+    background: rgba(154,127,224,0.12);
+    color: var(--arcane-glow);
+    white-space: nowrap;
+  }
+
+  /* ===== TOOLTIP / OVERLAY ===== */
+  /* theme-fantasy.css sets `body.theme-fantasy > * { position: relative; z-index: 1; }`,
+     so the body-portalled tooltip MUST force fixed positioning to escape normal flow. */
+  .tooltip {
+    position: fixed !important;
+    z-index: 2147483647 !important;
+    top: 0;
+    left: 0;
+    margin: 0;
+    width: min(360px, calc(100vw - 24px));
+    max-height: min(68vh, 520px);
+    overflow: auto;
+    overscroll-behavior: contain;
+    background: rgba(10, 16, 36, 0.96);
+    border: 1px solid rgba(143, 178, 220, 0.55);
+    border-radius: 10px;
+    padding: 14px 16px;
+    box-shadow: 0 16px 38px rgba(0,0,0,0.5);
+    backdrop-filter: blur(8px);
+    pointer-events: none !important;
+    opacity: 0;
+    transform: translateY(8px) scale(0.985);
+    transition: opacity 0.14s, transform 0.14s;
+    will-change: transform, top, left;
+  }
+  .tooltip.visible {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+  .tooltip-name {
+    font-family: 'Cinzel', serif;
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--gold-light);
+    margin-bottom: 4px;
+    border-bottom: 1px solid rgba(143,178,220,0.2);
+    padding-bottom: 8px;
+  }
+  .tooltip-type {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: #9fb4d6;
+    margin-bottom: 8px;
+  }
+  .tooltip-body {
+    font-family: 'IM Fell English', serif;
+    font-size: 12px;
+    color: #d7ddf0;
+    line-height: 1.55;
+  }
+  .tooltip-body strong {
+    color: var(--gold);
+    font-family: 'Barlow', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+  }
+  .tooltip-stats {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6px;
+    margin: 8px 0;
+    padding: 8px;
+    background: rgba(51,64,106,0.15);
+    border-radius: 4px;
+  }
+  .tooltip-stat {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 10px;
+    color: #9fb0cc;
+  }
+  .tooltip-stat span {
+    color: #cdd8f0;
+    font-weight: 600;
+  }
+
+  .currency-bar {
+    display: flex;
+    gap: 10px;
+    padding: 10px 14px;
+    background: rgba(16,22,46,0.6);
+    border: 1px solid rgba(143,178,220,0.15);
+    border-radius: 5px;
+    margin-bottom: 12px;
+    flex-wrap: wrap;
+  }
+  .currency-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .currency-coin {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    border: 1px solid;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 8px;
+    font-weight: 700;
+  }
+  .currency-coin.gp { border-color: var(--gold); color: var(--gold); }
+  .currency-coin.sp { border-color: #a0a0a0; color: #a0a0a0; }
+  .currency-coin.cp { border-color: #8b6520; color: #8b6520; }
+  .currency-coin.ep { border-color: #7090b0; color: #7090b0; }
+  .currency-coin.pp { border-color: #c0c0e0; color: #c0c0e0; }
+  .currency-value {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-primary);
+  }
+
+  /* ===== PASSIVE SENSES ===== */
+  .passive-row {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 6px;
+    align-items: center;
+    padding: 6px 10px;
+    background: rgba(16,22,46,0.5);
+    border: 1px solid rgba(51,64,106,0.3);
+    border-radius: 4px;
+  }
+  .passive-val {
+    font-family: 'Cinzel', serif;
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--gold-light);
+    width: 32px;
+    text-align: center;
+    flex-shrink: 0;
+  }
+  .passive-name {
+    font-family: 'Barlow', sans-serif;
+    font-size: 12px;
+    color: var(--text-secondary);
+  }
+
+  /* ===== PROFICIENCIES ===== */
+  .prof-section { margin-bottom: 10px; }
+  .prof-section-label {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--gold-dim);
+    margin-bottom: 4px;
+  }
+  .prof-list {
+    font-family: 'Barlow', sans-serif;
+    font-size: 12px;
+    color: var(--text-dim);
+    line-height: 1.7;
+  }
+
+  /* ===== LORE ===== */
+  .lore-section {
+    background: rgba(16,22,46,0.6);
+    border: 1px solid rgba(51,64,106,0.3);
+    border-radius: 5px;
+    padding: 14px;
+    margin-bottom: 12px;
+  }
+  .lore-label {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--gold-dim);
+    margin-bottom: 8px;
+  }
+  .lore-text {
+    font-family: 'IM Fell English', serif;
+    font-size: 13px;
+    color: var(--text-dim);
+    line-height: 1.7;
+    font-style: italic;
+  }
+  .char-details-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6px;
+    margin-bottom: 12px;
+  }
+  .char-detail-item {
+    padding: 8px 10px;
+    background: rgba(16,22,46,0.5);
+    border: 1px solid rgba(51,64,106,0.3);
+    border-radius: 4px;
+  }
+  .char-detail-item .detail-label {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--text-dim);
+  }
+  .char-detail-item .detail-value {
+    font-family: 'Barlow', sans-serif;
+    font-size: 13px;
+    color: var(--text-secondary);
+    margin-top: 2px;
+  }
+
+  /* ===== DIVIDERS ===== */
+  .section-divider {
+    height: 1px;
+    background: rgba(143,178,220,0.1);
+    margin: 12px 0;
+  }
+
+  /* ===== REST BUTTONS ===== */
+  .rest-btns {
+    display: flex;
+    gap: 6px;
+  }
+  .rest-btn {
+    flex: 1;
+    padding: 7px 10px;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    background: none;
+    border: 1px solid var(--forest-border);
+    border-radius: 4px;
+    color: var(--text-dim);
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .rest-btn.short:hover { border-color: var(--gold-dim); color: var(--gold); background: rgba(143,178,220,0.05); }
+  .rest-btn.long:hover { border-color: rgba(90,168,138,0.5); color: #5aa88a; background: rgba(90,168,138,0.05); }
+
+  /* Condition badges */
+  .conditions-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    margin-top: 6px;
+  }
+  .condition-badge {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    padding: 2px 8px;
+    border-radius: 3px;
+    cursor: pointer;
+    border: 1px solid;
+    transition: all 0.15s;
+  }
+  .condition-badge.active { background: rgba(139,47,74,0.3); border-color: rgba(192,64,95,0.5); color: #c0405f; }
+  .condition-badge.inactive { background: rgba(51,64,106,0.15); border-color: rgba(51,64,106,0.3); color: var(--text-dim); }
+
+  /* Scrollbar */
+  ::-webkit-scrollbar { width: 8px; height: 8px; }
+  ::-webkit-scrollbar-track { background: rgba(16,22,46,0.3); }
+  ::-webkit-scrollbar-thumb { background: var(--forest-border); border-radius: 3px; }
+  ::-webkit-scrollbar-thumb:hover { background: var(--gold-dim); }
+
+  /* Section grid helpers */
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .three-col { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+
+  /* ===== MODERN POLISH + OVERFLOW GUARDS ===== */
+  body {
+    font-family: 'Sora', 'Barlow', sans-serif;
+  }
+
+  .dashboard-grid > *,
+  .two-col > *,
+  .three-col > *,
+  #tab-features .sheet-body > div > * {
+    min-width: 0;
+  }
+
+  .panel,
+  .panel-body,
+  .weapon-card,
+  .feature-card,
+  .item-card,
+  .lore-section,
+  .char-detail-item,
+  .combat-stat,
+  .ability-score,
+  .passive-row,
+  .skill-item,
+  .feature-summary,
+  .lore-text,
+  .item-note,
+  .skill-name,
+  .weapon-name,
+  .char-meta-item .value {
+    overflow-wrap: anywhere;
+    word-break: break-word;
+  }
+
+  .sheet-header {
+    border-bottom-color: rgba(143, 178, 220, 0.5);
+    border-radius: 0 0 10px 10px;
+    background:
+      linear-gradient(180deg, rgba(7, 10, 24, 0.95), rgba(14, 20, 46, 0.92)),
+      radial-gradient(circle at 8% 10%, rgba(159, 176, 208, 0.14), transparent 35%);
+  }
+
+  .char-name {
+    font-size: clamp(1.6rem, 2.2vw, 2.1rem);
+    letter-spacing: 1.4px;
+  }
+
+  .panel {
+    border-radius: 10px;
+    border-color: rgba(143, 178, 220, 0.24);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.04), 0 10px 18px rgba(0,0,0,0.2);
+  }
+
+  .panel-header {
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .nav-tabs {
+    padding: 8px 12px 10px;
+  }
+
+  .tab-btn {
+    border: 1px solid rgba(159, 176, 208, 0.22);
+    border-radius: 8px;
+    padding: 8px 12px;
+    background: linear-gradient(180deg, rgba(18, 26, 52, 0.8), rgba(12, 18, 42, 0.75));
+    transition: color 0.2s, border-color 0.2s, background 0.2s, transform 0.12s;
+  }
+
+  .tab-btn:hover {
+    border-color: rgba(143, 178, 220, 0.36);
+    background: linear-gradient(180deg, rgba(24, 34, 64, 0.84), rgba(18, 26, 52, 0.82));
+    transform: translateY(-1px);
+  }
+
+  .tab-btn.active {
+    border-color: rgba(143, 178, 220, 0.58);
+    background: linear-gradient(180deg, rgba(143, 178, 220, 0.18), rgba(74, 111, 174, 0.24));
+    color: #cfe0f5;
+  }
+
+  .hp-btn,
+  .rest-btn,
+  .adv-btn {
+    border-radius: 8px;
+    border-width: 1px;
+    border-style: solid;
+    background: linear-gradient(180deg, rgba(16, 24, 48, 0.78), rgba(10, 16, 36, 0.72));
+  }
+
+  .hp-btn:hover,
+  .rest-btn:hover,
+  .adv-btn:hover {
+    transform: translateY(-1px);
+  }
+
+  .weapon-card,
+  .feature-card,
+  .item-card,
+  .lore-section,
+  .char-detail-item,
+  .ability-score,
+  .passive-row,
+  .combat-stat,
+  .hp-box {
+    border-radius: 8px;
+  }
+
+  .item-card {
+    min-height: 170px;
+    border-radius: 10px;
+  }
+
+  .combat-stat {
+    min-width: 72px;
+  }
+
+  /* ===== INVENTORY THEME OVERRIDES (page-polish.css is forest-green by default) ===== */
+  body.page-dnd-character-sheet .inventory-hud {
+    background: linear-gradient(90deg, rgba(18,26,51,0.8), rgba(13,18,38,0.78));
+    border-color: rgba(143, 178, 220, 0.22);
+  }
+  body.page-dnd-character-sheet .item-card {
+    background:
+      linear-gradient(165deg, rgba(22,29,56,0.94), rgba(14,20,44,0.93)),
+      repeating-linear-gradient(0deg, transparent 0, transparent 2px, var(--paper-grain) 3px, transparent 4px);
+    border-color: rgba(51, 64, 106, 0.55);
+  }
+  body.page-dnd-character-sheet .item-card:hover {
+    border-color: rgba(143, 178, 220, 0.45);
+  }
+  body.page-dnd-character-sheet .item-card.signature {
+    border-color: rgba(143, 178, 220, 0.6);
+    box-shadow: inset 0 0 0 1px rgba(143, 178, 220, 0.18);
+  }
+  body.page-dnd-character-sheet .item-card.magic {
+    border-color: rgba(154, 127, 224, 0.6);
+    box-shadow: inset 0 0 0 1px rgba(154, 127, 224, 0.2);
+  }
+  body.page-dnd-character-sheet .item-tag {
+    background: rgba(16, 22, 46, 0.6);
+    border-color: rgba(95, 111, 149, 0.45);
+  }
+  body.page-dnd-character-sheet .currency-bar {
+    background: linear-gradient(90deg, rgba(16,22,46,0.8), rgba(22,29,56,0.7));
+  }
+  body.page-dnd-character-sheet .inventory-builder {
+    background: rgba(16, 22, 46, 0.38);
+  }
+  body.page-dnd-character-sheet .inventory-input {
+    background: rgba(10, 16, 36, 0.78);
+    border-color: rgba(95, 111, 149, 0.5);
+  }
+
+  /* ===== BUTTON THEME OVERRIDES (theme-fantasy.css defaults buttons to brass) ===== */
+  body.theme-fantasy .tab-btn {
+    background: linear-gradient(180deg, rgba(18, 26, 52, 0.8), rgba(12, 18, 42, 0.75));
+  }
+  body.theme-fantasy .tab-btn:hover {
+    background: linear-gradient(180deg, rgba(24, 34, 64, 0.84), rgba(18, 26, 52, 0.82));
+  }
+  body.theme-fantasy .tab-btn.active {
+    background: linear-gradient(180deg, rgba(143, 178, 220, 0.18), rgba(74, 111, 174, 0.24));
+  }
+  body.theme-fantasy .hp-btn,
+  body.theme-fantasy .rest-btn,
+  body.theme-fantasy .adv-btn {
+    background: linear-gradient(180deg, rgba(16, 24, 48, 0.78), rgba(10, 16, 36, 0.72));
+  }
+  body.theme-fantasy .hp-btn.heal:hover { background: rgba(90, 168, 138, 0.14); }
+  body.theme-fantasy .hp-btn.damage:hover { background: rgba(192, 64, 95, 0.14); }
+  body.theme-fantasy .rest-btn.short:hover { background: rgba(143, 178, 220, 0.08); }
+  body.theme-fantasy .rest-btn.long:hover { background: rgba(90, 168, 138, 0.08); }
+  body.theme-fantasy .adv-btn.adv.active { background: rgba(46, 92, 76, 0.32); }
+  body.theme-fantasy .adv-btn.dis.active { background: rgba(92, 46, 46, 0.32); }
+  body.theme-fantasy.page-dnd-character-sheet .inventory-add-btn {
+    background: linear-gradient(180deg, rgba(143, 178, 220, 0.22), rgba(74, 111, 174, 0.3));
+    border-color: rgba(143, 178, 220, 0.45);
+    color: var(--gold-light);
+  }
+  body.theme-fantasy.page-dnd-character-sheet .inventory-remove-btn {
+    background: linear-gradient(180deg, rgba(60, 28, 40, 0.5), rgba(32, 16, 24, 0.6));
+  }
+
+  @media (max-width: 1320px) {
+    .dashboard-grid {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    }
+    .dashboard-grid > div:last-child {
+      grid-column: 1 / -1;
+    }
+    .aa-stat-strip {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+
+  @media (max-width: 1180px) {
+    .dashboard-grid {
+      grid-template-columns: 1fr;
+    }
+    .sheet-header {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 12px;
+      padding-bottom: 24px;
+    }
+    .char-meta {
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .meta-divider {
+      display: none;
+    }
+    .sheet-header::after {
+      right: 20px;
+      bottom: 6px;
+    }
+  }
+
+  @media (max-width: 920px) {
+    .sheet-body {
+      padding: 14px;
+    }
+    .nav-tabs {
+      overflow-x: auto;
+      padding: 0 8px;
+      gap: 0;
+      scrollbar-width: thin;
+    }
+    .tab-btn {
+      white-space: nowrap;
+      padding: 8px 12px;
+      font-size: 11px;
+    }
+    .two-col,
+    .three-col {
+      grid-template-columns: 1fr;
+    }
+    #tab-features .sheet-body > div,
+    #tab-arcane .sheet-body > div {
+      grid-template-columns: 1fr !important;
+    }
+    .combat-row {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 8px;
+    }
+    .char-meta-item {
+      min-width: 110px;
+      text-align: left;
+    }
+    .aa-stat-strip {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (max-width: 560px) {
+    .char-name {
+      font-size: 22px;
+      letter-spacing: 1px;
+    }
+    .combat-row {
+      grid-template-columns: 1fr;
+      gap: 6px;
+    }
+    .combat-stat {
+      min-width: 0;
+    }
+    .tooltip {
+      width: calc(100vw - 16px);
+      max-height: 58vh;
+    }
+    .sheet-header,
+    .nav-tabs,
+    .sheet-body {
+      width: 100%;
+    }
+    .panel-body {
+      padding: 12px;
+    }
+  }
+</style>
+</head>
+<body class="theme-fantasy page-dnd-character-sheet page-archibold-layadon-sheet">
+
+<!-- TOOLTIP (global portal layer) -->
+<div id="tooltip-layer" class="tooltip-layer" aria-hidden="true">
+  <div id="tooltip" class="tooltip" role="tooltip">
+    <div class="tooltip-name" id="tt-name"></div>
+    <div class="tooltip-type" id="tt-type"></div>
+    <div id="tt-stats" class="tooltip-stats" style="display:none"></div>
+    <div class="tooltip-body" id="tt-body"></div>
+  </div>
+</div>
+
+<!-- ===== HEADER ===== -->
+<div class="sheet-header">
+  <div id="uiVersionBadge" class="ui-version-badge">UI v0.0.0</div>
+  <div>
+    <div class="char-name">Archibold Layadon</div>
+    <div style="font-family:'Barlow Condensed',sans-serif;font-size:11px;color:var(--text-dim);letter-spacing:1px;margin-top:2px;">
+      Human · Wayfarer · Scout-Archer · Arcane Archer at Level 3
+    </div>
+  </div>
+  <div class="char-meta">
+    <div class="char-meta-item">
+      <div class="label">Class & Level</div>
+      <div class="value">Fighter 2</div>
+    </div>
+    <div class="meta-divider"></div>
+    <div class="char-meta-item">
+      <div class="label">Background</div>
+      <div class="value">Wayfarer</div>
+    </div>
+    <div class="meta-divider"></div>
+    <div class="char-meta-item">
+      <div class="label">Player</div>
+      <div class="value">HATDDND</div>
+    </div>
+    <div class="meta-divider"></div>
+    <div class="char-meta-item">
+      <div class="label">Prof Bonus</div>
+      <div class="value">+2</div>
+    </div>
+    <div class="meta-divider"></div>
+    <div class="char-meta-item">
+      <div class="label">Experience</div>
+      <div class="value">Milestone</div>
+    </div>
+    <div class="meta-divider"></div>
+    <a class="back-link" href="index.html">↩ Index</a>
+  </div>
+</div>
+
+<!-- ===== NAV ===== -->
+<div class="nav-tabs">
+  <button class="tab-btn active" onclick="switchTab('combat')">⚔ Combat</button>
+  <button class="tab-btn" onclick="switchTab('features')">◈ Features & Traits</button>
+  <button class="tab-btn" onclick="switchTab('arcane')">➶ Arcane Archer</button>
+  <button class="tab-btn" onclick="switchTab('inventory')">⊠ Inventory</button>
+  <button class="tab-btn" onclick="switchTab('lore')">☽ Lore & Notes</button>
+</div>
+
+<!-- ======================================================= -->
+<!-- TAB: COMBAT -->
+<!-- ======================================================= -->
+<div id="tab-combat" class="tab-panel active">
+<div class="sheet-body">
+<div class="dashboard-grid">
+
+  <!-- LEFT: ABILITY SCORES + SAVES + SENSES -->
+  <div style="display:flex;flex-direction:column;gap:14px;">
+
+    <div class="panel">
+      <div class="panel-header"><span class="panel-title">Ability Scores</span></div>
+      <div class="panel-body">
+        <div class="ability-grid">
+          <div class="ability-score" data-tooltip="strength">
+            <span class="ability-name">STR</span>
+            <span class="ability-num">13</span>
+            <span class="ability-mod">+1</span>
+            <div class="save-indicator proficient" title="Proficient Save"></div>
+          </div>
+          <div class="ability-score" data-tooltip="dexterity">
+            <span class="ability-name">DEX</span>
+            <span class="ability-num">17</span>
+            <span class="ability-mod">+3</span>
+            <div class="save-indicator" title="Not Proficient"></div>
+          </div>
+          <div class="ability-score" data-tooltip="constitution">
+            <span class="ability-name">CON</span>
+            <span class="ability-num">15</span>
+            <span class="ability-mod">+2</span>
+            <div class="save-indicator proficient" title="Proficient Save"></div>
+          </div>
+          <div class="ability-score" data-tooltip="intelligence">
+            <span class="ability-name">INT</span>
+            <span class="ability-num">17</span>
+            <span class="ability-mod">+3</span>
+            <div class="save-indicator" title="Not Proficient"></div>
+          </div>
+          <div class="ability-score" data-tooltip="wisdom">
+            <span class="ability-name">WIS</span>
+            <span class="ability-num">17</span>
+            <span class="ability-mod">+3</span>
+            <div class="save-indicator" title="Not Proficient"></div>
+          </div>
+          <div class="ability-score" data-tooltip="charisma">
+            <span class="ability-name">CHA</span>
+            <span class="ability-num">10</span>
+            <span class="ability-mod">+0</span>
+            <div class="save-indicator" title="Not Proficient"></div>
+          </div>
+        </div>
+        <div class="section-divider"></div>
+        <div style="font-family:'Barlow Condensed',sans-serif;font-size:9px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--gold-dim);margin-bottom:6px;">Saving Throws</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:4px;">
+          <div class="skill-item"><div class="skill-prof proficient"></div><span class="skill-mod">+3</span><span class="skill-name">Strength</span></div>
+          <div class="skill-item"><div class="skill-prof"></div><span class="skill-mod">+3</span><span class="skill-name">Dexterity</span></div>
+          <div class="skill-item"><div class="skill-prof proficient"></div><span class="skill-mod">+4</span><span class="skill-name">Constitution</span></div>
+          <div class="skill-item"><div class="skill-prof"></div><span class="skill-mod">+3</span><span class="skill-name">Intelligence</span></div>
+          <div class="skill-item"><div class="skill-prof"></div><span class="skill-mod">+3</span><span class="skill-name">Wisdom</span></div>
+          <div class="skill-item"><div class="skill-prof"></div><span class="skill-mod">+0</span><span class="skill-name">Charisma</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PASSIVE SENSES -->
+    <div class="panel">
+      <div class="panel-header"><span class="panel-title">Senses</span></div>
+      <div class="panel-body">
+        <div class="passive-row"><span class="passive-val">15</span><span class="passive-name">Passive Perception</span></div>
+        <div class="passive-row"><span class="passive-val">15</span><span class="passive-name">Passive Insight</span></div>
+        <div class="passive-row"><span class="passive-val">13</span><span class="passive-name">Passive Investigation</span></div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- CENTRE: COMBAT + WEAPONS + RESOURCES -->
+  <div style="display:flex;flex-direction:column;gap:14px;">
+
+    <!-- COMBAT STATS -->
+    <div class="panel">
+      <div class="panel-header"><span class="panel-title">Combat</span>
+        <div class="rest-btns">
+          <button class="rest-btn short" onclick="shortRest()">Short Rest</button>
+          <button class="rest-btn long" onclick="longRest()">Long Rest</button>
+        </div>
+      </div>
+      <div class="panel-body">
+        <div class="combat-row">
+          <div class="combat-stat"><span class="cs-val" id="acVal">13</span><span class="cs-label">Armour Class</span></div>
+          <div class="combat-stat"><span class="cs-val" id="initiativeVal">+3</span><span class="cs-label">Initiative</span></div>
+          <div class="combat-stat"><span class="cs-val" id="speedVal">30ft</span><span class="cs-label">Speed</span></div>
+          <div class="combat-stat"><span class="cs-val">+2</span><span class="cs-label">Prof Bonus</span></div>
+          <div class="combat-stat"><span class="cs-val">2d10</span><span class="cs-label">Hit Dice</span></div>
+        </div>
+        <div id="combatEffectReadout" style="font-family:'Barlow Condensed',sans-serif;font-size:10px;letter-spacing:1px;color:var(--text-dim);margin:-4px 0 8px;">
+          Second Wind 2/2 · Action Surge 1/1 · Luck 2/2 · Heroic Insp. 1/1
+        </div>
+        <div class="flag-note" style="margin:0 0 10px;">
+          ⚑ Export lists AC 13 &amp; Initiative +3. With Studded Leather equipped AC should read 15 (12 + DEX 3), and the Alert feat should make Initiative +5 (DEX 3 + Prof 2) — confirm with the GM.
+        </div>
+
+        <!-- HP -->
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:10px;">
+          <div class="hp-box">
+            <span class="hp-label">Max HP</span>
+            <div class="hp-value">20</div>
+          </div>
+          <div class="hp-box">
+            <span class="hp-label">Current HP</span>
+            <input class="hp-input current" id="currentHP" type="number" value="20" min="0" max="20" onchange="updateHPBar()">
+          </div>
+          <div class="hp-box">
+            <span class="hp-label">Temp HP</span>
+            <input class="hp-input temp" id="tempHP" type="number" value="0" min="0">
+          </div>
+        </div>
+        <div class="hp-bar-wrap"><div class="hp-bar-fill" id="hpBar" style="width:100%"></div></div>
+        <div class="hp-delta-input">
+          <input type="number" id="hpDelta" placeholder="Amount" min="0">
+          <button class="hp-btn heal" onclick="applyHP(1)">+ Heal</button>
+          <button class="hp-btn damage" onclick="applyHP(-1)">− Damage</button>
+        </div>
+
+        <div class="section-divider"></div>
+
+        <!-- DEATH SAVES -->
+        <div style="display:flex;align-items:center;justify-content:space-between;">
+          <div style="font-family:'Barlow Condensed',sans-serif;font-size:9px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--text-dim);">Death Saves</div>
+          <div class="death-saves">
+            <div class="death-save-row">
+              <div class="ds-label">Successes</div>
+              <div class="death-pips">
+                <div class="death-pip success" onclick="togglePip(this,'success')" title="Success 1"></div>
+                <div class="death-pip success" onclick="togglePip(this,'success')" title="Success 2"></div>
+                <div class="death-pip success" onclick="togglePip(this,'success')" title="Success 3"></div>
+              </div>
+            </div>
+            <div class="death-save-row">
+              <div class="ds-label">Failures</div>
+              <div class="death-pips">
+                <div class="death-pip failure" onclick="togglePip(this,'failure')" title="Failure 1"></div>
+                <div class="death-pip failure" onclick="togglePip(this,'failure')" title="Failure 2"></div>
+                <div class="death-pip failure" onclick="togglePip(this,'failure')" title="Failure 3"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="section-divider"></div>
+
+        <!-- CONDITIONS -->
+        <div style="font-family:'Barlow Condensed',sans-serif;font-size:9px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--text-dim);margin-bottom:4px;">Conditions</div>
+        <div class="conditions-row">
+          <div class="condition-badge inactive" onclick="toggleCondition(this)">Prone</div>
+          <div class="condition-badge inactive" onclick="toggleCondition(this)">Blinded</div>
+          <div class="condition-badge inactive" onclick="toggleCondition(this)">Stunned</div>
+          <div class="condition-badge inactive" onclick="toggleCondition(this)">Frightened</div>
+          <div class="condition-badge inactive" onclick="toggleCondition(this)">Poisoned</div>
+          <div class="condition-badge inactive" onclick="toggleCondition(this)">Restrained</div>
+          <div class="condition-badge inactive" onclick="toggleCondition(this)">Incapacitated</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- WEAPONS -->
+    <div class="panel">
+      <div class="panel-header"><span class="panel-title">Weapon Attacks</span></div>
+      <div class="panel-body">
+
+        <!-- LONGBOW -->
+        <div class="weapon-card">
+          <div class="weapon-header">
+            <span class="weapon-name">Longbow</span>
+          </div>
+          <div class="weapon-stats">
+            <div>
+              <div class="weapon-hit">+7</div>
+              <div class="weapon-hit-label">To Hit</div>
+            </div>
+            <div class="weapon-damage">1d8+3 Piercing</div>
+            <div class="weapon-range">150 / 600 ft.</div>
+          </div>
+          <div class="adv-toggle-wrap">
+            <button class="adv-btn adv" onclick="toggleAdv('longbow','adv',this)">Advantage</button>
+            <button class="adv-btn dis" onclick="toggleAdv('longbow','dis',this)">Disadvantage</button>
+            <span class="adv-indicator" id="longbow-adv-label"></span>
+          </div>
+          <div class="weapon-props">
+            <span class="wprop" data-tooltip="martial">Martial</span>
+            <span class="wprop" data-tooltip="ammunition">Ammunition</span>
+            <span class="wprop" data-tooltip="heavy">Heavy</span>
+            <span class="wprop" data-tooltip="two-handed">Two-Handed</span>
+            <span class="wprop" data-tooltip="archery">Archery +2</span>
+            <span class="weapon-mastery-tag" data-tooltip="slow">Slow ✦</span>
+          </div>
+        </div>
+
+        <!-- SHORTSWORD -->
+        <div class="weapon-card">
+          <div class="weapon-header">
+            <span class="weapon-name">Shortsword</span>
+          </div>
+          <div class="weapon-stats">
+            <div>
+              <div class="weapon-hit">+5</div>
+              <div class="weapon-hit-label">To Hit</div>
+            </div>
+            <div class="weapon-damage">1d6+3 Piercing</div>
+          </div>
+          <div class="adv-toggle-wrap">
+            <button class="adv-btn adv" onclick="toggleAdv('shortsword','adv',this)">Advantage</button>
+            <button class="adv-btn dis" onclick="toggleAdv('shortsword','dis',this)">Disadvantage</button>
+            <span class="adv-indicator" id="shortsword-adv-label"></span>
+          </div>
+          <div class="weapon-props">
+            <span class="wprop" data-tooltip="martial">Martial</span>
+            <span class="wprop" data-tooltip="finesse">Finesse</span>
+            <span class="wprop" data-tooltip="light">Light</span>
+            <span class="weapon-mastery-tag" data-tooltip="vex">Vex ✦</span>
+          </div>
+        </div>
+
+        <!-- DAGGER -->
+        <div class="weapon-card">
+          <div class="weapon-header">
+            <span class="weapon-name">Dagger <span style="font-size:11px;color:var(--text-dim);">×2</span></span>
+          </div>
+          <div class="weapon-stats">
+            <div>
+              <div class="weapon-hit">+5</div>
+              <div class="weapon-hit-label">To Hit</div>
+            </div>
+            <div class="weapon-damage">1d4+3 Piercing</div>
+            <div class="weapon-range">20 / 60 ft.</div>
+          </div>
+          <div class="weapon-props">
+            <span class="wprop" data-tooltip="finesse">Finesse</span>
+            <span class="wprop" data-tooltip="light">Light</span>
+            <span class="wprop" data-tooltip="thrown">Thrown</span>
+          </div>
+        </div>
+
+        <!-- UNARMED STRIKE -->
+        <div class="weapon-card">
+          <div class="weapon-header">
+            <span class="weapon-name">Unarmed Strike</span>
+          </div>
+          <div class="weapon-stats">
+            <div>
+              <div class="weapon-hit">+3</div>
+              <div class="weapon-hit-label">To Hit</div>
+            </div>
+            <div class="weapon-damage">2 Bludgeoning</div>
+          </div>
+          <div class="weapon-props">
+            <span class="wprop" data-tooltip="unarmed">Unarmed</span>
+          </div>
+        </div>
+
+        <div class="flag-note" style="margin-top:8px;">
+          ⚑ Only the Unarmed Strike appeared in the export's attack block — the Longbow, Shortsword &amp; Daggers are shown here as equipped so the sheet is table-ready (confirm equipped state with the GM).
+        </div>
+        <div style="margin-top:6px;font-family:'Barlow Condensed',sans-serif;font-size:10px;color:var(--text-dim);">
+          ✦ Weapon Mastery — hover to see property · Longbow to-hit already includes Archery (+2).
+        </div>
+      </div>
+    </div>
+
+    <!-- CLASS RESOURCES -->
+    <div class="panel">
+      <div class="panel-header"><span class="panel-title">Class Resources</span></div>
+      <div class="panel-body">
+
+        <div class="feature-card" data-tooltip="feat-second-wind">
+          <div class="feature-header">
+            <span class="feature-name">Second Wind</span>
+            <span class="feature-source">Fighter</span>
+          </div>
+          <div class="feature-summary">Bonus Action: regain 1d10+2 HP. Tap a pip when you spend a use.</div>
+          <div class="resource-track">
+            <div class="resource-pip available" data-res="secondWind" onclick="toggleResource(this)" title="Second Wind use 1"></div>
+            <div class="resource-pip available" data-res="secondWind" onclick="toggleResource(this)" title="Second Wind use 2"></div>
+            <span class="resource-label">2 / Long Rest · 1 returns on Short Rest</span>
+          </div>
+        </div>
+
+        <div class="feature-card" data-tooltip="feat-action-surge">
+          <div class="feature-header">
+            <span class="feature-name">Action Surge</span>
+            <span class="feature-source">Fighter</span>
+          </div>
+          <div class="feature-summary">Take one extra action on your turn (not the Magic action).</div>
+          <div class="resource-track">
+            <div class="resource-pip available" data-res="actionSurge" onclick="toggleResource(this)" title="Action Surge"></div>
+            <span class="resource-label">1 / Short or Long Rest</span>
+          </div>
+        </div>
+
+        <div class="feature-card" data-tooltip="feat-lucky">
+          <div class="feature-header">
+            <span class="feature-name">Luck Points</span>
+            <span class="feature-source">Feat</span>
+          </div>
+          <div class="feature-summary">Spend 1 for Advantage on a D20 Test, or to impose Disadvantage on an attack against you.</div>
+          <div class="resource-track">
+            <div class="resource-pip available" data-res="lucky" onclick="toggleResource(this)" title="Luck Point 1"></div>
+            <div class="resource-pip available" data-res="lucky" onclick="toggleResource(this)" title="Luck Point 2"></div>
+            <span class="resource-label">2 / Long Rest</span>
+          </div>
+        </div>
+
+        <div class="feature-card" data-tooltip="feat-resourceful">
+          <div class="feature-header">
+            <span class="feature-name">Heroic Inspiration</span>
+            <span class="feature-source">Human</span>
+          </div>
+          <div class="feature-summary">Resourceful: hold 1 Heroic Inspiration. Spend it to reroll any die and use the new roll.</div>
+          <div class="resource-track">
+            <div class="resource-pip available" data-res="inspiration" onclick="toggleResource(this)" title="Heroic Inspiration"></div>
+            <span class="resource-label">1 / Long Rest</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+
+  <!-- RIGHT: SKILLS + PROFICIENCIES -->
+  <div style="display:flex;flex-direction:column;gap:14px;">
+
+    <div class="panel">
+      <div class="panel-header"><span class="panel-title">Skills</span></div>
+      <div class="panel-body" style="padding:10px 10px;">
+        <div class="skill-list">
+          <div class="skill-item"><div class="skill-prof"></div><span class="skill-mod">+3</span><span class="skill-name">Acrobatics</span><span class="skill-attr">DEX</span></div>
+          <div class="skill-item"><div class="skill-prof"></div><span class="skill-mod">+3</span><span class="skill-name">Animal Handling</span><span class="skill-attr">WIS</span></div>
+          <div class="skill-item"><div class="skill-prof"></div><span class="skill-mod">+3</span><span class="skill-name">Arcana</span><span class="skill-attr">INT</span></div>
+          <div class="skill-item"><div class="skill-prof"></div><span class="skill-mod">+1</span><span class="skill-name">Athletics</span><span class="skill-attr">STR</span></div>
+          <div class="skill-item"><div class="skill-prof"></div><span class="skill-mod">+0</span><span class="skill-name">Deception</span><span class="skill-attr">CHA</span></div>
+          <div class="skill-item"><div class="skill-prof"></div><span class="skill-mod">+3</span><span class="skill-name">History</span><span class="skill-attr">INT</span></div>
+          <div class="skill-item"><div class="skill-prof proficient"></div><span class="skill-mod">+5</span><span class="skill-name">Insight</span><span class="skill-attr">WIS</span></div>
+          <div class="skill-item"><div class="skill-prof"></div><span class="skill-mod">+0</span><span class="skill-name">Intimidation</span><span class="skill-attr">CHA</span></div>
+          <div class="skill-item"><div class="skill-prof"></div><span class="skill-mod">+3</span><span class="skill-name">Investigation</span><span class="skill-attr">INT</span></div>
+          <div class="skill-item"><div class="skill-prof"></div><span class="skill-mod">+3</span><span class="skill-name">Medicine</span><span class="skill-attr">WIS</span></div>
+          <div class="skill-item"><div class="skill-prof"></div><span class="skill-mod">+3</span><span class="skill-name">Nature</span><span class="skill-attr">INT</span></div>
+          <div class="skill-item"><div class="skill-prof proficient"></div><span class="skill-mod">+5</span><span class="skill-name">Perception</span><span class="skill-attr">WIS</span></div>
+          <div class="skill-item"><div class="skill-prof"></div><span class="skill-mod">+0</span><span class="skill-name">Performance</span><span class="skill-attr">CHA</span></div>
+          <div class="skill-item"><div class="skill-prof"></div><span class="skill-mod">+0</span><span class="skill-name">Persuasion</span><span class="skill-attr">CHA</span></div>
+          <div class="skill-item"><div class="skill-prof"></div><span class="skill-mod">+3</span><span class="skill-name">Religion</span><span class="skill-attr">INT</span></div>
+          <div class="skill-item"><div class="skill-prof proficient"></div><span class="skill-mod">+5</span><span class="skill-name">Sleight of Hand</span><span class="skill-attr">DEX</span></div>
+          <div class="skill-item"><div class="skill-prof proficient"></div><span class="skill-mod">+5</span><span class="skill-name">Stealth</span><span class="skill-attr">DEX</span></div>
+          <div class="skill-item"><div class="skill-prof proficient"></div><span class="skill-mod">+5</span><span class="skill-name">Survival</span><span class="skill-attr">WIS</span></div>
+        </div>
+        <div class="section-divider"></div>
+        <div style="display:flex;gap:8px;font-family:'Barlow Condensed',sans-serif;font-size:9px;color:var(--text-dim);">
+          <span>● Proficient</span>
+          <span style="color:var(--gold-light);">◉ Expertise</span>
+        </div>
+        <div style="margin-top:6px;" class="flag-note">
+          ⚑ Athletics is unproficient (+1) despite the Fighter list — confirm with player. Arcana &amp; Nature gain proficiency at Level 3 via Arcane Archer Lore.
+        </div>
+      </div>
+    </div>
+
+    <!-- PROFICIENCIES -->
+    <div class="panel">
+      <div class="panel-header"><span class="panel-title">Proficiencies</span></div>
+      <div class="panel-body">
+        <div class="prof-section"><div class="prof-section-label">Armour</div><div class="prof-list">Heavy, Medium &amp; Light armour, Shields</div></div>
+        <div class="prof-section"><div class="prof-section-label">Weapons</div><div class="prof-list">Simple weapons, Martial weapons</div></div>
+        <div class="prof-section"><div class="prof-section-label">Tools</div><div class="prof-list">Thieves' tools</div></div>
+        <div class="prof-section"><div class="prof-section-label">Languages</div><div class="prof-list">Common, Common Sign Language, Elvish</div></div>
+      </div>
+    </div>
+
+  </div>
+
+</div><!-- /dashboard-grid -->
+</div><!-- /sheet-body -->
+</div><!-- /tab-combat -->
+
+<!-- ======================================================= -->
+<!-- TAB: FEATURES & TRAITS -->
+<!-- ======================================================= -->
+<div id="tab-features" class="tab-panel">
+<div class="sheet-body">
+<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;align-items:start;">
+
+  <!-- FIGHTER FEATURES -->
+  <div class="panel">
+    <div class="panel-header"><span class="panel-title">Fighter Features</span></div>
+    <div class="panel-body">
+
+      <div class="feature-card" data-tooltip="feat-core-fighter">
+        <div class="feature-header">
+          <span class="feature-name">Core Fighter Traits</span>
+          <span class="feature-source">Fighter</span>
+        </div>
+        <div class="feature-summary">Fighter's proficiencies, Hit Die d10, and saves in Strength and Constitution (PHB-2024 p.91).</div>
+      </div>
+
+      <div class="feature-card" data-tooltip="feat-archery">
+        <div class="feature-header">
+          <span class="feature-name">Fighting Style: Archery</span>
+          <span class="feature-source">Fighter</span>
+        </div>
+        <div class="feature-summary">+2 to attack rolls with ranged weapons (already included in the Longbow's +7). Replaceable on each Fighter level.</div>
+      </div>
+
+      <div class="feature-card" data-tooltip="feat-second-wind">
+        <div class="feature-header">
+          <span class="feature-name">Second Wind</span>
+          <span class="feature-source">Fighter</span>
+        </div>
+        <div class="feature-summary">Bonus Action: regain 1d10+2 HP. 2 uses per Long Rest; one returns on a Short Rest. Track on the Combat tab.</div>
+      </div>
+
+      <div class="feature-card" data-tooltip="feat-action-surge">
+        <div class="feature-header">
+          <span class="feature-name">Action Surge</span>
+          <span class="feature-source">Fighter</span>
+        </div>
+        <div class="feature-summary">Once per Short or Long Rest, take one additional action (except the Magic action).</div>
+      </div>
+
+      <div class="feature-card" data-tooltip="feat-tactical-mind">
+        <div class="feature-header">
+          <span class="feature-name">Tactical Mind</span>
+          <span class="feature-source">Fighter</span>
+        </div>
+        <div class="feature-summary">On a failed ability check, spend a Second Wind use to add 1d10 instead of regaining HP. If it still fails, the use isn't spent.</div>
+      </div>
+
+      <div class="feature-card" data-tooltip="feat-weapon-mastery">
+        <div class="feature-header">
+          <span class="feature-name">Weapon Mastery</span>
+          <span class="feature-source">Fighter</span>
+        </div>
+        <div class="feature-summary">Use the mastery properties of chosen weapons: Vex (Shortsword) and Slow (Longbow). Change on a Long Rest.</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- HUMAN TRAITS -->
+  <div class="panel">
+    <div class="panel-header"><span class="panel-title">Human Traits</span></div>
+    <div class="panel-body">
+
+      <div class="feature-card" data-tooltip="feat-creature-type">
+        <div class="feature-header">
+          <span class="feature-name">Creature Type</span>
+          <span class="feature-source">Human</span>
+        </div>
+        <div class="feature-summary">You are a Humanoid.</div>
+      </div>
+
+      <div class="feature-card" data-tooltip="feat-size-speed">
+        <div class="feature-header">
+          <span class="feature-name">Size &amp; Speed</span>
+          <span class="feature-source">Human</span>
+        </div>
+        <div class="feature-summary">Medium. Speed 30 ft.</div>
+      </div>
+
+      <div class="feature-card" data-tooltip="feat-resourceful">
+        <div class="feature-header">
+          <span class="feature-name">Resourceful</span>
+          <span class="feature-source">Human</span>
+        </div>
+        <div class="feature-summary">Regain Heroic Inspiration when you finish a Long Rest. Track it on the Combat tab.</div>
+      </div>
+
+      <div class="feature-card" data-tooltip="feat-skillful">
+        <div class="feature-header">
+          <span class="feature-name">Skillful</span>
+          <span class="feature-source">Human</span>
+        </div>
+        <div class="feature-summary">Proficiency in one additional skill of your choice.</div>
+      </div>
+
+      <div class="feature-card" data-tooltip="feat-versatile">
+        <div class="feature-header">
+          <span class="feature-name">Versatile</span>
+          <span class="feature-source">Human</span>
+        </div>
+        <div class="feature-summary">Gain one Origin feat — taken as Alert. (A second Origin feat, Lucky, comes from the Wayfarer background.)</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- FEATS + MASTERIES -->
+  <div class="panel">
+    <div class="panel-header"><span class="panel-title">Feats &amp; Masteries</span></div>
+    <div class="panel-body">
+
+      <div class="feature-card" data-tooltip="feat-alert">
+        <div class="feature-header">
+          <span class="feature-name">Alert</span>
+          <span class="feature-source">Origin Feat</span>
+        </div>
+        <div class="feature-summary">Add your Proficiency Bonus to Initiative, and swap Initiative with a willing ally right after rolling (neither Incapacitated).</div>
+      </div>
+
+      <div class="feature-card" data-tooltip="feat-lucky">
+        <div class="feature-header">
+          <span class="feature-name">Lucky</span>
+          <span class="feature-source">Origin Feat</span>
+        </div>
+        <div class="feature-summary">2 Luck Points (regained on a Long Rest). Spend 1 for Advantage on a D20 Test, or Disadvantage on an attack against you.</div>
+      </div>
+
+      <div class="feature-card" data-tooltip="feat-wayfarer">
+        <div class="feature-header">
+          <span class="feature-name">Wayfarer Background</span>
+          <span class="feature-source">Background</span>
+        </div>
+        <div class="feature-summary">Ability Score Increases (+2 / +1), Thieves' Tools proficiency, and an Origin feat. A rootless, streetwise past.</div>
+      </div>
+
+      <div class="feature-card" data-tooltip="vex">
+        <div class="feature-header">
+          <span class="feature-name">Vex (Shortsword)</span>
+          <span class="feature-source">Mastery</span>
+        </div>
+        <div class="feature-summary">On a damaging hit: Advantage on your next attack roll against that target, until the end of your next turn.</div>
+      </div>
+
+      <div class="feature-card" data-tooltip="slow">
+        <div class="feature-header">
+          <span class="feature-name">Slow (Longbow)</span>
+          <span class="feature-source">Mastery</span>
+        </div>
+        <div class="feature-summary">On a damaging hit: reduce the target's Speed by 10 ft. until the start of your next turn (doesn't stack past 10 ft. per turn).</div>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+</div>
+</div>
+
+<!-- ======================================================= -->
+<!-- TAB: ARCANE ARCHER (LEVEL 3 PREVIEW) -->
+<!-- ======================================================= -->
+<div id="tab-arcane" class="tab-panel">
+<div class="sheet-body">
+
+  <div class="aa-preview-banner">
+    <span class="aa-glyph">➶</span>
+    <div>
+      <div class="aa-title">Arcane Archer — Fighter Subclass</div>
+      <div class="aa-sub">Unlocks at Level 3 · Playtest (Unearthed Arcana 2025) — not yet active at Fighter 2. Numbers may change before publication.</div>
+    </div>
+  </div>
+
+  <div class="aa-stat-strip">
+    <div class="aa-stat"><span class="aa-val">INT</span><span class="aa-lbl">Spell Ability</span></div>
+    <div class="aa-stat"><span class="aa-val">3</span><span class="aa-lbl">Arcane Shot Uses</span></div>
+    <div class="aa-stat"><span class="aa-val">DC 13</span><span class="aa-lbl">Arcane Shot Save</span></div>
+    <div class="aa-stat"><span class="aa-val">1d6</span><span class="aa-lbl">Arcane Shot Die</span></div>
+    <div class="aa-stat"><span class="aa-val">2</span><span class="aa-lbl">Options Known (L3)</span></div>
+  </div>
+  <div class="flag-note" style="margin:-6px 0 16px;">
+    Uses = INT modifier (+3), recharged on a Short or Long Rest · Save DC = 8 + INT (3) + Prof (2) = 13 · Requires an Ammunition weapon (his Longbow qualifies).
+  </div>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;align-items:start;">
+
+    <!-- CORE FEATURES -->
+    <div class="panel">
+      <div class="panel-header"><span class="panel-title">Core Subclass Features</span></div>
+      <div class="panel-body">
+
+        <div class="feature-card arcane" data-tooltip="aa-lore">
+          <div class="feature-header">
+            <span class="feature-name">Arcane Archer Lore</span>
+            <span class="feature-source arcane">Level 3</span>
+          </div>
+          <div class="feature-summary">Learn Druidcraft or Prestidigitation (INT). Gain proficiency in Arcana and Nature.</div>
+        </div>
+
+        <div class="feature-card arcane" data-tooltip="aa-shot">
+          <div class="feature-header">
+            <span class="feature-name">Arcane Shot</span>
+            <span class="feature-source arcane">Level 3</span>
+          </div>
+          <div class="feature-summary">Once per turn, apply a known option to a ranged attack with an Ammunition weapon — chosen after the hit and damage (unless it skips the attack roll).</div>
+        </div>
+
+        <div class="feature-card arcane" data-tooltip="aa-curving">
+          <div class="feature-header">
+            <span class="feature-name">Curving Shot</span>
+            <span class="feature-source arcane">Level 7</span>
+          </div>
+          <div class="feature-summary">On a miss, Bonus Action to attack a different visible target in long range not behind Total Cover. No ammunition used.</div>
+        </div>
+
+        <div class="feature-card arcane" data-tooltip="aa-ever-ready">
+          <div class="feature-header">
+            <span class="feature-name">Ever Ready Shot</span>
+            <span class="feature-source arcane">Level 7</span>
+          </div>
+          <div class="feature-summary">Rolling Initiative with zero Arcane Shot uses left restores one.</div>
+        </div>
+
+        <div style="margin-top:10px;" class="flag-note">
+          Progression: L3 → 2 options · L7 → 3 (+Curving/Ever Ready) · L10 → 4 (die d8) · L15 → 5 (d10) · L18 → 6 (d12). Swap one known option each time you gain a new one.
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ARCANE SHOT OPTIONS -->
+    <div class="panel">
+      <div class="panel-header"><span class="panel-title">Arcane Shot Options</span></div>
+      <div class="panel-body">
+
+        <div class="feature-card arcane" data-tooltip="aa-banishing">
+          <div class="feature-header">
+            <span class="feature-name">Banishing Shot</span>
+            <span class="aa-shot-tag">Psychic ×1 · CHA</span>
+          </div>
+          <div class="feature-summary">Incapacitated with Speed 0; returns at the end of its next turn.</div>
+        </div>
+
+        <div class="feature-card arcane" data-tooltip="aa-beguiling">
+          <div class="feature-header">
+            <span class="feature-name">Beguiling Shot</span>
+            <span class="aa-shot-tag">Psychic ×2 · WIS</span>
+          </div>
+          <div class="feature-summary">Charmed by you or a chosen ally within 30 ft. until your next turn; breaks on damage.</div>
+        </div>
+
+        <div class="feature-card arcane" data-tooltip="aa-bursting">
+          <div class="feature-header">
+            <span class="feature-name">Bursting Shot</span>
+            <span class="aa-shot-tag">Force ×2 · —</span>
+          </div>
+          <div class="feature-summary">Hits the target plus everything in a 10-ft. Emanation from it.</div>
+        </div>
+
+        <div class="feature-card arcane" data-tooltip="aa-enfeebling">
+          <div class="feature-header">
+            <span class="feature-name">Enfeebling Shot</span>
+            <span class="aa-shot-tag">Necrotic ×2 · CON</span>
+          </div>
+          <div class="feature-summary">Poisoned to end of its next turn; its hits lose damage equal to one die roll.</div>
+        </div>
+
+        <div class="feature-card arcane" data-tooltip="aa-grasping">
+          <div class="feature-header">
+            <span class="feature-name">Grasping Shot</span>
+            <span class="aa-shot-tag">Slashing ×1 · STR</span>
+          </div>
+          <div class="feature-summary">Restrained until your next turn; escapable with Athletics vs. your DC.</div>
+        </div>
+
+        <div class="feature-card arcane" data-tooltip="aa-piercing">
+          <div class="feature-header">
+            <span class="feature-name">Piercing Shot</span>
+            <span class="aa-shot-tag">Piercing ×2 · DEX</span>
+          </div>
+          <div class="feature-summary">No attack roll. 30-ft. Line, 1 ft. wide, ignores cover; half on save.</div>
+        </div>
+
+        <div class="feature-card arcane" data-tooltip="aa-seeking">
+          <div class="feature-header">
+            <span class="feature-name">Seeking Shot</span>
+            <span class="aa-shot-tag">Force ×2 · DEX</span>
+          </div>
+          <div class="feature-summary">No attack roll. Curves to a creature seen in the last minute, ignores most cover; half on save.</div>
+        </div>
+
+        <div class="feature-card arcane" data-tooltip="aa-shadow">
+          <div class="feature-header">
+            <span class="feature-name">Shadow Shot</span>
+            <span class="aa-shot-tag">Psychic ×1 · WIS</span>
+          </div>
+          <div class="feature-summary">Blinded to the end of its next turn.</div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</div>
+</div>
+
+<!-- ======================================================= -->
+<!-- TAB: INVENTORY -->
+<!-- ======================================================= -->
+<div id="tab-inventory" class="tab-panel">
+<div class="sheet-body">
+
+  <div class="inventory-hud">
+    <div>
+      <div class="hud-title">Wayfarer's Kit</div>
+      <div class="hud-sub">A scout-archer's field pack — a good bow, a light blade, and every tool for a long road.</div>
+    </div>
+    <div style="font-family:'Barlow Condensed',sans-serif;font-size:11px;color:var(--text-dim);letter-spacing:1px;text-transform:uppercase;">
+      Manifest Cards: <span style="color:var(--gold);">7</span>
+    </div>
+  </div>
+
+  <div class="currency-bar">
+    <div class="currency-item"><div class="currency-coin pp">PP</div><span class="currency-value">0</span></div>
+    <div class="currency-item"><div class="currency-coin gp">GP</div><span class="currency-value">27</span></div>
+    <div class="currency-item"><div class="currency-coin ep">EP</div><span class="currency-value">0</span></div>
+    <div class="currency-item"><div class="currency-coin sp">SP</div><span class="currency-value">0</span></div>
+    <div class="currency-item"><div class="currency-coin cp">CP</div><span class="currency-value">0</span></div>
+    <div style="margin-left:auto;font-family:'Barlow Condensed',sans-serif;font-size:11px;color:var(--text-dim);">
+      Weight: <span style="color:var(--text-secondary);">90 lb</span> /
+      Encumbered: <span style="color:var(--text-secondary);">195 lb</span> /
+      Push: <span style="color:var(--text-secondary);">390 lb</span>
+    </div>
+  </div>
+
+  <div style="font-family:'Barlow Condensed',sans-serif;font-size:9px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--gold-dim);margin-bottom:8px;">Equipment</div>
+  <div class="inventory-grid">
+
+    <div class="item-card signature" data-tooltip="item-longbow">
+      <div class="card-topline"><span class="item-type">Weapon</span><span class="item-weight">2 lb</span></div>
+      <div class="item-main"><span class="item-icon">🏹</span><div><div class="item-name">Longbow</div><div class="item-qty">Qty: 1 · Drawn</div></div></div>
+      <div class="item-tags"><span class="item-tag">Ammunition</span><span class="item-tag">Heavy</span><span class="item-tag">Slow</span></div>
+      <div class="item-note">Archibold's primary weapon — +7 to hit with the Archery style, and the Ammunition weapon his future Arcane Shots need.</div>
+    </div>
+
+    <div class="item-card signature" data-tooltip="item-shortsword">
+      <div class="card-topline"><span class="item-type">Weapon</span><span class="item-weight">2 lb</span></div>
+      <div class="item-main"><span class="item-icon">🗡</span><div><div class="item-name">Shortsword</div><div class="item-qty">Qty: 1</div></div></div>
+      <div class="item-tags"><span class="item-tag">Finesse</span><span class="item-tag">Light</span><span class="item-tag">Vex</span></div>
+      <div class="item-note">A quick sidearm for when foes close the distance.</div>
+    </div>
+
+    <div class="item-card" data-tooltip="item-dagger">
+      <div class="card-topline"><span class="item-type">Weapon</span><span class="item-weight">1 lb ea</span></div>
+      <div class="item-main"><span class="item-icon">🔪</span><div><div class="item-name">Dagger</div><div class="item-qty">Qty: 2</div></div></div>
+      <div class="item-tags"><span class="item-tag">Finesse</span><span class="item-tag">Light</span><span class="item-tag">Thrown</span></div>
+      <div class="item-note">A pair of throwing blades — 20/60 ft. and always within reach.</div>
+    </div>
+
+    <div class="item-card" data-tooltip="item-arrows">
+      <div class="card-topline"><span class="item-type">Ammunition</span><span class="item-weight">2 lb</span></div>
+      <div class="item-main"><span class="item-icon">🎯</span><div><div class="item-name">Arrows &amp; Quiver</div><div class="item-qty">Qty: 20 · Quiver ×1</div></div></div>
+      <div class="item-note">Recover roughly half your spent arrows after a fight. Curving Shot (L7) fires without spending any.</div>
+    </div>
+
+    <div class="item-card" data-tooltip="item-studded">
+      <div class="card-topline"><span class="item-type">Armour</span><span class="item-weight">13 lb</span></div>
+      <div class="item-main"><span class="item-icon">🧥</span><div><div class="item-name">Studded Leather</div><div class="item-qty">Qty: 1 · Worn</div></div></div>
+      <div class="item-tags"><span class="item-tag">Light Armour</span></div>
+      <div class="item-note">AC 12 + full DEX. When properly equipped this should put Archibold at AC 15 (see combat flag).</div>
+    </div>
+
+    <div class="item-card" data-tooltip="item-thieves-tools">
+      <div class="card-topline"><span class="item-type">Tools</span><span class="item-weight">1 lb</span></div>
+      <div class="item-main"><span class="item-icon">🛠</span><div><div class="item-name">Thieves' Tools</div><div class="item-qty">Qty: 1</div></div></div>
+      <div class="item-tags"><span class="item-tag">Proficient</span></div>
+      <div class="item-note">Wayfarer training — pick locks and disarm traps with DEX + Prof (+5).</div>
+    </div>
+
+    <div class="item-card" data-tooltip="item-caltrops">
+      <div class="card-topline"><span class="item-type">Utility</span><span class="item-weight">2 lb</span></div>
+      <div class="item-main"><span class="item-icon">✦</span><div><div class="item-name">Caltrops</div><div class="item-qty">Qty: 20</div></div></div>
+      <div class="item-note">Scatter across a 5-ft. square to slow pursuers — DC 15 DEX save or take 1 piercing and have Speed cut.</div>
+    </div>
+
+  </div>
+
+  <div style="margin-top:16px;font-family:'Barlow Condensed',sans-serif;font-size:9px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--gold-dim);margin-bottom:8px;">Pack &amp; Sundries</div>
+  <div style="font-family:'Barlow',sans-serif;font-size:12px;color:var(--text-secondary);line-height:1.9;padding:12px 14px;background:rgba(16,22,46,0.5);border:1px solid rgba(51,64,106,0.35);border-radius:8px;">
+    Backpack · Crowbar · Oil ×2 · Rations ×10 · Rope (hemp) · Tinderbox · Torch ×10 · Waterskin · Bedroll · Pouch ×2 · Traveler's Clothes · Dice
+  </div>
+
+  <div class="inventory-builder" style="margin-top:16px;">
+    <div style="font-family:'Barlow Condensed',sans-serif;font-size:9px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--gold-dim);margin-bottom:8px;">Picked Up During Play</div>
+    <div class="inventory-form">
+      <input id="aCustomItemName" class="inventory-input" type="text" placeholder="Item name">
+      <input id="aCustomItemQty" class="inventory-input" type="text" placeholder="Qty">
+      <input id="aCustomItemWeight" class="inventory-input" type="text" placeholder="Weight">
+      <input id="aCustomItemNote" class="inventory-input" type="text" placeholder="Short note (optional)">
+      <button class="inventory-add-btn" type="button" onclick="addArchiboldCustomItem()">Add Item</button>
+    </div>
+    <div id="aCustomInventoryList" class="inventory-grid" style="margin-top:10px;"></div>
+    <div id="aCustomInventoryEmpty" class="inventory-empty">No picked-up items yet.</div>
+  </div>
+
+  <div style="margin-top:20px;font-family:'Barlow Condensed',sans-serif;font-size:9px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--gold-dim);margin-bottom:8px;">Attuned Magic Items</div>
+  <div style="font-family:'Barlow',sans-serif;font-size:12px;color:var(--text-dim);padding:16px;background:rgba(16,22,46,0.4);border:1px dashed rgba(51,64,106,0.3);border-radius:5px;text-align:center;">
+    No attuned magic items
+  </div>
+
+</div>
+</div>
+
+<!-- ======================================================= -->
+<!-- TAB: LORE & NOTES -->
+<!-- ======================================================= -->
+<div id="tab-lore" class="tab-panel">
+<div class="sheet-body">
+<div class="two-col">
+
+  <div style="display:flex;flex-direction:column;gap:14px;">
+    <div class="panel">
+      <div class="panel-header"><span class="panel-title">Character Details</span></div>
+      <div class="panel-body">
+        <div class="char-details-grid">
+          <div class="char-detail-item"><div class="detail-label">Species</div><div class="detail-value">Human</div></div>
+          <div class="char-detail-item"><div class="detail-label">Background</div><div class="detail-value">Wayfarer</div></div>
+          <div class="char-detail-item"><div class="detail-label">Alignment</div><div class="detail-value">—</div></div>
+          <div class="char-detail-item"><div class="detail-label">Size</div><div class="detail-value">Medium</div></div>
+          <div class="char-detail-item"><div class="detail-label">Age</div><div class="detail-value">—</div></div>
+          <div class="char-detail-item"><div class="detail-label">Height</div><div class="detail-value">—</div></div>
+          <div class="char-detail-item"><div class="detail-label">Weight</div><div class="detail-value">—</div></div>
+          <div class="char-detail-item"><div class="detail-label">Eyes</div><div class="detail-value">—</div></div>
+          <div class="char-detail-item"><div class="detail-label">Hair</div><div class="detail-value">—</div></div>
+          <div class="char-detail-item"><div class="detail-label">Skin</div><div class="detail-value">—</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="panel-header"><span class="panel-title">Personality</span></div>
+      <div class="panel-body">
+        <div class="lore-section">
+          <div class="lore-label">Traits</div>
+          <div class="lore-text">Unrecorded — open for development.</div>
+        </div>
+        <div class="lore-section">
+          <div class="lore-label">Ideals</div>
+          <div class="lore-text">Unrecorded — open for development.</div>
+        </div>
+        <div class="lore-section">
+          <div class="lore-label">Bonds</div>
+          <div class="lore-text">Unrecorded — open for development.</div>
+        </div>
+        <div class="lore-section" style="margin-bottom:0;">
+          <div class="lore-label">Flaws</div>
+          <div class="lore-text">Unrecorded — open for development.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="panel-header"><span class="panel-title">Allies &amp; Organizations</span></div>
+      <div class="panel-body">
+        <div class="lore-section" style="margin-bottom:0;">
+          <div class="lore-label">Allies &amp; Organizations</div>
+          <div class="lore-text">Unrecorded — open hooks for development.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div style="display:flex;flex-direction:column;gap:14px;">
+    <div class="panel">
+      <div class="panel-header"><span class="panel-title">Character Backstory</span></div>
+      <div class="panel-body">
+        <div class="lore-text">Backstory unrecorded on the export — open hooks await. A Wayfarer with thieves' tools and a set of dice suggests a rootless, streetwise past. His wide, even spread of 17s in Dexterity, Intelligence, and Wisdom paints a scout or outrider — capable, observant, and quick-thinking rather than a front-line bruiser, and a natural fit for the Arcane Archer's blend of bowcraft and low magic.</div>
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="panel-header"><span class="panel-title">GM Notes / Open Items</span></div>
+      <div class="panel-body">
+        <div class="lore-section">
+          <div class="lore-label">Table Flags</div>
+          <div class="lore-text">AC reads 13 but Studded Leather should give 15; Initiative reads +3 but Alert should give +5. Only the Unarmed Strike was in the attacks block — weapons added here as equipped. Athletics is unproficient (+1) despite the Fighter list.</div>
+        </div>
+        <div class="lore-section" style="margin-bottom:0;">
+          <div class="lore-label">Subclass — Arcane Archer (Level 3)</div>
+          <div class="lore-text">Subclass chosen at Level 3: Arcane Archer (UA 2025 playtest). The high INT (17) fully powers the subclass — DC 13, three Arcane Shot uses, and the bonus cantrip. See the Arcane Archer tab. Confirm the table is happy running playtest content.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="panel-header"><span class="panel-title">Additional Notes</span></div>
+      <div class="panel-body">
+        <textarea id="archiboldNotes" style="width:100%;min-height:180px;background:rgba(16,22,46,0.6);border:1px solid rgba(51,64,106,0.4);border-radius:4px;color:var(--text-secondary);font-family:'IM Fell English',serif;font-size:13px;font-style:italic;padding:10px;resize:vertical;line-height:1.6;" placeholder="Notes, campaign events, important NPCs..." oninput="saveSheetState()"></textarea>
+      </div>
+    </div>
+  </div>
+
+</div>
+</div>
+</div>
+
+<!-- ======================================================= -->
+<!-- TOOLTIP DATA (hidden) -->
+<!-- ======================================================= -->
+<script>
+const TOOLTIPS = {
+
+  // ABILITY SCORES
+  strength: { name: "Strength", type: "Ability Score", body: "Measures physical power. A proficient save for Fighters. Archibold's STR of 13 gives a +1 modifier.", stats: {"Score":"13","Modifier":"+1","Save":"+3 (Prof)"} },
+  dexterity: { name: "Dexterity", type: "Ability Score", body: "Measures agility and reflexes. Archibold's key stat — drives his bow attacks, AC, Initiative, and Stealth. DEX of 17 gives a +3 modifier.", stats: {"Score":"17","Modifier":"+3","Save":"+3"} },
+  constitution: { name: "Constitution", type: "Ability Score", body: "Measures health and stamina. A proficient save for Fighters; feeds his 20 HP.", stats: {"Score":"15","Modifier":"+2","Save":"+4 (Prof)"} },
+  intelligence: { name: "Intelligence", type: "Ability Score", body: "Measures memory and reasoning. INT of 17 (+3) is the spellcasting ability for his coming Arcane Archer features — DC, Arcane Shot uses, and the bonus cantrip all key off it.", stats: {"Score":"17","Modifier":"+3","Save":"+3"} },
+  wisdom: { name: "Wisdom", type: "Ability Score", body: "Measures perception and insight. Feeds his strong passive Perception and Survival — the scout's edge.", stats: {"Score":"17","Modifier":"+3","Save":"+3"} },
+  charisma: { name: "Charisma", type: "Ability Score", body: "Measures force of personality. Archibold's dump stat at 10 (+0).", stats: {"Score":"10","Modifier":"+0","Save":"+0"} },
+
+  // WEAPON PROPERTIES
+  martial: { name: "Martial Weapon", type: "Weapon Property", body: "Requires Martial Weapons proficiency. Archibold is proficient with all martial weapons." },
+  finesse: { name: "Finesse", type: "Weapon Property", body: "You can use your Strength or Dexterity for attack and damage rolls. Archibold uses DEX (+3)." },
+  ammunition: { name: "Ammunition", type: "Weapon Property", body: "You need ammunition (arrows) to make a ranged attack. Draw ammo as part of the attack; recover about half after the fight. This property is required for Arcane Shot at Level 3." },
+  heavy: { name: "Heavy", type: "Weapon Property", body: "Small creatures have Disadvantage on attack rolls with a Heavy weapon. Archibold is Medium, so it doesn't affect him." },
+  "two-handed": { name: "Two-Handed", type: "Weapon Property", body: "You need two free hands to use this weapon to make an attack. He can't hold a shield while firing the Longbow." },
+  light: { name: "Light", type: "Weapon Property", body: "A Light weapon can be used for Two-Weapon Fighting, letting you make an extra attack with a second Light weapon as a Bonus Action." },
+  thrown: { name: "Thrown", type: "Weapon Property", body: "You can throw the weapon to make a ranged attack, using the same ability modifier as a melee attack. The Dagger's range is 20/60 ft." },
+  unarmed: { name: "Unarmed Strike", type: "Weapon Option", body: "A punch, kick, or headbutt. Archibold's Unarmed Strike deals 2 Bludgeoning (1 + STR 1)." },
+  archery: { name: "Archery Fighting Style", type: "Fighter Feature (PHB-2024 p.209)", body: "You gain a +2 bonus to attack rolls you make with ranged weapons. This is already baked into the Longbow's +7 to hit.", stats: {"Bonus":"+2 to hit","Applies to":"Ranged weapons"} },
+
+  // WEAPON MASTERIES
+  vex: { name: "Vex", type: "Weapon Mastery — Shortsword", body: "If you hit a creature with the Shortsword and deal damage, you have Advantage on your next attack roll against that creature before the end of your next turn.", stats: {"Effect":"Advantage on next attack","Duration":"Until end of your next turn","Trigger":"On hit + damage"} },
+  slow: { name: "Slow", type: "Weapon Mastery — Longbow", body: "If you hit a creature with the Longbow and deal damage, reduce its Speed by 10 feet until the start of your next turn. The reduction doesn't stack past 10 ft. within a single turn.", stats: {"Effect":"−10 ft. Speed","Duration":"Until start of your next turn","Trigger":"On hit + damage"} },
+
+  // WEAPON / GEAR ITEMS
+  "item-longbow": { name: "Longbow", type: "Martial Ranged Weapon", body: "Ammunition, Heavy, Two-Handed. Mastery: Slow. Archibold attacks at +7 (DEX 3 + Prof 2 + Archery 2) for 1d8+3 piercing. Range 150/600 ft. This is the Ammunition weapon his Level-3 Arcane Shots will use.", stats: {"Damage":"1d8+3 Piercing","To Hit":"+7","Range":"150/600 ft.","Mastery":"Slow"} },
+  "item-shortsword": { name: "Shortsword", type: "Martial Melee Weapon", body: "Finesse, Light. Mastery: Vex. Archibold attacks at +5 (DEX 3 + Prof 2) for 1d6+3 piercing.", stats: {"Damage":"1d6+3 Piercing","To Hit":"+5","Mastery":"Vex","Weight":"2 lb"} },
+  "item-dagger": { name: "Dagger (×2)", type: "Simple Melee Weapon", body: "Finesse, Light, Thrown (20/60). +5 to hit for 1d4+3 piercing, in melee or thrown. Two on hand.", stats: {"Damage":"1d4+3 Piercing","To Hit":"+5","Range":"20/60 ft.","Qty":"2"} },
+  "item-arrows": { name: "Arrows & Quiver", type: "Ammunition", body: "20 arrows in a quiver. Draw one as part of each Longbow attack; recover about half after a battle. Curving Shot (L7) attacks without spending ammunition." },
+  "item-studded": { name: "Studded Leather", type: "Light Armour", body: "AC = 12 + full Dexterity modifier. With DEX +3 that is AC 15 when equipped. The export currently shows AC 13 — likely the armour isn't flagged as worn.", stats: {"Base AC":"12","DEX":"Full","Worn AC":"15","Weight":"13 lb"} },
+  "item-thieves-tools": { name: "Thieves' Tools", type: "Tools (Proficient)", body: "Used to pick locks and disarm traps. Archibold adds DEX + Proficiency (+5). Granted by the Wayfarer background." },
+  "item-caltrops": { name: "Caltrops (×20)", type: "Adventuring Gear", body: "Spread a bag across a 5-ft. square. A creature entering makes a DC 15 Dexterity save or takes 1 piercing damage and its Speed is reduced until it regains at least 1 HP." },
+
+  // FIGHTER FEATURES
+  "feat-core-fighter": { name: "Core Fighter Traits", type: "Fighter Feature (PHB-2024 p.91)", body: "The Fighter's baseline package: proficiency with all armour and shields, all simple and martial weapons, and saving throws in Strength and Constitution.", stats: {"Hit Die":"d10","Saves":"STR, CON","Key Ability":"STR or DEX"} },
+  "feat-archery": { name: "Fighting Style: Archery", type: "Fighter Feature (PHB-2024 p.209)", body: "You gain a +2 bonus to attack rolls you make with ranged weapons. This is already included in the Longbow's +7. You can replace your Fighting Style each time you gain a Fighter level.", stats: {"Bonus":"+2 to hit","Applies to":"Ranged weapons"} },
+  "feat-second-wind": { name: "Second Wind", type: "Fighter Feature (PHB-2024 p.91)", body: "As a Bonus Action, regain 1d10 + Fighter level HP (1d10+2 at level 2). You have two uses; regain one on a Short Rest and all on a Long Rest. It also fuels Tactical Mind.", stats: {"Heal":"1d10+2","Action":"Bonus Action","Uses":"2 (1 back on Short Rest)"} },
+  "feat-action-surge": { name: "Action Surge", type: "Fighter Feature (PHB-2024 p.91)", body: "On your turn, take one additional action. Once you use it, you must finish a Short or Long Rest before using it again. It can't be used to take the Magic action.", stats: {"Extra":"1 action","Recharge":"Short or Long Rest","Limit":"Not the Magic action"} },
+  "feat-tactical-mind": { name: "Tactical Mind", type: "Fighter Feature (PHB-2024 p.91)", body: "When you fail an ability check, you can expend a use of Second Wind to roll 1d10 and add it to the check, potentially turning the failure into a success. If the check still fails, the Second Wind use isn't expended." },
+  "feat-weapon-mastery": { name: "Weapon Mastery", type: "Fighter Feature (PHB-2024 p.91)", body: "You can use the mastery properties of weapons you're proficient with. Archibold uses Vex (Shortsword) and Slow (Longbow); a third mastery (e.g. Nick on the Dagger) may be assigned. Change choices on a Long Rest." },
+
+  // HUMAN TRAITS
+  "feat-creature-type": { name: "Creature Type", type: "Human Trait (PHB-2024 p.193)", body: "Archibold is a Humanoid. Effects that target Humanoids apply to him unless another effect changes his creature type." },
+  "feat-size-speed": { name: "Size & Speed", type: "Human Trait (PHB-2024 p.194)", body: "Archibold is Medium with a base walking speed of 30 feet.", stats: {"Size":"Medium","Base Speed":"30 ft."} },
+  "feat-resourceful": { name: "Resourceful", type: "Human Trait (PHB-2024 p.194)", body: "You gain Heroic Inspiration whenever you finish a Long Rest. Spend Heroic Inspiration to reroll any die immediately after rolling it, and use the new roll.", stats: {"Regain":"On Long Rest","Held":"1 max","Use":"Reroll one die"} },
+  "feat-skillful": { name: "Skillful", type: "Human Trait (PHB-2024 p.194)", body: "You gain proficiency in one skill of your choice, on top of your class and background skills." },
+  "feat-versatile": { name: "Versatile", type: "Human Trait (PHB-2024 p.194)", body: "You gain an Origin feat of your choice. Archibold took Alert. His Wayfarer background grants a second Origin feat, Lucky." },
+  "feat-alert": { name: "Alert", type: "Origin Feat (PHB-2024 p.200)", body: "Initiative Proficiency: add your Proficiency Bonus to Initiative rolls (so Archibold's should read +5, not +3). Initiative Swap: immediately after rolling Initiative, you can swap your Initiative with a willing ally, provided neither of you is Incapacitated.", stats: {"Initiative":"+Prof (should be +5)","Swap":"With willing ally"} },
+  "feat-lucky": { name: "Lucky", type: "Origin Feat (PHB-2024 p.201)", body: "You have Luck Points equal to your Proficiency Bonus (2), regained on a Long Rest. Spend 1 point to give yourself Advantage on a D20 Test, or to impose Disadvantage on an attack roll made against you.", stats: {"Luck Points":"2","Regain":"Long Rest","Use":"Advantage / impose Disadvantage"} },
+  "feat-wayfarer": { name: "Wayfarer Background", type: "Background (PHB-2024)", body: "Grants Ability Score Increases (+2 / +1 across two scores), proficiency with Thieves' Tools, skill proficiencies, and an Origin feat (Lucky). Flavour: a rootless, streetwise traveller." },
+
+  // ===== ARCANE ARCHER (Level 3 — Playtest, UA 2025) =====
+  "aa-lore": { name: "Arcane Archer Lore", type: "Arcane Archer · Level 3 (Playtest)", body: "You learn the Druidcraft or Prestidigitation cantrip (Intelligence is your spellcasting ability). You also gain proficiency in Arcana and Nature; if you already have either, choose another skill instead.", stats: {"Cantrip":"Druidcraft / Prestidigitation","Ability":"INT","Skills":"Arcana & Nature"} },
+  "aa-shot": { name: "Arcane Shot", type: "Arcane Archer · Level 3 (Playtest)", body: "Once per turn, apply one known Arcane Shot option to a ranged attack made with an Ammunition-property weapon. You choose the option after the hit lands and damage is dealt — except options that skip the attack roll entirely. Uses = INT modifier (3), recharged on a Short or Long Rest. Save DC = 8 + INT + Prof = 13. Die = 1d6 at this tier.", stats: {"Uses":"3 (INT mod)","Recharge":"Short/Long Rest","Save DC":"13","Die":"1d6"} },
+  "aa-curving": { name: "Curving Shot", type: "Arcane Archer · Level 7 (Playtest)", body: "When you miss with an Ammunition weapon, you can use a Bonus Action to attack a different target you can see within long range that isn't behind Total Cover. This attack consumes no ammunition." },
+  "aa-ever-ready": { name: "Ever Ready Shot", type: "Arcane Archer · Level 7 (Playtest)", body: "When you roll Initiative and have no Arcane Shot uses remaining, you regain one use — so you always enter combat with at least one charge." },
+
+  // ARCANE SHOT OPTIONS
+  "aa-banishing": { name: "Banishing Shot", type: "Arcane Shot Option (Playtest)", body: "A brief banishment to a harmless demiplane. On a failed CHA save, the target is Incapacitated and its Speed is 0 until the end of its next turn, when it reappears.", stats: {"Damage":"Psychic ×1","Save":"CHA","Effect":"Incapacitated, Speed 0"} },
+  "aa-beguiling": { name: "Beguiling Shot", type: "Arcane Shot Option (Playtest)", body: "Enchanting magic clouds the target's mind. On a failed WIS save, it is Charmed by you or a chosen ally within 30 ft. until the start of your next turn. The Charm ends if the target takes damage or is forced to make the save again.", stats: {"Damage":"Psychic ×2","Save":"WIS","Effect":"Charmed until your next turn"} },
+  "aa-bursting": { name: "Bursting Shot", type: "Arcane Shot Option (Playtest)", body: "The arrow erupts with force. It hits the target plus every creature in a 10-foot Emanation from it — no separate attack roll for the burst.", stats: {"Damage":"Force ×2","Save":"—","Area":"10-ft. Emanation"} },
+  "aa-enfeebling": { name: "Enfeebling Shot", type: "Arcane Shot Option (Playtest)", body: "Necrotic energy saps the target's strength. On a failed CON save, it is Poisoned until the end of its next turn, and its attacks that deal damage lose damage equal to one roll of the Arcane Shot Die.", stats: {"Damage":"Necrotic ×2","Save":"CON","Effect":"Poisoned; weakened hits"} },
+  "aa-grasping": { name: "Grasping Shot", type: "Arcane Shot Option (Playtest)", body: "Spectral brambles seize the target. On a failed STR save, it is Restrained until the start of your next turn. It can free itself with an Athletics check against your save DC.", stats: {"Damage":"Slashing ×1","Save":"STR","Effect":"Restrained"} },
+  "aa-piercing": { name: "Piercing Shot", type: "Arcane Shot Option (Playtest)", body: "You skip the attack roll entirely. The arrow becomes a 30-foot Line, 1 foot wide, ignoring cover. Each creature in the Line makes a DEX save, taking full damage on a failure and half on a success.", stats: {"Damage":"Piercing ×2","Save":"DEX","Area":"30-ft. Line (no attack roll)"} },
+  "aa-seeking": { name: "Seeking Shot", type: "Arcane Shot Option (Playtest)", body: "You skip the attack roll. The arrow curves to seek a creature you've seen within the last minute, ignoring Half and Three-Quarters Cover, revealing its location. It makes a DEX save for half damage.", stats: {"Damage":"Force ×2","Save":"DEX","Effect":"Homing; reveals location"} },
+  "aa-shadow": { name: "Shadow Shot", type: "Arcane Shot Option (Playtest)", body: "Roiling shadow clings to the target's eyes. On a failed WIS save, it is Blinded until the end of its next turn.", stats: {"Damage":"Psychic ×1","Save":"WIS","Effect":"Blinded"} },
+};
+</script>
+
+<script>
+const SHEET_UI_VERSION = '1.0.0';
+
+// ===== TABS =====
+function switchTab(id) {
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-' + id)?.classList.add('active');
+  const activeBtn = document.querySelector(`.tab-btn[onclick="switchTab('${id}')"]`);
+  if (activeBtn) activeBtn.classList.add('active');
+  saveSheetState();
+}
+
+// ===== TOOLTIP ENGINE =====
+const tooltip = document.getElementById('tooltip');
+const ttName = document.getElementById('tt-name');
+const ttType = document.getElementById('tt-type');
+const ttBody = document.getElementById('tt-body');
+const ttStats = document.getElementById('tt-stats');
+let activeTooltipEl = null;
+let lastMouseX = 0;
+let lastMouseY = 0;
+
+function showTooltip(data) {
+  ttName.textContent = data.name;
+  ttType.textContent = data.type || '';
+  ttBody.innerHTML = (data.body || '').replace(/\n/g, '<br>');
+  if (data.stats) {
+    ttStats.style.display = 'grid';
+    ttStats.innerHTML = Object.entries(data.stats).map(([k,v]) => `<div class="tooltip-stat">${k}: <span>${v}</span></div>`).join('');
+  } else {
+    ttStats.style.display = 'none';
+  }
+  tooltip.classList.add('visible');
+}
+
+function positionTooltip(x, y) {
+  const pad = 12;
+  const rect = tooltip.getBoundingClientRect();
+  let left = x + 16;
+  let top = y + 14;
+  if (left + rect.width > window.innerWidth - pad) left = x - rect.width - 16;
+  if (top + rect.height > window.innerHeight - pad) top = y - rect.height - 16;
+  if (left < pad) left = pad;
+  if (top < pad) top = pad;
+
+  tooltip.style.left = Math.round(left) + 'px';
+  tooltip.style.top = Math.round(top) + 'px';
+}
+
+function hideTooltip() {
+  tooltip.classList.remove('visible');
+  activeTooltipEl = null;
+}
+
+function getTooltipData(el) {
+  if (!el) return null;
+  return TOOLTIPS[el.dataset.tooltip] || null;
+}
+
+function activateTooltip(el, x, y) {
+  const data = getTooltipData(el);
+  if (!data) return;
+  if (tooltip.parentElement !== document.body) {
+    document.body.appendChild(tooltip);
+  }
+  activeTooltipEl = el;
+  showTooltip(data);
+  positionTooltip(x, y);
+}
+
+document.addEventListener('mouseover', (e) => {
+  const el = e.target.closest('[data-tooltip]');
+  if (!el) return;
+  lastMouseX = e.clientX;
+  lastMouseY = e.clientY;
+  activateTooltip(el, lastMouseX, lastMouseY);
+});
+
+document.addEventListener('mousemove', (e) => {
+  if (!activeTooltipEl) return;
+  lastMouseX = e.clientX;
+  lastMouseY = e.clientY;
+  positionTooltip(lastMouseX, lastMouseY);
+});
+
+document.addEventListener('mouseout', (e) => {
+  if (!activeTooltipEl) return;
+  const nextEl = e.relatedTarget;
+  if (nextEl && activeTooltipEl.contains(nextEl)) {
+    return;
+  }
+  hideTooltip();
+});
+
+document.addEventListener('focusin', (e) => {
+  const el = e.target.closest('[data-tooltip]');
+  if (!el) return;
+  const rect = el.getBoundingClientRect();
+  activateTooltip(el, rect.left + rect.width / 2, rect.top + rect.height / 2);
+});
+
+document.addEventListener('focusout', () => {
+  hideTooltip();
+});
+
+window.addEventListener('scroll', () => {
+  if (activeTooltipEl) {
+    const rect = activeTooltipEl.getBoundingClientRect();
+    positionTooltip(rect.left + rect.width / 2, rect.top + rect.height / 2);
+  }
+}, { passive: true });
+
+window.addEventListener('resize', () => {
+  if (!activeTooltipEl) return;
+  const rect = activeTooltipEl.getBoundingClientRect();
+  positionTooltip(rect.left + rect.width / 2, rect.top + rect.height / 2);
+});
+
+// ===== CONSTANTS =====
+const MAX_HP = 20;
+
+// ===== HP =====
+function updateHPBar() {
+  const cur = parseInt(document.getElementById('currentHP').value) || 0;
+  const pct = Math.min(100, Math.max(0, (cur / MAX_HP) * 100));
+  const bar = document.getElementById('hpBar');
+  bar.style.width = pct + '%';
+  if (pct > 50) bar.style.background = 'linear-gradient(90deg,#3a7fb8,#7fc0e8)';
+  else if (pct > 25) bar.style.background = 'linear-gradient(90deg,#8b7a20,#c0a830)';
+  else bar.style.background = 'linear-gradient(90deg,#8b2f4a,#c0405f)';
+  saveSheetState();
+}
+
+function applyHP(sign) {
+  const delta = parseInt(document.getElementById('hpDelta').value) || 0;
+  const cur = parseInt(document.getElementById('currentHP').value) || 0;
+  const newVal = Math.min(MAX_HP, Math.max(0, cur + sign * delta));
+  document.getElementById('currentHP').value = newVal;
+  document.getElementById('hpDelta').value = '';
+  updateHPBar();
+  saveSheetState();
+}
+
+// ===== REACTIVE SHEET STATE =====
+const sheetState = {};
+
+// ===== CUSTOM INVENTORY =====
+const SHEET_STORAGE_KEY = 'maltandmagic:dnd:archibold-layadon-sheet:v1';
+let customInventoryItems = [];
+
+function renderArchiboldCustomItems() {
+  const list = document.getElementById('aCustomInventoryList');
+  const empty = document.getElementById('aCustomInventoryEmpty');
+  if (!list || !empty) return;
+
+  list.innerHTML = '';
+  if (!customInventoryItems.length) {
+    empty.style.display = 'block';
+    return;
+  }
+
+  empty.style.display = 'none';
+  customInventoryItems.forEach(item => {
+    const card = document.createElement('div');
+    card.className = 'item-card custom-item-card';
+
+    const top = document.createElement('div');
+    top.className = 'card-topline';
+    top.innerHTML = `<span class="item-type">Picked Up</span><span class="item-weight">${item.weight || '-'}</span>`;
+
+    const main = document.createElement('div');
+    main.className = 'item-main';
+    main.innerHTML = `<span class="item-icon">🎒</span><div><div class="item-name"></div><div class="item-qty"></div></div>`;
+    main.querySelector('.item-name').textContent = item.name;
+    main.querySelector('.item-qty').textContent = `Qty: ${item.qty || '1'}`;
+
+    const note = document.createElement('div');
+    note.className = 'item-note';
+    note.textContent = item.note || 'Added during play.';
+
+    const actions = document.createElement('div');
+    actions.style.marginTop = '8px';
+    const removeBtn = document.createElement('button');
+    removeBtn.type = 'button';
+    removeBtn.className = 'inventory-remove-btn';
+    removeBtn.textContent = 'Remove';
+    removeBtn.onclick = () => removeArchiboldCustomItem(item.id);
+    actions.appendChild(removeBtn);
+
+    card.appendChild(top);
+    card.appendChild(main);
+    card.appendChild(note);
+    card.appendChild(actions);
+    list.appendChild(card);
+  });
+}
+
+function addArchiboldCustomItem() {
+  const nameEl = document.getElementById('aCustomItemName');
+  const qtyEl = document.getElementById('aCustomItemQty');
+  const weightEl = document.getElementById('aCustomItemWeight');
+  const noteEl = document.getElementById('aCustomItemNote');
+  if (!nameEl || !qtyEl || !weightEl || !noteEl) return;
+
+  const name = nameEl.value.trim();
+  if (!name) {
+    castToast('Enter an item name first.', true);
+    return;
+  }
+
+  customInventoryItems.push({
+    id: `${Date.now()}-${Math.random().toString(16).slice(2)}`,
+    name,
+    qty: qtyEl.value.trim() || '1',
+    weight: weightEl.value.trim() || '-',
+    note: noteEl.value.trim(),
+  });
+
+  nameEl.value = '';
+  qtyEl.value = '';
+  weightEl.value = '';
+  noteEl.value = '';
+
+  renderArchiboldCustomItems();
+  saveSheetState();
+  castToast('Item added to picked-up inventory.');
+}
+
+function removeArchiboldCustomItem(id) {
+  customInventoryItems = customInventoryItems.filter(item => item.id !== id);
+  renderArchiboldCustomItems();
+  saveSheetState();
+}
+
+// ===== PERSISTENCE =====
+function saveSheetState() {
+  try {
+    const state = {
+      sheetState,
+      weaponState,
+      hp: {
+        current: document.getElementById('currentHP')?.value || String(MAX_HP),
+        temp: document.getElementById('tempHP')?.value || '0',
+      },
+      resources: Array.from(document.querySelectorAll('.resource-pip')).map(el => el.classList.contains('used')),
+      deaths: Array.from(document.querySelectorAll('.death-pip')).map(el => el.classList.contains('filled')),
+      conditions: Array.from(document.querySelectorAll('.condition-badge')).map(el => ({
+        name: (el.textContent || '').trim(),
+        active: el.classList.contains('active'),
+      })),
+      notes: document.getElementById('archiboldNotes')?.value || '',
+      customInventoryItems,
+      activeTab: document.querySelector('.tab-panel.active')?.id || 'tab-combat',
+    };
+    localStorage.setItem(SHEET_STORAGE_KEY, JSON.stringify(state));
+  } catch (err) {
+    console.warn('Could not save sheet state:', err);
+  }
+}
+
+function loadSheetState() {
+  const versionBadge = document.getElementById('uiVersionBadge');
+  if (versionBadge) versionBadge.textContent = `UI v${SHEET_UI_VERSION}`;
+  if (!document.title.includes(`UI v${SHEET_UI_VERSION}`)) {
+    document.title = `${document.title} · UI v${SHEET_UI_VERSION}`;
+  }
+
+  try {
+    const raw = localStorage.getItem(SHEET_STORAGE_KEY);
+    if (!raw) {
+      refreshDerivedStats();
+      updateHPBar();
+      renderArchiboldCustomItems();
+      return;
+    }
+
+    const saved = JSON.parse(raw);
+
+    if (Array.isArray(saved.customInventoryItems)) {
+      customInventoryItems = saved.customInventoryItems;
+    }
+
+    if (saved.sheetState && typeof saved.sheetState === 'object') {
+      Object.assign(sheetState, saved.sheetState);
+    }
+
+    if (saved.weaponState?.longbow) {
+      weaponState.longbow = { ...weaponState.longbow, ...saved.weaponState.longbow };
+    }
+    if (saved.weaponState?.shortsword) {
+      weaponState.shortsword = { ...weaponState.shortsword, ...saved.weaponState.shortsword };
+    }
+
+    if (saved.hp) {
+      const currentHP = document.getElementById('currentHP');
+      const tempHP = document.getElementById('tempHP');
+      if (currentHP) currentHP.value = saved.hp.current ?? String(MAX_HP);
+      if (tempHP) tempHP.value = saved.hp.temp ?? '0';
+    }
+
+    if (Array.isArray(saved.resources)) {
+      document.querySelectorAll('.resource-pip').forEach((el, idx) => {
+        const used = !!saved.resources[idx];
+        el.classList.toggle('used', used);
+        el.classList.toggle('available', !used);
+      });
+    }
+
+    if (Array.isArray(saved.deaths)) {
+      document.querySelectorAll('.death-pip').forEach((el, idx) => {
+        el.classList.toggle('filled', !!saved.deaths[idx]);
+      });
+    }
+
+    if (Array.isArray(saved.conditions)) {
+      const map = new Map(saved.conditions.map(c => [c.name, !!c.active]));
+      document.querySelectorAll('.condition-badge').forEach(el => {
+        const key = (el.textContent || '').trim();
+        const active = map.get(key) || false;
+        el.classList.toggle('active', active);
+        el.classList.toggle('inactive', !active);
+      });
+    }
+
+    const notesEl = document.getElementById('archiboldNotes');
+    if (notesEl && typeof saved.notes === 'string') notesEl.value = saved.notes;
+
+    refreshDerivedStats();
+    updateHPBar();
+    updateWeaponDisplay('longbow');
+    updateWeaponDisplay('shortsword');
+    applyAdvButtons('longbow');
+    applyAdvButtons('shortsword');
+
+    const savedTab = (saved.activeTab || 'tab-combat').replace('tab-', '');
+    switchTab(savedTab);
+  } catch (err) {
+    console.warn('Could not load sheet state:', err);
+    refreshDerivedStats();
+    updateHPBar();
+  }
+
+  renderArchiboldCustomItems();
+}
+
+// ===== DERIVED STATS =====
+function refreshDerivedStats() {
+  const tally = (group) => {
+    const pips = document.querySelectorAll(`.resource-pip[data-res="${group}"]`);
+    const avail = Array.from(pips).filter(p => p.classList.contains('available')).length;
+    return `${avail}/${pips.length}`;
+  };
+  const readout = document.getElementById('combatEffectReadout');
+  if (readout) {
+    readout.textContent = `Second Wind ${tally('secondWind')} · Action Surge ${tally('actionSurge')} · Luck ${tally('lucky')} · Heroic Insp. ${tally('inspiration')}`;
+  }
+}
+
+// ===== DEATH SAVES =====
+function togglePip(el, type) {
+  el.classList.toggle('filled');
+  saveSheetState();
+}
+
+// ===== RESOURCES =====
+function toggleResource(el) {
+  el.classList.toggle('used');
+  el.classList.toggle('available');
+  refreshDerivedStats();
+  saveSheetState();
+}
+
+function restoreResource(group) {
+  document.querySelectorAll(`.resource-pip[data-res="${group}"]`).forEach(p => {
+    p.classList.remove('used');
+    p.classList.add('available');
+  });
+}
+
+function restoreOneResource(group) {
+  const used = document.querySelector(`.resource-pip[data-res="${group}"].used`);
+  if (used) {
+    used.classList.remove('used');
+    used.classList.add('available');
+  }
+}
+
+// ===== CONDITIONS =====
+function toggleCondition(el) {
+  el.classList.toggle('active');
+  el.classList.toggle('inactive');
+  saveSheetState();
+}
+
+// ===== WEAPON ADVANTAGE TOGGLES =====
+const weaponState = {
+  longbow: { adv: 'none' },
+  shortsword: { adv: 'none' },
+};
+
+function toggleAdv(weapon, type, btn) {
+  const state = weaponState[weapon];
+  if (state.adv === type) {
+    state.adv = 'none';
+    btn.classList.remove('active');
+  } else {
+    state.adv = type;
+    btn.closest('.adv-toggle-wrap').querySelectorAll('.adv-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+  }
+  updateWeaponDisplay(weapon);
+  saveSheetState();
+}
+
+function applyAdvButtons(weapon) {
+  const state = weaponState[weapon];
+  const advBtn = document.querySelector(`button[onclick="toggleAdv('${weapon}','adv',this)"]`);
+  const disBtn = document.querySelector(`button[onclick="toggleAdv('${weapon}','dis',this)"]`);
+  [advBtn, disBtn].forEach(b => b && b.classList.remove('active'));
+  if (state.adv === 'adv' && advBtn) advBtn.classList.add('active');
+  if (state.adv === 'dis' && disBtn) disBtn.classList.add('active');
+}
+
+function updateWeaponDisplay(weapon) {
+  const state = weaponState[weapon];
+  const advLabel = document.getElementById(weapon + '-adv-label');
+  if (!advLabel) return;
+  if (state.adv === 'adv') {
+    advLabel.textContent = 'Advantage';
+    advLabel.className = 'adv-indicator advantage';
+  } else if (state.adv === 'dis') {
+    advLabel.textContent = 'Disadvantage';
+    advLabel.className = 'adv-indicator disadvantage';
+  } else {
+    advLabel.textContent = '';
+    advLabel.className = 'adv-indicator';
+  }
+}
+
+// ===== TOAST =====
+let castToastTimer = null;
+function castToast(msg, isError = false) {
+  const el = document.getElementById('castToast');
+  if (!el) return;
+  el.textContent = msg;
+  el.classList.toggle('error', !!isError);
+  el.classList.add('show');
+  clearTimeout(castToastTimer);
+  castToastTimer = setTimeout(() => el.classList.remove('show'), 2400);
+}
+
+// ===== REST =====
+function shortRest() {
+  restoreResource('actionSurge');
+  restoreOneResource('secondWind');
+  refreshDerivedStats();
+  saveSheetState();
+  alert('Short Rest taken.\n\n• Action Surge use restored (recovers on Short or Long Rest)\n• One Second Wind use returns\n• Spend Hit Dice (2d10) manually to recover HP\n• Luck Points and Heroic Inspiration return on a Long Rest only');
+}
+
+function longRest() {
+  document.getElementById('currentHP').value = MAX_HP;
+  document.getElementById('tempHP').value = 0;
+  updateHPBar();
+  // Restore all class resources
+  restoreResource('secondWind');
+  restoreResource('actionSurge');
+  restoreResource('lucky');
+  restoreResource('inspiration');
+  // Reset death saves
+  document.querySelectorAll('.death-pip').forEach(p => p.classList.remove('filled'));
+  refreshDerivedStats();
+  saveSheetState();
+  alert('Long Rest completed!\n\n• HP restored to 20/20\n• Second Wind (2), Action Surge (1) & Luck Points (2) refreshed\n• Heroic Inspiration regained (Resourceful)\n• Death saves cleared\n• Clear any lingering conditions manually as needed');
+}
+
+loadSheetState();
+</script>
+
+<div id="castToast" class="cast-toast" role="status" aria-live="polite"></div>
+</body>
+</html>

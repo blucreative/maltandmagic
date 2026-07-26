@@ -1,0 +1,2596 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vellan Darkmere — Rogue 2 | Malt & Magic</title>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=IM+Fell+English:ital@0;1&family=Barlow:wght@300;400;500;600&family=Barlow+Condensed:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/css/theme-fantasy.css">
+<link rel="stylesheet" href="../assets/css/page-polish.css">
+<script defer src="../assets/js/a11y-sheet-helpers.js"></script>
+<style>
+  :root {
+    /* Pirate / deep-sea palette */
+    --forest-dark: #0b1f24;
+    --forest-mid: #12333a;
+    --forest-panel: #0f2a30;
+    --forest-border: #2c5a63;
+    --forest-accent: #2f7d7d;
+    --gold: #c9a24c;
+    --gold-light: #ecc86a;
+    --gold-dim: #7c6326;
+    --parchment: #e9e0cb;
+    --parchment-dark: #cabfa2;
+    --text-primary: #e9e0cb;
+    --text-secondary: #9fb0ac;
+    --text-dim: #6a7d7a;
+    --danger: #8b2f2f;
+    --danger-light: #c0392b;
+    --success: #2f7d68;
+    --success-light: #5aa88a;
+    --hp-bar: #6b2020;
+    --section-bg: rgba(11,31,36,0.85);
+    --card-bg: rgba(15,42,48,0.9);
+    --card-border: rgba(201,168,76,0.25);
+    --tooltip-bg: #08161a;
+    --advantage: #2e5c4c;
+    --disadvantage: #5c2e2e;
+    --steel: #8fa6a2;
+    --steel-dim: #5f7772;
+    --crimson: #a83f4e;
+    --paper-grain: rgba(224, 208, 170, 0.05);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html,
+  body {
+    max-width: 100%;
+    overflow-x: clip;
+  }
+
+  body {
+    background: #06131a;
+    background-image:
+      radial-gradient(ellipse at 16% 18%, rgba(47, 125, 125, 0.30) 0%, transparent 52%),
+      radial-gradient(ellipse at 82% 78%, rgba(168, 63, 78, 0.16) 0%, transparent 54%),
+      linear-gradient(180deg, #05121a 0%, #0a2029 52%, #06131a 100%);
+    color: var(--text-primary);
+    font-family: 'Barlow', sans-serif;
+    font-size: 14px;
+    min-height: 100vh;
+    line-height: 1.4;
+    position: relative;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    background-image:
+      radial-gradient(circle at 24% 20%, rgba(201,162,76,0.08) 0 24%, transparent 40%),
+      linear-gradient(115deg, transparent 0%, rgba(143,166,162,0.07) 49%, transparent 52%),
+      repeating-linear-gradient(20deg, transparent 0, transparent 42px, rgba(224,208,170,0.022) 42px, rgba(224,208,170,0.022) 43px);
+    z-index: 0;
+  }
+
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    background: radial-gradient(circle at center, transparent 55%, rgba(0,0,0,0.55) 100%);
+    z-index: 0;
+  }
+
+  .sheet-header,
+  .nav-tabs,
+  .sheet-body {
+    position: relative;
+    z-index: 1;
+    width: min(1400px, 100%);
+    margin-inline: auto;
+  }
+
+  .tooltip-layer {
+    display: contents;
+  }
+
+  /* ===== HEADER ===== */
+  .sheet-header {
+    background: linear-gradient(180deg, rgba(6,18,26,0.96) 0%, rgba(12,32,40,0.94) 65%, rgba(7,19,25,0.94) 100%);
+    border-bottom: 2px solid var(--gold-dim);
+    padding: 16px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.35);
+  }
+  .sheet-header::after {
+    content: 'LETTER OF MARQUE';
+    position: absolute;
+    right: 24px;
+    bottom: 4px;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 9px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: rgba(143, 166, 162, 0.46);
+  }
+  .char-name {
+    font-family: 'Cinzel', serif;
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--gold-light);
+    letter-spacing: 2px;
+    text-shadow: 0 0 20px rgba(201,162,76,0.32);
+  }
+  .char-meta {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+  }
+  .char-meta-item {
+    text-align: center;
+  }
+  .char-meta-item .label {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 9px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--text-dim);
+  }
+  .char-meta-item .value {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--gold);
+  }
+  .meta-divider {
+    width: 1px;
+    height: 30px;
+    background: var(--gold-dim);
+    opacity: 0.35;
+  }
+  .ui-version-badge {
+    position: absolute;
+    top: 10px;
+    right: 14px;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 10px;
+    letter-spacing: 1.1px;
+    text-transform: uppercase;
+    padding: 3px 7px;
+    border-radius: 7px;
+    border: 1px solid rgba(143, 166, 162, 0.35);
+    color: #b9c8c4;
+    background: rgba(8, 20, 24, 0.65);
+    pointer-events: none;
+  }
+
+  .back-link {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 1.4px;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    text-decoration: none;
+    border: 1px solid rgba(143, 166, 162, 0.28);
+    border-radius: 7px;
+    padding: 5px 10px;
+    transition: color 0.2s, border-color 0.2s;
+    white-space: nowrap;
+  }
+  .back-link:hover { color: var(--gold); border-color: var(--gold-dim); }
+
+  /* ===== NAV TABS ===== */
+  .nav-tabs {
+    display: flex;
+    background: rgba(6, 20, 26, 0.9);
+    border-bottom: 1px solid var(--forest-border);
+    padding: 0 24px;
+    gap: 4px;
+    backdrop-filter: blur(6px);
+  }
+  .tab-btn {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    background: none;
+    border: none;
+    border-bottom: 2px solid transparent;
+    padding: 10px 16px 8px;
+    cursor: pointer;
+    transition: color 0.2s, border-color 0.2s;
+  }
+  .tab-btn:hover { color: var(--gold); }
+  .tab-btn.active {
+    color: var(--gold-light);
+    border-bottom-color: var(--gold);
+  }
+  .tab-panel { display: none; }
+  .tab-panel.active { display: block; }
+
+  /* ===== MAIN GRID ===== */
+  .sheet-body {
+    padding: 20px 24px 28px;
+  }
+  .dashboard-grid {
+    display: grid;
+    grid-template-columns: minmax(210px, 250px) minmax(420px, 1fr) minmax(250px, 310px);
+    grid-template-rows: auto auto auto;
+    gap: 16px;
+    align-items: start;
+  }
+
+  /* ===== PANELS ===== */
+  .panel {
+    background: linear-gradient(180deg, rgba(17,44,50,0.9), rgba(12,32,37,0.88));
+    border: 1px solid var(--card-border);
+    border-radius: 10px;
+    overflow: visible;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.03), 0 14px 24px rgba(0,0,0,0.2);
+  }
+  .panel-header {
+    background: linear-gradient(180deg, rgba(201,162,76,0.1), rgba(201,162,76,0.04));
+    border-bottom: 1px solid var(--card-border);
+    padding: 9px 14px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .panel-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--gold);
+  }
+  .panel-body { padding: 14px; }
+
+  /* ===== ABILITY SCORES ===== */
+  .ability-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+  .ability-score {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 10px;
+    background: rgba(13,34,39,0.6);
+    border: 1px solid rgba(44,90,99,0.4);
+    border-radius: 4px;
+    cursor: default;
+    position: relative;
+  }
+  .ability-score:hover { border-color: var(--gold-dim); }
+  .ability-name {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    width: 26px;
+    flex-shrink: 0;
+  }
+  .ability-num {
+    font-family: 'Cinzel', serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--text-primary);
+    width: 36px;
+    text-align: center;
+    flex-shrink: 0;
+  }
+  .ability-mod {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--gold-light);
+    width: 26px;
+    text-align: center;
+    background: rgba(201,162,76,0.1);
+    border: 1px solid rgba(201,162,76,0.2);
+    border-radius: 3px;
+    padding: 2px 0;
+  }
+  .save-indicator {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    border: 1px solid var(--text-dim);
+    flex-shrink: 0;
+    margin-left: auto;
+  }
+  .save-indicator.proficient { background: var(--gold); border-color: var(--gold); }
+
+  /* ===== HP ===== */
+  .hp-box {
+    text-align: center;
+    padding: 10px 6px;
+    background: rgba(13,34,39,0.6);
+    border: 1px solid rgba(44,90,99,0.4);
+    border-radius: 4px;
+  }
+  .hp-box .hp-label {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 8px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    display: block;
+    margin-bottom: 4px;
+  }
+  .hp-box .hp-value {
+    font-family: 'Cinzel', serif;
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--text-primary);
+  }
+  .hp-box .hp-value.current { color: #5fd0c0; }
+  .hp-box .hp-value.temp { color: #7eb8c8; }
+  .hp-input {
+    width: 100%;
+    text-align: center;
+    background: rgba(8,22,26,0.8);
+    border: 1px solid var(--forest-border);
+    border-radius: 4px;
+    color: var(--text-primary);
+    font-family: 'Cinzel', serif;
+    font-size: 20px;
+    font-weight: 700;
+    padding: 4px;
+  }
+  .hp-input:focus { outline: 1px solid var(--gold); }
+  .hp-btn {
+    flex: 1;
+    padding: 6px;
+    background: none;
+    border: 1px solid var(--forest-border);
+    border-radius: 4px;
+    color: var(--text-secondary);
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .hp-btn:hover { border-color: var(--gold-dim); color: var(--gold); }
+  .hp-btn.heal { border-color: rgba(90,168,138,0.4); color: #5aa88a; }
+  .hp-btn.heal:hover { background: rgba(90,168,138,0.1); }
+  .hp-btn.damage { border-color: rgba(139,47,47,0.4); color: #c05050; }
+  .hp-btn.damage:hover { background: rgba(139,47,47,0.1); }
+  .hp-bar-wrap {
+    height: 6px;
+    background: rgba(8,22,26,0.8);
+    border-radius: 3px;
+    border: 1px solid rgba(44,90,99,0.3);
+    overflow: hidden;
+    margin-bottom: 10px;
+  }
+  .hp-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #2f9d8a, #5fd0c0);
+    border-radius: 3px;
+    transition: width 0.4s ease;
+  }
+  .hp-delta-input {
+    display: flex;
+    gap: 6px;
+    align-items: center;
+  }
+  .hp-delta-input input {
+    flex: 1;
+    background: rgba(8,22,26,0.8);
+    border: 1px solid var(--forest-border);
+    border-radius: 4px;
+    color: var(--text-primary);
+    font-family: 'Barlow', sans-serif;
+    font-size: 14px;
+    padding: 6px 10px;
+    text-align: center;
+  }
+  .hp-delta-input input:focus { outline: 1px solid var(--gold); }
+
+  /* ===== COMBAT STATS ROW ===== */
+  .combat-row {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 14px;
+    flex-wrap: wrap;
+  }
+  .combat-stat {
+    flex: 1;
+    min-width: 60px;
+    text-align: center;
+    padding: 10px 8px;
+    background: rgba(13,34,39,0.7);
+    border: 1px solid rgba(44,90,99,0.5);
+    border-radius: 4px;
+  }
+  .combat-stat .cs-val {
+    font-family: 'Cinzel', serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--gold-light);
+    display: block;
+  }
+  .combat-stat .cs-label {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--text-dim);
+  }
+
+  /* ===== DEATH SAVES ===== */
+  .death-saves {
+    display: flex;
+    gap: 12px;
+    padding: 8px 0;
+  }
+  .death-save-row {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .death-save-row .ds-label {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--text-dim);
+  }
+  .death-pips {
+    display: flex;
+    gap: 6px;
+  }
+  .death-pip {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    border: 1px solid var(--text-dim);
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .death-pip.success.filled { background: #5aa88a; border-color: #5aa88a; }
+  .death-pip.failure.filled { background: var(--danger-light); border-color: var(--danger-light); }
+
+  /* ===== SKILLS ===== */
+  .skill-list { display: flex; flex-direction: column; gap: 2px; }
+  .skill-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 4px 6px;
+    border-radius: 3px;
+    cursor: default;
+    transition: background 0.1s;
+  }
+  .skill-item:hover { background: rgba(44,90,99,0.2); }
+  .skill-prof {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    border: 1px solid var(--text-dim);
+    flex-shrink: 0;
+  }
+  .skill-prof.proficient { background: var(--gold); border-color: var(--gold); }
+  .skill-prof.expertise { background: var(--gold-light); border-color: var(--gold-light); box-shadow: 0 0 4px rgba(236,200,106,0.5); }
+  .skill-mod {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--gold-light);
+    width: 24px;
+    text-align: right;
+    flex-shrink: 0;
+  }
+  .skill-name {
+    font-family: 'Barlow', sans-serif;
+    font-size: 12px;
+    color: var(--text-secondary);
+    flex: 1;
+  }
+  .skill-attr {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 9px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--text-dim);
+  }
+
+  /* ===== WEAPONS ===== */
+  .weapon-card {
+    background: rgba(13,34,39,0.7);
+    border: 1px solid rgba(44,90,99,0.5);
+    border-radius: 5px;
+    padding: 10px 12px;
+    margin-bottom: 8px;
+    position: relative;
+  }
+  .weapon-card:last-child { margin-bottom: 0; }
+  .weapon-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 6px;
+    gap: 8px;
+  }
+  .weapon-name {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--text-primary);
+    letter-spacing: 0.5px;
+  }
+  .weapon-stats {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    margin-bottom: 6px;
+  }
+  .weapon-hit {
+    font-family: 'Cinzel', serif;
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--gold-light);
+  }
+  .weapon-hit-label {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 9px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--text-dim);
+  }
+  .weapon-damage {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-secondary);
+    border-left: 1px solid rgba(44,90,99,0.5);
+    padding-left: 10px;
+    margin-left: 4px;
+  }
+  .weapon-props {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    margin-top: 6px;
+  }
+  .wprop {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    padding: 2px 6px;
+    background: rgba(44,90,99,0.3);
+    border: 1px solid rgba(44,90,99,0.4);
+    border-radius: 3px;
+    color: var(--text-dim);
+    cursor: pointer;
+    position: relative;
+  }
+  .wprop:hover { color: var(--gold); border-color: var(--gold-dim); }
+  .weapon-mastery-tag {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 2px 8px;
+    background: rgba(201,162,76,0.15);
+    border: 1px solid rgba(201,162,76,0.3);
+    border-radius: 3px;
+    color: var(--gold);
+    cursor: pointer;
+    position: relative;
+  }
+  .adv-toggle-wrap {
+    display: flex;
+    gap: 4px;
+    margin-top: 6px;
+    align-items: center;
+  }
+  .adv-btn {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 3px 8px;
+    background: none;
+    border: 1px solid rgba(44,90,99,0.3);
+    border-radius: 3px;
+    color: var(--text-dim);
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .adv-btn.adv.active { background: rgba(46,92,76,0.3); border-color: rgba(90,168,138,0.5); color: #5fd0b0; }
+  .adv-btn.dis.active { background: rgba(92,46,46,0.3); border-color: rgba(192,80,80,0.5); color: #c05050; }
+  .adv-indicator {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 10px;
+    padding: 3px 8px;
+    border-radius: 3px;
+    letter-spacing: 0.5px;
+  }
+  .adv-indicator.advantage { background: rgba(46,92,76,0.2); color: #5fd0b0; }
+  .adv-indicator.disadvantage { background: rgba(92,46,46,0.2); color: #c05050; }
+
+  /* ===== SNEAK ATTACK BANNER ===== */
+  .sa-banner {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 7px 12px;
+    background: rgba(168,63,78,0.06);
+    border: 1px solid rgba(168,63,78,0.28);
+    border-radius: 4px;
+    margin-bottom: 8px;
+    cursor: pointer;
+  }
+  .sa-banner.active {
+    background: rgba(168,63,78,0.16);
+    border-color: rgba(168,63,78,0.5);
+  }
+  .sa-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    border: 1px solid var(--crimson);
+    flex-shrink: 0;
+  }
+  .sa-dot.on { background: var(--crimson); border-color: var(--crimson); }
+  .sa-text {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    flex: 1;
+  }
+  .sa-banner.active .sa-text { color: #e6a2ad; }
+  .sa-bonus {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 11px;
+    color: var(--steel-dim);
+  }
+  .sa-banner.active .sa-bonus { color: #ecc86a; }
+
+  /* ===== TOAST ===== */
+  .cast-toast {
+    position: fixed !important;
+    z-index: 2147483646 !important;
+    left: 50%;
+    bottom: 26px;
+    transform: translate(-50%, 18px);
+    max-width: min(420px, calc(100vw - 32px));
+    padding: 11px 18px;
+    border-radius: 8px;
+    border: 1px solid rgba(201,162,76,0.55);
+    background: rgba(8,20,24,0.96);
+    color: var(--text-primary);
+    font-family: 'Barlow', sans-serif;
+    font-size: 13px;
+    line-height: 1.35;
+    text-align: center;
+    box-shadow: 0 14px 34px rgba(0,0,0,0.55);
+    backdrop-filter: blur(8px);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s, transform 0.2s;
+  }
+  .cast-toast.show {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+  .cast-toast.error {
+    border-color: rgba(200,90,90,0.7);
+    color: #f0c0c0;
+  }
+
+  /* ===== FEATURES / TRAITS ===== */
+  .feature-card {
+    background: rgba(13,34,39,0.6);
+    border: 1px solid rgba(44,90,99,0.4);
+    border-radius: 5px;
+    padding: 10px 12px;
+    margin-bottom: 6px;
+    position: relative;
+    cursor: pointer;
+    transition: border-color 0.15s;
+  }
+  .feature-card:hover { border-color: var(--gold-dim); }
+  .feature-card.effect-active {
+    border-color: rgba(168, 63, 78, 0.6);
+    box-shadow: inset 0 0 0 1px rgba(168, 63, 78, 0.2);
+    background: linear-gradient(180deg, rgba(50, 28, 32, 0.72), rgba(30, 24, 26, 0.66));
+  }
+  .status-pill {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    border: 1px solid rgba(90, 168, 138, 0.45);
+    background: rgba(90, 168, 138, 0.12);
+    color: #7fd0b0;
+    padding: 2px 7px;
+    border-radius: 999px;
+  }
+  .status-pill.off {
+    border-color: rgba(95, 119, 114, 0.45);
+    background: rgba(13, 34, 39, 0.5);
+    color: var(--text-dim);
+  }
+  .feature-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    justify-content: space-between;
+  }
+  .feature-name {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--gold);
+    letter-spacing: 0.5px;
+    flex: 1;
+  }
+  .feature-source {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    padding: 1px 6px;
+    background: rgba(44,90,99,0.2);
+    border-radius: 3px;
+    white-space: nowrap;
+  }
+  .feature-summary {
+    font-family: 'Barlow', sans-serif;
+    font-size: 12px;
+    color: var(--text-dim);
+    margin-top: 4px;
+    line-height: 1.5;
+  }
+  .resource-track {
+    display: flex;
+    gap: 4px;
+    margin-top: 6px;
+    align-items: center;
+  }
+  .resource-pip {
+    width: 12px;
+    height: 12px;
+    border-radius: 2px;
+    border: 1px solid var(--gold-dim);
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .resource-pip.used { background: transparent; border-color: rgba(124,99,38,0.3); }
+  .resource-pip.available { background: var(--gold); border-color: var(--gold); }
+  .resource-label {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 9px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    margin-left: 4px;
+  }
+
+  /* ===== TOOLTIP / OVERLAY ===== */
+  /* theme-fantasy.css sets `body.theme-fantasy > * { position: relative; z-index: 1; }`,
+     so the body-portalled tooltip MUST force fixed positioning to escape normal flow. */
+  .tooltip {
+    position: fixed !important;
+    z-index: 2147483647 !important;
+    top: 0;
+    left: 0;
+    margin: 0;
+    width: min(360px, calc(100vw - 24px));
+    max-height: min(68vh, 520px);
+    overflow: auto;
+    overscroll-behavior: contain;
+    background: rgba(8, 22, 26, 0.96);
+    border: 1px solid rgba(201, 162, 76, 0.55);
+    border-radius: 10px;
+    padding: 14px 16px;
+    box-shadow: 0 16px 38px rgba(0,0,0,0.5);
+    backdrop-filter: blur(8px);
+    pointer-events: none !important;
+    opacity: 0;
+    transform: translateY(8px) scale(0.985);
+    transition: opacity 0.14s, transform 0.14s;
+    will-change: transform, top, left;
+  }
+  .tooltip.visible {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+  .tooltip-name {
+    font-family: 'Cinzel', serif;
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--gold-light);
+    margin-bottom: 4px;
+    border-bottom: 1px solid rgba(201,162,76,0.2);
+    padding-bottom: 8px;
+  }
+  .tooltip-type {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: #7fb0a6;
+    margin-bottom: 8px;
+  }
+  .tooltip-body {
+    font-family: 'IM Fell English', serif;
+    font-size: 12px;
+    color: #d7d1b4;
+    line-height: 1.55;
+  }
+  .tooltip-body strong {
+    color: var(--gold);
+    font-family: 'Barlow', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+  }
+  .tooltip-stats {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6px;
+    margin: 8px 0;
+    padding: 8px;
+    background: rgba(44,90,99,0.15);
+    border-radius: 4px;
+  }
+  .tooltip-stat {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 10px;
+    color: #9bb0aa;
+  }
+  .tooltip-stat span {
+    color: #e1d3a3;
+    font-weight: 600;
+  }
+
+  .currency-bar {
+    display: flex;
+    gap: 10px;
+    padding: 10px 14px;
+    background: rgba(13,34,39,0.6);
+    border: 1px solid rgba(201,162,76,0.15);
+    border-radius: 5px;
+    margin-bottom: 12px;
+    flex-wrap: wrap;
+  }
+  .currency-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .currency-coin {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    border: 1px solid;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 8px;
+    font-weight: 700;
+  }
+  .currency-coin.gp { border-color: var(--gold); color: var(--gold); }
+  .currency-coin.sp { border-color: #a0a0a0; color: #a0a0a0; }
+  .currency-coin.cp { border-color: #8b6520; color: #8b6520; }
+  .currency-coin.ep { border-color: #7090b0; color: #7090b0; }
+  .currency-coin.pp { border-color: #c0c0e0; color: #c0c0e0; }
+  .currency-value {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-primary);
+  }
+
+  /* ===== PASSIVE SENSES ===== */
+  .passive-row {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 6px;
+    align-items: center;
+    padding: 6px 10px;
+    background: rgba(13,34,39,0.5);
+    border: 1px solid rgba(44,90,99,0.3);
+    border-radius: 4px;
+  }
+  .passive-val {
+    font-family: 'Cinzel', serif;
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--gold-light);
+    width: 32px;
+    text-align: center;
+    flex-shrink: 0;
+  }
+  .passive-name {
+    font-family: 'Barlow', sans-serif;
+    font-size: 12px;
+    color: var(--text-secondary);
+  }
+
+  /* ===== PROFICIENCIES ===== */
+  .prof-section { margin-bottom: 10px; }
+  .prof-section-label {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--gold-dim);
+    margin-bottom: 4px;
+  }
+  .prof-list {
+    font-family: 'Barlow', sans-serif;
+    font-size: 12px;
+    color: var(--text-dim);
+    line-height: 1.7;
+  }
+
+  /* ===== LORE ===== */
+  .lore-section {
+    background: rgba(13,34,39,0.6);
+    border: 1px solid rgba(44,90,99,0.3);
+    border-radius: 5px;
+    padding: 14px;
+    margin-bottom: 12px;
+  }
+  .lore-label {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--gold-dim);
+    margin-bottom: 8px;
+  }
+  .lore-text {
+    font-family: 'IM Fell English', serif;
+    font-size: 13px;
+    color: var(--text-dim);
+    line-height: 1.7;
+    font-style: italic;
+  }
+  .char-details-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6px;
+    margin-bottom: 12px;
+  }
+  .char-detail-item {
+    padding: 8px 10px;
+    background: rgba(13,34,39,0.5);
+    border: 1px solid rgba(44,90,99,0.3);
+    border-radius: 4px;
+  }
+  .char-detail-item .detail-label {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--text-dim);
+  }
+  .char-detail-item .detail-value {
+    font-family: 'Barlow', sans-serif;
+    font-size: 13px;
+    color: var(--text-secondary);
+    margin-top: 2px;
+  }
+
+  /* ===== DIVIDERS ===== */
+  .section-divider {
+    height: 1px;
+    background: rgba(201,162,76,0.1);
+    margin: 12px 0;
+  }
+
+  /* ===== REST BUTTONS ===== */
+  .rest-btns {
+    display: flex;
+    gap: 6px;
+  }
+  .rest-btn {
+    flex: 1;
+    padding: 7px 10px;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    background: none;
+    border: 1px solid var(--forest-border);
+    border-radius: 4px;
+    color: var(--text-dim);
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .rest-btn.short:hover { border-color: var(--gold-dim); color: var(--gold); background: rgba(201,162,76,0.05); }
+  .rest-btn.long:hover { border-color: rgba(90,168,138,0.5); color: #5aa88a; background: rgba(90,168,138,0.05); }
+
+  /* Condition badges */
+  .conditions-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    margin-top: 6px;
+  }
+  .condition-badge {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    padding: 2px 8px;
+    border-radius: 3px;
+    cursor: pointer;
+    border: 1px solid;
+    transition: all 0.15s;
+  }
+  .condition-badge.active { background: rgba(139,47,47,0.3); border-color: rgba(192,80,80,0.5); color: #c05050; }
+  .condition-badge.inactive { background: rgba(44,90,99,0.15); border-color: rgba(44,90,99,0.3); color: var(--text-dim); }
+
+  /* Scrollbar */
+  ::-webkit-scrollbar { width: 8px; height: 8px; }
+  ::-webkit-scrollbar-track { background: rgba(13,34,39,0.3); }
+  ::-webkit-scrollbar-thumb { background: var(--forest-border); border-radius: 3px; }
+  ::-webkit-scrollbar-thumb:hover { background: var(--gold-dim); }
+
+  /* Section grid helpers */
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .three-col { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+
+  /* ===== MODERN POLISH + OVERFLOW GUARDS ===== */
+  body {
+    font-family: 'Sora', 'Barlow', sans-serif;
+  }
+
+  .dashboard-grid > *,
+  .two-col > *,
+  .three-col > *,
+  #tab-features .sheet-body > div > * {
+    min-width: 0;
+  }
+
+  .panel,
+  .panel-body,
+  .weapon-card,
+  .feature-card,
+  .item-card,
+  .lore-section,
+  .char-detail-item,
+  .combat-stat,
+  .ability-score,
+  .passive-row,
+  .skill-item,
+  .feature-summary,
+  .lore-text,
+  .item-note,
+  .skill-name,
+  .weapon-name,
+  .char-meta-item .value {
+    overflow-wrap: anywhere;
+    word-break: break-word;
+  }
+
+  .sheet-header {
+    border-bottom-color: rgba(201, 162, 76, 0.5);
+    border-radius: 0 0 10px 10px;
+    background:
+      linear-gradient(180deg, rgba(5, 16, 22, 0.95), rgba(9, 26, 32, 0.92)),
+      radial-gradient(circle at 8% 10%, rgba(143, 166, 162, 0.14), transparent 35%);
+  }
+
+  .char-name {
+    font-size: clamp(1.6rem, 2.2vw, 2.1rem);
+    letter-spacing: 1.4px;
+  }
+
+  .panel {
+    border-radius: 10px;
+    border-color: rgba(201, 162, 76, 0.24);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.04), 0 10px 18px rgba(0,0,0,0.2);
+  }
+
+  .panel-header {
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .nav-tabs {
+    padding: 8px 12px 10px;
+  }
+
+  .tab-btn {
+    border: 1px solid rgba(143, 166, 162, 0.22);
+    border-radius: 8px;
+    padding: 8px 12px;
+    background: linear-gradient(180deg, rgba(14, 36, 42, 0.8), rgba(9, 26, 32, 0.75));
+    transition: color 0.2s, border-color 0.2s, background 0.2s, transform 0.12s;
+  }
+
+  .tab-btn:hover {
+    border-color: rgba(201, 162, 76, 0.36);
+    background: linear-gradient(180deg, rgba(20, 48, 54, 0.84), rgba(14, 36, 42, 0.82));
+    transform: translateY(-1px);
+  }
+
+  .tab-btn.active {
+    border-color: rgba(201, 162, 76, 0.58);
+    background: linear-gradient(180deg, rgba(201, 162, 76, 0.18), rgba(117, 96, 46, 0.24));
+    color: #f1da9b;
+  }
+
+  .hp-btn,
+  .rest-btn,
+  .adv-btn {
+    border-radius: 8px;
+    border-width: 1px;
+    border-style: solid;
+    background: linear-gradient(180deg, rgba(12, 30, 36, 0.78), rgba(8, 20, 26, 0.72));
+  }
+
+  .hp-btn:hover,
+  .rest-btn:hover,
+  .adv-btn:hover {
+    transform: translateY(-1px);
+  }
+
+  .weapon-card,
+  .feature-card,
+  .item-card,
+  .lore-section,
+  .char-detail-item,
+  .ability-score,
+  .passive-row,
+  .combat-stat,
+  .hp-box {
+    border-radius: 8px;
+  }
+
+  .item-card {
+    min-height: 170px;
+    border-radius: 10px;
+  }
+
+  .combat-stat {
+    min-width: 72px;
+  }
+
+  /* ===== INVENTORY THEME OVERRIDES (page-polish.css is forest-green by default) ===== */
+  body.page-dnd-character-sheet .inventory-hud {
+    background: linear-gradient(90deg, rgba(15,42,48,0.8), rgba(11,31,36,0.78));
+    border-color: rgba(201, 162, 76, 0.22);
+  }
+  body.page-dnd-character-sheet .item-card {
+    background:
+      linear-gradient(165deg, rgba(17,44,50,0.94), rgba(11,30,35,0.93)),
+      repeating-linear-gradient(0deg, transparent 0, transparent 2px, var(--paper-grain) 3px, transparent 4px);
+    border-color: rgba(44, 90, 99, 0.55);
+  }
+  body.page-dnd-character-sheet .item-card:hover {
+    border-color: rgba(201, 162, 76, 0.45);
+  }
+  body.page-dnd-character-sheet .item-card.signature {
+    border-color: rgba(201, 162, 76, 0.6);
+    box-shadow: inset 0 0 0 1px rgba(201, 162, 76, 0.18);
+  }
+  body.page-dnd-character-sheet .item-card.magic {
+    border-color: rgba(168, 63, 78, 0.6);
+    box-shadow: inset 0 0 0 1px rgba(168, 63, 78, 0.2);
+  }
+  body.page-dnd-character-sheet .item-tag {
+    background: rgba(13, 34, 39, 0.6);
+    border-color: rgba(95, 119, 114, 0.45);
+  }
+  body.page-dnd-character-sheet .currency-bar {
+    background: linear-gradient(90deg, rgba(13,34,39,0.8), rgba(17,44,50,0.7));
+  }
+  body.page-dnd-character-sheet .inventory-builder {
+    background: rgba(13, 34, 39, 0.38);
+  }
+  body.page-dnd-character-sheet .inventory-input {
+    background: rgba(8, 22, 26, 0.78);
+    border-color: rgba(95, 119, 114, 0.5);
+  }
+
+  @media (max-width: 1320px) {
+    .dashboard-grid {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    }
+    .dashboard-grid > div:last-child {
+      grid-column: 1 / -1;
+    }
+  }
+
+  @media (max-width: 1180px) {
+    .dashboard-grid {
+      grid-template-columns: 1fr;
+    }
+    .sheet-header {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 12px;
+      padding-bottom: 24px;
+    }
+    .char-meta {
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .meta-divider {
+      display: none;
+    }
+    .sheet-header::after {
+      right: 20px;
+      bottom: 6px;
+    }
+  }
+
+  @media (max-width: 920px) {
+    .sheet-body {
+      padding: 14px;
+    }
+    .nav-tabs {
+      overflow-x: auto;
+      padding: 0 8px;
+      gap: 0;
+      scrollbar-width: thin;
+    }
+    .tab-btn {
+      white-space: nowrap;
+      padding: 8px 12px;
+      font-size: 11px;
+    }
+    .two-col,
+    .three-col {
+      grid-template-columns: 1fr;
+    }
+    #tab-features .sheet-body > div {
+      grid-template-columns: 1fr !important;
+    }
+    .combat-row {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 8px;
+    }
+    .char-meta-item {
+      min-width: 110px;
+      text-align: left;
+    }
+  }
+
+  @media (max-width: 560px) {
+    .char-name {
+      font-size: 22px;
+      letter-spacing: 1px;
+    }
+    .combat-row {
+      grid-template-columns: 1fr;
+      gap: 6px;
+    }
+    .combat-stat {
+      min-width: 0;
+    }
+    .tooltip {
+      width: calc(100vw - 16px);
+      max-height: 58vh;
+    }
+    .sheet-header,
+    .nav-tabs,
+    .sheet-body {
+      width: 100%;
+    }
+    .panel-body {
+      padding: 12px;
+    }
+  }
+</style>
+</head>
+<body class="theme-fantasy page-dnd-character-sheet page-vellan-darkmere-sheet">
+
+<!-- TOOLTIP (global portal layer) -->
+<div id="tooltip-layer" class="tooltip-layer" aria-hidden="true">
+  <div id="tooltip" class="tooltip" role="tooltip">
+    <div class="tooltip-name" id="tt-name"></div>
+    <div class="tooltip-type" id="tt-type"></div>
+    <div id="tt-stats" class="tooltip-stats" style="display:none"></div>
+    <div class="tooltip-body" id="tt-body"></div>
+  </div>
+</div>
+
+<!-- ===== HEADER ===== -->
+<div class="sheet-header">
+  <div id="uiVersionBadge" class="ui-version-badge">UI v0.0.0</div>
+  <div>
+    <div class="char-name">Vellan Darkmere</div>
+    <div style="font-family:'Barlow Condensed',sans-serif;font-size:11px;color:var(--text-dim);letter-spacing:1px;margin-top:2px;">
+      Human · Chaotic Evil · Male · Pirate of the Tides
+    </div>
+  </div>
+  <div class="char-meta">
+    <div class="char-meta-item">
+      <div class="label">Class & Level</div>
+      <div class="value">Rogue 2</div>
+    </div>
+    <div class="meta-divider"></div>
+    <div class="char-meta-item">
+      <div class="label">Background</div>
+      <div class="value">Pirate</div>
+    </div>
+    <div class="meta-divider"></div>
+    <div class="char-meta-item">
+      <div class="label">Player</div>
+      <div class="value">naeethim</div>
+    </div>
+    <div class="meta-divider"></div>
+    <div class="char-meta-item">
+      <div class="label">Prof Bonus</div>
+      <div class="value">+2</div>
+    </div>
+    <div class="meta-divider"></div>
+    <div class="char-meta-item">
+      <div class="label">Experience</div>
+      <div class="value">Milestone</div>
+    </div>
+    <div class="meta-divider"></div>
+    <a class="back-link" href="index.html">↩ Index</a>
+  </div>
+</div>
+
+<!-- ===== NAV ===== -->
+<div class="nav-tabs">
+  <button class="tab-btn active" onclick="switchTab('combat')">⚔ Combat</button>
+  <button class="tab-btn" onclick="switchTab('features')">◈ Features & Traits</button>
+  <button class="tab-btn" onclick="switchTab('inventory')">⊠ Inventory</button>
+  <button class="tab-btn" onclick="switchTab('lore')">☽ Lore & Notes</button>
+</div>
+
+<!-- ======================================================= -->
+<!-- TAB: COMBAT -->
+<!-- ======================================================= -->
+<div id="tab-combat" class="tab-panel active">
+<div class="sheet-body">
+<div class="dashboard-grid">
+
+  <!-- LEFT: ABILITY SCORES + SAVES + SENSES -->
+  <div style="display:flex;flex-direction:column;gap:14px;">
+
+    <div class="panel">
+      <div class="panel-header"><span class="panel-title">Ability Scores</span></div>
+      <div class="panel-body">
+        <div class="ability-grid">
+          <div class="ability-score" data-tooltip="strength">
+            <span class="ability-name">STR</span>
+            <span class="ability-num">12</span>
+            <span class="ability-mod">+1</span>
+            <div class="save-indicator" title="Not Proficient"></div>
+          </div>
+          <div class="ability-score" data-tooltip="dexterity">
+            <span class="ability-name">DEX</span>
+            <span class="ability-num">16</span>
+            <span class="ability-mod">+3</span>
+            <div class="save-indicator proficient" title="Proficient Save"></div>
+          </div>
+          <div class="ability-score" data-tooltip="constitution">
+            <span class="ability-name">CON</span>
+            <span class="ability-num">10</span>
+            <span class="ability-mod">+0</span>
+            <div class="save-indicator" title="Not Proficient"></div>
+          </div>
+          <div class="ability-score" data-tooltip="intelligence">
+            <span class="ability-name">INT</span>
+            <span class="ability-num">8</span>
+            <span class="ability-mod">−1</span>
+            <div class="save-indicator proficient" title="Proficient Save"></div>
+          </div>
+          <div class="ability-score" data-tooltip="wisdom">
+            <span class="ability-name">WIS</span>
+            <span class="ability-num">14</span>
+            <span class="ability-mod">+2</span>
+            <div class="save-indicator" title="Not Proficient"></div>
+          </div>
+          <div class="ability-score" data-tooltip="charisma">
+            <span class="ability-name">CHA</span>
+            <span class="ability-num">15</span>
+            <span class="ability-mod">+2</span>
+            <div class="save-indicator" title="Not Proficient"></div>
+          </div>
+        </div>
+        <div class="section-divider"></div>
+        <div style="font-family:'Barlow Condensed',sans-serif;font-size:9px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--gold-dim);margin-bottom:6px;">Saving Throws</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:4px;">
+          <div class="skill-item"><div class="skill-prof"></div><span class="skill-mod">+1</span><span class="skill-name">Strength</span></div>
+          <div class="skill-item"><div class="skill-prof proficient"></div><span class="skill-mod">+5</span><span class="skill-name">Dexterity</span></div>
+          <div class="skill-item"><div class="skill-prof"></div><span class="skill-mod">+0</span><span class="skill-name">Constitution</span></div>
+          <div class="skill-item"><div class="skill-prof proficient"></div><span class="skill-mod">+1</span><span class="skill-name">Intelligence</span></div>
+          <div class="skill-item"><div class="skill-prof"></div><span class="skill-mod">+2</span><span class="skill-name">Wisdom</span></div>
+          <div class="skill-item"><div class="skill-prof"></div><span class="skill-mod">+2</span><span class="skill-name">Charisma</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PASSIVE SENSES -->
+    <div class="panel">
+      <div class="panel-header"><span class="panel-title">Senses</span></div>
+      <div class="panel-body">
+        <div class="passive-row"><span class="passive-val">14</span><span class="passive-name">Passive Perception</span></div>
+        <div class="passive-row"><span class="passive-val">12</span><span class="passive-name">Passive Insight</span></div>
+        <div class="passive-row"><span class="passive-val">9</span><span class="passive-name">Passive Investigation</span></div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- CENTRE: COMBAT + WEAPONS -->
+  <div style="display:flex;flex-direction:column;gap:14px;">
+
+    <!-- COMBAT STATS -->
+    <div class="panel">
+      <div class="panel-header"><span class="panel-title">Combat</span>
+        <div class="rest-btns">
+          <button class="rest-btn short" onclick="shortRest()">Short Rest</button>
+          <button class="rest-btn long" onclick="longRest()">Long Rest</button>
+        </div>
+      </div>
+      <div class="panel-body">
+        <div class="combat-row">
+          <div class="combat-stat"><span class="cs-val" id="acVal">13</span><span class="cs-label">Armour Class</span></div>
+          <div class="combat-stat"><span class="cs-val" id="initiativeVal">+3</span><span class="cs-label">Initiative</span></div>
+          <div class="combat-stat"><span class="cs-val" id="speedVal">30ft</span><span class="cs-label">Speed</span></div>
+          <div class="combat-stat"><span class="cs-val">+2</span><span class="cs-label">Prof Bonus</span></div>
+          <div class="combat-stat"><span class="cs-val">2d8</span><span class="cs-label">Hit Dice</span></div>
+        </div>
+        <div id="combatEffectReadout" style="font-family:'Barlow Condensed',sans-serif;font-size:10px;letter-spacing:1px;color:var(--text-dim);margin:-4px 0 10px;">
+          No temporary combat effects active.
+        </div>
+
+        <!-- HP -->
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:10px;">
+          <div class="hp-box">
+            <span class="hp-label">Max HP</span>
+            <div class="hp-value">13</div>
+          </div>
+          <div class="hp-box">
+            <span class="hp-label">Current HP</span>
+            <input class="hp-input current" id="currentHP" type="number" value="13" min="0" max="13" onchange="updateHPBar()">
+          </div>
+          <div class="hp-box">
+            <span class="hp-label">Temp HP</span>
+            <input class="hp-input temp" id="tempHP" type="number" value="0" min="0">
+          </div>
+        </div>
+        <div class="hp-bar-wrap"><div class="hp-bar-fill" id="hpBar" style="width:100%"></div></div>
+        <div class="hp-delta-input">
+          <input type="number" id="hpDelta" placeholder="Amount" min="0">
+          <button class="hp-btn heal" onclick="applyHP(1)">+ Heal</button>
+          <button class="hp-btn damage" onclick="applyHP(-1)">− Damage</button>
+        </div>
+
+        <div class="section-divider"></div>
+
+        <!-- DEATH SAVES -->
+        <div style="display:flex;align-items:center;justify-content:space-between;">
+          <div style="font-family:'Barlow Condensed',sans-serif;font-size:9px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--text-dim);">Death Saves</div>
+          <div class="death-saves">
+            <div class="death-save-row">
+              <div class="ds-label">Successes</div>
+              <div class="death-pips">
+                <div class="death-pip success" onclick="togglePip(this,'success')" title="Success 1"></div>
+                <div class="death-pip success" onclick="togglePip(this,'success')" title="Success 2"></div>
+                <div class="death-pip success" onclick="togglePip(this,'success')" title="Success 3"></div>
+              </div>
+            </div>
+            <div class="death-save-row">
+              <div class="ds-label">Failures</div>
+              <div class="death-pips">
+                <div class="death-pip failure" onclick="togglePip(this,'failure')" title="Failure 1"></div>
+                <div class="death-pip failure" onclick="togglePip(this,'failure')" title="Failure 2"></div>
+                <div class="death-pip failure" onclick="togglePip(this,'failure')" title="Failure 3"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="section-divider"></div>
+
+        <!-- CONDITIONS -->
+        <div style="font-family:'Barlow Condensed',sans-serif;font-size:9px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--text-dim);margin-bottom:4px;">Conditions</div>
+        <div class="conditions-row">
+          <div class="condition-badge inactive" onclick="toggleCondition(this)">Prone</div>
+          <div class="condition-badge inactive" onclick="toggleCondition(this)">Blinded</div>
+          <div class="condition-badge inactive" onclick="toggleCondition(this)">Stunned</div>
+          <div class="condition-badge inactive" onclick="toggleCondition(this)">Frightened</div>
+          <div class="condition-badge inactive" onclick="toggleCondition(this)">Poisoned</div>
+          <div class="condition-badge inactive" onclick="toggleCondition(this)">Restrained</div>
+          <div class="condition-badge inactive" onclick="toggleCondition(this)">Incapacitated</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SNEAK ATTACK -->
+    <div class="sa-banner" id="saBanner" onclick="toggleSneakAttack()">
+      <div class="sa-dot" id="saDot"></div>
+      <span class="sa-text">Sneak Attack (1d6)</span>
+      <span class="sa-bonus" id="saBonus">Unarmed — arm to show +1d6 on a finesse hit</span>
+    </div>
+
+    <!-- WEAPONS -->
+    <div class="panel">
+      <div class="panel-header"><span class="panel-title">Weapon Attacks</span></div>
+      <div class="panel-body">
+
+        <!-- RAPIER -->
+        <div class="weapon-card">
+          <div class="weapon-header">
+            <span class="weapon-name">Rapier</span>
+          </div>
+          <div class="weapon-stats">
+            <div>
+              <div class="weapon-hit">+5</div>
+              <div class="weapon-hit-label">To Hit</div>
+            </div>
+            <div class="weapon-damage">1d8+3 Piercing</div>
+            <div id="sa-rapier" style="display:none;margin-left:6px;font-family:'Barlow Condensed',sans-serif;font-size:11px;color:var(--crimson);">+1d6</div>
+          </div>
+          <div class="adv-toggle-wrap">
+            <button class="adv-btn adv" onclick="toggleAdv('rapier','adv',this)">Advantage</button>
+            <button class="adv-btn dis" onclick="toggleAdv('rapier','dis',this)">Disadvantage</button>
+            <span class="adv-indicator" id="rapier-adv-label"></span>
+          </div>
+          <div class="weapon-props">
+            <span class="wprop" data-tooltip="martial">Martial</span>
+            <span class="wprop" data-tooltip="finesse">Finesse</span>
+            <span class="weapon-mastery-tag" data-tooltip="vex">Vex ✦</span>
+          </div>
+        </div>
+
+        <!-- WHIP -->
+        <div class="weapon-card">
+          <div class="weapon-header">
+            <span class="weapon-name">Whip</span>
+          </div>
+          <div class="weapon-stats">
+            <div>
+              <div class="weapon-hit">+5</div>
+              <div class="weapon-hit-label">To Hit</div>
+            </div>
+            <div class="weapon-damage">1d4+3 Slashing</div>
+            <div id="sa-whip" style="display:none;margin-left:6px;font-family:'Barlow Condensed',sans-serif;font-size:11px;color:var(--crimson);">+1d6</div>
+          </div>
+          <div class="adv-toggle-wrap">
+            <button class="adv-btn adv" onclick="toggleAdv('whip','adv',this)">Advantage</button>
+            <button class="adv-btn dis" onclick="toggleAdv('whip','dis',this)">Disadvantage</button>
+            <span class="adv-indicator" id="whip-adv-label"></span>
+          </div>
+          <div class="weapon-props">
+            <span class="wprop" data-tooltip="martial">Martial</span>
+            <span class="wprop" data-tooltip="finesse">Finesse</span>
+            <span class="wprop" data-tooltip="reach">Reach</span>
+            <span class="weapon-mastery-tag" data-tooltip="slow">Slow ✦</span>
+          </div>
+        </div>
+
+        <!-- UNARMED STRIKE -->
+        <div class="weapon-card">
+          <div class="weapon-header">
+            <span class="weapon-name">Unarmed Strike</span>
+          </div>
+          <div class="weapon-stats">
+            <div>
+              <div class="weapon-hit">+3</div>
+              <div class="weapon-hit-label">To Hit</div>
+            </div>
+            <div class="weapon-damage">2 Bludgeoning</div>
+          </div>
+          <div class="weapon-props">
+            <span class="wprop" data-tooltip="unarmed">Unarmed</span>
+          </div>
+        </div>
+
+        <!-- ENHANCED UNARMED STRIKE (TAVERN BRAWLER) -->
+        <div class="weapon-card">
+          <div class="weapon-header">
+            <span class="weapon-name">Enhanced Unarmed Strike</span>
+          </div>
+          <div class="weapon-stats">
+            <div>
+              <div class="weapon-hit">+3</div>
+              <div class="weapon-hit-label">To Hit</div>
+            </div>
+            <div class="weapon-damage">1d4+1 Bludgeoning</div>
+          </div>
+          <div class="weapon-props">
+            <span class="wprop" data-tooltip="tavern-brawler">Tavern Brawler</span>
+            <span class="wprop" data-tooltip="push">Push ✦</span>
+          </div>
+        </div>
+
+        <div style="margin-top:8px;font-family:'Barlow Condensed',sans-serif;font-size:10px;color:var(--text-dim);">
+          ✦ Weapon Mastery — hover to see property · ⚔ Sneak Attack once per turn (Finesse/Ranged)
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- RIGHT: SKILLS + PROFICIENCIES -->
+  <div style="display:flex;flex-direction:column;gap:14px;">
+
+    <div class="panel">
+      <div class="panel-header"><span class="panel-title">Skills</span></div>
+      <div class="panel-body" style="padding:10px 10px;">
+        <div class="skill-list">
+          <div class="skill-item"><div class="skill-prof proficient"></div><span class="skill-mod">+5</span><span class="skill-name">Acrobatics</span><span class="skill-attr">DEX</span></div>
+          <div class="skill-item"><div class="skill-prof"></div><span class="skill-mod">+2</span><span class="skill-name">Animal Handling</span><span class="skill-attr">WIS</span></div>
+          <div class="skill-item"><div class="skill-prof"></div><span class="skill-mod">−1</span><span class="skill-name">Arcana</span><span class="skill-attr">INT</span></div>
+          <div class="skill-item"><div class="skill-prof proficient"></div><span class="skill-mod">+3</span><span class="skill-name">Athletics</span><span class="skill-attr">STR</span></div>
+          <div class="skill-item"><div class="skill-prof proficient"></div><span class="skill-mod">+4</span><span class="skill-name">Deception</span><span class="skill-attr">CHA</span></div>
+          <div class="skill-item"><div class="skill-prof"></div><span class="skill-mod">−1</span><span class="skill-name">History</span><span class="skill-attr">INT</span></div>
+          <div class="skill-item"><div class="skill-prof"></div><span class="skill-mod">+2</span><span class="skill-name">Insight</span><span class="skill-attr">WIS</span></div>
+          <div class="skill-item"><div class="skill-prof"></div><span class="skill-mod">+2</span><span class="skill-name">Intimidation</span><span class="skill-attr">CHA</span></div>
+          <div class="skill-item"><div class="skill-prof"></div><span class="skill-mod">−1</span><span class="skill-name">Investigation</span><span class="skill-attr">INT</span></div>
+          <div class="skill-item"><div class="skill-prof"></div><span class="skill-mod">+2</span><span class="skill-name">Medicine</span><span class="skill-attr">WIS</span></div>
+          <div class="skill-item"><div class="skill-prof"></div><span class="skill-mod">−1</span><span class="skill-name">Nature</span><span class="skill-attr">INT</span></div>
+          <div class="skill-item"><div class="skill-prof proficient"></div><span class="skill-mod">+4</span><span class="skill-name">Perception</span><span class="skill-attr">WIS</span></div>
+          <div class="skill-item"><div class="skill-prof proficient"></div><span class="skill-mod">+4</span><span class="skill-name">Performance</span><span class="skill-attr">CHA</span></div>
+          <div class="skill-item"><div class="skill-prof expertise"></div><span class="skill-mod">+6</span><span class="skill-name">Persuasion</span><span class="skill-attr">CHA</span></div>
+          <div class="skill-item"><div class="skill-prof"></div><span class="skill-mod">−1</span><span class="skill-name">Religion</span><span class="skill-attr">INT</span></div>
+          <div class="skill-item"><div class="skill-prof proficient"></div><span class="skill-mod">+5</span><span class="skill-name">Sleight of Hand</span><span class="skill-attr">DEX</span></div>
+          <div class="skill-item"><div class="skill-prof"></div><span class="skill-mod">+3</span><span class="skill-name">Stealth</span><span class="skill-attr">DEX</span></div>
+          <div class="skill-item"><div class="skill-prof"></div><span class="skill-mod">+2</span><span class="skill-name">Survival</span><span class="skill-attr">WIS</span></div>
+        </div>
+        <div class="section-divider"></div>
+        <div style="display:flex;gap:8px;font-family:'Barlow Condensed',sans-serif;font-size:9px;color:var(--text-dim);">
+          <span>● Proficient</span>
+          <span style="color:var(--gold-light);">◉ Expertise</span>
+        </div>
+        <div style="margin-top:6px;font-family:'Barlow Condensed',sans-serif;font-size:9px;color:var(--crimson);letter-spacing:0.5px;">
+          ⚑ Stealth is unproficient (+3) — flag with player; unusual for a Rogue.
+        </div>
+      </div>
+    </div>
+
+    <!-- PROFICIENCIES -->
+    <div class="panel">
+      <div class="panel-header"><span class="panel-title">Proficiencies</span></div>
+      <div class="panel-body">
+        <div class="prof-section"><div class="prof-section-label">Armour</div><div class="prof-list">Light Armour</div></div>
+        <div class="prof-section"><div class="prof-section-label">Weapons</div><div class="prof-list">Simple weapons, Hand crossbow, Rapier, Scimitar, Shortsword, Whip</div></div>
+        <div class="prof-section"><div class="prof-section-label">Tools</div><div class="prof-list">Navigator's tools, Thieves' tools, Vehicles (Water)</div></div>
+        <div class="prof-section"><div class="prof-section-label">Languages</div><div class="prof-list">Common, Common Sign Language, Elvish, Halfling, Thieves' Cant</div></div>
+      </div>
+    </div>
+
+  </div>
+
+</div><!-- /dashboard-grid -->
+</div><!-- /sheet-body -->
+</div><!-- /tab-combat -->
+
+<!-- ======================================================= -->
+<!-- TAB: FEATURES & TRAITS -->
+<!-- ======================================================= -->
+<div id="tab-features" class="tab-panel">
+<div class="sheet-body">
+<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;align-items:start;">
+
+  <!-- ROGUE FEATURES -->
+  <div class="panel">
+    <div class="panel-header"><span class="panel-title">Rogue Features</span></div>
+    <div class="panel-body">
+
+      <div class="feature-card" data-tooltip="feat-core-rogue">
+        <div class="feature-header">
+          <span class="feature-name">Core Rogue Traits</span>
+          <span class="feature-source">Rogue</span>
+        </div>
+        <div class="feature-summary">Rogue's proficiencies, expertise, and precision-strike toolkit (PHB-2024 p.129).</div>
+      </div>
+
+      <div class="feature-card" data-tooltip="feat-expertise">
+        <div class="feature-header">
+          <span class="feature-name">Expertise</span>
+          <span class="feature-source">Rogue</span>
+        </div>
+        <div class="feature-summary">Double proficiency in two skills. Persuasion (+6) marked. Second Expertise skill unconfirmed — check with player.</div>
+      </div>
+
+      <div class="feature-card" data-tooltip="feat-sneak-attack">
+        <div class="feature-header">
+          <span class="feature-name">Sneak Attack (1d6)</span>
+          <span class="feature-source">Rogue</span>
+        </div>
+        <div class="feature-summary">Once per turn, deal an extra 1d6 with a Finesse or Ranged weapon when you have Advantage, or an ally is within 5 ft. of the target and you don't have Disadvantage.</div>
+      </div>
+
+      <div class="feature-card" data-tooltip="feat-cunning-action">
+        <div class="feature-header">
+          <span class="feature-name">Cunning Action</span>
+          <span class="feature-source">Rogue</span>
+        </div>
+        <div class="feature-summary">Bonus Action: take Dash, Disengage, or Hide (PHB-2024 p.130).</div>
+      </div>
+
+      <div class="feature-card" data-tooltip="feat-thieves-cant">
+        <div class="feature-header">
+          <span class="feature-name">Thieves' Cant</span>
+          <span class="feature-source">Rogue</span>
+        </div>
+        <div class="feature-summary">Secret mix of dialect, jargon, and code. Plus one additional language.</div>
+      </div>
+
+      <div class="feature-card" data-tooltip="feat-weapon-mastery">
+        <div class="feature-header">
+          <span class="feature-name">Weapon Mastery</span>
+          <span class="feature-source">Rogue</span>
+        </div>
+        <div class="feature-summary">Use the mastery property of two weapons: Vex (Rapier) and Slow (Whip). Change on a Long Rest.</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- HUMAN TRAITS + FEAT -->
+  <div class="panel">
+    <div class="panel-header"><span class="panel-title">Human Traits & Feats</span></div>
+    <div class="panel-body">
+
+      <div class="feature-card" data-tooltip="feat-creature-type">
+        <div class="feature-header">
+          <span class="feature-name">Creature Type</span>
+          <span class="feature-source">Human</span>
+        </div>
+        <div class="feature-summary">You are a Humanoid.</div>
+      </div>
+
+      <div class="feature-card" data-tooltip="feat-size-speed">
+        <div class="feature-header">
+          <span class="feature-name">Size &amp; Speed</span>
+          <span class="feature-source">Human</span>
+        </div>
+        <div class="feature-summary">Medium. Speed 30 ft.</div>
+      </div>
+
+      <div class="feature-card" id="feat-resourceful-card" data-tooltip="feat-resourceful">
+        <div class="feature-header">
+          <span class="feature-name">Resourceful</span>
+          <span class="feature-source">Human</span>
+        </div>
+        <div class="feature-summary">Regain Heroic Inspiration when you finish a Long Rest. Tap the pip when you hold it.</div>
+        <div class="resource-track">
+          <div class="resource-pip available" onclick="toggleResource(this)" title="Heroic Inspiration"></div>
+          <span class="resource-label">1 / Long Rest — Heroic Inspiration</span>
+        </div>
+      </div>
+
+      <div class="feature-card" data-tooltip="feat-skillful">
+        <div class="feature-header">
+          <span class="feature-name">Skillful</span>
+          <span class="feature-source">Human</span>
+        </div>
+        <div class="feature-summary">Proficiency in one additional skill of your choice.</div>
+      </div>
+
+      <div class="feature-card" data-tooltip="feat-versatile">
+        <div class="feature-header">
+          <span class="feature-name">Versatile</span>
+          <span class="feature-source">Human</span>
+        </div>
+        <div class="feature-summary">Gain one Origin feat — taken as Tavern Brawler.</div>
+      </div>
+
+      <div class="feature-card" data-tooltip="feat-tavern-brawler">
+        <div class="feature-header">
+          <span class="feature-name">Tavern Brawler</span>
+          <span class="feature-source">Origin Feat</span>
+        </div>
+        <div class="feature-summary">Enhanced Unarmed Strike (1d4+1), reroll 1s on unarmed damage, improvised weapon proficiency, and a once-per-turn Push (PHB-2024 p.202).</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- WEAPON MASTERIES -->
+  <div class="panel">
+    <div class="panel-header"><span class="panel-title">Weapon Masteries &amp; Actions</span></div>
+    <div class="panel-body">
+
+      <div class="feature-card" data-tooltip="vex">
+        <div class="feature-header">
+          <span class="feature-name">Vex (Rapier)</span>
+          <span class="feature-source">Mastery</span>
+        </div>
+        <div class="feature-summary">On a damaging hit: Advantage on your next attack roll against that target, until the end of your next turn.</div>
+      </div>
+
+      <div class="feature-card" data-tooltip="slow">
+        <div class="feature-header">
+          <span class="feature-name">Slow (Whip)</span>
+          <span class="feature-source">Mastery</span>
+        </div>
+        <div class="feature-summary">On a damaging hit: reduce the target's Speed by 10 ft. until the start of your next turn (doesn't stack past 10 ft. per turn).</div>
+      </div>
+
+      <div class="feature-card" data-tooltip="push">
+        <div class="feature-header">
+          <span class="feature-name">Push (Tavern Brawler)</span>
+          <span class="feature-source">Special</span>
+        </div>
+        <div class="feature-summary">Once per turn, a damaging Unarmed Strike can also push the target 5 ft. away.</div>
+      </div>
+
+      <div class="feature-card" data-tooltip="action-cunning">
+        <div class="feature-header">
+          <span class="feature-name">Bonus Action Options</span>
+          <span class="feature-source">Cunning</span>
+        </div>
+        <div class="feature-summary">Dash · Disengage · Hide (Cunning Action) · Two-Weapon Fighting · Push.</div>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+</div>
+</div>
+
+<!-- ======================================================= -->
+<!-- TAB: INVENTORY -->
+<!-- ======================================================= -->
+<div id="tab-inventory" class="tab-panel">
+<div class="sheet-body">
+
+  <div class="inventory-hud">
+    <div>
+      <div class="hud-title">Plunder Manifest</div>
+      <div class="hud-sub">A light-footed rogue's kit — travel lean, strike quick, run quicker.</div>
+    </div>
+    <div style="font-family:'Barlow Condensed',sans-serif;font-size:11px;color:var(--text-dim);letter-spacing:1px;text-transform:uppercase;">
+      Manifest Cards: <span style="color:var(--gold);">4</span>
+    </div>
+  </div>
+
+  <div class="currency-bar">
+    <div class="currency-item"><div class="currency-coin pp">PP</div><span class="currency-value">0</span></div>
+    <div class="currency-item"><div class="currency-coin gp">GP</div><span class="currency-value">100</span></div>
+    <div class="currency-item"><div class="currency-coin ep">EP</div><span class="currency-value">0</span></div>
+    <div class="currency-item"><div class="currency-coin sp">SP</div><span class="currency-value">0</span></div>
+    <div class="currency-item"><div class="currency-coin cp">CP</div><span class="currency-value">0</span></div>
+    <div style="margin-left:auto;font-family:'Barlow Condensed',sans-serif;font-size:11px;color:var(--text-dim);">
+      Weight: <span style="color:var(--text-secondary);">13 lb</span> /
+      Encumbered: <span style="color:var(--text-secondary);">180 lb</span> /
+      Push: <span style="color:var(--text-secondary);">360 lb</span>
+    </div>
+  </div>
+
+  <div style="font-family:'Barlow Condensed',sans-serif;font-size:9px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--gold-dim);margin-bottom:8px;">Equipment</div>
+  <div class="inventory-grid">
+
+    <div class="item-card signature" data-tooltip="item-rapier">
+      <div class="card-topline"><span class="item-type">Weapon</span><span class="item-weight">2 lb</span></div>
+      <div class="item-main"><span class="item-icon">🗡</span><div><div class="item-name">Rapier</div><div class="item-qty">Qty: 1 · Drawn</div></div></div>
+      <div class="item-tags"><span class="item-tag">Finesse</span><span class="item-tag">Vex</span><span class="item-tag">Martial</span></div>
+      <div class="item-note">Vellan's duelling blade — quick, precise, and always first out of the sheath.</div>
+    </div>
+
+    <div class="item-card signature" data-tooltip="item-whip">
+      <div class="card-topline"><span class="item-type">Weapon</span><span class="item-weight">3 lb</span></div>
+      <div class="item-main"><span class="item-icon">🪢</span><div><div class="item-name">Whip</div><div class="item-qty">Qty: 1</div></div></div>
+      <div class="item-tags"><span class="item-tag">Finesse</span><span class="item-tag">Reach</span><span class="item-tag">Slow</span></div>
+      <div class="item-note">A deckhand's reach weapon — trip, drag, and slow foes from 10 ft. away.</div>
+    </div>
+
+    <div class="item-card" data-tooltip="item-clothes">
+      <div class="card-topline"><span class="item-type">Apparel</span><span class="item-weight">3 lb</span></div>
+      <div class="item-main"><span class="item-icon">🧥</span><div><div class="item-name">Common Clothes</div><div class="item-qty">Qty: 1 · Worn</div></div></div>
+      <div class="item-note">Salt-worn layers cut for climbing rigging and blending into a harbour crowd.</div>
+    </div>
+
+    <div class="item-card" data-tooltip="item-silk-rope">
+      <div class="card-topline"><span class="item-type">Utility</span><span class="item-weight">5 lb</span></div>
+      <div class="item-main"><span class="item-icon">🧵</span><div><div class="item-name">Silk Rope (50 ft.)</div><div class="item-qty">Qty: 1</div></div></div>
+      <div class="item-tags"><span class="item-tag">Ascent</span><span class="item-tag">Restraint</span></div>
+      <div class="item-note">Fifty feet of strong, light silk cord for boarding, escape, and rescue pulls.</div>
+    </div>
+
+  </div>
+
+  <div class="inventory-builder">
+    <div style="font-family:'Barlow Condensed',sans-serif;font-size:9px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--gold-dim);margin-bottom:8px;">Picked Up During Play</div>
+    <div class="inventory-form">
+      <input id="vCustomItemName" class="inventory-input" type="text" placeholder="Item name">
+      <input id="vCustomItemQty" class="inventory-input" type="text" placeholder="Qty">
+      <input id="vCustomItemWeight" class="inventory-input" type="text" placeholder="Weight">
+      <input id="vCustomItemNote" class="inventory-input" type="text" placeholder="Short note (optional)">
+      <button class="inventory-add-btn" type="button" onclick="addVellanCustomItem()">Add Item</button>
+    </div>
+    <div id="vCustomInventoryList" class="inventory-grid" style="margin-top:10px;"></div>
+    <div id="vCustomInventoryEmpty" class="inventory-empty">No picked-up items yet.</div>
+  </div>
+
+  <div style="margin-top:20px;font-family:'Barlow Condensed',sans-serif;font-size:9px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--gold-dim);margin-bottom:8px;">Attuned Magic Items</div>
+  <div style="font-family:'Barlow',sans-serif;font-size:12px;color:var(--text-dim);padding:16px;background:rgba(13,34,39,0.4);border:1px dashed rgba(44,90,99,0.3);border-radius:5px;text-align:center;">
+    No attuned magic items
+  </div>
+
+</div>
+</div>
+
+<!-- ======================================================= -->
+<!-- TAB: LORE & NOTES -->
+<!-- ======================================================= -->
+<div id="tab-lore" class="tab-panel">
+<div class="sheet-body">
+<div class="two-col">
+
+  <div style="display:flex;flex-direction:column;gap:14px;">
+    <div class="panel">
+      <div class="panel-header"><span class="panel-title">Character Details</span></div>
+      <div class="panel-body">
+        <div class="char-details-grid">
+          <div class="char-detail-item"><div class="detail-label">Gender</div><div class="detail-value">Male</div></div>
+          <div class="char-detail-item"><div class="detail-label">Species</div><div class="detail-value">Human</div></div>
+          <div class="char-detail-item"><div class="detail-label">Alignment</div><div class="detail-value">Chaotic Evil</div></div>
+          <div class="char-detail-item"><div class="detail-label">Background</div><div class="detail-value">Pirate</div></div>
+          <div class="char-detail-item"><div class="detail-label">Size</div><div class="detail-value">Medium</div></div>
+          <div class="char-detail-item"><div class="detail-label">Age</div><div class="detail-value">—</div></div>
+          <div class="char-detail-item"><div class="detail-label">Height</div><div class="detail-value">—</div></div>
+          <div class="char-detail-item"><div class="detail-label">Weight</div><div class="detail-value">—</div></div>
+          <div class="char-detail-item"><div class="detail-label">Eyes</div><div class="detail-value">—</div></div>
+          <div class="char-detail-item"><div class="detail-label">Hair</div><div class="detail-value">—</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="panel-header"><span class="panel-title">Personality</span></div>
+      <div class="panel-body">
+        <div class="lore-section">
+          <div class="lore-label">Traits</div>
+          <div class="lore-text">Stretches the truth for the sake of a good story.</div>
+        </div>
+        <div class="lore-section">
+          <div class="lore-label">Ideals — Aspiration</div>
+          <div class="lore-text">Someday he'll own his own ship and chart his own destiny.</div>
+        </div>
+        <div class="lore-section">
+          <div class="lore-label">Bonds</div>
+          <div class="lore-text">A paramour in a harbour town who nearly stole him away from the sea.</div>
+        </div>
+        <div class="lore-section" style="margin-bottom:0;">
+          <div class="lore-label">Flaws</div>
+          <div class="lore-text">He'll say anything to get out of extra work.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="panel-header"><span class="panel-title">Allies &amp; Organizations</span></div>
+      <div class="panel-body">
+        <div class="lore-section" style="margin-bottom:0;">
+          <div class="lore-label">Allies &amp; Organizations</div>
+          <div class="lore-text">Unrecorded — open hooks for development.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div style="display:flex;flex-direction:column;gap:14px;">
+    <div class="panel">
+      <div class="panel-header"><span class="panel-title">Character Backstory</span></div>
+      <div class="panel-body">
+        <div class="lore-text">Backstory unrecorded on the export — open hooks await. The strongest thread is the harbour-town paramour who nearly pulled him from the sea, and the ship he does not yet own but means to one day command.</div>
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="panel-header"><span class="panel-title">GM Notes / Open Items</span></div>
+      <div class="panel-body">
+        <div class="lore-section">
+          <div class="lore-label">Table Flags</div>
+          <div class="lore-text">Subclass chosen at level 3 (none yet). Chaotic Evil in a party warrants a Session Zero conversation. Stealth is unproficient despite the class — likely an oversight to confirm.</div>
+        </div>
+        <div class="lore-section" style="margin-bottom:0;">
+          <div class="lore-label">Second Expertise</div>
+          <div class="lore-text">Rogue grants two Expertise skills; only Persuasion is clearly marked on the export. Confirm the second with the player.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="panel-header"><span class="panel-title">Additional Notes</span></div>
+      <div class="panel-body">
+        <textarea id="vellanNotes" style="width:100%;min-height:180px;background:rgba(13,34,39,0.6);border:1px solid rgba(44,90,99,0.4);border-radius:4px;color:var(--text-secondary);font-family:'IM Fell English',serif;font-size:13px;font-style:italic;padding:10px;resize:vertical;line-height:1.6;" placeholder="Notes, campaign events, important NPCs..." oninput="saveSheetState()"></textarea>
+      </div>
+    </div>
+  </div>
+
+</div>
+</div>
+</div>
+
+<!-- ======================================================= -->
+<!-- TOOLTIP DATA (hidden) -->
+<!-- ======================================================= -->
+<script>
+const TOOLTIPS = {
+
+  // ABILITY SCORES
+  strength: { name: "Strength", type: "Ability Score", body: "Measures physical power. Used for Athletics, grapples, and carrying capacity. Vellan's STR of 12 gives a +1 modifier.", stats: {"Score":"12","Modifier":"+1","Save":"+1"} },
+  dexterity: { name: "Dexterity", type: "Ability Score", body: "Measures agility and reflexes. Drives Vellan's finesse attacks, AC, Initiative, and Sneak Attack. DEX of 16 gives a +3 modifier.", stats: {"Score":"16","Modifier":"+3","Save":"+5 (Prof)"} },
+  constitution: { name: "Constitution", type: "Ability Score", body: "Measures health and stamina. Used for HP and concentration checks.", stats: {"Score":"10","Modifier":"+0","Save":"+0"} },
+  intelligence: { name: "Intelligence", type: "Ability Score", body: "Measures memory and reasoning. A proficient save for Rogues.", stats: {"Score":"8","Modifier":"−1","Save":"+1 (Prof)"} },
+  wisdom: { name: "Wisdom", type: "Ability Score", body: "Measures perception and insight. Feeds Vellan's strong passive Perception.", stats: {"Score":"14","Modifier":"+2","Save":"+2"} },
+  charisma: { name: "Charisma", type: "Ability Score", body: "Measures force of personality. Vellan's social engine — Deception, Performance, and Expertise Persuasion.", stats: {"Score":"15","Modifier":"+2","Save":"+2"} },
+
+  // WEAPON PROPERTIES
+  martial: { name: "Martial Weapon", type: "Weapon Property", body: "Requires Martial Weapons proficiency. Vellan is proficient with his listed martial weapons." },
+  finesse: { name: "Finesse", type: "Weapon Property", body: "You can use your Strength or Dexterity for attack and damage rolls. Vellan uses DEX (+3), and Finesse weapons qualify for Sneak Attack." },
+  reach: { name: "Reach", type: "Weapon Property", body: "This weapon adds 5 feet to your reach when you attack, as well as when determining your reach for Opportunity Attacks. The Whip reaches 10 ft." },
+  unarmed: { name: "Unarmed Strike", type: "Weapon Option", body: "A punch, kick, or headbutt. Vellan's standard Unarmed Strike deals 2 Bludgeoning (1 + STR 1). It is not a Finesse or Ranged weapon, so it does not qualify for Sneak Attack." },
+  "tavern-brawler": { name: "Tavern Brawler", type: "Origin Feat (PHB-2024 p.202)", body: "Enhanced Unarmed Strike: deal 1d4 + STR bludgeoning (1d4+1). Also: reroll a 1 on an Unarmed Strike damage die, gain Improvised Weaponry proficiency, and a once-per-turn Push." },
+  push: { name: "Push", type: "Tavern Brawler Option", body: "Once per turn, when you hit with an Unarmed Strike and deal damage, you can push the target 5 feet away from you.", stats: {"Frequency":"Once per turn","Trigger":"Unarmed hit + damage","Effect":"Push 5 ft."} },
+
+  // WEAPON MASTERIES
+  vex: { name: "Vex", type: "Weapon Mastery — Rapier", body: "If you hit a creature with the Rapier and deal damage, you have Advantage on your next attack roll against that creature before the end of your next turn. Sets up Sneak Attack cleanly.", stats: {"Effect":"Advantage on next attack","Duration":"Until end of your next turn","Trigger":"On hit + damage"} },
+  slow: { name: "Slow", type: "Weapon Mastery — Whip", body: "If you hit a creature with the Whip and deal damage, reduce its Speed by 10 feet until the start of your next turn. The reduction doesn't stack past 10 ft. within a single turn.", stats: {"Effect":"−10 ft. Speed","Duration":"Until start of your next turn","Trigger":"On hit + damage"} },
+
+  // WEAPON ITEMS
+  "item-rapier": { name: "Rapier", type: "Martial Melee Weapon", body: "Finesse. Mastery property: Vex. Vellan attacks at +5 (DEX 3 + Prof 2) for 1d8+3 piercing, plus 1d6 Sneak Attack when the conditions are met.", stats: {"Damage":"1d8+3 Piercing","To Hit":"+5","Mastery":"Vex","Weight":"2 lb"} },
+  "item-whip": { name: "Whip", type: "Martial Melee Weapon", body: "Finesse, Reach (10 ft.). Mastery property: Slow. Vellan attacks at +5 for 1d4+3 slashing, and can Sneak Attack with it as a Finesse weapon.", stats: {"Damage":"1d4+3 Slashing","To Hit":"+5","Reach":"10 ft.","Mastery":"Slow"} },
+  "item-clothes": { name: "Common Clothes", type: "Apparel", body: "Ordinary garments suited to a working harbour. No armour bonus — Vellan's AC of 13 comes from 10 + DEX (3)." },
+  "item-silk-rope": { name: "Silk Rope (50 ft.)", type: "Adventuring Gear", body: "Fifty feet of strong, lightweight silk rope. Has 2 hit points and can be burst with a DC 20 Strength check. Weighs 5 lb." },
+
+  // ROGUE FEATURES
+  "feat-core-rogue": { name: "Core Rogue Traits", type: "Rogue Feature (PHB-2024 p.129)", body: "The Rogue's baseline package: proficiency with Light armour, Simple weapons plus a handful of Martial weapons, Thieves' Tools, and saves in Dexterity and Intelligence.", stats: {"Hit Die":"d8","Saves":"DEX, INT","Key Ability":"DEX"} },
+  "feat-expertise": { name: "Expertise", type: "Rogue Feature (PHB-2024 p.129)", body: "Choose two skill proficiencies; your Proficiency Bonus is doubled for checks with them. Vellan's Persuasion is +6 (CHA 2 + doubled Prof 4). The second Expertise skill isn't clearly marked on the export — confirm with the player." },
+  "feat-sneak-attack": { name: "Sneak Attack (1d6)", type: "Rogue Feature (PHB-2024 p.129)", body: "Once per turn, deal an extra 1d6 damage to one creature you hit with an attack if you have Advantage on the roll, using a Finesse or Ranged weapon. You don't need Advantage if another enemy of the target is within 5 ft. of it, that enemy isn't Incapacitated, and you don't have Disadvantage. At Rogue 2 the die is 1d6.", stats: {"Extra Damage":"1d6","Frequency":"Once per turn","Weapons":"Finesse or Ranged"} },
+  "feat-cunning-action": { name: "Cunning Action", type: "Rogue Feature (PHB-2024 p.130)", body: "Your quick thinking lets you act fast. As a Bonus Action, you can take the Dash, Disengage, or Hide action.", stats: {"Action":"Bonus Action","Options":"Dash · Disengage · Hide"} },
+  "feat-thieves-cant": { name: "Thieves' Cant", type: "Rogue Feature (PHB-2024 p.129)", body: "You know Thieves' Cant, a secret mix of dialect, jargon, and code that lets you hide messages in seemingly normal conversation. You also learn one additional language of your choice." },
+  "feat-weapon-mastery": { name: "Weapon Mastery", type: "Rogue Feature (PHB-2024 p.129)", body: "You can use the mastery properties of two kinds of weapons you're proficient with. Vellan has chosen Rapier (Vex) and Whip (Slow). You can change the chosen weapons when you finish a Long Rest." },
+
+  // HUMAN TRAITS
+  "feat-creature-type": { name: "Creature Type", type: "Human Trait (PHB-2024 p.193)", body: "Vellan is a Humanoid. Effects that target Humanoids apply to him unless another effect changes his creature type." },
+  "feat-size-speed": { name: "Size & Speed", type: "Human Trait (PHB-2024 p.194)", body: "Vellan is Medium with a base walking speed of 30 feet.", stats: {"Size":"Medium","Base Speed":"30 ft."} },
+  "feat-resourceful": { name: "Resourceful", type: "Human Trait (PHB-2024 p.194)", body: "You gain Heroic Inspiration whenever you finish a Long Rest. Spend Heroic Inspiration to reroll any die immediately after rolling it, and use the new roll.", stats: {"Regain":"On Long Rest","Held":"1 max","Use":"Reroll one die"} },
+  "feat-skillful": { name: "Skillful", type: "Human Trait (PHB-2024 p.194)", body: "You gain proficiency in one skill of your choice, on top of your class and background skills." },
+  "feat-versatile": { name: "Versatile", type: "Human Trait (PHB-2024 p.194)", body: "You gain an Origin feat of your choice. Vellan chose Tavern Brawler." },
+  "feat-tavern-brawler": { name: "Tavern Brawler", type: "Origin Feat (PHB-2024 p.202)", body: "Enhanced Unarmed Strike: your Unarmed Strike deals 1d4 + STR (1d4+1) bludgeoning instead of the flat amount. Damage Rerolls: reroll a 1 on an Unarmed Strike damage die (use the new roll). Improvised Weaponry: proficiency with improvised weapons. Push: once per turn, a damaging Unarmed Strike can push the target 5 ft." },
+
+  // ACTIONS
+  "action-cunning": { name: "Bonus Action Options", type: "Combat Reference", body: "Vellan's common Bonus Actions: Cunning Action (Dash, Disengage, Hide), Two-Weapon Fighting when dual-wielding Light weapons, and the Tavern Brawler Push rider on an Unarmed Strike hit." },
+};
+</script>
+
+<script>
+const SHEET_UI_VERSION = '1.0.0';
+
+// ===== TABS =====
+function switchTab(id) {
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-' + id)?.classList.add('active');
+  const activeBtn = document.querySelector(`.tab-btn[onclick="switchTab('${id}')"]`);
+  if (activeBtn) activeBtn.classList.add('active');
+  saveSheetState();
+}
+
+// ===== TOOLTIP ENGINE =====
+const tooltip = document.getElementById('tooltip');
+const ttName = document.getElementById('tt-name');
+const ttType = document.getElementById('tt-type');
+const ttBody = document.getElementById('tt-body');
+const ttStats = document.getElementById('tt-stats');
+let activeTooltipEl = null;
+let lastMouseX = 0;
+let lastMouseY = 0;
+
+function showTooltip(data) {
+  ttName.textContent = data.name;
+  ttType.textContent = data.type || '';
+  ttBody.innerHTML = (data.body || '').replace(/\n/g, '<br>');
+  if (data.stats) {
+    ttStats.style.display = 'grid';
+    ttStats.innerHTML = Object.entries(data.stats).map(([k,v]) => `<div class="tooltip-stat">${k}: <span>${v}</span></div>`).join('');
+  } else {
+    ttStats.style.display = 'none';
+  }
+  tooltip.classList.add('visible');
+}
+
+function positionTooltip(x, y) {
+  const pad = 12;
+  const rect = tooltip.getBoundingClientRect();
+  let left = x + 16;
+  let top = y + 14;
+  if (left + rect.width > window.innerWidth - pad) left = x - rect.width - 16;
+  if (top + rect.height > window.innerHeight - pad) top = y - rect.height - 16;
+  if (left < pad) left = pad;
+  if (top < pad) top = pad;
+
+  tooltip.style.left = Math.round(left) + 'px';
+  tooltip.style.top = Math.round(top) + 'px';
+}
+
+function hideTooltip() {
+  tooltip.classList.remove('visible');
+  activeTooltipEl = null;
+}
+
+function getTooltipData(el) {
+  if (!el) return null;
+  return TOOLTIPS[el.dataset.tooltip] || null;
+}
+
+function activateTooltip(el, x, y) {
+  const data = getTooltipData(el);
+  if (!data) return;
+  if (tooltip.parentElement !== document.body) {
+    document.body.appendChild(tooltip);
+  }
+  activeTooltipEl = el;
+  showTooltip(data);
+  positionTooltip(x, y);
+}
+
+document.addEventListener('mouseover', (e) => {
+  const el = e.target.closest('[data-tooltip]');
+  if (!el) return;
+  lastMouseX = e.clientX;
+  lastMouseY = e.clientY;
+  activateTooltip(el, lastMouseX, lastMouseY);
+});
+
+document.addEventListener('mousemove', (e) => {
+  if (!activeTooltipEl) return;
+  lastMouseX = e.clientX;
+  lastMouseY = e.clientY;
+  positionTooltip(lastMouseX, lastMouseY);
+});
+
+document.addEventListener('mouseout', (e) => {
+  if (!activeTooltipEl) return;
+  const nextEl = e.relatedTarget;
+  if (nextEl && activeTooltipEl.contains(nextEl)) {
+    return;
+  }
+  hideTooltip();
+});
+
+document.addEventListener('focusin', (e) => {
+  const el = e.target.closest('[data-tooltip]');
+  if (!el) return;
+  const rect = el.getBoundingClientRect();
+  activateTooltip(el, rect.left + rect.width / 2, rect.top + rect.height / 2);
+});
+
+document.addEventListener('focusout', () => {
+  hideTooltip();
+});
+
+window.addEventListener('scroll', () => {
+  if (activeTooltipEl) {
+    const rect = activeTooltipEl.getBoundingClientRect();
+    positionTooltip(rect.left + rect.width / 2, rect.top + rect.height / 2);
+  }
+}, { passive: true });
+
+window.addEventListener('resize', () => {
+  if (!activeTooltipEl) return;
+  const rect = activeTooltipEl.getBoundingClientRect();
+  positionTooltip(rect.left + rect.width / 2, rect.top + rect.height / 2);
+});
+
+// ===== CONSTANTS =====
+const MAX_HP = 13;
+
+// ===== HP =====
+function updateHPBar() {
+  const cur = parseInt(document.getElementById('currentHP').value) || 0;
+  const pct = Math.min(100, Math.max(0, (cur / MAX_HP) * 100));
+  const bar = document.getElementById('hpBar');
+  bar.style.width = pct + '%';
+  if (pct > 50) bar.style.background = 'linear-gradient(90deg,#2f9d8a,#5fd0c0)';
+  else if (pct > 25) bar.style.background = 'linear-gradient(90deg,#8b7a20,#c0a830)';
+  else bar.style.background = 'linear-gradient(90deg,#8b2f2f,#c05050)';
+  saveSheetState();
+}
+
+function applyHP(sign) {
+  const delta = parseInt(document.getElementById('hpDelta').value) || 0;
+  const cur = parseInt(document.getElementById('currentHP').value) || 0;
+  const newVal = Math.min(MAX_HP, Math.max(0, cur + sign * delta));
+  document.getElementById('currentHP').value = newVal;
+  document.getElementById('hpDelta').value = '';
+  updateHPBar();
+  saveSheetState();
+}
+
+// ===== REACTIVE SHEET STATE =====
+const sheetState = {
+  sneakAttack: false,
+};
+
+// ===== CUSTOM INVENTORY =====
+const SHEET_STORAGE_KEY = 'maltandmagic:dnd:vellan-darkmere-sheet:v1';
+let customInventoryItems = [];
+
+function renderVellanCustomItems() {
+  const list = document.getElementById('vCustomInventoryList');
+  const empty = document.getElementById('vCustomInventoryEmpty');
+  if (!list || !empty) return;
+
+  list.innerHTML = '';
+  if (!customInventoryItems.length) {
+    empty.style.display = 'block';
+    return;
+  }
+
+  empty.style.display = 'none';
+  customInventoryItems.forEach(item => {
+    const card = document.createElement('div');
+    card.className = 'item-card custom-item-card';
+
+    const top = document.createElement('div');
+    top.className = 'card-topline';
+    top.innerHTML = `<span class="item-type">Picked Up</span><span class="item-weight">${item.weight || '-'}</span>`;
+
+    const main = document.createElement('div');
+    main.className = 'item-main';
+    main.innerHTML = `<span class="item-icon">🎒</span><div><div class="item-name"></div><div class="item-qty"></div></div>`;
+    main.querySelector('.item-name').textContent = item.name;
+    main.querySelector('.item-qty').textContent = `Qty: ${item.qty || '1'}`;
+
+    const note = document.createElement('div');
+    note.className = 'item-note';
+    note.textContent = item.note || 'Added during play.';
+
+    const actions = document.createElement('div');
+    actions.style.marginTop = '8px';
+    const removeBtn = document.createElement('button');
+    removeBtn.type = 'button';
+    removeBtn.className = 'inventory-remove-btn';
+    removeBtn.textContent = 'Remove';
+    removeBtn.onclick = () => removeVellanCustomItem(item.id);
+    actions.appendChild(removeBtn);
+
+    card.appendChild(top);
+    card.appendChild(main);
+    card.appendChild(note);
+    card.appendChild(actions);
+    list.appendChild(card);
+  });
+}
+
+function addVellanCustomItem() {
+  const nameEl = document.getElementById('vCustomItemName');
+  const qtyEl = document.getElementById('vCustomItemQty');
+  const weightEl = document.getElementById('vCustomItemWeight');
+  const noteEl = document.getElementById('vCustomItemNote');
+  if (!nameEl || !qtyEl || !weightEl || !noteEl) return;
+
+  const name = nameEl.value.trim();
+  if (!name) {
+    castToast('Enter an item name first.', true);
+    return;
+  }
+
+  customInventoryItems.push({
+    id: `${Date.now()}-${Math.random().toString(16).slice(2)}`,
+    name,
+    qty: qtyEl.value.trim() || '1',
+    weight: weightEl.value.trim() || '-',
+    note: noteEl.value.trim(),
+  });
+
+  nameEl.value = '';
+  qtyEl.value = '';
+  weightEl.value = '';
+  noteEl.value = '';
+
+  renderVellanCustomItems();
+  saveSheetState();
+  castToast('Item added to picked-up inventory.');
+}
+
+function removeVellanCustomItem(id) {
+  customInventoryItems = customInventoryItems.filter(item => item.id !== id);
+  renderVellanCustomItems();
+  saveSheetState();
+}
+
+// ===== PERSISTENCE =====
+function saveSheetState() {
+  try {
+    const state = {
+      sheetState,
+      weaponState,
+      hp: {
+        current: document.getElementById('currentHP')?.value || String(MAX_HP),
+        temp: document.getElementById('tempHP')?.value || '0',
+      },
+      resources: Array.from(document.querySelectorAll('.resource-pip')).map(el => el.classList.contains('used')),
+      deaths: Array.from(document.querySelectorAll('.death-pip')).map(el => el.classList.contains('filled')),
+      conditions: Array.from(document.querySelectorAll('.condition-badge')).map(el => ({
+        name: (el.textContent || '').trim(),
+        active: el.classList.contains('active'),
+      })),
+      notes: document.getElementById('vellanNotes')?.value || '',
+      customInventoryItems,
+      activeTab: document.querySelector('.tab-panel.active')?.id || 'tab-combat',
+    };
+    localStorage.setItem(SHEET_STORAGE_KEY, JSON.stringify(state));
+  } catch (err) {
+    console.warn('Could not save sheet state:', err);
+  }
+}
+
+function loadSheetState() {
+  const versionBadge = document.getElementById('uiVersionBadge');
+  if (versionBadge) versionBadge.textContent = `UI v${SHEET_UI_VERSION}`;
+  if (!document.title.includes(`UI v${SHEET_UI_VERSION}`)) {
+    document.title = `${document.title} · UI v${SHEET_UI_VERSION}`;
+  }
+
+  try {
+    const raw = localStorage.getItem(SHEET_STORAGE_KEY);
+    if (!raw) {
+      refreshDerivedStats();
+      updateHPBar();
+      renderVellanCustomItems();
+      return;
+    }
+
+    const saved = JSON.parse(raw);
+
+    if (Array.isArray(saved.customInventoryItems)) {
+      customInventoryItems = saved.customInventoryItems;
+    }
+
+    if (saved.sheetState && typeof saved.sheetState === 'object') {
+      Object.assign(sheetState, saved.sheetState);
+    }
+
+    if (saved.weaponState?.rapier) {
+      weaponState.rapier = { ...weaponState.rapier, ...saved.weaponState.rapier };
+    }
+    if (saved.weaponState?.whip) {
+      weaponState.whip = { ...weaponState.whip, ...saved.weaponState.whip };
+    }
+
+    if (saved.hp) {
+      const currentHP = document.getElementById('currentHP');
+      const tempHP = document.getElementById('tempHP');
+      if (currentHP) currentHP.value = saved.hp.current ?? String(MAX_HP);
+      if (tempHP) tempHP.value = saved.hp.temp ?? '0';
+    }
+
+    if (Array.isArray(saved.resources)) {
+      document.querySelectorAll('.resource-pip').forEach((el, idx) => {
+        const used = !!saved.resources[idx];
+        el.classList.toggle('used', used);
+        el.classList.toggle('available', !used);
+      });
+    }
+
+    if (Array.isArray(saved.deaths)) {
+      document.querySelectorAll('.death-pip').forEach((el, idx) => {
+        el.classList.toggle('filled', !!saved.deaths[idx]);
+      });
+    }
+
+    if (Array.isArray(saved.conditions)) {
+      const map = new Map(saved.conditions.map(c => [c.name, !!c.active]));
+      document.querySelectorAll('.condition-badge').forEach(el => {
+        const key = (el.textContent || '').trim();
+        const active = map.get(key) || false;
+        el.classList.toggle('active', active);
+        el.classList.toggle('inactive', !active);
+      });
+    }
+
+    const notesEl = document.getElementById('vellanNotes');
+    if (notesEl && typeof saved.notes === 'string') notesEl.value = saved.notes;
+
+    // Sync Sneak Attack banner UI to saved state
+    applySneakAttackUI();
+
+    refreshDerivedStats();
+    updateHPBar();
+    updateWeaponDisplay('rapier');
+    updateWeaponDisplay('whip');
+    applyAdvButtons('rapier');
+    applyAdvButtons('whip');
+
+    const savedTab = (saved.activeTab || 'tab-combat').replace('tab-', '');
+    switchTab(savedTab);
+  } catch (err) {
+    console.warn('Could not load sheet state:', err);
+    refreshDerivedStats();
+    updateHPBar();
+  }
+
+  renderVellanCustomItems();
+}
+
+// ===== DERIVED STATS =====
+function refreshDerivedStats() {
+  const effectReadout = document.getElementById('combatEffectReadout');
+  if (effectReadout) {
+    const effects = [];
+    if (sheetState.sneakAttack) effects.push('Sneak Attack armed: +1d6 on a Finesse hit (once per turn)');
+    effectReadout.textContent = effects.length ? `Active Effects: ${effects.join(' | ')}` : 'No temporary combat effects active.';
+  }
+
+  const resourceCard = document.getElementById('feat-resourceful-card');
+  // (no derived toggle needed; kept for parity/extension)
+
+  const saBonusEls = ['sa-rapier', 'sa-whip'];
+  saBonusEls.forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.style.display = sheetState.sneakAttack ? 'inline' : 'none';
+  });
+}
+
+// ===== SNEAK ATTACK =====
+function applySneakAttackUI() {
+  const banner = document.getElementById('saBanner');
+  const dot = document.getElementById('saDot');
+  const bonus = document.getElementById('saBonus');
+  if (!banner || !dot || !bonus) return;
+  banner.classList.toggle('active', sheetState.sneakAttack);
+  dot.classList.toggle('on', sheetState.sneakAttack);
+  bonus.textContent = sheetState.sneakAttack
+    ? 'Armed — +1d6 on your Finesse hit this turn'
+    : 'Unarmed — arm to show +1d6 on a finesse hit';
+}
+
+function toggleSneakAttack() {
+  sheetState.sneakAttack = !sheetState.sneakAttack;
+  applySneakAttackUI();
+  refreshDerivedStats();
+  saveSheetState();
+}
+
+// ===== DEATH SAVES =====
+function togglePip(el, type) {
+  el.classList.toggle('filled');
+  saveSheetState();
+}
+
+// ===== RESOURCES =====
+function toggleResource(el) {
+  el.classList.toggle('used');
+  el.classList.toggle('available');
+  saveSheetState();
+}
+
+// ===== CONDITIONS =====
+function toggleCondition(el) {
+  el.classList.toggle('active');
+  el.classList.toggle('inactive');
+  saveSheetState();
+}
+
+// ===== WEAPON ADVANTAGE TOGGLES =====
+const weaponState = {
+  rapier: { adv: 'none' },
+  whip: { adv: 'none' },
+};
+
+function toggleAdv(weapon, type, btn) {
+  const state = weaponState[weapon];
+  if (state.adv === type) {
+    state.adv = 'none';
+    btn.classList.remove('active');
+  } else {
+    state.adv = type;
+    btn.closest('.adv-toggle-wrap').querySelectorAll('.adv-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+  }
+  updateWeaponDisplay(weapon);
+  saveSheetState();
+}
+
+function applyAdvButtons(weapon) {
+  const state = weaponState[weapon];
+  const advBtn = document.querySelector(`button[onclick="toggleAdv('${weapon}','adv',this)"]`);
+  const disBtn = document.querySelector(`button[onclick="toggleAdv('${weapon}','dis',this)"]`);
+  [advBtn, disBtn].forEach(b => b && b.classList.remove('active'));
+  if (state.adv === 'adv' && advBtn) advBtn.classList.add('active');
+  if (state.adv === 'dis' && disBtn) disBtn.classList.add('active');
+}
+
+function updateWeaponDisplay(weapon) {
+  const state = weaponState[weapon];
+  const advLabel = document.getElementById(weapon + '-adv-label');
+  if (!advLabel) return;
+  if (state.adv === 'adv') {
+    advLabel.textContent = 'Advantage';
+    advLabel.className = 'adv-indicator advantage';
+  } else if (state.adv === 'dis') {
+    advLabel.textContent = 'Disadvantage';
+    advLabel.className = 'adv-indicator disadvantage';
+  } else {
+    advLabel.textContent = '';
+    advLabel.className = 'adv-indicator';
+  }
+}
+
+// ===== TOAST =====
+let castToastTimer = null;
+function castToast(msg, isError = false) {
+  const el = document.getElementById('castToast');
+  if (!el) return;
+  el.textContent = msg;
+  el.classList.toggle('error', !!isError);
+  el.classList.add('show');
+  clearTimeout(castToastTimer);
+  castToastTimer = setTimeout(() => el.classList.remove('show'), 2400);
+}
+
+// ===== REST =====
+function shortRest() {
+  alert('Short Rest taken.\n\n• Rogue 2 has no short-rest class resources.\n• Heroic Inspiration (Resourceful) returns on a Long Rest.\n\nHit Dice available to spend: 2d8\nRemember to manually spend Hit Dice and update Current HP.');
+}
+
+function longRest() {
+  document.getElementById('currentHP').value = MAX_HP;
+  document.getElementById('tempHP').value = 0;
+  updateHPBar();
+  // Restore all resource pips (Heroic Inspiration via Resourceful)
+  document.querySelectorAll('.resource-pip').forEach(p => {
+    p.classList.remove('used');
+    p.classList.add('available');
+  });
+  // Reset death saves
+  document.querySelectorAll('.death-pip').forEach(p => p.classList.remove('filled'));
+  // Clear the per-turn Sneak Attack arming indicator
+  sheetState.sneakAttack = false;
+  applySneakAttackUI();
+  refreshDerivedStats();
+  saveSheetState();
+  alert('Long Rest completed!\n\n• HP restored to 13/13\n• Heroic Inspiration regained (Resourceful)\n• Death saves cleared\n• Clear any lingering conditions manually as needed');
+}
+
+loadSheetState();
+</script>
+
+<div id="castToast" class="cast-toast" role="status" aria-live="polite"></div>
+</body>
+</html>
