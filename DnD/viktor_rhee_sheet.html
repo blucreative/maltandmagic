@@ -259,61 +259,72 @@
   /* ===== ABILITY SCORES ===== */
   .ability-grid {
     display: grid;
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, 1fr);
     gap: 8px;
   }
   .ability-score {
     display: flex;
+    flex-direction: column;
     align-items: center;
-    gap: 10px;
-    padding: 8px 10px;
+    gap: 3px;
+    padding: 8px 6px;
     background: rgba(26,34,24,0.6);
     border: 1px solid rgba(58,79,53,0.4);
-    border-radius: 4px;
-    cursor: default;
+    border-radius: 6px;
+    cursor: pointer;
     position: relative;
+    text-align: center;
+    transition: border-color 0.2s;
   }
   .ability-score:hover { border-color: var(--gold-dim); }
   .ability-name {
     font-family: 'Barlow Condensed', sans-serif;
-    font-size: 9px;
+    font-size: 8px;
     font-weight: 600;
-    letter-spacing: 1.5px;
+    letter-spacing: 2px;
     text-transform: uppercase;
     color: var(--text-dim);
-    width: 26px;
-    flex-shrink: 0;
   }
   .ability-num {
     font-family: 'Cinzel', serif;
     font-size: 22px;
     font-weight: 700;
     color: var(--text-primary);
-    width: 36px;
-    text-align: center;
-    flex-shrink: 0;
+    line-height: 1.05;
   }
   .ability-mod {
     font-family: 'Barlow Condensed', sans-serif;
     font-size: 13px;
     font-weight: 600;
     color: var(--gold-light);
-    width: 26px;
+    min-width: 34px;
     text-align: center;
     background: rgba(201,168,76,0.1);
     border: 1px solid rgba(201,168,76,0.2);
     border-radius: 3px;
-    padding: 2px 0;
+    padding: 1px 8px;
   }
   .save-indicator {
     width: 8px;
     height: 8px;
     border-radius: 50%;
     border: 1px solid var(--text-dim);
-    flex-shrink: 0;
-    margin-left: auto;
+    position: absolute;
+    top: 6px;
+    right: 6px;
   }
   .save-indicator.proficient { background: var(--gold); border-color: var(--gold); }
+
+  /* ===== SAVES (single column, Lygas-style) ===== */
+  .save-row {
+    display: flex; align-items: center; gap: 8px;
+    padding: 3px 4px; border-radius: 3px;
+  }
+  .save-row:hover { background: rgba(58,79,53,0.15); }
+  .prof-dot { width: 8px; height: 8px; border-radius: 50%; border: 1px solid var(--text-dim); flex-shrink: 0; }
+  .prof-dot.proficient { background: var(--gold); border-color: var(--gold); }
+  .save-name { flex: 1; font-family: 'Barlow', sans-serif; font-size: 12px; color: var(--text-secondary); }
+  .save-val { font-family: 'Barlow Condensed', sans-serif; font-size: 13px; font-weight: 600; color: var(--gold-light); min-width: 30px; text-align: right; }
 
   /* ===== HP ===== */
   .hp-display {
@@ -1606,7 +1617,7 @@
 <div class="sheet-body">
 <div class="dashboard-grid">
 
-  <!-- LEFT: ABILITY SCORES + SAVES -->
+  <!-- LEFT: ABILITIES + SAVES + SKILLS -->
   <div style="display:flex;flex-direction:column;gap:14px;">
 
     <div class="panel">
@@ -1650,36 +1661,58 @@
             <div class="save-indicator" title="Not Proficient"></div>
           </div>
         </div>
-        <div class="section-divider"></div>
-        <div style="font-family:'Barlow Condensed',sans-serif;font-size:9px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--gold-dim);margin-bottom:6px;">Saving Throws</div>
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:4px;">
-          <div class="skill-item"><div class="skill-prof proficient"></div><span class="skill-mod">+4</span><span class="skill-name">Strength</span></div>
-          <div class="skill-item"><div class="skill-prof proficient"></div><span class="skill-mod">+5</span><span class="skill-name">Dexterity</span></div>
-          <div class="skill-item"><div class="skill-prof"></div><span class="skill-mod">+1</span><span class="skill-name">Constitution</span></div>
-          <div class="skill-item"><div class="skill-prof"></div><span class="skill-mod">+0</span><span class="skill-name">Intelligence</span></div>
-          <div class="skill-item"><div class="skill-prof"></div><span class="skill-mod">+2</span><span class="skill-name">Wisdom</span></div>
-          <div class="skill-item"><div class="skill-prof"></div><span class="skill-mod">−1</span><span class="skill-name">Charisma</span></div>
-        </div>
       </div>
     </div>
 
-    <!-- PASSIVE SENSES -->
+    <!-- SAVING THROWS -->
     <div class="panel">
-      <div class="panel-header"><span class="panel-title">Senses</span></div>
-      <div class="panel-body">
-        <div class="passive-row"><span class="passive-val">14</span><span class="passive-name">Passive Perception</span></div>
-        <div class="passive-row"><span class="passive-val">12</span><span class="passive-name">Passive Insight</span></div>
-        <div class="passive-row"><span class="passive-val">12</span><span class="passive-name">Passive Investigation</span></div>
-        <div style="margin-top:8px;padding:6px 10px;background:rgba(26,34,24,0.5);border:1px solid rgba(58,79,53,0.3);border-radius:4px;">
-          <span style="font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:600;color:var(--gold);">Darkvision</span>
-          <span style="font-family:'Barlow',sans-serif;font-size:11px;color:var(--text-dim);margin-left:6px;">120 ft.</span>
+      <div class="panel-header"><span class="panel-title">Saving Throws</span></div>
+      <div class="panel-body" style="padding:8px 12px;">
+        <div class="save-row"><div class="prof-dot proficient"></div><span class="save-name">Strength</span><span class="save-val">+4</span></div>
+        <div class="save-row"><div class="prof-dot proficient"></div><span class="save-name">Dexterity</span><span class="save-val">+5</span></div>
+        <div class="save-row"><div class="prof-dot"></div><span class="save-name">Constitution</span><span class="save-val">+1</span></div>
+        <div class="save-row"><div class="prof-dot"></div><span class="save-name">Intelligence</span><span class="save-val">+0</span></div>
+        <div class="save-row"><div class="prof-dot"></div><span class="save-name">Wisdom</span><span class="save-val">+2</span></div>
+        <div class="save-row"><div class="prof-dot"></div><span class="save-name">Charisma</span><span class="save-val">−1</span></div>
+        <div style="margin-top:6px;font-size:10px;color:var(--text-dim);font-style:italic;">Proficient saves: Strength, Dexterity</div>
+      </div>
+    </div>
+
+    <!-- SKILLS -->
+    <div class="panel">
+      <div class="panel-header"><span class="panel-title">Skills</span></div>
+      <div class="panel-body" style="padding:6px 12px;">
+        <div class="skill-list">
+          <div class="skill-item"><div class="skill-prof proficient"></div><span class="skill-mod">+3</span><span class="skill-name">Acrobatics</span><span class="skill-attr">DEX</span></div>
+          <div class="skill-item"><div class="skill-prof"></div><span class="skill-mod">+2</span><span class="skill-name">Animal Handling</span><span class="skill-attr">WIS</span></div>
+          <div class="skill-item"><div class="skill-prof"></div><span class="skill-mod">+0</span><span class="skill-name">Arcana</span><span class="skill-attr">INT</span></div>
+          <div class="skill-item"><div class="skill-prof expertise"></div><span class="skill-mod">+6</span><span class="skill-name">Athletics</span><span class="skill-attr">STR</span></div>
+          <div class="skill-item"><div class="skill-prof"></div><span class="skill-mod">−1</span><span class="skill-name">Deception</span><span class="skill-attr">CHA</span></div>
+          <div class="skill-item"><div class="skill-prof"></div><span class="skill-mod">+0</span><span class="skill-name">History</span><span class="skill-attr">INT</span></div>
+          <div class="skill-item"><div class="skill-prof"></div><span class="skill-mod">+2</span><span class="skill-name">Insight</span><span class="skill-attr">WIS</span></div>
+          <div class="skill-item"><div class="skill-prof proficient"></div><span class="skill-mod">+1</span><span class="skill-name">Intimidation</span><span class="skill-attr">CHA</span></div>
+          <div class="skill-item"><div class="skill-prof proficient"></div><span class="skill-mod">+2</span><span class="skill-name">Investigation</span><span class="skill-attr">INT</span></div>
+          <div class="skill-item"><div class="skill-prof"></div><span class="skill-mod">+2</span><span class="skill-name">Medicine</span><span class="skill-attr">WIS</span></div>
+          <div class="skill-item"><div class="skill-prof"></div><span class="skill-mod">+0</span><span class="skill-name">Nature</span><span class="skill-attr">INT</span></div>
+          <div class="skill-item"><div class="skill-prof expertise"></div><span class="skill-mod">+4</span><span class="skill-name">Perception</span><span class="skill-attr">WIS</span></div>
+          <div class="skill-item"><div class="skill-prof"></div><span class="skill-mod">−1</span><span class="skill-name">Performance</span><span class="skill-attr">CHA</span></div>
+          <div class="skill-item"><div class="skill-prof"></div><span class="skill-mod">−1</span><span class="skill-name">Persuasion</span><span class="skill-attr">CHA</span></div>
+          <div class="skill-item"><div class="skill-prof"></div><span class="skill-mod">+0</span><span class="skill-name">Religion</span><span class="skill-attr">INT</span></div>
+          <div class="skill-item"><div class="skill-prof proficient"></div><span class="skill-mod">+3</span><span class="skill-name">Sleight of Hand</span><span class="skill-attr">DEX</span></div>
+          <div class="skill-item"><div class="skill-prof proficient"></div><span class="skill-mod">+3</span><span class="skill-name">Stealth</span><span class="skill-attr">DEX</span></div>
+          <div class="skill-item"><div class="skill-prof proficient"></div><span class="skill-mod">+4</span><span class="skill-name">Survival</span><span class="skill-attr">WIS</span></div>
+        </div>
+        <div class="section-divider"></div>
+        <div style="display:flex;gap:8px;font-family:'Barlow Condensed',sans-serif;font-size:9px;color:var(--text-dim);">
+          <span>● Proficient</span>
+          <span style="color:var(--gold-light);">◉ Expertise</span>
         </div>
       </div>
     </div>
 
   </div>
 
-  <!-- CENTRE: COMBAT + WEAPONS + SKILLS -->
+  <!-- CENTRE: COMBAT + HP + WEAPONS + CONDITIONS -->
   <div style="display:flex;flex-direction:column;gap:14px;">
 
     <!-- COMBAT STATS -->
@@ -1698,11 +1731,16 @@
           <div class="combat-stat"><span class="cs-val">+2</span><span class="cs-label">Prof Bonus</span></div>
           <div class="combat-stat"><span class="cs-val">2d10</span><span class="cs-label">Hit Dice</span></div>
         </div>
-        <div id="combatEffectReadout" style="font-family:'Barlow Condensed',sans-serif;font-size:10px;letter-spacing:1px;color:var(--text-dim);margin:-4px 0 10px;">
+        <div id="combatEffectReadout" style="font-family:'Barlow Condensed',sans-serif;font-size:10px;letter-spacing:1px;color:var(--text-dim);margin:-4px 0 0;">
           No temporary combat effects active.
         </div>
+      </div>
+    </div>
 
-        <!-- HP -->
+    <!-- HIT POINTS -->
+    <div class="panel">
+      <div class="panel-header"><span class="panel-title">Hit Points</span></div>
+      <div class="panel-body">
         <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:10px;">
           <div class="hp-box">
             <span class="hp-label">Max HP</span>
@@ -1748,34 +1786,6 @@
             </div>
           </div>
         </div>
-
-        <div class="section-divider"></div>
-
-        <!-- CONDITIONS -->
-        <div style="font-family:'Barlow Condensed',sans-serif;font-size:9px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--text-dim);margin-bottom:4px;">Conditions</div>
-        <div class="conditions-row">
-          <div class="condition-badge inactive" data-condition="Blinded" data-tooltip="cond-blinded" onclick="toggleCondition(this)">Blinded</div>
-          <div class="condition-badge inactive" data-condition="Charmed" data-tooltip="cond-charmed" onclick="toggleCondition(this)">Charmed</div>
-          <div class="condition-badge inactive" data-condition="Deafened" data-tooltip="cond-deafened" onclick="toggleCondition(this)">Deafened</div>
-          <div class="condition-badge inactive" data-condition="Frightened" data-tooltip="cond-frightened" onclick="toggleCondition(this)">Frightened</div>
-          <div class="condition-badge inactive" data-condition="Grappled" data-tooltip="cond-grappled" onclick="toggleCondition(this)">Grappled</div>
-          <div class="condition-badge inactive" data-condition="Incapacitated" data-tooltip="cond-incapacitated" onclick="toggleCondition(this)">Incapacitated</div>
-          <div class="condition-badge inactive" data-condition="Invisible" data-tooltip="cond-invisible" onclick="toggleCondition(this)">Invisible</div>
-          <div class="condition-badge inactive" data-condition="Paralyzed" data-tooltip="cond-paralyzed" onclick="toggleCondition(this)">Paralyzed</div>
-          <div class="condition-badge inactive" data-condition="Petrified" data-tooltip="cond-petrified" onclick="toggleCondition(this)">Petrified</div>
-          <div class="condition-badge inactive" data-condition="Poisoned" data-tooltip="cond-poisoned" onclick="toggleCondition(this)">Poisoned</div>
-          <div class="condition-badge inactive" data-condition="Prone" data-tooltip="cond-prone" onclick="toggleCondition(this)">Prone</div>
-          <div class="condition-badge inactive" data-condition="Restrained" data-tooltip="cond-restrained" onclick="toggleCondition(this)">Restrained</div>
-          <div class="condition-badge inactive" data-condition="Stunned" data-tooltip="cond-stunned" onclick="toggleCondition(this)">Stunned</div>
-          <div class="condition-badge inactive" data-condition="Unconscious" data-tooltip="cond-unconscious" onclick="toggleCondition(this)">Unconscious</div>
-        </div>
-        <div class="exhaustion-control">
-          <span class="exh-title" data-tooltip="cond-exhaustion">Exhaustion</span>
-          <button class="exh-btn" onclick="setExhaustion(-1)" aria-label="Decrease exhaustion level">−</button>
-          <span class="exh-readout">Level <span class="exh-level" id="exhLevel">0</span> / 6</span>
-          <button class="exh-btn" onclick="setExhaustion(1)" aria-label="Increase exhaustion level">+</button>
-        </div>
-        <div class="condition-effects" id="conditionEffects"><span class="ce-none">No active conditions. Toggle a condition or raise Exhaustion to see its effects here.</span></div>
       </div>
     </div>
 
@@ -1882,6 +1892,55 @@
       </div>
     </div>
 
+    <!-- CONDITIONS -->
+    <div class="panel">
+      <div class="panel-header"><span class="panel-title">Conditions</span></div>
+      <div class="panel-body">
+        <div class="conditions-row">
+          <div class="condition-badge inactive" data-condition="Blinded" data-tooltip="cond-blinded" onclick="toggleCondition(this)">Blinded</div>
+          <div class="condition-badge inactive" data-condition="Charmed" data-tooltip="cond-charmed" onclick="toggleCondition(this)">Charmed</div>
+          <div class="condition-badge inactive" data-condition="Deafened" data-tooltip="cond-deafened" onclick="toggleCondition(this)">Deafened</div>
+          <div class="condition-badge inactive" data-condition="Frightened" data-tooltip="cond-frightened" onclick="toggleCondition(this)">Frightened</div>
+          <div class="condition-badge inactive" data-condition="Grappled" data-tooltip="cond-grappled" onclick="toggleCondition(this)">Grappled</div>
+          <div class="condition-badge inactive" data-condition="Incapacitated" data-tooltip="cond-incapacitated" onclick="toggleCondition(this)">Incapacitated</div>
+          <div class="condition-badge inactive" data-condition="Invisible" data-tooltip="cond-invisible" onclick="toggleCondition(this)">Invisible</div>
+          <div class="condition-badge inactive" data-condition="Paralyzed" data-tooltip="cond-paralyzed" onclick="toggleCondition(this)">Paralyzed</div>
+          <div class="condition-badge inactive" data-condition="Petrified" data-tooltip="cond-petrified" onclick="toggleCondition(this)">Petrified</div>
+          <div class="condition-badge inactive" data-condition="Poisoned" data-tooltip="cond-poisoned" onclick="toggleCondition(this)">Poisoned</div>
+          <div class="condition-badge inactive" data-condition="Prone" data-tooltip="cond-prone" onclick="toggleCondition(this)">Prone</div>
+          <div class="condition-badge inactive" data-condition="Restrained" data-tooltip="cond-restrained" onclick="toggleCondition(this)">Restrained</div>
+          <div class="condition-badge inactive" data-condition="Stunned" data-tooltip="cond-stunned" onclick="toggleCondition(this)">Stunned</div>
+          <div class="condition-badge inactive" data-condition="Unconscious" data-tooltip="cond-unconscious" onclick="toggleCondition(this)">Unconscious</div>
+        </div>
+        <div class="exhaustion-control">
+          <span class="exh-title" data-tooltip="cond-exhaustion">Exhaustion</span>
+          <button class="exh-btn" onclick="setExhaustion(-1)" aria-label="Decrease exhaustion level">−</button>
+          <span class="exh-readout">Level <span class="exh-level" id="exhLevel">0</span> / 6</span>
+          <button class="exh-btn" onclick="setExhaustion(1)" aria-label="Increase exhaustion level">+</button>
+        </div>
+        <div class="condition-effects" id="conditionEffects"><span class="ce-none">No active conditions. Toggle a condition or raise Exhaustion to see its effects here.</span></div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- RIGHT: SENSES + SPELLCASTING + PROFICIENCIES -->
+  <div style="display:flex;flex-direction:column;gap:14px;">
+
+    <!-- PASSIVE SENSES -->
+    <div class="panel">
+      <div class="panel-header"><span class="panel-title">Senses</span></div>
+      <div class="panel-body">
+        <div class="passive-row"><span class="passive-val">14</span><span class="passive-name">Passive Perception</span></div>
+        <div class="passive-row"><span class="passive-val">12</span><span class="passive-name">Passive Insight</span></div>
+        <div class="passive-row"><span class="passive-val">12</span><span class="passive-name">Passive Investigation</span></div>
+        <div style="margin-top:8px;padding:6px 10px;background:rgba(26,34,24,0.5);border:1px solid rgba(58,79,53,0.3);border-radius:4px;">
+          <span style="font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:600;color:var(--gold);">Darkvision</span>
+          <span style="font-family:'Barlow',sans-serif;font-size:11px;color:var(--text-dim);margin-left:6px;">120 ft.</span>
+        </div>
+      </div>
+    </div>
+
     <!-- SPELLCASTING QUICK REF -->
     <div class="panel">
       <div class="panel-header"><span class="panel-title">Spellcasting</span></div>
@@ -1896,42 +1955,6 @@
           <div class="slot-pip available" id="slot-1a" onclick="toggleSlot('slot-1a')" title="Slot 1"></div>
           <div class="slot-pip available" id="slot-1b" onclick="toggleSlot('slot-1b')" title="Slot 2"></div>
           <span style="font-family:'Barlow Condensed',sans-serif;font-size:10px;color:var(--text-dim);margin-left:4px;">2 slots</span>
-        </div>
-      </div>
-    </div>
-
-  </div>
-
-  <!-- RIGHT: SKILLS -->
-  <div style="display:flex;flex-direction:column;gap:14px;">
-
-    <div class="panel">
-      <div class="panel-header"><span class="panel-title">Skills</span></div>
-      <div class="panel-body" style="padding:10px 10px;">
-        <div class="skill-list">
-          <div class="skill-item"><div class="skill-prof proficient"></div><span class="skill-mod">+3</span><span class="skill-name">Acrobatics</span><span class="skill-attr">DEX</span></div>
-          <div class="skill-item"><div class="skill-prof"></div><span class="skill-mod">+2</span><span class="skill-name">Animal Handling</span><span class="skill-attr">WIS</span></div>
-          <div class="skill-item"><div class="skill-prof"></div><span class="skill-mod">+0</span><span class="skill-name">Arcana</span><span class="skill-attr">INT</span></div>
-          <div class="skill-item"><div class="skill-prof expertise"></div><span class="skill-mod">+6</span><span class="skill-name">Athletics</span><span class="skill-attr">STR</span></div>
-          <div class="skill-item"><div class="skill-prof"></div><span class="skill-mod">−1</span><span class="skill-name">Deception</span><span class="skill-attr">CHA</span></div>
-          <div class="skill-item"><div class="skill-prof"></div><span class="skill-mod">+0</span><span class="skill-name">History</span><span class="skill-attr">INT</span></div>
-          <div class="skill-item"><div class="skill-prof"></div><span class="skill-mod">+2</span><span class="skill-name">Insight</span><span class="skill-attr">WIS</span></div>
-          <div class="skill-item"><div class="skill-prof proficient"></div><span class="skill-mod">+1</span><span class="skill-name">Intimidation</span><span class="skill-attr">CHA</span></div>
-          <div class="skill-item"><div class="skill-prof proficient"></div><span class="skill-mod">+2</span><span class="skill-name">Investigation</span><span class="skill-attr">INT</span></div>
-          <div class="skill-item"><div class="skill-prof"></div><span class="skill-mod">+2</span><span class="skill-name">Medicine</span><span class="skill-attr">WIS</span></div>
-          <div class="skill-item"><div class="skill-prof"></div><span class="skill-mod">+0</span><span class="skill-name">Nature</span><span class="skill-attr">INT</span></div>
-          <div class="skill-item"><div class="skill-prof expertise"></div><span class="skill-mod">+4</span><span class="skill-name">Perception</span><span class="skill-attr">WIS</span></div>
-          <div class="skill-item"><div class="skill-prof"></div><span class="skill-mod">−1</span><span class="skill-name">Performance</span><span class="skill-attr">CHA</span></div>
-          <div class="skill-item"><div class="skill-prof"></div><span class="skill-mod">−1</span><span class="skill-name">Persuasion</span><span class="skill-attr">CHA</span></div>
-          <div class="skill-item"><div class="skill-prof"></div><span class="skill-mod">+0</span><span class="skill-name">Religion</span><span class="skill-attr">INT</span></div>
-          <div class="skill-item"><div class="skill-prof proficient"></div><span class="skill-mod">+3</span><span class="skill-name">Sleight of Hand</span><span class="skill-attr">DEX</span></div>
-          <div class="skill-item"><div class="skill-prof proficient"></div><span class="skill-mod">+3</span><span class="skill-name">Stealth</span><span class="skill-attr">DEX</span></div>
-          <div class="skill-item"><div class="skill-prof proficient"></div><span class="skill-mod">+4</span><span class="skill-name">Survival</span><span class="skill-attr">WIS</span></div>
-        </div>
-        <div class="section-divider"></div>
-        <div style="display:flex;gap:8px;font-family:'Barlow Condensed',sans-serif;font-size:9px;color:var(--text-dim);">
-          <span>● Proficient</span>
-          <span style="color:var(--gold-light);">◉ Expertise</span>
         </div>
       </div>
     </div>
