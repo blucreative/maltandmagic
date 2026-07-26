@@ -156,6 +156,21 @@
     background: var(--gold-dim);
     opacity: 0.3;
   }
+  .back-link {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 1.4px;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    text-decoration: none;
+    border: 1px solid var(--gold-dim);
+    border-radius: 7px;
+    padding: 5px 10px;
+    transition: color 0.2s, border-color 0.2s;
+    white-space: nowrap;
+  }
+  .back-link:hover { color: var(--gold); border-color: var(--gold); }
   .ui-version-badge {
     position: absolute;
     top: 10px;
@@ -1554,6 +1569,8 @@
       <div class="label">Experience</div>
       <div class="value">Milestone</div>
     </div>
+    <div class="meta-divider"></div>
+    <a class="back-link" href="index.html">↩ Index</a>
   </div>
 </div>
 
