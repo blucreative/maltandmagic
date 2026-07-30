@@ -315,6 +315,30 @@
   .condition-effects .ce-none { color:var(--text-dim); }
   .weapon-hit.stat-modified, .hstat-val.stat-modified { color: var(--danger-light) !important; }
 
+  .weapon-row.stowed {
+    opacity: 0.62;
+  }
+
+  .equip-btn {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 4px 8px;
+    border-radius: 4px;
+    border: 1px solid rgba(61,31,90,0.5);
+    background: rgba(14,8,24,0.75);
+    color: var(--text-dim);
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .equip-btn.equipped {
+    border-color: rgba(201,160,122,0.58);
+    color: var(--gold-light);
+    background: rgba(201,160,122,0.15);
+  }
+
   /* ===== PROFICIENCY LIST ===== */
   .prof-section-title { font-family: 'Barlow Condensed', sans-serif; font-size: 9px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; color: var(--gold-dim); margin-bottom: 4px; }
   .prof-list { font-size: 11px; color: var(--text-secondary); line-height: 1.6; }
@@ -671,7 +695,7 @@
           <span class="panel-title">Weapon Attacks</span>
           <span style="font-family:'Barlow Condensed',sans-serif;font-size:9px;color:var(--text-dim);margin-left:auto;">Two-Weapon Fighting · Nick (free off-hand attack)</span>
         </div>
-        <div class="weapon-row">
+        <div class="weapon-row" id="weapon-row-luck">
           <div>
             <div class="weapon-name">Luck</div>
             <div style="display:flex;gap:4px;margin-top:2px;">
@@ -680,11 +704,11 @@
             </div>
             <div class="adv-indicator" id="fear-adv-label"></div>
           </div>
-          <div class="weapon-hit" data-base="6">+6</div>
-          <div class="weapon-dmg">1d6+4</div>
+          <div class="weapon-hit" id="weapon-hit-luck" data-base="6">+6</div>
+          <div class="weapon-dmg" id="weapon-dmg-luck">1d6+4</div>
           <div class="weapon-type">Slashing</div>
         </div>
-        <div class="weapon-row">
+        <div class="weapon-row" id="weapon-row-judgement">
           <div>
             <div class="weapon-name">Judgement</div>
             <div style="display:flex;gap:4px;margin-top:2px;">
@@ -693,8 +717,8 @@
             </div>
             <div class="adv-indicator" id="hunger-adv-label"></div>
           </div>
-          <div class="weapon-hit" data-base="6">+6</div>
-          <div class="weapon-dmg">1d6+4</div>
+          <div class="weapon-hit" id="weapon-hit-judgement" data-base="6">+6</div>
+          <div class="weapon-dmg" id="weapon-dmg-judgement">1d6+4</div>
           <div class="weapon-type">Slashing</div>
         </div>
         <div class="weapon-row">
@@ -1210,6 +1234,7 @@
       <div class="item-main"><span class="item-icon">⚔</span><div><div class="item-name">Luck (Scimitar)</div><div class="item-qty">Bonded Pact Blade</div></div></div>
       <div class="item-tags"><span class="item-tag">Finesse</span><span class="item-tag">Light</span><span class="item-tag">Nick</span></div>
       <div class="item-note">Bonded to Lygas through Pact of the Blade. Wickedly serrated, carved with briar thorns.</div>
+      <div style="margin-top:8px;"><button type="button" class="equip-btn" id="equip-btn-luck" onclick="toggleEquip('luck')">Equip</button></div>
     </div>
 
     <div class="item-card signature">
@@ -1217,6 +1242,7 @@
       <div class="item-main"><span class="item-icon">⚔</span><div><div class="item-name">Judgement (Scimitar)</div><div class="item-qty">Bonded Pact Blade</div></div></div>
       <div class="item-tags"><span class="item-tag">Finesse</span><span class="item-tag">Light</span><span class="item-tag">Nick</span></div>
       <div class="item-note">Companion blade to Luck. Enchanted to bond through Pact of the Blade covenant.</div>
+      <div style="margin-top:8px;"><button type="button" class="equip-btn" id="equip-btn-judgement" onclick="toggleEquip('judgement')">Equip</button></div>
     </div>
 
     <div class="item-card">
@@ -1224,6 +1250,7 @@
       <div class="item-main"><span class="item-icon">🛡</span><div><div class="item-name">Chain Shirt</div><div class="item-qty">AC 13 + DEX</div></div></div>
       <div class="item-tags"><span class="item-tag">Medium Armour</span><span class="item-tag">Stealth</span></div>
       <div class="item-note">Light chain mesh worn beneath fine clothes. Bought with charlatan's gold.</div>
+      <div style="margin-top:8px;"><button type="button" class="equip-btn" id="equip-btn-chainShirt" onclick="toggleEquip('chainShirt')">Equip</button></div>
     </div>
 
     <div class="item-card">
@@ -1324,6 +1351,11 @@ const sheetState = {
   charm: false,
   secondWindUsed: 0,
   defense: false,
+  equipment: {
+    chainShirt: true,
+    luck: true,
+    judgement: true,
+  },
   customItems: [],
 };
 
@@ -1333,6 +1365,8 @@ const baseStats = {
   spellDc: 14,
   spellAttack: 6,
 };
+
+const UNARMORED_AC = 12;
 
 // ===== TAB SWITCHING =====
 function switchTab(name) {
@@ -1513,6 +1547,12 @@ function applyConditionEffects() {
 
   // ----- WEAPON TO-HIT (Exhaustion penalty) -----
   document.querySelectorAll('.weapon-hit[data-base]').forEach(el => {
+    const row = el.closest('.weapon-row.stowed');
+    if (row) {
+      el.textContent = '--';
+      el.classList.remove('stat-modified');
+      return;
+    }
     const base = parseInt(el.dataset.base, 10);
     el.textContent = fmtSigned(base - exhPenalty);
     el.classList.toggle('stat-modified', exhPenalty !== 0);
@@ -1585,8 +1625,14 @@ function applyConditionEffects() {
 }
 
 function refreshDerivedStats() {
+  applyEquipmentUI();
+
   const acEl = document.getElementById('acVal');
-  if (acEl) acEl.textContent = String(baseStats.ac);
+  const acNow = sheetState.equipment?.chainShirt ? baseStats.ac : UNARMORED_AC;
+  if (acEl) {
+    acEl.textContent = String(acNow);
+    acEl.classList.toggle('stat-modified', acNow !== baseStats.ac);
+  }
 
   const speedEl = document.getElementById('speedVal');
   if (speedEl) { speedEl.dataset.base = String(baseStats.speed); speedEl.textContent = `${baseStats.speed}ft`; }
@@ -1606,6 +1652,9 @@ function refreshDerivedStats() {
     const effects = [];
     if (sheetState.hex) effects.push(`Hex active → +1d6 Necrotic on hit${sheetState.hexTarget ? ` (${sheetState.hexTarget})` : ''}`);
     if (sheetState.charm) effects.push('Charm Person active');
+    if (!sheetState.equipment?.chainShirt) effects.push('Chain Shirt unequipped: AC reduced to 12');
+    const equippedWeapons = ['luck', 'judgement'].filter(key => sheetState.equipment?.[key]);
+    if (equippedWeapons.length) effects.push(`Equipped weapons: ${equippedWeapons.join(', ')}`);
     readout.textContent = effects.length ? `Active: ${effects.join(' | ')}` : 'No temporary combat effects active.';
   }
 
@@ -1637,6 +1686,54 @@ function refreshDerivedStats() {
   }
 
   applyConditionEffects();
+}
+
+function applyEquipmentUI() {
+  const bindings = [
+    {
+      key: 'luck',
+      rowId: 'weapon-row-luck',
+      hitId: 'weapon-hit-luck',
+      dmgId: 'weapon-dmg-luck',
+      dmg: '1d6+4',
+      btnId: 'equip-btn-luck',
+    },
+    {
+      key: 'judgement',
+      rowId: 'weapon-row-judgement',
+      hitId: 'weapon-hit-judgement',
+      dmgId: 'weapon-dmg-judgement',
+      dmg: '1d6+4',
+      btnId: 'equip-btn-judgement',
+    },
+    {
+      key: 'chainShirt',
+      btnId: 'equip-btn-chainShirt',
+    },
+  ];
+
+  bindings.forEach(binding => {
+    const equipped = !!sheetState.equipment?.[binding.key];
+    const row = binding.rowId ? document.getElementById(binding.rowId) : null;
+    const hitEl = binding.hitId ? document.getElementById(binding.hitId) : null;
+    const dmgEl = binding.dmgId ? document.getElementById(binding.dmgId) : null;
+    const btn = document.getElementById(binding.btnId);
+
+    if (row) row.classList.toggle('stowed', !equipped);
+    if (hitEl && !equipped) hitEl.textContent = '--';
+    if (dmgEl) dmgEl.textContent = equipped ? binding.dmg : 'Stowed';
+    if (btn) {
+      btn.textContent = equipped ? 'Equipped' : 'Equip';
+      btn.classList.toggle('equipped', equipped);
+    }
+  });
+}
+
+function toggleEquip(itemKey) {
+  if (!sheetState.equipment || !(itemKey in sheetState.equipment)) return;
+  sheetState.equipment[itemKey] = !sheetState.equipment[itemKey];
+  refreshDerivedStats();
+  saveSheetState();
 }
 
 // ===== SPELL CASTING =====
@@ -1871,6 +1968,12 @@ function loadSheetState() {
     const saved = JSON.parse(raw);
 
     if (saved.sheetState) Object.assign(sheetState, saved.sheetState);
+    if (!sheetState.equipment || typeof sheetState.equipment !== 'object') {
+      sheetState.equipment = { chainShirt: true, luck: true, judgement: true };
+    }
+    if (typeof sheetState.equipment.chainShirt !== 'boolean') sheetState.equipment.chainShirt = true;
+    if (typeof sheetState.equipment.luck !== 'boolean') sheetState.equipment.luck = true;
+    if (typeof sheetState.equipment.judgement !== 'boolean') sheetState.equipment.judgement = true;
     if (!Array.isArray(sheetState.customItems)) sheetState.customItems = [];
 
     if (saved.hp) {

@@ -648,6 +648,31 @@
   .adv-indicator.advantage { background: rgba(46,92,76,0.2); color: #5fd0b0; }
   .adv-indicator.disadvantage { background: rgba(92,46,46,0.2); color: #c05050; }
 
+  .weapon-card.stowed {
+    opacity: 0.62;
+    border-style: dashed;
+  }
+
+  .equip-btn {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 4px 8px;
+    border-radius: 4px;
+    border: 1px solid rgba(44,90,99,0.45);
+    background: rgba(8,22,26,0.75);
+    color: var(--text-dim);
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .equip-btn.equipped {
+    border-color: rgba(201,162,76,0.55);
+    color: var(--gold-light);
+    background: rgba(201,162,76,0.12);
+  }
+
   /* ===== SNEAK ATTACK BANNER ===== */
   .sa-banner {
     display: flex;
@@ -1592,7 +1617,7 @@
     <!-- SNEAK ATTACK -->
     <div class="sa-banner" id="saBanner" onclick="toggleSneakAttack()">
       <div class="sa-dot" id="saDot"></div>
-      <span class="sa-text">Sneak Attack (1d6)</span>
+      <span class="sa-text" id="saLabel">Sneak Attack (1d6)</span>
       <span class="sa-bonus" id="saBonus">Unarmed — arm to show +1d6 on a finesse hit</span>
     </div>
 
@@ -1602,16 +1627,16 @@
       <div class="panel-body">
 
         <!-- RAPIER -->
-        <div class="weapon-card">
+        <div class="weapon-card" id="weapon-card-rapier">
           <div class="weapon-header">
             <span class="weapon-name">Rapier</span>
           </div>
           <div class="weapon-stats">
             <div>
-              <div class="weapon-hit" data-base="5">+5</div>
+              <div class="weapon-hit" id="weapon-hit-rapier" data-base="5">+5</div>
               <div class="weapon-hit-label">To Hit</div>
             </div>
-            <div class="weapon-damage">1d8+3 Piercing</div>
+            <div class="weapon-damage" id="weapon-dmg-rapier">1d8+3 Piercing</div>
             <div id="sa-rapier" style="display:none;margin-left:6px;font-family:'Barlow Condensed',sans-serif;font-size:11px;color:var(--crimson);">+1d6</div>
           </div>
           <div class="adv-toggle-wrap">
@@ -1627,16 +1652,16 @@
         </div>
 
         <!-- WHIP -->
-        <div class="weapon-card">
+        <div class="weapon-card" id="weapon-card-whip">
           <div class="weapon-header">
             <span class="weapon-name">Whip</span>
           </div>
           <div class="weapon-stats">
             <div>
-              <div class="weapon-hit" data-base="5">+5</div>
+              <div class="weapon-hit" id="weapon-hit-whip" data-base="5">+5</div>
               <div class="weapon-hit-label">To Hit</div>
             </div>
-            <div class="weapon-damage">1d4+3 Slashing</div>
+            <div class="weapon-damage" id="weapon-dmg-whip">1d4+3 Slashing</div>
             <div id="sa-whip" style="display:none;margin-left:6px;font-family:'Barlow Condensed',sans-serif;font-size:11px;color:var(--crimson);">+1d6</div>
           </div>
           <div class="adv-toggle-wrap">
@@ -1959,6 +1984,7 @@
       <div class="item-main"><span class="item-icon">🗡</span><div><div class="item-name">Rapier</div><div class="item-qty">Qty: 1 · Drawn</div></div></div>
       <div class="item-tags"><span class="item-tag">Finesse</span><span class="item-tag">Vex</span><span class="item-tag">Martial</span></div>
       <div class="item-note">Vellan's duelling blade — quick, precise, and always first out of the sheath.</div>
+      <div style="margin-top:8px;"><button type="button" class="equip-btn" id="equip-btn-rapier" onclick="toggleEquip('rapier')">Equip</button></div>
     </div>
 
     <div class="item-card signature" data-tooltip="item-whip">
@@ -1966,6 +1992,7 @@
       <div class="item-main"><span class="item-icon">🪢</span><div><div class="item-name">Whip</div><div class="item-qty">Qty: 1</div></div></div>
       <div class="item-tags"><span class="item-tag">Finesse</span><span class="item-tag">Reach</span><span class="item-tag">Slow</span></div>
       <div class="item-note">A deckhand's reach weapon — trip, drag, and slow foes from 10 ft. away.</div>
+      <div style="margin-top:8px;"><button type="button" class="equip-btn" id="equip-btn-whip" onclick="toggleEquip('whip')">Equip</button></div>
     </div>
 
     <div class="item-card" data-tooltip="item-clothes">
@@ -2314,7 +2341,23 @@ function applyHP(sign) {
 // ===== REACTIVE SHEET STATE =====
 const sheetState = {
   sneakAttack: false,
+  equipment: {
+    rapier: true,
+    whip: false,
+  },
 };
+
+const ROGUE_LEVEL = 2;
+
+function sneakAttackDiceForLevel(level) {
+  const safeLevel = Math.max(1, parseInt(level, 10) || 1);
+  const diceCount = Math.max(1, Math.ceil(safeLevel / 2));
+  return `${diceCount}d6`;
+}
+
+function getSneakAttackDice() {
+  return sneakAttackDiceForLevel(ROGUE_LEVEL);
+}
 
 // ===== CUSTOM INVENTORY =====
 const SHEET_STORAGE_KEY = 'maltandmagic:dnd:vellan-darkmere-sheet:v1';
@@ -2441,7 +2484,9 @@ function loadSheetState() {
   try {
     const raw = localStorage.getItem(SHEET_STORAGE_KEY);
     if (!raw) {
+      applySneakAttackUI();
       refreshDerivedStats();
+      applyEquipmentUI();
       updateHPBar();
       applyConditionEffects();
       renderVellanCustomItems();
@@ -2457,6 +2502,11 @@ function loadSheetState() {
     if (saved.sheetState && typeof saved.sheetState === 'object') {
       Object.assign(sheetState, saved.sheetState);
     }
+    if (!sheetState.equipment || typeof sheetState.equipment !== 'object') {
+      sheetState.equipment = { rapier: true, whip: false };
+    }
+    if (typeof sheetState.equipment.rapier !== 'boolean') sheetState.equipment.rapier = true;
+    if (typeof sheetState.equipment.whip !== 'boolean') sheetState.equipment.whip = false;
 
     if (saved.weaponState?.rapier) {
       weaponState.rapier = { ...weaponState.rapier, ...saved.weaponState.rapier };
@@ -2505,6 +2555,7 @@ function loadSheetState() {
     applySneakAttackUI();
 
     refreshDerivedStats();
+    applyEquipmentUI();
     updateHPBar();
     updateWeaponDisplay('rapier');
     updateWeaponDisplay('whip');
@@ -2517,6 +2568,7 @@ function loadSheetState() {
   } catch (err) {
     console.warn('Could not load sheet state:', err);
     refreshDerivedStats();
+    applyEquipmentUI();
     updateHPBar();
     applyConditionEffects();
   }
@@ -2529,7 +2581,10 @@ function refreshDerivedStats() {
   const effectReadout = document.getElementById('combatEffectReadout');
   if (effectReadout) {
     const effects = [];
-    if (sheetState.sneakAttack) effects.push('Sneak Attack armed: +1d6 on a Finesse hit (once per turn)');
+    const sneakAttackDice = getSneakAttackDice();
+    if (sheetState.sneakAttack) effects.push(`Sneak Attack armed: +${sneakAttackDice} on a Finesse hit (once per turn)`);
+    const equippedWeapons = ['rapier', 'whip'].filter(key => sheetState.equipment?.[key]);
+    if (equippedWeapons.length) effects.push(`Equipped weapons: ${equippedWeapons.join(', ')}`);
     effectReadout.textContent = effects.length ? `Active Effects: ${effects.join(' | ')}` : 'No temporary combat effects active.';
   }
 
@@ -2539,21 +2594,75 @@ function refreshDerivedStats() {
   const saBonusEls = ['sa-rapier', 'sa-whip'];
   saBonusEls.forEach(id => {
     const el = document.getElementById(id);
-    if (el) el.style.display = sheetState.sneakAttack ? 'inline' : 'none';
+    if (!el) return;
+    const weaponKey = id.endsWith('rapier') ? 'rapier' : 'whip';
+    el.textContent = `+${getSneakAttackDice()}`;
+    el.style.display = (sheetState.sneakAttack && sheetState.equipment?.[weaponKey]) ? 'inline' : 'none';
   });
+
+  applyEquipmentUI();
+}
+
+function applyEquipmentUI() {
+  const bindings = [
+    {
+      key: 'rapier',
+      cardId: 'weapon-card-rapier',
+      hitId: 'weapon-hit-rapier',
+      dmgId: 'weapon-dmg-rapier',
+      dmg: '1d8+3 Piercing',
+      btnId: 'equip-btn-rapier',
+    },
+    {
+      key: 'whip',
+      cardId: 'weapon-card-whip',
+      hitId: 'weapon-hit-whip',
+      dmgId: 'weapon-dmg-whip',
+      dmg: '1d4+3 Slashing',
+      btnId: 'equip-btn-whip',
+    },
+  ];
+
+  bindings.forEach(binding => {
+    const equipped = !!sheetState.equipment?.[binding.key];
+    const card = document.getElementById(binding.cardId);
+    const hitEl = document.getElementById(binding.hitId);
+    const dmgEl = document.getElementById(binding.dmgId);
+    const btn = document.getElementById(binding.btnId);
+
+    if (card) card.classList.toggle('stowed', !equipped);
+    if (hitEl && !equipped) hitEl.textContent = '--';
+    if (dmgEl) dmgEl.textContent = equipped ? binding.dmg : 'Stowed';
+    if (btn) {
+      btn.textContent = equipped ? 'Equipped' : 'Equip';
+      btn.classList.toggle('equipped', equipped);
+    }
+  });
+}
+
+function toggleEquip(itemKey) {
+  if (!sheetState.equipment || !(itemKey in sheetState.equipment)) return;
+  sheetState.equipment[itemKey] = !sheetState.equipment[itemKey];
+  refreshDerivedStats();
+  applyConditionEffects();
+  applyEquipmentUI();
+  saveSheetState();
 }
 
 // ===== SNEAK ATTACK =====
 function applySneakAttackUI() {
   const banner = document.getElementById('saBanner');
   const dot = document.getElementById('saDot');
+  const label = document.getElementById('saLabel');
   const bonus = document.getElementById('saBonus');
   if (!banner || !dot || !bonus) return;
+  const sneakAttackDice = getSneakAttackDice();
+  if (label) label.textContent = `Sneak Attack (${sneakAttackDice})`;
   banner.classList.toggle('active', sheetState.sneakAttack);
   dot.classList.toggle('on', sheetState.sneakAttack);
   bonus.textContent = sheetState.sneakAttack
-    ? 'Armed — +1d6 on your Finesse hit this turn'
-    : 'Unarmed — arm to show +1d6 on a finesse hit';
+    ? `Armed — +${sneakAttackDice} on your Finesse hit this turn`
+    : `Unarmed — arm to show +${sneakAttackDice} on a finesse hit`;
 }
 
 function toggleSneakAttack() {
@@ -2657,6 +2766,12 @@ function applyConditionEffects() {
 
   // ----- WEAPON TO-HIT (Exhaustion penalty) -----
   document.querySelectorAll('.weapon-hit[data-base]').forEach(el => {
+    const inStowedCard = el.closest('.weapon-card.stowed');
+    if (inStowedCard) {
+      el.textContent = '--';
+      el.classList.remove('stat-modified');
+      return;
+    }
     const base = parseInt(el.dataset.base, 10);
     el.textContent = fmtSigned(base - exhPenalty);
     el.classList.toggle('stat-modified', exhPenalty !== 0);
