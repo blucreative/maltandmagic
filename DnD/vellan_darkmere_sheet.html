@@ -9,6 +9,7 @@
 <link rel="stylesheet" href="../assets/css/theme-fantasy.css">
 <link rel="stylesheet" href="../assets/css/page-polish.css">
 <script defer src="../assets/js/a11y-sheet-helpers.js"></script>
+<script src="../assets/js/inventory-trackers.js"></script>
 <style>
   :root {
     /* Pirate / deep-sea palette */
@@ -2102,7 +2103,7 @@
     <div style="font-family:'Barlow Condensed',sans-serif;font-size:9px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--gold-dim);margin-bottom:8px;">Picked Up During Play</div>
     <div class="inventory-form">
       <input id="vCustomItemName" class="inventory-input" type="text" placeholder="Item name">
-      <input id="vCustomItemQty" class="inventory-input" type="text" placeholder="Qty">
+      <input id="vCustomItemQty" class="inventory-input" type="number" min="0" step="1" inputmode="numeric" placeholder="Qty">
       <input id="vCustomItemWeight" class="inventory-input" type="text" placeholder="Weight">
       <input id="vCustomItemNote" class="inventory-input" type="text" placeholder="Short note (optional)">
       <button class="inventory-add-btn" type="button" onclick="addVellanCustomItem()">Add Item</button>
@@ -2440,6 +2441,7 @@ const sheetState = {
     rapier: true,
     whip: false,
   },
+  consumables: {},
 };
 
 const DEFAULT_CURRENCY = { pp: 0, gp: 100, ep: 0, sp: 0, cp: 0 };
@@ -2530,7 +2532,18 @@ function renderVellanCustomItems() {
     note.textContent = item.note || 'Added during play.';
 
     const actions = document.createElement('div');
-    actions.style.marginTop = '8px';
+    actions.className = 'quantity-row';
+    if (/^\d+$/.test(String(item.qty).trim())) {
+      actions.appendChild(InventoryTrackers.createQuantityControl({
+        label: item.name,
+        value: item.qty,
+        onChange(nextValue) {
+          item.qty = String(nextValue);
+          main.querySelector('.item-qty').textContent = `Qty: ${nextValue}`;
+          saveSheetState();
+        },
+      }));
+    }
     const removeBtn = document.createElement('button');
     removeBtn.type = 'button';
     removeBtn.className = 'inventory-remove-btn';
@@ -2715,6 +2728,7 @@ function loadSheetState() {
 
   applyCurrencyUI();
   renderVellanCustomItems();
+  InventoryTrackers.initializeFixedTrackers(sheetState, saveSheetState);
 }
 
 // ===== DERIVED STATS =====

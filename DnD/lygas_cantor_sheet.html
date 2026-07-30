@@ -8,6 +8,7 @@
 <link rel="stylesheet" href="../assets/css/theme-fantasy.css">
 <link rel="stylesheet" href="../assets/css/page-polish.css">
 <script defer src="../assets/js/a11y-sheet-helpers.js"></script>
+<script src="../assets/js/inventory-trackers.js"></script>
 <style>
   :root {
     --briar-dark: #120a1e;
@@ -1327,7 +1328,7 @@
     <div style="font-family:'Barlow Condensed',sans-serif;font-size:9px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--gold-dim);margin-bottom:8px;">Picked Up During Play</div>
     <div class="inventory-form">
       <input id="customItemName" class="inventory-input" type="text" placeholder="Item name">
-      <input id="customItemQty" class="inventory-input" type="text" placeholder="Qty">
+      <input id="customItemQty" class="inventory-input" type="number" min="0" step="1" inputmode="numeric" placeholder="Qty">
       <input id="customItemWeight" class="inventory-input" type="text" placeholder="Weight">
       <input id="customItemNote" class="inventory-input" type="text" placeholder="Short note (optional)">
       <button class="inventory-add-btn" type="button" onclick="addCustomInventoryItem()">Add Item</button>
@@ -1397,6 +1398,7 @@ const sheetState = {
     judgement: true,
     hiddenDagger: false,
   },
+  consumables: {},
   customItems: [],
 };
 
@@ -1963,7 +1965,18 @@ function renderCustomInventoryItems() {
     note.textContent = item.note || 'Added during play.';
 
     const actions = document.createElement('div');
-    actions.style.marginTop = '8px';
+    actions.className = 'quantity-row';
+    if (/^\d+$/.test(String(item.qty).trim())) {
+      actions.appendChild(InventoryTrackers.createQuantityControl({
+        label: item.name,
+        value: item.qty,
+        onChange(nextValue) {
+          item.qty = String(nextValue);
+          main.querySelector('.item-qty').textContent = `Qty: ${nextValue}`;
+          saveSheetState();
+        },
+      }));
+    }
     const removeBtn = document.createElement('button');
     removeBtn.type = 'button';
     removeBtn.className = 'inventory-remove-btn';
@@ -2129,6 +2142,7 @@ function loadSheetState() {
   refreshDerivedStats();
   updateHPBar();
   renderCustomInventoryItems();
+  InventoryTrackers.initializeFixedTrackers(sheetState, saveSheetState);
 }
 
 // ===== TOOLTIP SYSTEM =====

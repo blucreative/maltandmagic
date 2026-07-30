@@ -9,6 +9,7 @@
 <link rel="stylesheet" href="../assets/css/theme-fantasy.css">
 <link rel="stylesheet" href="../assets/css/page-polish.css">
 <script defer src="../assets/js/a11y-sheet-helpers.js"></script>
+<script src="../assets/js/inventory-trackers.js"></script>
 <style>
   :root {
     /* Arcane Archer / moonlit-indigo palette */
@@ -2337,6 +2338,7 @@
       <div class="card-topline"><span class="item-type">Ammunition</span><span class="item-weight">2 lb</span></div>
       <div class="item-main"><span class="item-icon">🎯</span><div><div class="item-name">Arrows &amp; Quiver</div><div class="item-qty">Qty: 20 · Quiver ×1</div></div></div>
       <div class="item-note">Recover roughly half your spent arrows after a fight. Curving Shot (L7) fires without spending any.</div>
+      <div class="quantity-row"><span class="quantity-label">Arrows remaining</span><div data-consumable-key="arrows" data-consumable-default="20" data-consumable-label="arrow"></div></div>
     </div>
 
     <div class="item-card" data-tooltip="item-studded">
@@ -2358,6 +2360,7 @@
       <div class="card-topline"><span class="item-type">Utility</span><span class="item-weight">2 lb</span></div>
       <div class="item-main"><span class="item-icon">✦</span><div><div class="item-name">Caltrops</div><div class="item-qty">Qty: 20</div></div></div>
       <div class="item-note">Scatter across a 5-ft. square to slow pursuers — DC 15 DEX save or take 1 piercing and have Speed cut.</div>
+      <div class="quantity-row"><span class="quantity-label">Remaining</span><div data-consumable-key="caltrops" data-consumable-default="20" data-consumable-label="caltrop"></div></div>
     </div>
 
   </div>
@@ -2365,13 +2368,16 @@
   <div style="margin-top:16px;font-family:'Barlow Condensed',sans-serif;font-size:9px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--gold-dim);margin-bottom:8px;">Pack &amp; Sundries</div>
   <div style="font-family:'Barlow',sans-serif;font-size:12px;color:var(--text-secondary);line-height:1.9;padding:12px 14px;background:rgba(16,22,46,0.5);border:1px solid rgba(51,64,106,0.35);border-radius:8px;">
     Backpack · Crowbar · Oil ×2 · Rations ×10 · Rope (hemp) · Tinderbox · Torch ×10 · Waterskin · Bedroll · Pouch ×2 · Traveler's Clothes · Dice
+    <div class="quantity-row"><span class="quantity-label">Oil flasks</span><div data-consumable-key="oil" data-consumable-default="2" data-consumable-label="oil flask"></div></div>
+    <div class="quantity-row"><span class="quantity-label">Rations</span><div data-consumable-key="rations" data-consumable-default="10" data-consumable-label="ration"></div></div>
+    <div class="quantity-row"><span class="quantity-label">Torches</span><div data-consumable-key="torches" data-consumable-default="10" data-consumable-label="torch"></div></div>
   </div>
 
   <div class="inventory-builder" style="margin-top:16px;">
     <div style="font-family:'Barlow Condensed',sans-serif;font-size:9px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--gold-dim);margin-bottom:8px;">Picked Up During Play</div>
     <div class="inventory-form">
       <input id="aCustomItemName" class="inventory-input" type="text" placeholder="Item name">
-      <input id="aCustomItemQty" class="inventory-input" type="text" placeholder="Qty">
+      <input id="aCustomItemQty" class="inventory-input" type="number" min="0" step="1" inputmode="numeric" placeholder="Qty">
       <input id="aCustomItemWeight" class="inventory-input" type="text" placeholder="Weight">
       <input id="aCustomItemNote" class="inventory-input" type="text" placeholder="Short note (optional)">
       <button class="inventory-add-btn" type="button" onclick="addArchiboldCustomItem()">Add Item</button>
@@ -2731,6 +2737,7 @@ const sheetState = {
     dagger: true,
     studded: true,
   },
+  consumables: {},
 };
 
 const DEFAULT_CURRENCY = { pp: 0, gp: 27, ep: 0, sp: 0, cp: 0 };
@@ -2812,7 +2819,18 @@ function renderArchiboldCustomItems() {
     note.textContent = item.note || 'Added during play.';
 
     const actions = document.createElement('div');
-    actions.style.marginTop = '8px';
+    actions.className = 'quantity-row';
+    if (/^\d+$/.test(String(item.qty).trim())) {
+      actions.appendChild(InventoryTrackers.createQuantityControl({
+        label: item.name,
+        value: item.qty,
+        onChange(nextValue) {
+          item.qty = String(nextValue);
+          main.querySelector('.item-qty').textContent = `Qty: ${nextValue}`;
+          saveSheetState();
+        },
+      }));
+    }
     const removeBtn = document.createElement('button');
     removeBtn.type = 'button';
     removeBtn.className = 'inventory-remove-btn';
@@ -2994,6 +3012,7 @@ function loadSheetState() {
 
   applyCurrencyUI();
   renderArchiboldCustomItems();
+  InventoryTrackers.initializeFixedTrackers(sheetState, saveSheetState);
 }
 
 // ===== DERIVED STATS =====

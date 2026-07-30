@@ -502,6 +502,74 @@ body.page-dnd-character-sheet .item-qty {
   color: var(--text-dim, #6a6050);
 }
 
+body.page-dnd-character-sheet .quantity-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-top: 10px;
+  padding-top: 8px;
+  border-top: 1px solid rgba(95, 113, 107, 0.28);
+}
+
+body.page-dnd-character-sheet .quantity-label {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  color: var(--steel, #8fa29a);
+}
+
+body.page-dnd-character-sheet .quantity-control {
+  display: inline-grid;
+  grid-template-columns: 36px 48px 36px;
+  align-items: stretch;
+  border: 1px solid rgba(201, 168, 76, 0.38);
+  border-radius: 6px;
+  overflow: hidden;
+  background: rgba(10, 18, 10, 0.6);
+}
+
+body.page-dnd-character-sheet .quantity-control.is-empty {
+  border-color: rgba(176, 84, 84, 0.65);
+}
+
+body.page-dnd-character-sheet .quantity-btn,
+body.page-dnd-character-sheet .quantity-input {
+  min-height: 36px;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  color: var(--text-primary, #e8dfc8);
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 15px;
+  text-align: center;
+}
+
+body.page-dnd-character-sheet .quantity-btn {
+  cursor: pointer;
+  color: var(--fantasy-link-hover, #f4ddac);
+}
+
+body.page-dnd-character-sheet .quantity-btn:hover {
+  background: rgba(201, 168, 76, 0.16);
+}
+
+body.page-dnd-character-sheet .quantity-input {
+  width: 48px;
+  padding: 0 2px;
+  border-left: 1px solid rgba(201, 168, 76, 0.24);
+  border-right: 1px solid rgba(201, 168, 76, 0.24);
+  -moz-appearance: textfield;
+}
+
+body.page-dnd-character-sheet .quantity-input::-webkit-inner-spin-button,
+body.page-dnd-character-sheet .quantity-input::-webkit-outer-spin-button {
+  margin: 0;
+  -webkit-appearance: none;
+}
+
 body.page-dnd-character-sheet .item-note {
   font-family: 'IM Fell English', serif;
   font-size: 12px;

@@ -9,6 +9,7 @@
 <link rel="stylesheet" href="../assets/css/theme-fantasy.css">
 <link rel="stylesheet" href="../assets/css/page-polish.css">
 <script defer src="../assets/js/a11y-sheet-helpers.js"></script>
+<script src="../assets/js/inventory-trackers.js"></script>
 <style>
   :root {
     --forest-dark: #1a2218;
@@ -2410,6 +2411,7 @@
       <div class="item-main"><span class="item-icon">🫙</span><div><div class="item-name">Oil</div><div class="item-qty">Qty: 2</div></div></div>
       <div class="item-tags"><span class="item-tag">Utility</span><span class="item-tag">Fire Prep</span></div>
       <div class="item-note">For traps, torches, and emergency burn lanes.</div>
+      <div class="quantity-row"><span class="quantity-label">Remaining</span><div data-consumable-key="oil" data-consumable-default="2" data-consumable-label="oil flask"></div></div>
     </div>
 
     <div class="item-card">
@@ -2417,6 +2419,7 @@
       <div class="item-main"><span class="item-icon">🧺</span><div><div class="item-name">Rations</div><div class="item-qty">Qty: 10</div></div></div>
       <div class="item-tags"><span class="item-tag">10 Days</span></div>
       <div class="item-note">Dry stock to support deep-range operations without supply lines.</div>
+      <div class="quantity-row"><span class="quantity-label">Remaining</span><div data-consumable-key="rations" data-consumable-default="10" data-consumable-label="ration"></div></div>
     </div>
 
     <div class="item-card">
@@ -2442,6 +2445,7 @@
       <div class="item-main"><span class="item-icon">🕯</span><div><div class="item-name">Torch</div><div class="item-qty">Qty: 10</div></div></div>
       <div class="item-tags"><span class="item-tag">1h Burn</span></div>
       <div class="item-note">Reliable illumination when darkvision alone is not enough for detail work.</div>
+      <div class="quantity-row"><span class="quantity-label">Remaining</span><div data-consumable-key="torches" data-consumable-default="10" data-consumable-label="torch"></div></div>
     </div>
 
     <div class="item-card">
@@ -2459,9 +2463,10 @@
 
     <div class="item-card magic" data-tooltip="item-healers-kit">
       <div class="card-topline"><span class="item-type">Support</span><span class="item-weight">3 lb</span></div>
-      <div class="item-main"><span class="item-icon">🩹</span><div><div class="item-name">Healer's Kit</div><div class="item-qty">Qty: 1</div></div></div>
+      <div class="item-main"><span class="item-icon">🩹</span><div><div class="item-name">Healer's Kit</div><div class="item-qty">Uses: 10</div></div></div>
       <div class="item-tags"><span class="item-tag">10 Uses</span><span class="item-tag">Stabilize</span></div>
       <div class="item-note">Emergency trauma kit for keeping squadmates breathing.</div>
+      <div class="quantity-row"><span class="quantity-label">Uses remaining</span><div data-consumable-key="healersKitUses" data-consumable-default="10" data-consumable-label="healer's kit use"></div></div>
     </div>
 
     <div class="item-card">
@@ -2469,6 +2474,7 @@
       <div class="item-main"><span class="item-icon">🏹</span><div><div class="item-name">Bolts</div><div class="item-qty">Qty: 20</div></div></div>
       <div class="item-tags"><span class="item-tag">Standard Stock</span></div>
       <div class="item-note">Enough for a short engagement before scavenging and recovery.</div>
+      <div class="quantity-row"><span class="quantity-label">Bolts remaining</span><div data-consumable-key="bolts" data-consumable-default="20" data-consumable-label="crossbow bolt"></div></div>
     </div>
 
     <div class="item-card">
@@ -2484,7 +2490,7 @@
     <div style="font-family:'Barlow Condensed',sans-serif;font-size:9px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--gold-dim);margin-bottom:8px;">Picked Up During Play</div>
     <div class="inventory-form">
       <input id="vCustomItemName" class="inventory-input" type="text" placeholder="Item name">
-      <input id="vCustomItemQty" class="inventory-input" type="text" placeholder="Qty">
+      <input id="vCustomItemQty" class="inventory-input" type="number" min="0" step="1" inputmode="numeric" placeholder="Qty">
       <input id="vCustomItemWeight" class="inventory-input" type="text" placeholder="Weight">
       <input id="vCustomItemNote" class="inventory-input" type="text" placeholder="Short note (optional)">
       <button class="inventory-add-btn" type="button" onclick="addViktorCustomItem()">Add Item</button>
@@ -2820,6 +2826,7 @@ const sheetState = {
     battleaxe: true,
     crossbow: true,
   },
+  consumables: {},
 };
 
 const DEFAULT_CURRENCY = { pp: 0, gp: 21, ep: 0, sp: 0, cp: 0 };
@@ -2907,7 +2914,18 @@ function renderViktorCustomItems() {
     note.textContent = item.note || 'Added during play.';
 
     const actions = document.createElement('div');
-    actions.style.marginTop = '8px';
+    actions.className = 'quantity-row';
+    if (/^\d+$/.test(String(item.qty).trim())) {
+      actions.appendChild(InventoryTrackers.createQuantityControl({
+        label: item.name,
+        value: item.qty,
+        onChange(nextValue) {
+          item.qty = String(nextValue);
+          main.querySelector('.item-qty').textContent = `Qty: ${nextValue}`;
+          saveSheetState();
+        },
+      }));
+    }
     const removeBtn = document.createElement('button');
     removeBtn.type = 'button';
     removeBtn.className = 'inventory-remove-btn';
@@ -3113,6 +3131,7 @@ function loadSheetState() {
 
   applyCurrencyUI();
   renderViktorCustomItems();
+  InventoryTrackers.initializeFixedTrackers(sheetState, saveSheetState);
 }
 
 function setStatusPill(id, active, onText = 'Active', offText = 'Inactive') {
