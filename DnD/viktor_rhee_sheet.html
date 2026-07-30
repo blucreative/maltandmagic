@@ -682,6 +682,31 @@
   }
   .adv-indicator.advantage { background: rgba(46,92,46,0.2); color: #7ec87e; }
   .adv-indicator.disadvantage { background: rgba(92,46,46,0.2); color: #c05050; }
+
+  .weapon-card.stowed {
+    opacity: 0.62;
+    border-style: dashed;
+  }
+
+  .equip-btn {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 4px 8px;
+    border-radius: 4px;
+    border: 1px solid rgba(58,79,53,0.45);
+    background: rgba(26,34,24,0.75);
+    color: var(--text-dim);
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .equip-btn.equipped {
+    border-color: rgba(201,168,76,0.55);
+    color: var(--gold-light);
+    background: rgba(201,168,76,0.12);
+  }
   .hm-active {
     font-family: 'Barlow Condensed', sans-serif;
     font-size: 10px;
@@ -1802,7 +1827,7 @@
       <div class="panel-body">
 
         <!-- BATTLEAXE -->
-        <div class="weapon-card">
+        <div class="weapon-card" id="weapon-card-battleaxe">
           <div class="weapon-header">
             <span class="weapon-name">Battleaxe</span>
             <div style="display:flex;gap:6px;align-items:center;">
@@ -1834,7 +1859,7 @@
         </div>
 
         <!-- HAND CROSSBOW -->
-        <div class="weapon-card">
+        <div class="weapon-card" id="weapon-card-crossbow">
           <div class="weapon-header">
             <span class="weapon-name">Crossbow, Hand</span>
             <div class="range-toggle">
@@ -2293,6 +2318,7 @@
       <div class="item-main"><span class="item-icon">🛡</span><div><div class="item-name">Studded Leather</div><div class="item-qty">Qty: 1 · Worn</div></div></div>
       <div class="item-tags"><span class="item-tag">AC 16 Ready</span><span class="item-tag">Light Armour</span></div>
       <div class="item-note">Forester issue cuirass, tailored for speed on woodland patrol.</div>
+      <div style="margin-top:8px;"><button type="button" class="equip-btn" id="equip-btn-studdedLeather" onclick="toggleEquip('studdedLeather')">Equip</button></div>
     </div>
 
     <div class="item-card signature" data-tooltip="item-crossbow">
@@ -2300,6 +2326,7 @@
       <div class="item-main"><span class="item-icon">🏹</span><div><div class="item-name">Crossbow, Hand</div><div class="item-qty">Qty: 1</div></div></div>
       <div class="item-tags"><span class="item-tag">Vex</span><span class="item-tag">30/120</span><span class="item-tag">Light</span></div>
       <div class="item-note">Primary pursuit weapon for quick marks and controlled openings.</div>
+      <div style="margin-top:8px;"><button type="button" class="equip-btn" id="equip-btn-crossbow" onclick="toggleEquip('crossbow')">Equip</button></div>
     </div>
 
     <div class="item-card signature" data-tooltip="item-battleaxe">
@@ -2307,6 +2334,7 @@
       <div class="item-main"><span class="item-icon">⚔</span><div><div class="item-name">Battleaxe</div><div class="item-qty">Qty: 1</div></div></div>
       <div class="item-tags"><span class="item-tag">Topple</span><span class="item-tag">Versatile</span></div>
       <div class="item-note">Close-quarters breaker for forcing enemies to the ground.</div>
+      <div style="margin-top:8px;"><button type="button" class="equip-btn" id="equip-btn-battleaxe" onclick="toggleEquip('battleaxe')">Equip</button></div>
     </div>
 
     <div class="item-card">
@@ -2744,6 +2772,11 @@ const sheetState = {
   longstrider: false,
   anticipate: false,
   huntersMark: false,
+  equipment: {
+    studdedLeather: true,
+    battleaxe: true,
+    crossbow: true,
+  },
 };
 
 const baseStats = {
@@ -2752,6 +2785,9 @@ const baseStats = {
   spellDc: 12,
   spellAttack: 4,
 };
+
+const UNARMORED_AC = 13;
+const STUDED_LEATHER_AC = 15;
 
 const SHEET_STORAGE_KEY = 'maltandmagic:dnd:viktor-rhee-sheet:v1';
 let customInventoryItems = [];
@@ -2894,6 +2930,12 @@ function loadSheetState() {
     if (saved.sheetState && typeof saved.sheetState === 'object') {
       Object.assign(sheetState, saved.sheetState);
     }
+    if (!sheetState.equipment || typeof sheetState.equipment !== 'object') {
+      sheetState.equipment = { studdedLeather: true, battleaxe: true, crossbow: true };
+    }
+    if (typeof sheetState.equipment.studdedLeather !== 'boolean') sheetState.equipment.studdedLeather = true;
+    if (typeof sheetState.equipment.battleaxe !== 'boolean') sheetState.equipment.battleaxe = true;
+    if (typeof sheetState.equipment.crossbow !== 'boolean') sheetState.equipment.crossbow = true;
 
     huntersMark = !!(saved.huntersMark || sheetState.huntersMark);
     sheetState.huntersMark = huntersMark;
@@ -2948,6 +2990,7 @@ function loadSheetState() {
     if (typeof saved.exhaustion === 'number') exhaustionLevel = Math.max(0, Math.min(6, saved.exhaustion));
 
     refreshDerivedStats();
+    applyEquipmentUI();
     updateWeaponDisplay('battleaxe');
     updateWeaponDisplay('crossbow');
 
@@ -2976,6 +3019,7 @@ function loadSheetState() {
   } catch (err) {
     console.warn('Could not load sheet state:', err);
     refreshDerivedStats();
+    applyEquipmentUI();
     updateHPBar();
   }
 
@@ -2990,12 +3034,18 @@ function setStatusPill(id, active, onText = 'Active', offText = 'Inactive') {
 }
 
 function refreshDerivedStats() {
-  const ac = baseStats.acNoDefense + (sheetState.defense ? 1 : 0);
+  applyEquipmentUI();
+
+  const armourBaseAc = sheetState.equipment?.studdedLeather ? STUDED_LEATHER_AC : UNARMORED_AC;
+  const ac = armourBaseAc + ((sheetState.defense && sheetState.equipment?.studdedLeather) ? 1 : 0);
   const speed = baseStats.speed + (sheetState.longstrider ? 10 : 0);
 
   const acEl = document.getElementById('acVal');
   const speedEl = document.getElementById('speedVal');
-  if (acEl) acEl.textContent = String(ac);
+  if (acEl) {
+    acEl.textContent = String(ac);
+    acEl.classList.toggle('stat-modified', !sheetState.equipment?.studdedLeather || !sheetState.defense);
+  }
   if (speedEl) { speedEl.dataset.base = String(speed); speedEl.textContent = `${speed}ft`; }
 
   ['spellDcQuick', 'spellDcFull'].forEach(id => {
@@ -3010,10 +3060,13 @@ function refreshDerivedStats() {
   const effectReadout = document.getElementById('combatEffectReadout');
   if (effectReadout) {
     const effects = [];
-    if (sheetState.defense) effects.push('Defense +1 AC');
+    if (sheetState.defense && sheetState.equipment?.studdedLeather) effects.push('Defense +1 AC');
     if (sheetState.longstrider) effects.push('Longstrider +10 ft Speed');
     if (sheetState.huntersMark) effects.push('Hunter\'s Mark +1d6 on weapon hit');
     if (sheetState.anticipate) effects.push('Anticipate Weakness: crit on 19-20 (next attack window)');
+    if (!sheetState.equipment?.studdedLeather) effects.push('Armour unequipped: AC uses unarmored baseline');
+    const equippedWeapons = ['battleaxe', 'crossbow'].filter(key => sheetState.equipment?.[key]);
+    if (equippedWeapons.length) effects.push(`Equipped weapons: ${equippedWeapons.join(', ')}`);
     effectReadout.textContent = effects.length ? `Active Effects: ${effects.join(' | ')}` : 'No temporary combat effects active.';
   }
 
@@ -3046,6 +3099,55 @@ function refreshDerivedStats() {
 
   refreshSpellAvailability();
   applyConditionEffects();
+}
+
+function applyEquipmentUI() {
+  const bindings = [
+    {
+      key: 'battleaxe',
+      cardId: 'weapon-card-battleaxe',
+      hitId: 'battleaxe-hit',
+      dmgId: 'battleaxe-dmg',
+      dmg: weaponState.battleaxe?.mode === 'versatile' ? '1d10+2 Slashing (2H)' : '1d8+2 Slashing',
+      btnId: 'equip-btn-battleaxe',
+    },
+    {
+      key: 'crossbow',
+      cardId: 'weapon-card-crossbow',
+      hitId: 'crossbow-hit',
+      dmgId: 'crossbow-dmg',
+      dmg: '1d6+3 Piercing',
+      btnId: 'equip-btn-crossbow',
+    },
+    {
+      key: 'studdedLeather',
+      btnId: 'equip-btn-studdedLeather',
+    },
+  ];
+
+  bindings.forEach(binding => {
+    const equipped = !!sheetState.equipment?.[binding.key];
+    const card = binding.cardId ? document.getElementById(binding.cardId) : null;
+    const hitEl = binding.hitId ? document.getElementById(binding.hitId) : null;
+    const dmgEl = binding.dmgId ? document.getElementById(binding.dmgId) : null;
+    const btn = document.getElementById(binding.btnId);
+
+    if (card) card.classList.toggle('stowed', !equipped);
+    if (hitEl && !equipped) hitEl.textContent = '--';
+    if (dmgEl) dmgEl.textContent = equipped ? binding.dmg : 'Stowed';
+    if (btn) {
+      btn.textContent = equipped ? 'Equipped' : 'Equip';
+      btn.classList.toggle('equipped', equipped);
+    }
+  });
+}
+
+function toggleEquip(itemKey) {
+  if (!sheetState.equipment || !(itemKey in sheetState.equipment)) return;
+  sheetState.equipment[itemKey] = !sheetState.equipment[itemKey];
+  refreshDerivedStats();
+  applyConditionEffects();
+  saveSheetState();
 }
 
 function toggleFeatureEffect(name) {
@@ -3305,6 +3407,12 @@ function applyConditionEffects() {
 
   // ----- WEAPON TO-HIT (Exhaustion penalty) -----
   document.querySelectorAll('.weapon-hit[data-base]').forEach(el => {
+    const inStowedCard = el.closest('.weapon-card.stowed');
+    if (inStowedCard) {
+      el.textContent = '--';
+      el.classList.remove('stat-modified');
+      return;
+    }
     const base = parseInt(el.dataset.base, 10);
     el.textContent = fmtSigned(base - exhPenalty);
     el.classList.toggle('stat-modified', exhPenalty !== 0);
@@ -3451,6 +3559,26 @@ function toggleAdv(weapon, type, btn) {
 function updateWeaponDisplay(weapon) {
   const state = weaponState[weapon];
   const advLabel = document.getElementById(weapon + '-adv-label');
+
+  if (!sheetState.equipment?.[weapon]) {
+    if (weapon === 'battleaxe') {
+      const hitEl = document.getElementById('battleaxe-hit');
+      const dmgEl = document.getElementById('battleaxe-dmg');
+      if (hitEl) hitEl.textContent = '--';
+      if (dmgEl) dmgEl.textContent = 'Stowed';
+    }
+    if (weapon === 'crossbow') {
+      const hitEl = document.getElementById('crossbow-hit');
+      const dmgEl = document.getElementById('crossbow-dmg');
+      if (hitEl) hitEl.textContent = '--';
+      if (dmgEl) dmgEl.textContent = 'Stowed';
+    }
+    if (advLabel) {
+      advLabel.textContent = '';
+      advLabel.className = 'adv-indicator';
+    }
+    return;
+  }
 
   if (weapon === 'battleaxe') {
     const hitEl = document.getElementById('battleaxe-hit');

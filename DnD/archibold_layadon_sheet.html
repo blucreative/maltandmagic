@@ -655,6 +655,31 @@
   .adv-indicator.advantage { background: rgba(46,92,76,0.2); color: #5fce9a; }
   .adv-indicator.disadvantage { background: rgba(92,46,46,0.2); color: #c05050; }
 
+  .weapon-card.stowed {
+    opacity: 0.62;
+    border-style: dashed;
+  }
+
+  .equip-btn {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 4px 8px;
+    border-radius: 4px;
+    border: 1px solid rgba(51,64,106,0.45);
+    background: rgba(10,16,36,0.75);
+    color: var(--text-dim);
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .equip-btn.equipped {
+    border-color: rgba(143,178,220,0.55);
+    color: var(--gold-light);
+    background: rgba(143,178,220,0.12);
+  }
+
   /* ===== FLAG NOTE ===== */
   .flag-note {
     font-family: 'Barlow Condensed', sans-serif;
@@ -1688,16 +1713,16 @@
       <div class="panel-body">
 
         <!-- LONGBOW -->
-        <div class="weapon-card">
+        <div class="weapon-card" id="weapon-card-longbow">
           <div class="weapon-header">
             <span class="weapon-name">Longbow</span>
           </div>
           <div class="weapon-stats">
             <div>
-              <div class="weapon-hit" data-base="7">+7</div>
+              <div class="weapon-hit" id="weapon-hit-longbow" data-base="7">+7</div>
               <div class="weapon-hit-label">To Hit</div>
             </div>
-            <div class="weapon-damage">1d8+3 Piercing</div>
+            <div class="weapon-damage" id="weapon-dmg-longbow">1d8+3 Piercing</div>
             <div class="weapon-range">150 / 600 ft.</div>
           </div>
           <div class="adv-toggle-wrap">
@@ -1716,16 +1741,16 @@
         </div>
 
         <!-- SHORTSWORD -->
-        <div class="weapon-card">
+        <div class="weapon-card" id="weapon-card-shortsword">
           <div class="weapon-header">
             <span class="weapon-name">Shortsword</span>
           </div>
           <div class="weapon-stats">
             <div>
-              <div class="weapon-hit" data-base="5">+5</div>
+              <div class="weapon-hit" id="weapon-hit-shortsword" data-base="5">+5</div>
               <div class="weapon-hit-label">To Hit</div>
             </div>
-            <div class="weapon-damage">1d6+3 Piercing</div>
+            <div class="weapon-damage" id="weapon-dmg-shortsword">1d6+3 Piercing</div>
           </div>
           <div class="adv-toggle-wrap">
             <button class="adv-btn adv" onclick="toggleAdv('shortsword','adv',this)">Advantage</button>
@@ -1741,16 +1766,16 @@
         </div>
 
         <!-- DAGGER -->
-        <div class="weapon-card">
+        <div class="weapon-card" id="weapon-card-dagger">
           <div class="weapon-header">
             <span class="weapon-name">Dagger <span style="font-size:11px;color:var(--text-dim);">×2</span></span>
           </div>
           <div class="weapon-stats">
             <div>
-              <div class="weapon-hit" data-base="5">+5</div>
+              <div class="weapon-hit" id="weapon-hit-dagger" data-base="5">+5</div>
               <div class="weapon-hit-label">To Hit</div>
             </div>
-            <div class="weapon-damage">1d4+3 Piercing</div>
+            <div class="weapon-damage" id="weapon-dmg-dagger">1d4+3 Piercing</div>
             <div class="weapon-range">20 / 60 ft.</div>
           </div>
           <div class="weapon-props">
@@ -2253,6 +2278,7 @@
       <div class="item-main"><span class="item-icon">🏹</span><div><div class="item-name">Longbow</div><div class="item-qty">Qty: 1 · Drawn</div></div></div>
       <div class="item-tags"><span class="item-tag">Ammunition</span><span class="item-tag">Heavy</span><span class="item-tag">Slow</span></div>
       <div class="item-note">Archibold's primary weapon — +7 to hit with the Archery style, and the Ammunition weapon his future Arcane Shots need.</div>
+      <div style="margin-top:8px;"><button type="button" class="equip-btn" id="equip-btn-longbow" onclick="toggleEquip('longbow')">Equip</button></div>
     </div>
 
     <div class="item-card signature" data-tooltip="item-shortsword">
@@ -2260,6 +2286,7 @@
       <div class="item-main"><span class="item-icon">🗡</span><div><div class="item-name">Shortsword</div><div class="item-qty">Qty: 1</div></div></div>
       <div class="item-tags"><span class="item-tag">Finesse</span><span class="item-tag">Light</span><span class="item-tag">Vex</span></div>
       <div class="item-note">A quick sidearm for when foes close the distance.</div>
+      <div style="margin-top:8px;"><button type="button" class="equip-btn" id="equip-btn-shortsword" onclick="toggleEquip('shortsword')">Equip</button></div>
     </div>
 
     <div class="item-card" data-tooltip="item-dagger">
@@ -2267,6 +2294,7 @@
       <div class="item-main"><span class="item-icon">🔪</span><div><div class="item-name">Dagger</div><div class="item-qty">Qty: 2</div></div></div>
       <div class="item-tags"><span class="item-tag">Finesse</span><span class="item-tag">Light</span><span class="item-tag">Thrown</span></div>
       <div class="item-note">A pair of throwing blades — 20/60 ft. and always within reach.</div>
+      <div style="margin-top:8px;"><button type="button" class="equip-btn" id="equip-btn-dagger" onclick="toggleEquip('dagger')">Equip</button></div>
     </div>
 
     <div class="item-card" data-tooltip="item-arrows">
@@ -2280,6 +2308,7 @@
       <div class="item-main"><span class="item-icon">🧥</span><div><div class="item-name">Studded Leather</div><div class="item-qty">Qty: 1 · Worn</div></div></div>
       <div class="item-tags"><span class="item-tag">Light Armour</span></div>
       <div class="item-note">AC 12 + full DEX. When properly equipped this should put Archibold at AC 15 (see combat flag).</div>
+      <div style="margin-top:8px;"><button type="button" class="equip-btn" id="equip-btn-studded" onclick="toggleEquip('studded')">Equip</button></div>
     </div>
 
     <div class="item-card" data-tooltip="item-thieves-tools">
@@ -2652,7 +2681,17 @@ function applyHP(sign) {
 }
 
 // ===== REACTIVE SHEET STATE =====
-const sheetState = {};
+const sheetState = {
+  equipment: {
+    longbow: true,
+    shortsword: true,
+    dagger: true,
+    studded: true,
+  },
+};
+
+const UNARMORED_AC = 13;
+const STUDED_LEATHER_AC = 15;
 
 // ===== CUSTOM INVENTORY =====
 const SHEET_STORAGE_KEY = 'maltandmagic:dnd:archibold-layadon-sheet:v1';
@@ -2795,6 +2834,13 @@ function loadSheetState() {
     if (saved.sheetState && typeof saved.sheetState === 'object') {
       Object.assign(sheetState, saved.sheetState);
     }
+    if (!sheetState.equipment || typeof sheetState.equipment !== 'object') {
+      sheetState.equipment = { longbow: true, shortsword: true, dagger: true, studded: true };
+    }
+    if (typeof sheetState.equipment.longbow !== 'boolean') sheetState.equipment.longbow = true;
+    if (typeof sheetState.equipment.shortsword !== 'boolean') sheetState.equipment.shortsword = true;
+    if (typeof sheetState.equipment.dagger !== 'boolean') sheetState.equipment.dagger = true;
+    if (typeof sheetState.equipment.studded !== 'boolean') sheetState.equipment.studded = true;
 
     if (saved.weaponState?.longbow) {
       weaponState.longbow = { ...weaponState.longbow, ...saved.weaponState.longbow };
@@ -2840,6 +2886,7 @@ function loadSheetState() {
     if (notesEl && typeof saved.notes === 'string') notesEl.value = saved.notes;
 
     refreshDerivedStats();
+    applyEquipmentUI();
     updateHPBar();
     updateWeaponDisplay('longbow');
     updateWeaponDisplay('shortsword');
@@ -2852,6 +2899,7 @@ function loadSheetState() {
   } catch (err) {
     console.warn('Could not load sheet state:', err);
     refreshDerivedStats();
+    applyEquipmentUI();
     updateHPBar();
     applyConditionEffects();
   }
@@ -2861,6 +2909,15 @@ function loadSheetState() {
 
 // ===== DERIVED STATS =====
 function refreshDerivedStats() {
+  applyEquipmentUI();
+
+  const acEl = document.getElementById('acVal');
+  const acNow = sheetState.equipment?.studded ? STUDED_LEATHER_AC : UNARMORED_AC;
+  if (acEl) {
+    acEl.textContent = String(acNow);
+    acEl.classList.toggle('stat-modified', acNow !== UNARMORED_AC);
+  }
+
   const tally = (group) => {
     const pips = document.querySelectorAll(`.resource-pip[data-res="${group}"]`);
     const avail = Array.from(pips).filter(p => p.classList.contains('available')).length;
@@ -2868,8 +2925,70 @@ function refreshDerivedStats() {
   };
   const readout = document.getElementById('combatEffectReadout');
   if (readout) {
-    readout.textContent = `Second Wind ${tally('secondWind')} · Action Surge ${tally('actionSurge')} · Luck ${tally('lucky')} · Heroic Insp. ${tally('inspiration')}`;
+    const equippedWeapons = ['longbow', 'shortsword', 'dagger'].filter(key => sheetState.equipment?.[key]);
+    const gearNotes = [];
+    if (!sheetState.equipment?.studded) gearNotes.push(`AC ${UNARMORED_AC} (armour unequipped)`);
+    if (equippedWeapons.length) gearNotes.push(`Weapons: ${equippedWeapons.join(', ')}`);
+    const gearText = gearNotes.length ? ` · ${gearNotes.join(' | ')}` : '';
+    readout.textContent = `Second Wind ${tally('secondWind')} · Action Surge ${tally('actionSurge')} · Luck ${tally('lucky')} · Heroic Insp. ${tally('inspiration')}${gearText}`;
   }
+}
+
+function applyEquipmentUI() {
+  const bindings = [
+    {
+      key: 'longbow',
+      cardId: 'weapon-card-longbow',
+      hitId: 'weapon-hit-longbow',
+      dmgId: 'weapon-dmg-longbow',
+      dmg: '1d8+3 Piercing',
+      btnId: 'equip-btn-longbow',
+    },
+    {
+      key: 'shortsword',
+      cardId: 'weapon-card-shortsword',
+      hitId: 'weapon-hit-shortsword',
+      dmgId: 'weapon-dmg-shortsword',
+      dmg: '1d6+3 Piercing',
+      btnId: 'equip-btn-shortsword',
+    },
+    {
+      key: 'dagger',
+      cardId: 'weapon-card-dagger',
+      hitId: 'weapon-hit-dagger',
+      dmgId: 'weapon-dmg-dagger',
+      dmg: '1d4+3 Piercing',
+      btnId: 'equip-btn-dagger',
+    },
+    {
+      key: 'studded',
+      btnId: 'equip-btn-studded',
+    },
+  ];
+
+  bindings.forEach(binding => {
+    const equipped = !!sheetState.equipment?.[binding.key];
+    const card = binding.cardId ? document.getElementById(binding.cardId) : null;
+    const hitEl = binding.hitId ? document.getElementById(binding.hitId) : null;
+    const dmgEl = binding.dmgId ? document.getElementById(binding.dmgId) : null;
+    const btn = document.getElementById(binding.btnId);
+
+    if (card) card.classList.toggle('stowed', !equipped);
+    if (hitEl && !equipped) hitEl.textContent = '--';
+    if (dmgEl) dmgEl.textContent = equipped ? binding.dmg : 'Stowed';
+    if (btn) {
+      btn.textContent = equipped ? 'Equipped' : 'Equip';
+      btn.classList.toggle('equipped', equipped);
+    }
+  });
+}
+
+function toggleEquip(itemKey) {
+  if (!sheetState.equipment || !(itemKey in sheetState.equipment)) return;
+  sheetState.equipment[itemKey] = !sheetState.equipment[itemKey];
+  refreshDerivedStats();
+  applyConditionEffects();
+  saveSheetState();
 }
 
 // ===== DEATH SAVES =====
@@ -2981,6 +3100,12 @@ function applyConditionEffects() {
 
   // ----- WEAPON TO-HIT (Exhaustion penalty) -----
   document.querySelectorAll('.weapon-hit[data-base]').forEach(el => {
+    const inStowedCard = el.closest('.weapon-card.stowed');
+    if (inStowedCard) {
+      el.textContent = '--';
+      el.classList.remove('stat-modified');
+      return;
+    }
     const base = parseInt(el.dataset.base, 10);
     el.textContent = fmtSigned(base - exhPenalty);
     el.classList.toggle('stat-modified', exhPenalty !== 0);
