@@ -721,6 +721,19 @@
           <div class="weapon-dmg" id="weapon-dmg-judgement">1d6+4</div>
           <div class="weapon-type">Slashing</div>
         </div>
+        <div class="weapon-row" id="weapon-row-hiddenDagger">
+          <div>
+            <div class="weapon-name">Hidden Dagger</div>
+            <div style="display:flex;gap:4px;margin-top:2px;">
+              <span class="weapon-badge">Backup</span>
+              <span class="weapon-badge">Finesse · Light</span>
+            </div>
+            <div class="adv-indicator"></div>
+          </div>
+          <div class="weapon-hit" id="weapon-hit-hiddenDagger" data-base="4">+4</div>
+          <div class="weapon-dmg" id="weapon-dmg-hiddenDagger">1d4+2</div>
+          <div class="weapon-type">Piercing</div>
+        </div>
         <div class="weapon-row">
           <div>
             <div class="weapon-name">Unarmed Strike</div>
@@ -1258,6 +1271,7 @@
       <div class="item-main"><span class="item-icon">🗡</span><div><div class="item-name">Dagger</div><div class="item-qty">Qty: 1</div></div></div>
       <div class="item-tags"><span class="item-tag">Finesse</span><span class="item-tag">Light</span></div>
       <div class="item-note">Backup blade concealed in boot. Simple iron, well-maintained.</div>
+      <div style="margin-top:8px;"><button type="button" class="equip-btn" id="equip-btn-hiddenDagger" onclick="toggleEquip('hiddenDagger')">Equip</button></div>
     </div>
 
     <div class="item-card">
@@ -1355,6 +1369,7 @@ const sheetState = {
     chainShirt: true,
     luck: true,
     judgement: true,
+    hiddenDagger: false,
   },
   customItems: [],
 };
@@ -1653,7 +1668,7 @@ function refreshDerivedStats() {
     if (sheetState.hex) effects.push(`Hex active → +1d6 Necrotic on hit${sheetState.hexTarget ? ` (${sheetState.hexTarget})` : ''}`);
     if (sheetState.charm) effects.push('Charm Person active');
     if (!sheetState.equipment?.chainShirt) effects.push('Chain Shirt unequipped: AC reduced to 12');
-    const equippedWeapons = ['luck', 'judgement'].filter(key => sheetState.equipment?.[key]);
+    const equippedWeapons = ['luck', 'judgement', 'hiddenDagger'].filter(key => sheetState.equipment?.[key]);
     if (equippedWeapons.length) effects.push(`Equipped weapons: ${equippedWeapons.join(', ')}`);
     readout.textContent = effects.length ? `Active: ${effects.join(' | ')}` : 'No temporary combat effects active.';
   }
@@ -1705,6 +1720,14 @@ function applyEquipmentUI() {
       dmgId: 'weapon-dmg-judgement',
       dmg: '1d6+4',
       btnId: 'equip-btn-judgement',
+    },
+    {
+      key: 'hiddenDagger',
+      rowId: 'weapon-row-hiddenDagger',
+      hitId: 'weapon-hit-hiddenDagger',
+      dmgId: 'weapon-dmg-hiddenDagger',
+      dmg: '1d4+2',
+      btnId: 'equip-btn-hiddenDagger',
     },
     {
       key: 'chainShirt',
@@ -1969,11 +1992,12 @@ function loadSheetState() {
 
     if (saved.sheetState) Object.assign(sheetState, saved.sheetState);
     if (!sheetState.equipment || typeof sheetState.equipment !== 'object') {
-      sheetState.equipment = { chainShirt: true, luck: true, judgement: true };
+      sheetState.equipment = { chainShirt: true, luck: true, judgement: true, hiddenDagger: false };
     }
     if (typeof sheetState.equipment.chainShirt !== 'boolean') sheetState.equipment.chainShirt = true;
     if (typeof sheetState.equipment.luck !== 'boolean') sheetState.equipment.luck = true;
     if (typeof sheetState.equipment.judgement !== 'boolean') sheetState.equipment.judgement = true;
+    if (typeof sheetState.equipment.hiddenDagger !== 'boolean') sheetState.equipment.hiddenDagger = false;
     if (!Array.isArray(sheetState.customItems)) sheetState.customItems = [];
 
     if (saved.hp) {
