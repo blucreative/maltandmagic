@@ -686,8 +686,9 @@
     cursor: pointer;
   }
   .sa-banner.active {
-    background: rgba(168,63,78,0.16);
-    border-color: rgba(168,63,78,0.5);
+    background: linear-gradient(90deg, rgba(168,63,78,0.28), rgba(168,63,78,0.12));
+    border-color: rgba(216,93,112,0.72);
+    box-shadow: 0 0 0 1px rgba(216,93,112,0.35), 0 0 18px rgba(168,63,78,0.28);
   }
   .sa-dot {
     width: 8px;
@@ -713,6 +714,56 @@
     color: var(--steel-dim);
   }
   .sa-banner.active .sa-bonus { color: #ecc86a; }
+
+  .sa-ready-pill {
+    display: none;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 10px;
+    letter-spacing: 1.1px;
+    text-transform: uppercase;
+    font-weight: 700;
+    padding: 3px 8px;
+    border-radius: 999px;
+    border: 1px solid rgba(236,120,139,0.62);
+    background: rgba(168,63,78,0.24);
+    color: #ffd6dd;
+    animation: saPulse 1.2s ease-in-out infinite;
+  }
+
+  .sa-banner.active .sa-ready-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .weapon-card.sa-armed {
+    border-color: rgba(216,93,112,0.72);
+    box-shadow: inset 0 0 0 1px rgba(216,93,112,0.35), 0 0 16px rgba(168,63,78,0.24);
+  }
+
+  .weapon-card.sa-armed .weapon-name,
+  .weapon-card.sa-armed .weapon-damage {
+    color: #ffd6dd;
+  }
+
+  .sa-inline-burst {
+    display: none;
+    margin-left: 6px;
+    padding: 2px 7px;
+    border-radius: 999px;
+    border: 1px solid rgba(236,120,139,0.58);
+    background: rgba(168,63,78,0.22);
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.8px;
+    color: #ffd6dd;
+    white-space: nowrap;
+  }
+
+  @keyframes saPulse {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(216,93,112,0.28); }
+    50% { box-shadow: 0 0 0 5px rgba(216,93,112,0.06); }
+  }
 
   /* ===== TOAST ===== */
   .cast-toast {
@@ -1619,6 +1670,7 @@
       <div class="sa-dot" id="saDot"></div>
       <span class="sa-text" id="saLabel">Sneak Attack (1d6)</span>
       <span class="sa-bonus" id="saBonus">Unarmed — arm to show +1d6 on a finesse hit</span>
+      <span class="sa-ready-pill" id="saReadyPill">Ready</span>
     </div>
 
     <!-- WEAPONS -->
@@ -1637,7 +1689,7 @@
               <div class="weapon-hit-label">To Hit</div>
             </div>
             <div class="weapon-damage" id="weapon-dmg-rapier">1d8+3 Piercing</div>
-            <div id="sa-rapier" style="display:none;margin-left:6px;font-family:'Barlow Condensed',sans-serif;font-size:11px;color:var(--crimson);">+1d6</div>
+            <div id="sa-rapier" class="sa-inline-burst">+1d6 Sneak Attack</div>
           </div>
           <div class="adv-toggle-wrap">
             <button class="adv-btn adv" onclick="toggleAdv('rapier','adv',this)">Advantage</button>
@@ -1662,7 +1714,7 @@
               <div class="weapon-hit-label">To Hit</div>
             </div>
             <div class="weapon-damage" id="weapon-dmg-whip">1d4+3 Slashing</div>
-            <div id="sa-whip" style="display:none;margin-left:6px;font-family:'Barlow Condensed',sans-serif;font-size:11px;color:var(--crimson);">+1d6</div>
+            <div id="sa-whip" class="sa-inline-burst">+1d6 Sneak Attack</div>
           </div>
           <div class="adv-toggle-wrap">
             <button class="adv-btn adv" onclick="toggleAdv('whip','adv',this)">Advantage</button>
@@ -2637,6 +2689,11 @@ function applyEquipmentUI() {
       btn.textContent = equipped ? 'Equipped' : 'Equip';
       btn.classList.toggle('equipped', equipped);
     }
+
+    if (card) {
+      const sneakArmed = sheetState.sneakAttack && equipped;
+      card.classList.toggle('sa-armed', sneakArmed);
+    }
   });
 }
 
@@ -2655,6 +2712,7 @@ function applySneakAttackUI() {
   const dot = document.getElementById('saDot');
   const label = document.getElementById('saLabel');
   const bonus = document.getElementById('saBonus');
+  const readyPill = document.getElementById('saReadyPill');
   if (!banner || !dot || !bonus) return;
   const sneakAttackDice = getSneakAttackDice();
   if (label) label.textContent = `Sneak Attack (${sneakAttackDice})`;
@@ -2663,6 +2721,13 @@ function applySneakAttackUI() {
   bonus.textContent = sheetState.sneakAttack
     ? `Armed — +${sneakAttackDice} on your Finesse hit this turn`
     : `Unarmed — arm to show +${sneakAttackDice} on a finesse hit`;
+  if (readyPill) readyPill.textContent = `Ready +${sneakAttackDice}`;
+
+  ['rapier', 'whip'].forEach(weaponKey => {
+    const card = document.getElementById(`weapon-card-${weaponKey}`);
+    const equipped = !!sheetState.equipment?.[weaponKey];
+    if (card) card.classList.toggle('sa-armed', sheetState.sneakAttack && equipped);
+  });
 }
 
 function toggleSneakAttack() {
