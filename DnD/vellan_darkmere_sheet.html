@@ -1005,6 +1005,42 @@
     font-weight: 600;
     color: var(--text-primary);
   }
+  .currency-controls {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+  }
+  .currency-input {
+    width: 52px;
+    padding: 3px 4px;
+    border-radius: 4px;
+    border: 1px solid rgba(44,90,99,0.45);
+    background: rgba(8,22,26,0.75);
+    color: var(--text-primary);
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 13px;
+    text-align: center;
+  }
+  .currency-input:focus {
+    outline: 1px solid rgba(201,162,76,0.55);
+    border-color: rgba(201,162,76,0.55);
+  }
+  .currency-adjust-btn {
+    width: 20px;
+    height: 20px;
+    border-radius: 4px;
+    border: 1px solid rgba(44,90,99,0.45);
+    background: rgba(8,22,26,0.75);
+    color: var(--text-dim);
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 12px;
+    line-height: 1;
+    cursor: pointer;
+  }
+  .currency-adjust-btn:hover {
+    border-color: rgba(201,162,76,0.55);
+    color: var(--gold-light);
+  }
 
   /* ===== PASSIVE SENSES ===== */
   .passive-row {
@@ -2016,11 +2052,11 @@
   </div>
 
   <div class="currency-bar">
-    <div class="currency-item"><div class="currency-coin pp">PP</div><span class="currency-value">0</span></div>
-    <div class="currency-item"><div class="currency-coin gp">GP</div><span class="currency-value">100</span></div>
-    <div class="currency-item"><div class="currency-coin ep">EP</div><span class="currency-value">0</span></div>
-    <div class="currency-item"><div class="currency-coin sp">SP</div><span class="currency-value">0</span></div>
-    <div class="currency-item"><div class="currency-coin cp">CP</div><span class="currency-value">0</span></div>
+    <div class="currency-item"><div class="currency-coin pp">PP</div><div class="currency-controls"><button type="button" class="currency-adjust-btn" onclick="adjustCurrency('pp',-1)">-</button><input id="currency-pp" class="currency-input" type="number" min="0" step="1" inputmode="numeric" value="0" onchange="setCurrencyFromInput('pp', this.value)"><button type="button" class="currency-adjust-btn" onclick="adjustCurrency('pp',1)">+</button></div></div>
+    <div class="currency-item"><div class="currency-coin gp">GP</div><div class="currency-controls"><button type="button" class="currency-adjust-btn" onclick="adjustCurrency('gp',-1)">-</button><input id="currency-gp" class="currency-input" type="number" min="0" step="1" inputmode="numeric" value="100" onchange="setCurrencyFromInput('gp', this.value)"><button type="button" class="currency-adjust-btn" onclick="adjustCurrency('gp',1)">+</button></div></div>
+    <div class="currency-item"><div class="currency-coin ep">EP</div><div class="currency-controls"><button type="button" class="currency-adjust-btn" onclick="adjustCurrency('ep',-1)">-</button><input id="currency-ep" class="currency-input" type="number" min="0" step="1" inputmode="numeric" value="0" onchange="setCurrencyFromInput('ep', this.value)"><button type="button" class="currency-adjust-btn" onclick="adjustCurrency('ep',1)">+</button></div></div>
+    <div class="currency-item"><div class="currency-coin sp">SP</div><div class="currency-controls"><button type="button" class="currency-adjust-btn" onclick="adjustCurrency('sp',-1)">-</button><input id="currency-sp" class="currency-input" type="number" min="0" step="1" inputmode="numeric" value="0" onchange="setCurrencyFromInput('sp', this.value)"><button type="button" class="currency-adjust-btn" onclick="adjustCurrency('sp',1)">+</button></div></div>
+    <div class="currency-item"><div class="currency-coin cp">CP</div><div class="currency-controls"><button type="button" class="currency-adjust-btn" onclick="adjustCurrency('cp',-1)">-</button><input id="currency-cp" class="currency-input" type="number" min="0" step="1" inputmode="numeric" value="0" onchange="setCurrencyFromInput('cp', this.value)"><button type="button" class="currency-adjust-btn" onclick="adjustCurrency('cp',1)">+</button></div></div>
     <div style="margin-left:auto;font-family:'Barlow Condensed',sans-serif;font-size:11px;color:var(--text-dim);">
       Weight: <span style="color:var(--text-secondary);">13 lb</span> /
       Encumbered: <span style="color:var(--text-secondary);">180 lb</span> /
@@ -2393,11 +2429,59 @@ function applyHP(sign) {
 // ===== REACTIVE SHEET STATE =====
 const sheetState = {
   sneakAttack: false,
+  currency: {
+    pp: 0,
+    gp: 100,
+    ep: 0,
+    sp: 0,
+    cp: 0,
+  },
   equipment: {
     rapier: true,
     whip: false,
   },
 };
+
+const DEFAULT_CURRENCY = { pp: 0, gp: 100, ep: 0, sp: 0, cp: 0 };
+
+function sanitizeCurrencyValue(value) {
+  const parsed = parseInt(value, 10);
+  return Number.isFinite(parsed) ? Math.max(0, parsed) : 0;
+}
+
+function ensureCurrencyState() {
+  if (!sheetState.currency || typeof sheetState.currency !== 'object') {
+    sheetState.currency = { ...DEFAULT_CURRENCY };
+    return;
+  }
+  ['pp', 'gp', 'ep', 'sp', 'cp'].forEach(key => {
+    sheetState.currency[key] = sanitizeCurrencyValue(sheetState.currency[key]);
+  });
+}
+
+function applyCurrencyUI() {
+  ensureCurrencyState();
+  ['pp', 'gp', 'ep', 'sp', 'cp'].forEach(key => {
+    const input = document.getElementById(`currency-${key}`);
+    if (input) input.value = String(sheetState.currency[key]);
+  });
+}
+
+function setCurrencyFromInput(coin, rawValue) {
+  ensureCurrencyState();
+  if (!(coin in sheetState.currency)) return;
+  sheetState.currency[coin] = sanitizeCurrencyValue(rawValue);
+  applyCurrencyUI();
+  saveSheetState();
+}
+
+function adjustCurrency(coin, delta) {
+  ensureCurrencyState();
+  if (!(coin in sheetState.currency)) return;
+  sheetState.currency[coin] = Math.max(0, sheetState.currency[coin] + delta);
+  applyCurrencyUI();
+  saveSheetState();
+}
 
 const ROGUE_LEVEL = 2;
 
@@ -2536,6 +2620,7 @@ function loadSheetState() {
   try {
     const raw = localStorage.getItem(SHEET_STORAGE_KEY);
     if (!raw) {
+      applyCurrencyUI();
       applySneakAttackUI();
       refreshDerivedStats();
       applyEquipmentUI();
@@ -2554,6 +2639,7 @@ function loadSheetState() {
     if (saved.sheetState && typeof saved.sheetState === 'object') {
       Object.assign(sheetState, saved.sheetState);
     }
+    ensureCurrencyState();
     if (!sheetState.equipment || typeof sheetState.equipment !== 'object') {
       sheetState.equipment = { rapier: true, whip: false };
     }
@@ -2605,6 +2691,7 @@ function loadSheetState() {
 
     // Sync Sneak Attack banner UI to saved state
     applySneakAttackUI();
+    applyCurrencyUI();
 
     refreshDerivedStats();
     applyEquipmentUI();
@@ -2619,12 +2706,14 @@ function loadSheetState() {
     switchTab(savedTab);
   } catch (err) {
     console.warn('Could not load sheet state:', err);
+    applyCurrencyUI();
     refreshDerivedStats();
     applyEquipmentUI();
     updateHPBar();
     applyConditionEffects();
   }
 
+  applyCurrencyUI();
   renderVellanCustomItems();
 }
 
