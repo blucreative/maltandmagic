@@ -1597,7 +1597,7 @@
           <div class="skill-item"><div class="skill-prof"></div><span class="skill-mod">+2</span><span class="skill-name">Animal Handling</span><span class="skill-attr">WIS</span></div>
           <div class="skill-item"><div class="skill-prof"></div><span class="skill-mod">−1</span><span class="skill-name">Arcana</span><span class="skill-attr">INT</span></div>
           <div class="skill-item"><div class="skill-prof proficient"></div><span class="skill-mod">+3</span><span class="skill-name">Athletics</span><span class="skill-attr">STR</span></div>
-          <div class="skill-item"><div class="skill-prof proficient"></div><span class="skill-mod">+4</span><span class="skill-name">Deception</span><span class="skill-attr">CHA</span></div>
+          <div class="skill-item"><div class="skill-prof expertise"></div><span class="skill-mod">+6</span><span class="skill-name">Deception</span><span class="skill-attr">CHA</span></div>
           <div class="skill-item"><div class="skill-prof"></div><span class="skill-mod">−1</span><span class="skill-name">History</span><span class="skill-attr">INT</span></div>
           <div class="skill-item"><div class="skill-prof"></div><span class="skill-mod">+2</span><span class="skill-name">Insight</span><span class="skill-attr">WIS</span></div>
           <div class="skill-item"><div class="skill-prof"></div><span class="skill-mod">+2</span><span class="skill-name">Intimidation</span><span class="skill-attr">CHA</span></div>
@@ -1894,7 +1894,7 @@
           <span class="feature-name">Expertise</span>
           <span class="feature-source">Rogue</span>
         </div>
-        <div class="feature-summary">Double proficiency in two skills. Persuasion (+6) marked. Second Expertise skill unconfirmed — check with player.</div>
+        <div class="feature-summary">Double proficiency in Deception (+6) and Persuasion (+6).</div>
       </div>
 
       <div class="feature-card" data-tooltip="feat-sneak-attack">
@@ -2195,8 +2195,8 @@
           <div class="lore-text">Subclass chosen at level 3 (none yet). Chaotic Evil in a party warrants a Session Zero conversation. Stealth is unproficient despite the class — likely an oversight to confirm.</div>
         </div>
         <div class="lore-section" style="margin-bottom:0;">
-          <div class="lore-label">Second Expertise</div>
-          <div class="lore-text">Rogue grants two Expertise skills; only Persuasion is clearly marked on the export. Confirm the second with the player.</div>
+          <div class="lore-label">Expertise</div>
+          <div class="lore-text">Vellan doubles his Proficiency Bonus for Deception and Persuasion checks; both are +6.</div>
         </div>
       </div>
     </div>
@@ -2264,7 +2264,7 @@ const TOOLTIPS = {
 
   // ROGUE FEATURES
   "feat-core-rogue": { name: "Core Rogue Traits", type: "Rogue Feature (PHB-2024 p.129)", body: "The Rogue's baseline package: proficiency with Light armour, Simple weapons plus a handful of Martial weapons, Thieves' Tools, and saves in Dexterity and Intelligence.", stats: {"Hit Die":"d8","Saves":"DEX, INT","Key Ability":"DEX"} },
-  "feat-expertise": { name: "Expertise", type: "Rogue Feature (PHB-2024 p.129)", body: "Choose two skill proficiencies; your Proficiency Bonus is doubled for checks with them. Vellan's Persuasion is +6 (CHA 2 + doubled Prof 4). The second Expertise skill isn't clearly marked on the export — confirm with the player." },
+  "feat-expertise": { name: "Expertise", type: "Rogue Feature (PHB-2024 p.129)", body: "Choose two skill proficiencies; your Proficiency Bonus is doubled for checks with them. Vellan's Deception and Persuasion are both +6 (CHA 2 + doubled Prof 4)." },
   "feat-sneak-attack": { name: "Sneak Attack (1d6)", type: "Rogue Feature (PHB-2024 p.129)", body: "Once per turn, deal an extra 1d6 damage to one creature you hit with an attack if you have Advantage on the roll, using a Finesse or Ranged weapon. You don't need Advantage if another enemy of the target is within 5 ft. of it, that enemy isn't Incapacitated, and you don't have Disadvantage. At Rogue 2 the die is 1d6.", stats: {"Extra Damage":"1d6","Frequency":"Once per turn","Weapons":"Finesse or Ranged"} },
   "feat-cunning-action": { name: "Cunning Action", type: "Rogue Feature (PHB-2024 p.130)", body: "Your quick thinking lets you act fast. As a Bonus Action, you can take the Dash, Disengage, or Hide action.", stats: {"Action":"Bonus Action","Options":"Dash · Disengage · Hide"} },
   "feat-thieves-cant": { name: "Thieves' Cant", type: "Rogue Feature (PHB-2024 p.129)", body: "You know Thieves' Cant, a secret mix of dialect, jargon, and code that lets you hide messages in seemingly normal conversation. You also learn one additional language of your choice." },
