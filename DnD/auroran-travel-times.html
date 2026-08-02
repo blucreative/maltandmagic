@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Roads of the Auroran Empire — Travel Times</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --deep: #091218;
+    --surface: #0f1e28;
+    --raised: #162636;
+    --border: #25404c;
+    --border-light: #376171;
+    --teal: #54bda8;
+    --teal-dim: #286f62;
+    --gold: #c9a84c;
+    --gold-bright: #edcf7c;
+    --cream: #d5dfda;
+    --muted: #88a09a;
+    --road: #bf8d4f;
+    --river: #5f9db5;
+    --sea: #55aaa3;
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    margin: 0;
+    min-height: 100vh;
+    background: linear-gradient(rgba(9,18,24,0.94), rgba(9,18,24,0.98)), url('The%20Auroran%20Empire%206K.jpg') center 18% / cover fixed;
+    color: var(--cream);
+    font-family: 'EB Garamond', Georgia, serif;
+    font-size: 17px;
+    line-height: 1.65;
+  }
+
+  a { color: inherit; }
+
+  .shell {
+    width: min(1120px, calc(100% - 40px));
+    margin: 0 auto;
+    padding: 20px 0 80px;
+  }
+
+  .back-link {
+    display: inline-flex;
+    align-items: center;
+    min-height: 40px;
+    padding: 8px 12px;
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 3px;
+    color: #c4c9c3;
+    font-family: 'Cinzel', serif;
+    font-size: 10px;
+    letter-spacing: 1.5px;
+    text-decoration: none;
+    text-transform: uppercase;
+  }
+
+  .back-link:hover,
+  .back-link:focus-visible { border-color: var(--teal); color: #fff; }
+
+  .hero {
+    min-height: 430px;
+    margin: 18px 0 48px;
+    padding: clamp(32px, 7vw, 74px);
+    display: flex;
+    align-items: end;
+    position: relative;
+    overflow: hidden;
+    border: 1px solid var(--border-light);
+    border-radius: 4px;
+    background: linear-gradient(180deg, rgba(5,14,18,0.08) 5%, rgba(5,14,18,0.92) 88%), url('The%20Auroran%20Empire%206K.jpg') center 54% / cover;
+    box-shadow: 0 30px 80px rgba(0,0,0,0.34);
+  }
+
+  .hero::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border: 1px solid rgba(232,200,118,0.18);
+    pointer-events: none;
+  }
+
+  .hero-copy { position: relative; z-index: 1; max-width: 720px; }
+
+  .eyebrow,
+  .section-label,
+  .route-mode,
+  .note-label {
+    color: var(--teal);
+    font-family: 'Cinzel', serif;
+    font-size: 10px;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+  }
+
+  h1 {
+    margin: 10px 0 12px;
+    color: var(--gold-bright);
+    font-family: 'Cinzel', serif;
+    font-size: clamp(34px, 6vw, 66px);
+    font-weight: 700;
+    line-height: 1.05;
+    text-shadow: 0 3px 24px rgba(0,0,0,0.8);
+  }
+
+  .hero p { max-width: 620px; margin: 0; color: #edf1ed; font-size: 18px; font-style: italic; }
+
+  .intro-grid {
+    display: grid;
+    grid-template-columns: 1.2fr 0.8fr;
+    gap: 18px;
+    margin-bottom: 48px;
+  }
+
+  .panel,
+  .route-card { border: 1px solid var(--border); border-radius: 4px; background: rgba(15,30,40,0.9); }
+  .panel { padding: 24px; }
+  .panel p { margin: 8px 0 0; color: #b9c8c2; }
+
+  .pace-list {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    margin-top: 16px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    background: var(--border);
+  }
+
+  .pace { min-width: 0; padding: 14px; background: var(--raised); }
+  .pace strong { display: block; color: var(--gold-bright); font-family: 'Cinzel', serif; font-size: 12px; }
+  .pace span { color: var(--muted); font-size: 14px; }
+
+  .section-heading { display: flex; align-items: center; gap: 16px; margin: 0 0 20px; }
+  .section-heading h2 { margin: 0; color: var(--gold); font-family: 'Cinzel', serif; font-size: 13px; letter-spacing: 2.5px; text-transform: uppercase; }
+  .section-heading::after { content: ''; height: 1px; flex: 1; background: linear-gradient(90deg, var(--border-light), transparent); }
+
+  .table-wrap {
+    margin-bottom: 48px;
+    overflow-x: auto;
+    border: 1px solid var(--border-light);
+    border-radius: 4px;
+    background: rgba(10,24,31,0.94);
+  }
+
+  table { width: 100%; min-width: 860px; border-collapse: collapse; font-variant-numeric: tabular-nums; }
+  th, td { padding: 14px 12px; border-right: 1px solid var(--border); border-bottom: 1px solid var(--border); text-align: center; }
+  tr:last-child td, tr:last-child th { border-bottom: 0; }
+  th:last-child, td:last-child { border-right: 0; }
+
+  thead th { background: #142a34; color: var(--gold-bright); font-family: 'Cinzel', serif; font-size: 10px; letter-spacing: 1px; text-transform: uppercase; }
+  tbody th { position: sticky; left: 0; z-index: 1; background: #12252f; color: var(--gold-bright); font-family: 'Cinzel', serif; font-size: 11px; text-align: left; white-space: nowrap; }
+  td { color: #d8e4df; font-size: 16px; }
+  td.same { color: #526b69; }
+  td.special { color: #83c9c1; }
+  .table-note { margin: 0; padding: 14px 18px; border-top: 1px solid var(--border); color: var(--muted); font-size: 14px; font-style: italic; }
+
+  .route-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; margin-bottom: 48px; }
+  .route-card { padding: 22px; border-top: 3px solid var(--road); }
+  .route-card.river { border-top-color: var(--river); }
+  .route-card.sea { border-top-color: var(--sea); }
+  .route-card h3 { margin: 5px 0 8px; color: var(--gold-bright); font-family: 'Cinzel', serif; font-size: 17px; }
+  .route-card p { margin: 0; color: #aebfba; font-size: 15px; }
+  .route-time { margin-top: 14px; color: #e8efe9; font-family: 'Cinzel', serif; font-size: 11px; letter-spacing: 1px; }
+
+  .season-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+  .season { padding: 18px; border-left: 2px solid var(--teal-dim); background: rgba(22,38,54,0.72); }
+  .season strong { display: block; margin-bottom: 5px; color: var(--gold-bright); font-family: 'Cinzel', serif; font-size: 12px; }
+  .season span { color: #9db0aa; font-size: 14px; }
+
+  .planner {
+    margin-bottom: 48px;
+    padding: 24px;
+    border: 1px solid var(--border-light);
+    border-radius: 4px;
+    background: rgba(10,24,31,0.94);
+  }
+
+  .planner-controls {
+    display: grid;
+    grid-template-columns: 1fr 44px 1fr;
+    gap: 12px;
+    align-items: end;
+  }
+
+  .planner-field label {
+    display: block;
+    margin-bottom: 6px;
+    color: var(--teal);
+    font-family: 'Cinzel', serif;
+    font-size: 9px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+
+  .planner-field select,
+  .swap-button {
+    width: 100%;
+    height: 44px;
+    border: 1px solid var(--border-light);
+    border-radius: 3px;
+    background: var(--raised);
+    color: var(--cream);
+    font: inherit;
+  }
+
+  .planner-field select { padding: 0 38px 0 12px; cursor: pointer; }
+
+  .swap-button {
+    padding: 0;
+    color: var(--gold-bright);
+    font-size: 20px;
+    cursor: pointer;
+  }
+
+  .planner-field select:focus-visible,
+  .swap-button:focus-visible,
+  .leg-link:focus-visible {
+    outline: 2px solid var(--teal);
+    outline-offset: 2px;
+  }
+
+  .journey-result {
+    min-height: 112px;
+    margin-top: 18px;
+    padding: 18px;
+    border-left: 3px solid var(--gold);
+    background: var(--raised);
+  }
+
+  .journey-summary {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 8px 20px;
+  }
+
+  .journey-summary strong {
+    color: var(--gold-bright);
+    font-family: 'Cinzel', serif;
+    font-size: 16px;
+  }
+
+  .journey-total {
+    color: var(--teal);
+    font-family: 'Cinzel', serif;
+    font-size: 13px;
+    letter-spacing: 1px;
+  }
+
+  .journey-path { margin: 12px 0 0; color: #c3d0ca; }
+  .journey-path span { color: var(--muted); }
+
+  .directory-intro { margin: -8px 0 18px; color: var(--muted); font-size: 15px; }
+  .directory { display: grid; gap: 12px; margin-bottom: 48px; }
+
+  .region-routes {
+    overflow: hidden;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    background: rgba(15,30,40,0.9);
+  }
+
+  .region-routes summary {
+    padding: 15px 18px;
+    cursor: pointer;
+    color: var(--gold-bright);
+    font-family: 'Cinzel', serif;
+    font-size: 12px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+  }
+
+  .region-routes summary::marker { color: var(--teal); }
+
+  .city-leg-row {
+    display: grid;
+    grid-template-columns: minmax(130px, 0.28fr) 1fr;
+    gap: 14px;
+    padding: 13px 18px;
+    border-top: 1px solid var(--border);
+  }
+
+  .city-leg-name {
+    color: var(--gold-bright);
+    font-family: 'Cinzel', serif;
+    font-size: 11px;
+  }
+
+  .city-legs { display: flex; flex-wrap: wrap; gap: 7px; }
+
+  .leg-link {
+    padding: 5px 8px;
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    background: transparent;
+    color: #b9c8c2;
+    font: inherit;
+    font-size: 14px;
+    cursor: pointer;
+  }
+
+  .leg-link:hover { border-color: var(--teal-dim); color: #fff; background: rgba(84,189,168,0.08); }
+  .leg-link span { color: var(--teal); }
+
+  footer { margin-top: 54px; padding-top: 20px; border-top: 1px solid var(--border); color: var(--muted); font-family: 'Cinzel', serif; font-size: 9px; letter-spacing: 2px; text-align: center; text-transform: uppercase; }
+
+  @media (max-width: 760px) {
+    .shell { width: min(100% - 24px, 1120px); padding-top: 12px; }
+    .hero { min-height: 390px; margin-top: 12px; padding: 28px 22px; background-position: 47% 54%; }
+    .hero p { font-size: 16px; }
+    .intro-grid, .route-grid { grid-template-columns: 1fr; }
+    .pace-list { grid-template-columns: 1fr; }
+    .season-grid { grid-template-columns: repeat(2, 1fr); }
+    .planner { padding: 18px; }
+    .planner-controls { grid-template-columns: 1fr 44px; }
+    .planner-field:last-child { grid-column: 1 / -1; }
+    .city-leg-row { grid-template-columns: 1fr; gap: 8px; }
+  }
+
+  @media (max-width: 430px) {
+    .season-grid { grid-template-columns: 1fr; }
+    .panel, .route-card { padding: 18px; }
+    .planner-controls { grid-template-columns: 1fr; }
+    .swap-button { width: 44px; }
+    .planner-field:last-child { grid-column: auto; }
+  }
+</style>
+</head>
+<body>
+<main class="shell">
+  <a class="back-link" href="player-location-guide.html">&larr; Traveller's Guide</a>
+
+  <header class="hero">
+    <div class="hero-copy">
+      <div class="eyebrow">An Imperial Wayfarer's Reckoning</div>
+      <h1>Roads of Aurora</h1>
+      <p>Expected journey times between every city of the Empire, as measured by a sensible traveller with sound boots, a serviceable cart, and no urgent reason to arrive early.</p>
+    </div>
+  </header>
+
+  <section class="intro-grid" aria-label="How to read the travel estimates">
+    <div class="panel">
+      <div class="section-label">The Imperial Standard</div>
+      <p>The figures below assume eight hours of travel each day, established roads where they exist, ordinary weather, and nightly stops. They include routine ferries, toll gates, meals, and the small delays that turn a distance on a map into a journey through the Empire.</p>
+      <div class="pace-list">
+        <div class="pace"><strong>On Foot</strong><span>Use the listed time</span></div>
+        <div class="pace"><strong>Mounted</strong><span>Reduce by roughly one third</span></div>
+        <div class="pace"><strong>Relay Post</strong><span>Reduce by roughly one half</span></div>
+      </div>
+    </div>
+    <aside class="panel">
+      <div class="note-label">A Necessary Caution</div>
+      <p>These are planning estimates, not promises. Fen floods, mountain closures, military traffic, contrary winds, and an especially thorough magistrate can each add a day. Beyond Thornwall, the Imperial reckoning ends.</p>
+    </aside>
+  </section>
+
+  <section aria-labelledby="planner-title">
+    <div class="section-heading"><h2 id="planner-title">Plan a Journey</h2></div>
+    <div class="planner">
+      <div class="planner-controls">
+        <div class="planner-field"><label for="journeyFrom">From</label><select id="journeyFrom"></select></div>
+        <button class="swap-button" id="swapJourney" type="button" aria-label="Swap origin and destination" title="Swap origin and destination">⇄</button>
+        <div class="planner-field"><label for="journeyTo">To</label><select id="journeyTo"></select></div>
+      </div>
+      <div class="journey-result" id="journeyResult" aria-live="polite"></div>
+    </div>
+  </section>
+
+  <section aria-labelledby="directory-title">
+    <div class="section-heading"><h2 id="directory-title">Every City &amp; Its Neighbours</h2></div>
+    <p class="directory-intro">Each entry lists the next city reached by a recognised road, river passage, or scheduled coastal service. Select a leg to place it in the journey planner.</p>
+    <div class="directory" id="routeDirectory"></div>
+  </section>
+
+  <section aria-labelledby="routes-title">
+    <div class="section-heading"><h2 id="routes-title">The Great Routes</h2></div>
+    <div class="route-grid">
+      <article class="route-card"><div class="route-mode">Fen Road · Heartfen</div><h3>Shimmerfen to Hollowhearth</h3><p>The best-maintained road in the north runs south from the capital on raised stone, passing Reedmere before turning toward the Codex Halls. Floodwater may cover the fen, but it rarely covers the road.</p><div class="route-time">3 days · 2 days mounted</div></article>
+      <article class="route-card"><div class="route-mode">Imperial Road · Pass Crossing</div><h3>Shimmerfen to Vareth</h3><p>The eastern road passes Dunmore, climbs to Ironpass, and crosses the Pass of Dernavar before descending toward the Varethi coast. The pass is the journey: in winter, its condition decides the timetable.</p><div class="route-time">11 days · add 2–4 days in winter</div></article>
+      <article class="route-card"><div class="route-mode">North–South Artery · Grandbelt</div><h3>Shimmerfen to Cindral</h3><p>Travellers leave the fen through Ferngate, skirt the Aldwood, and emerge onto the open grain roads near Millhaven. South of the forest the road is broad, exposed, and busy with military and harvest traffic.</p><div class="route-time">8 days · 5 days by relay post</div></article>
+      <article class="route-card river"><div class="route-mode">The Maren · River Passage</div><h3>Cindral to Marenfall</h3><p>Grain barges follow the Maren west through Tolmen to the Ocean of Conflux. Passage downstream is quick and plentiful; the return depends on towpaths, sail, and the river's seasonal temper.</p><div class="route-time">4 days downstream · 6 days upriver</div></article>
+      <article class="route-card"><div class="route-mode">Southern Road · Frontier</div><h3>Cindral to Thornwall</h3><p>The road narrows beyond Stockend, where cultivated plains give way to the Ashfringe. Waymark and Ashford divide the long southern run into manageable stages before the volcanic ridge fills the horizon.</p><div class="route-time">7 days · reliable outside ash storms</div></article>
+      <article class="route-card sea"><div class="route-mode">Ocean of Ophidra · Sea Passage</div><h3>Vareth to Velara</h3><p>Regular packets sail south along the Varethi coast before crossing to Corsala. A direct captain can make the passage swiftly; most scheduled ships call at one coastal harbour before reaching Velara.</p><div class="route-time">4 days · 3 with favourable winds</div></article>
+    </div>
+  </section>
+
+  <section aria-labelledby="season-title">
+    <div class="section-heading"><h2 id="season-title">Seasonal Reckoning</h2></div>
+    <div class="season-grid">
+      <div class="season"><strong>Spring</strong><span>Fen floods and swollen rivers add one day to northern road journeys.</span></div>
+      <div class="season"><strong>Summer</strong><span>Fast roads, low rivers, and punishing Grandbelt heat. Start before dawn.</span></div>
+      <div class="season"><strong>Autumn</strong><span>Harvest traffic adds a day around Cindral, Tolmen, and the main grain roads.</span></div>
+      <div class="season"><strong>Winter</strong><span>The Pass of Dernavar may add two to four days or close without notice.</span></div>
+    </div>
+  </section>
+
+  <footer>Roads of the Auroran Empire · Traveller's Reckoning · Player Document</footer>
+</main>
+<script>
+  const regions = {
+    'The Heartfen': ['Shimmerfen', 'Hollowhearth', 'Duskport', 'Coldhaven', 'Reedmere', 'Greywood', 'Ferngate', "Shimmer's Edge", 'Dunmore', 'Brackwater'],
+    'The Varethi Reach': ['Vareth', 'Salcova', 'Whitecliff', 'Verano', 'Harrowmouth', 'Breakwater', 'Crestwater', 'Dawnshore'],
+    'The Ironspine': ['Ironpass', 'Stonekneid', 'Coppergate', 'Deepholm'],
+    'The Grandbelt': ['Cindral', 'Millhaven', 'Goldfield', 'Dryford', 'Stockend', 'Redwater', 'Sojourn', 'Cornstead', 'Tolmen', 'Marenfall', 'Greywatch'],
+    'The Ashfringe': ['Thornwall', 'Ashford', "Cinder's Rest", 'Waymark'],
+    'Corsala': ['Velara', 'Tormessa', 'Alvenor']
+  };
+
+  const routes = [
+    ['Coldhaven', 'Brackwater', 2, 'Fen Road'], ['Brackwater', 'Shimmerfen', 2, 'Fen Road'], ['Coldhaven', 'Duskport', 4, 'Coast Road'],
+    ['Duskport', 'Shimmerfen', 2, 'Fen Road'], ['Duskport', "Shimmer's Edge", 3, 'Coast Road'], ['Shimmerfen', 'Reedmere', 2, 'Fen Road'],
+    ['Reedmere', 'Hollowhearth', 1, 'Fen Road'], ['Shimmerfen', 'Dunmore', 2, 'Imperial Road'], ['Reedmere', 'Dunmore', 2, 'Fen Road'],
+    ['Hollowhearth', "Shimmer's Edge", 2, 'Forest Road'], ['Hollowhearth', 'Greywood', 2, 'Aldwood Road'], ['Hollowhearth', 'Ferngate', 1, 'Imperial Road'],
+    ['Greywood', 'Ferngate', 1, 'Forest Road'], ['Dunmore', 'Ironpass', 2, 'Dernavar Road'], ['Ferngate', 'Millhaven', 1, 'Imperial Road'],
+    ["Shimmer's Edge", 'Whitecliff', 2, 'Coast Road'], ['Ironpass', 'Salcova', 3, 'Dernavar Road'], ['Ironpass', 'Verano', 2, 'Mountain Road'],
+    ['Salcova', 'Verano', 2, 'Coast Road'], ['Verano', 'Whitecliff', 1, 'Tessil Road'], ['Whitecliff', 'Breakwater', 2, 'Coast Road'],
+    ['Breakwater', 'Vareth', 2, 'Coast Road'], ['Breakwater', 'Greywatch', 2, 'Coastal Packet'], ['Vareth', 'Harrowmouth', 3, 'Coast Road'],
+    ['Vareth', 'Crestwater', 3, 'Coast Road'], ['Crestwater', 'Dawnshore', 2, 'Coast Road'], ['Dawnshore', 'Harrowmouth', 3, 'Coastal Packet'],
+    ['Vareth', 'Marenfall', 3, 'Coastal Packet'], ['Vareth', 'Velara', 4, 'Sea Passage'], ['Crestwater', 'Velara', 3, 'Sea Passage'],
+    ['Harrowmouth', 'Velara', 3, 'Sea Passage'], ['Ironpass', 'Stonekneid', 3, 'Highland Road'], ['Stonekneid', 'Coppergate', 3, 'Highland Road'],
+    ['Stonekneid', 'Deepholm', 4, 'Deep Road'], ['Coppergate', 'Millhaven', 2, 'Pass Road'], ['Coppergate', 'Cornstead', 3, 'Grandbelt Road'],
+    ['Deepholm', 'Goldfield', 3, 'Mountain Road'], ['Deepholm', 'Redwater', 3, 'Mountain Road'], ['Millhaven', 'Cornstead', 1, 'Grain Road'],
+    ['Cornstead', 'Cindral', 2, 'Grain Road'], ['Cindral', 'Dryford', 2, 'Davan Road'], ['Cindral', 'Tolmen', 2, 'Maren Passage', 3],
+    ['Tolmen', 'Marenfall', 2, 'Maren Passage', 3], ['Cindral', 'Goldfield', 3, 'Grandbelt Road'], ['Goldfield', 'Dryford', 2, 'Grandbelt Road'],
+    ['Dryford', 'Redwater', 2, 'Davan Road'], ['Redwater', 'Stockend', 2, 'Sorn Road'], ['Cindral', 'Sojourn', 2, 'South Road'],
+    ['Sojourn', 'Waymark', 1, 'South Road'], ['Sojourn', 'Stockend', 2, 'Stock Road'], ['Waymark', 'Stockend', 2, 'Ashfringe Road'],
+    ['Greywatch', 'Tolmen', 3, 'Western Road'], ['Greywatch', 'Marenfall', 2, 'Coast Road'], ['Waymark', 'Ashford', 1, 'South Road'],
+    ['Stockend', 'Ashford', 2, 'Ashfringe Road'], ['Ashford', 'Thornwall', 3, 'Rampart Road'], ['Thornwall', "Cinder's Rest", 3, 'Ridge Road'],
+    ["Cinder's Rest", 'Ashford', 3, 'Ridge Road'], ['Velara', 'Tormessa', 1, 'Island Road'], ['Tormessa', 'Alvenor', 1, 'Island Road'],
+    ['Velara', 'Alvenor', 2, 'Island Road']
+  ];
+
+  const cityNames = Object.values(regions).flat();
+  const graph = new Map(cityNames.map(city => [city, []]));
+
+  routes.forEach(([from, to, outwardDays, mode, returnDays = outwardDays]) => {
+    graph.get(from).push({ city: to, days: outwardDays, mode });
+    graph.get(to).push({ city: from, days: returnDays, mode });
+  });
+
+  const fromSelect = document.getElementById('journeyFrom');
+  const toSelect = document.getElementById('journeyTo');
+  const journeyResult = document.getElementById('journeyResult');
+
+  function fillSelect(select) {
+    Object.entries(regions).forEach(([region, cities]) => {
+      const group = document.createElement('optgroup');
+      group.label = region;
+      cities.forEach(city => group.append(new Option(city, city)));
+      select.append(group);
+    });
+  }
+
+  function shortestJourney(start, destination) {
+    const distances = new Map(cityNames.map(city => [city, Infinity]));
+    const previous = new Map();
+    const unvisited = new Set(cityNames);
+    distances.set(start, 0);
+
+    while (unvisited.size) {
+      const current = [...unvisited].reduce((best, city) => distances.get(city) < distances.get(best) ? city : best);
+      if (current === destination || distances.get(current) === Infinity) break;
+      unvisited.delete(current);
+
+      graph.get(current).forEach(leg => {
+        if (!unvisited.has(leg.city)) return;
+        const distance = distances.get(current) + leg.days;
+        if (distance < distances.get(leg.city)) {
+          distances.set(leg.city, distance);
+          previous.set(leg.city, { city: current, leg });
+        }
+      });
+    }
+
+    const steps = [];
+    let city = destination;
+    while (city !== start && previous.has(city)) {
+      const entry = previous.get(city);
+      steps.unshift({ from: entry.city, to: city, ...entry.leg });
+      city = entry.city;
+    }
+    return { days: distances.get(destination), steps };
+  }
+
+  function renderJourney() {
+    const start = fromSelect.value;
+    const destination = toSelect.value;
+    if (start === destination) {
+      journeyResult.innerHTML = `<div class="journey-summary"><strong>${start}</strong><span class="journey-total">Already there</span></div><p class="journey-path">Choose another destination to plan a route.</p>`;
+      return;
+    }
+
+    const journey = shortestJourney(start, destination);
+    const path = journey.steps.map(step => `${step.from} <span>→ ${step.to} · ${step.days} ${step.days === 1 ? 'day' : 'days'} by ${step.mode}</span>`).join('<br>');
+    const legLabel = journey.steps.length === 1 ? 'leg' : 'legs';
+    journeyResult.innerHTML = `<div class="journey-summary"><strong>${start} to ${destination}</strong><span class="journey-total">${journey.days} days · ${journey.steps.length} ${legLabel}</span></div><p class="journey-path">${path}</p>`;
+  }
+
+  function renderDirectory() {
+    const directory = document.getElementById('routeDirectory');
+    Object.entries(regions).forEach(([region, cities]) => {
+      const details = document.createElement('details');
+      details.className = 'region-routes';
+      details.open = true;
+      details.innerHTML = `<summary>${region} · ${cities.length} cities</summary>`;
+
+      cities.forEach(city => {
+        const row = document.createElement('div');
+        row.className = 'city-leg-row';
+        const legs = [...graph.get(city)].sort((a, b) => a.days - b.days || a.city.localeCompare(b.city));
+        row.innerHTML = `<div class="city-leg-name">${city}</div><div class="city-legs"></div>`;
+        const legList = row.querySelector('.city-legs');
+        legs.forEach(leg => {
+          const button = document.createElement('button');
+          button.className = 'leg-link';
+          button.type = 'button';
+          button.innerHTML = `${leg.city} <span>· ${leg.days}d</span>`;
+          button.title = `${city} to ${leg.city} by ${leg.mode}`;
+          button.addEventListener('click', () => {
+            fromSelect.value = city;
+            toSelect.value = leg.city;
+            renderJourney();
+            document.getElementById('planner-title').scrollIntoView({ behavior: 'smooth', block: 'start' });
+          });
+          legList.append(button);
+        });
+        details.append(row);
+      });
+      directory.append(details);
+    });
+  }
+
+  fillSelect(fromSelect);
+  fillSelect(toSelect);
+  fromSelect.value = 'Shimmerfen';
+  toSelect.value = 'Thornwall';
+  fromSelect.addEventListener('change', renderJourney);
+  toSelect.addEventListener('change', renderJourney);
+  document.getElementById('swapJourney').addEventListener('click', () => {
+    [fromSelect.value, toSelect.value] = [toSelect.value, fromSelect.value];
+    renderJourney();
+  });
+  renderDirectory();
+  renderJourney();
+</script>
+</body>
+</html>
