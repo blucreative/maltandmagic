@@ -310,6 +310,7 @@
 
   .leg-link:hover { border-color: var(--teal-dim); color: #fff; background: rgba(84,189,168,0.08); }
   .leg-link span { color: var(--teal); }
+  .leg-link .sea-mark { color: var(--gold); font-size: 11px; text-transform: uppercase; }
 
   footer { margin-top: 54px; padding-top: 20px; border-top: 1px solid var(--border); color: var(--muted); font-family: 'Cinzel', serif; font-size: 9px; letter-spacing: 2px; text-align: center; text-transform: uppercase; }
 
@@ -343,23 +344,23 @@
     <div class="hero-copy">
       <div class="eyebrow">An Imperial Wayfarer's Reckoning</div>
       <h1>Roads of Aurora</h1>
-      <p>Expected journey times between every city of the Empire, as measured by a sensible traveller with sound boots, a serviceable cart, and no urgent reason to arrive early.</p>
+      <p>Map-scaled journey estimates between every city of the Empire, calculated for travellers moving at a normal overland pace.</p>
     </div>
   </header>
 
   <section class="intro-grid" aria-label="How to read the travel estimates">
     <div class="panel">
-      <div class="section-label">The Imperial Standard</div>
-      <p>The figures below assume eight hours of travel each day, established roads where they exist, ordinary weather, and nightly stops. They include routine ferries, toll gates, meals, and the small delays that turn a distance on a map into a journey through the Empire.</p>
+      <div class="section-label">How Distances Are Reckoned</div>
+      <p>Each estimate measures the direct map distance, then adds a 15% route factor for bends, roads, river crossings, and local geography. Normal travel covers 24 miles each day; round the result in play rather than treating it as a survey.</p>
       <div class="pace-list">
-        <div class="pace"><strong>On Foot</strong><span>Use the listed time</span></div>
-        <div class="pace"><strong>Mounted</strong><span>Reduce by roughly one third</span></div>
-        <div class="pace"><strong>Relay Post</strong><span>Reduce by roughly one half</span></div>
+        <div class="pace"><strong>Slow · 18 mi/day</strong><span>Harsh terrain or poor weather</span></div>
+        <div class="pace"><strong>Normal · 24 mi/day</strong><span>All listed day counts</span></div>
+        <div class="pace"><strong>Fast · 30 mi/day</strong><span>Suitable terrain and good roads</span></div>
       </div>
     </div>
     <aside class="panel">
-      <div class="note-label">A Necessary Caution</div>
-      <p>These are planning estimates, not promises. Fen floods, mountain closures, military traffic, contrary winds, and an especially thorough magistrate can each add a day. Beyond Thornwall, the Imperial reckoning ends.</p>
+      <div class="note-label">Sea Crossings</div>
+      <p>Routes to Corsala or Whitecliff cross open water. Their mileage is useful for scale, but the overland day count does not apply. Passage time depends on the vessel, weather, and departure schedule.</p>
     </aside>
   </section>
 
@@ -377,30 +378,8 @@
 
   <section aria-labelledby="directory-title">
     <div class="section-heading"><h2 id="directory-title">Every City &amp; Its Neighbours</h2></div>
-    <p class="directory-intro">Each entry lists the next city reached by a recognised road, river passage, or scheduled coastal service. Select a leg to place it in the journey planner.</p>
+    <p class="directory-intro">Each entry lists the six closest mapped settlements at normal pace. Select one to place that leg in the journey planner. Sea entries are distance guides only.</p>
     <div class="directory" id="routeDirectory"></div>
-  </section>
-
-  <section aria-labelledby="routes-title">
-    <div class="section-heading"><h2 id="routes-title">The Great Routes</h2></div>
-    <div class="route-grid">
-      <article class="route-card"><div class="route-mode">Fen Road · Heartfen</div><h3>Shimmerfen to Hollowhearth</h3><p>The best-maintained road in the north runs south from the capital on raised stone, passing Reedmere before turning toward the Codex Halls. Floodwater may cover the fen, but it rarely covers the road.</p><div class="route-time">3 days · 2 days mounted</div></article>
-      <article class="route-card"><div class="route-mode">Imperial Road · Pass Crossing</div><h3>Shimmerfen to Vareth</h3><p>The eastern road passes Dunmore, climbs to Ironpass, and crosses the Pass of Dernavar before descending toward the Varethi coast. The pass is the journey: in winter, its condition decides the timetable.</p><div class="route-time">11 days · add 2–4 days in winter</div></article>
-      <article class="route-card"><div class="route-mode">North–South Artery · Grandbelt</div><h3>Shimmerfen to Cindral</h3><p>Travellers leave the fen through Ferngate, skirt the Aldwood, and emerge onto the open grain roads near Millhaven. South of the forest the road is broad, exposed, and busy with military and harvest traffic.</p><div class="route-time">8 days · 5 days by relay post</div></article>
-      <article class="route-card river"><div class="route-mode">The Maren · River Passage</div><h3>Cindral to Marenfall</h3><p>Grain barges follow the Maren west through Tolmen to the Ocean of Conflux. Passage downstream is quick and plentiful; the return depends on towpaths, sail, and the river's seasonal temper.</p><div class="route-time">4 days downstream · 6 days upriver</div></article>
-      <article class="route-card"><div class="route-mode">Southern Road · Frontier</div><h3>Cindral to Thornwall</h3><p>The road narrows beyond Stockend, where cultivated plains give way to the Ashfringe. Waymark and Ashford divide the long southern run into manageable stages before the volcanic ridge fills the horizon.</p><div class="route-time">7 days · reliable outside ash storms</div></article>
-      <article class="route-card sea"><div class="route-mode">Ocean of Ophidra · Sea Passage</div><h3>Vareth to Velara</h3><p>Regular packets sail south along the Varethi coast before crossing to Corsala. A direct captain can make the passage swiftly; most scheduled ships call at one coastal harbour before reaching Velara.</p><div class="route-time">4 days · 3 with favourable winds</div></article>
-    </div>
-  </section>
-
-  <section aria-labelledby="season-title">
-    <div class="section-heading"><h2 id="season-title">Seasonal Reckoning</h2></div>
-    <div class="season-grid">
-      <div class="season"><strong>Spring</strong><span>Fen floods and swollen rivers add one day to northern road journeys.</span></div>
-      <div class="season"><strong>Summer</strong><span>Fast roads, low rivers, and punishing Grandbelt heat. Start before dawn.</span></div>
-      <div class="season"><strong>Autumn</strong><span>Harvest traffic adds a day around Cindral, Tolmen, and the main grain roads.</span></div>
-      <div class="season"><strong>Winter</strong><span>The Pass of Dernavar may add two to four days or close without notice.</span></div>
-    </div>
   </section>
 
   <footer>Roads of the Auroran Empire · Traveller's Reckoning · Player Document</footer>
@@ -415,36 +394,58 @@
     'Corsala': ['Velara', 'Tormessa', 'Alvenor']
   };
 
-  const routes = [
-    ['Coldhaven', 'Brackwater', 2, 'Fen Road'], ['Brackwater', 'Shimmerfen', 2, 'Fen Road'], ['Coldhaven', 'Duskport', 4, 'Coast Road'],
-    ['Duskport', 'Shimmerfen', 2, 'Fen Road'], ['Duskport', "Shimmer's Edge", 3, 'Coast Road'], ['Shimmerfen', 'Reedmere', 2, 'Fen Road'],
-    ['Reedmere', 'Hollowhearth', 1, 'Fen Road'], ['Shimmerfen', 'Dunmore', 2, 'Imperial Road'], ['Reedmere', 'Dunmore', 2, 'Fen Road'],
-    ['Hollowhearth', "Shimmer's Edge", 2, 'Forest Road'], ['Hollowhearth', 'Greywood', 2, 'Aldwood Road'], ['Hollowhearth', 'Ferngate', 1, 'Imperial Road'],
-    ['Greywood', 'Ferngate', 1, 'Forest Road'], ['Dunmore', 'Ironpass', 2, 'Dernavar Road'], ['Ferngate', 'Millhaven', 1, 'Imperial Road'],
-    ["Shimmer's Edge", 'Whitecliff', 2, 'Coast Road'], ['Ironpass', 'Salcova', 3, 'Dernavar Road'], ['Ironpass', 'Verano', 2, 'Mountain Road'],
-    ['Salcova', 'Verano', 2, 'Coast Road'], ['Verano', 'Whitecliff', 1, 'Tessil Road'], ['Whitecliff', 'Breakwater', 2, 'Coast Road'],
-    ['Breakwater', 'Vareth', 2, 'Coast Road'], ['Breakwater', 'Greywatch', 2, 'Coastal Packet'], ['Vareth', 'Harrowmouth', 3, 'Coast Road'],
-    ['Vareth', 'Crestwater', 3, 'Coast Road'], ['Crestwater', 'Dawnshore', 2, 'Coast Road'], ['Dawnshore', 'Harrowmouth', 3, 'Coastal Packet'],
-    ['Vareth', 'Marenfall', 3, 'Coastal Packet'], ['Vareth', 'Velara', 4, 'Sea Passage'], ['Crestwater', 'Velara', 3, 'Sea Passage'],
-    ['Harrowmouth', 'Velara', 3, 'Sea Passage'], ['Ironpass', 'Stonekneid', 3, 'Highland Road'], ['Stonekneid', 'Coppergate', 3, 'Highland Road'],
-    ['Stonekneid', 'Deepholm', 4, 'Deep Road'], ['Coppergate', 'Millhaven', 2, 'Pass Road'], ['Coppergate', 'Cornstead', 3, 'Grandbelt Road'],
-    ['Deepholm', 'Goldfield', 3, 'Mountain Road'], ['Deepholm', 'Redwater', 3, 'Mountain Road'], ['Millhaven', 'Cornstead', 1, 'Grain Road'],
-    ['Cornstead', 'Cindral', 2, 'Grain Road'], ['Cindral', 'Dryford', 2, 'Davan Road'], ['Cindral', 'Tolmen', 2, 'Maren Passage', 3],
-    ['Tolmen', 'Marenfall', 2, 'Maren Passage', 3], ['Cindral', 'Goldfield', 3, 'Grandbelt Road'], ['Goldfield', 'Dryford', 2, 'Grandbelt Road'],
-    ['Dryford', 'Redwater', 2, 'Davan Road'], ['Redwater', 'Stockend', 2, 'Sorn Road'], ['Cindral', 'Sojourn', 2, 'South Road'],
-    ['Sojourn', 'Waymark', 1, 'South Road'], ['Sojourn', 'Stockend', 2, 'Stock Road'], ['Waymark', 'Stockend', 2, 'Ashfringe Road'],
-    ['Greywatch', 'Tolmen', 3, 'Western Road'], ['Greywatch', 'Marenfall', 2, 'Coast Road'], ['Waymark', 'Ashford', 1, 'South Road'],
-    ['Stockend', 'Ashford', 2, 'Ashfringe Road'], ['Ashford', 'Thornwall', 3, 'Rampart Road'], ['Thornwall', "Cinder's Rest", 3, 'Ridge Road'],
-    ["Cinder's Rest", 'Ashford', 3, 'Ridge Road'], ['Velara', 'Tormessa', 1, 'Island Road'], ['Tormessa', 'Alvenor', 1, 'Island Road'],
-    ['Velara', 'Alvenor', 2, 'Island Road']
-  ];
+  const nearest = {
+    'Alvenor': [['Velara',50,3], ['Tormessa',50,3], ['Harrowmouth',125,6,true], ['Crestwater',125,6,true], ['Dawnshore',125,6,true], ['Vareth',150,7,true]],
+    'Ashford': [['Thornwall',50,3], ['Redwater',50,3], ['Stockend',75,4], ['Goldfield',100,5], ['Waymark',125,6], ['Deepholm',125,6]],
+    'Brackwater': [['Dunmore',75,4], ['Millhaven',100,5], ['Coldhaven',100,5], ['Ironpass',125,6], ['Shimmerfen',125,6], ['Ferngate',125,6]],
+    'Breakwater': [['Vareth',50,3], ['Verano',75,4], ['Stonekneid',75,4], ['Deepholm',125,6], ['Crestwater',125,6], ['Ironpass',125,6]],
+    'Cinder\'s Rest': [['Harrowmouth',75,4], ['Dawnshore',75,4], ['Crestwater',125,6], ['Velara',125,6,true], ['Stockend',150,7], ['Ashford',150,7]],
+    'Cindral': [['Dryford',50,3], ['Sojourn',50,3], ['Tolmen',75,4], ['Greywood',75,4], ['Hollowhearth',100,5], ['Waymark',100,5]],
+    'Coldhaven': [['Ironpass',100,5], ['Brackwater',100,5], ['Dunmore',125,6], ['Salcova',150,7], ['Verano',150,7], ['Millhaven',175,8]],
+    'Coppergate': [['Millhaven',50,3], ['Deepholm',75,4], ['Goldfield',100,5], ['Cornstead',100,5], ['Ferngate',100,5], ['Stonekneid',100,5]],
+    'Cornstead': [['Ferngate',50,3], ['Goldfield',75,4], ['Coppergate',100,5], ['Dryford',100,5], ['Reedmere',100,5], ['Millhaven',125,6]],
+    'Crestwater': [['Harrowmouth',50,3], ['Velara',50,3,true], ['Dawnshore',75,4], ['Vareth',100,5], ['Cinder\'s Rest',125,6], ['Breakwater',125,6]],
+    'Dawnshore': [['Harrowmouth',25,2], ['Velara',50,3,true], ['Crestwater',75,4], ['Cinder\'s Rest',75,4], ['Alvenor',125,6,true], ['Stockend',150,7]],
+    'Deepholm': [['Stockend',50,3], ['Coppergate',75,4], ['Stonekneid',100,5], ['Goldfield',125,6], ['Crestwater',125,6], ['Harrowmouth',125,6]],
+    'Dryford': [['Cindral',50,3], ['Sojourn',75,4], ['Waymark',75,4], ['Cornstead',100,5], ['Goldfield',100,5], ['Redwater',100,5]],
+    'Dunmore': [['Millhaven',50,3], ['Brackwater',75,4], ['Stonekneid',100,5], ['Coppergate',100,5], ['Ironpass',100,5], ['Ferngate',125,6]],
+    'Duskport': [['Shimmer\'s Edge',75,4], ['Hollowhearth',75,4], ['Greywood',100,5], ['Greywatch',150,7], ['Reedmere',175,8], ['Cindral',175,8]],
+    'Ferngate': [['Cornstead',50,3], ['Millhaven',75,4], ['Reedmere',75,4], ['Goldfield',100,5], ['Coppergate',100,5], ['Shimmerfen',100,5]],
+    'Goldfield': [['Redwater',50,3], ['Cornstead',75,4], ['Waymark',100,5], ['Dryford',100,5], ['Thornwall',100,5], ['Ashford',100,5]],
+    'Greywatch': [['Marenfall',50,3], ['Shimmer\'s Edge',75,4], ['Tolmen',75,4], ['Duskport',150,7], ['Cindral',150,7], ['Greywood',150,7]],
+    'Greywood': [['Hollowhearth',50,3], ['Cindral',75,4], ['Tolmen',100,5], ['Duskport',100,5], ['Dryford',100,5], ['Reedmere',100,5]],
+    'Harrowmouth': [['Dawnshore',25,2], ['Crestwater',50,3], ['Cinder\'s Rest',75,4], ['Velara',75,4,true], ['Vareth',125,6], ['Stockend',125,6]],
+    'Hollowhearth': [['Greywood',50,3], ['Duskport',75,4], ['Cindral',100,5], ['Shimmer\'s Edge',100,5], ['Reedmere',100,5], ['Dryford',125,6]],
+    'Ironpass': [['Stonekneid',75,4], ['Verano',75,4], ['Dunmore',100,5], ['Salcova',100,5], ['Coldhaven',100,5], ['Breakwater',125,6]],
+    'Marenfall': [['Greywatch',50,3], ['Tolmen',100,5], ['Shimmer\'s Edge',125,6], ['Cindral',175,8], ['Sojourn',175,8], ['Greywood',200,9]],
+    'Millhaven': [['Coppergate',50,3], ['Dunmore',50,3], ['Ferngate',75,4], ['Stonekneid',75,4], ['Brackwater',100,5], ['Cornstead',125,6]],
+    'Redwater': [['Ashford',50,3], ['Thornwall',50,3], ['Goldfield',50,3], ['Waymark',75,4], ['Dryford',100,5], ['Stockend',100,5]],
+    'Reedmere': [['Shimmerfen',50,3], ['Ferngate',75,4], ['Cornstead',100,5], ['Greywood',100,5], ['Hollowhearth',100,5], ['Dryford',125,6]],
+    'Salcova': [['Whitecliff',75,4,true], ['Verano',75,4], ['Ironpass',100,5], ['Breakwater',150,7], ['Stonekneid',150,7], ['Coldhaven',150,7]],
+    'Shimmer\'s Edge': [['Duskport',75,4], ['Greywatch',75,4], ['Tolmen',100,5], ['Greywood',100,5], ['Hollowhearth',100,5], ['Marenfall',125,6]],
+    'Shimmerfen': [['Reedmere',50,3], ['Ferngate',100,5], ['Cornstead',125,6], ['Brackwater',125,6], ['Millhaven',150,7], ['Greywood',150,7]],
+    'Sojourn': [['Cindral',50,3], ['Waymark',50,3], ['Dryford',75,4], ['Tolmen',100,5], ['Redwater',125,6], ['Greywood',125,6]],
+    'Stockend': [['Deepholm',50,3], ['Ashford',75,4], ['Redwater',100,5], ['Goldfield',100,5], ['Thornwall',100,5], ['Coppergate',100,5]],
+    'Stonekneid': [['Ironpass',75,4], ['Millhaven',75,4], ['Breakwater',75,4], ['Deepholm',100,5], ['Vareth',100,5], ['Verano',100,5]],
+    'Thornwall': [['Ashford',50,3], ['Redwater',50,3], ['Goldfield',100,5], ['Waymark',100,5], ['Stockend',100,5], ['Dryford',150,7]],
+    'Tolmen': [['Greywatch',75,4], ['Cindral',75,4], ['Marenfall',100,5], ['Shimmer\'s Edge',100,5], ['Sojourn',100,5], ['Greywood',100,5]],
+    'Tormessa': [['Alvenor',50,3], ['Velara',125,6], ['Crestwater',150,7,true], ['Vareth',175,8,true], ['Dawnshore',175,8,true], ['Harrowmouth',175,8,true]],
+    'Vareth': [['Breakwater',50,3], ['Stonekneid',100,5], ['Crestwater',100,5], ['Verano',100,5], ['Harrowmouth',125,6], ['Velara',125,6,true]],
+    'Velara': [['Crestwater',50,3,true], ['Dawnshore',50,3,true], ['Alvenor',50,3], ['Harrowmouth',75,4,true], ['Vareth',125,6,true], ['Cinder\'s Rest',125,6,true]],
+    'Verano': [['Breakwater',75,4], ['Ironpass',75,4], ['Salcova',75,4], ['Whitecliff',100,5,true], ['Vareth',100,5], ['Stonekneid',100,5]],
+    'Waymark': [['Sojourn',50,3], ['Dryford',75,4], ['Redwater',75,4], ['Cindral',100,5], ['Thornwall',100,5], ['Goldfield',100,5]],
+    'Whitecliff': [['Salcova',75,4,true], ['Verano',100,5,true], ['Breakwater',150,7,true], ['Vareth',150,7,true], ['Ironpass',175,8,true], ['Stonekneid',200,9,true]]
+  };
 
   const cityNames = Object.values(regions).flat();
   const graph = new Map(cityNames.map(city => [city, []]));
 
-  routes.forEach(([from, to, outwardDays, mode, returnDays = outwardDays]) => {
-    graph.get(from).push({ city: to, days: outwardDays, mode });
-    graph.get(to).push({ city: from, days: returnDays, mode });
+  Object.entries(nearest).forEach(([from, entries]) => {
+    entries.forEach(([to, miles, days, cross = false]) => {
+      const mode = cross ? 'sea distance guide' : 'overland estimate';
+      if (!graph.get(from).some(leg => leg.city === to)) graph.get(from).push({ city: to, miles, days, mode, cross });
+      if (!graph.get(to).some(leg => leg.city === from)) graph.get(to).push({ city: from, miles, days, mode, cross });
+    });
   });
 
   const fromSelect = document.getElementById('journeyFrom');
@@ -466,6 +467,11 @@
     const unvisited = new Set(cityNames);
     distances.set(start, 0);
 
+    const sameLandmass = (cityA, cityB) => {
+      const landmass = city => city === 'Whitecliff' ? 'Eastern Island' : ['Velara', 'Alvenor', 'Tormessa'].includes(city) ? 'Corsala' : 'Mainland';
+      return landmass(cityA) === landmass(cityB);
+    };
+
     while (unvisited.size) {
       const current = [...unvisited].reduce((best, city) => distances.get(city) < distances.get(best) ? city : best);
       if (current === destination || distances.get(current) === Infinity) break;
@@ -473,6 +479,7 @@
 
       graph.get(current).forEach(leg => {
         if (!unvisited.has(leg.city)) return;
+        if (leg.cross && sameLandmass(start, destination)) return;
         const distance = distances.get(current) + leg.days;
         if (distance < distances.get(leg.city)) {
           distances.set(leg.city, distance);
@@ -488,7 +495,12 @@
       steps.unshift({ from: entry.city, to: city, ...entry.leg });
       city = entry.city;
     }
-    return { days: distances.get(destination), steps };
+    return {
+      days: distances.get(destination),
+      miles: steps.reduce((total, step) => total + step.miles, 0),
+      hasSea: steps.some(step => step.cross),
+      steps
+    };
   }
 
   function renderJourney() {
@@ -500,9 +512,12 @@
     }
 
     const journey = shortestJourney(start, destination);
-    const path = journey.steps.map(step => `${step.from} <span>→ ${step.to} · ${step.days} ${step.days === 1 ? 'day' : 'days'} by ${step.mode}</span>`).join('<br>');
+    const path = journey.steps.map(step => `${step.from} <span>→ ${step.to} · ${step.miles} mi / ${step.days} ${step.days === 1 ? 'day' : 'days'}${step.cross ? ' · sea guide only' : ''}</span>`).join('<br>');
     const legLabel = journey.steps.length === 1 ? 'leg' : 'legs';
-    journeyResult.innerHTML = `<div class="journey-summary"><strong>${start} to ${destination}</strong><span class="journey-total">${journey.days} days · ${journey.steps.length} ${legLabel}</span></div><p class="journey-path">${path}</p>`;
+    const total = journey.hasSea
+      ? `${journey.miles} mapped miles · sea schedule required`
+      : `${journey.days} days · ${journey.miles} miles · ${journey.steps.length} ${legLabel}`;
+    journeyResult.innerHTML = `<div class="journey-summary"><strong>${start} to ${destination}</strong><span class="journey-total">${total}</span></div><p class="journey-path">${path}</p>`;
   }
 
   function renderDirectory() {
@@ -516,18 +531,20 @@
       cities.forEach(city => {
         const row = document.createElement('div');
         row.className = 'city-leg-row';
-        const legs = [...graph.get(city)].sort((a, b) => a.days - b.days || a.city.localeCompare(b.city));
+        const legs = nearest[city].map(([destination, miles, days, cross = false]) => ({ destination, miles, days, cross }));
         row.innerHTML = `<div class="city-leg-name">${city}</div><div class="city-legs"></div>`;
         const legList = row.querySelector('.city-legs');
         legs.forEach(leg => {
           const button = document.createElement('button');
           button.className = 'leg-link';
           button.type = 'button';
-          button.innerHTML = `${leg.city} <span>· ${leg.days}d</span>`;
-          button.title = `${city} to ${leg.city} by ${leg.mode}`;
+          button.innerHTML = `${leg.destination} <span>· ${leg.miles} mi / ${leg.days}d</span>${leg.cross ? ' <span class="sea-mark">sea</span>' : ''}`;
+          button.title = leg.cross
+            ? `${city} to ${leg.destination}: distance guide only; sea passage required`
+            : `${city} to ${leg.destination}: ${leg.miles} miles, ${leg.days} days at normal pace`;
           button.addEventListener('click', () => {
             fromSelect.value = city;
-            toSelect.value = leg.city;
+            toSelect.value = leg.destination;
             renderJourney();
             document.getElementById('planner-title').scrollIntoView({ behavior: 'smooth', block: 'start' });
           });
