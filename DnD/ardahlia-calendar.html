@@ -782,15 +782,15 @@ function renderDateTracker() {
         <label for="current-day">Day</label>
         <input class="date-input" id="current-day" type="number" min="1" max="30" value="${currentDate.day}">
       </div>
+      <div class="date-field">
+        <label for="days-to-add">Days to add</label>
+        <input class="date-input" id="days-to-add" type="number" min="1" value="1">
+      </div>
       <div class="date-actions">
         <button class="date-btn primary" data-date-action="set">Set Date</button>
         <button class="date-btn" data-date-action="add" data-days="-1" aria-label="Go back one day">−1 Day</button>
         <button class="date-btn" data-date-action="add" data-days="1">+1 Day</button>
         <button class="date-btn" data-date-action="add-custom">Add Days</button>
-      </div>
-      <div class="date-field">
-        <label for="days-to-add">Days to add</label>
-        <input class="date-input" id="days-to-add" type="number" min="1" value="1">
       </div>
     </section>`;
 }
