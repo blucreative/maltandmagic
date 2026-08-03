@@ -95,6 +95,71 @@
     .s-btn:hover { background: rgba(168,128,80,0.08); color: #d4b890; }
     .s-btn.active { color: #e8dcc8; border-color: var(--s-accent); background: var(--s-badge); box-shadow: 0 0 14px var(--s-glow); }
 
+    .date-tracker {
+      margin: 16px 24px 0;
+      padding: 14px 16px;
+      display: flex;
+      align-items: end;
+      gap: 12px;
+      flex-wrap: wrap;
+      background: rgba(255,255,255,0.025);
+      border: 1px solid var(--border);
+      border-left: 3px solid rgba(212,160,64,0.55);
+      border-radius: 4px;
+    }
+    .date-current { min-width: 190px; margin-right: auto; }
+    .date-current-value {
+      margin-top: 3px;
+      font-family: 'Cinzel', Palatino, serif;
+      font-size: 15px;
+      color: #ede3cc;
+    }
+    .date-field { display: flex; flex-direction: column; gap: 4px; }
+    .date-field label {
+      font-family: 'Cinzel', Palatino, serif;
+      font-size: 8px;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--text-faint);
+    }
+    .date-input {
+      height: 31px;
+      border: 1px solid rgba(168,128,80,0.22);
+      border-radius: 3px;
+      background: #0b0e14;
+      color: var(--text);
+      font: 13px 'Crimson Pro', Palatino, serif;
+      padding: 4px 8px;
+    }
+    select.date-input { min-width: 120px; }
+    input.date-input { width: 62px; }
+    .date-input:focus-visible, .date-btn:focus-visible {
+      outline: 2px solid #d4a040;
+      outline-offset: 2px;
+    }
+    .date-actions { display: flex; gap: 6px; align-items: end; }
+    .date-btn {
+      min-height: 31px;
+      padding: 5px 11px;
+      border: 1px solid rgba(168,128,80,0.22);
+      border-radius: 3px;
+      background: rgba(168,128,80,0.06);
+      color: #d8c39d;
+      font: 600 9px 'Cinzel', Palatino, serif;
+      letter-spacing: 0.6px;
+      cursor: pointer;
+    }
+    .date-btn:hover { background: rgba(168,128,80,0.14); border-color: rgba(212,160,64,0.45); }
+    .date-btn.primary { background: rgba(212,160,64,0.15); color: #f0dfba; }
+    @media (max-width: 620px) {
+      .date-tracker { margin: 12px 14px 0; align-items: stretch; }
+      .date-current { flex-basis: 100%; }
+      .date-field { flex: 1; }
+      select.date-input, input.date-input { width: 100%; }
+      .date-actions { flex-basis: 100%; }
+      .date-btn { flex: 1; }
+    }
+
     /* ── WEEK BANNER ────────────────────────────── */
     .week-banner {
       margin: 16px 24px 0;
@@ -253,6 +318,23 @@
     .day-cell.has-fest .dc-num { color: rgba(205,194,170,0.75); }
     .day-cell.has-moon .dc-num { color: rgba(190,180,158,0.5); }
     .day-cell.has-fest.has-moon .dc-num { color: rgba(215,205,182,0.82); }
+    .day-cell.current-day {
+      background: rgba(212,160,64,0.16);
+      box-shadow: inset 0 0 0 1px #d4a040, 0 0 12px rgba(212,160,64,0.2);
+    }
+    .day-cell.current-day::after {
+      content: '';
+      position: absolute;
+      top: 2px;
+      right: 2px;
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background: #f2d488;
+      box-shadow: 0 0 5px #d4a040;
+    }
+    .day-cell.current-day .dc-num { color: #fff0c8; font-weight: 700; }
+    .month-card.current-month { border-color: rgba(212,160,64,0.48); }
     .dc-bottom {
       display: flex;
       align-items: center;
@@ -486,6 +568,36 @@ const MONTHS = [
   { num:12, name:"Kaelvar",  short:"Kael", season:"Winter", tag:"year's end",      lore:"Hearthseal — the Longnight returns" },
 ];
 
+const DATE_STORAGE_KEY = 'ardahlia-current-date';
+let currentDate = loadCurrentDate();
+
+function loadCurrentDate() {
+  try {
+    const saved = JSON.parse(localStorage.getItem(DATE_STORAGE_KEY));
+    if (Number.isInteger(saved?.month) && saved.month >= 1 && saved.month <= 12 &&
+        Number.isInteger(saved?.day) && saved.day >= 1 && saved.day <= 30) {
+      return saved;
+    }
+  } catch (error) {
+    console.warn('Could not load the Ardahlian date.', error);
+  }
+  return { month: 1, day: 1 };
+}
+
+function saveCurrentDate() {
+  localStorage.setItem(DATE_STORAGE_KEY, JSON.stringify(currentDate));
+}
+
+function shiftCurrentDate(days) {
+  const yearLength = MONTHS.length * 30;
+  const currentIndex = (currentDate.month - 1) * 30 + currentDate.day - 1;
+  const nextIndex = ((currentIndex + days) % yearLength + yearLength) % yearLength;
+  currentDate = { month: Math.floor(nextIndex / 30) + 1, day: nextIndex % 30 + 1 };
+  saveCurrentDate();
+  renderAll();
+  scrollCurrentDateIntoView();
+}
+
 const WEEK = ["Auren","Brem","Thaelon","Keld","Narven","Glaer","Solveth","Pelk","Seradel","Kaelden"];
 
 const SEASONS = {
@@ -652,6 +764,37 @@ function renderControls() {
   return `<div class="controls"><span class="ctrl-label">Season</span>${btns}</div>`;
 }
 
+function renderDateTracker() {
+  const monthOptions = MONTHS.map(month =>
+    `<option value="${month.num}"${month.num === currentDate.month ? ' selected' : ''}>${month.name}</option>`
+  ).join('');
+  return `
+    <section class="date-tracker" aria-label="In-game date tracker">
+      <div class="date-current" aria-live="polite">
+        <div class="ctrl-label">Current In-Game Date</div>
+        <div class="date-current-value">${MONTHS[currentDate.month - 1].name}, Day ${currentDate.day}</div>
+      </div>
+      <div class="date-field">
+        <label for="current-month">Month</label>
+        <select class="date-input" id="current-month">${monthOptions}</select>
+      </div>
+      <div class="date-field">
+        <label for="current-day">Day</label>
+        <input class="date-input" id="current-day" type="number" min="1" max="30" value="${currentDate.day}">
+      </div>
+      <div class="date-actions">
+        <button class="date-btn primary" data-date-action="set">Set Date</button>
+        <button class="date-btn" data-date-action="add" data-days="-1" aria-label="Go back one day">−1 Day</button>
+        <button class="date-btn" data-date-action="add" data-days="1">+1 Day</button>
+        <button class="date-btn" data-date-action="add-custom">Add Days</button>
+      </div>
+      <div class="date-field">
+        <label for="days-to-add">Days to add</label>
+        <input class="date-input" id="days-to-add" type="number" min="1" value="1">
+      </div>
+    </section>`;
+}
+
 function renderWeekBanner() {
   const cells = WEEK.map((w, i) =>
     `<div class="wb-item"><div class="wb-n">${i+1}</div><div class="wb-d">${w}</div></div>`
@@ -693,9 +836,10 @@ function renderDayCell(monthNum, day) {
   if (hasFest)  classes += ' has-fest';
   if (hasMoon)  classes += ' has-moon';
   if (hasFest)  classes += ' clickable';
+  if (currentDate.month === monthNum && currentDate.day === day) classes += ' current-day';
 
-  let data = '';
-  if (hasFest || hasMoon) data += ` data-month="${monthNum}" data-day="${day}"`;
+  const isCurrent = currentDate.month === monthNum && currentDate.day === day;
+  const data = ` data-month="${monthNum}" data-day="${day}"${isCurrent ? ' aria-current="date" title="Current in-game day"' : ''}`;
 
   let bottom = '';
   if (hasFest || hasMoon) {
@@ -741,7 +885,7 @@ function renderMonth(m) {
   const grid = `<div class="day-grid"><div class="dg-hdr-row">${hdrRow}</div>${rows}</div>`;
 
   return `
-    <div class="month-card" data-season="${m.season}"
+    <div class="month-card${currentDate.month === m.num ? ' current-month' : ''}" data-season="${m.season}"
       style="--s-accent:${s.accent};--s-badge:${s.badge};--s-border-grad:${borderGrad}">
       ${head}${grid}
     </div>`;
@@ -752,9 +896,16 @@ function renderAll() {
   document.getElementById('app').innerHTML =
     renderHeader() +
     renderControls() +
+    renderDateTracker() +
     renderWeekBanner() +
     renderLegend() +
     `<div class="months-grid" id="months-grid">${months}</div>`;
+}
+
+function scrollCurrentDateIntoView() {
+  requestAnimationFrame(() => {
+    document.querySelector('.current-day')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  });
 }
 
 
@@ -848,6 +999,33 @@ function hideTooltip() {
 // ═══════════════════════════════════════════════════════════
 
 document.addEventListener('click', function(e) {
+  const dateButton = e.target.closest('[data-date-action]');
+  if (dateButton) {
+    const action = dateButton.dataset.dateAction;
+    if (action === 'set') {
+      const month = Number(document.getElementById('current-month').value);
+      const day = Number(document.getElementById('current-day').value);
+      if (!Number.isInteger(day) || day < 1 || day > 30) {
+        document.getElementById('current-day').focus();
+        return;
+      }
+      currentDate = { month, day };
+      saveCurrentDate();
+      renderAll();
+      scrollCurrentDateIntoView();
+    } else if (action === 'add-custom') {
+      const days = Number(document.getElementById('days-to-add').value);
+      if (!Number.isInteger(days) || days < 1) {
+        document.getElementById('days-to-add').focus();
+        return;
+      }
+      shiftCurrentDate(days);
+    } else {
+      shiftCurrentDate(Number(dateButton.dataset.days));
+    }
+    return;
+  }
+
   // Season filter
   const btn = e.target.closest('.s-btn');
   if (btn) {
