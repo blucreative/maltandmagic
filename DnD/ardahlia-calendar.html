@@ -139,6 +139,9 @@
     }
     .date-actions { display: flex; gap: 6px; align-items: end; }
     .date-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
       min-height: 31px;
       padding: 5px 11px;
       border: 1px solid rgba(168,128,80,0.22);
@@ -148,6 +151,7 @@
       font: 600 9px 'Cinzel', Palatino, serif;
       letter-spacing: 0.6px;
       cursor: pointer;
+      text-decoration: none;
     }
     .date-btn:hover { background: rgba(168,128,80,0.14); border-color: rgba(212,160,64,0.45); }
     .date-btn.primary { background: rgba(212,160,64,0.15); color: #f0dfba; }
@@ -568,34 +572,29 @@ const MONTHS = [
   { num:12, name:"Kaelvar",  short:"Kael", season:"Winter", tag:"year's end",      lore:"Hearthseal — the Longnight returns" },
 ];
 
-const DATE_STORAGE_KEY = 'ardahlia-current-date';
-let currentDate = loadCurrentDate();
+const SHARED_DATE_URL = 'ardahlia-current-date.json';
+const UPDATE_WORKFLOW_URL = 'https://github.com/blucreative/maltandmagic/actions/workflows/update-ardahlia-date.yml';
+let currentDate = { month: 1, day: 1 };
+let sharedDateStatus = 'Loading shared campaign date…';
 
-function loadCurrentDate() {
+function isValidDate(date) {
+  return Number.isInteger(date?.month) && date.month >= 1 && date.month <= 12 &&
+    Number.isInteger(date?.day) && date.day >= 1 && date.day <= 30;
+}
+
+async function loadSharedDate() {
   try {
-    const saved = JSON.parse(localStorage.getItem(DATE_STORAGE_KEY));
-    if (Number.isInteger(saved?.month) && saved.month >= 1 && saved.month <= 12 &&
-        Number.isInteger(saved?.day) && saved.day >= 1 && saved.day <= 30) {
-      return saved;
-    }
+    const response = await fetch(`${SHARED_DATE_URL}?v=${Date.now()}`, { cache: 'no-store' });
+    if (!response.ok) throw new Error(`HTTP ${response.status}`);
+    const sharedDate = await response.json();
+    if (!isValidDate(sharedDate)) throw new Error('Invalid campaign date');
+    currentDate = { month: sharedDate.month, day: sharedDate.day };
+    sharedDateStatus = 'Shared with all players';
   } catch (error) {
-    console.warn('Could not load the Ardahlian date.', error);
+    sharedDateStatus = 'Shared date unavailable — showing Year Start';
+    console.warn('Could not load the shared Ardahlian date.', error);
   }
-  return { month: 1, day: 1 };
-}
-
-function saveCurrentDate() {
-  localStorage.setItem(DATE_STORAGE_KEY, JSON.stringify(currentDate));
-}
-
-function shiftCurrentDate(days) {
-  const yearLength = MONTHS.length * 30;
-  const currentIndex = (currentDate.month - 1) * 30 + currentDate.day - 1;
-  const nextIndex = ((currentIndex + days) % yearLength + yearLength) % yearLength;
-  currentDate = { month: Math.floor(nextIndex / 30) + 1, day: nextIndex % 30 + 1 };
-  saveCurrentDate();
   renderAll();
-  scrollCurrentDateIntoView();
 }
 
 const WEEK = ["Auren","Brem","Thaelon","Keld","Narven","Glaer","Solveth","Pelk","Seradel","Kaelden"];
@@ -765,32 +764,15 @@ function renderControls() {
 }
 
 function renderDateTracker() {
-  const monthOptions = MONTHS.map(month =>
-    `<option value="${month.num}"${month.num === currentDate.month ? ' selected' : ''}>${month.name}</option>`
-  ).join('');
   return `
     <section class="date-tracker" aria-label="In-game date tracker">
       <div class="date-current" aria-live="polite">
         <div class="ctrl-label">Current In-Game Date</div>
         <div class="date-current-value">${MONTHS[currentDate.month - 1].name}, Day ${currentDate.day}</div>
-      </div>
-      <div class="date-field">
-        <label for="current-month">Month</label>
-        <select class="date-input" id="current-month">${monthOptions}</select>
-      </div>
-      <div class="date-field">
-        <label for="current-day">Day</label>
-        <input class="date-input" id="current-day" type="number" min="1" max="30" value="${currentDate.day}">
-      </div>
-      <div class="date-field">
-        <label for="days-to-add">Days to add</label>
-        <input class="date-input" id="days-to-add" type="number" min="1" value="1">
+        <div class="cal-sub">${sharedDateStatus}</div>
       </div>
       <div class="date-actions">
-        <button class="date-btn primary" data-date-action="set">Set Date</button>
-        <button class="date-btn" data-date-action="add" data-days="-1" aria-label="Go back one day">−1 Day</button>
-        <button class="date-btn" data-date-action="add" data-days="1">+1 Day</button>
-        <button class="date-btn" data-date-action="add-custom">Add Days</button>
+        <a class="date-btn primary" href="${UPDATE_WORKFLOW_URL}" target="_blank" rel="noopener noreferrer">Update Campaign Date</a>
       </div>
     </section>`;
 }
@@ -999,33 +981,6 @@ function hideTooltip() {
 // ═══════════════════════════════════════════════════════════
 
 document.addEventListener('click', function(e) {
-  const dateButton = e.target.closest('[data-date-action]');
-  if (dateButton) {
-    const action = dateButton.dataset.dateAction;
-    if (action === 'set') {
-      const month = Number(document.getElementById('current-month').value);
-      const day = Number(document.getElementById('current-day').value);
-      if (!Number.isInteger(day) || day < 1 || day > 30) {
-        document.getElementById('current-day').focus();
-        return;
-      }
-      currentDate = { month, day };
-      saveCurrentDate();
-      renderAll();
-      scrollCurrentDateIntoView();
-    } else if (action === 'add-custom') {
-      const days = Number(document.getElementById('days-to-add').value);
-      if (!Number.isInteger(days) || days < 1) {
-        document.getElementById('days-to-add').focus();
-        return;
-      }
-      shiftCurrentDate(days);
-    } else {
-      shiftCurrentDate(Number(dateButton.dataset.days));
-    }
-    return;
-  }
-
   // Season filter
   const btn = e.target.closest('.s-btn');
   if (btn) {
@@ -1083,6 +1038,7 @@ window.addEventListener('scroll', hideTooltip, true);
 // ═══════════════════════════════════════════════════════════
 
 renderAll();
+loadSharedDate();
 </script>
 </body>
 </html>
