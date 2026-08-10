@@ -1243,13 +1243,13 @@
       <div class="hud-sub">Stolen finery, tools of deception, and well-worn weapons.</div>
     </div>
     <div style="font-family:'Barlow Condensed',sans-serif;font-size:11px;color:var(--text-dim);letter-spacing:1px;text-transform:uppercase;">
-      Gear: <span style="color:var(--gold);">9 items</span>
+      Gear: <span style="color:var(--gold);">10 items</span>
     </div>
   </div>
 
   <div class="currency-bar">
     <div class="currency-item"><div class="currency-coin pp">PP</div><div class="currency-controls"><button type="button" class="currency-adjust-btn" onclick="adjustCurrency('pp',-1)">-</button><input id="currency-pp" class="currency-input" type="number" min="0" step="1" inputmode="numeric" value="0" onchange="setCurrencyFromInput('pp', this.value)"><button type="button" class="currency-adjust-btn" onclick="adjustCurrency('pp',1)">+</button></div></div>
-    <div class="currency-item"><div class="currency-coin gp">GP</div><div class="currency-controls"><button type="button" class="currency-adjust-btn" onclick="adjustCurrency('gp',-1)">-</button><input id="currency-gp" class="currency-input" type="number" min="0" step="1" inputmode="numeric" value="0" onchange="setCurrencyFromInput('gp', this.value)"><button type="button" class="currency-adjust-btn" onclick="adjustCurrency('gp',1)">+</button></div></div>
+    <div class="currency-item"><div class="currency-coin gp">GP</div><div class="currency-controls"><button type="button" class="currency-adjust-btn" onclick="adjustCurrency('gp',-1)">-</button><input id="currency-gp" class="currency-input" type="number" min="0" step="1" inputmode="numeric" value="9" onchange="setCurrencyFromInput('gp', this.value)"><button type="button" class="currency-adjust-btn" onclick="adjustCurrency('gp',1)">+</button></div></div>
     <div class="currency-item"><div class="currency-coin ep">EP</div><div class="currency-controls"><button type="button" class="currency-adjust-btn" onclick="adjustCurrency('ep',-1)">-</button><input id="currency-ep" class="currency-input" type="number" min="0" step="1" inputmode="numeric" value="0" onchange="setCurrencyFromInput('ep', this.value)"><button type="button" class="currency-adjust-btn" onclick="adjustCurrency('ep',1)">+</button></div></div>
     <div class="currency-item"><div class="currency-coin sp">SP</div><div class="currency-controls"><button type="button" class="currency-adjust-btn" onclick="adjustCurrency('sp',-1)">-</button><input id="currency-sp" class="currency-input" type="number" min="0" step="1" inputmode="numeric" value="0" onchange="setCurrencyFromInput('sp', this.value)"><button type="button" class="currency-adjust-btn" onclick="adjustCurrency('sp',1)">+</button></div></div>
     <div class="currency-item"><div class="currency-coin cp">CP</div><div class="currency-controls"><button type="button" class="currency-adjust-btn" onclick="adjustCurrency('cp',-1)">-</button><input id="currency-cp" class="currency-input" type="number" min="0" step="1" inputmode="numeric" value="0" onchange="setCurrencyFromInput('cp', this.value)"><button type="button" class="currency-adjust-btn" onclick="adjustCurrency('cp',1)">+</button></div></div>
@@ -1331,6 +1331,14 @@
       <div class="quantity-row"><span class="quantity-label">Remaining</span><div data-consumable-key="rations" data-consumable-default="5" data-consumable-label="ration"></div></div>
     </div>
 
+    <div class="item-card magic">
+      <div class="card-topline"><span class="item-type">Homebrew Consumable</span><span class="item-weight">-</span></div>
+      <div class="item-main"><span class="item-icon">☕</span><div><div class="item-name">Viktor's Speed Bar</div><div class="item-qty">Qty: 1</div></div></div>
+      <div class="item-tags"><span class="item-tag">1 Hour</span><span class="item-tag">Advantage</span><span class="item-tag">DC 14 CON</span></div>
+      <div class="item-note">Consume the bar to gain Advantage on Perception and Investigation checks for 1 hour. Make a DC 14 Constitution save; on a failure, when the hour ends, Speed is reduced by 10 feet and all checks take a -2 penalty for the next hour.</div>
+      <div class="quantity-row"><span class="quantity-label">Bars remaining</span><div data-consumable-key="speedBars" data-consumable-default="1" data-consumable-label="Viktor's Speed Bar"></div></div>
+    </div>
+
   </div>
 
   <div class="inventory-builder">
@@ -1396,7 +1404,7 @@ const sheetState = {
   defense: false,
   currency: {
     pp: 0,
-    gp: 0,
+    gp: 9,
     ep: 0,
     sp: 0,
     cp: 0,
@@ -1407,12 +1415,12 @@ const sheetState = {
     judgement: true,
     hiddenDagger: false,
   },
-  consumables: {},
-  inventoryGrants: { august2026: true },
+  consumables: { speedBars: 1 },
+  inventoryGrants: { august2026: true, lygasFundsAndSpeedBarAugust2026: true },
   customItems: [],
 };
 
-const DEFAULT_CURRENCY = { pp: 0, gp: 0, ep: 0, sp: 0, cp: 0 };
+const DEFAULT_CURRENCY = { pp: 0, gp: 9, ep: 0, sp: 0, cp: 0 };
 
 function sanitizeCurrencyValue(value) {
   const parsed = parseInt(value, 10);
@@ -2093,6 +2101,14 @@ function loadSheetState() {
       if (!sheetState.consumables || typeof sheetState.consumables !== 'object') sheetState.consumables = {};
       sheetState.consumables.rations = InventoryTrackers.sanitizeQuantity(sheetState.consumables.rations, 0) + 5;
       sheetState.inventoryGrants = { ...(sheetState.inventoryGrants || {}), august2026: true };
+      inventoryGrantApplied = true;
+    }
+    if (!saved.sheetState?.inventoryGrants?.lygasFundsAndSpeedBarAugust2026) {
+      if (!sheetState.currency || typeof sheetState.currency !== 'object') sheetState.currency = { ...DEFAULT_CURRENCY };
+      if (!sheetState.consumables || typeof sheetState.consumables !== 'object') sheetState.consumables = {};
+      sheetState.currency.gp = 9;
+      sheetState.consumables.speedBars = 1;
+      sheetState.inventoryGrants = { ...(sheetState.inventoryGrants || {}), lygasFundsAndSpeedBarAugust2026: true };
       inventoryGrantApplied = true;
     }
     ensureCurrencyState();
