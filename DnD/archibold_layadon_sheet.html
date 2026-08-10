@@ -2290,7 +2290,7 @@
       <div class="hud-sub">A scout-archer's field pack — a good bow, a light blade, and every tool for a long road.</div>
     </div>
     <div style="font-family:'Barlow Condensed',sans-serif;font-size:11px;color:var(--text-dim);letter-spacing:1px;text-transform:uppercase;">
-      Manifest Cards: <span style="color:var(--gold);">7</span>
+      Manifest Cards: <span style="color:var(--gold);">8</span>
     </div>
   </div>
 
@@ -2301,7 +2301,7 @@
     <div class="currency-item"><div class="currency-coin sp">SP</div><div class="currency-controls"><button type="button" class="currency-adjust-btn" onclick="adjustCurrency('sp',-1)">-</button><input id="currency-sp" class="currency-input" type="number" min="0" step="1" inputmode="numeric" value="0" onchange="setCurrencyFromInput('sp', this.value)"><button type="button" class="currency-adjust-btn" onclick="adjustCurrency('sp',1)">+</button></div></div>
     <div class="currency-item"><div class="currency-coin cp">CP</div><div class="currency-controls"><button type="button" class="currency-adjust-btn" onclick="adjustCurrency('cp',-1)">-</button><input id="currency-cp" class="currency-input" type="number" min="0" step="1" inputmode="numeric" value="0" onchange="setCurrencyFromInput('cp', this.value)"><button type="button" class="currency-adjust-btn" onclick="adjustCurrency('cp',1)">+</button></div></div>
     <div style="margin-left:auto;font-family:'Barlow Condensed',sans-serif;font-size:11px;color:var(--text-dim);">
-      Weight: <span style="color:var(--text-secondary);">90 lb</span> /
+      Weight: <span style="color:var(--text-secondary);">103 lb</span> /
       Encumbered: <span style="color:var(--text-secondary);">195 lb</span> /
       Push: <span style="color:var(--text-secondary);">390 lb</span>
     </div>
@@ -2363,13 +2363,21 @@
       <div class="quantity-row"><span class="quantity-label">Remaining</span><div data-consumable-key="caltrops" data-consumable-default="20" data-consumable-label="caltrop"></div></div>
     </div>
 
+    <div class="item-card magic">
+      <div class="card-topline"><span class="item-type">Support</span><span class="item-weight">3 lb</span></div>
+      <div class="item-main"><span class="item-icon">🩹</span><div><div class="item-name">Healer's Kit</div><div class="item-qty">Qty: 1 · Uses: 10</div></div></div>
+      <div class="item-tags"><span class="item-tag">10 Uses</span><span class="item-tag">Stabilize</span></div>
+      <div class="item-note">As a Utilize action, expend one use to stabilize an Unconscious creature at 0 HP without a Wisdom (Medicine) check.</div>
+      <div class="quantity-row"><span class="quantity-label">Uses remaining</span><div data-consumable-key="healersKitUses" data-consumable-default="10" data-consumable-label="healer's kit use"></div></div>
+    </div>
+
   </div>
 
   <div style="margin-top:16px;font-family:'Barlow Condensed',sans-serif;font-size:9px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--gold-dim);margin-bottom:8px;">Pack &amp; Sundries</div>
   <div style="font-family:'Barlow',sans-serif;font-size:12px;color:var(--text-secondary);line-height:1.9;padding:12px 14px;background:rgba(16,22,46,0.5);border:1px solid rgba(51,64,106,0.35);border-radius:8px;">
-    Backpack · Crowbar · Oil ×2 · Rations ×10 · Rope (hemp) · Tinderbox · Torch ×10 · Waterskin · Bedroll · Pouch ×2 · Traveler's Clothes · Dice
+    Backpack · Crowbar · Oil ×2 · Rations ×15 · Rope (hemp) · Tinderbox · Torch ×10 · Waterskin · Bedroll · Pouch ×2 · Traveler's Clothes · Dice
     <div class="quantity-row"><span class="quantity-label">Oil flasks</span><div data-consumable-key="oil" data-consumable-default="2" data-consumable-label="oil flask"></div></div>
-    <div class="quantity-row"><span class="quantity-label">Rations</span><div data-consumable-key="rations" data-consumable-default="10" data-consumable-label="ration"></div></div>
+    <div class="quantity-row"><span class="quantity-label">Rations</span><div data-consumable-key="rations" data-consumable-default="15" data-consumable-label="ration"></div></div>
     <div class="quantity-row"><span class="quantity-label">Torches</span><div data-consumable-key="torches" data-consumable-default="10" data-consumable-label="torch"></div></div>
   </div>
 
@@ -2738,6 +2746,7 @@ const sheetState = {
     studded: true,
   },
   consumables: {},
+  inventoryGrants: { august2026: true },
 };
 
 const DEFAULT_CURRENCY = { pp: 0, gp: 27, ep: 0, sp: 0, cp: 0 };
@@ -2911,6 +2920,7 @@ function saveSheetState() {
 }
 
 function loadSheetState() {
+  let inventoryGrantApplied = false;
   const versionBadge = document.getElementById('uiVersionBadge');
   if (versionBadge) versionBadge.textContent = `UI v${SHEET_UI_VERSION}`;
   if (!document.title.includes(`UI v${SHEET_UI_VERSION}`)) {
@@ -2925,6 +2935,7 @@ function loadSheetState() {
       updateHPBar();
       applyConditionEffects();
       renderArchiboldCustomItems();
+      InventoryTrackers.initializeFixedTrackers(sheetState, saveSheetState);
       return;
     }
 
@@ -2936,6 +2947,12 @@ function loadSheetState() {
 
     if (saved.sheetState && typeof saved.sheetState === 'object') {
       Object.assign(sheetState, saved.sheetState);
+    }
+    if (!saved.sheetState?.inventoryGrants?.august2026) {
+      if (!sheetState.consumables || typeof sheetState.consumables !== 'object') sheetState.consumables = {};
+      sheetState.consumables.rations = InventoryTrackers.sanitizeQuantity(sheetState.consumables.rations, 10) + 5;
+      sheetState.inventoryGrants = { ...(sheetState.inventoryGrants || {}), august2026: true };
+      inventoryGrantApplied = true;
     }
     ensureCurrencyState();
     if (!sheetState.equipment || typeof sheetState.equipment !== 'object') {
@@ -3013,6 +3030,7 @@ function loadSheetState() {
   applyCurrencyUI();
   renderArchiboldCustomItems();
   InventoryTrackers.initializeFixedTrackers(sheetState, saveSheetState);
+  if (inventoryGrantApplied) saveSheetState();
 }
 
 // ===== DERIVED STATS =====

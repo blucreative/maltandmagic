@@ -2330,7 +2330,7 @@
       <div class="hud-sub">Foresters standard issue plus personal hunting kit.</div>
     </div>
     <div style="font-family:'Barlow Condensed',sans-serif;font-size:11px;color:var(--text-dim);letter-spacing:1px;text-transform:uppercase;">
-      Prepared Cards: <span style="color:var(--gold);">18</span>
+      Prepared Cards: <span style="color:var(--gold);">20</span>
     </div>
   </div>
 
@@ -2341,7 +2341,7 @@
     <div class="currency-item"><div class="currency-coin sp">SP</div><div class="currency-controls"><button type="button" class="currency-adjust-btn" onclick="adjustCurrency('sp',-1)">-</button><input id="currency-sp" class="currency-input" type="number" min="0" step="1" inputmode="numeric" value="0" onchange="setCurrencyFromInput('sp', this.value)"><button type="button" class="currency-adjust-btn" onclick="adjustCurrency('sp',1)">+</button></div></div>
     <div class="currency-item"><div class="currency-coin cp">CP</div><div class="currency-controls"><button type="button" class="currency-adjust-btn" onclick="adjustCurrency('cp',-1)">-</button><input id="currency-cp" class="currency-input" type="number" min="0" step="1" inputmode="numeric" value="0" onchange="setCurrencyFromInput('cp', this.value)"><button type="button" class="currency-adjust-btn" onclick="adjustCurrency('cp',1)">+</button></div></div>
     <div style="margin-left:auto;font-family:'Barlow Condensed',sans-serif;font-size:11px;color:var(--text-dim);">
-      Weight: <span style="color:var(--text-secondary);">109.5 lb</span> /
+      Weight: <span style="color:var(--text-secondary);">122.5 lb</span> /
       Encumbered: <span style="color:var(--text-secondary);">210 lb</span> /
       Push: <span style="color:var(--text-secondary);">420 lb</span>
     </div>
@@ -2415,11 +2415,11 @@
     </div>
 
     <div class="item-card">
-      <div class="card-topline"><span class="item-type">Consumable</span><span class="item-weight">20 lb</span></div>
-      <div class="item-main"><span class="item-icon">🧺</span><div><div class="item-name">Rations</div><div class="item-qty">Qty: 10</div></div></div>
-      <div class="item-tags"><span class="item-tag">10 Days</span></div>
+      <div class="card-topline"><span class="item-type">Consumable</span><span class="item-weight">30 lb</span></div>
+      <div class="item-main"><span class="item-icon">🧺</span><div><div class="item-name">Rations</div><div class="item-qty">Qty: 15</div></div></div>
+      <div class="item-tags"><span class="item-tag">15 Days</span></div>
       <div class="item-note">Dry stock to support deep-range operations without supply lines.</div>
-      <div class="quantity-row"><span class="quantity-label">Remaining</span><div data-consumable-key="rations" data-consumable-default="10" data-consumable-label="ration"></div></div>
+      <div class="quantity-row"><span class="quantity-label">Remaining</span><div data-consumable-key="rations" data-consumable-default="15" data-consumable-label="ration"></div></div>
     </div>
 
     <div class="item-card">
@@ -2482,6 +2482,21 @@
       <div class="item-main"><span class="item-icon">🪝</span><div><div class="item-name">Grappling Hook</div><div class="item-qty">Qty: 1</div></div></div>
       <div class="item-tags"><span class="item-tag">Ascent</span><span class="item-tag">Retrieve</span></div>
       <div class="item-note">Reinforced iron hook with smooth rotating pivot for stealth ascents and retrieving items from distance.</div>
+    </div>
+
+    <div class="item-card">
+      <div class="card-topline"><span class="item-type">Tool</span><span class="item-weight">3 lb</span></div>
+      <div class="item-main"><span class="item-icon">🌿</span><div><div class="item-name">Herbalism Kit</div><div class="item-qty">Qty: 1</div></div></div>
+      <div class="item-tags"><span class="item-tag">Identify Plants</span><span class="item-tag">Crafting</span></div>
+      <div class="item-note">Used to identify plants and craft antitoxin, candles, healer's kits, and Potions of Healing.</div>
+    </div>
+
+    <div class="item-card magic">
+      <div class="card-topline"><span class="item-type">Homebrew Consumable</span><span class="item-weight">-</span></div>
+      <div class="item-main"><span class="item-icon">☕</span><div><div class="item-name">Viktor's Speed Bars</div><div class="item-qty">Qty: 5</div></div></div>
+      <div class="item-tags"><span class="item-tag">1 Hour</span><span class="item-tag">Advantage</span><span class="item-tag">DC 14 CON</span></div>
+      <div class="item-note">Consume a whole bar to gain Advantage on Perception and Investigation checks for 1 hour. Make a DC 14 Constitution save; on a failure, when the hour ends, Speed is reduced by 10 feet and all checks take a -2 penalty for the next hour.</div>
+      <div class="quantity-row"><span class="quantity-label">Bars remaining</span><div data-consumable-key="speedBars" data-consumable-default="5" data-consumable-label="Viktor's Speed Bar"></div></div>
     </div>
 
   </div>
@@ -2827,6 +2842,7 @@ const sheetState = {
     crossbow: true,
   },
   consumables: {},
+  inventoryGrants: { august2026: true },
 };
 
 const DEFAULT_CURRENCY = { pp: 0, gp: 21, ep: 0, sp: 0, cp: 0 };
@@ -3009,6 +3025,7 @@ function saveSheetState() {
 }
 
 function loadSheetState() {
+  let inventoryGrantApplied = false;
   const versionBadge = document.getElementById('uiVersionBadge');
   if (versionBadge) versionBadge.textContent = `UI v${SHEET_UI_VERSION}`;
   if (!document.title.includes(`UI v${SHEET_UI_VERSION}`)) {
@@ -3021,6 +3038,8 @@ function loadSheetState() {
       applyCurrencyUI();
       refreshDerivedStats();
       updateHPBar();
+      renderViktorCustomItems();
+      InventoryTrackers.initializeFixedTrackers(sheetState, saveSheetState);
       return;
     }
 
@@ -3032,6 +3051,12 @@ function loadSheetState() {
 
     if (saved.sheetState && typeof saved.sheetState === 'object') {
       Object.assign(sheetState, saved.sheetState);
+    }
+    if (!saved.sheetState?.inventoryGrants?.august2026) {
+      if (!sheetState.consumables || typeof sheetState.consumables !== 'object') sheetState.consumables = {};
+      sheetState.consumables.rations = InventoryTrackers.sanitizeQuantity(sheetState.consumables.rations, 10) + 5;
+      sheetState.inventoryGrants = { ...(sheetState.inventoryGrants || {}), august2026: true };
+      inventoryGrantApplied = true;
     }
     ensureCurrencyState();
     if (!sheetState.equipment || typeof sheetState.equipment !== 'object') {
@@ -3132,6 +3157,7 @@ function loadSheetState() {
   applyCurrencyUI();
   renderViktorCustomItems();
   InventoryTrackers.initializeFixedTrackers(sheetState, saveSheetState);
+  if (inventoryGrantApplied) saveSheetState();
 }
 
 function setStatusPill(id, active, onText = 'Active', offText = 'Inactive') {

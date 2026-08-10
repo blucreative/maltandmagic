@@ -2048,7 +2048,7 @@
       <div class="hud-sub">A light-footed rogue's kit — travel lean, strike quick, run quicker.</div>
     </div>
     <div style="font-family:'Barlow Condensed',sans-serif;font-size:11px;color:var(--text-dim);letter-spacing:1px;text-transform:uppercase;">
-      Manifest Cards: <span style="color:var(--gold);">4</span>
+      Manifest Cards: <span style="color:var(--gold);">5</span>
     </div>
   </div>
 
@@ -2059,7 +2059,7 @@
     <div class="currency-item"><div class="currency-coin sp">SP</div><div class="currency-controls"><button type="button" class="currency-adjust-btn" onclick="adjustCurrency('sp',-1)">-</button><input id="currency-sp" class="currency-input" type="number" min="0" step="1" inputmode="numeric" value="0" onchange="setCurrencyFromInput('sp', this.value)"><button type="button" class="currency-adjust-btn" onclick="adjustCurrency('sp',1)">+</button></div></div>
     <div class="currency-item"><div class="currency-coin cp">CP</div><div class="currency-controls"><button type="button" class="currency-adjust-btn" onclick="adjustCurrency('cp',-1)">-</button><input id="currency-cp" class="currency-input" type="number" min="0" step="1" inputmode="numeric" value="0" onchange="setCurrencyFromInput('cp', this.value)"><button type="button" class="currency-adjust-btn" onclick="adjustCurrency('cp',1)">+</button></div></div>
     <div style="margin-left:auto;font-family:'Barlow Condensed',sans-serif;font-size:11px;color:var(--text-dim);">
-      Weight: <span style="color:var(--text-secondary);">13 lb</span> /
+      Weight: <span style="color:var(--text-secondary);">23 lb</span> /
       Encumbered: <span style="color:var(--text-secondary);">180 lb</span> /
       Push: <span style="color:var(--text-secondary);">360 lb</span>
     </div>
@@ -2095,6 +2095,14 @@
       <div class="item-main"><span class="item-icon">🧵</span><div><div class="item-name">Silk Rope (50 ft.)</div><div class="item-qty">Qty: 1</div></div></div>
       <div class="item-tags"><span class="item-tag">Ascent</span><span class="item-tag">Restraint</span></div>
       <div class="item-note">Fifty feet of strong, light silk cord for boarding, escape, and rescue pulls.</div>
+    </div>
+
+    <div class="item-card">
+      <div class="card-topline"><span class="item-type">Consumable</span><span class="item-weight">10 lb</span></div>
+      <div class="item-main"><span class="item-icon">🧺</span><div><div class="item-name">Rations</div><div class="item-qty">Qty: 5</div></div></div>
+      <div class="item-tags"><span class="item-tag">5 Days</span></div>
+      <div class="item-note">Travel-ready food for five days on the road.</div>
+      <div class="quantity-row"><span class="quantity-label">Remaining</span><div data-consumable-key="rations" data-consumable-default="5" data-consumable-label="ration"></div></div>
     </div>
 
   </div>
@@ -2442,6 +2450,7 @@ const sheetState = {
     whip: false,
   },
   consumables: {},
+  inventoryGrants: { august2026: true },
 };
 
 const DEFAULT_CURRENCY = { pp: 0, gp: 100, ep: 0, sp: 0, cp: 0 };
@@ -2624,6 +2633,7 @@ function saveSheetState() {
 }
 
 function loadSheetState() {
+  let inventoryGrantApplied = false;
   const versionBadge = document.getElementById('uiVersionBadge');
   if (versionBadge) versionBadge.textContent = `UI v${SHEET_UI_VERSION}`;
   if (!document.title.includes(`UI v${SHEET_UI_VERSION}`)) {
@@ -2640,6 +2650,7 @@ function loadSheetState() {
       updateHPBar();
       applyConditionEffects();
       renderVellanCustomItems();
+      InventoryTrackers.initializeFixedTrackers(sheetState, saveSheetState);
       return;
     }
 
@@ -2651,6 +2662,12 @@ function loadSheetState() {
 
     if (saved.sheetState && typeof saved.sheetState === 'object') {
       Object.assign(sheetState, saved.sheetState);
+    }
+    if (!saved.sheetState?.inventoryGrants?.august2026) {
+      if (!sheetState.consumables || typeof sheetState.consumables !== 'object') sheetState.consumables = {};
+      sheetState.consumables.rations = InventoryTrackers.sanitizeQuantity(sheetState.consumables.rations, 0) + 5;
+      sheetState.inventoryGrants = { ...(sheetState.inventoryGrants || {}), august2026: true };
+      inventoryGrantApplied = true;
     }
     ensureCurrencyState();
     if (!sheetState.equipment || typeof sheetState.equipment !== 'object') {
@@ -2729,6 +2746,7 @@ function loadSheetState() {
   applyCurrencyUI();
   renderVellanCustomItems();
   InventoryTrackers.initializeFixedTrackers(sheetState, saveSheetState);
+  if (inventoryGrantApplied) saveSheetState();
 }
 
 // ===== DERIVED STATS =====

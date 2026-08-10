@@ -1242,7 +1242,7 @@
       <div class="hud-sub">Stolen finery, tools of deception, and well-worn weapons.</div>
     </div>
     <div style="font-family:'Barlow Condensed',sans-serif;font-size:11px;color:var(--text-dim);letter-spacing:1px;text-transform:uppercase;">
-      Gear: <span style="color:var(--gold);">8 items</span>
+      Gear: <span style="color:var(--gold);">9 items</span>
     </div>
   </div>
 
@@ -1253,7 +1253,7 @@
     <div class="currency-item"><div class="currency-coin sp">SP</div><div class="currency-controls"><button type="button" class="currency-adjust-btn" onclick="adjustCurrency('sp',-1)">-</button><input id="currency-sp" class="currency-input" type="number" min="0" step="1" inputmode="numeric" value="0" onchange="setCurrencyFromInput('sp', this.value)"><button type="button" class="currency-adjust-btn" onclick="adjustCurrency('sp',1)">+</button></div></div>
     <div class="currency-item"><div class="currency-coin cp">CP</div><div class="currency-controls"><button type="button" class="currency-adjust-btn" onclick="adjustCurrency('cp',-1)">-</button><input id="currency-cp" class="currency-input" type="number" min="0" step="1" inputmode="numeric" value="0" onchange="setCurrencyFromInput('cp', this.value)"><button type="button" class="currency-adjust-btn" onclick="adjustCurrency('cp',1)">+</button></div></div>
     <div style="margin-left:auto;font-family:'Barlow Condensed',sans-serif;font-size:11px;color:var(--text-dim);">
-      Weight: <span style="color:var(--text-secondary);">43 lb</span> /
+      Weight: <span style="color:var(--text-secondary);">53 lb</span> /
       Encumbered: <span style="color:var(--text-secondary);">165 lb</span> /
       Push: <span style="color:var(--text-secondary);">330 lb</span>
     </div>
@@ -1320,6 +1320,14 @@
       <div class="item-main"><span class="item-icon">✒</span><div><div class="item-name">Forgery Kit</div><div class="item-qty">Qty: 1</div></div></div>
       <div class="item-tags"><span class="item-tag">Documents</span><span class="item-tag">Seals</span></div>
       <div class="item-note">Inks, parchments, seal stamps, and reference papers for creating false credentials.</div>
+    </div>
+
+    <div class="item-card">
+      <div class="card-topline"><span class="item-type">Consumable</span><span class="item-weight">10 lb</span></div>
+      <div class="item-main"><span class="item-icon">🧺</span><div><div class="item-name">Rations</div><div class="item-qty">Qty: 5</div></div></div>
+      <div class="item-tags"><span class="item-tag">5 Days</span></div>
+      <div class="item-note">Travel-ready food for five days on the road.</div>
+      <div class="quantity-row"><span class="quantity-label">Remaining</span><div data-consumable-key="rations" data-consumable-default="5" data-consumable-label="ration"></div></div>
     </div>
 
   </div>
@@ -1399,6 +1407,7 @@ const sheetState = {
     hiddenDagger: false,
   },
   consumables: {},
+  inventoryGrants: { august2026: true },
   customItems: [],
 };
 
@@ -2062,15 +2071,29 @@ function saveSheetState() {
 }
 
 function loadSheetState() {
+  let inventoryGrantApplied = false;
   const vb = document.getElementById('uiVersionBadge');
   if (vb) vb.textContent = `UI v${SHEET_UI_VERSION}`;
 
   try {
     const raw = localStorage.getItem(SHEET_STORAGE_KEY);
-    if (!raw) { applyCurrencyUI(); refreshDerivedStats(); updateHPBar(); return; }
+    if (!raw) {
+      applyCurrencyUI();
+      refreshDerivedStats();
+      updateHPBar();
+      renderCustomInventoryItems();
+      InventoryTrackers.initializeFixedTrackers(sheetState, saveSheetState);
+      return;
+    }
     const saved = JSON.parse(raw);
 
     if (saved.sheetState) Object.assign(sheetState, saved.sheetState);
+    if (!saved.sheetState?.inventoryGrants?.august2026) {
+      if (!sheetState.consumables || typeof sheetState.consumables !== 'object') sheetState.consumables = {};
+      sheetState.consumables.rations = InventoryTrackers.sanitizeQuantity(sheetState.consumables.rations, 0) + 5;
+      sheetState.inventoryGrants = { ...(sheetState.inventoryGrants || {}), august2026: true };
+      inventoryGrantApplied = true;
+    }
     ensureCurrencyState();
     if (!sheetState.equipment || typeof sheetState.equipment !== 'object') {
       sheetState.equipment = { chainShirt: true, luck: true, judgement: true, hiddenDagger: false };
@@ -2143,6 +2166,7 @@ function loadSheetState() {
   updateHPBar();
   renderCustomInventoryItems();
   InventoryTrackers.initializeFixedTrackers(sheetState, saveSheetState);
+  if (inventoryGrantApplied) saveSheetState();
 }
 
 // ===== TOOLTIP SYSTEM =====
