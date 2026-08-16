@@ -734,6 +734,23 @@
     transition: border-color 0.15s;
   }
   .feature-card:hover { border-color: var(--gold-dim); }
+  .action-filter {
+    display: flex; align-items: center; gap: 4px; width: fit-content;
+    margin-bottom: 12px; padding: 4px; border: 1px solid rgba(51,64,106,0.4);
+    border-radius: 6px; background: rgba(16,22,46,0.6);
+  }
+  .action-filter-btn {
+    min-height: 30px; padding: 5px 10px; border: 1px solid transparent;
+    border-radius: 4px; background: transparent; color: var(--text-dim);
+    font-family: 'Barlow Condensed', sans-serif; font-size: 10px; font-weight: 600;
+    letter-spacing: 1px; text-transform: uppercase; cursor: pointer;
+  }
+  .action-filter-btn:hover { color: var(--text-primary); border-color: rgba(51,64,106,0.55); }
+  .action-filter-btn.active {
+    color: var(--text-primary); border-color: var(--gold-dim);
+    background: rgba(201,162,76,0.14);
+  }
+  #tab-features .feature-card[hidden] { display: none !important; }
   .feature-card.arcane {
     border-color: rgba(154, 127, 224, 0.4);
     box-shadow: inset 0 0 0 1px rgba(154, 127, 224, 0.12);
@@ -1973,6 +1990,12 @@
 <!-- ======================================================= -->
 <div id="tab-features" class="tab-panel">
 <div class="sheet-body">
+<div class="action-filter" role="group" aria-label="Filter features by action type">
+  <button type="button" class="action-filter-btn active" data-action-filter="all" aria-pressed="true" onclick="filterFeatures('all')">All</button>
+  <button type="button" class="action-filter-btn" data-action-filter="action" aria-pressed="false" onclick="filterFeatures('action')">Action</button>
+  <button type="button" class="action-filter-btn" data-action-filter="bonus-action" aria-pressed="false" onclick="filterFeatures('bonus-action')">Bonus Action</button>
+  <button type="button" class="action-filter-btn" data-action-filter="free-action" aria-pressed="false" onclick="filterFeatures('free-action')">Free Action</button>
+</div>
 <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;align-items:start;">
 
   <!-- FIGHTER FEATURES -->
@@ -1996,7 +2019,7 @@
         <div class="feature-summary">+2 to attack rolls with ranged weapons (already included in the Longbow's +7). Replaceable on each Fighter level.</div>
       </div>
 
-      <div class="feature-card" data-tooltip="feat-second-wind">
+      <div class="feature-card" data-tooltip="feat-second-wind" data-action-type="bonus-action">
         <div class="feature-header">
           <span class="feature-name">Second Wind</span>
           <span class="feature-source">Fighter</span>
@@ -2004,7 +2027,7 @@
         <div class="feature-summary">Bonus Action: regain 1d10+2 HP. 2 uses per Long Rest; one returns on a Short Rest. Track on the Combat tab.</div>
       </div>
 
-      <div class="feature-card" data-tooltip="feat-action-surge">
+      <div class="feature-card" data-tooltip="feat-action-surge" data-action-type="free-action">
         <div class="feature-header">
           <span class="feature-name">Action Surge</span>
           <span class="feature-source">Fighter</span>
@@ -2012,7 +2035,7 @@
         <div class="feature-summary">Once per Short or Long Rest, take one additional action (except the Magic action).</div>
       </div>
 
-      <div class="feature-card" data-tooltip="feat-tactical-mind">
+      <div class="feature-card" data-tooltip="feat-tactical-mind" data-action-type="free-action">
         <div class="feature-header">
           <span class="feature-name">Tactical Mind</span>
           <span class="feature-source">Fighter</span>
@@ -2020,7 +2043,7 @@
         <div class="feature-summary">On a failed ability check, spend a Second Wind use to add 1d10 instead of regaining HP. If it still fails, the use isn't spent.</div>
       </div>
 
-      <div class="feature-card" data-tooltip="feat-weapon-mastery">
+      <div class="feature-card" data-tooltip="feat-weapon-mastery" data-action-type="action free-action">
         <div class="feature-header">
           <span class="feature-name">Weapon Mastery</span>
           <span class="feature-source">Fighter</span>
@@ -2084,7 +2107,7 @@
     <div class="panel-header"><span class="panel-title">Feats &amp; Masteries</span></div>
     <div class="panel-body">
 
-      <div class="feature-card" data-tooltip="feat-alert">
+      <div class="feature-card" data-tooltip="feat-alert" data-action-type="free-action">
         <div class="feature-header">
           <span class="feature-name">Alert</span>
           <span class="feature-source">Origin Feat</span>
@@ -2092,7 +2115,7 @@
         <div class="feature-summary">Add your Proficiency Bonus to Initiative, and swap Initiative with a willing ally right after rolling (neither Incapacitated).</div>
       </div>
 
-      <div class="feature-card" data-tooltip="feat-lucky">
+      <div class="feature-card" data-tooltip="feat-lucky" data-action-type="free-action">
         <div class="feature-header">
           <span class="feature-name">Lucky</span>
           <span class="feature-source">Origin Feat</span>
@@ -2108,7 +2131,7 @@
         <div class="feature-summary">Ability Score Increases (+2 / +1), Thieves' Tools proficiency, and an Origin feat. A rootless, streetwise past.</div>
       </div>
 
-      <div class="feature-card" data-tooltip="vex">
+      <div class="feature-card" data-tooltip="vex" data-action-type="action free-action">
         <div class="feature-header">
           <span class="feature-name">Vex (Shortsword)</span>
           <span class="feature-source">Mastery</span>
@@ -2116,7 +2139,7 @@
         <div class="feature-summary">On a damaging hit: Advantage on your next attack roll against that target, until the end of your next turn.</div>
       </div>
 
-      <div class="feature-card" data-tooltip="slow">
+      <div class="feature-card" data-tooltip="slow" data-action-type="action free-action">
         <div class="feature-header">
           <span class="feature-name">Slow (Longbow)</span>
           <span class="feature-source">Mastery</span>
@@ -2597,6 +2620,18 @@ function switchTab(id) {
   const activeBtn = document.querySelector(`.tab-btn[onclick="switchTab('${id}')"]`);
   if (activeBtn) activeBtn.classList.add('active');
   saveSheetState();
+}
+
+function filterFeatures(actionType) {
+  document.querySelectorAll('#tab-features .feature-card').forEach(card => {
+    const actionTypes = (card.dataset.actionType || '').split(' ');
+    card.hidden = actionType !== 'all' && !actionTypes.includes(actionType);
+  });
+  document.querySelectorAll('#tab-features .action-filter-btn').forEach(button => {
+    const isActive = button.dataset.actionFilter === actionType;
+    button.classList.toggle('active', isActive);
+    button.setAttribute('aria-pressed', String(isActive));
+  });
 }
 
 // ===== TOOLTIP ENGINE =====

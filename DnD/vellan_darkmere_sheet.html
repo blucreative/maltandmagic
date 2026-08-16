@@ -810,6 +810,23 @@
     transition: border-color 0.15s;
   }
   .feature-card:hover { border-color: var(--gold-dim); }
+  .action-filter {
+    display: flex; align-items: center; gap: 4px; width: fit-content;
+    margin-bottom: 12px; padding: 4px; border: 1px solid rgba(44,90,99,0.4);
+    border-radius: 6px; background: rgba(13,34,39,0.6);
+  }
+  .action-filter-btn {
+    min-height: 30px; padding: 5px 10px; border: 1px solid transparent;
+    border-radius: 4px; background: transparent; color: var(--text-dim);
+    font-family: 'Barlow Condensed', sans-serif; font-size: 10px; font-weight: 600;
+    letter-spacing: 1px; text-transform: uppercase; cursor: pointer;
+  }
+  .action-filter-btn:hover { color: var(--text-primary); border-color: rgba(44,90,99,0.55); }
+  .action-filter-btn.active {
+    color: var(--text-primary); border-color: var(--gold-dim);
+    background: rgba(201,162,76,0.14);
+  }
+  #tab-features .feature-card[hidden] { display: none !important; }
   .feature-card.effect-active {
     border-color: rgba(168, 63, 78, 0.6);
     box-shadow: inset 0 0 0 1px rgba(168, 63, 78, 0.2);
@@ -1874,6 +1891,12 @@
 <!-- ======================================================= -->
 <div id="tab-features" class="tab-panel">
 <div class="sheet-body">
+<div class="action-filter" role="group" aria-label="Filter features by action type">
+  <button type="button" class="action-filter-btn active" data-action-filter="all" aria-pressed="true" onclick="filterFeatures('all')">All</button>
+  <button type="button" class="action-filter-btn" data-action-filter="action" aria-pressed="false" onclick="filterFeatures('action')">Action</button>
+  <button type="button" class="action-filter-btn" data-action-filter="bonus-action" aria-pressed="false" onclick="filterFeatures('bonus-action')">Bonus Action</button>
+  <button type="button" class="action-filter-btn" data-action-filter="free-action" aria-pressed="false" onclick="filterFeatures('free-action')">Free Action</button>
+</div>
 <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;align-items:start;">
 
   <!-- ROGUE FEATURES -->
@@ -1897,7 +1920,7 @@
         <div class="feature-summary">Double proficiency in Deception (+6) and Persuasion (+6).</div>
       </div>
 
-      <div class="feature-card" data-tooltip="feat-sneak-attack">
+      <div class="feature-card" data-tooltip="feat-sneak-attack" data-action-type="action free-action">
         <div class="feature-header">
           <span class="feature-name">Sneak Attack (1d6)</span>
           <span class="feature-source">Rogue</span>
@@ -1905,7 +1928,7 @@
         <div class="feature-summary">Once per turn, deal an extra 1d6 with a Finesse or Ranged weapon when you have Advantage, or an ally is within 5 ft. of the target and you don't have Disadvantage.</div>
       </div>
 
-      <div class="feature-card" data-tooltip="feat-cunning-action">
+      <div class="feature-card" data-tooltip="feat-cunning-action" data-action-type="bonus-action">
         <div class="feature-header">
           <span class="feature-name">Cunning Action</span>
           <span class="feature-source">Rogue</span>
@@ -1921,7 +1944,7 @@
         <div class="feature-summary">Secret mix of dialect, jargon, and code. Plus one additional language.</div>
       </div>
 
-      <div class="feature-card" data-tooltip="feat-weapon-mastery">
+      <div class="feature-card" data-tooltip="feat-weapon-mastery" data-action-type="action free-action">
         <div class="feature-header">
           <span class="feature-name">Weapon Mastery</span>
           <span class="feature-source">Rogue</span>
@@ -1981,7 +2004,7 @@
         <div class="feature-summary">Gain one Origin feat — taken as Tavern Brawler.</div>
       </div>
 
-      <div class="feature-card" data-tooltip="feat-tavern-brawler">
+      <div class="feature-card" data-tooltip="feat-tavern-brawler" data-action-type="action free-action">
         <div class="feature-header">
           <span class="feature-name">Tavern Brawler</span>
           <span class="feature-source">Origin Feat</span>
@@ -1997,7 +2020,7 @@
     <div class="panel-header"><span class="panel-title">Weapon Masteries &amp; Actions</span></div>
     <div class="panel-body">
 
-      <div class="feature-card" data-tooltip="vex">
+      <div class="feature-card" data-tooltip="vex" data-action-type="action free-action">
         <div class="feature-header">
           <span class="feature-name">Vex (Rapier)</span>
           <span class="feature-source">Mastery</span>
@@ -2005,7 +2028,7 @@
         <div class="feature-summary">On a damaging hit: Advantage on your next attack roll against that target, until the end of your next turn.</div>
       </div>
 
-      <div class="feature-card" data-tooltip="slow">
+      <div class="feature-card" data-tooltip="slow" data-action-type="action free-action">
         <div class="feature-header">
           <span class="feature-name">Slow (Whip)</span>
           <span class="feature-source">Mastery</span>
@@ -2013,7 +2036,7 @@
         <div class="feature-summary">On a damaging hit: reduce the target's Speed by 10 ft. until the start of your next turn (doesn't stack past 10 ft. per turn).</div>
       </div>
 
-      <div class="feature-card" data-tooltip="push">
+      <div class="feature-card" data-tooltip="push" data-action-type="action free-action">
         <div class="feature-header">
           <span class="feature-name">Push (Tavern Brawler)</span>
           <span class="feature-source">Special</span>
@@ -2021,7 +2044,7 @@
         <div class="feature-summary">Once per turn, a damaging Unarmed Strike can also push the target 5 ft. away.</div>
       </div>
 
-      <div class="feature-card" data-tooltip="action-cunning">
+      <div class="feature-card" data-tooltip="action-cunning" data-action-type="bonus-action">
         <div class="feature-header">
           <span class="feature-name">Bonus Action Options</span>
           <span class="feature-source">Cunning</span>
@@ -2302,6 +2325,18 @@ function switchTab(id) {
   const activeBtn = document.querySelector(`.tab-btn[onclick="switchTab('${id}')"]`);
   if (activeBtn) activeBtn.classList.add('active');
   saveSheetState();
+}
+
+function filterFeatures(actionType) {
+  document.querySelectorAll('#tab-features .feature-card').forEach(card => {
+    const actionTypes = (card.dataset.actionType || '').split(' ');
+    card.hidden = actionType !== 'all' && !actionTypes.includes(actionType);
+  });
+  document.querySelectorAll('#tab-features .action-filter-btn').forEach(button => {
+    const isActive = button.dataset.actionFilter === actionType;
+    button.classList.toggle('active', isActive);
+    button.setAttribute('aria-pressed', String(isActive));
+  });
 }
 
 // ===== TOOLTIP ENGINE =====
