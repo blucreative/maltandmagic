@@ -189,6 +189,77 @@
     white-space: nowrap;
   }
   .back-link:hover { color: var(--gold); border-color: var(--gold-dim); }
+  .level-up-btn {
+    padding: 6px 10px; border: 1px solid var(--gold-light); border-radius: 7px;
+    background: var(--gold); color: #08161a; cursor: pointer; white-space: nowrap;
+    font-family: 'Barlow Condensed', sans-serif; font-size: 11px; font-weight: 700;
+    letter-spacing: 1.2px; text-transform: uppercase;
+  }
+  .level-up-btn:hover { background: var(--gold-light); }
+  .level-up-dialog {
+    width: min(620px, calc(100% - 24px)); max-height: calc(100vh - 32px);
+    margin: auto; padding: 0; overflow: auto; color: var(--text-primary);
+    background: #0b2228; border: 1px solid rgba(201,162,76,0.55);
+    border-radius: 8px; box-shadow: 0 24px 70px rgba(0,0,0,0.65);
+  }
+  .level-up-dialog::backdrop { background: rgba(2,10,13,0.82); backdrop-filter: blur(3px); }
+  .level-up-header {
+    display: flex; align-items: center; justify-content: space-between; gap: 16px;
+    padding: 16px 18px; border-bottom: 1px solid rgba(44,90,99,0.65);
+    background: rgba(6,20,26,0.72);
+  }
+  .level-up-title { font-family: 'Cinzel', serif; font-size: 18px; color: var(--gold-light); }
+  .level-up-kicker, .level-up-label {
+    font-family: 'Barlow Condensed', sans-serif; font-size: 10px; font-weight: 700;
+    letter-spacing: 1.2px; text-transform: uppercase; color: var(--parchment-dark);
+  }
+  .level-up-close {
+    width: 32px; height: 32px; border: 1px solid rgba(95,119,114,0.5);
+    border-radius: 4px; background: transparent; color: var(--text-secondary);
+    font-size: 20px; line-height: 1; cursor: pointer;
+  }
+  .level-up-close:hover { color: var(--gold-light); border-color: var(--gold-dim); }
+  .level-up-form { padding: 18px; }
+  .level-up-gains { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; margin-bottom: 18px; }
+  .level-up-gain {
+    min-width: 0; padding: 10px; border: 1px solid rgba(44,90,99,0.5);
+    border-radius: 6px; background: rgba(13,34,39,0.7);
+  }
+  .level-up-gain strong { display: block; color: var(--gold); font-size: 12px; }
+  .level-up-gain span { color: var(--text-secondary); font-size: 11px; }
+  .level-up-field { display: grid; gap: 6px; margin-bottom: 14px; }
+  .level-up-field[hidden] { display: none; }
+  .level-up-select, .level-up-input {
+    width: 100%; min-height: 38px; padding: 8px 10px;
+    border: 1px solid rgba(95,119,114,0.55); border-radius: 5px;
+    background: rgba(5,18,22,0.82); color: var(--text-primary); font: inherit;
+  }
+  .level-up-select:focus, .level-up-input:focus { outline: 2px solid rgba(201,162,76,0.45); outline-offset: 1px; }
+  .level-up-hp-options { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; border: 0; }
+  .level-up-choice {
+    display: flex; align-items: center; gap: 8px; min-height: 40px; padding: 8px 10px;
+    border: 1px solid rgba(44,90,99,0.5); border-radius: 5px; cursor: pointer;
+  }
+  .level-up-choice:has(input:checked) { border-color: var(--gold-dim); background: rgba(201,162,76,0.1); }
+  .level-up-review {
+    margin-top: 18px; padding: 12px; border-left: 2px solid var(--gold-dim);
+    background: rgba(6,20,26,0.68); color: var(--text-secondary); font-size: 12px; line-height: 1.6;
+  }
+  .level-up-review strong { color: var(--parchment); }
+  .level-up-actions { display: flex; justify-content: flex-end; gap: 8px; margin-top: 18px; }
+  .level-up-action {
+    min-height: 36px; padding: 7px 12px; border: 1px solid rgba(95,119,114,0.55);
+    border-radius: 5px; background: transparent; color: var(--text-secondary); cursor: pointer;
+    font-family: 'Barlow Condensed', sans-serif; font-size: 11px; font-weight: 700;
+    letter-spacing: 1px; text-transform: uppercase;
+  }
+  .level-up-action.primary { border-color: var(--gold-dim); background: var(--gold); color: #08161a; }
+  .level-up-action.primary:hover { background: var(--gold-light); }
+  .level-up-action:disabled { cursor: not-allowed; opacity: 0.5; }
+  .level-up-verification { min-height: 65px; margin-top: 14px; }
+  .level-up-error { min-height: 18px; margin-top: 8px; color: #e08a8a; font-size: 11px; }
+  .level-up-error.success { color: var(--success-light); }
+  .level-up-error a { color: inherit; font-weight: 600; }
 
   /* ===== NAV TABS ===== */
   .nav-tabs {
@@ -1475,6 +1546,9 @@
     .panel-body {
       padding: 12px;
     }
+    .level-up-gains, .level-up-hp-options { grid-template-columns: 1fr; }
+    .level-up-actions { flex-direction: column-reverse; }
+    .level-up-action { width: 100%; }
   }
 </style>
 </head>
@@ -1525,9 +1599,57 @@
       <div class="value">Milestone</div>
     </div>
     <div class="meta-divider"></div>
+    <button type="button" class="level-up-btn" onclick="openLevelUpPlanner()">Level Up</button>
     <a class="back-link" href="index.html">↩ Index</a>
   </div>
 </div>
+
+<dialog id="levelUpDialog" class="level-up-dialog" aria-labelledby="levelUpTitle">
+  <div class="level-up-header">
+    <div>
+      <div class="level-up-kicker">Rogue 2 → Rogue 3</div>
+      <h2 class="level-up-title" id="levelUpTitle">Vellan's Level Up</h2>
+    </div>
+    <button type="button" class="level-up-close" onclick="closeLevelUpPlanner()" aria-label="Close level-up planner">×</button>
+  </div>
+  <form class="level-up-form" id="levelUpForm" onsubmit="submitLevelUpRequest(event)">
+    <div class="level-up-gains" aria-label="Automatic level 3 gains">
+      <div class="level-up-gain"><strong>Sneak Attack</strong><span>Increases from 1d6 to 2d6</span></div>
+      <div class="level-up-gain"><strong>Steady Aim</strong><span>New Rogue 3 feature</span></div>
+      <div class="level-up-gain"><strong>Proficiency</strong><span>Remains +2</span></div>
+    </div>
+    <div class="level-up-field">
+      <label class="level-up-label" for="levelUpSubclass">Rogue Subclass</label>
+      <select class="level-up-select" id="levelUpSubclass" required onchange="updateLevelUpPlanner()">
+        <option value="">Choose a subclass</option>
+        <option value="Thief">Thief (SRD 5.2.1)</option>
+        <option value="other">Other approved subclass</option>
+      </select>
+    </div>
+    <div class="level-up-field" id="levelUpOtherSubclassField" hidden>
+      <label class="level-up-label" for="levelUpOtherSubclass">Approved Subclass Name</label>
+      <input class="level-up-input" id="levelUpOtherSubclass" type="text" maxlength="80" autocomplete="off" oninput="updateLevelUpPlanner()">
+    </div>
+    <div class="level-up-field">
+      <div class="level-up-label" id="levelUpHpLegend">Hit Point Increase</div>
+      <fieldset class="level-up-hp-options" aria-labelledby="levelUpHpLegend">
+        <label class="level-up-choice"><input type="radio" name="levelUpHpMethod" value="fixed" checked onchange="updateLevelUpPlanner()"> Fixed value (+5 HP)</label>
+        <label class="level-up-choice"><input type="radio" name="levelUpHpMethod" value="rolled" onchange="updateLevelUpPlanner()"> Rolled d8</label>
+      </fieldset>
+    </div>
+    <div class="level-up-field" id="levelUpHpRollField" hidden>
+      <label class="level-up-label" for="levelUpHpRoll">Recorded d8 Roll</label>
+      <input class="level-up-input" id="levelUpHpRoll" type="number" min="1" max="8" inputmode="numeric" oninput="updateLevelUpPlanner()">
+    </div>
+    <div class="level-up-review" id="levelUpReview" aria-live="polite"></div>
+    <div class="level-up-verification" id="levelUpTurnstile" aria-label="Human verification"></div>
+    <div class="level-up-error" id="levelUpError" role="alert"></div>
+    <div class="level-up-actions">
+      <button type="button" class="level-up-action" onclick="closeLevelUpPlanner()">Cancel</button>
+      <button type="submit" class="level-up-action primary" id="levelUpSubmit" disabled>Submit Level-Up Request</button>
+    </div>
+  </form>
+</dialog>
 
 <!-- ===== NAV ===== -->
 <div class="nav-tabs">
@@ -2316,6 +2438,12 @@ const TOOLTIPS = {
 
 <script>
 const SHEET_UI_VERSION = '1.0.0';
+const LEVEL_UP_API_URL = 'https://maltandmagic-level-up.maltandmagic-level-up-request.workers.dev/requests/level-up';
+const TURNSTILE_SITE_KEY = '0x4AAAAAAERnonLxTMX6NA92';
+let levelUpTurnstileToken = '';
+let levelUpTurnstileWidgetId = null;
+let levelUpTurnstileLoader = null;
+let levelUpSubmitting = false;
 
 // ===== TABS =====
 function switchTab(id) {
@@ -2337,6 +2465,176 @@ function filterFeatures(actionType) {
     button.classList.toggle('active', isActive);
     button.setAttribute('aria-pressed', String(isActive));
   });
+}
+
+function openLevelUpPlanner() {
+  const dialog = document.getElementById('levelUpDialog');
+  updateLevelUpPlanner();
+  if (dialog && !dialog.open) dialog.showModal();
+  prepareLevelUpVerification();
+}
+
+function closeLevelUpPlanner() {
+  document.getElementById('levelUpDialog')?.close();
+}
+
+function getLevelUpChoices() {
+  const subclassChoice = document.getElementById('levelUpSubclass')?.value || '';
+  const otherSubclass = document.getElementById('levelUpOtherSubclass')?.value.trim() || '';
+  const subclass = subclassChoice === 'other' ? otherSubclass : subclassChoice;
+  const hpMethod = document.querySelector('input[name="levelUpHpMethod"]:checked')?.value || 'fixed';
+  const hpRoll = parseInt(document.getElementById('levelUpHpRoll')?.value, 10);
+  const hpIncrease = hpMethod === 'fixed' ? 5 : hpRoll;
+  return { subclassChoice, subclass, hpMethod, hpIncrease };
+}
+
+function updateLevelUpPlanner() {
+  const choices = getLevelUpChoices();
+  const otherField = document.getElementById('levelUpOtherSubclassField');
+  const otherInput = document.getElementById('levelUpOtherSubclass');
+  const hpRollField = document.getElementById('levelUpHpRollField');
+  const hpRollInput = document.getElementById('levelUpHpRoll');
+  if (otherField) otherField.hidden = choices.subclassChoice !== 'other';
+  if (otherInput) otherInput.required = choices.subclassChoice === 'other';
+  if (hpRollField) hpRollField.hidden = choices.hpMethod !== 'rolled';
+  if (hpRollInput) hpRollInput.required = choices.hpMethod === 'rolled';
+  const subclassSummary = choices.subclass || 'Not selected';
+  const hpSummary = Number.isInteger(choices.hpIncrease) ? `+${choices.hpIncrease} HP (maximum 13 → ${13 + choices.hpIncrease})` : 'Enter the recorded d8 roll';
+  const review = document.getElementById('levelUpReview');
+  if (review) {
+    const heading = document.createElement('strong');
+    heading.textContent = 'Request preview';
+    review.replaceChildren(
+      heading,
+      document.createElement('br'),
+      document.createTextNode(`Rogue 2 → Rogue 3 · ${subclassSummary}`),
+      document.createElement('br'),
+      document.createTextNode(hpSummary),
+      document.createElement('br'),
+      document.createTextNode('Automatic gains: Steady Aim and Sneak Attack 2d6'),
+    );
+  }
+  setLevelUpStatus('');
+}
+
+function levelUpServiceConfigured() {
+  return !LEVEL_UP_API_URL.includes('REPLACE_WITH_') && !TURNSTILE_SITE_KEY.includes('REPLACE_WITH_');
+}
+
+function loadTurnstile() {
+  if (window.turnstile) return Promise.resolve(window.turnstile);
+  if (levelUpTurnstileLoader) return levelUpTurnstileLoader;
+  levelUpTurnstileLoader = new Promise((resolve, reject) => {
+    const script = document.createElement('script');
+    script.src = 'https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit';
+    script.async = true;
+    script.defer = true;
+    script.addEventListener('load', () => resolve(window.turnstile), { once: true });
+    script.addEventListener('error', () => reject(new Error('Verification failed to load.')), { once: true });
+    document.head.appendChild(script);
+  });
+  return levelUpTurnstileLoader;
+}
+
+async function prepareLevelUpVerification() {
+  if (!levelUpServiceConfigured()) {
+    setLevelUpStatus('Level-up requests are awaiting owner configuration.');
+    updateLevelUpSubmitState();
+    return;
+  }
+  try {
+    const turnstile = await loadTurnstile();
+    if (levelUpTurnstileWidgetId === null) {
+      levelUpTurnstileWidgetId = turnstile.render('#levelUpTurnstile', {
+        sitekey: TURNSTILE_SITE_KEY,
+        action: 'level-up-request',
+        theme: 'dark',
+        callback: token => {
+          levelUpTurnstileToken = token;
+          setLevelUpStatus('');
+          updateLevelUpSubmitState();
+        },
+        'expired-callback': () => {
+          levelUpTurnstileToken = '';
+          updateLevelUpSubmitState();
+        },
+        'error-callback': () => {
+          levelUpTurnstileToken = '';
+          setLevelUpStatus('Verification failed to load. Please try again.');
+          updateLevelUpSubmitState();
+        },
+      });
+    }
+  } catch (error) {
+    setLevelUpStatus(error.message || 'Verification failed to load.');
+  }
+}
+
+function setLevelUpStatus(message, type = 'error', issueUrl = '') {
+  const status = document.getElementById('levelUpError');
+  if (!status) return;
+  status.classList.toggle('success', type === 'success');
+  status.textContent = message;
+  if (issueUrl) {
+    const link = document.createElement('a');
+    link.href = issueUrl;
+    link.target = '_blank';
+    link.rel = 'noopener';
+    link.textContent = ' View request.';
+    status.appendChild(link);
+  }
+}
+
+function updateLevelUpSubmitState() {
+  const submitButton = document.getElementById('levelUpSubmit');
+  if (!submitButton) return;
+  submitButton.disabled = levelUpSubmitting || !levelUpTurnstileToken || !levelUpServiceConfigured();
+  submitButton.textContent = levelUpSubmitting ? 'Submitting...' : 'Submit Level-Up Request';
+}
+
+async function submitLevelUpRequest(event) {
+  event.preventDefault();
+  const form = document.getElementById('levelUpForm');
+  if (!form?.reportValidity()) return;
+  const choices = getLevelUpChoices();
+  if (!choices.subclass || !Number.isInteger(choices.hpIncrease) || choices.hpIncrease < 1 || choices.hpIncrease > 8) {
+    setLevelUpStatus('Choose a subclass and a valid Hit Point increase.');
+    return;
+  }
+  if (!levelUpTurnstileToken) {
+    setLevelUpStatus('Complete the verification challenge before submitting.');
+    return;
+  }
+
+  levelUpSubmitting = true;
+  updateLevelUpSubmitState();
+  setLevelUpStatus('');
+  try {
+    const response = await fetch(LEVEL_UP_API_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        characterId: 'vellan-darkmere',
+        subclass: choices.subclass,
+        hpMethod: choices.hpMethod,
+        hpIncrease: choices.hpIncrease,
+        turnstileToken: levelUpTurnstileToken,
+      }),
+    });
+    const result = await response.json().catch(() => ({}));
+    if (!response.ok) throw new Error(result.error || 'The request could not be submitted.');
+
+    setLevelUpStatus(`Request #${result.issueNumber} was submitted for review.`, 'success', result.issueUrl);
+    levelUpTurnstileToken = '';
+    if (window.turnstile && levelUpTurnstileWidgetId !== null) window.turnstile.reset(levelUpTurnstileWidgetId);
+  } catch (error) {
+    setLevelUpStatus(error.message || 'The request could not be submitted.');
+    levelUpTurnstileToken = '';
+    if (window.turnstile && levelUpTurnstileWidgetId !== null) window.turnstile.reset(levelUpTurnstileWidgetId);
+  } finally {
+    levelUpSubmitting = false;
+    updateLevelUpSubmitState();
+  }
 }
 
 // ===== TOOLTIP ENGINE =====
