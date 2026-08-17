@@ -518,12 +518,61 @@
 
   /* ===== MOBILE ===== */
   @media (max-width: 768px) {
-    .sheet-body { padding: 10px 12px; }
+    .sheet-header { padding: 12px 12px 10px; }
+    .header-inner { gap: 10px; }
+    .header-name { flex-basis: 100%; min-width: 0; }
     .char-name { font-size: 22px; }
-    .header-stats { gap: 6px; }
-    .hstat { padding: 4px 7px; min-width: 46px; }
+    .char-sub {
+      display: block;
+      margin-top: 5px;
+      padding: 0;
+      font-size: 11px;
+      line-height: 1.45;
+      letter-spacing: 1px;
+      overflow-x: visible;
+    }
+    .header-stats {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 6px;
+      width: 100%;
+    }
+    .hstat { min-width: 0; padding: 6px 4px; }
+    .hstat.hp-display { grid-column: span 2; min-width: 0; }
     .hstat-val { font-size: 15px; }
-    .tab-btn { padding: 8px 10px; font-size: 10px; letter-spacing: 1px; }
+    .hp-inputs { justify-content: center; }
+    .hp-input { width: 44px; }
+    .header-nav { width: 100%; justify-content: space-between; }
+    .tab-bar {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 2px;
+      padding: 4px 6px;
+    }
+    .tab-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 0;
+      min-height: 44px;
+      padding: 6px 2px;
+      font-size: 10px;
+      line-height: 1.1;
+      letter-spacing: 0.6px;
+      text-align: center;
+      white-space: normal;
+    }
+    .sheet-body { padding: 10px; }
+    #tab-combat .sheet-body > div,
+    #tab-spells .sheet-body > div,
+    #tab-features .sheet-body > div:not(.action-filter),
+    #tab-notes .sheet-body > div {
+      grid-template-columns: minmax(0, 1fr) !important;
+      gap: 12px !important;
+    }
+    #tab-combat .sheet-body > div > div:nth-child(2) {
+      order: -1;
+    }
     .ability-grid { grid-template-columns: repeat(3, 1fr); }
     .weapon-row { grid-template-columns: 1fr auto auto; }
     .weapon-type { display: none; }
