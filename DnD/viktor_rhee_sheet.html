@@ -7,9 +7,10 @@
 <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=IM+Fell+English:ital@0;1&family=Barlow:wght@300;400;500;600&family=Barlow+Condensed:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../assets/css/theme-fantasy.css">
-<link rel="stylesheet" href="../assets/css/page-polish.css">
+<link rel="stylesheet" href="../assets/css/page-polish.css?v=20260817-rest-dialog">
 <script defer src="../assets/js/a11y-sheet-helpers.js"></script>
 <script src="../assets/js/inventory-trackers.js"></script>
+<script defer src="../assets/js/rest-hit-dice.js?v=20260817-rest-dialog"></script>
 <style>
   :root {
     --forest-dark: #1a2218;
@@ -3838,7 +3839,7 @@ function updateWeaponDisplay(weapon) {
 }
 
 // ===== REST =====
-function shortRest() {
+async function shortRest() {
   const currentHP = document.getElementById('currentHP');
   const hp = Number.parseInt(currentHP.value, 10) || 0;
   if (hp < 1) {
@@ -3852,13 +3853,18 @@ function shortRest() {
   });
   const rolls = [];
   let healedHP = hp;
-  while (sheetState.hitDice.d10 > 0 && healedHP < 17 && window.confirm(`Spend 1d10 Hit Die?\n\nHP: ${healedHP}/17\nHit Dice remaining: ${sheetState.hitDice.d10}/2`)) {
-    const roll = Math.floor(Math.random() * 10) + 1;
+  const selectedDice = healedHP < 17
+    ? await chooseRestHitDice([{ type: 'd10', size: 10, label: 'd10', available: sheetState.hitDice.d10 }])
+    : [];
+  for (const selectedDie of selectedDice) {
+    if (healedHP >= 17) break;
+    const manual = selectedDie.roll !== null;
+    const roll = manual ? selectedDie.roll : Math.floor(Math.random() * selectedDie.size) + 1;
     const healing = Math.max(1, roll + 1);
     const regained = Math.min(17 - healedHP, healing);
     healedHP += regained;
     sheetState.hitDice.d10 -= 1;
-    rolls.push(`d10 ${roll} + CON 1 = ${healing} (${regained} HP regained)`);
+    rolls.push(`d10 ${roll}${manual ? ' (manual)' : ' (auto)'} + CON 1 = ${healing} (${regained} HP regained)`);
     currentHP.value = healedHP;
     updateHPBar();
     updateHitDiceUI();
