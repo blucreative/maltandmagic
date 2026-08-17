@@ -1805,8 +1805,8 @@
     <div class="panel">
       <div class="panel-header"><span class="panel-title">Combat</span>
         <div class="rest-btns">
-          <button class="rest-btn short" onclick="shortRest()">Short Rest</button>
-          <button class="rest-btn long" onclick="longRest()">Long Rest</button>
+          <button type="button" class="rest-btn short" onclick="shortRest()" title="Spend Hit Dice and recover Short Rest features">Short Rest</button>
+          <button type="button" class="rest-btn long" onclick="longRest()" title="Restore HP, Hit Dice, spell slots, and Long Rest features">Long Rest</button>
         </div>
       </div>
       <div class="panel-body">
@@ -1815,7 +1815,7 @@
           <div class="combat-stat"><span class="cs-val" id="initiativeVal">+3</span><span class="cs-label">Initiative</span></div>
           <div class="combat-stat"><span class="cs-val" id="speedVal">30ft</span><span class="cs-label">Speed</span></div>
           <div class="combat-stat"><span class="cs-val">+2</span><span class="cs-label">Prof Bonus</span></div>
-          <div class="combat-stat"><span class="cs-val">2d10</span><span class="cs-label">Hit Dice</span></div>
+          <div class="combat-stat"><span class="cs-val" id="hitDiceDisplay">2 / 2 d10</span><span class="cs-label">Hit Dice</span></div>
         </div>
         <div id="combatEffectReadout" style="font-family:'Barlow Condensed',sans-serif;font-size:10px;letter-spacing:1px;color:var(--text-dim);margin:-4px 0 0;">
           No temporary combat effects active.
@@ -2169,8 +2169,8 @@
             </div>
             <div style="margin-top:6px;">
               <div class="resource-track">
-                <div class="resource-pip available" onclick="toggleResource(this)" title="Free use 1"></div>
-                <div class="resource-pip available" onclick="toggleResource(this)" title="Free use 2"></div>
+                <div class="resource-pip available" data-resource="favouredEnemy" onclick="toggleResource(this)" title="Free use 1"></div>
+                <div class="resource-pip available" data-resource="favouredEnemy" onclick="toggleResource(this)" title="Free use 2"></div>
                 <span class="resource-label">2 / Long Rest (no slot needed)</span>
               </div>
             </div>
@@ -2211,8 +2211,8 @@
         </div>
         <div class="feature-summary">Hunter's Mark always prepared. Cast without a spell slot 2× per Long Rest.</div>
         <div class="resource-track">
-          <div class="resource-pip available" onclick="toggleResource(this)"></div>
-          <div class="resource-pip available" onclick="toggleResource(this)"></div>
+          <div class="resource-pip available" data-resource="favouredEnemy" onclick="toggleResource(this)"></div>
+          <div class="resource-pip available" data-resource="favouredEnemy" onclick="toggleResource(this)"></div>
           <span class="resource-label">2 / Long Rest</span>
         </div>
       </div>
@@ -2273,8 +2273,8 @@
         </div>
         <div class="feature-summary">Bonus Action: take Dash, gain 2 Temp HP. Recharges on Short or Long Rest.</div>
         <div class="resource-track">
-          <div class="resource-pip available" onclick="toggleResource(this)"></div>
-          <div class="resource-pip available" onclick="toggleResource(this)"></div>
+          <div class="resource-pip available" data-resource="adrenalineRush" onclick="toggleResource(this)"></div>
+          <div class="resource-pip available" data-resource="adrenalineRush" onclick="toggleResource(this)"></div>
           <span class="resource-label">2 / Short or Long Rest</span>
         </div>
       </div>
@@ -2294,7 +2294,7 @@
         </div>
         <div class="feature-summary">Once per Long Rest: when reduced to 0 HP but not killed outright, drop to 1 HP instead.</div>
         <div class="resource-track">
-          <div class="resource-pip available" onclick="toggleResource(this)"></div>
+          <div class="resource-pip available" data-resource="relentlessEndurance" onclick="toggleResource(this)"></div>
           <span class="resource-label">1 / Long Rest</span>
         </div>
       </div>
@@ -2895,6 +2895,7 @@ function updateHPBar() {
 
 // ===== REACTIVE SHEET STATE =====
 const sheetState = {
+  hitDice: { d10: 2 },
   defense: true,
   longstrider: false,
   anticipate: false,
@@ -2930,6 +2931,18 @@ function ensureCurrencyState() {
   ['pp', 'gp', 'ep', 'sp', 'cp'].forEach(key => {
     sheetState.currency[key] = sanitizeCurrencyValue(sheetState.currency[key]);
   });
+}
+
+function ensureHitDiceState() {
+  if (!sheetState.hitDice || typeof sheetState.hitDice !== 'object') sheetState.hitDice = {};
+  const remaining = Number.parseInt(sheetState.hitDice.d10, 10);
+  sheetState.hitDice.d10 = Number.isFinite(remaining) ? Math.max(0, Math.min(2, remaining)) : 2;
+}
+
+function updateHitDiceUI() {
+  ensureHitDiceState();
+  const display = document.getElementById('hitDiceDisplay');
+  if (display) display.textContent = `${sheetState.hitDice.d10} / 2 d10`;
 }
 
 function applyCurrencyUI() {
@@ -3105,6 +3118,7 @@ function loadSheetState() {
   try {
     const raw = localStorage.getItem(SHEET_STORAGE_KEY);
     if (!raw) {
+      updateHitDiceUI();
       applyCurrencyUI();
       refreshDerivedStats();
       updateHPBar();
@@ -3122,6 +3136,7 @@ function loadSheetState() {
     if (saved.sheetState && typeof saved.sheetState === 'object') {
       Object.assign(sheetState, saved.sheetState);
     }
+    ensureHitDiceState();
     if (!saved.sheetState?.inventoryGrants?.august2026) {
       if (!sheetState.consumables || typeof sheetState.consumables !== 'object') sheetState.consumables = {};
       sheetState.consumables.rations = InventoryTrackers.sanitizeQuantity(sheetState.consumables.rations, 10) + 5;
@@ -3189,6 +3204,7 @@ function loadSheetState() {
     if (typeof saved.exhaustion === 'number') exhaustionLevel = Math.max(0, Math.min(6, saved.exhaustion));
 
     applyCurrencyUI();
+    updateHitDiceUI();
     refreshDerivedStats();
     applyEquipmentUI();
     updateWeaponDisplay('battleaxe');
@@ -3219,6 +3235,7 @@ function loadSheetState() {
   } catch (err) {
     console.warn('Could not load sheet state:', err);
     applyCurrencyUI();
+    updateHitDiceUI();
     refreshDerivedStats();
     applyEquipmentUI();
     updateHPBar();
@@ -3822,15 +3839,47 @@ function updateWeaponDisplay(weapon) {
 
 // ===== REST =====
 function shortRest() {
-  // Recharge Adrenaline Rush
-  document.querySelectorAll('.resource-pip').forEach(p => {
-    // Only auto-reset the adrenaline rush; others are manual
+  const currentHP = document.getElementById('currentHP');
+  const hp = Number.parseInt(currentHP.value, 10) || 0;
+  if (hp < 1) {
+    castToast('You need at least 1 HP to start a Short Rest.', true);
+    return;
+  }
+
+  document.querySelectorAll('.resource-pip[data-resource="adrenalineRush"]').forEach(p => {
+    p.classList.remove('used');
+    p.classList.add('available');
   });
-  alert('Short Rest taken.\n\n• Adrenaline Rush: 2 charges restored\n• Hunter\'s Mark free casts: unchanged (Long Rest)\n\nHit Dice available to spend: 2d10\nRemember to manually spend Hit Dice and update Current HP.');
+  const rolls = [];
+  let healedHP = hp;
+  while (sheetState.hitDice.d10 > 0 && healedHP < 17 && window.confirm(`Spend 1d10 Hit Die?\n\nHP: ${healedHP}/17\nHit Dice remaining: ${sheetState.hitDice.d10}/2`)) {
+    const roll = Math.floor(Math.random() * 10) + 1;
+    const healing = Math.max(1, roll + 1);
+    const regained = Math.min(17 - healedHP, healing);
+    healedHP += regained;
+    sheetState.hitDice.d10 -= 1;
+    rolls.push(`d10 ${roll} + CON 1 = ${healing} (${regained} HP regained)`);
+    currentHP.value = healedHP;
+    updateHPBar();
+    updateHitDiceUI();
+  }
+  refreshDerivedStats();
+  saveSheetState();
+  alert('Short Rest complete.\n\n• Adrenaline Rush restored\n• Spell slots, Favoured Enemy, and Relentless Endurance unchanged' + (rolls.length ? `\n• ${rolls.join('\n• ')}` : '\n• No Hit Dice spent'));
 }
 
 function longRest() {
-  document.getElementById('currentHP').value = 17;
+  const currentHP = document.getElementById('currentHP');
+  if ((Number.parseInt(currentHP.value, 10) || 0) < 1) {
+    castToast('You need at least 1 HP to start a Long Rest.', true);
+    return;
+  }
+  if (!window.confirm('Finish a Long Rest?\n\nThis restores HP, all Hit Dice, spell slots, and Long Rest resources. Temporary HP expires, and Exhaustion decreases by 1.')) return;
+
+  currentHP.value = 17;
+  document.getElementById('tempHP').value = 0;
+  sheetState.hitDice.d10 = 2;
+  updateHitDiceUI();
   updateHPBar();
   // Reset spell slots
   ['slot-1a','slot-1b','s-slot-1a','s-slot-1b'].forEach(id => {
@@ -3855,7 +3904,7 @@ function longRest() {
   if (exhReduced) exhaustionLevel -= 1;
   refreshDerivedStats();
   saveSheetState();
-  alert('Long Rest completed!\n\n• HP restored to 17/17\n• Spell slots restored (2×1st)\n• Hunter\'s Mark free casts restored (2)\n• Adrenaline Rush restored (2)\n• Relentless Endurance restored' + (exhReduced ? '\n• Exhaustion reduced by 1 (now ' + exhaustionLevel + ')' : '') + '\n• All conditions cleared (clear manually if needed)');
+  alert('Long Rest completed!\n\n• HP restored to 17/17\n• Temporary HP expired\n• Hit Dice restored (2d10)\n• Spell slots restored (2×1st)\n• Hunter\'s Mark free casts restored (2)\n• Adrenaline Rush restored (2)\n• Relentless Endurance restored' + (exhReduced ? '\n• Exhaustion reduced by 1 (now ' + exhaustionLevel + ')' : '') + '\n• Other conditions are unchanged');
 }
 
 loadSheetState();

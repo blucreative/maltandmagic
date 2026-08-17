@@ -91,28 +91,21 @@
   .nav-tabs,
   .sheet-body {
     position: relative;
-      flex-wrap: wrap;
-      overflow-x: visible;
-      padding: 4px 8px;
-      gap: 2px;
+    z-index: 1;
+    width: min(1400px, 100%);
+    margin-inline: auto;
+  }
 
   .tooltip-layer {
-      white-space: normal;
-      padding: 8px 4px;
+    display: contents;
+  }
 
-      line-height: 1.15;
   /* ===== HEADER ===== */
   .sheet-header {
     background: linear-gradient(180deg, rgba(7,10,24,0.96) 0%, rgba(16,24,56,0.94) 65%, rgba(7,10,24,0.94) 100%);
     border-bottom: 2px solid var(--gold-dim);
     padding: 16px 24px;
     display: flex;
-
-  @media (max-width: 600px) {
-    .nav-tabs .tab-btn {
-      flex: 1 1 30%;
-    }
-  }
     align-items: center;
     justify-content: space-between;
     position: sticky;
@@ -1464,15 +1457,16 @@
       padding: 14px;
     }
     .nav-tabs {
-      overflow-x: auto;
-      padding: 0 8px;
-      gap: 0;
-      scrollbar-width: thin;
+      flex-wrap: wrap;
+      overflow-x: visible;
+      padding: 4px 8px;
+      gap: 2px;
     }
     .tab-btn {
-      white-space: nowrap;
-      padding: 8px 12px;
+      white-space: normal;
+      padding: 8px 4px;
       font-size: 11px;
+      line-height: 1.15;
     }
     .two-col,
     .three-col {
@@ -1493,6 +1487,12 @@
     }
     .aa-stat-strip {
       grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (max-width: 600px) {
+    .nav-tabs .tab-btn {
+      flex: 1 1 30%;
     }
   }
 
@@ -1695,8 +1695,8 @@
     <div class="panel">
       <div class="panel-header"><span class="panel-title">Combat</span>
         <div class="rest-btns">
-          <button class="rest-btn short" onclick="shortRest()">Short Rest</button>
-          <button class="rest-btn long" onclick="longRest()">Long Rest</button>
+          <button type="button" class="rest-btn short" onclick="shortRest()" title="Spend Hit Dice and recover Short Rest features">Short Rest</button>
+          <button type="button" class="rest-btn long" onclick="longRest()" title="Restore HP, Hit Dice, and Long Rest features">Long Rest</button>
         </div>
       </div>
       <div class="panel-body">
@@ -1705,7 +1705,7 @@
           <div class="combat-stat"><span class="cs-val" id="initiativeVal">+3</span><span class="cs-label">Initiative</span></div>
           <div class="combat-stat"><span class="cs-val" id="speedVal" data-base="30">30ft</span><span class="cs-label">Speed</span></div>
           <div class="combat-stat"><span class="cs-val">+2</span><span class="cs-label">Prof Bonus</span></div>
-          <div class="combat-stat"><span class="cs-val">2d10</span><span class="cs-label">Hit Dice</span></div>
+          <div class="combat-stat"><span class="cs-val" id="hitDiceDisplay">2 / 2 d10</span><span class="cs-label">Hit Dice</span></div>
         </div>
         <div id="combatEffectReadout" style="font-family:'Barlow Condensed',sans-serif;font-size:10px;letter-spacing:1px;color:var(--text-dim);margin:-4px 0 8px;">
           Second Wind 2/2 · Action Surge 1/1 · Luck 2/2 · Heroic Insp. 1/1
@@ -2802,6 +2802,7 @@ function applyHP(sign) {
 
 // ===== REACTIVE SHEET STATE =====
 const sheetState = {
+  hitDice: { d10: 2 },
   currency: {
     pp: 0,
     gp: 27,
@@ -2834,6 +2835,18 @@ function ensureCurrencyState() {
   ['pp', 'gp', 'ep', 'sp', 'cp'].forEach(key => {
     sheetState.currency[key] = sanitizeCurrencyValue(sheetState.currency[key]);
   });
+}
+
+function ensureHitDiceState() {
+  if (!sheetState.hitDice || typeof sheetState.hitDice !== 'object') sheetState.hitDice = {};
+  const remaining = Number.parseInt(sheetState.hitDice.d10, 10);
+  sheetState.hitDice.d10 = Number.isFinite(remaining) ? Math.max(0, Math.min(2, remaining)) : 2;
+}
+
+function updateHitDiceUI() {
+  ensureHitDiceState();
+  const display = document.getElementById('hitDiceDisplay');
+  if (display) display.textContent = `${sheetState.hitDice.d10} / 2 d10`;
 }
 
 function applyCurrencyUI() {
@@ -3000,6 +3013,7 @@ function loadSheetState() {
   try {
     const raw = localStorage.getItem(SHEET_STORAGE_KEY);
     if (!raw) {
+      updateHitDiceUI();
       applyCurrencyUI();
       refreshDerivedStats();
       updateHPBar();
@@ -3018,6 +3032,7 @@ function loadSheetState() {
     if (saved.sheetState && typeof saved.sheetState === 'object') {
       Object.assign(sheetState, saved.sheetState);
     }
+    ensureHitDiceState();
     if (!saved.sheetState?.inventoryGrants?.august2026) {
       if (!sheetState.consumables || typeof sheetState.consumables !== 'object') sheetState.consumables = {};
       sheetState.consumables.rations = InventoryTrackers.sanitizeQuantity(sheetState.consumables.rations, 10) + 5;
@@ -3077,6 +3092,7 @@ function loadSheetState() {
     if (notesEl && typeof saved.notes === 'string') notesEl.value = saved.notes;
 
     applyCurrencyUI();
+    updateHitDiceUI();
     refreshDerivedStats();
     applyEquipmentUI();
     updateHPBar();
@@ -3091,6 +3107,7 @@ function loadSheetState() {
   } catch (err) {
     console.warn('Could not load sheet state:', err);
     applyCurrencyUI();
+    updateHitDiceUI();
     refreshDerivedStats();
     applyEquipmentUI();
     updateHPBar();
@@ -3440,16 +3457,45 @@ function castToast(msg, isError = false) {
 
 // ===== REST =====
 function shortRest() {
+  const currentHP = document.getElementById('currentHP');
+  const hp = Number.parseInt(currentHP.value, 10) || 0;
+  if (hp < 1) {
+    castToast('You need at least 1 HP to start a Short Rest.', true);
+    return;
+  }
+
   restoreResource('actionSurge');
   restoreOneResource('secondWind');
+  const rolls = [];
+  let healedHP = hp;
+  while (sheetState.hitDice.d10 > 0 && healedHP < MAX_HP && window.confirm(`Spend 1d10 Hit Die?\n\nHP: ${healedHP}/${MAX_HP}\nHit Dice remaining: ${sheetState.hitDice.d10}/2`)) {
+    const roll = Math.floor(Math.random() * 10) + 1;
+    const healing = Math.max(1, roll + 2);
+    const regained = Math.min(MAX_HP - healedHP, healing);
+    healedHP += regained;
+    sheetState.hitDice.d10 -= 1;
+    rolls.push(`d10 ${roll} + CON 2 = ${healing} (${regained} HP regained)`);
+    currentHP.value = healedHP;
+    updateHPBar();
+    updateHitDiceUI();
+  }
   refreshDerivedStats();
   saveSheetState();
-  alert('Short Rest taken.\n\n• Action Surge use restored (recovers on Short or Long Rest)\n• One Second Wind use returns\n• Spend Hit Dice (2d10) manually to recover HP\n• Luck Points and Heroic Inspiration return on a Long Rest only');
+  alert('Short Rest complete.\n\n• Action Surge restored\n• One Second Wind use restored\n• Luck Points and Heroic Inspiration unchanged' + (rolls.length ? `\n• ${rolls.join('\n• ')}` : '\n• No Hit Dice spent'));
 }
 
 function longRest() {
-  document.getElementById('currentHP').value = MAX_HP;
+  const currentHP = document.getElementById('currentHP');
+  if ((Number.parseInt(currentHP.value, 10) || 0) < 1) {
+    castToast('You need at least 1 HP to start a Long Rest.', true);
+    return;
+  }
+  if (!window.confirm('Finish a Long Rest?\n\nThis restores HP, all Hit Dice, and Long Rest resources. Temporary HP expires, and Exhaustion decreases by 1.')) return;
+
+  currentHP.value = MAX_HP;
   document.getElementById('tempHP').value = 0;
+  sheetState.hitDice.d10 = 2;
+  updateHitDiceUI();
   updateHPBar();
   // Restore all class resources
   restoreResource('secondWind');
