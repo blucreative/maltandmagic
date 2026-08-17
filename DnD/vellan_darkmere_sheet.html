@@ -90,20 +90,27 @@
   .nav-tabs,
   .sheet-body {
     position: relative;
-    z-index: 1;
-    width: min(1400px, 100%);
-    margin-inline: auto;
-  }
+      flex-wrap: wrap;
+      overflow-x: visible;
+      padding: 4px 8px;
+      gap: 2px;
 
   .tooltip-layer {
-    display: contents;
-  }
+      white-space: normal;
+      padding: 8px 4px;
 
+      line-height: 1.15;
   /* ===== HEADER ===== */
   .sheet-header {
     background: linear-gradient(180deg, rgba(6,18,26,0.96) 0%, rgba(12,32,40,0.94) 65%, rgba(7,19,25,0.94) 100%);
     border-bottom: 2px solid var(--gold-dim);
     padding: 16px 24px;
+
+  @media (max-width: 600px) {
+    .nav-tabs .tab-btn {
+      flex: 1 1 30%;
+    }
+  }
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -2017,7 +2024,7 @@
   <button type="button" class="action-filter-btn active" data-action-filter="all" aria-pressed="true" onclick="filterFeatures('all')">All</button>
   <button type="button" class="action-filter-btn" data-action-filter="action" aria-pressed="false" onclick="filterFeatures('action')">Action</button>
   <button type="button" class="action-filter-btn" data-action-filter="bonus-action" aria-pressed="false" onclick="filterFeatures('bonus-action')">Bonus Action</button>
-  <button type="button" class="action-filter-btn" data-action-filter="free-action" aria-pressed="false" onclick="filterFeatures('free-action')">Free Action</button>
+  <button type="button" class="action-filter-btn" data-action-filter="reaction" aria-pressed="false" onclick="filterFeatures('reaction')">Reaction</button>
 </div>
 <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;align-items:start;">
 
@@ -2042,7 +2049,7 @@
         <div class="feature-summary">Double proficiency in Deception (+6) and Persuasion (+6).</div>
       </div>
 
-      <div class="feature-card" data-tooltip="feat-sneak-attack" data-action-type="action free-action">
+      <div class="feature-card" data-tooltip="feat-sneak-attack">
         <div class="feature-header">
           <span class="feature-name">Sneak Attack (1d6)</span>
           <span class="feature-source">Rogue</span>
@@ -2066,7 +2073,7 @@
         <div class="feature-summary">Secret mix of dialect, jargon, and code. Plus one additional language.</div>
       </div>
 
-      <div class="feature-card" data-tooltip="feat-weapon-mastery" data-action-type="action free-action">
+      <div class="feature-card" data-tooltip="feat-weapon-mastery">
         <div class="feature-header">
           <span class="feature-name">Weapon Mastery</span>
           <span class="feature-source">Rogue</span>
@@ -2126,7 +2133,7 @@
         <div class="feature-summary">Gain one Origin feat — taken as Tavern Brawler.</div>
       </div>
 
-      <div class="feature-card" data-tooltip="feat-tavern-brawler" data-action-type="action free-action">
+      <div class="feature-card" data-tooltip="feat-tavern-brawler">
         <div class="feature-header">
           <span class="feature-name">Tavern Brawler</span>
           <span class="feature-source">Origin Feat</span>
@@ -2142,7 +2149,7 @@
     <div class="panel-header"><span class="panel-title">Weapon Masteries &amp; Actions</span></div>
     <div class="panel-body">
 
-      <div class="feature-card" data-tooltip="vex" data-action-type="action free-action">
+      <div class="feature-card" data-tooltip="vex">
         <div class="feature-header">
           <span class="feature-name">Vex (Rapier)</span>
           <span class="feature-source">Mastery</span>
@@ -2150,7 +2157,7 @@
         <div class="feature-summary">On a damaging hit: Advantage on your next attack roll against that target, until the end of your next turn.</div>
       </div>
 
-      <div class="feature-card" data-tooltip="slow" data-action-type="action free-action">
+      <div class="feature-card" data-tooltip="slow">
         <div class="feature-header">
           <span class="feature-name">Slow (Whip)</span>
           <span class="feature-source">Mastery</span>
@@ -2158,7 +2165,7 @@
         <div class="feature-summary">On a damaging hit: reduce the target's Speed by 10 ft. until the start of your next turn (doesn't stack past 10 ft. per turn).</div>
       </div>
 
-      <div class="feature-card" data-tooltip="push" data-action-type="action free-action">
+      <div class="feature-card" data-tooltip="push">
         <div class="feature-header">
           <span class="feature-name">Push (Tavern Brawler)</span>
           <span class="feature-source">Special</span>
@@ -2171,7 +2178,31 @@
           <span class="feature-name">Bonus Action Options</span>
           <span class="feature-source">Cunning</span>
         </div>
-        <div class="feature-summary">Dash · Disengage · Hide (Cunning Action) · Two-Weapon Fighting · Push.</div>
+        <div class="feature-summary">Dash · Disengage · Hide through Cunning Action.</div>
+      </div>
+
+      <div class="feature-card" data-action-type="action">
+        <div class="feature-header">
+          <span class="feature-name">Attack</span>
+          <span class="feature-source">Action</span>
+        </div>
+        <div class="feature-summary">Make one attack with a weapon or an Unarmed Strike. Vellan's Rapier and Whip are Finesse weapons that can deliver Sneak Attack when its conditions are met.</div>
+      </div>
+
+      <div class="feature-card" data-action-type="action reaction">
+        <div class="feature-header">
+          <span class="feature-name">Ready</span>
+          <span class="feature-source">Action → Reaction</span>
+        </div>
+        <div class="feature-summary">Choose a perceivable trigger and an action or movement. When the trigger finishes, use your Reaction to act or ignore it.</div>
+      </div>
+
+      <div class="feature-card" data-action-type="reaction">
+        <div class="feature-header">
+          <span class="feature-name">Opportunity Attack</span>
+          <span class="feature-source">Reaction</span>
+        </div>
+        <div class="feature-summary">When a creature you can see leaves your reach using its movement, Action, Bonus Action, or Reaction, make one melee attack just before it leaves. The Whip covers a 10-ft. reach; a qualifying hit can deal Sneak Attack because it is once per turn.</div>
       </div>
 
     </div>
@@ -2459,6 +2490,10 @@ function filterFeatures(actionType) {
   document.querySelectorAll('#tab-features .feature-card').forEach(card => {
     const actionTypes = (card.dataset.actionType || '').split(' ');
     card.hidden = actionType !== 'all' && !actionTypes.includes(actionType);
+  });
+  document.querySelectorAll('#tab-features .panel').forEach(panel => {
+    const hasVisibleCard = [...panel.querySelectorAll('.feature-card')].some(card => !card.hidden);
+    panel.hidden = actionType !== 'all' && !hasVisibleCard;
   });
   document.querySelectorAll('#tab-features .action-filter-btn').forEach(button => {
     const isActive = button.dataset.actionFilter === actionType;

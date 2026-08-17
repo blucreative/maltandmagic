@@ -1035,7 +1035,7 @@
     <button type="button" class="action-filter-btn active" data-action-filter="all" aria-pressed="true" onclick="filterFeatures('all')">All</button>
     <button type="button" class="action-filter-btn" data-action-filter="action" aria-pressed="false" onclick="filterFeatures('action')">Action</button>
     <button type="button" class="action-filter-btn" data-action-filter="bonus-action" aria-pressed="false" onclick="filterFeatures('bonus-action')">Bonus Action</button>
-    <button type="button" class="action-filter-btn" data-action-filter="free-action" aria-pressed="false" onclick="filterFeatures('free-action')">Free Action</button>
+    <button type="button" class="action-filter-btn" data-action-filter="reaction" aria-pressed="false" onclick="filterFeatures('reaction')">Reaction</button>
   </div>
   <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;align-items:start;">
 
@@ -1059,7 +1059,7 @@
           </div>
         </div>
 
-        <div class="feature-card" data-tooltip="feat-twf" data-action-type="action">
+        <div class="feature-card" data-tooltip="feat-twf">
           <div class="feature-header">
             <span class="feature-name">Two-Weapon Fighting</span>
             <span class="feature-source">Fighter · Feat</span>
@@ -1075,7 +1075,7 @@
           <div class="feature-summary">Gain one Fighting Style feat at Fighter level 1. Chosen style: Two-Weapon Fighting.</div>
         </div>
 
-        <div class="feature-card" data-tooltip="feat-weaponmastery" data-action-type="action free-action">
+        <div class="feature-card" data-tooltip="feat-weaponmastery">
           <div class="feature-header">
             <span class="feature-name">Weapon Mastery</span>
             <span class="feature-source">Fighter</span>
@@ -1087,7 +1087,7 @@
           </div>
         </div>
 
-        <div class="feature-card" data-tooltip="feat-alert" data-action-type="free-action">
+        <div class="feature-card" data-tooltip="feat-alert">
           <div class="feature-header">
             <span class="feature-name">Alert</span>
             <span class="feature-source">Feat</span>
@@ -1156,7 +1156,7 @@
           <div class="feature-summary">Always-prepared: Command, Faerie Fire, Misty Step, Suggestion (Lv 3); Blink, Fireball (Lv 5); Fire Shield, Greater Invisibility (Lv 7); Geas, Seeming (Lv 9).</div>
         </div>
 
-        <div class="feature-card locked" data-action-type="free-action">
+        <div class="feature-card locked">
           <div class="feature-header">
             <span class="feature-name">Cruel Fortune</span>
             <span class="feature-source locked-label">Warlock 6 required</span>
@@ -1172,7 +1172,7 @@
           <div class="feature-summary">Resistance to a chosen damage type (not Force). Swap on Short or Long Rest.</div>
         </div>
 
-        <div class="feature-card locked" data-action-type="free-action">
+        <div class="feature-card locked">
           <div class="feature-header">
             <span class="feature-name">Cast Through the Briar</span>
             <span class="feature-source locked-label">Warlock 14 required</span>
@@ -1244,6 +1244,30 @@
             <span class="feature-source">Background</span>
           </div>
           <div class="feature-summary">Background ability increases applied as +2 Charisma and +1 Constitution.</div>
+        </div>
+
+        <div class="feature-card" data-action-type="action">
+          <div class="feature-header">
+            <span class="feature-name">Attack</span>
+            <span class="feature-source">Action</span>
+          </div>
+          <div class="feature-summary">Make one attack with a weapon or an Unarmed Strike. With a Scimitar's Nick mastery, the extra Light-weapon attack is part of this Attack action.</div>
+        </div>
+
+        <div class="feature-card" data-action-type="action reaction">
+          <div class="feature-header">
+            <span class="feature-name">Ready</span>
+            <span class="feature-source">Action → Reaction</span>
+          </div>
+          <div class="feature-summary">Choose a perceivable trigger and an action or movement. When the trigger finishes, use your Reaction to act or ignore it. A readied spell uses its normal resources and requires Concentration.</div>
+        </div>
+
+        <div class="feature-card" data-action-type="reaction">
+          <div class="feature-header">
+            <span class="feature-name">Opportunity Attack</span>
+            <span class="feature-source">Reaction</span>
+          </div>
+          <div class="feature-summary">When a creature you can see leaves your reach using its movement, Action, Bonus Action, or Reaction, make one melee attack just before it leaves. Lygas can use either Scimitar or an Unarmed Strike.</div>
         </div>
 
       </div>
@@ -1506,6 +1530,10 @@ function filterFeatures(actionType) {
   document.querySelectorAll('#tab-features .feature-card').forEach(card => {
     const actionTypes = (card.dataset.actionType || '').split(' ');
     card.hidden = actionType !== 'all' && !actionTypes.includes(actionType);
+  });
+  document.querySelectorAll('#tab-features .panel').forEach(panel => {
+    const hasVisibleCard = [...panel.querySelectorAll('.feature-card')].some(card => !card.hidden);
+    panel.hidden = actionType !== 'all' && !hasVisibleCard;
   });
   document.querySelectorAll('#tab-features .action-filter-btn').forEach(button => {
     const isActive = button.dataset.actionFilter === actionType;
