@@ -64,10 +64,10 @@ export async function handleRequest(request, env, fetcher = fetch) {
 export function validateSaveRequest(input) {
   if (!plainObject(input) || !Number.isInteger(input.revision) || input.revision < 0 || !plainObject(input.state)) return { ok: false, error: 'Invalid save request.' };
   const state = input.state;
-  const allowed = new Set(['schemaVersion', 'revision', 'hp', 'resources', 'currency', 'inventory', 'conditions', 'notes', 'updatedAt']);
-  if (state.schemaVersion !== 1 || state.revision !== input.revision || Object.keys(state).some(key => !allowed.has(key))) return { ok: false, error: 'Unsupported sheet state.' };
+  const allowed = new Set(['schemaVersion', 'characterLevel', 'revision', 'hp', 'resources', 'currency', 'inventory', 'conditions', 'notes', 'updatedAt']);
+  if (state.schemaVersion !== 1 || state.characterLevel !== 2 || state.revision !== input.revision || Object.keys(state).some(key => !allowed.has(key))) return { ok: false, error: 'Unsupported sheet state.' };
   if (!numericObject(state.hp, { current: [0, 999], max: [1, 999], temp: [0, 999] })) return { ok: false, error: 'Invalid Hit Point state.' };
-  if (!numericObject(state.resources, { innate: [0, 2], slots1: [0, 2], hitDice: [0, 1] })) return { ok: false, error: 'Invalid resource state.' };
+  if (!numericObject(state.resources, { innate: [0, 2], sorcery: [0, 2], slots1: [0, 3], hitDice: [0, 2] })) return { ok: false, error: 'Invalid resource state.' };
   if (!numericObject(state.currency, { cp: [0, 999999], sp: [0, 999999], ep: [0, 999999], gp: [0, 999999], pp: [0, 999999] })) return { ok: false, error: 'Invalid currency state.' };
   if (!Array.isArray(state.inventory) || state.inventory.length > 100 || state.inventory.some(item => !plainObject(item) || Object.keys(item).length !== 3 || typeof item.name !== 'string' || item.name.length > 100 || !boundedNumber(item.qty, 0, 9999) || !boundedNumber(item.weight, 0, 1000))) return { ok: false, error: 'Invalid inventory state.' };
   if (!Array.isArray(state.conditions) || new Set(state.conditions).size !== state.conditions.length || state.conditions.some(value => !CONDITIONS.has(value))) return { ok: false, error: 'Invalid condition state.' };

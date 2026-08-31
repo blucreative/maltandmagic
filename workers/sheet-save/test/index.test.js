@@ -5,12 +5,13 @@ import { handleRequest, validateSaveRequest } from '../src/index.js';
 const claimKey = 'col-test-claim';
 const claimHash = '3bc3caf05f6b32f6fccf96ffaa3348644dc2983d8dabb27228602dc1bef8c691';
 const env = { ALLOWED_ORIGINS: 'https://blucreative.github.io', GITHUB_OWNER: 'blucreative', GITHUB_REPO: 'maltandmagic', GITHUB_TOKEN: 'token', SAVE_BRANCH: 'player-saves', COL_AGEN_CLAIM_SHA256: claimHash };
-const state = { schemaVersion: 1, revision: 0, hp: { current: 10, max: 10, temp: 0 }, resources: { innate: 2, slots1: 2, hitDice: 1 }, currency: { cp: 0, sp: 0, ep: 0, gp: 58, pp: 0 }, inventory: [{ name: 'Shovel', qty: 1, weight: 5 }], conditions: [], notes: { 'Personality Traits': '', Ideals: '', Bonds: '', Flaws: '', Appearance: '', 'Allies & Organizations': '', Backstory: '', 'Additional Notes': '' }, updatedAt: null };
+const state = { schemaVersion: 1, characterLevel: 2, revision: 0, hp: { current: 21, max: 21, temp: 0 }, resources: { innate: 2, sorcery: 2, slots1: 3, hitDice: 2 }, currency: { cp: 0, sp: 0, ep: 0, gp: 58, pp: 0 }, inventory: [{ name: 'Shovel', qty: 1, weight: 5 }], conditions: [], notes: { 'Personality Traits': '', Ideals: '', Bonds: '', Flaws: '', Appearance: '', 'Allies & Organizations': '', Backstory: '', 'Additional Notes': '' }, updatedAt: null };
 function request(method, body, key = claimKey) { return new Request('https://worker.example/sheets/col-agen', { method, headers: { Origin: 'https://blucreative.github.io', Authorization: `Bearer ${key}`, ...(body ? { 'Content-Type': 'application/json' } : {}) }, ...(body ? { body: JSON.stringify(body) } : {}) }); }
 
 test('validates the strict Col sheet schema', () => {
   assert.equal(validateSaveRequest({ revision: 0, state }).ok, true);
-  assert.equal(validateSaveRequest({ revision: 0, state: { ...state, resources: { ...state.resources, slots1: 3 } } }).ok, false);
+  assert.equal(validateSaveRequest({ revision: 0, state: { ...state, resources: { ...state.resources, slots1: 4 } } }).ok, false);
+  assert.equal(validateSaveRequest({ revision: 0, state: { ...state, characterLevel: 1 } }).ok, false);
   assert.equal(validateSaveRequest({ revision: 0, state: { ...state, unexpected: true } }).ok, false);
   assert.equal(validateSaveRequest({ revision: 0, state: { ...state, notes: { ...state.notes, Backstory: 'x'.repeat(10001) } } }).ok, false);
 });
