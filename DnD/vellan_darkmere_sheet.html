@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Vellan Darkmere — Rogue 2 | Malt & Magic</title>
+<title>Vellan Darkmere — Rogue 3 Swashbuckler | Malt & Magic</title>
 <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=IM+Fell+English:ital@0;1&family=Barlow:wght@300;400;500;600&family=Barlow+Condensed:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../assets/css/theme-fantasy.css">
@@ -1587,7 +1587,7 @@
   <div class="char-meta">
     <div class="char-meta-item">
       <div class="label">Class & Level</div>
-      <div class="value">Rogue 2</div>
+      <div class="value">Rogue 3 · Swashbuckler</div>
     </div>
     <div class="meta-divider"></div>
     <div class="char-meta-item">
@@ -1610,7 +1610,7 @@
       <div class="value">Milestone</div>
     </div>
     <div class="meta-divider"></div>
-    <button type="button" class="level-up-btn" onclick="openLevelUpPlanner()">Level Up</button>
+    <button type="button" class="level-up-btn" disabled title="Vellan's Rogue 3 level-up is complete">Level 3 Complete</button>
     <a class="back-link" href="index.html">↩ Index</a>
   </div>
 </div>
@@ -1824,10 +1824,10 @@
       <div class="panel-body">
         <div class="combat-row">
           <div class="combat-stat"><span class="cs-val" id="acVal">13</span><span class="cs-label">Armour Class</span></div>
-          <div class="combat-stat"><span class="cs-val" id="initiativeVal">+3</span><span class="cs-label">Initiative</span></div>
+          <div class="combat-stat"><span class="cs-val" id="initiativeVal">+5</span><span class="cs-label">Initiative</span></div>
           <div class="combat-stat"><span class="cs-val" id="speedVal" data-base="30">30ft</span><span class="cs-label">Speed</span></div>
           <div class="combat-stat"><span class="cs-val">+2</span><span class="cs-label">Prof Bonus</span></div>
-          <div class="combat-stat"><span class="cs-val" id="hitDiceDisplay">2 / 2 d8</span><span class="cs-label">Hit Dice</span></div>
+          <div class="combat-stat"><span class="cs-val" id="hitDiceDisplay">3 / 3 d8</span><span class="cs-label">Hit Dice</span></div>
         </div>
         <div id="combatEffectReadout" style="font-family:'Barlow Condensed',sans-serif;font-size:10px;letter-spacing:1px;color:var(--text-dim);margin:-4px 0 0;">
           No temporary combat effects active.
@@ -1842,11 +1842,11 @@
         <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:10px;">
           <div class="hp-box">
             <span class="hp-label">Max HP</span>
-            <div class="hp-value">13</div>
+            <div class="hp-value">16</div>
           </div>
           <div class="hp-box">
             <span class="hp-label">Current HP</span>
-            <input class="hp-input current" id="currentHP" type="number" value="13" min="0" max="13" onchange="updateHPBar()">
+            <input class="hp-input current" id="currentHP" type="number" value="16" min="0" max="16" onchange="updateHPBar()">
           </div>
           <div class="hp-box">
             <span class="hp-label">Temp HP</span>
@@ -1890,8 +1890,8 @@
     <!-- SNEAK ATTACK -->
     <div class="sa-banner" id="saBanner" onclick="toggleSneakAttack()">
       <div class="sa-dot" id="saDot"></div>
-      <span class="sa-text" id="saLabel">Sneak Attack (1d6)</span>
-      <span class="sa-bonus" id="saBonus">Unarmed — arm to show +1d6 on a finesse hit</span>
+      <span class="sa-text" id="saLabel">Sneak Attack (2d6)</span>
+      <span class="sa-bonus" id="saBonus">Unarmed — arm to show +2d6 on a finesse hit</span>
       <span class="sa-ready-pill" id="saReadyPill">Ready</span>
     </div>
 
@@ -1911,7 +1911,7 @@
               <div class="weapon-hit-label">To Hit</div>
             </div>
             <div class="weapon-damage" id="weapon-dmg-rapier">1d8+3 Piercing</div>
-            <div id="sa-rapier" class="sa-inline-burst">+1d6 Sneak Attack</div>
+            <div id="sa-rapier" class="sa-inline-burst">+2d6 Sneak Attack</div>
           </div>
           <div class="adv-toggle-wrap">
             <button class="adv-btn adv" onclick="toggleAdv('rapier','adv',this)">Advantage</button>
@@ -1936,7 +1936,7 @@
               <div class="weapon-hit-label">To Hit</div>
             </div>
             <div class="weapon-damage" id="weapon-dmg-whip">1d4+3 Slashing</div>
-            <div id="sa-whip" class="sa-inline-burst">+1d6 Sneak Attack</div>
+            <div id="sa-whip" class="sa-inline-burst">+2d6 Sneak Attack</div>
           </div>
           <div class="adv-toggle-wrap">
             <button class="adv-btn adv" onclick="toggleAdv('whip','adv',this)">Advantage</button>
@@ -2090,10 +2090,10 @@
 
       <div class="feature-card" data-tooltip="feat-sneak-attack">
         <div class="feature-header">
-          <span class="feature-name">Sneak Attack (1d6)</span>
+          <span class="feature-name">Sneak Attack (2d6)</span>
           <span class="feature-source">Rogue</span>
         </div>
-        <div class="feature-summary">Once per turn, deal an extra 1d6 with a Finesse or Ranged weapon when you have Advantage, or an ally is within 5 ft. of the target and you don't have Disadvantage.</div>
+        <div class="feature-summary">Once per turn, deal an extra 2d6 with a Finesse or Ranged weapon when you have Advantage, an ally is within 5 ft. of the target, or Rakish Audacity's single-combat conditions are met.</div>
       </div>
 
       <div class="feature-card" data-tooltip="feat-cunning-action" data-action-type="bonus-action">
@@ -2118,6 +2118,30 @@
           <span class="feature-source">Rogue</span>
         </div>
         <div class="feature-summary">Use the mastery property of two weapons: Vex (Rapier) and Slow (Whip). Change on a Long Rest.</div>
+      </div>
+
+      <div class="feature-card" data-tooltip="feat-steady-aim" data-action-type="bonus-action">
+        <div class="feature-header">
+          <span class="feature-name">Steady Aim</span>
+          <span class="feature-source">Rogue 3</span>
+        </div>
+        <div class="feature-summary">Bonus Action: gain Advantage on your next attack this turn if you haven't moved; your Speed becomes 0 for the rest of the turn.</div>
+      </div>
+
+      <div class="feature-card" data-tooltip="feat-fancy-footwork">
+        <div class="feature-header">
+          <span class="feature-name">Fancy Footwork</span>
+          <span class="feature-source">Swashbuckler</span>
+        </div>
+        <div class="feature-summary">After you make a melee attack against a creature, it can't make Opportunity Attacks against you for the rest of your turn.</div>
+      </div>
+
+      <div class="feature-card" data-tooltip="feat-rakish-audacity">
+        <div class="feature-header">
+          <span class="feature-name">Rakish Audacity</span>
+          <span class="feature-source">Swashbuckler</span>
+        </div>
+        <div class="feature-summary">Add CHA (+2) to Initiative. You can Sneak Attack a creature within 5 ft. without Advantage when no other creatures are within 5 ft. of you and you don't have Disadvantage.</div>
       </div>
 
     </div>
@@ -2263,7 +2287,7 @@
       <div class="hud-sub">A light-footed rogue's kit — travel lean, strike quick, run quicker.</div>
     </div>
     <div style="font-family:'Barlow Condensed',sans-serif;font-size:11px;color:var(--text-dim);letter-spacing:1px;text-transform:uppercase;">
-      Manifest Cards: <span style="color:var(--gold);">5</span>
+      Manifest Cards: <span style="color:var(--gold);">4</span>
     </div>
   </div>
 
@@ -2274,7 +2298,7 @@
     <div class="currency-item"><div class="currency-coin sp">SP</div><div class="currency-controls"><button type="button" class="currency-adjust-btn" onclick="adjustCurrency('sp',-1)">-</button><input id="currency-sp" class="currency-input" type="number" min="0" step="1" inputmode="numeric" value="0" onchange="setCurrencyFromInput('sp', this.value)"><button type="button" class="currency-adjust-btn" onclick="adjustCurrency('sp',1)">+</button></div></div>
     <div class="currency-item"><div class="currency-coin cp">CP</div><div class="currency-controls"><button type="button" class="currency-adjust-btn" onclick="adjustCurrency('cp',-1)">-</button><input id="currency-cp" class="currency-input" type="number" min="0" step="1" inputmode="numeric" value="0" onchange="setCurrencyFromInput('cp', this.value)"><button type="button" class="currency-adjust-btn" onclick="adjustCurrency('cp',1)">+</button></div></div>
     <div style="margin-left:auto;font-family:'Barlow Condensed',sans-serif;font-size:11px;color:var(--text-dim);">
-      Weight: <span style="color:var(--text-secondary);">23 lb</span> /
+      Weight: <span style="color:var(--text-secondary);">13 lb</span> /
       Encumbered: <span style="color:var(--text-secondary);">180 lb</span> /
       Push: <span style="color:var(--text-secondary);">360 lb</span>
     </div>
@@ -2310,14 +2334,6 @@
       <div class="item-main"><span class="item-icon">🧵</span><div><div class="item-name">Silk Rope (50 ft.)</div><div class="item-qty">Qty: 1</div></div></div>
       <div class="item-tags"><span class="item-tag">Ascent</span><span class="item-tag">Restraint</span></div>
       <div class="item-note">Fifty feet of strong, light silk cord for boarding, escape, and rescue pulls.</div>
-    </div>
-
-    <div class="item-card">
-      <div class="card-topline"><span class="item-type">Consumable</span><span class="item-weight">10 lb</span></div>
-      <div class="item-main"><span class="item-icon">🧺</span><div><div class="item-name">Rations</div><div class="item-qty">Qty: 5</div></div></div>
-      <div class="item-tags"><span class="item-tag">5 Days</span></div>
-      <div class="item-note">Travel-ready food for five days on the road.</div>
-      <div class="quantity-row"><span class="quantity-label">Remaining</span><div data-consumable-key="rations" data-consumable-default="5" data-consumable-label="ration"></div></div>
     </div>
 
   </div>
@@ -2415,7 +2431,7 @@
       <div class="panel-body">
         <div class="lore-section">
           <div class="lore-label">Table Flags</div>
-          <div class="lore-text">Subclass chosen at level 3 (none yet). Chaotic Evil in a party warrants a Session Zero conversation. Stealth is unproficient despite the class — likely an oversight to confirm.</div>
+          <div class="lore-text">Subclass: Swashbuckler. Chaotic Evil in a party warrants a Session Zero conversation. Stealth is unproficient despite the class — confirm that this is intentional.</div>
         </div>
         <div class="lore-section" style="margin-bottom:0;">
           <div class="lore-label">Expertise</div>
@@ -2480,7 +2496,7 @@ const TOOLTIPS = {
   slow: { name: "Slow", type: "Weapon Mastery — Whip", body: "If you hit a creature with the Whip and deal damage, reduce its Speed by 10 feet until the start of your next turn. The reduction doesn't stack past 10 ft. within a single turn.", stats: {"Effect":"−10 ft. Speed","Duration":"Until start of your next turn","Trigger":"On hit + damage"} },
 
   // WEAPON ITEMS
-  "item-rapier": { name: "Rapier", type: "Martial Melee Weapon", body: "Finesse. Mastery property: Vex. Vellan attacks at +5 (DEX 3 + Prof 2) for 1d8+3 piercing, plus 1d6 Sneak Attack when the conditions are met.", stats: {"Damage":"1d8+3 Piercing","To Hit":"+5","Mastery":"Vex","Weight":"2 lb"} },
+  "item-rapier": { name: "Rapier", type: "Martial Melee Weapon", body: "Finesse. Mastery property: Vex. Vellan attacks at +5 (DEX 3 + Prof 2) for 1d8+3 piercing, plus 2d6 Sneak Attack when the conditions are met.", stats: {"Damage":"1d8+3 Piercing","To Hit":"+5","Mastery":"Vex","Weight":"2 lb"} },
   "item-whip": { name: "Whip", type: "Martial Melee Weapon", body: "Finesse, Reach (10 ft.). Mastery property: Slow. Vellan attacks at +5 for 1d4+3 slashing, and can Sneak Attack with it as a Finesse weapon.", stats: {"Damage":"1d4+3 Slashing","To Hit":"+5","Reach":"10 ft.","Mastery":"Slow"} },
   "item-clothes": { name: "Common Clothes", type: "Apparel", body: "Ordinary garments suited to a working harbour. No armour bonus — Vellan's AC of 13 comes from 10 + DEX (3)." },
   "item-silk-rope": { name: "Silk Rope (50 ft.)", type: "Adventuring Gear", body: "Fifty feet of strong, lightweight silk rope. Has 2 hit points and can be burst with a DC 20 Strength check. Weighs 5 lb." },
@@ -2488,10 +2504,13 @@ const TOOLTIPS = {
   // ROGUE FEATURES
   "feat-core-rogue": { name: "Core Rogue Traits", type: "Rogue Feature (PHB-2024 p.129)", body: "The Rogue's baseline package: proficiency with Light armour, Simple weapons plus a handful of Martial weapons, Thieves' Tools, and saves in Dexterity and Intelligence.", stats: {"Hit Die":"d8","Saves":"DEX, INT","Key Ability":"DEX"} },
   "feat-expertise": { name: "Expertise", type: "Rogue Feature (PHB-2024 p.129)", body: "Choose two skill proficiencies; your Proficiency Bonus is doubled for checks with them. Vellan's Deception and Persuasion are both +6 (CHA 2 + doubled Prof 4)." },
-  "feat-sneak-attack": { name: "Sneak Attack (1d6)", type: "Rogue Feature (PHB-2024 p.129)", body: "Once per turn, deal an extra 1d6 damage to one creature you hit with an attack if you have Advantage on the roll, using a Finesse or Ranged weapon. You don't need Advantage if another enemy of the target is within 5 ft. of it, that enemy isn't Incapacitated, and you don't have Disadvantage. At Rogue 2 the die is 1d6.", stats: {"Extra Damage":"1d6","Frequency":"Once per turn","Weapons":"Finesse or Ranged"} },
+  "feat-sneak-attack": { name: "Sneak Attack (2d6)", type: "Rogue Feature (PHB-2024 p.129)", body: "Once per turn, deal an extra 2d6 damage to one creature you hit with a Finesse or Ranged weapon when you have Advantage. You don't need Advantage when an eligible ally is within 5 feet of the target, or when Rakish Audacity's single-combat conditions are met, provided you don't have Disadvantage.", stats: {"Extra Damage":"2d6","Frequency":"Once per turn","Weapons":"Finesse or Ranged"} },
   "feat-cunning-action": { name: "Cunning Action", type: "Rogue Feature (PHB-2024 p.130)", body: "Your quick thinking lets you act fast. As a Bonus Action, you can take the Dash, Disengage, or Hide action.", stats: {"Action":"Bonus Action","Options":"Dash · Disengage · Hide"} },
   "feat-thieves-cant": { name: "Thieves' Cant", type: "Rogue Feature (PHB-2024 p.129)", body: "You know Thieves' Cant, a secret mix of dialect, jargon, and code that lets you hide messages in seemingly normal conversation. You also learn one additional language of your choice." },
   "feat-weapon-mastery": { name: "Weapon Mastery", type: "Rogue Feature (PHB-2024 p.129)", body: "You can use the mastery properties of two kinds of weapons you're proficient with. Vellan has chosen Rapier (Vex) and Whip (Slow). You can change the chosen weapons when you finish a Long Rest." },
+  "feat-steady-aim": { name: "Steady Aim", type: "Rogue 3 Feature (PHB-2024 p.130)", body: "As a Bonus Action, gain Advantage on your next attack roll during the current turn. You can use this only if you haven't moved this turn, and your Speed becomes 0 until the end of the turn.", stats: {"Action":"Bonus Action","Benefit":"Advantage on next attack","Restriction":"No movement this turn"} },
+  "feat-fancy-footwork": { name: "Fancy Footwork", type: "Swashbuckler 3 Feature (SCAG)", body: "During your turn, if you make a melee attack against a creature, that creature can't make Opportunity Attacks against you for the rest of your turn.", stats: {"Trigger":"Make a melee attack","Effect":"Target can't make Opportunity Attacks against you","Duration":"Rest of your turn"} },
+  "feat-rakish-audacity": { name: "Rakish Audacity", type: "Swashbuckler 3 Feature (SCAG)", body: "Add your Charisma modifier (+2) to Initiative. You also qualify for Sneak Attack without Advantage against a creature within 5 feet when no other creatures are within 5 feet of you and you don't have Disadvantage.", stats: {"Initiative":"+5 total","Duel Sneak Attack":"Target within 5 ft.; no other creatures within 5 ft. of you"} },
 
   // HUMAN TRAITS
   "feat-creature-type": { name: "Creature Type", type: "Human Trait (PHB-2024 p.193)", body: "Vellan is a Humanoid. Effects that target Humanoids apply to him unless another effect changes his creature type." },
@@ -2502,12 +2521,12 @@ const TOOLTIPS = {
   "feat-tavern-brawler": { name: "Tavern Brawler", type: "Origin Feat (PHB-2024 p.202)", body: "Enhanced Unarmed Strike: your Unarmed Strike deals 1d4 + STR (1d4+1) bludgeoning instead of the flat amount. Damage Rerolls: reroll a 1 on an Unarmed Strike damage die (use the new roll). Improvised Weaponry: proficiency with improvised weapons. Push: once per turn, a damaging Unarmed Strike can push the target 5 ft." },
 
   // ACTIONS
-  "action-cunning": { name: "Bonus Action Options", type: "Combat Reference", body: "Vellan's common Bonus Actions: Cunning Action (Dash, Disengage, Hide), Two-Weapon Fighting when dual-wielding Light weapons, and the Tavern Brawler Push rider on an Unarmed Strike hit." },
+  "action-cunning": { name: "Bonus Action Options", type: "Combat Reference", body: "Vellan's common Bonus Actions are Cunning Action (Dash, Disengage, Hide) and Steady Aim (Advantage on the next attack this turn, with movement restrictions)." },
 };
 </script>
 
 <script>
-const SHEET_UI_VERSION = '1.0.0';
+const SHEET_UI_VERSION = '1.1.0';
 const LEVEL_UP_API_URL = 'https://maltandmagic-level-up.maltandmagic-level-up-request.workers.dev/requests/level-up';
 const TURNSTILE_SITE_KEY = '0x4AAAAAAERnonLxTMX6NA92';
 let levelUpTurnstileToken = '';
@@ -2897,7 +2916,7 @@ window.addEventListener('resize', () => {
 });
 
 // ===== CONSTANTS =====
-const MAX_HP = 13;
+const MAX_HP = 16;
 
 // ===== HP =====
 function updateHPBar() {
@@ -2923,7 +2942,8 @@ function applyHP(sign) {
 
 // ===== REACTIVE SHEET STATE =====
 const sheetState = {
-  hitDice: { d8: 2 },
+  hitDice: { d8: 3 },
+  level3Applied: true,
   sneakAttack: false,
   currency: {
     pp: 0,
@@ -2937,7 +2957,6 @@ const sheetState = {
     whip: false,
   },
   consumables: {},
-  inventoryGrants: { august2026: true },
 };
 
 const DEFAULT_CURRENCY = { pp: 0, gp: 100, ep: 0, sp: 0, cp: 0 };
@@ -2960,13 +2979,13 @@ function ensureCurrencyState() {
 function ensureHitDiceState() {
   if (!sheetState.hitDice || typeof sheetState.hitDice !== 'object') sheetState.hitDice = {};
   const remaining = Number.parseInt(sheetState.hitDice.d8, 10);
-  sheetState.hitDice.d8 = Number.isFinite(remaining) ? Math.max(0, Math.min(2, remaining)) : 2;
+  sheetState.hitDice.d8 = Number.isFinite(remaining) ? Math.max(0, Math.min(3, remaining)) : 3;
 }
 
 function updateHitDiceUI() {
   ensureHitDiceState();
   const display = document.getElementById('hitDiceDisplay');
-  if (display) display.textContent = `${sheetState.hitDice.d8} / 2 d8`;
+  if (display) display.textContent = `${sheetState.hitDice.d8} / 3 d8`;
 }
 
 function applyCurrencyUI() {
@@ -2993,7 +3012,7 @@ function adjustCurrency(coin, delta) {
   saveSheetState();
 }
 
-const ROGUE_LEVEL = 2;
+const ROGUE_LEVEL = 3;
 
 function sneakAttackDiceForLevel(level) {
   const safeLevel = Math.max(1, parseInt(level, 10) || 1);
@@ -3132,7 +3151,7 @@ function saveSheetState() {
 }
 
 function loadSheetState() {
-  let inventoryGrantApplied = false;
+  let level3MigrationApplied = false;
   const versionBadge = document.getElementById('uiVersionBadge');
   if (versionBadge) versionBadge.textContent = `UI v${SHEET_UI_VERSION}`;
   if (!document.title.includes(`UI v${SHEET_UI_VERSION}`)) {
@@ -3163,13 +3182,13 @@ function loadSheetState() {
     if (saved.sheetState && typeof saved.sheetState === 'object') {
       Object.assign(sheetState, saved.sheetState);
     }
-    ensureHitDiceState();
-    if (!saved.sheetState?.inventoryGrants?.august2026) {
-      if (!sheetState.consumables || typeof sheetState.consumables !== 'object') sheetState.consumables = {};
-      sheetState.consumables.rations = InventoryTrackers.sanitizeQuantity(sheetState.consumables.rations, 0) + 5;
-      sheetState.inventoryGrants = { ...(sheetState.inventoryGrants || {}), august2026: true };
-      inventoryGrantApplied = true;
+    if (saved.sheetState?.level3Applied !== true) {
+      const previousHitDice = Number.parseInt(saved.sheetState?.hitDice?.d8, 10);
+      sheetState.hitDice = { d8: Math.min(3, (Number.isFinite(previousHitDice) ? previousHitDice : 2) + 1) };
+      sheetState.level3Applied = true;
+      level3MigrationApplied = true;
     }
+    ensureHitDiceState();
     ensureCurrencyState();
     if (!sheetState.equipment || typeof sheetState.equipment !== 'object') {
       sheetState.equipment = { rapier: true, whip: false };
@@ -3187,7 +3206,12 @@ function loadSheetState() {
     if (saved.hp) {
       const currentHP = document.getElementById('currentHP');
       const tempHP = document.getElementById('tempHP');
-      if (currentHP) currentHP.value = saved.hp.current ?? String(MAX_HP);
+      if (currentHP) {
+        const previousHP = Number.parseInt(saved.hp.current, 10);
+        currentHP.value = level3MigrationApplied && Number.isFinite(previousHP)
+          ? String(Math.min(MAX_HP, previousHP + 3))
+          : saved.hp.current ?? String(MAX_HP);
+      }
       if (tempHP) tempHP.value = saved.hp.temp ?? '0';
     }
 
@@ -3249,7 +3273,7 @@ function loadSheetState() {
   applyCurrencyUI();
   renderVellanCustomItems();
   InventoryTrackers.initializeFixedTrackers(sheetState, saveSheetState);
-  if (inventoryGrantApplied) saveSheetState();
+  if (level3MigrationApplied) saveSheetState();
 }
 
 // ===== DERIVED STATS =====
@@ -3624,7 +3648,7 @@ async function shortRest() {
     updateHitDiceUI();
   }
   saveSheetState();
-  alert('Short Rest complete.\n\n• Rogue 2 has no Short Rest class resources\n• Heroic Inspiration unchanged' + (rolls.length ? `\n• ${rolls.join('\n• ')}` : '\n• No Hit Dice spent'));
+  alert('Short Rest complete.\n\n• Rogue 3 has no Short Rest class resources\n• Heroic Inspiration unchanged' + (rolls.length ? `\n• ${rolls.join('\n• ')}` : '\n• No Hit Dice spent'));
 }
 
 function longRest() {
@@ -3637,7 +3661,7 @@ function longRest() {
 
   currentHP.value = MAX_HP;
   document.getElementById('tempHP').value = 0;
-  sheetState.hitDice.d8 = 2;
+  sheetState.hitDice.d8 = 3;
   updateHitDiceUI();
   updateHPBar();
   // Restore all resource pips (Heroic Inspiration via Resourceful)
@@ -3656,7 +3680,7 @@ function longRest() {
   refreshDerivedStats();
   applyConditionEffects();
   saveSheetState();
-  alert('Long Rest completed!\n\n• HP restored to 13/13\n• Heroic Inspiration regained (Resourceful)\n• Death saves cleared' + (exhReduced ? '\n• Exhaustion reduced by 1 (now ' + exhaustionLevel + ')' : '') + '\n• Clear any lingering conditions manually as needed');
+  alert('Long Rest completed!\n\n• HP restored to 16/16\n• Heroic Inspiration regained (Resourceful)\n• Death saves cleared' + (exhReduced ? '\n• Exhaustion reduced by 1 (now ' + exhaustionLevel + ')' : '') + '\n• Clear any lingering conditions manually as needed');
 }
 
 loadSheetState();
