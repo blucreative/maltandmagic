@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Lygas Cantor — Fighter 1 / Warlock 1 | Malt &amp; Magic</title>
+<title>Lygas Cantor — Fighter 1 / Warlock 2 | Malt &amp; Magic</title>
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=IM+Fell+English:ital@0;1&family=Barlow:wght@300;400;500;600&family=Barlow+Condensed:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../assets/css/theme-fantasy.css">
 <link rel="stylesheet" href="../assets/css/page-polish.css?v=20260817-rest-dialog">
@@ -611,7 +611,7 @@
   <div class="header-inner">
     <div class="header-name">
       <div class="char-name">Lygas Cantor</div>
-      <div class="char-sub">Fighter 1 / <span>Warlock 1</span> · Human · Charlatan · Milestone</div>
+      <div class="char-sub">Fighter 1 / <span>Warlock 2</span> · Human · Charlatan · Milestone</div>
     </div>
 
     <div class="header-stats">
@@ -621,9 +621,9 @@
       </div>
       <div class="hstat hp-display">
         <div class="hp-inputs">
-          <input type="number" class="hp-input" id="currentHP" value="19" min="0" max="99" oninput="updateHPBar()">
+          <input type="number" class="hp-input" id="currentHP" value="28" min="0" max="99" oninput="updateHPBar()">
           <span class="hp-sep">/</span>
-          <span class="hstat-val" style="font-size:14px; padding-top:4px;">19</span>
+          <span class="hstat-val" style="font-size:14px; padding-top:4px;">28</span>
         </div>
         <div class="hp-bar-wrap"><div class="hp-bar" id="hpBar" style="width:100%;"></div></div>
         <span class="hstat-lbl">HP</span>
@@ -743,9 +743,9 @@
             <div style="flex:1;">
               <div style="font-family:'Barlow Condensed',sans-serif;font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:var(--text-dim);margin-bottom:4px;">Current / Max</div>
               <div style="display:flex;gap:6px;align-items:center;">
-                <input type="number" class="hp-input" id="currentHP2" value="19" min="0" max="99" oninput="syncHP(this)" style="font-size:24px;width:60px;">
+                <input type="number" class="hp-input" id="currentHP2" value="28" min="0" max="99" oninput="syncHP(this)" style="font-size:24px;width:60px;">
                 <span style="color:var(--text-dim);font-size:18px;">/</span>
-                <span style="font-family:'Cinzel',serif;font-size:20px;font-weight:700;color:var(--gold);">19</span>
+                <span style="font-family:'Cinzel',serif;font-size:20px;font-weight:700;color:var(--gold);">28</span>
               </div>
               <div class="hp-bar-wrap" style="margin-top:6px;height:5px;"><div class="hp-bar" id="hpBar2" style="width:100%;"></div></div>
             </div>
@@ -755,7 +755,7 @@
             </div>
             <div>
               <div style="font-family:'Barlow Condensed',sans-serif;font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:var(--text-dim);margin-bottom:4px;">Hit Dice</div>
-              <div id="hitDiceDisplay" style="font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:600;color:var(--steel);">1/1 d10 + 1/1 d8</div>
+              <div id="hitDiceDisplay" style="font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:600;color:var(--steel);">1/1 d10 + 2/2 d8</div>
             </div>
           </div>
           <!-- Death saves -->
@@ -914,7 +914,8 @@
           <div class="spell-slot-track">
             <span class="spell-slot-label">L1</span>
             <div class="slot-pip available" id="s-slot-1a" onclick="toggleSlot('s-slot-1a')" title="Pact Slot 1"></div>
-            <span style="font-family:'Barlow Condensed',sans-serif;font-size:10px;color:var(--text-dim);">1 slot</span>
+            <div class="slot-pip available" id="s-slot-1b" onclick="toggleSlot('s-slot-1b')" title="Pact Slot 2"></div>
+            <span style="font-family:'Barlow Condensed',sans-serif;font-size:10px;color:var(--text-dim);">2 slots</span>
           </div>
           <div class="pact-note">Recovers on Short or Long Rest</div>
         </div>
@@ -970,7 +971,8 @@
             <div style="display:flex;align-items:center;gap:8px;">
               <span class="spell-slot-label">1st</span>
               <div class="slot-pip available" id="s-slot-1a-sp" onclick="toggleSlot('s-slot-1a')" title="Pact Slot 1"></div>
-              <span style="font-family:'Barlow Condensed',sans-serif;font-size:10px;color:var(--text-dim);">1 slot</span>
+              <div class="slot-pip available" id="s-slot-1b-sp" onclick="toggleSlot('s-slot-1b')" title="Pact Slot 2"></div>
+              <span style="font-family:'Barlow Condensed',sans-serif;font-size:10px;color:var(--text-dim);">2 slots</span>
             </div>
           </div>
           <div class="pact-note">Short or Long Rest recovery</div>
@@ -995,7 +997,7 @@
     <!-- Spell list -->
     <div class="panel">
       <div class="panel-header">
-        <span class="panel-title">Spells — Warlock 1</span>
+        <span class="panel-title">Spells — Warlock 2</span>
       </div>
       <div class="panel-body">
 
@@ -1029,7 +1031,7 @@
         </div>
 
         <!-- Level 1 -->
-        <div style="font-family:'Barlow Condensed',sans-serif;font-size:9px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--text-dim);margin:12px 0 8px;">1st Level — 1 Pact Slot</div>
+        <div style="font-family:'Barlow Condensed',sans-serif;font-size:9px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--text-dim);margin:12px 0 8px;">1st Level — 2 Pact Slots</div>
 
         <div class="spell-card prepared effect-active" id="spell-hex-card" data-tooltip="spell-hex">
           <div class="spell-header">
@@ -1065,6 +1067,23 @@
           <div style="font-size:11px;color:var(--text-secondary);margin-bottom:6px;">WIS save DC 14 · target Charmed (Humanoids only)</div>
           <div class="spell-actions">
             <button class="cast-btn" onclick="castSpell('charm')">⚡ Cast</button>
+          </div>
+        </div>
+
+        <div class="spell-card prepared" id="spell-rebuke-card" data-tooltip="spell-rebuke">
+          <div class="spell-header">
+            <div class="spell-name">Hellish Rebuke</div>
+            <span class="spell-level-badge">1st</span>
+          </div>
+          <div class="spell-meta">
+            <span>⏱ Reaction</span>
+            <span>📏 60 ft.</span>
+            <span>⌛ Instantaneous</span>
+            <span>🔮 V,S</span>
+          </div>
+          <div style="font-size:11px;color:var(--text-secondary);margin-bottom:6px;">When a creature you can see within 60 feet damages you: DEX save DC 14 · 2d10 Fire, half on success</div>
+          <div class="spell-actions">
+            <button class="cast-btn" onclick="castSpell('rebuke')">⚡ Cast</button>
           </div>
         </div>
 
@@ -1153,7 +1172,7 @@
       <div class="panel-header"><span class="panel-title">Warlock Features</span></div>
       <div class="panel-body">
 
-        <div class="class-divider warlock">⬡ Warlock 1</div>
+        <div class="class-divider warlock">⬡ Warlock 2</div>
 
         <div class="feature-card" data-tooltip="feat-pactblade" data-action-type="bonus-action">
           <div class="feature-header">
@@ -1172,7 +1191,34 @@
             <span class="feature-name">Eldritch Invocations</span>
             <span class="feature-source">Warlock</span>
           </div>
-          <div class="feature-summary">Forbidden magical techniques known through your patron. Pact of the Blade is one of your invocations.</div>
+          <div class="feature-summary">Three invocations known: Pact of the Blade, Mask of Many Faces, and Eldritch Mind.</div>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-header">
+            <span class="feature-name">Mask of Many Faces</span>
+            <span class="feature-source">Eldritch Invocation</span>
+          </div>
+          <div class="feature-summary">Cast <em>Disguise Self</em> without expending a spell slot.</div>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-header">
+            <span class="feature-name">Eldritch Mind</span>
+            <span class="feature-source">Eldritch Invocation</span>
+          </div>
+          <div class="feature-summary">You have Advantage on Constitution saving throws made to maintain Concentration.</div>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-header">
+            <span class="feature-name">Magical Cunning</span>
+            <span class="feature-source">Warlock 2</span>
+          </div>
+          <div class="feature-summary">Perform a 1-minute rite to regain one expended Pact Magic slot. Once per Long Rest.</div>
+          <div class="spell-actions" style="margin-top:8px;">
+            <button class="cast-btn" id="magicalCunningButton" onclick="useMagicalCunning()">Restore 1 Pact Slot</button>
+          </div>
         </div>
 
         <div class="feature-card" data-tooltip="feat-pactmagic">
@@ -1180,10 +1226,11 @@
             <span class="feature-name">Pact Magic</span>
             <span class="feature-source">Warlock</span>
           </div>
-          <div class="feature-summary">1 × Level 1 spell slot. Recovers on Short or Long Rest. Spellcasting ability: CHA (mod +4).</div>
+          <div class="feature-summary">2 × Level 1 spell slots. Recover both on a Short or Long Rest. Spellcasting ability: CHA (mod +4).</div>
           <div style="margin-top:8px;display:flex;align-items:center;gap:8px;">
             <div class="slot-pip available" id="feat-slot-1" onclick="toggleSlot('s-slot-1a')" title="Pact Slot 1"></div>
-            <span class="resource-label">1 Pact Slot · Short/Long Rest</span>
+            <div class="slot-pip available" id="feat-slot-2" onclick="toggleSlot('s-slot-1b')" title="Pact Slot 2"></div>
+            <span class="resource-label">2 Pact Slots · Short/Long Rest</span>
           </div>
         </div>
 
@@ -1340,13 +1387,13 @@
       <div class="hud-sub">Stolen finery, tools of deception, and well-worn weapons.</div>
     </div>
     <div style="font-family:'Barlow Condensed',sans-serif;font-size:11px;color:var(--text-dim);letter-spacing:1px;text-transform:uppercase;">
-      Gear: <span style="color:var(--gold);">10 items</span>
+      Gear: <span style="color:var(--gold);">11 items</span>
     </div>
   </div>
 
   <div class="currency-bar">
     <div class="currency-item"><div class="currency-coin pp">PP</div><div class="currency-controls"><button type="button" class="currency-adjust-btn" onclick="adjustCurrency('pp',-1)">-</button><input id="currency-pp" class="currency-input" type="number" min="0" step="1" inputmode="numeric" value="0" onchange="setCurrencyFromInput('pp', this.value)"><button type="button" class="currency-adjust-btn" onclick="adjustCurrency('pp',1)">+</button></div></div>
-    <div class="currency-item"><div class="currency-coin gp">GP</div><div class="currency-controls"><button type="button" class="currency-adjust-btn" onclick="adjustCurrency('gp',-1)">-</button><input id="currency-gp" class="currency-input" type="number" min="0" step="1" inputmode="numeric" value="9" onchange="setCurrencyFromInput('gp', this.value)"><button type="button" class="currency-adjust-btn" onclick="adjustCurrency('gp',1)">+</button></div></div>
+    <div class="currency-item"><div class="currency-coin gp">GP</div><div class="currency-controls"><button type="button" class="currency-adjust-btn" onclick="adjustCurrency('gp',-1)">-</button><input id="currency-gp" class="currency-input" type="number" min="0" step="1" inputmode="numeric" value="13" onchange="setCurrencyFromInput('gp', this.value)"><button type="button" class="currency-adjust-btn" onclick="adjustCurrency('gp',1)">+</button></div></div>
     <div class="currency-item"><div class="currency-coin ep">EP</div><div class="currency-controls"><button type="button" class="currency-adjust-btn" onclick="adjustCurrency('ep',-1)">-</button><input id="currency-ep" class="currency-input" type="number" min="0" step="1" inputmode="numeric" value="0" onchange="setCurrencyFromInput('ep', this.value)"><button type="button" class="currency-adjust-btn" onclick="adjustCurrency('ep',1)">+</button></div></div>
     <div class="currency-item"><div class="currency-coin sp">SP</div><div class="currency-controls"><button type="button" class="currency-adjust-btn" onclick="adjustCurrency('sp',-1)">-</button><input id="currency-sp" class="currency-input" type="number" min="0" step="1" inputmode="numeric" value="0" onchange="setCurrencyFromInput('sp', this.value)"><button type="button" class="currency-adjust-btn" onclick="adjustCurrency('sp',1)">+</button></div></div>
     <div class="currency-item"><div class="currency-coin cp">CP</div><div class="currency-controls"><button type="button" class="currency-adjust-btn" onclick="adjustCurrency('cp',-1)">-</button><input id="currency-cp" class="currency-input" type="number" min="0" step="1" inputmode="numeric" value="0" onchange="setCurrencyFromInput('cp', this.value)"><button type="button" class="currency-adjust-btn" onclick="adjustCurrency('cp',1)">+</button></div></div>
@@ -1421,11 +1468,18 @@
     </div>
 
     <div class="item-card">
+      <div class="card-topline"><span class="item-type">Keepsake</span><span class="item-weight">-</span></div>
+      <div class="item-main"><span class="item-icon">◇</span><div><div class="item-name">Silver Necklace</div><div class="item-qty">Qty: 1</div></div></div>
+      <div class="item-tags"><span class="item-tag">Crookback Farm</span></div>
+      <div class="item-note">A silver necklace recovered from Crookback Farm.</div>
+    </div>
+
+    <div class="item-card">
       <div class="card-topline"><span class="item-type">Consumable</span><span class="item-weight">10 lb</span></div>
-      <div class="item-main"><span class="item-icon">🧺</span><div><div class="item-name">Rations</div><div class="item-qty">Qty: 5</div></div></div>
-      <div class="item-tags"><span class="item-tag">5 Days</span></div>
-      <div class="item-note">Travel-ready food for five days on the road.</div>
-      <div class="quantity-row"><span class="quantity-label">Remaining</span><div data-consumable-key="rations" data-consumable-default="5" data-consumable-label="ration"></div></div>
+      <div class="item-main"><span class="item-icon">🧺</span><div><div class="item-name">Rations</div><div class="item-qty">Qty: 4</div></div></div>
+      <div class="item-tags"><span class="item-tag">4 Days</span></div>
+      <div class="item-note">Travel-ready food for four days on the road.</div>
+      <div class="quantity-row"><span class="quantity-label">Remaining</span><div data-consumable-key="rations" data-consumable-default="4" data-consumable-label="ration"></div></div>
     </div>
 
     <div class="item-card magic">
@@ -1489,20 +1543,22 @@
 
 
 <script>
-const SHEET_UI_VERSION = '1.0';
+const SHEET_UI_VERSION = '1.1';
 const SHEET_STORAGE_KEY = 'maltandmagic:dnd:lygas-cantor-sheet:v1';
 
 // ===== STATE =====
 const sheetState = {
-  hitDice: { d10: 1, d8: 1 },
+  characterLevel: 3,
+  hitDice: { d10: 1, d8: 2 },
   hex: false,
   hexTarget: '',
   charm: false,
   secondWindUsed: 0,
+  magicalCunningUsed: false,
   defense: false,
   currency: {
     pp: 0,
-    gp: 9,
+    gp: 13,
     ep: 0,
     sp: 0,
     cp: 0,
@@ -1513,12 +1569,12 @@ const sheetState = {
     judgement: true,
     hiddenDagger: false,
   },
-  consumables: { speedBars: 1 },
-  inventoryGrants: { august2026: true, lygasFundsAndSpeedBarAugust2026: true },
+  consumables: { rations: 4, speedBars: 1 },
+  inventoryGrants: { august2026: true, lygasFundsAndSpeedBarAugust2026: true, lygasWarlock2ManualFixAugust2026: true },
   customItems: [],
 };
 
-const DEFAULT_CURRENCY = { pp: 0, gp: 9, ep: 0, sp: 0, cp: 0 };
+const DEFAULT_CURRENCY = { pp: 0, gp: 13, ep: 0, sp: 0, cp: 0 };
 
 function sanitizeCurrencyValue(value) {
   const parsed = parseInt(value, 10);
@@ -1539,14 +1595,15 @@ function ensureHitDiceState() {
   if (!sheetState.hitDice || typeof sheetState.hitDice !== 'object') sheetState.hitDice = {};
   ['d10', 'd8'].forEach(type => {
     const remaining = Number.parseInt(sheetState.hitDice[type], 10);
-    sheetState.hitDice[type] = Number.isFinite(remaining) ? Math.max(0, Math.min(1, remaining)) : 1;
+    const maximum = type === 'd8' ? 2 : 1;
+    sheetState.hitDice[type] = Number.isFinite(remaining) ? Math.max(0, Math.min(maximum, remaining)) : maximum;
   });
 }
 
 function updateHitDiceUI() {
   ensureHitDiceState();
   const display = document.getElementById('hitDiceDisplay');
-  if (display) display.textContent = `${sheetState.hitDice.d10}/1 d10 + ${sheetState.hitDice.d8}/1 d8`;
+  if (display) display.textContent = `${sheetState.hitDice.d10}/1 d10 + ${sheetState.hitDice.d8}/2 d8`;
 }
 
 function applyCurrencyUI() {
@@ -1610,7 +1667,7 @@ function filterFeatures(actionType) {
 // ===== HP =====
 function updateHPBar() {
   const curr = parseInt(document.getElementById('currentHP')?.value) || 0;
-  const max = 19;
+  const max = 28;
   const pct = Math.max(0, Math.min(100, (curr / max) * 100));
   ['hpBar', 'hpBar2'].forEach(id => {
     const bar = document.getElementById(id);
@@ -1633,6 +1690,7 @@ function syncHP(el) {
 // ===== SLOT MANAGEMENT =====
 const SLOT_SYNC_MAP = {
   's-slot-1a': ['s-slot-1a', 's-slot-1a-sp', 'feat-slot-1'],
+  's-slot-1b': ['s-slot-1b', 's-slot-1b-sp', 'feat-slot-2'],
 };
 
 function toggleSlot(id) {
@@ -1650,24 +1708,34 @@ function toggleSlot(id) {
 }
 
 function remainingSlots() {
-  const pip = document.getElementById('s-slot-1a');
-  return pip?.classList.contains('available') ? 1 : 0;
+  return ['s-slot-1a', 's-slot-1b'].filter(id => document.getElementById(id)?.classList.contains('available')).length;
 }
 
 function consumeSlot() {
   if (remainingSlots() === 0) return false;
-  toggleSlot('s-slot-1a');
+  const available = ['s-slot-1a', 's-slot-1b'].find(id => document.getElementById(id)?.classList.contains('available'));
+  toggleSlot(available);
   return true;
 }
 
 function restoreSlots() {
-  const peers = SLOT_SYNC_MAP['s-slot-1a'];
-  peers.forEach(pid => {
-    const el = document.getElementById(pid);
+  Object.values(SLOT_SYNC_MAP).flat().forEach(id => {
+    const el = document.getElementById(id);
     if (!el) return;
     el.classList.add('available');
     el.classList.remove('used');
   });
+}
+
+function useMagicalCunning() {
+  if (sheetState.magicalCunningUsed) return castToast('Magical Cunning is already spent.', true);
+  const spentSlot = ['s-slot-1a', 's-slot-1b'].find(id => document.getElementById(id)?.classList.contains('used'));
+  if (!spentSlot) return castToast('No expended Pact Magic slot to restore.', true);
+  toggleSlot(spentSlot);
+  sheetState.magicalCunningUsed = true;
+  refreshDerivedStats();
+  saveSheetState();
+  castToast('Magical Cunning restores one Pact Magic slot.');
 }
 
 // ===== RESOURCE PIPS =====
@@ -1915,6 +1983,12 @@ function refreshDerivedStats() {
     else concEl.textContent = '—';
   }
 
+  const magicalCunningButton = document.getElementById('magicalCunningButton');
+  if (magicalCunningButton) {
+    magicalCunningButton.disabled = sheetState.magicalCunningUsed;
+    magicalCunningButton.textContent = sheetState.magicalCunningUsed ? 'Used · Long Rest' : 'Restore 1 Pact Slot';
+  }
+
   applyConditionEffects();
 }
 
@@ -1978,6 +2052,7 @@ function toggleEquip(itemKey) {
 const SPELLS = {
   hex:   { name: 'Hex',          level: 1, effect: 'hex',   conc: true },
   charm: { name: 'Charm Person', level: 1, effect: 'charm',  conc: false },
+  rebuke: { name: 'Hellish Rebuke', level: 1, effect: null, conc: false },
 };
 
 let castToastTimer = null;
@@ -2048,18 +2123,18 @@ async function shortRest() {
     used[0].classList.add('available');
   }
   const rolls = [];
-  const selectedDice = hp < 19
+  const selectedDice = hp < 28
     ? await chooseRestHitDice([
         { type: 'd10', size: 10, label: 'Fighter d10', available: sheetState.hitDice.d10 },
         { type: 'd8', size: 8, label: 'Warlock d8', available: sheetState.hitDice.d8 }
       ])
     : [];
   for (const selectedDie of selectedDice) {
-    if (hp >= 19) break;
+    if (hp >= 28) break;
     const manual = selectedDie.roll !== null;
     const roll = manual ? selectedDie.roll : Math.floor(Math.random() * selectedDie.size) + 1;
     const healing = Math.max(1, roll + 2);
-    const regained = Math.min(19 - hp, healing);
+    const regained = Math.min(28 - hp, healing);
     hp += regained;
     sheetState.hitDice[selectedDie.type] -= 1;
     rolls.push(`${selectedDie.type} ${roll}${manual ? ' (manual)' : ' (auto)'} + CON 2 = ${healing} (${regained} HP regained)`);
@@ -2070,7 +2145,7 @@ async function shortRest() {
   }
   refreshDerivedStats();
   saveSheetState();
-  alert('Short Rest complete.\n\n• Pact Magic slot restored\n• One Second Wind use restored' + (rolls.length ? `\n• ${rolls.join('\n• ')}` : '\n• No Hit Dice spent'));
+  alert('Short Rest complete.\n\n• Pact Magic slots restored\n• One Second Wind use restored' + (rolls.length ? `\n• ${rolls.join('\n• ')}` : '\n• No Hit Dice spent'));
 }
 
 function longRest() {
@@ -2081,10 +2156,10 @@ function longRest() {
   }
   if (!window.confirm('Finish a Long Rest?\n\nThis restores HP, all Hit Dice, and Long Rest resources. Temporary HP expires, and Exhaustion decreases by 1.')) return;
 
-  currentHP.value = 19;
-  document.getElementById('currentHP2').value = 19;
+  currentHP.value = 28;
+  document.getElementById('currentHP2').value = 28;
   document.getElementById('tempHP').value = 0;
-  sheetState.hitDice = { d10: 1, d8: 1 };
+  sheetState.hitDice = { d10: 1, d8: 2 };
   updateHitDiceUI();
   updateHPBar();
   // Restore pact slot
@@ -2107,6 +2182,7 @@ function longRest() {
   // End concentration
   if (sheetState.hex) endSpell('hex');
   sheetState.charm = false;
+  sheetState.magicalCunningUsed = false;
   // Long Rest removes one level of Exhaustion
   const exhReduced = exhaustionLevel > 0;
   if (exhReduced) exhaustionLevel -= 1;
@@ -2225,10 +2301,10 @@ function saveSheetState() {
     const data = {
       sheetState,
       hp: {
-        current: document.getElementById('currentHP')?.value || '19',
+        current: document.getElementById('currentHP')?.value || '28',
         temp: document.getElementById('tempHP')?.value || '0',
       },
-      slots: [{ id: 's-slot-1a', used: document.getElementById('s-slot-1a')?.classList.contains('used') }],
+      slots: ['s-slot-1a', 's-slot-1b'].map(id => ({ id, used: document.getElementById(id)?.classList.contains('used') })),
       resources: Array.from(document.querySelectorAll('.resource-pip')).map(el => el.classList.contains('used')),
       deaths: Array.from(document.querySelectorAll('.death-pip')).map(el => el.classList.contains('filled')),
       conditions: Array.from(document.querySelectorAll('.condition-badge')).map(el => ({
@@ -2248,6 +2324,7 @@ function saveSheetState() {
 
 function loadSheetState() {
   let inventoryGrantApplied = false;
+  let levelGrantApplied = false;
   const vb = document.getElementById('uiVersionBadge');
   if (vb) vb.textContent = `UI v${SHEET_UI_VERSION}`;
 
@@ -2264,7 +2341,17 @@ function loadSheetState() {
     }
     const saved = JSON.parse(raw);
 
+    const previousCharacterLevel = Number.parseInt(saved.sheetState?.characterLevel, 10) || 2;
     if (saved.sheetState) Object.assign(sheetState, saved.sheetState);
+    if (previousCharacterLevel < 3) {
+      const previousD8 = Number.parseInt(saved.sheetState?.hitDice?.d8, 10);
+      sheetState.characterLevel = 3;
+      sheetState.hitDice = { ...(sheetState.hitDice || {}), d8: Math.min(2, (Number.isFinite(previousD8) ? Math.max(0, previousD8) : 1) + 1) };
+      sheetState.magicalCunningUsed = false;
+      const previousHp = Number.parseInt(saved.hp?.current, 10);
+      saved.hp = { ...(saved.hp || {}), current: String(Math.min(28, (Number.isFinite(previousHp) ? Math.max(0, previousHp) : 19) + 9)) };
+      levelGrantApplied = true;
+    }
     ensureHitDiceState();
     if (!saved.sheetState?.inventoryGrants?.august2026) {
       if (!sheetState.consumables || typeof sheetState.consumables !== 'object') sheetState.consumables = {};
@@ -2278,6 +2365,15 @@ function loadSheetState() {
       sheetState.currency.gp = 9;
       sheetState.consumables.speedBars = 1;
       sheetState.inventoryGrants = { ...(sheetState.inventoryGrants || {}), lygasFundsAndSpeedBarAugust2026: true };
+      inventoryGrantApplied = true;
+    }
+    if (!saved.sheetState?.inventoryGrants?.lygasWarlock2ManualFixAugust2026) {
+      if (!sheetState.currency || typeof sheetState.currency !== 'object') sheetState.currency = { ...DEFAULT_CURRENCY };
+      if (!sheetState.consumables || typeof sheetState.consumables !== 'object') sheetState.consumables = {};
+      sheetState.currency.gp = 13;
+      sheetState.consumables.rations = 4;
+      sheetState.consumables.speedBars = 1;
+      sheetState.inventoryGrants = { ...(sheetState.inventoryGrants || {}), lygasWarlock2ManualFixAugust2026: true };
       inventoryGrantApplied = true;
     }
     ensureCurrencyState();
@@ -2294,8 +2390,8 @@ function loadSheetState() {
       const c = document.getElementById('currentHP');
       const c2 = document.getElementById('currentHP2');
       const t = document.getElementById('tempHP');
-      if (c) c.value = saved.hp.current ?? '19';
-      if (c2) c2.value = saved.hp.current ?? '19';
+      if (c) c.value = saved.hp.current ?? '28';
+      if (c2) c2.value = saved.hp.current ?? '28';
       if (t) t.value = saved.hp.temp ?? '0';
     }
 
@@ -2354,7 +2450,7 @@ function loadSheetState() {
   updateHPBar();
   renderCustomInventoryItems();
   InventoryTrackers.initializeFixedTrackers(sheetState, saveSheetState);
-  if (inventoryGrantApplied) saveSheetState();
+  if (inventoryGrantApplied || levelGrantApplied) saveSheetState();
 }
 
 // ===== TOOLTIP SYSTEM =====
@@ -2386,6 +2482,12 @@ const TOOLTIPS = {
     body: 'One Humanoid you can see within range makes a Wisdom saving throw (DC 14). On a failed save, the target has the Charmed condition until the spell ends or until you or your allies deal damage to it. The Charmed creature is Friendly to you.',
     stats: { 'Cast Time': '1 Action', 'Range': '30 ft.', 'Duration': '1 hour', 'Components': 'V, S', 'Save': 'WIS DC 14' }
   },
+  'spell-rebuke': {
+    name: 'Hellish Rebuke',
+    type: '1st-Level Evocation (Warlock) — SRD 5.2.1',
+    body: 'When a creature you can see within 60 feet damages you, you can take a Reaction to surround it with green flames. It makes a Dexterity saving throw, taking 2d10 Fire damage on a failed save or half as much on a successful one.',
+    stats: { 'Cast Time': 'Reaction on taking damage', 'Range': '60 ft.', 'Duration': 'Instantaneous', 'Components': 'V, S', 'Save': 'DEX DC 14' }
+  },
   'spell-prestidigitation': {
     name: 'Prestidigitation',
     type: 'Transmutation Cantrip (Warlock) — SRD 5.2.1',
@@ -2413,8 +2515,8 @@ const TOOLTIPS = {
   'feat-pactmagic': {
     name: 'Pact Magic',
     type: 'Warlock Feature — SRD 5.2.1',
-    body: 'Spell slots that are all the same level. Regain all expended slots on Short or Long Rest. At level 1: 1 slot of level 1.',
-    stats: { 'Slots': '1 × Level 1', 'Recovery': 'Short or Long Rest', 'Ability': 'CHA', 'DC': '14', 'Atk': '+6' }
+    body: 'Spell slots that are all the same level. Regain all expended slots on Short or Long Rest. At Warlock level 2: 2 slots of level 1.',
+    stats: { 'Slots': '2 × Level 1', 'Recovery': 'Short or Long Rest', 'Ability': 'CHA', 'DC': '14', 'Atk': '+6' }
   },
   'feat-twf': {
     name: 'Two-Weapon Fighting',
