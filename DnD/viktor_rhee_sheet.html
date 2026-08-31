@@ -995,6 +995,49 @@
     color: var(--text-dim);
     margin-left: 4px;
   }
+  .combat-feature-list {
+    display: grid;
+    gap: 6px;
+  }
+  .combat-feature-list .feature-card {
+    margin-bottom: 0;
+  }
+  .combat-resource-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    margin-top: 7px;
+  }
+  .combat-resource-count {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 10px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--text-dim);
+  }
+  .combat-resource-btn {
+    min-height: 28px;
+    padding: 4px 10px;
+    border: 1px solid var(--gold-dim);
+    border-radius: 6px;
+    background: rgba(201,168,76,0.1);
+    color: var(--gold-light);
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    cursor: pointer;
+  }
+  .combat-resource-btn:hover:not(:disabled) {
+    border-color: var(--gold);
+    background: rgba(201,168,76,0.18);
+  }
+  .combat-resource-btn:disabled {
+    cursor: not-allowed;
+    opacity: 0.45;
+  }
 
   /* ===== TOOLTIP / OVERLAY ===== */
   /* position + z-index forced: theme-fantasy.css has `body.theme-fantasy > *
@@ -2043,6 +2086,56 @@
           <div class="slot-pip available" id="slot-1b" onclick="toggleSlot('slot-1b')" title="Slot 2"></div>
           <div class="slot-pip available" id="slot-1c" onclick="toggleSlot('slot-1c')" title="Slot 3"></div>
           <span style="font-family:'Barlow Condensed',sans-serif;font-size:10px;color:var(--text-dim);margin-left:4px;">3 slots</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- COMBAT FEATURES -->
+    <div class="panel">
+      <div class="panel-header"><span class="panel-title">Combat Features</span></div>
+      <div class="panel-body combat-feature-list">
+        <div class="feature-card" data-tooltip="feat-colossus-slayer">
+          <div class="feature-header">
+            <span class="feature-name">Colossus Slayer</span>
+            <span class="feature-source">Hunter 3</span>
+          </div>
+          <div class="feature-summary">Once per turn, deal +1d8 weapon damage when you hit a creature missing any HP.</div>
+        </div>
+        <div class="feature-card" data-tooltip="feat-hunters-lore">
+          <div class="feature-header">
+            <span class="feature-name">Hunter's Lore</span>
+            <span class="feature-source">Hunter 3</span>
+          </div>
+          <div class="feature-summary">A target marked by Hunter's Mark reveals its Immunities, Resistances, and Vulnerabilities.</div>
+        </div>
+        <div class="feature-card" data-tooltip="feat-savage-attacker">
+          <div class="feature-header">
+            <span class="feature-name">Savage Attacker</span>
+            <span class="feature-source">Feat</span>
+          </div>
+          <div class="feature-summary">Once per turn on a weapon hit, roll the weapon's damage dice twice and use either roll.</div>
+        </div>
+        <div class="feature-card" data-tooltip="feat-adrenaline-rush">
+          <div class="feature-header">
+            <span class="feature-name">Adrenaline Rush</span>
+            <span class="feature-source">Bonus Action</span>
+          </div>
+          <div class="feature-summary">Dash as a Bonus Action and gain 2 Temporary HP.</div>
+          <div class="combat-resource-row">
+            <span class="combat-resource-count" id="combat-adrenalineRush-count">2 / 2 available</span>
+            <button type="button" class="combat-resource-btn" id="combat-adrenalineRush-btn" aria-label="Use Adrenaline Rush" onclick="event.stopPropagation(); spendCombatResource('adrenalineRush')">Use</button>
+          </div>
+        </div>
+        <div class="feature-card" data-tooltip="feat-relentless-endurance">
+          <div class="feature-header">
+            <span class="feature-name">Relentless Endurance</span>
+            <span class="feature-source">Reaction</span>
+          </div>
+          <div class="feature-summary">When reduced to 0 HP but not killed outright, drop to 1 HP instead.</div>
+          <div class="combat-resource-row">
+            <span class="combat-resource-count" id="combat-relentlessEndurance-count">1 / 1 available</span>
+            <button type="button" class="combat-resource-btn" id="combat-relentlessEndurance-btn" aria-label="Use Relentless Endurance" onclick="event.stopPropagation(); spendCombatResource('relentlessEndurance')">Use</button>
+          </div>
         </div>
       </div>
     </div>
@@ -3253,6 +3346,7 @@ function loadSheetState() {
         el.classList.toggle('used', used);
         el.classList.toggle('available', !used);
       });
+      updateCombatResourceControls();
     }
 
     if (Array.isArray(saved.deaths)) {
@@ -3615,8 +3709,33 @@ function toggleSlot(id) {
 function toggleResource(el) {
   el.classList.toggle('used');
   el.classList.toggle('available');
+  updateCombatResourceControls();
   if (typeof refreshSpellAvailability === 'function') refreshSpellAvailability();
   saveSheetState();
+}
+
+function updateCombatResourceControls() {
+  ['adrenalineRush', 'relentlessEndurance'].forEach(resource => {
+    const pips = [...document.querySelectorAll(`.resource-pip[data-resource="${resource}"]`)];
+    const available = pips.filter(pip => !pip.classList.contains('used')).length;
+    const count = document.getElementById(`combat-${resource}-count`);
+    const button = document.getElementById(`combat-${resource}-btn`);
+    if (count) count.textContent = `${available} / ${pips.length} available`;
+    if (button) button.disabled = available === 0;
+  });
+}
+
+function spendCombatResource(resource) {
+  const availablePip = document.querySelector(`.resource-pip[data-resource="${resource}"]:not(.used)`);
+  if (!availablePip) {
+    castToast('No uses remaining.', true);
+    return;
+  }
+  availablePip.classList.remove('available');
+  availablePip.classList.add('used');
+  updateCombatResourceControls();
+  saveSheetState();
+  castToast(resource === 'adrenalineRush' ? 'Adrenaline Rush used.' : 'Relentless Endurance used.');
 }
 
 // ===== CONDITIONS ENGINE =====
@@ -3921,6 +4040,7 @@ async function shortRest() {
     p.classList.remove('used');
     p.classList.add('available');
   });
+  updateCombatResourceControls();
   const rolls = [];
   let healedHP = hp;
   const selectedDice = healedHP < 25
@@ -3967,6 +4087,7 @@ function longRest() {
     p.classList.remove('used');
     p.classList.add('available');
   });
+  updateCombatResourceControls();
   // Reset death saves
   document.querySelectorAll('.death-pip').forEach(p => p.classList.remove('filled'));
   if (sheetState.longstrider) sheetState.longstrider = false;
