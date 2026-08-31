@@ -1,0 +1,138 @@
+{
+  "schemaVersion": 1,
+  "characterId": "col-agen",
+  "revision": 1,
+  "updatedAt": "2026-08-31T17:59:00.717Z",
+  "state": {
+    "schemaVersion": 1,
+    "characterLevel": 2,
+    "revision": 1,
+    "hp": {
+      "current": 21,
+      "max": 21,
+      "temp": 0
+    },
+    "resources": {
+      "innate": 2,
+      "sorcery": 2,
+      "slots1": 3,
+      "hitDice": 2
+    },
+    "currency": {
+      "cp": 0,
+      "sp": 0,
+      "ep": 0,
+      "gp": 60,
+      "pp": 0
+    },
+    "inventory": [
+      {
+        "name": "Spear",
+        "qty": 1,
+        "weight": 3
+      },
+      {
+        "name": "Dagger",
+        "qty": 2,
+        "weight": 1
+      },
+      {
+        "name": "Crystal",
+        "qty": 1,
+        "weight": 1
+      },
+      {
+        "name": "Backpack",
+        "qty": 1,
+        "weight": 5
+      },
+      {
+        "name": "Caltrops",
+        "qty": 20,
+        "weight": 0.1
+      },
+      {
+        "name": "Crowbar",
+        "qty": 1,
+        "weight": 5
+      },
+      {
+        "name": "Oil",
+        "qty": 2,
+        "weight": 1
+      },
+      {
+        "name": "Rations",
+        "qty": 10,
+        "weight": 2
+      },
+      {
+        "name": "Rope",
+        "qty": 1,
+        "weight": 5
+      },
+      {
+        "name": "Tinderbox",
+        "qty": 1,
+        "weight": 1
+      },
+      {
+        "name": "Torch",
+        "qty": 10,
+        "weight": 1
+      },
+      {
+        "name": "Waterskin",
+        "qty": 1,
+        "weight": 5
+      },
+      {
+        "name": "Sickle",
+        "qty": 1,
+        "weight": 2
+      },
+      {
+        "name": "Carpenter's Tools",
+        "qty": 1,
+        "weight": 6
+      },
+      {
+        "name": "Healer's Kit",
+        "qty": 1,
+        "weight": 3
+      },
+      {
+        "name": "Iron Pot",
+        "qty": 1,
+        "weight": 10
+      },
+      {
+        "name": "Shovel",
+        "qty": 1,
+        "weight": 5
+      },
+      {
+        "name": "Traveler's Clothes",
+        "qty": 1,
+        "weight": 4
+      },
+      {
+        "name": "New item",
+        "qty": 1,
+        "weight": 0
+      }
+    ],
+    "conditions": [],
+    "notes": {
+      "Personality Traits": "",
+      "Ideals": "",
+      "Bonds": "",
+      "Flaws": "",
+      "Appearance": "",
+      "Allies & Organizations": "",
+      "Backstory": "",
+      "Additional Notes": ""
+    },
+    "updatedAt": "2026-08-31T17:59:00.717Z"
+  }
+}
