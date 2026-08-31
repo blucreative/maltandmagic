@@ -230,6 +230,9 @@
   .level-up-gain span { color: var(--text-secondary); font-size: 11px; }
   .level-up-field { display: grid; gap: 6px; margin-bottom: 14px; }
   .level-up-field[hidden] { display: none; }
+  .level-up-subclass-options { display: grid; gap: 10px; padding: 12px; border: 1px solid rgba(201,162,76,0.22); background: rgba(4,20,24,0.5); }
+  .level-up-subclass-options[hidden] { display: none; }
+  .level-up-choice-note { color: var(--text-secondary); font-size: 11px; line-height: 1.45; }
   .level-up-select, .level-up-input {
     width: 100%; min-height: 38px; padding: 8px 10px;
     border: 1px solid rgba(95,119,114,0.55); border-radius: 5px;
@@ -1630,13 +1633,48 @@
       <label class="level-up-label" for="levelUpSubclass">Rogue Subclass</label>
       <select class="level-up-select" id="levelUpSubclass" required onchange="updateLevelUpPlanner()">
         <option value="">Choose a subclass</option>
+        <option value="Arcane Trickster">Arcane Trickster (PHB)</option>
+        <option value="Assassin">Assassin (PHB)</option>
+        <option value="Scion of the Three">Scion of the Three (FR)</option>
+        <option value="Soulknife">Soulknife (PHB)</option>
         <option value="Thief">Thief (SRD 5.2.1)</option>
-        <option value="other">Other approved subclass</option>
+        <option value="Runetagger">Runetagger (Saddlebag)</option>
+        <option value="Shadow Stalker">Shadow Stalker (CbT)</option>
       </select>
     </div>
-    <div class="level-up-field" id="levelUpOtherSubclassField" hidden>
-      <label class="level-up-label" for="levelUpOtherSubclass">Approved Subclass Name</label>
-      <input class="level-up-input" id="levelUpOtherSubclass" type="text" maxlength="80" autocomplete="off" oninput="updateLevelUpPlanner()">
+    <div class="level-up-subclass-options" id="levelUpArcaneTricksterFields" hidden>
+      <div class="level-up-choice-note">Mage Hand is granted automatically. Choose two additional Wizard cantrips and three level 1 Wizard spells.</div>
+      <div class="level-up-field">
+        <label class="level-up-label" for="levelUpCantripOne">Wizard Cantrip 1</label>
+        <select class="level-up-select" id="levelUpCantripOne" onchange="updateLevelUpPlanner()"></select>
+      </div>
+      <div class="level-up-field">
+        <label class="level-up-label" for="levelUpCantripTwo">Wizard Cantrip 2</label>
+        <select class="level-up-select" id="levelUpCantripTwo" onchange="updateLevelUpPlanner()"></select>
+      </div>
+      <div class="level-up-field">
+        <label class="level-up-label" for="levelUpSpellOne">Level 1 Wizard Spell 1</label>
+        <select class="level-up-select" id="levelUpSpellOne" onchange="updateLevelUpPlanner()"></select>
+      </div>
+      <div class="level-up-field">
+        <label class="level-up-label" for="levelUpSpellTwo">Level 1 Wizard Spell 2</label>
+        <select class="level-up-select" id="levelUpSpellTwo" onchange="updateLevelUpPlanner()"></select>
+      </div>
+      <div class="level-up-field">
+        <label class="level-up-label" for="levelUpSpellThree">Level 1 Wizard Spell 3</label>
+        <select class="level-up-select" id="levelUpSpellThree" onchange="updateLevelUpPlanner()"></select>
+      </div>
+    </div>
+    <div class="level-up-subclass-options" id="levelUpScionFields" hidden>
+      <div class="level-up-field">
+        <label class="level-up-label" for="levelUpDreadAllegiance">Dread Allegiance</label>
+        <select class="level-up-select" id="levelUpDreadAllegiance" onchange="updateLevelUpPlanner()">
+          <option value="">Choose one of the Dead Three</option>
+          <option value="Bane">Bane - Psychic, Minor Illusion</option>
+          <option value="Bhaal">Bhaal - Poison, Blade Ward</option>
+          <option value="Myrkul">Myrkul - Necrotic, Chill Touch</option>
+        </select>
+      </div>
     </div>
     <div class="level-up-field">
       <div class="level-up-label" id="levelUpHpLegend">Hit Point Increase</div>
@@ -2476,6 +2514,28 @@ let levelUpTurnstileToken = '';
 let levelUpTurnstileWidgetId = null;
 let levelUpTurnstileLoader = null;
 let levelUpSubmitting = false;
+const LEVEL_UP_SUBCLASSES = {
+  'Arcane Trickster': { source: "Player's Handbook", features: ['Spellcasting', 'Mage Hand Legerdemain'] },
+  Assassin: { source: "Player's Handbook", features: ['Assassinate', "Assassin's Tools"] },
+  'Scion of the Three': { source: 'Forgotten Realms: Heroes of Faerun', features: ['Bloodthirst', 'Dread Allegiance'] },
+  Soulknife: { source: "Player's Handbook", features: ['Psionic Power (4d6 Energy Dice)', 'Psychic Blades'] },
+  Thief: { source: 'SRD 5.2.1', features: ['Fast Hands', 'Second-Story Work'] },
+  Runetagger: { source: "The Griffon's Saddlebag: Book One", features: ['Impressionist', 'Runes (4 Rune Points)'] },
+  'Shadow Stalker': { source: 'Cthulhu by Torchlight', features: ['Shadowy Reflection', 'Shadow Motes (3)'] },
+};
+const ARCANE_TRICKSTER_CANTRIPS = [
+  'Acid Splash', 'Chill Touch', 'Dancing Lights', 'Elementalism', 'Fire Bolt', 'Light',
+  'Mending', 'Message', 'Minor Illusion', 'Poison Spray', 'Prestidigitation',
+  'Ray of Frost', 'Shocking Grasp', 'True Strike',
+];
+const ARCANE_TRICKSTER_LEVEL_ONE_SPELLS = [
+  'Alarm', 'Burning Hands', 'Charm Person', 'Chromatic Orb', 'Color Spray',
+  'Comprehend Languages', 'Detect Magic', 'Disguise Self', 'Expeditious Retreat',
+  'False Life', 'Feather Fall', 'Find Familiar', 'Floating Disk', 'Fog Cloud', 'Grease',
+  'Hideous Laughter', 'Ice Knife', 'Identify', 'Illusory Script', 'Jump', 'Longstrider',
+  'Mage Armor', 'Magic Missile', 'Protection from Evil and Good', 'Ray of Sickness',
+  'Shield', 'Silent Image', 'Sleep', 'Thunderwave', 'Unseen Servant', 'Witch Bolt',
+];
 
 // ===== TABS =====
 function switchTab(id) {
@@ -2505,6 +2565,7 @@ function filterFeatures(actionType) {
 
 function openLevelUpPlanner() {
   const dialog = document.getElementById('levelUpDialog');
+  initializeLevelUpSpellOptions();
   updateLevelUpPlanner();
   if (dialog && !dialog.open) dialog.showModal();
   prepareLevelUpVerification();
@@ -2516,26 +2577,79 @@ function closeLevelUpPlanner() {
 
 function getLevelUpChoices() {
   const subclassChoice = document.getElementById('levelUpSubclass')?.value || '';
-  const otherSubclass = document.getElementById('levelUpOtherSubclass')?.value.trim() || '';
-  const subclass = subclassChoice === 'other' ? otherSubclass : subclassChoice;
+  const subclassDetails = {};
+  if (subclassChoice === 'Arcane Trickster') {
+    subclassDetails.cantrips = ['levelUpCantripOne', 'levelUpCantripTwo'].map(id => document.getElementById(id)?.value || '');
+    subclassDetails.preparedSpells = ['levelUpSpellOne', 'levelUpSpellTwo', 'levelUpSpellThree'].map(id => document.getElementById(id)?.value || '');
+  } else if (subclassChoice === 'Scion of the Three') {
+    subclassDetails.dreadAllegiance = document.getElementById('levelUpDreadAllegiance')?.value || '';
+  }
   const hpMethod = document.querySelector('input[name="levelUpHpMethod"]:checked')?.value || 'fixed';
   const hpRoll = parseInt(document.getElementById('levelUpHpRoll')?.value, 10);
   const hpIncrease = hpMethod === 'fixed' ? 5 : hpRoll;
-  return { subclassChoice, subclass, hpMethod, hpIncrease };
+  return { subclass: subclassChoice, subclassDetails, hpMethod, hpIncrease };
+}
+
+function initializeLevelUpSpellOptions() {
+  populateLevelUpSelect('levelUpCantripOne', ARCANE_TRICKSTER_CANTRIPS, 'Choose a Wizard cantrip');
+  populateLevelUpSelect('levelUpCantripTwo', ARCANE_TRICKSTER_CANTRIPS, 'Choose a different cantrip');
+  ['levelUpSpellOne', 'levelUpSpellTwo', 'levelUpSpellThree'].forEach((id, index) => {
+    populateLevelUpSelect(id, ARCANE_TRICKSTER_LEVEL_ONE_SPELLS, `Choose level 1 spell ${index + 1}`);
+  });
+}
+
+function populateLevelUpSelect(id, options, placeholder) {
+  const select = document.getElementById(id);
+  if (!select || select.options.length) return;
+  select.add(new Option(placeholder, ''));
+  options.forEach(option => select.add(new Option(option, option)));
+}
+
+function validateLevelUpChoices(choices) {
+  if (!LEVEL_UP_SUBCLASSES[choices.subclass]) return 'Choose an available Rogue subclass.';
+  if (choices.subclass === 'Arcane Trickster') {
+    const { cantrips, preparedSpells } = choices.subclassDetails;
+    if (cantrips.some(choice => !choice) || new Set(cantrips).size !== 2) return 'Choose two different Wizard cantrips.';
+    if (preparedSpells.some(choice => !choice) || new Set(preparedSpells).size !== 3) return 'Choose three different level 1 Wizard spells.';
+  }
+  if (choices.subclass === 'Scion of the Three' && !choices.subclassDetails.dreadAllegiance) {
+    return 'Choose a Dread Allegiance.';
+  }
+  if (!Number.isInteger(choices.hpIncrease) || choices.hpIncrease < 1 || choices.hpIncrease > 8) {
+    return 'Choose a valid Hit Point increase.';
+  }
+  return '';
 }
 
 function updateLevelUpPlanner() {
   const choices = getLevelUpChoices();
-  const otherField = document.getElementById('levelUpOtherSubclassField');
-  const otherInput = document.getElementById('levelUpOtherSubclass');
+  const arcaneFields = document.getElementById('levelUpArcaneTricksterFields');
+  const scionFields = document.getElementById('levelUpScionFields');
   const hpRollField = document.getElementById('levelUpHpRollField');
   const hpRollInput = document.getElementById('levelUpHpRoll');
-  if (otherField) otherField.hidden = choices.subclassChoice !== 'other';
-  if (otherInput) otherInput.required = choices.subclassChoice === 'other';
+  if (arcaneFields) arcaneFields.hidden = choices.subclass !== 'Arcane Trickster';
+  if (scionFields) scionFields.hidden = choices.subclass !== 'Scion of the Three';
+  ['levelUpCantripOne', 'levelUpCantripTwo', 'levelUpSpellOne', 'levelUpSpellTwo', 'levelUpSpellThree'].forEach(id => {
+    const select = document.getElementById(id);
+    if (select) select.required = choices.subclass === 'Arcane Trickster';
+  });
+  const allegiance = document.getElementById('levelUpDreadAllegiance');
+  if (allegiance) allegiance.required = choices.subclass === 'Scion of the Three';
   if (hpRollField) hpRollField.hidden = choices.hpMethod !== 'rolled';
   if (hpRollInput) hpRollInput.required = choices.hpMethod === 'rolled';
+  const subclass = LEVEL_UP_SUBCLASSES[choices.subclass];
   const subclassSummary = choices.subclass || 'Not selected';
   const hpSummary = Number.isInteger(choices.hpIncrease) ? `+${choices.hpIncrease} HP (maximum 13 → ${13 + choices.hpIncrease})` : 'Enter the recorded d8 roll';
+  const detailLines = [];
+  if (subclass) detailLines.push(`${subclass.features.join(' · ')} · ${subclass.source}`);
+  if (choices.subclass === 'Arcane Trickster') {
+    const cantrips = choices.subclassDetails.cantrips.filter(Boolean);
+    const spells = choices.subclassDetails.preparedSpells.filter(Boolean);
+    detailLines.push(`Cantrips: Mage Hand${cantrips.length ? `, ${cantrips.join(', ')}` : ''}`);
+    detailLines.push(`Level 1 spells: ${spells.length ? spells.join(', ') : 'Not selected'}`);
+  } else if (choices.subclass === 'Scion of the Three') {
+    detailLines.push(`Dread Allegiance: ${choices.subclassDetails.dreadAllegiance || 'Not selected'}`);
+  }
   const review = document.getElementById('levelUpReview');
   if (review) {
     const heading = document.createElement('strong');
@@ -2544,6 +2658,7 @@ function updateLevelUpPlanner() {
       heading,
       document.createElement('br'),
       document.createTextNode(`Rogue 2 → Rogue 3 · ${subclassSummary}`),
+      ...detailLines.flatMap(line => [document.createElement('br'), document.createTextNode(line)]),
       document.createElement('br'),
       document.createTextNode(hpSummary),
       document.createElement('br'),
@@ -2633,8 +2748,9 @@ async function submitLevelUpRequest(event) {
   const form = document.getElementById('levelUpForm');
   if (!form?.reportValidity()) return;
   const choices = getLevelUpChoices();
-  if (!choices.subclass || !Number.isInteger(choices.hpIncrease) || choices.hpIncrease < 1 || choices.hpIncrease > 8) {
-    setLevelUpStatus('Choose a subclass and a valid Hit Point increase.');
+  const validationError = validateLevelUpChoices(choices);
+  if (validationError) {
+    setLevelUpStatus(validationError);
     return;
   }
   if (!levelUpTurnstileToken) {
@@ -2652,6 +2768,7 @@ async function submitLevelUpRequest(event) {
       body: JSON.stringify({
         characterId: 'vellan-darkmere',
         subclass: choices.subclass,
+        subclassDetails: choices.subclassDetails,
         hpMethod: choices.hpMethod,
         hpIncrease: choices.hpIncrease,
         turnstileToken: levelUpTurnstileToken,

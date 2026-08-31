@@ -1,7 +1,50 @@
 const TURNSTILE_VERIFY_URL = 'https://challenges.cloudflare.com/turnstile/v0/siteverify';
 const GITHUB_API_VERSION = '2022-11-28';
 const MAX_REQUEST_BYTES = 4096;
-const CUSTOM_SUBCLASS_PATTERN = /^[A-Za-z][A-Za-z0-9 '&-]{1,79}$/;
+const SUBCLASS_OPTIONS = {
+  'Arcane Trickster': {
+    source: "Player's Handbook",
+    features: ['Spellcasting', 'Mage Hand Legerdemain'],
+  },
+  Assassin: {
+    source: "Player's Handbook",
+    features: ['Assassinate', "Assassin's Tools"],
+  },
+  'Scion of the Three': {
+    source: 'Forgotten Realms: Heroes of Faerun',
+    features: ['Bloodthirst', 'Dread Allegiance'],
+  },
+  Soulknife: {
+    source: "Player's Handbook",
+    features: ['Psionic Power (4d6 Energy Dice)', 'Psychic Blades'],
+  },
+  Thief: {
+    source: 'SRD 5.2.1',
+    features: ['Fast Hands', 'Second-Story Work'],
+  },
+  Runetagger: {
+    source: "The Griffon's Saddlebag: Book One",
+    features: ['Impressionist', 'Runes (4 Rune Points)'],
+  },
+  'Shadow Stalker': {
+    source: 'Cthulhu by Torchlight',
+    features: ['Shadowy Reflection', 'Shadow Motes (3)'],
+  },
+};
+const WIZARD_CANTRIPS = new Set([
+  'Acid Splash', 'Chill Touch', 'Dancing Lights', 'Elementalism', 'Fire Bolt', 'Light',
+  'Mending', 'Message', 'Minor Illusion', 'Poison Spray', 'Prestidigitation',
+  'Ray of Frost', 'Shocking Grasp', 'True Strike',
+]);
+const LEVEL_ONE_WIZARD_SPELLS = new Set([
+  'Alarm', 'Burning Hands', 'Charm Person', 'Chromatic Orb', 'Color Spray',
+  'Comprehend Languages', 'Detect Magic', 'Disguise Self', 'Expeditious Retreat',
+  'False Life', 'Feather Fall', 'Find Familiar', 'Floating Disk', 'Fog Cloud', 'Grease',
+  'Hideous Laughter', 'Ice Knife', 'Identify', 'Illusory Script', 'Jump', 'Longstrider',
+  'Mage Armor', 'Magic Missile', 'Protection from Evil and Good', 'Ray of Sickness',
+  'Shield', 'Silent Image', 'Sleep', 'Thunderwave', 'Unseen Servant', 'Witch Bolt',
+]);
+const DEAD_THREE = new Set(['Bane', 'Bhaal', 'Myrkul']);
 
 export default {
   async fetch(request, env) {
@@ -104,9 +147,10 @@ export function validateLevelUpRequest(input) {
   }
 
   const subclass = typeof input.subclass === 'string' ? input.subclass.trim() : '';
-  if (subclass !== 'Thief' && !CUSTOM_SUBCLASS_PATTERN.test(subclass)) {
-    return { ok: false, error: 'Choose a valid approved subclass.' };
-  }
+  if (!SUBCLASS_OPTIONS[subclass]) return { ok: false, error: 'Choose an available Rogue subclass.' };
+
+  const subclassDetails = validateSubclassDetails(subclass, input.subclassDetails);
+  if (!subclassDetails.ok) return subclassDetails;
 
   if (!['fixed', 'rolled'].includes(input.hpMethod)) {
     return { ok: false, error: 'Choose a valid Hit Point method.' };
@@ -122,11 +166,39 @@ export function validateLevelUpRequest(input) {
     ok: true,
     value: {
       subclass,
-      subclassSource: subclass === 'Thief' ? 'SRD 5.2.1' : 'GM-approved external source',
+      subclassSource: SUBCLASS_OPTIONS[subclass].source,
+      subclassFeatures: SUBCLASS_OPTIONS[subclass].features,
+      subclassDetails: subclassDetails.value,
       hpMethod: input.hpMethod,
       hpIncrease: input.hpIncrease,
     },
   };
+}
+
+function validateSubclassDetails(subclass, details) {
+  const value = details && typeof details === 'object' && !Array.isArray(details) ? details : {};
+  if (subclass === 'Arcane Trickster') {
+    const cantrips = validateUniqueSelections(value.cantrips, 2, WIZARD_CANTRIPS);
+    if (!cantrips) return { ok: false, error: 'Choose two different Wizard cantrips in addition to Mage Hand.' };
+    const preparedSpells = validateUniqueSelections(value.preparedSpells, 3, LEVEL_ONE_WIZARD_SPELLS);
+    if (!preparedSpells) return { ok: false, error: 'Choose three different level 1 Wizard spells.' };
+    return { ok: true, value: { cantrips, preparedSpells } };
+  }
+  if (subclass === 'Scion of the Three') {
+    const dreadAllegiance = typeof value.dreadAllegiance === 'string' ? value.dreadAllegiance.trim() : '';
+    if (!DEAD_THREE.has(dreadAllegiance)) {
+      return { ok: false, error: 'Choose Bane, Bhaal, or Myrkul for Dread Allegiance.' };
+    }
+    return { ok: true, value: { dreadAllegiance } };
+  }
+  return { ok: true, value: {} };
+}
+
+function validateUniqueSelections(value, count, allowed) {
+  if (!Array.isArray(value) || value.length !== count) return null;
+  const selections = value.map(item => typeof item === 'string' ? item.trim() : '');
+  if (new Set(selections).size !== count || selections.some(item => !allowed.has(item))) return null;
+  return selections;
 }
 
 export function buildIssue(levelUp, issueLabel) {
@@ -140,12 +212,16 @@ export function buildIssue(levelUp, issueLabel) {
     choices: levelUp,
     automaticGains: ['Steady Aim', 'Sneak Attack 2d6'],
   };
+  const subclassChoiceLines = buildSubclassChoiceLines(levelUp);
   const body = [
     '## Level-Up Request',
     '',
     '**Character:** Vellan Darkmere',
     '**Progression:** Rogue 2 to Rogue 3',
     `**Subclass:** ${levelUp.subclass}`,
+    `**Source:** ${levelUp.subclassSource}`,
+    `**Subclass features:** ${levelUp.subclassFeatures.join('; ')}`,
+    ...subclassChoiceLines,
     `**Hit Points:** +${levelUp.hpIncrease} (${levelUp.hpMethod === 'fixed' ? 'fixed value' : 'recorded d8 roll'}), maximum 13 to ${newMaxHp}`,
     '**Automatic gains:** Steady Aim; Sneak Attack increases to 2d6',
     '',
@@ -159,6 +235,19 @@ export function buildIssue(levelUp, issueLabel) {
     body,
     ...(issueLabel ? { labels: [issueLabel] } : {}),
   };
+}
+
+function buildSubclassChoiceLines(levelUp) {
+  if (levelUp.subclass === 'Arcane Trickster') {
+    return [
+      `**Cantrips:** Mage Hand; ${levelUp.subclassDetails.cantrips.join('; ')}`,
+      `**Prepared level 1 spells:** ${levelUp.subclassDetails.preparedSpells.join('; ')}`,
+    ];
+  }
+  if (levelUp.subclass === 'Scion of the Three') {
+    return [`**Dread Allegiance:** ${levelUp.subclassDetails.dreadAllegiance}`];
+  }
+  return [];
 }
 
 async function verifyTurnstile(token, request, env, fetcher) {

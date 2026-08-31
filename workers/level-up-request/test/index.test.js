@@ -17,6 +17,7 @@ function validInput(overrides = {}) {
   return {
     characterId: 'vellan-darkmere',
     subclass: 'Thief',
+    subclassDetails: {},
     hpMethod: 'fixed',
     hpIncrease: 5,
     turnstileToken: 'verified-token',
@@ -27,11 +28,36 @@ function validInput(overrides = {}) {
 test('validates only bounded Vellan Rogue 3 choices', () => {
   assert.equal(validateLevelUpRequest(validInput()).ok, true);
   assert.equal(validateLevelUpRequest(validInput({ hpMethod: 'rolled', hpIncrease: 8 })).ok, true);
-  assert.equal(validateLevelUpRequest(validInput({ subclass: 'Swashbuckler' })).ok, true);
+  assert.equal(validateLevelUpRequest(validInput({ subclass: 'Assassin' })).ok, true);
+  assert.equal(validateLevelUpRequest(validInput({ subclass: 'Soulknife' })).ok, true);
+  assert.equal(validateLevelUpRequest(validInput({ subclass: 'Runetagger' })).ok, true);
+  assert.equal(validateLevelUpRequest(validInput({ subclass: 'Shadow Stalker' })).ok, true);
+  assert.equal(validateLevelUpRequest(validInput({
+    subclass: 'Scion of the Three',
+    subclassDetails: { dreadAllegiance: 'Bhaal' },
+  })).ok, true);
+  assert.equal(validateLevelUpRequest(validInput({
+    subclass: 'Arcane Trickster',
+    subclassDetails: {
+      cantrips: ['Minor Illusion', 'Message'],
+      preparedSpells: ['Disguise Self', 'Find Familiar', 'Sleep'],
+    },
+  })).ok, true);
+  assert.equal(validateLevelUpRequest(validInput({ subclass: 'Swashbuckler' })).ok, false);
   assert.equal(validateLevelUpRequest(validInput({ characterId: 'someone-else' })).ok, false);
   assert.equal(validateLevelUpRequest(validInput({ hpIncrease: 9 })).ok, false);
   assert.equal(validateLevelUpRequest(validInput({ hpIncrease: 6 })).ok, false);
-  assert.equal(validateLevelUpRequest(validInput({ subclass: '**Injected heading**' })).ok, false);
+  assert.equal(validateLevelUpRequest(validInput({
+    subclass: 'Scion of the Three',
+    subclassDetails: { dreadAllegiance: 'Cyric' },
+  })).ok, false);
+  assert.equal(validateLevelUpRequest(validInput({
+    subclass: 'Arcane Trickster',
+    subclassDetails: {
+      cantrips: ['Message', 'Message'],
+      preparedSpells: ['Disguise Self', 'Find Familiar', 'Sleep'],
+    },
+  })).ok, false);
 });
 
 test('builds the GitHub issue entirely on the server', () => {
@@ -40,6 +66,20 @@ test('builds the GitHub issue entirely on the server', () => {
   assert.deepEqual(issue.labels, ['level-up']);
   assert.match(issue.body, /maximum 13 to 18/);
   assert.match(issue.body, /"characterId": "vellan-darkmere"/);
+});
+
+test('includes subclass-specific choices in the issue', () => {
+  const input = validInput({
+    subclass: 'Arcane Trickster',
+    subclassDetails: {
+      cantrips: ['Minor Illusion', 'Message'],
+      preparedSpells: ['Disguise Self', 'Find Familiar', 'Sleep'],
+    },
+  });
+  const issue = buildIssue(validateLevelUpRequest(input).value, 'level-up');
+  assert.match(issue.body, /Cantrips:\*\* Mage Hand; Minor Illusion; Message/);
+  assert.match(issue.body, /Prepared level 1 spells:\*\* Disguise Self; Find Familiar; Sleep/);
+  assert.match(issue.body, /"subclassSource": "Player's Handbook"/);
 });
 
 test('verifies Turnstile and creates an issue', async () => {
