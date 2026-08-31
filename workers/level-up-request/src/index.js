@@ -45,6 +45,17 @@ const LEVEL_ONE_WIZARD_SPELLS = new Set([
   'Shield', 'Silent Image', 'Sleep', 'Thunderwave', 'Unseen Servant', 'Witch Bolt',
 ]);
 const DEAD_THREE = new Set(['Bane', 'Bhaal', 'Myrkul']);
+const METAMAGIC_OPTIONS = new Set([
+  'Careful Spell', 'Distant Spell', 'Empowered Spell', 'Extended Spell', 'Heightened Spell',
+  'Quickened Spell', 'Seeking Spell', 'Subtle Spell', 'Transmuted Spell', 'Twinned Spell',
+]);
+const LEVEL_ONE_SORCERER_SPELLS = new Set([
+  'Burning Hands', 'Charm Person', 'Chromatic Orb', 'Color Spray', 'Comprehend Languages',
+  'Detect Magic', 'Disguise Self', 'Expeditious Retreat', 'False Life', 'Feather Fall',
+  'Fog Cloud', 'Grease', 'Ice Knife', 'Jump', 'Mage Armor', 'Magic Missile',
+  'Ray of Sickness', 'Shield', 'Silent Image', 'Sleep', 'Thunderwave', 'Witch Bolt',
+]);
+const COL_CURRENT_SPELLS = new Set(['False Life', 'Grease']);
 
 export default {
   async fetch(request, env) {
@@ -139,12 +150,12 @@ export function validateLevelUpRequest(input) {
   if (!input || typeof input !== 'object' || Array.isArray(input)) {
     return { ok: false, error: 'Invalid level-up request.' };
   }
-  if (input.characterId !== 'vellan-darkmere') {
-    return { ok: false, error: 'Unknown character.' };
-  }
   if (typeof input.turnstileToken !== 'string' || input.turnstileToken.length < 1 || input.turnstileToken.length > 2048) {
     return { ok: false, error: 'Complete the verification challenge.' };
   }
+
+  if (input.characterId === 'col-agen') return validateColLevelUp(input);
+  if (input.characterId !== 'vellan-darkmere') return { ok: false, error: 'Unknown character.' };
 
   const subclass = typeof input.subclass === 'string' ? input.subclass.trim() : '';
   if (!SUBCLASS_OPTIONS[subclass]) return { ok: false, error: 'Choose an available Rogue subclass.' };
@@ -175,6 +186,37 @@ export function validateLevelUpRequest(input) {
   };
 }
 
+function validateColLevelUp(input) {
+  const metamagic = validateUniqueSelections(input.metamagic, 2, METAMAGIC_OPTIONS);
+  if (!metamagic) return { ok: false, error: 'Choose two different Metamagic options.' };
+  const preparedSpells = validateUniqueSelections(input.preparedSpells, 2, LEVEL_ONE_SORCERER_SPELLS);
+  if (!preparedSpells || preparedSpells.some(spell => COL_CURRENT_SPELLS.has(spell))) {
+    return { ok: false, error: 'Choose two different new level 1 Sorcerer spells.' };
+  }
+
+  let spellReplacement = null;
+  if (input.spellReplacement !== null && input.spellReplacement !== undefined) {
+    const from = typeof input.spellReplacement?.from === 'string' ? input.spellReplacement.from.trim() : '';
+    const to = typeof input.spellReplacement?.to === 'string' ? input.spellReplacement.to.trim() : '';
+    if (!COL_CURRENT_SPELLS.has(from) || !LEVEL_ONE_SORCERER_SPELLS.has(to) || COL_CURRENT_SPELLS.has(to) || preparedSpells.includes(to)) {
+      return { ok: false, error: 'Choose a valid, distinct prepared-spell replacement.' };
+    }
+    spellReplacement = { from, to };
+  }
+
+  if (!['fixed', 'rolled'].includes(input.hpMethod)) return { ok: false, error: 'Choose a valid Hit Point method.' };
+  const hpRoll = input.hpMethod === 'rolled' ? input.hpRoll : null;
+  const expectedIncrease = input.hpMethod === 'fixed' ? 10 : hpRoll + 6;
+  if (input.hpMethod === 'rolled' && (!Number.isInteger(hpRoll) || hpRoll < 1 || hpRoll > 6)) {
+    return { ok: false, error: 'The recorded Hit Die roll must be from 1 to 6.' };
+  }
+  if (!Number.isInteger(input.hpIncrease) || input.hpIncrease !== expectedIncrease) {
+    return { ok: false, error: 'The Hit Point increase does not match the selected method.' };
+  }
+
+  return { ok: true, value: { characterId: 'col-agen', metamagic, preparedSpells, spellReplacement, hpMethod: input.hpMethod, hpRoll, hpIncrease: input.hpIncrease } };
+}
+
 function validateSubclassDetails(subclass, details) {
   const value = details && typeof details === 'object' && !Array.isArray(details) ? details : {};
   if (subclass === 'Arcane Trickster') {
@@ -202,6 +244,7 @@ function validateUniqueSelections(value, count, allowed) {
 }
 
 export function buildIssue(levelUp, issueLabel) {
+  if (levelUp.characterId === 'col-agen') return buildColIssue(levelUp, issueLabel);
   const newMaxHp = 13 + levelUp.hpIncrease;
   const structuredRequest = {
     schemaVersion: 1,
@@ -235,6 +278,29 @@ export function buildIssue(levelUp, issueLabel) {
     body,
     ...(issueLabel ? { labels: [issueLabel] } : {}),
   };
+}
+
+function buildColIssue(levelUp, issueLabel) {
+  const newMaxHp = 10 + levelUp.hpIncrease;
+  const structuredRequest = {
+    schemaVersion: 1,
+    characterId: 'col-agen',
+    sourceSheet: 'DnD/col_agen_sheet.html',
+    from: { characterLevel: 1, classes: { sorcerer: 1 }, maxHp: 10 },
+    to: { characterLevel: 2, classes: { sorcerer: 2 }, maxHp: newMaxHp },
+    choices: levelUp,
+    automaticGains: ['Font of Magic', '2 Sorcery Points', '3 level 1 spell slots', '4 prepared spells'],
+  };
+  const body = [
+    '## Level-Up Request', '', '**Character:** Col Agen', '**Progression:** Sorcerer 1 to Sorcerer 2',
+    `**Metamagic:** ${levelUp.metamagic.join('; ')}`,
+    `**New prepared spells:** ${levelUp.preparedSpells.join('; ')}`,
+    `**Spell replacement:** ${levelUp.spellReplacement ? `${levelUp.spellReplacement.from} to ${levelUp.spellReplacement.to}` : 'None'}`,
+    `**Hit Points:** +${levelUp.hpIncrease} (${levelUp.hpMethod === 'fixed' ? 'fixed 4 + Constitution 4 + Tough 2' : `d6 roll ${levelUp.hpRoll} + Constitution 4 + Tough 2`}), maximum 10 to ${newMaxHp}`,
+    '**Automatic gains:** Font of Magic; 2 Sorcery Points; 3 level 1 spell slots; 4 prepared spells',
+    '', '<!-- level-up-data', JSON.stringify(structuredRequest, null, 2), '-->',
+  ].join('\n');
+  return { title: '[Level Up] Col Agen - Sorcerer 2', body, ...(issueLabel ? { labels: [issueLabel] } : {}) };
 }
 
 function buildSubclassChoiceLines(levelUp) {

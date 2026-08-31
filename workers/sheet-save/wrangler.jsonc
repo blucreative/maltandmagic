@@ -1,0 +1,19 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "maltandmagic-sheet-save",
+  "main": "src/index.js",
+  "compatibility_date": "2026-08-16",
+  "vars": {
+    "ALLOWED_ORIGINS": "https://blucreative.github.io,http://127.0.0.1:4173,http://localhost:4173",
+    "GITHUB_OWNER": "blucreative",
+    "GITHUB_REPO": "maltandmagic",
+    "SAVE_BRANCH": "player-saves"
+  },
+  "ratelimits": [
+    {
+      "name": "SHEET_SAVE_RATE_LIMITER",
+      "namespace_id": "1001",
+      "simple": { "limit": 30, "period": 60 }
+    }
+  ]
+}

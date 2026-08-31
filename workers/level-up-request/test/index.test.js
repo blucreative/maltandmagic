@@ -25,6 +25,20 @@ function validInput(overrides = {}) {
   };
 }
 
+function validColInput(overrides = {}) {
+  return {
+    characterId: 'col-agen',
+    metamagic: ['Careful Spell', 'Subtle Spell'],
+    preparedSpells: ['Mage Armor', 'Shield'],
+    spellReplacement: null,
+    hpMethod: 'fixed',
+    hpRoll: null,
+    hpIncrease: 10,
+    turnstileToken: 'verified-token',
+    ...overrides,
+  };
+}
+
 test('validates only bounded Vellan Rogue 3 choices', () => {
   assert.equal(validateLevelUpRequest(validInput()).ok, true);
   assert.equal(validateLevelUpRequest(validInput({ hpMethod: 'rolled', hpIncrease: 8 })).ok, true);
@@ -66,6 +80,27 @@ test('builds the GitHub issue entirely on the server', () => {
   assert.deepEqual(issue.labels, ['level-up']);
   assert.match(issue.body, /maximum 13 to 18/);
   assert.match(issue.body, /"characterId": "vellan-darkmere"/);
+});
+
+test('validates bounded Col Sorcerer 2 choices', () => {
+  assert.equal(validateLevelUpRequest(validColInput()).ok, true);
+  assert.equal(validateLevelUpRequest(validColInput({ hpMethod: 'rolled', hpRoll: 6, hpIncrease: 12 })).ok, true);
+  assert.equal(validateLevelUpRequest(validColInput({ spellReplacement: { from: 'Grease', to: 'Sleep' } })).ok, true);
+  assert.equal(validateLevelUpRequest(validColInput({ metamagic: ['Subtle Spell', 'Subtle Spell'] })).ok, false);
+  assert.equal(validateLevelUpRequest(validColInput({ preparedSpells: ['Grease', 'Shield'] })).ok, false);
+  assert.equal(validateLevelUpRequest(validColInput({ preparedSpells: ['Mage Armor', 'Mage Armor'] })).ok, false);
+  assert.equal(validateLevelUpRequest(validColInput({ hpIncrease: 6 })).ok, false);
+  assert.equal(validateLevelUpRequest(validColInput({ hpMethod: 'rolled', hpRoll: 7, hpIncrease: 13 })).ok, false);
+  assert.equal(validateLevelUpRequest(validColInput({ spellReplacement: { from: 'Grease', to: 'Shield' } })).ok, false);
+});
+
+test('builds Col level-up issue data on the server', () => {
+  const levelUp = validateLevelUpRequest(validColInput({ spellReplacement: { from: 'False Life', to: 'Sleep' } })).value;
+  const issue = buildIssue(levelUp, 'level-up');
+  assert.equal(issue.title, '[Level Up] Col Agen - Sorcerer 2');
+  assert.match(issue.body, /maximum 10 to 20/);
+  assert.match(issue.body, /False Life to Sleep/);
+  assert.match(issue.body, /"characterId": "col-agen"/);
 });
 
 test('includes subclass-specific choices in the issue', () => {
