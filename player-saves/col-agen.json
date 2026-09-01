@@ -1,12 +1,12 @@
 {
   "schemaVersion": 1,
   "characterId": "col-agen",
-  "revision": 2,
-  "updatedAt": "2026-08-31T17:59:33.865Z",
+  "revision": 3,
+  "updatedAt": "2026-09-01T08:06:37.298Z",
   "state": {
     "schemaVersion": 1,
     "characterLevel": 2,
-    "revision": 2,
+    "revision": 3,
     "hp": {
       "current": 21,
       "max": 21,
@@ -133,6 +133,6 @@
       "Backstory": "",
       "Additional Notes": ""
     },
-    "updatedAt": "2026-08-31T17:59:33.865Z"
+    "updatedAt": "2026-09-01T08:06:37.298Z"
   }
 }
