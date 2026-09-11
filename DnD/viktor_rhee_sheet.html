@@ -11,6 +11,7 @@
 <script defer src="../assets/js/a11y-sheet-helpers.js"></script>
 <script src="../assets/js/inventory-trackers.js"></script>
 <script defer src="../assets/js/rest-hit-dice.js?v=20260817-rest-dialog"></script>
+<script src="../assets/js/archibold-rules-help.js?v=3"></script>
 <style>
   :root {
     --forest-dark: #1a2218;
@@ -1679,6 +1680,8 @@
     }
   }
 </style>
+<link rel="stylesheet" href="../assets/css/viktor-modern.css?v=1">
+<link rel="stylesheet" href="../assets/css/archibold-rules-help.css?v=3">
 </head>
 <body class="theme-fantasy page-dnd-character-sheet page-viktor-rhee-sheet">
 
@@ -2064,7 +2067,7 @@
         <div class="passive-row"><span class="passive-val">14</span><span class="passive-name">Passive Perception</span></div>
         <div class="passive-row"><span class="passive-val">12</span><span class="passive-name">Passive Insight</span></div>
         <div class="passive-row"><span class="passive-val">12</span><span class="passive-name">Passive Investigation</span></div>
-        <div style="margin-top:8px;padding:6px 10px;background:rgba(26,34,24,0.5);border:1px solid rgba(58,79,53,0.3);border-radius:4px;">
+        <div class="darkvision-readout">
           <span style="font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:600;color:var(--gold);">Darkvision</span>
           <span style="font-family:'Barlow',sans-serif;font-size:11px;color:var(--text-dim);margin-left:6px;">120 ft.</span>
         </div>
@@ -2912,111 +2915,9 @@ function filterFeatures(actionType) {
 }
 
 // ===== TOOLTIP ENGINE =====
-const tooltip = document.getElementById('tooltip');
-const ttName = document.getElementById('tt-name');
-const ttType = document.getElementById('tt-type');
-const ttBody = document.getElementById('tt-body');
-const ttStats = document.getElementById('tt-stats');
-let activeTooltipEl = null;
-let lastMouseX = 0;
-let lastMouseY = 0;
-
-function showTooltip(data) {
-  ttName.textContent = data.name;
-  ttType.textContent = data.type || '';
-  ttBody.innerHTML = (data.body || '').replace(/\n/g, '<br>');
-  if (data.stats) {
-    ttStats.style.display = 'grid';
-    ttStats.innerHTML = Object.entries(data.stats).map(([k,v]) => `<div class="tooltip-stat">${k}: <span>${v}</span></div>`).join('');
-  } else {
-    ttStats.style.display = 'none';
-  }
-  tooltip.classList.add('visible');
-}
-
-function positionTooltip(x, y) {
-  const pad = 12;
-  const rect = tooltip.getBoundingClientRect();
-  let left = x + 16;
-  let top = y + 14;
-  if (left + rect.width > window.innerWidth - pad) left = x - rect.width - 16;
-  if (top + rect.height > window.innerHeight - pad) top = y - rect.height - 16;
-  if (left < pad) left = pad;
-  if (top < pad) top = pad;
-
-  tooltip.style.left = Math.round(left) + 'px';
-  tooltip.style.top = Math.round(top) + 'px';
-}
-
-function hideTooltip() {
-  tooltip.classList.remove('visible');
-  activeTooltipEl = null;
-}
-
-function getTooltipData(el) {
-  if (!el) return null;
-  return TOOLTIPS[el.dataset.tooltip] || null;
-}
-
-function activateTooltip(el, x, y) {
-  const data = getTooltipData(el);
-  if (!data) return;
-  // Render the tooltip as a direct child of <body> so it escapes any
-  // ancestor stacking context. Only re-parent if needed.
-  if (tooltip.parentElement !== document.body) {
-    document.body.appendChild(tooltip);
-  }
-  activeTooltipEl = el;
-  showTooltip(data);
-  positionTooltip(x, y);
-}
-
-document.addEventListener('mouseover', (e) => {
-  const el = e.target.closest('[data-tooltip]');
-  if (!el) return;
-  lastMouseX = e.clientX;
-  lastMouseY = e.clientY;
-  activateTooltip(el, lastMouseX, lastMouseY);
-});
-
-document.addEventListener('mousemove', (e) => {
-  if (!activeTooltipEl) return;
-  lastMouseX = e.clientX;
-  lastMouseY = e.clientY;
-  positionTooltip(lastMouseX, lastMouseY);
-});
-
-document.addEventListener('mouseout', (e) => {
-  if (!activeTooltipEl) return;
-  const nextEl = e.relatedTarget;
-  if (nextEl && activeTooltipEl.contains(nextEl)) {
-    return;
-  }
-  hideTooltip();
-});
-
-document.addEventListener('focusin', (e) => {
-  const el = e.target.closest('[data-tooltip]');
-  if (!el) return;
-  const rect = el.getBoundingClientRect();
-  activateTooltip(el, rect.left + rect.width / 2, rect.top + rect.height / 2);
-});
-
-document.addEventListener('focusout', () => {
-  hideTooltip();
-});
-
-window.addEventListener('scroll', () => {
-  if (activeTooltipEl) {
-    const rect = activeTooltipEl.getBoundingClientRect();
-    positionTooltip(rect.left + rect.width / 2, rect.top + rect.height / 2);
-  }
-}, { passive: true });
-
-window.addEventListener('resize', () => {
-  if (!activeTooltipEl) return;
-  const rect = activeTooltipEl.getBoundingClientRect();
-  positionTooltip(rect.left + rect.width / 2, rect.top + rect.height / 2);
+window.initializeSheetRulesHelp(TOOLTIPS, {
+  headingSelector: '.feature-name,.item-name,.ability-name,.weapon-name,.spell-name',
+  groupSelector: '.condition-badge',
 });
 
 // ===== HP =====
