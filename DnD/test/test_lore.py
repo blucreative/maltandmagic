@@ -40,6 +40,19 @@ class Document(HTMLParser):
 
 
 class LoreTests(unittest.TestCase):
+    def test_brand_logos_resolve_on_home_and_all_lore_pages(self):
+        for path in [ROOT / 'index.html', *REFERENCES]:
+            with self.subTest(page=path.relative_to(ROOT).as_posix()):
+                source = path.read_text(encoding='utf-8')
+                images = re.findall(r'<img\b[^>]*class(?:Name)?="brand-logo"[^>]*>', source)
+                self.assertEqual(len(images), 2 if path == ROOT / 'index.html' else 1)
+                for image in images:
+                    src = re.search(r'src="([^"]+)"', image).group(1)
+                    target = path.parent / unquote(urlsplit(src).path)
+                    self.assertTrue(target.is_file(), src)
+                    self.assertIn(target.name, ['White Logo.png', 'Dark Logo.png'])
+                    self.assertIn('alt=""', image)  # Adjacent brand text supplies the accessible name.
+
     def test_all_lore_pages_opt_in_and_have_valid_styles(self):
         self.assertEqual(len(REFERENCES), 14)
         for path in REFERENCES:
