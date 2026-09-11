@@ -1,12 +1,12 @@
 {
   "schemaVersion": 1,
   "characterId": "col-agen",
-  "revision": 8,
-  "updatedAt": "2026-09-11T11:03:20.524Z",
+  "revision": 9,
+  "updatedAt": "2026-09-11T11:04:53.213Z",
   "state": {
     "schemaVersion": 1,
     "characterLevel": 2,
-    "revision": 8,
+    "revision": 9,
     "hp": {
       "current": 21,
       "max": 21,
@@ -120,6 +120,11 @@
         "name": "New item",
         "qty": 1,
         "weight": 0
+      },
+      {
+        "name": "New item",
+        "qty": 1,
+        "weight": 0
       }
     ],
     "conditions": [],
@@ -133,6 +138,6 @@
       "Backstory": "",
       "Additional Notes": ""
     },
-    "updatedAt": "2026-09-11T11:03:20.524Z"
+    "updatedAt": "2026-09-11T11:04:53.213Z"
   }
 }
