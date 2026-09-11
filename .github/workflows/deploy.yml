@@ -25,7 +25,7 @@ jobs:
         run: |
           rm -rf site
           mkdir -p site
-          rsync -a --exclude='.git' --exclude='.github' ./ site/
+          rsync -a --exclude='.git' --exclude='.github' --exclude='.private' --exclude='node_modules' --exclude='/workers' --exclude='/site' ./ site/
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3

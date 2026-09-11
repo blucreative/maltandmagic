@@ -53,3 +53,36 @@ test('rejects disallowed origins', async () => {
   const bad = new Request('https://worker.example/sheets/col-agen', { method: 'GET', headers: { Origin: 'https://example.com', Authorization: `Bearer ${claimKey}` } });
   assert.equal((await handleRequest(bad, env)).status, 403);
 });
+
+test('advancement is atomic, idempotent, and protected from older clients', async () => {
+  let stored = { schemaVersion: 1, characterId: 'col-agen', revision: 4, state: { ...structuredClone(state), revision: 4, currency: { ...state.currency, gp: 123 } } };
+  let writes = 0;
+  const fetcher = async (_url, options = {}) => {
+    if (!options.method) return Response.json({ sha: 'abc', content: btoa(JSON.stringify(stored)) });
+    stored = JSON.parse(atob(JSON.parse(options.body).content));
+    writes += 1;
+    return Response.json({ content: { sha: 'abc' } });
+  };
+  const advancement = {
+    id: 'player-level-three', classId: 'sorcerer', hpRoll: 4, milestone: true,
+    choices: { subclass: 'draconic-sorcery', spells: ['Grease', 'False Life', 'Fog Cloud', 'Shield', 'Web', 'Misty Step'], cantrips: ['Light', 'Mage Hand', 'Mending', 'Prestidigitation'], metamagic: ['Careful Spell', 'Quickened Spell'] }
+  };
+  const advance = revision => new Request('https://worker.example/sheets/col-agen/advancements', { method: 'POST', headers: { Origin: env.ALLOWED_ORIGINS, Authorization: `Bearer ${claimKey}`, 'Content-Type': 'application/json' }, body: JSON.stringify({ revision, advancement }) });
+  assert.equal((await handleRequest(advance(3), env, fetcher)).status, 409);
+  assert.equal((await handleRequest(advance(4), env, fetcher)).status, 200);
+  assert.equal(stored.state.characterLevel, 3);
+  assert.equal(stored.state.hp.max, 34);
+  assert.equal(stored.state.hp.current, 34);
+  assert.equal(stored.state.currency.gp, 123);
+  assert.deepEqual(stored.state.inventory, state.inventory);
+  assert.equal(stored.state.resources.slots2, 2);
+  assert.equal(validateSaveRequest({ revision: 5, state: stored.state }).ok, true);
+  assert.equal((await handleRequest(advance(4), env, fetcher)).status, 200);
+  assert.equal(writes, 1);
+  assert.equal((await handleRequest(request('PUT', { revision: 5, state: { ...state, revision: 5 } }), env, fetcher)).status, 409);
+  const edited = structuredClone(stored.state);
+  edited.currency.gp = 150;
+  assert.equal((await handleRequest(request('PUT', { revision: 5, state: edited }), env, fetcher)).status, 200);
+  assert.equal(stored.state.currency.gp, 150);
+  assert.equal(stored.state.progression.history.length, 1);
+});

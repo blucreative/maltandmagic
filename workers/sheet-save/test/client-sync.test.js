@@ -2,6 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import vm from 'node:vm';
+import { applyAdvancement } from '../../../assets/js/advancement-engine.mjs';
 
 const html = readFileSync(new URL('../../../DnD/col_agen_sheet.html', import.meta.url), 'utf8');
 const script = html.match(/<script>([\s\S]*?)<\/script>/)[1];
@@ -12,6 +13,21 @@ function browser(fetcher, saved = {}) {
   storage.set('maltandmagic:col-agen:claim', 'test-claim');
   const nodes = new Map();
   const documentEvents = new Map();
+  const documentListeners = new Map();
+  const listen = (type, handler, capture = false) => {
+    const listeners = documentListeners.get(type) || [];
+    listeners.push({ handler, capture });
+    documentListeners.set(type, listeners);
+    documentEvents.set(type, event => {
+      let stopped = false;
+      event.preventDefault ||= () => {};
+      event.stopImmediatePropagation = () => { stopped = true; };
+      for (const listener of [...listeners].sort((first, second) => Number(second.capture) - Number(first.capture))) {
+        if (stopped) break;
+        listener.handler(event);
+      }
+    });
+  };
   const windowEvents = new Map();
   const node = id => {
     if (!nodes.has(id)) nodes.set(id, {
@@ -24,7 +40,7 @@ function browser(fetcher, saved = {}) {
   };
   const context = vm.createContext({
     localStorage: { getItem: key => storage.get(key) ?? null, setItem: (key, value) => storage.set(key, String(value)) },
-    document: { getElementById: node, querySelectorAll: () => [], addEventListener: (type, handler) => documentEvents.set(type, handler), createElement: () => ({ set textContent(value) { this.innerHTML = value; } }) },
+    document: { getElementById: node, querySelectorAll: () => [], addEventListener: listen, createElement: () => ({ set textContent(value) { this.innerHTML = value; } }) },
     window: { addEventListener: (type, handler) => windowEvents.set(type, handler) },
     fetch: fetcher, setTimeout: () => 1, clearTimeout() {}, console
   });
@@ -66,7 +82,8 @@ function cloud() {
     if (server.beforeWrite) await server.beforeWrite();
     if (input.revision !== (server.save?.revision || 0)) return Response.json(server.save, { status: 409 });
     const revision = input.revision + 1;
-    server.save = { revision, state: { ...input.state, revision, updatedAt: '2026-09-11T13:00:00.000Z' } };
+    const state = method === 'POST' ? applyAdvancement(server.save.state, input.advancement) : input.state;
+    server.save = { revision, state: { ...state, revision, updatedAt: '2026-09-11T13:00:00.000Z' } };
     return Response.json(server.save);
   };
   return server;
@@ -184,4 +201,34 @@ test('legacy browser saves without a baseline are not silently discarded', async
   await client.run('connectCloud()');
   assert.equal(client.run('state.currency.gp'), 64);
   assert.equal(client.node('syncStatus').textContent, 'Sync conflict');
+});
+
+test('unreadable or newer local saves never fall back to defaults', () => {
+  for (const saved of ['{broken', JSON.stringify({ schemaVersion: 99 })]) {
+    assert.throws(() => browser(() => { throw new Error('Must not connect'); }, { [storageKey]: saved }));
+  }
+});
+
+test('finalization locks edits immediately and the next device loads choices', async () => {
+  const server = cloud();
+  const client = browser(server.fetch);
+  await client.run('connectCloud()');
+  client.run('state.currency.gp=123;persist()');
+  const request = {
+    id: 'client-level-3', classId: 'sorcerer', hpRoll: 4, milestone: true,
+    choices: { subclass: 'draconic-sorcery', spells: ['Grease', 'False Life', 'Fog Cloud', 'Shield', 'Web', 'Misty Step'], cantrips: ['Light', 'Mage Hand', 'Mending', 'Prestidigitation'], metamagic: ['Careful Spell', 'Quickened Spell'] }
+  };
+  const pending = client.run(`window.colSheet.finalize(${JSON.stringify(request)},2)`);
+  assert.equal(client.run('window.colSheet.finalizing'), true);
+  client.documentEvents.get('change')({ target: { id: '', dataset: { currency: 'gp' }, value: '999' } });
+  await assert.rejects(client.run(`window.colSheet.finalize(${JSON.stringify(request)},2)`), /already/);
+  await pending;
+  assert.equal(client.run('window.colSheet.finalizing'), false);
+  assert.equal(server.save.state.currency.gp, 123);
+  assert.equal(server.save.state.characterLevel, 3);
+  const second = browser(server.fetch);
+  await second.run('connectCloud()');
+  assert.equal(second.run('state.progression.history[0].choices.subclass'), 'draconic-sorcery');
+  assert.equal(second.run('state.hp.max'), 34);
+  assert.equal(server.requests.filter(method => method === 'POST').length, 1);
 });

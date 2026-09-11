@@ -25,3 +25,88 @@ Cloud saves update the JSON on the `player-saves` branch, not the HTML or the Pa
 ## Verification
 
 `npm test` runs Worker validation tests and client sync regressions using the actual inline script from Col's sheet. Client tests simulate two devices, gold edits, reloads, offline retries, explicit conflicts, and changes made during an upload without accessing the live save.
+
+## Advancement Pilot
+
+Col alone has a four-step advancement dialog. The legacy sheet has a level-2
+baseline; the player records the missing level-3 choices and HP roll before
+recording later milestones. No subclass or new spell is selected on the
+player's behalf. This is not a level-1 character-creation wizard.
+
+`POST /sheets/col-agen/advancements` accepts the existing bearer claim key and:
+
+```json
+{
+	"revision": 4,
+	"advancement": {
+		"id": "unique-client-generated-id",
+		"classId": "sorcerer",
+		"hpRoll": 4,
+		"milestone": true,
+		"choices": {}
+	}
+}
+```
+
+The example's empty choices are intentionally incomplete. The shared engine
+defines the required choices for the actual class level. HP uses the selected
+class's die, rerolls all 1s, and applies Constitution and Col's recorded Tough
+feat. Each confirmed advancement includes a Long Rest. The Worker computes
+the new state and appends the history using the GitHub file SHA. A repeated ID
+with identical choices is idempotent. A stale revision returns HTTP 409 and
+the current save. Ordinary PUTs cannot rewrite confirmed advancement history.
+
+Schema-2 gameplay state contains a versioned baseline and append-only history,
+including chosen options, rolled HP, and feature snapshots. Drafts remain
+separate from confirmed levels and synchronize with normal gameplay state.
+Gold, inventory, conditions, and notes survive advancement. Unrecognized local
+save schemas stop loading rather than overwriting stored data with defaults.
+
+### Deployment Order
+
+1. Back up the existing JSON on the `player-saves` branch.
+2. Deploy the updated sheet-save Worker using the existing secrets.
+3. Publish Col's updated HTML, advancement modules, catalog, stylesheet, and
+	 attribution together through the normal Pages workflow.
+4. Verify with a designated test save before using real player advancement.
+
+There is no deployment or live-save modification as part of local tests.
+The new frontend cannot finalize against the old Worker. The legacy
+level-up-request Worker remains unchanged for other character sheets.
+
+### Rules Versions and Coverage
+
+`assets/js/advancement-catalog-v1.mjs` is checked in and loaded locally, not
+fetched from a rules website at runtime. Preserve this catalog and the meaning
+of `2024-campaign-1` once records are in use. Routine UI updates must never
+replace the ledger with new HTML defaults. A rules correction requires an
+explicit reviewed migration, a backup, and regression tests against existing
+records. A new rules version must retain a compatible reader for old saves.
+
+The catalog currently contains all 12 core classes and 49 subclass entries
+from the SRD and local sources. Tests traverse class levels 1 through 20 from
+synthetic level-1 baselines; this is smoke coverage, not certification of every
+subclass combination. Automatic calculations include proficiency, HP,
+Constitution adjustments, class resources, pooled Hit Dice, multiclass slots,
+Pact Magic, prepared spell counts, and selected feat/class choices.
+
+This is a test pilot, not complete rules automation. Supplemental choices can
+be recorded in Additional Feature Choices, but not every effect is calculated.
+Remaining structured coverage includes weapon mastery, tool choices, several
+subclass-specific choices, repeatable invocation variants, Wizard subclass
+spellbook additions, and Lore Bard bonus spells. Equipment-dependent AC,
+conditional attacks, and all rest/feature interactions are not fully modeled.
+The selectable feat list is currently SRD-based, with Col's Tough preserved as
+a recorded campaign feat. Do not treat a successful save as rules approval.
+
+Catalog regeneration is an explicit development step:
+
+```sh
+node workers/sheet-save/scripts/build-advancement-catalog.mjs
+node --test workers/sheet-save/test/*.test.js
+```
+
+Review generated changes before publication; upstream markdown is not pinned
+to a commit. Attribution is in `assets/advancement-attribution.md`. Pages
+assembly excludes `.private`, Worker tooling, and dependency directories.
+This exclusion does not remove anything already present in Git history.

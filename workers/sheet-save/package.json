@@ -8,6 +8,8 @@
     "test": "node --test"
   },
   "devDependencies": {
+    "cheerio": "^1.2.0",
+    "marked": "^18.0.12",
     "wrangler": "^4.0.0"
   }
 }
