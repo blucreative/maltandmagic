@@ -1,0 +1,145 @@
+body.page-archibold-layadon-sheet {
+  --forest-dark: #f4f7f6;
+  --forest-mid: #edf2f0;
+  --forest-panel: #ffffff;
+  --forest-border: #d5dfdc;
+  --forest-accent: #197468;
+  --gold: #176e62;
+  --gold-light: #174c46;
+  --gold-dim: #b5cdc6;
+  --parchment: #213632;
+  --parchment-dark: #455e58;
+  --text-primary: #213632;
+  --text-secondary: #4c625c;
+  --text-dim: #61726d;
+  --danger: #a33348;
+  --danger-light: #ad3048;
+  --success: #176e62;
+  --success-light: #176e62;
+  --section-bg: #ffffff;
+  --card-bg: #ffffff;
+  --card-border: #d5dfdc;
+  --tooltip-bg: #ffffff;
+  --steel: #506c65;
+  --steel-dim: #61726d;
+  --arcane: #7450a1;
+  --arcane-glow: #623b93;
+  --fantasy-panel: #ffffff;
+  --fantasy-panel-border: #d5dfdc;
+  --fantasy-shadow: none;
+  background: linear-gradient(180deg, #eaf2ef 0, #f6f8f7 320px, #f6f8f7 100%);
+  color: var(--text-primary);
+  font-family: 'Sora', sans-serif;
+  font-size: 13px;
+  line-height: 1.6;
+}
+body.page-archibold-layadon-sheet::before,
+body.page-archibold-layadon-sheet::after,
+.page-archibold-layadon-sheet .sheet-header::after { display: none; }
+.page-archibold-layadon-sheet :is(h1,h2,h3,button,input,textarea,select,.panel-title,.char-name,.char-meta-item .value,.char-meta-item .label,.ability-name,.ability-num,.ability-mod,.save-name,.save-val,.skill-name,.skill-mod,.skill-attr,.hp-label,.hp-value,.cs-val,.cs-label,.feature-name,.feature-source,.feature-summary,.weapon-name,.weapon-hit,.weapon-damage,.resource-label,.passive-name,.passive-val,.aa-val,.aa-lbl,.lore-label,.lore-text,.detail-label,.detail-value,.currency-value,.tooltip-name,.tooltip-type,.tooltip-body) {
+  font-family: 'Sora', sans-serif;
+  letter-spacing: 0;
+  text-shadow: none;
+}
+.page-archibold-layadon-sheet .sheet-header {
+  position: relative;
+  padding: 38px 28px 28px;
+  background: transparent;
+  border: 0;
+  box-shadow: none;
+  align-items: flex-end;
+  gap: 28px;
+}
+.page-archibold-layadon-sheet .char-name { font-size: 32px; line-height: 1.2; color: var(--text-primary); }
+.page-archibold-layadon-sheet .char-meta { flex-wrap: wrap; gap: 16px; }
+.page-archibold-layadon-sheet .char-meta-item { text-align: left; }
+.page-archibold-layadon-sheet .char-meta-item .label { font-size: 10px; margin-bottom: 4px; }
+.page-archibold-layadon-sheet .char-meta-item .value { font-size: 13px; }
+.page-archibold-layadon-sheet .ui-version-badge { top: 8px; right: 28px; background: transparent; border: 0; color: var(--text-dim); font-size: 9px; }
+.page-archibold-layadon-sheet .back-link { color: var(--gold); border-color: var(--forest-border); border-radius: 4px; padding: 10px; letter-spacing: 0; }
+.page-archibold-layadon-sheet .nav-tabs { position: sticky; top: 0; z-index: 100; background: #f6f8f7; backdrop-filter: none; border-block: 1px solid var(--forest-border); padding: 0 24px; gap: 4px; }
+body.page-archibold-layadon-sheet .tab-btn { background: transparent; color: var(--text-secondary); text-transform: none; min-height: 48px; border-radius: 0; font-size: 12px; padding: 12px 16px; }
+body.page-archibold-layadon-sheet .tab-btn.active { background: transparent; color: var(--gold); border-bottom: 3px solid var(--gold); }
+body.page-archibold-layadon-sheet .tab-btn:hover { background: #e8f0ed; color: var(--gold); }
+.page-archibold-layadon-sheet .sheet-body { padding: 24px 28px 40px; }
+.page-archibold-layadon-sheet .dashboard-grid { grid-template-columns: minmax(220px,.8fr) minmax(340px,1.4fr) minmax(270px,1fr); gap: 24px; }
+body.page-archibold-layadon-sheet .panel { background: transparent; border: 0; border-radius: 0; box-shadow: none; backdrop-filter: none; }
+body.page-archibold-layadon-sheet button { box-shadow: none; }
+.page-archibold-layadon-sheet .passive-row { background: #edf3f0; border-color: var(--forest-border); }
+.page-archibold-layadon-sheet .panel-header { background: transparent; padding: 12px 0; border-bottom: 1px solid var(--forest-border); }
+.page-archibold-layadon-sheet .panel-title { font-size: 11px; font-weight: 600; color: var(--text-secondary); }
+.page-archibold-layadon-sheet .panel-body { padding: 16px 0; }
+.page-archibold-layadon-sheet :is(.ability-score,.hp-box,.combat-stat,.aa-stat) { background: #fff; border: 1px solid var(--forest-border); border-radius: 6px; box-shadow: none; padding: 14px 8px; }
+.page-archibold-layadon-sheet .ability-grid { gap: 10px; }
+.page-archibold-layadon-sheet .ability-name { font-size: 10px; }
+.page-archibold-layadon-sheet .ability-num { font-size: 28px; }
+.page-archibold-layadon-sheet .ability-mod { background: #eaf3ef; border: 0; font-size: 13px; color: var(--gold); }
+.page-archibold-layadon-sheet :is(.save-row,.skill-item) { min-height: 32px; padding-block: 5px; }
+.page-archibold-layadon-sheet :is(.save-name,.skill-name) { font-size: 12px; }
+.page-archibold-layadon-sheet .skill-attr { font-size: 10px; }
+.page-archibold-layadon-sheet .hp-box .hp-label { font-size: 10px; }
+.page-archibold-layadon-sheet .hp-box .hp-value.current { color: var(--gold); }
+.page-archibold-layadon-sheet .hp-box .hp-value.temp { color: var(--arcane); }
+.page-archibold-layadon-sheet .hp-bar-wrap { background: #e0e9e5; border: 0; height: 8px; }
+.page-archibold-layadon-sheet .hp-bar-fill { background: #268475; }
+body.page-archibold-layadon-sheet :is(input,textarea,select,.inventory-input,.currency-input) { min-height: 44px; min-width: 0; max-width: 100%; background: #fff; color: var(--text-primary); border: 1px solid var(--forest-border); border-radius: 4px; }
+.page-archibold-layadon-sheet .hp-input { font-size: 24px; }
+body.page-archibold-layadon-sheet :is(.hp-btn,.rest-btn,.adv-btn,.equip-btn,.inventory-add-btn,.inventory-remove-btn,.currency-adjust-btn,.exh-btn,.action-filter-btn) { min-height: 40px; background: #fff; color: var(--gold); border: 1px solid var(--forest-border); border-radius: 4px; text-transform: none; letter-spacing: 0; font-size: 11px; }
+body.page-archibold-layadon-sheet :is(.hp-btn.damage,.inventory-remove-btn) { color: var(--danger); }
+body.page-archibold-layadon-sheet :is(.inventory-add-btn,.equip-btn.equipped,.action-filter-btn.active) { background: var(--gold); color: #fff; border-color: var(--gold); }
+body.page-archibold-layadon-sheet .adv-btn.adv.active { background: #e0f1e8; color: #195b3a; }
+body.page-archibold-layadon-sheet .adv-btn.dis.active { background: #f9e6e9; color: #972b40; }
+.page-archibold-layadon-sheet :is(.weapon-card,.feature-card) { background: #fff; border: 1px solid var(--forest-border); border-radius: 6px; box-shadow: none; padding: 16px; }
+.page-archibold-layadon-sheet .feature-card.arcane { background: #fff; border-color: #d4c5e6; border-left: 3px solid var(--arcane); }
+.page-archibold-layadon-sheet :is(.weapon-name,.feature-name) { font-size: 14px; }
+.page-archibold-layadon-sheet .feature-summary { font-size: 12px; line-height: 1.65; }
+.page-archibold-layadon-sheet :is(.feature-source,.wprop,.weapon-mastery-tag,.status-pill,.aa-shot-tag) { background: #edf3f0; color: var(--gold); border-color: var(--forest-border); letter-spacing: 0; border-radius: 4px; }
+.page-archibold-layadon-sheet :is(.feature-source.arcane,.status-pill.arcane,.aa-shot-tag) { background: #f2edf8; color: var(--arcane); border-color: #d4c5e6; }
+.page-archibold-layadon-sheet .status-pill.off { background: #f0f2f1; color: var(--text-dim); }
+.page-archibold-layadon-sheet .resource-track { flex-wrap: wrap; gap: 8px; }
+.page-archibold-layadon-sheet .resource-pip { width: 22px; height: 22px; flex: 0 0 22px; }
+.page-archibold-layadon-sheet .resource-pip.used { background: #f0f3f1; border-color: #819c93; }
+.page-archibold-layadon-sheet .resource-label { font-size: 10px; }
+.page-archibold-layadon-sheet :is(.condition-effects,.aa-preview-banner,.char-detail-item,.lore-section) { background: transparent; border-color: var(--forest-border); border-radius: 0; box-shadow: none; }
+.page-archibold-layadon-sheet .aa-preview-banner { border-left: 3px solid var(--arcane); }
+.page-archibold-layadon-sheet .aa-stat-strip { gap: 12px; }
+.page-archibold-layadon-sheet .condition-badge { min-height: 32px; display: inline-flex; align-items: center; border-radius: 4px; font-size: 11px; }
+.page-archibold-layadon-sheet .condition-badge.active { background: #fae8ed; color: var(--danger); border-color: #d9a2ae; }
+.page-archibold-layadon-sheet .condition-badge.inactive { background: #edf1ef; color: var(--text-dim); border-color: var(--forest-border); }
+body.page-archibold-layadon-sheet :is(.inventory-hud,.currency-bar,.inventory-builder) { background: #edf3f0; border-color: var(--forest-border); border-radius: 0; box-shadow: none; }
+body.page-archibold-layadon-sheet .item-card { background: #fff; color: var(--text-primary); border: 1px solid var(--forest-border); border-radius: 6px; box-shadow: none; }
+body.page-archibold-layadon-sheet .item-card.magic { border-color: #bfa8d5; box-shadow: none; }
+body.page-archibold-layadon-sheet .item-card.signature { border-color: #8aafa3; box-shadow: none; }
+body.page-archibold-layadon-sheet .item-tag { background: #edf3f0; border-color: var(--forest-border); }
+body.page-archibold-layadon-sheet .inventory-grid { grid-template-columns: repeat(auto-fit,minmax(min(280px,100%),1fr)); gap: 16px; }
+body.page-archibold-layadon-sheet :is(.item-type,.item-weight,.item-name,.item-qty,.item-note,.item-tag,.quantity-label,.inventory-hud .hud-title,.inventory-hud .hud-sub) { font-family: 'Sora',sans-serif; letter-spacing: 0; font-style: normal; }
+body.page-archibold-layadon-sheet .item-name { font-size: 14px; line-height: 1.5; }
+body.page-archibold-layadon-sheet :is(.item-note,.inventory-hud .hud-sub) { font-size: 12px; line-height: 1.65; }
+body.page-archibold-layadon-sheet :is(.item-type,.quantity-label) { font-size: 10px; }
+body.page-archibold-layadon-sheet .item-card:hover { transform: none; box-shadow: none; border-color: var(--gold); }
+body.page-archibold-layadon-sheet .quantity-control { border-color: var(--forest-border); background: #edf3f0; grid-template-columns: 40px 48px 40px; }
+body.page-archibold-layadon-sheet .quantity-btn { background: #edf3f0; color: var(--gold); min-height: 44px; border: 0; border-radius: 0; font-size: 18px; }
+body.page-archibold-layadon-sheet #tab-inventory .sheet-body > div:has(> .quantity-row) { background: #edf3f0 !important; color: var(--text-secondary); border-color: var(--forest-border) !important; }
+.page-archibold-layadon-sheet .action-filter { background: #edf3f0; }
+.page-archibold-layadon-sheet .cast-toast { background: #fff; color: var(--text-primary); border-color: var(--forest-border); box-shadow: 0 4px 16px #193b3020; }
+.page-archibold-layadon-sheet .tooltip { background: #fff; border: 1px solid var(--forest-border); border-radius: 6px; color: var(--text-primary); box-shadow: 0 10px 32px #193b3026; }
+.page-archibold-layadon-sheet :is(.tooltip-name,.tooltip-body strong) { color: var(--gold); }
+.page-archibold-layadon-sheet :is(.tooltip-type,.tooltip-body,.tooltip-stat) { color: var(--text-secondary); }
+.page-archibold-layadon-sheet :is(button,a,input,textarea,select,[tabindex]):focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; }
+@media(min-width:1181px) { .page-archibold-layadon-sheet .dashboard-grid > div:last-child { grid-column: auto; } }
+@media(max-width:1180px) { .page-archibold-layadon-sheet .dashboard-grid { grid-template-columns: minmax(0,1fr); } }
+@media(max-width:760px) {
+  .page-archibold-layadon-sheet .sheet-header { padding: 32px 16px 20px; gap: 20px; }
+  .page-archibold-layadon-sheet .char-name { font-size: 26px; }
+  .page-archibold-layadon-sheet .char-meta { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); width: 100%; gap: 12px; }
+  .page-archibold-layadon-sheet .char-meta-item { min-width: 0; }
+  .page-archibold-layadon-sheet .meta-divider { display: none; }
+  .page-archibold-layadon-sheet .sheet-body { padding: 16px 14px 28px; }
+  .page-archibold-layadon-sheet .nav-tabs { padding: 0 8px; gap: 0; }
+  body.page-archibold-layadon-sheet .tab-btn { padding: 9px 6px; font-size: 11px; flex: 1 1 30%; }
+  .page-archibold-layadon-sheet .combat-row { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); }
+  .page-archibold-layadon-sheet .hp-delta-input { flex-wrap: wrap; }
+  .page-archibold-layadon-sheet .hp-delta-input input { flex-basis: 100%; width: 100%; }
+  .page-archibold-layadon-sheet :is(.rest-btn,.hp-btn,.equip-btn,.inventory-add-btn,.inventory-remove-btn,.currency-adjust-btn,.exh-btn) { min-height: 44px; }
+}
+@media(prefers-reduced-motion:reduce) { .page-archibold-layadon-sheet * { transition: none !important; animation: none !important; } }

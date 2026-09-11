@@ -1,0 +1,18 @@
+body.page-archibold-layadon-sheet .archibold-rules-help,
+body.page-archibold-layadon-sheet .archibold-rules-close { display: inline-flex; align-items: center; justify-content: center; width: 32px; height: 32px; min-width: 32px; padding: 0; margin-left: 5px; vertical-align: middle; border: 1px solid var(--forest-border); border-radius: 4px; background: var(--forest-panel); color: var(--gold); box-shadow: none; cursor: pointer; }
+.archibold-rules-help img,.archibold-rules-close img { width: 17px; height: 17px; }
+body.page-archibold-layadon-sheet .archibold-rules-help { background: transparent; border-color: transparent; }
+body.page-archibold-layadon-sheet .archibold-rules-panel { position: fixed; z-index: 1500; width: min(420px,calc(100vw - 24px)); max-height: min(560px,calc(100dvh - 24px)); overflow: auto; overscroll-behavior: contain; padding: 20px; background: var(--forest-panel); color: var(--text-primary); border: 1px solid var(--forest-border); border-radius: 6px; box-shadow: 0 8px 32px #193b3033; font-family: 'Sora',sans-serif; font-size: 13px; line-height: 1.65; }
+body.page-archibold-layadon-sheet .archibold-rules-panel h2 { font-family: inherit; font-size: 17px; letter-spacing: 0; color: var(--gold); text-shadow: none; margin: 0 40px 6px 0; }
+.archibold-rules-source { color: var(--text-secondary); font-size: 11px; margin-bottom: 12px; }
+.archibold-rules-panel dl { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 12px; border-block: 1px solid var(--forest-border); padding: 12px 0; margin: 0 0 12px; }
+.archibold-rules-panel dt { color: var(--text-secondary); font-size: 11px; }
+.archibold-rules-panel dd { margin: 0; font-weight: 600; }
+.archibold-rules-panel p { margin-bottom: 10px; }
+.archibold-rules-panel p:last-child { margin-bottom: 0; }
+.archibold-rules-panel :is(p,dt,dd) { overflow-wrap: anywhere; }
+body.page-archibold-layadon-sheet .archibold-rules-close { position: absolute; top: 10px; right: 10px; }
+.archibold-rules-panel[hidden],.archibold-rules-panel [hidden],#tooltip[hidden] { display: none !important; }
+.archibold-rules-help:focus-visible,.archibold-rules-panel:focus-visible,.archibold-rules-close:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; }
+@media (pointer:coarse) { body.page-archibold-layadon-sheet .archibold-rules-help,body.page-archibold-layadon-sheet .archibold-rules-close { width: 44px; height: 44px; min-width: 44px; } }
+@media print { .archibold-rules-help,.archibold-rules-panel { display: none !important; } }
