@@ -1,5 +1,5 @@
 import { catalog, createProgression, deriveCharacter } from './advancement-engine.mjs';
-import { renderSpellPreview } from './col-agen-spell-preview.mjs';
+import { renderSpellPreview } from './col-agen-spell-preview.mjs?v=spell-preview-1';
 
 export function usageCharacter(state) {
   const character = deriveCharacter(state.progression || createProgression(state));

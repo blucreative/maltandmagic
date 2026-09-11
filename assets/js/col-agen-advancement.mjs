@@ -1,5 +1,5 @@
 import { catalog, CLASS_TRAITS, SKILL_ABILITIES, SCALAR_CHOICES, createProgression, deriveCharacter, classEligibility, choiceRequirements, advanceCharacter, modifier, rollHitDie } from './advancement-engine.mjs';
-import { mountUsage, recoverShortRest } from './col-agen-usage.mjs';
+import { mountUsage, recoverShortRest } from './col-agen-usage.mjs?v=spell-preview-1';
 
 const sheet = window.colSheet;
 const button = document.getElementById('advancementButton');
