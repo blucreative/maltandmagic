@@ -25,7 +25,7 @@ jobs:
         run: |
           rm -rf site
           mkdir -p site
-          rsync -a --exclude='.git' --exclude='.github' --exclude='.private' --exclude='node_modules' --exclude='/workers' --exclude='/site' ./ site/
+          rsync -a --exclude='.git' --exclude='.github' --exclude='.private' --exclude='node_modules' --exclude='/workers' --exclude='/site' --exclude='/Daggerheart/scripts' --exclude='/Daggerheart/test' --exclude='/Daggerheart/test-output' --exclude='/Daggerheart/package*.json' ./ site/
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
