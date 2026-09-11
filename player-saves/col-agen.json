@@ -1,12 +1,12 @@
 {
   "schemaVersion": 1,
   "characterId": "col-agen",
-  "revision": 10,
-  "updatedAt": "2026-09-11T12:51:33.021Z",
+  "revision": 11,
+  "updatedAt": "2026-09-11T12:57:05.564Z",
   "state": {
     "schemaVersion": 1,
     "characterLevel": 2,
-    "revision": 10,
+    "revision": 11,
     "hp": {
       "current": 21,
       "max": 21,
@@ -138,6 +138,32 @@
       "Backstory": "",
       "Additional Notes": ""
     },
-    "updatedAt": "2026-09-11T12:51:33.021Z"
+    "updatedAt": "2026-09-11T12:57:05.564Z",
+    "advancementDraft": {
+      "id": "70692950-0a40-4641-887f-de7bc94ec9ec",
+      "baseLevel": 2,
+      "classId": "sorcerer",
+      "choices": {
+        "spells": [
+          "Grease",
+          "False Life",
+          "Fog Cloud",
+          "Shield"
+        ],
+        "cantrips": [
+          "Light",
+          "Mage Hand",
+          "Mending",
+          "Prestidigitation"
+        ],
+        "metamagic": [
+          "Careful Spell",
+          "Quickened Spell"
+        ]
+      },
+      "hpRoll": null,
+      "milestone": false,
+      "step": 1
+    }
   }
 }
