@@ -1,12 +1,12 @@
 {
   "schemaVersion": 1,
   "characterId": "col-agen",
-  "revision": 16,
-  "updatedAt": "2026-09-11T12:58:31.456Z",
+  "revision": 17,
+  "updatedAt": "2026-09-11T12:58:35.687Z",
   "state": {
     "schemaVersion": 1,
     "characterLevel": 2,
-    "revision": 16,
+    "revision": 17,
     "hp": {
       "current": 21,
       "max": 21,
@@ -138,7 +138,7 @@
       "Backstory": "",
       "Additional Notes": ""
     },
-    "updatedAt": "2026-09-11T12:58:31.456Z",
+    "updatedAt": "2026-09-11T12:58:35.687Z",
     "advancementDraft": {
       "id": "70692950-0a40-4641-887f-de7bc94ec9ec",
       "baseLevel": 2,
@@ -165,9 +165,13 @@
         "subclass": "spellfire-sorcery",
         "supplementReviewed": true
       },
-      "hpRoll": null,
+      "hpRoll": 4,
       "milestone": false,
-      "step": 2
+      "step": 2,
+      "rolls": [
+        1,
+        4
+      ]
     }
   }
 }
