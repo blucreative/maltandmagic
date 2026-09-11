@@ -71,4 +71,23 @@ main:has(.usage-feedback){padding-bottom:110px}
 .resource:has(.usage-controls),.advancement-resource:has(.usage-controls){flex-wrap:wrap}
 .advancement-resource .usage-count{width:auto}
 .usage-controls :focus-visible,.usage-feedback :focus-visible{outline:2px solid var(--green);outline-offset:3px}
+#spellGrid{grid-template-columns:repeat(2,minmax(0,1fr));align-items:start}
+#spellGrid .spell{display:flex;flex-direction:column;gap:10px;min-width:0}
+#spellGrid .spell h3{font-size:17px;margin:0}
+#spellGrid .spell .spell-origin{margin:0}
+#spellGrid .spell-effect{font-size:14px;line-height:1.6;margin:0 0 14px;color:var(--ink)}
+.spell-facts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px 16px;margin:0;padding:12px 0;border-block:1px solid var(--line)}
+.spell-facts>div:last-child{grid-column:1/-1}
+.spell-facts dt{font-size:11px;color:var(--muted);margin-bottom:3px}
+.spell-facts dd{font-size:13px;font-weight:600;margin:0;overflow-wrap:anywhere}
+#spellGrid .spell-trigger,#spellGrid .spell-scaling{font-size:12px;line-height:1.55;margin:10px 0 0}
+.spell-trigger{color:#8a3d23}
+.spell-scaling{color:var(--green)}
+.spell-full-rules{border-top:1px solid var(--line);padding-top:4px}
+.spell-full-rules summary{display:flex;align-items:center;gap:8px;cursor:pointer;min-height:44px;font-size:12px;color:var(--green);list-style:none}
+.spell-full-rules summary::before{content:'+';font-size:18px;width:16px;text-align:center}
+.spell-full-rules[open] summary::before{content:'-'}
+.spell-full-rules small{color:var(--muted)}
+.spell-full-rules summary:focus-visible{outline:2px solid var(--green);outline-offset:2px}
+@media(max-width:760px){#spellGrid{grid-template-columns:minmax(0,1fr)}}
 @media print{#advancementButton,.advancement-dialog,.usage-controls,.usage-feedback{display:none!important}}

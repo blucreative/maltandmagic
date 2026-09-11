@@ -1,4 +1,5 @@
 import { catalog, createProgression, deriveCharacter } from './advancement-engine.mjs';
+import { renderSpellPreview } from './col-agen-spell-preview.mjs';
 
 export function usageCharacter(state) {
   const character = deriveCharacter(state.progression || createProgression(state));
@@ -83,7 +84,9 @@ export function mountUsage(sheet, resourceContainer, featureContainer, resourceN
     const use = command(cost > 1 ? `${verb} ${cost} SP` : verb, verb === 'Cast' ? 'book-open' : 'swords');
     use.setAttribute('aria-label', `${verb} ${name}`);
     const count = node('small', '', 'usage-count');
-    wrapper.append(select, use, count); host.append(wrapper);
+    wrapper.append(select, use, count);
+    const rules = host.querySelector('.spell-full-rules');
+    if (rules) rules.before(wrapper); else host.append(wrapper);
     controls.set(wrapper, { modes, select, use, count, name, cost });
     select.addEventListener('change', refresh);
     use.addEventListener('click', () => {
@@ -128,6 +131,7 @@ export function mountUsage(sheet, resourceContainer, featureContainer, resourceN
       const heading = article.querySelector('h3').cloneNode(true);
       heading.querySelectorAll('.tag,button').forEach(child => child.remove());
       const name = heading.textContent.trim();
+      renderSpellPreview(article, name);
       const modes = spellModes(character, name, saved.progression);
       if (modes.length) add(article, name, modes, 'Cast');
     }

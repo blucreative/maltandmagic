@@ -450,11 +450,7 @@ function render() {
     const arcanum = casting.classId === 'warlock' ? [6, 7, 8, 9].map(level => character.choices.warlock?.[`arcanum${level}`]).filter(Boolean) : [];
     for (const name of [...new Set([...casting.cantrips, ...casting.spells, ...casting.granted, ...arcanum])]) {
       const spell = Object.values(catalog.classes).flatMap(entry => entry.spells).find(entry => entry.name === name);
-      const article = element('article', undefined, 'spell'); article.append(element('h3', name), element('small', `${CLASS_TRAITS[casting.classId].name} / ${spell ? spell.level ? `Level ${spell.level}` : 'Cantrip' : 'Supplemental'}${casting.granted.includes(name) ? ' / Always prepared' : ''}`, 'meta'));
-      if (spell) {
-        if (catalog.spellRules?.[name]) article.append(details(catalog.spellRules[name], 'SRD 5.2.1'));
-        const link = element('a', 'Spell Rules'); link.href = `https://github.com/downfallx/dnd-5e-srd-markdown/blob/master/spells.md#${name.toLowerCase().replace(/'/g, '').replace(/[^a-z0-9]+/g, '-')}`; link.target = '_blank'; link.rel = 'noopener'; article.append(link);
-      }
+      const article = element('article', undefined, 'spell'); article.append(element('h3', name), element('small', `${casting.label || CLASS_TRAITS[casting.classId].name} / ${spell ? spell.level ? `Level ${spell.level}` : 'Cantrip' : 'Supplemental'}${casting.granted.includes(name) ? ' / Always prepared' : ''}`, 'meta spell-origin'));
       spellGrid.append(article);
     }
   }
