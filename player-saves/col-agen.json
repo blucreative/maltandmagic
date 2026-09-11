@@ -1,12 +1,12 @@
 {
   "schemaVersion": 1,
   "characterId": "col-agen",
-  "revision": 13,
-  "updatedAt": "2026-09-11T12:57:51.876Z",
+  "revision": 14,
+  "updatedAt": "2026-09-11T12:57:57.124Z",
   "state": {
     "schemaVersion": 1,
     "characterLevel": 2,
-    "revision": 13,
+    "revision": 14,
     "hp": {
       "current": 21,
       "max": 21,
@@ -138,7 +138,7 @@
       "Backstory": "",
       "Additional Notes": ""
     },
-    "updatedAt": "2026-09-11T12:57:51.876Z",
+    "updatedAt": "2026-09-11T12:57:57.124Z",
     "advancementDraft": {
       "id": "70692950-0a40-4641-887f-de7bc94ec9ec",
       "baseLevel": 2,
@@ -149,7 +149,8 @@
           "False Life",
           "Fog Cloud",
           "Shield",
-          "Mage Armor"
+          "Mage Armor",
+          "Blur"
         ],
         "cantrips": [
           "Light",
