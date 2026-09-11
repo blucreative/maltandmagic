@@ -1,0 +1,145 @@
+name: Update Ardahlia campaign date
+
+on:
+  workflow_dispatch:
+    inputs:
+      operation:
+        description: Choose whether to set an exact date or advance the current date
+        required: true
+        type: choice
+        options:
+          - Add days
+          - Set exact date
+        default: Add days
+      month:
+        description: Month number (used only when setting an exact date)
+        required: true
+        type: choice
+        options:
+          - "1"
+          - "2"
+          - "3"
+          - "4"
+          - "5"
+          - "6"
+          - "7"
+          - "8"
+          - "9"
+          - "10"
+          - "11"
+          - "12"
+        default: "1"
+      day:
+        description: Day 1-30 (used only when setting an exact date)
+        required: true
+        type: number
+        default: 1
+      days_to_add:
+        description: Number of days to advance (used only with Add days)
+        required: true
+        type: number
+        default: 1
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  update-date:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Check out main
+        uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - name: Validate and update campaign date
+        env:
+          OPERATION: ${{ inputs.operation }}
+          MONTH: ${{ inputs.month }}
+          DAY: ${{ inputs.day }}
+          DAYS_TO_ADD: ${{ inputs.days_to_add }}
+        run: |
+          node <<'NODE'
+          const fs = require('fs');
+          const file = 'DnD/ardahlia-current-date.json';
+          const current = JSON.parse(fs.readFileSync(file, 'utf8'));
+
+          function validDate(date) {
+            return Number.isInteger(date.month) && date.month >= 1 && date.month <= 12 &&
+              Number.isInteger(date.day) && date.day >= 1 && date.day <= 30;
+          }
+
+          if (!validDate(current)) throw new Error('The stored campaign date is invalid.');
+
+          let next;
+          if (process.env.OPERATION === 'Set exact date') {
+            next = { month: Number(process.env.MONTH), day: Number(process.env.DAY) };
+            if (!validDate(next)) throw new Error('Month must be 1-12 and day must be 1-30.');
+          } else if (process.env.OPERATION === 'Add days') {
+            const days = Number(process.env.DAYS_TO_ADD);
+            if (!Number.isInteger(days) || days < -3600 || days > 3600) {
+              throw new Error('Days to add must be a whole number between -3600 and 3600.');
+            }
+            const yearLength = 360;
+            const currentIndex = (current.month - 1) * 30 + current.day - 1;
+            const nextIndex = ((currentIndex + days) % yearLength + yearLength) % yearLength;
+            next = { month: Math.floor(nextIndex / 30) + 1, day: nextIndex % 30 + 1 };
+          } else {
+            throw new Error('Unknown operation.');
+          }
+
+          fs.writeFileSync(file, `${JSON.stringify(next, null, 2)}\n`);
+          fs.appendFileSync(process.env.GITHUB_STEP_SUMMARY,
+            `## Ardahlia date updated\n\nMonth **${next.month}**, Day **${next.day}**\n`);
+          NODE
+
+      - name: Commit shared date
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add DnD/ardahlia-current-date.json
+          if git diff --cached --quiet; then
+            echo "Campaign date is already set to that value."
+          else
+            git commit -m "Update Ardahlia campaign date"
+            git push origin main
+          fi
+
+  build:
+    needs: update-date
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - name: Check out updated main
+        uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - name: Assemble Pages site
+        run: |
+          rm -rf site
+          mkdir -p site
+          rsync -a --exclude='.git' --exclude='.github' ./ site/
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./site
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

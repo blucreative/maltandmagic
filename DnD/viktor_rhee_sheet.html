@@ -3,13 +3,15 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Viktor Rhee — Ranger 2 | Malt & Magic</title>
+<title>Viktor Rhee — Ranger 3 | Malt & Magic</title>
 <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=IM+Fell+English:ital@0;1&family=Barlow:wght@300;400;500;600&family=Barlow+Condensed:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../assets/css/theme-fantasy.css">
-<link rel="stylesheet" href="../assets/css/page-polish.css">
+<link rel="stylesheet" href="../assets/css/page-polish.css?v=20260817-rest-dialog">
 <script defer src="../assets/js/a11y-sheet-helpers.js"></script>
 <script src="../assets/js/inventory-trackers.js"></script>
+<script defer src="../assets/js/rest-hit-dice.js?v=20260817-rest-dialog"></script>
+<script src="../assets/js/archibold-rules-help.js?v=3"></script>
 <style>
   :root {
     --forest-dark: #1a2218;
@@ -898,6 +900,23 @@
     transition: border-color 0.15s;
   }
   .feature-card:hover { border-color: var(--gold-dim); }
+  .action-filter {
+    display: flex; align-items: center; gap: 4px; width: fit-content;
+    margin-bottom: 12px; padding: 4px; border: 1px solid rgba(58,79,53,0.4);
+    border-radius: 6px; background: rgba(26,34,24,0.6);
+  }
+  .action-filter-btn {
+    min-height: 30px; padding: 5px 10px; border: 1px solid transparent;
+    border-radius: 4px; background: transparent; color: var(--text-dim);
+    font-family: 'Barlow Condensed', sans-serif; font-size: 10px; font-weight: 600;
+    letter-spacing: 1px; text-transform: uppercase; cursor: pointer;
+  }
+  .action-filter-btn:hover { color: var(--text-primary); border-color: rgba(58,79,53,0.55); }
+  .action-filter-btn.active {
+    color: var(--text-primary); border-color: var(--gold-dim);
+    background: rgba(201,162,76,0.14);
+  }
+  #tab-features .feature-card[hidden] { display: none !important; }
   .feature-card.effect-active {
     border-color: rgba(232, 201, 106, 0.6);
     box-shadow: inset 0 0 0 1px rgba(232, 201, 106, 0.2);
@@ -976,6 +995,49 @@
     text-transform: uppercase;
     color: var(--text-dim);
     margin-left: 4px;
+  }
+  .combat-feature-list {
+    display: grid;
+    gap: 6px;
+  }
+  .combat-feature-list .feature-card {
+    margin-bottom: 0;
+  }
+  .combat-resource-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    margin-top: 7px;
+  }
+  .combat-resource-count {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 10px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--text-dim);
+  }
+  .combat-resource-btn {
+    min-height: 28px;
+    padding: 4px 10px;
+    border: 1px solid var(--gold-dim);
+    border-radius: 6px;
+    background: rgba(201,168,76,0.1);
+    color: var(--gold-light);
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    cursor: pointer;
+  }
+  .combat-resource-btn:hover:not(:disabled) {
+    border-color: var(--gold);
+    background: rgba(201,168,76,0.18);
+  }
+  .combat-resource-btn:disabled {
+    cursor: not-allowed;
+    opacity: 0.45;
   }
 
   /* ===== TOOLTIP / OVERLAY ===== */
@@ -1552,15 +1614,16 @@
       padding: 14px;
     }
     .nav-tabs {
-      overflow-x: auto;
-      padding: 0 8px;
-      gap: 0;
-      scrollbar-width: thin;
+      flex-wrap: wrap;
+      overflow-x: visible;
+      padding: 4px 8px;
+      gap: 2px;
     }
     .tab-btn {
-      white-space: nowrap;
-      padding: 8px 12px;
+      white-space: normal;
+      padding: 8px 4px;
       font-size: 11px;
+      line-height: 1.15;
     }
     .two-col,
     .three-col {
@@ -1571,6 +1634,12 @@
       grid-template-columns: 1fr !important;
     }
 
+
+  @media (max-width: 600px) {
+    .nav-tabs .tab-btn {
+      flex: 1 1 30%;
+    }
+  }
     .combat-row {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -1611,6 +1680,8 @@
     }
   }
 </style>
+<link rel="stylesheet" href="../assets/css/viktor-modern.css?v=1">
+<link rel="stylesheet" href="../assets/css/archibold-rules-help.css?v=3">
 </head>
 <body class="theme-fantasy page-dnd-character-sheet page-viktor-rhee-sheet">
 
@@ -1636,7 +1707,7 @@
   <div class="char-meta">
     <div class="char-meta-item">
       <div class="label">Class & Level</div>
-      <div class="value">Ranger 2</div>
+      <div class="value">Ranger 3 · Hunter</div>
     </div>
     <div class="meta-divider"></div>
     <div class="char-meta-item">
@@ -1646,7 +1717,7 @@
     <div class="meta-divider"></div>
     <div class="char-meta-item">
       <div class="label">Player</div>
-      <div class="value">VikingHodge</div>
+      <div class="value">naeethim</div>
     </div>
     <div class="meta-divider"></div>
     <div class="char-meta-item">
@@ -1781,8 +1852,8 @@
     <div class="panel">
       <div class="panel-header"><span class="panel-title">Combat</span>
         <div class="rest-btns">
-          <button class="rest-btn short" onclick="shortRest()">Short Rest</button>
-          <button class="rest-btn long" onclick="longRest()">Long Rest</button>
+          <button type="button" class="rest-btn short" onclick="shortRest()" title="Spend Hit Dice and recover Short Rest features">Short Rest</button>
+          <button type="button" class="rest-btn long" onclick="longRest()" title="Restore HP, Hit Dice, spell slots, and Long Rest features">Long Rest</button>
         </div>
       </div>
       <div class="panel-body">
@@ -1791,7 +1862,7 @@
           <div class="combat-stat"><span class="cs-val" id="initiativeVal">+3</span><span class="cs-label">Initiative</span></div>
           <div class="combat-stat"><span class="cs-val" id="speedVal">30ft</span><span class="cs-label">Speed</span></div>
           <div class="combat-stat"><span class="cs-val">+2</span><span class="cs-label">Prof Bonus</span></div>
-          <div class="combat-stat"><span class="cs-val">2d10</span><span class="cs-label">Hit Dice</span></div>
+          <div class="combat-stat"><span class="cs-val" id="hitDiceDisplay">3 / 3 d10</span><span class="cs-label">Hit Dice</span></div>
         </div>
         <div id="combatEffectReadout" style="font-family:'Barlow Condensed',sans-serif;font-size:10px;letter-spacing:1px;color:var(--text-dim);margin:-4px 0 0;">
           No temporary combat effects active.
@@ -1806,11 +1877,11 @@
         <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:10px;">
           <div class="hp-box">
             <span class="hp-label">Max HP</span>
-            <div class="hp-value">17</div>
+            <div class="hp-value">25</div>
           </div>
           <div class="hp-box">
             <span class="hp-label">Current HP</span>
-            <input class="hp-input current" id="currentHP" type="number" value="17" min="0" max="17" onchange="updateHPBar()">
+            <input class="hp-input current" id="currentHP" type="number" value="25" min="0" max="25" onchange="updateHPBar()">
           </div>
           <div class="hp-box">
             <span class="hp-label">Temp HP</span>
@@ -1996,7 +2067,7 @@
         <div class="passive-row"><span class="passive-val">14</span><span class="passive-name">Passive Perception</span></div>
         <div class="passive-row"><span class="passive-val">12</span><span class="passive-name">Passive Insight</span></div>
         <div class="passive-row"><span class="passive-val">12</span><span class="passive-name">Passive Investigation</span></div>
-        <div style="margin-top:8px;padding:6px 10px;background:rgba(26,34,24,0.5);border:1px solid rgba(58,79,53,0.3);border-radius:4px;">
+        <div class="darkvision-readout">
           <span style="font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:600;color:var(--gold);">Darkvision</span>
           <span style="font-family:'Barlow',sans-serif;font-size:11px;color:var(--text-dim);margin-left:6px;">120 ft.</span>
         </div>
@@ -2016,7 +2087,58 @@
           <span class="spell-slot-label">1st Level</span>
           <div class="slot-pip available" id="slot-1a" onclick="toggleSlot('slot-1a')" title="Slot 1"></div>
           <div class="slot-pip available" id="slot-1b" onclick="toggleSlot('slot-1b')" title="Slot 2"></div>
-          <span style="font-family:'Barlow Condensed',sans-serif;font-size:10px;color:var(--text-dim);margin-left:4px;">2 slots</span>
+          <div class="slot-pip available" id="slot-1c" onclick="toggleSlot('slot-1c')" title="Slot 3"></div>
+          <span style="font-family:'Barlow Condensed',sans-serif;font-size:10px;color:var(--text-dim);margin-left:4px;">3 slots</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- COMBAT FEATURES -->
+    <div class="panel">
+      <div class="panel-header"><span class="panel-title">Combat Features</span></div>
+      <div class="panel-body combat-feature-list">
+        <div class="feature-card" data-tooltip="feat-colossus-slayer">
+          <div class="feature-header">
+            <span class="feature-name">Colossus Slayer</span>
+            <span class="feature-source">Hunter 3</span>
+          </div>
+          <div class="feature-summary">Once per turn, deal +1d8 weapon damage when you hit a creature missing any HP.</div>
+        </div>
+        <div class="feature-card" data-tooltip="feat-hunters-lore">
+          <div class="feature-header">
+            <span class="feature-name">Hunter's Lore</span>
+            <span class="feature-source">Hunter 3</span>
+          </div>
+          <div class="feature-summary">A target marked by Hunter's Mark reveals its Immunities, Resistances, and Vulnerabilities.</div>
+        </div>
+        <div class="feature-card" data-tooltip="feat-savage-attacker">
+          <div class="feature-header">
+            <span class="feature-name">Savage Attacker</span>
+            <span class="feature-source">Feat</span>
+          </div>
+          <div class="feature-summary">Once per turn on a weapon hit, roll the weapon's damage dice twice and use either roll.</div>
+        </div>
+        <div class="feature-card" data-tooltip="feat-adrenaline-rush">
+          <div class="feature-header">
+            <span class="feature-name">Adrenaline Rush</span>
+            <span class="feature-source">Bonus Action</span>
+          </div>
+          <div class="feature-summary">Dash as a Bonus Action and gain 2 Temporary HP.</div>
+          <div class="combat-resource-row">
+            <span class="combat-resource-count" id="combat-adrenalineRush-count">2 / 2 available</span>
+            <button type="button" class="combat-resource-btn" id="combat-adrenalineRush-btn" aria-label="Use Adrenaline Rush" onclick="event.stopPropagation(); spendCombatResource('adrenalineRush')">Use</button>
+          </div>
+        </div>
+        <div class="feature-card" data-tooltip="feat-relentless-endurance">
+          <div class="feature-header">
+            <span class="feature-name">Relentless Endurance</span>
+            <span class="feature-source">Reaction</span>
+          </div>
+          <div class="feature-summary">When reduced to 0 HP but not killed outright, drop to 1 HP instead.</div>
+          <div class="combat-resource-row">
+            <span class="combat-resource-count" id="combat-relentlessEndurance-count">1 / 1 available</span>
+            <button type="button" class="combat-resource-btn" id="combat-relentlessEndurance-btn" aria-label="Use Relentless Endurance" onclick="event.stopPropagation(); spendCombatResource('relentlessEndurance')">Use</button>
+          </div>
         </div>
       </div>
     </div>
@@ -2063,7 +2185,8 @@
               <span class="spell-slot-label">1st</span>
               <div class="slot-pip available" id="s-slot-1a" onclick="toggleSlot('s-slot-1a')" title="Slot 1"></div>
               <div class="slot-pip available" id="s-slot-1b" onclick="toggleSlot('s-slot-1b')" title="Slot 2"></div>
-              <span style="font-family:'Barlow Condensed',sans-serif;font-size:10px;color:var(--text-dim);">2 slots</span>
+              <div class="slot-pip available" id="s-slot-1c" onclick="toggleSlot('s-slot-1c')" title="Slot 3"></div>
+              <span style="font-family:'Barlow Condensed',sans-serif;font-size:10px;color:var(--text-dim);">3 slots</span>
             </div>
           </div>
         </div>
@@ -2072,7 +2195,7 @@
 
     <div class="panel">
       <div class="panel-header">
-        <span class="panel-title">Prepared Spells — 1st Level (2 Slots)</span>
+        <span class="panel-title">Prepared Spells — 1st Level (4 Prepared · 3 Slots)</span>
       </div>
       <div class="panel-body">
         <div style="font-family:'Barlow Condensed',sans-serif;font-size:9px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--gold-dim);margin-bottom:8px;">1st Level</div>
@@ -2129,6 +2252,22 @@
           </div>
         </div>
 
+        <div class="spell-card prepared" data-tooltip="spell-cure-wounds">
+          <div class="spell-header">
+            <div class="spell-name">Cure Wounds</div>
+            <span class="spell-level-badge">1st</span>
+          </div>
+          <div class="spell-meta">
+            <span>⏱ 1 Action</span>
+            <span>📏 Touch</span>
+            <span>⌛ Instantaneous</span>
+            <span>🔮 V,S</span>
+          </div>
+          <div class="spell-actions">
+            <button class="cast-btn" data-cast="cureWounds" onclick="castSpell('cureWounds')">⚡ Cast · Heal 2d8+2</button>
+          </div>
+        </div>
+
         <div style="margin-top:12px;margin-bottom:6px;">
           <div style="font-family:'Barlow Condensed',sans-serif;font-size:9px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:#5a9b5a;margin-bottom:8px;">Always Prepared (Favoured Enemy)</div>
           <div class="spell-card always-prepared" id="spell-hm-card" data-tooltip="spell-hunters-mark">
@@ -2145,8 +2284,8 @@
             </div>
             <div style="margin-top:6px;">
               <div class="resource-track">
-                <div class="resource-pip available" onclick="toggleResource(this)" title="Free use 1"></div>
-                <div class="resource-pip available" onclick="toggleResource(this)" title="Free use 2"></div>
+                <div class="resource-pip available" data-resource="favouredEnemy" onclick="toggleResource(this)" title="Free use 1"></div>
+                <div class="resource-pip available" data-resource="favouredEnemy" onclick="toggleResource(this)" title="Free use 2"></div>
                 <span class="resource-label">2 / Long Rest (no slot needed)</span>
               </div>
             </div>
@@ -2167,6 +2306,12 @@
 <!-- ======================================================= -->
 <div id="tab-features" class="tab-panel">
 <div class="sheet-body">
+<div class="action-filter" role="group" aria-label="Filter features by action type">
+  <button type="button" class="action-filter-btn active" data-action-filter="all" aria-pressed="true" onclick="filterFeatures('all')">All</button>
+  <button type="button" class="action-filter-btn" data-action-filter="action" aria-pressed="false" onclick="filterFeatures('action')">Action</button>
+  <button type="button" class="action-filter-btn" data-action-filter="bonus-action" aria-pressed="false" onclick="filterFeatures('bonus-action')">Bonus Action</button>
+  <button type="button" class="action-filter-btn" data-action-filter="reaction" aria-pressed="false" onclick="filterFeatures('reaction')">Reaction</button>
+</div>
 <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;align-items:start;">
 
   <!-- RANGER FEATURES -->
@@ -2174,15 +2319,15 @@
     <div class="panel-header"><span class="panel-title">Ranger Features</span></div>
     <div class="panel-body">
 
-      <div class="feature-card" data-tooltip="feat-favored-enemy">
+      <div class="feature-card" data-tooltip="feat-favored-enemy" data-action-type="bonus-action">
         <div class="feature-header">
           <span class="feature-name">Favoured Enemy</span>
           <span class="feature-source">Ranger</span>
         </div>
         <div class="feature-summary">Hunter's Mark always prepared. Cast without a spell slot 2× per Long Rest.</div>
         <div class="resource-track">
-          <div class="resource-pip available" onclick="toggleResource(this)"></div>
-          <div class="resource-pip available" onclick="toggleResource(this)"></div>
+          <div class="resource-pip available" data-resource="favouredEnemy" onclick="toggleResource(this)"></div>
+          <div class="resource-pip available" data-resource="favouredEnemy" onclick="toggleResource(this)"></div>
           <span class="resource-label">2 / Long Rest</span>
         </div>
       </div>
@@ -2212,6 +2357,22 @@
         <div class="feature-summary">+1 to AC while wearing armour. (AC = 16 with Studded Leather)</div>
       </div>
 
+      <div class="feature-card" data-tooltip="feat-hunters-lore">
+        <div class="feature-header">
+          <span class="feature-name">Hunter's Lore</span>
+          <span class="feature-source">Hunter 3</span>
+        </div>
+        <div class="feature-summary">While a creature is marked by Hunter's Mark, learn all of its Immunities, Resistances, and Vulnerabilities.</div>
+      </div>
+
+      <div class="feature-card" data-tooltip="feat-colossus-slayer">
+        <div class="feature-header">
+          <span class="feature-name">Hunter's Prey: Colossus Slayer</span>
+          <span class="feature-source">Hunter 3</span>
+        </div>
+        <div class="feature-summary">Once per turn, a weapon hit deals +1d8 damage if the target is missing any Hit Points.</div>
+      </div>
+
     </div>
   </div>
 
@@ -2236,15 +2397,15 @@
         <div class="feature-summary">Medium. Speed 30 ft.</div>
       </div>
 
-      <div class="feature-card" data-tooltip="feat-adrenaline-rush">
+      <div class="feature-card" data-tooltip="feat-adrenaline-rush" data-action-type="bonus-action">
         <div class="feature-header">
           <span class="feature-name">Adrenaline Rush</span>
           <span class="feature-source">Orc</span>
         </div>
         <div class="feature-summary">Bonus Action: take Dash, gain 2 Temp HP. Recharges on Short or Long Rest.</div>
         <div class="resource-track">
-          <div class="resource-pip available" onclick="toggleResource(this)"></div>
-          <div class="resource-pip available" onclick="toggleResource(this)"></div>
+          <div class="resource-pip available" data-resource="adrenalineRush" onclick="toggleResource(this)"></div>
+          <div class="resource-pip available" data-resource="adrenalineRush" onclick="toggleResource(this)"></div>
           <span class="resource-label">2 / Short or Long Rest</span>
         </div>
       </div>
@@ -2264,7 +2425,7 @@
         </div>
         <div class="feature-summary">Once per Long Rest: when reduced to 0 HP but not killed outright, drop to 1 HP instead.</div>
         <div class="resource-track">
-          <div class="resource-pip available" onclick="toggleResource(this)"></div>
+          <div class="resource-pip available" data-resource="relentlessEndurance" onclick="toggleResource(this)"></div>
           <span class="resource-label">1 / Long Rest</span>
         </div>
       </div>
@@ -2311,6 +2472,30 @@
         <div class="feature-summary">On hit with damage: Advantage on your next attack roll against that creature before your next turn ends.</div>
       </div>
 
+      <div class="feature-card" data-action-type="action">
+        <div class="feature-header">
+          <span class="feature-name">Attack</span>
+          <span class="feature-source">Action</span>
+        </div>
+        <div class="feature-summary">Make one attack with a weapon or an Unarmed Strike. Viktor usually uses his Battleaxe (+4) or Hand Crossbow (+5).</div>
+      </div>
+
+      <div class="feature-card" data-action-type="action reaction">
+        <div class="feature-header">
+          <span class="feature-name">Ready</span>
+          <span class="feature-source">Action → Reaction</span>
+        </div>
+        <div class="feature-summary">Choose a perceivable trigger and an action or movement. When the trigger finishes, use your Reaction to act or ignore it. Readying a spell uses its normal resources and requires Concentration.</div>
+      </div>
+
+      <div class="feature-card" data-action-type="reaction">
+        <div class="feature-header">
+          <span class="feature-name">Opportunity Attack</span>
+          <span class="feature-source">Reaction</span>
+        </div>
+        <div class="feature-summary">When a creature you can see leaves your reach using its movement, Action, Bonus Action, or Reaction, make one melee attack just before it leaves. Use the Battleaxe or an Unarmed Strike, not the Hand Crossbow.</div>
+      </div>
+
     </div>
   </div>
 
@@ -2330,7 +2515,7 @@
       <div class="hud-sub">Foresters standard issue plus personal hunting kit.</div>
     </div>
     <div style="font-family:'Barlow Condensed',sans-serif;font-size:11px;color:var(--text-dim);letter-spacing:1px;text-transform:uppercase;">
-      Prepared Cards: <span style="color:var(--gold);">18</span>
+      Prepared Cards: <span style="color:var(--gold);">22</span>
     </div>
   </div>
 
@@ -2341,7 +2526,7 @@
     <div class="currency-item"><div class="currency-coin sp">SP</div><div class="currency-controls"><button type="button" class="currency-adjust-btn" onclick="adjustCurrency('sp',-1)">-</button><input id="currency-sp" class="currency-input" type="number" min="0" step="1" inputmode="numeric" value="0" onchange="setCurrencyFromInput('sp', this.value)"><button type="button" class="currency-adjust-btn" onclick="adjustCurrency('sp',1)">+</button></div></div>
     <div class="currency-item"><div class="currency-coin cp">CP</div><div class="currency-controls"><button type="button" class="currency-adjust-btn" onclick="adjustCurrency('cp',-1)">-</button><input id="currency-cp" class="currency-input" type="number" min="0" step="1" inputmode="numeric" value="0" onchange="setCurrencyFromInput('cp', this.value)"><button type="button" class="currency-adjust-btn" onclick="adjustCurrency('cp',1)">+</button></div></div>
     <div style="margin-left:auto;font-family:'Barlow Condensed',sans-serif;font-size:11px;color:var(--text-dim);">
-      Weight: <span style="color:var(--text-secondary);">109.5 lb</span> /
+      Weight: <span style="color:var(--text-secondary);">114.35 lb</span> /
       Encumbered: <span style="color:var(--text-secondary);">210 lb</span> /
       Push: <span style="color:var(--text-secondary);">420 lb</span>
     </div>
@@ -2415,11 +2600,11 @@
     </div>
 
     <div class="item-card">
-      <div class="card-topline"><span class="item-type">Consumable</span><span class="item-weight">20 lb</span></div>
-      <div class="item-main"><span class="item-icon">🧺</span><div><div class="item-name">Rations</div><div class="item-qty">Qty: 10</div></div></div>
-      <div class="item-tags"><span class="item-tag">10 Days</span></div>
+      <div class="card-topline"><span class="item-type">Consumable</span><span class="item-weight">30 lb</span></div>
+      <div class="item-main"><span class="item-icon">🧺</span><div><div class="item-name">Rations</div><div class="item-qty">Qty: 9</div></div></div>
+      <div class="item-tags"><span class="item-tag">9 Days</span></div>
       <div class="item-note">Dry stock to support deep-range operations without supply lines.</div>
-      <div class="quantity-row"><span class="quantity-label">Remaining</span><div data-consumable-key="rations" data-consumable-default="10" data-consumable-label="ration"></div></div>
+      <div class="quantity-row"><span class="quantity-label">Remaining</span><div data-consumable-key="rations" data-consumable-default="9" data-consumable-label="ration"></div></div>
     </div>
 
     <div class="item-card">
@@ -2471,10 +2656,10 @@
 
     <div class="item-card">
       <div class="card-topline"><span class="item-type">Ammunition</span><span class="item-weight">1.5 lb</span></div>
-      <div class="item-main"><span class="item-icon">🏹</span><div><div class="item-name">Bolts</div><div class="item-qty">Qty: 20</div></div></div>
+      <div class="item-main"><span class="item-icon">🏹</span><div><div class="item-name">Bolts</div><div class="item-qty">Qty: 18</div></div></div>
       <div class="item-tags"><span class="item-tag">Standard Stock</span></div>
       <div class="item-note">Enough for a short engagement before scavenging and recovery.</div>
-      <div class="quantity-row"><span class="quantity-label">Bolts remaining</span><div data-consumable-key="bolts" data-consumable-default="20" data-consumable-label="crossbow bolt"></div></div>
+      <div class="quantity-row"><span class="quantity-label">Bolts remaining</span><div data-consumable-key="bolts" data-consumable-default="18" data-consumable-label="crossbow bolt"></div></div>
     </div>
 
     <div class="item-card">
@@ -2482,6 +2667,29 @@
       <div class="item-main"><span class="item-icon">🪝</span><div><div class="item-name">Grappling Hook</div><div class="item-qty">Qty: 1</div></div></div>
       <div class="item-tags"><span class="item-tag">Ascent</span><span class="item-tag">Retrieve</span></div>
       <div class="item-note">Reinforced iron hook with smooth rotating pivot for stealth ascents and retrieving items from distance.</div>
+    </div>
+
+    <div class="item-card">
+      <div class="card-topline"><span class="item-type">Tool</span><span class="item-weight">3 lb</span></div>
+      <div class="item-main"><span class="item-icon">🌿</span><div><div class="item-name">Herbalism Kit</div><div class="item-qty">Qty: 1</div></div></div>
+      <div class="item-tags"><span class="item-tag">Identify Plants</span><span class="item-tag">Crafting</span></div>
+      <div class="item-note">Used to identify plants and craft antitoxin, candles, healer's kits, and Potions of Healing.</div>
+    </div>
+
+    <div class="item-card magic">
+      <div class="card-topline"><span class="item-type">Homebrew Consumable</span><span class="item-weight">-</span></div>
+      <div class="item-main"><span class="item-icon">☕</span><div><div class="item-name">Viktor's Speed Bars</div><div class="item-qty">Qty: 1</div></div></div>
+      <div class="item-tags"><span class="item-tag">1 Hour</span><span class="item-tag">Advantage</span><span class="item-tag">DC 14 CON</span></div>
+      <div class="item-note">Consume a whole bar to gain Advantage on Perception and Investigation checks for 1 hour. Make a DC 14 Constitution save; on a failure, when the hour ends, Speed is reduced by 10 feet and all checks take a -2 penalty for the next hour.</div>
+      <div class="quantity-row"><span class="quantity-label">Bars remaining</span><div data-consumable-key="speedBars" data-consumable-default="1" data-consumable-label="Viktor's Speed Bar"></div></div>
+    </div>
+
+    <div class="item-card magic">
+      <div class="card-topline"><span class="item-type">Antidote</span><span class="item-weight">-</span></div>
+      <div class="item-main"><span class="item-icon">⚗</span><div><div class="item-name">Wyvern Poison Antedote</div><div class="item-qty">Qty: 1</div></div></div>
+      <div class="item-tags"><span class="item-tag">Campaign Item</span></div>
+      <div class="item-note">A specialized antidote carried for exposure to wyvern poison.</div>
+      <div class="quantity-row"><span class="quantity-label">Remaining</span><div data-consumable-key="wyvernAntidote" data-consumable-default="1" data-consumable-label="wyvern poison antidote"></div></div>
     </div>
 
   </div>
@@ -2650,6 +2858,8 @@ const TOOLTIPS = {
   "feat-weapon-mastery": { name: "Weapon Mastery", type: "Ranger Feature (PHB 2024 p.120)", body: "Your training with weapons allows you to use the mastery property of two kinds of weapons of your choice with which you are proficient. Viktor has chosen Battleaxe (Topple) and Hand Crossbow (Vex). You can change your chosen weapons when you finish a Long Rest." },
   "feat-deft-explorer": { name: "Deft Explorer", type: "Ranger Feature (PHB 2024 p.120)", body: "You gain Expertise in one of your skill proficiencies of your choice. Viktor chose Athletics (+6, double proficiency). You also know two additional languages of your choice — Viktor knows Elvish and Goblin as his bonus languages." },
   "feat-fighting-style": { name: "Fighting Style: Defense", type: "Ranger Feature (PHB 2024 p.120)", body: "You adopt a particular style of fighting as your specialty. Viktor's chosen Fighting Style is Defense: while wearing armour, you gain a +1 bonus to Armour Class. His base Studded Leather AC of 15 (12 + DEX 3) becomes 16.", stats: {"Style":"Defense","Bonus":"+1 AC","Requirement":"Wearing armour","Viktor's AC":"16 (12+3+1)"} },
+  "feat-hunters-lore": { name: "Hunter's Lore", type: "Hunter Feature (Ranger 3) — SRD 5.2.1", body: "While a creature is marked by your Hunter's Mark, you know whether it has any Immunities, Resistances, or Vulnerabilities, and you know what they are.", stats: {"Requirement":"Target marked by Hunter's Mark","Reveals":"Immunities, Resistances, Vulnerabilities"} },
+  "feat-colossus-slayer": { name: "Colossus Slayer", type: "Hunter's Prey (Ranger 3) — SRD 5.2.1", body: "When you hit a creature with a weapon, the weapon deals an extra 1d8 damage if the target is missing any Hit Points. You can deal this extra damage only once per turn.", stats: {"Damage":"+1d8 weapon damage","Trigger":"Weapon hit against a wounded target","Frequency":"Once per turn"} },
 
   // ORC TRAITS
   "feat-adrenaline-rush": { name: "Adrenaline Rush", type: "Orc Trait (PHB 2024 p.195)", body: "You can take the Dash action as a Bonus Action. When you do, you gain 2 Temporary HP. You can use this trait a number of times equal to your Proficiency Bonus (2), and you regain all expended uses when you finish a Short or Long Rest.", stats: {"Uses":"2 / Short or Long Rest","Action":"Bonus Action","Benefit":"Dash + 2 Temp HP"} },
@@ -2667,6 +2877,7 @@ const TOOLTIPS = {
   "spell-jump": { name: "Jump", type: "1st-Level Transmutation (Ranger)", body: "You touch a willing creature. Until the spell ends, the target's jump distance is tripled.\n\nUseful for traversal, escaping grapples by leaping away, or reaching elevated terrain out of melee range.", stats: {"Cast Time":"1 Bonus Action","Range":"Touch","Duration":"1 Minute","Components":"V, S, M (a grasshopper's hind leg)"} },
   "spell-longstrider": { name: "Longstrider", type: "1st-Level Transmutation (Ranger)", body: "You touch a creature. Its speed increases by 10 feet until the spell ends.\n\nViktor can cast this on himself before combat to reach 40ft speed, or on allies for tactical repositioning. Lasts a full hour — cast before adventuring.", stats: {"Cast Time":"1 Action","Range":"Touch","Duration":"1 Hour","Components":"V, S, M (a pinch of dirt)","Effect":"+10 ft. Speed"} },
   "spell-anticipate": { name: "Anticipate Weakness", type: "1st-Level Divination (Ranger) · Homebrew", body: "With a quick glance into the future, you pinpoint where a gap is about to open in your foe's defense, and then you strike. After casting Anticipate Weakness, you have Advantage on attack rolls until the end of your turn.", stats: {"Cast Time":"1 Bonus Action","Range":"Self","Duration":"Instantaneous","Components":"V, S","Effect":"Advantage on attack rolls until end of turn"} },
+  "spell-cure-wounds": { name: "Cure Wounds", type: "1st-Level Abjuration (Ranger) — SRD 5.2.1", body: "A creature you touch regains Hit Points equal to 2d8 plus your spellcasting ability modifier. Viktor restores 2d8 + 2 HP with a 1st-level slot.", stats: {"Cast Time":"1 Action","Range":"Touch","Duration":"Instantaneous","Components":"V, S","Healing":"2d8 + 2 HP"} },
   "spell-hunters-mark": { name: "Hunter's Mark", type: "1st-Level Divination (Ranger) — Always Prepared", body: "You choose a creature you can see within range and mystically mark it as your quarry. Until the spell ends, you deal an extra 1d6 damage to the target whenever you hit it with a weapon attack, and you have Advantage on any Perception or Survival check you make to find it.\n\nIf the target drops to 0 HP before this spell ends, you can use a Bonus Action to mark a new creature.\n\nConcentration. Viktor can cast this without a spell slot 2× per Long Rest via Favoured Enemy.", stats: {"Cast Time":"1 Bonus Action","Range":"90 ft.","Duration":"Concentration, up to 1 hr","Bonus Damage":"+1d6 on hit","Free Casts":"2 / Long Rest","Concentration":"Yes"} },
 
   // ITEMS  
@@ -2675,7 +2886,7 @@ const TOOLTIPS = {
 </script>
 
 <script>
-const SHEET_UI_VERSION = '3.2.0';
+const SHEET_UI_VERSION = '3.3.0';
 
 // ===== TABS =====
 function switchTab(id) {
@@ -2687,118 +2898,32 @@ function switchTab(id) {
   saveSheetState();
 }
 
+function filterFeatures(actionType) {
+  document.querySelectorAll('#tab-features .feature-card').forEach(card => {
+    const actionTypes = (card.dataset.actionType || '').split(' ');
+    card.hidden = actionType !== 'all' && !actionTypes.includes(actionType);
+  });
+  document.querySelectorAll('#tab-features .panel').forEach(panel => {
+    const hasVisibleCard = [...panel.querySelectorAll('.feature-card')].some(card => !card.hidden);
+    panel.hidden = actionType !== 'all' && !hasVisibleCard;
+  });
+  document.querySelectorAll('#tab-features .action-filter-btn').forEach(button => {
+    const isActive = button.dataset.actionFilter === actionType;
+    button.classList.toggle('active', isActive);
+    button.setAttribute('aria-pressed', String(isActive));
+  });
+}
+
 // ===== TOOLTIP ENGINE =====
-const tooltip = document.getElementById('tooltip');
-const ttName = document.getElementById('tt-name');
-const ttType = document.getElementById('tt-type');
-const ttBody = document.getElementById('tt-body');
-const ttStats = document.getElementById('tt-stats');
-let activeTooltipEl = null;
-let lastMouseX = 0;
-let lastMouseY = 0;
-
-function showTooltip(data) {
-  ttName.textContent = data.name;
-  ttType.textContent = data.type || '';
-  ttBody.innerHTML = (data.body || '').replace(/\n/g, '<br>');
-  if (data.stats) {
-    ttStats.style.display = 'grid';
-    ttStats.innerHTML = Object.entries(data.stats).map(([k,v]) => `<div class="tooltip-stat">${k}: <span>${v}</span></div>`).join('');
-  } else {
-    ttStats.style.display = 'none';
-  }
-  tooltip.classList.add('visible');
-}
-
-function positionTooltip(x, y) {
-  const pad = 12;
-  const rect = tooltip.getBoundingClientRect();
-  let left = x + 16;
-  let top = y + 14;
-  if (left + rect.width > window.innerWidth - pad) left = x - rect.width - 16;
-  if (top + rect.height > window.innerHeight - pad) top = y - rect.height - 16;
-  if (left < pad) left = pad;
-  if (top < pad) top = pad;
-
-  tooltip.style.left = Math.round(left) + 'px';
-  tooltip.style.top = Math.round(top) + 'px';
-}
-
-function hideTooltip() {
-  tooltip.classList.remove('visible');
-  activeTooltipEl = null;
-}
-
-function getTooltipData(el) {
-  if (!el) return null;
-  return TOOLTIPS[el.dataset.tooltip] || null;
-}
-
-function activateTooltip(el, x, y) {
-  const data = getTooltipData(el);
-  if (!data) return;
-  // Render the tooltip as a direct child of <body> so it escapes any
-  // ancestor stacking context. Only re-parent if needed.
-  if (tooltip.parentElement !== document.body) {
-    document.body.appendChild(tooltip);
-  }
-  activeTooltipEl = el;
-  showTooltip(data);
-  positionTooltip(x, y);
-}
-
-document.addEventListener('mouseover', (e) => {
-  const el = e.target.closest('[data-tooltip]');
-  if (!el) return;
-  lastMouseX = e.clientX;
-  lastMouseY = e.clientY;
-  activateTooltip(el, lastMouseX, lastMouseY);
-});
-
-document.addEventListener('mousemove', (e) => {
-  if (!activeTooltipEl) return;
-  lastMouseX = e.clientX;
-  lastMouseY = e.clientY;
-  positionTooltip(lastMouseX, lastMouseY);
-});
-
-document.addEventListener('mouseout', (e) => {
-  if (!activeTooltipEl) return;
-  const nextEl = e.relatedTarget;
-  if (nextEl && activeTooltipEl.contains(nextEl)) {
-    return;
-  }
-  hideTooltip();
-});
-
-document.addEventListener('focusin', (e) => {
-  const el = e.target.closest('[data-tooltip]');
-  if (!el) return;
-  const rect = el.getBoundingClientRect();
-  activateTooltip(el, rect.left + rect.width / 2, rect.top + rect.height / 2);
-});
-
-document.addEventListener('focusout', () => {
-  hideTooltip();
-});
-
-window.addEventListener('scroll', () => {
-  if (activeTooltipEl) {
-    const rect = activeTooltipEl.getBoundingClientRect();
-    positionTooltip(rect.left + rect.width / 2, rect.top + rect.height / 2);
-  }
-}, { passive: true });
-
-window.addEventListener('resize', () => {
-  if (!activeTooltipEl) return;
-  const rect = activeTooltipEl.getBoundingClientRect();
-  positionTooltip(rect.left + rect.width / 2, rect.top + rect.height / 2);
+window.initializeSheetRulesHelp(TOOLTIPS, {
+  headingSelector: '.feature-name,.item-name,.ability-name,.weapon-name,.spell-name',
+  groupSelector: '.condition-badge',
 });
 
 // ===== HP =====
 function updateHPBar() {
   const cur = parseInt(document.getElementById('currentHP').value) || 0;
-  const max = 17;
+  const max = 25;
   const pct = Math.min(100, Math.max(0, (cur / max) * 100));
   const bar = document.getElementById('hpBar');
   bar.style.width = pct + '%';
@@ -2810,6 +2935,8 @@ function updateHPBar() {
 
 // ===== REACTIVE SHEET STATE =====
 const sheetState = {
+  characterLevel: 3,
+  hitDice: { d10: 3 },
   defense: true,
   longstrider: false,
   anticipate: false,
@@ -2827,6 +2954,7 @@ const sheetState = {
     crossbow: true,
   },
   consumables: {},
+  inventoryGrants: { august2026: true, viktorRanger3: true },
 };
 
 const DEFAULT_CURRENCY = { pp: 0, gp: 21, ep: 0, sp: 0, cp: 0 };
@@ -2844,6 +2972,18 @@ function ensureCurrencyState() {
   ['pp', 'gp', 'ep', 'sp', 'cp'].forEach(key => {
     sheetState.currency[key] = sanitizeCurrencyValue(sheetState.currency[key]);
   });
+}
+
+function ensureHitDiceState() {
+  if (!sheetState.hitDice || typeof sheetState.hitDice !== 'object') sheetState.hitDice = {};
+  const remaining = Number.parseInt(sheetState.hitDice.d10, 10);
+  sheetState.hitDice.d10 = Number.isFinite(remaining) ? Math.max(0, Math.min(3, remaining)) : 3;
+}
+
+function updateHitDiceUI() {
+  ensureHitDiceState();
+  const display = document.getElementById('hitDiceDisplay');
+  if (display) display.textContent = `${sheetState.hitDice.d10} / 3 d10`;
 }
 
 function applyCurrencyUI() {
@@ -2985,7 +3125,7 @@ function saveSheetState() {
       huntersMark,
       weaponState,
       hp: {
-        current: document.getElementById('currentHP')?.value || '17',
+        current: document.getElementById('currentHP')?.value || '25',
         temp: document.getElementById('tempHP')?.value || '0',
       },
       slots: Array.from(document.querySelectorAll('.slot-pip')).map((el, idx) => ({
@@ -3009,6 +3149,7 @@ function saveSheetState() {
 }
 
 function loadSheetState() {
+  let ranger3MigrationApplied = false;
   const versionBadge = document.getElementById('uiVersionBadge');
   if (versionBadge) versionBadge.textContent = `UI v${SHEET_UI_VERSION}`;
   if (!document.title.includes(`UI v${SHEET_UI_VERSION}`)) {
@@ -3018,9 +3159,12 @@ function loadSheetState() {
   try {
     const raw = localStorage.getItem(SHEET_STORAGE_KEY);
     if (!raw) {
+      updateHitDiceUI();
       applyCurrencyUI();
       refreshDerivedStats();
       updateHPBar();
+      renderViktorCustomItems();
+      InventoryTrackers.initializeFixedTrackers(sheetState, saveSheetState);
       return;
     }
 
@@ -3033,6 +3177,36 @@ function loadSheetState() {
     if (saved.sheetState && typeof saved.sheetState === 'object') {
       Object.assign(sheetState, saved.sheetState);
     }
+    if (saved.sheetState?.characterLevel !== 3) {
+      const previousHitDice = Number.parseInt(sheetState.hitDice?.d10, 10);
+      sheetState.hitDice = {
+        ...(sheetState.hitDice || {}),
+        d10: Math.min(3, Math.max(0, Number.isFinite(previousHitDice) ? previousHitDice : 2) + 1),
+      };
+      const previousHP = Number.parseInt(saved.hp?.current, 10);
+      saved.hp = {
+        ...(saved.hp || {}),
+        current: String(Math.min(25, Math.max(0, Number.isFinite(previousHP) ? previousHP : 17) + 8)),
+      };
+      sheetState.consumables = {
+        ...(sheetState.consumables || {}),
+        oil: 2,
+        rations: 9,
+        torches: 10,
+        healersKitUses: 10,
+        bolts: 18,
+        speedBars: 1,
+        wyvernAntidote: 1,
+      };
+      sheetState.characterLevel = 3;
+      sheetState.inventoryGrants = {
+        ...(sheetState.inventoryGrants || {}),
+        august2026: true,
+        viktorRanger3: true,
+      };
+      ranger3MigrationApplied = true;
+    }
+    ensureHitDiceState();
     ensureCurrencyState();
     if (!sheetState.equipment || typeof sheetState.equipment !== 'object') {
       sheetState.equipment = { studdedLeather: true, battleaxe: true, crossbow: true };
@@ -3054,7 +3228,7 @@ function loadSheetState() {
     if (saved.hp) {
       const currentHP = document.getElementById('currentHP');
       const tempHP = document.getElementById('tempHP');
-      if (currentHP) currentHP.value = saved.hp.current ?? '17';
+      if (currentHP) currentHP.value = saved.hp.current ?? '25';
       if (tempHP) tempHP.value = saved.hp.temp ?? '0';
     }
 
@@ -3073,6 +3247,7 @@ function loadSheetState() {
         el.classList.toggle('used', used);
         el.classList.toggle('available', !used);
       });
+      updateCombatResourceControls();
     }
 
     if (Array.isArray(saved.deaths)) {
@@ -3094,6 +3269,7 @@ function loadSheetState() {
     if (typeof saved.exhaustion === 'number') exhaustionLevel = Math.max(0, Math.min(6, saved.exhaustion));
 
     applyCurrencyUI();
+    updateHitDiceUI();
     refreshDerivedStats();
     applyEquipmentUI();
     updateWeaponDisplay('battleaxe');
@@ -3124,6 +3300,7 @@ function loadSheetState() {
   } catch (err) {
     console.warn('Could not load sheet state:', err);
     applyCurrencyUI();
+    updateHitDiceUI();
     refreshDerivedStats();
     applyEquipmentUI();
     updateHPBar();
@@ -3132,6 +3309,7 @@ function loadSheetState() {
   applyCurrencyUI();
   renderViktorCustomItems();
   InventoryTrackers.initializeFixedTrackers(sheetState, saveSheetState);
+  if (ranger3MigrationApplied) saveSheetState();
 }
 
 function setStatusPill(id, active, onText = 'Active', offText = 'Inactive') {
@@ -3282,6 +3460,7 @@ const SPELLS = {
   jump:        { name: 'Jump',                level: 1, effect: null },
   longstrider: { name: 'Longstrider',         level: 1, effect: 'longstrider' },
   anticipate:  { name: 'Anticipate Weakness', level: 1, effect: 'anticipate' },
+  cureWounds:  { name: 'Cure Wounds',          level: 1, effect: null },
 };
 
 const ORDINALS = ['0th','1st','2nd','3rd','4th','5th','6th','7th','8th','9th'];
@@ -3397,7 +3576,7 @@ function refreshSpellAvailability() {
 function applyHP(sign) {
   const delta = parseInt(document.getElementById('hpDelta').value) || 0;
   const cur = parseInt(document.getElementById('currentHP').value) || 0;
-  const newVal = Math.min(17, Math.max(0, cur + sign * delta));
+  const newVal = Math.min(25, Math.max(0, cur + sign * delta));
   document.getElementById('currentHP').value = newVal;
   document.getElementById('hpDelta').value = '';
   updateHPBar();
@@ -3431,8 +3610,33 @@ function toggleSlot(id) {
 function toggleResource(el) {
   el.classList.toggle('used');
   el.classList.toggle('available');
+  updateCombatResourceControls();
   if (typeof refreshSpellAvailability === 'function') refreshSpellAvailability();
   saveSheetState();
+}
+
+function updateCombatResourceControls() {
+  ['adrenalineRush', 'relentlessEndurance'].forEach(resource => {
+    const pips = [...document.querySelectorAll(`.resource-pip[data-resource="${resource}"]`)];
+    const available = pips.filter(pip => !pip.classList.contains('used')).length;
+    const count = document.getElementById(`combat-${resource}-count`);
+    const button = document.getElementById(`combat-${resource}-btn`);
+    if (count) count.textContent = `${available} / ${pips.length} available`;
+    if (button) button.disabled = available === 0;
+  });
+}
+
+function spendCombatResource(resource) {
+  const availablePip = document.querySelector(`.resource-pip[data-resource="${resource}"]:not(.used)`);
+  if (!availablePip) {
+    castToast('No uses remaining.', true);
+    return;
+  }
+  availablePip.classList.remove('available');
+  availablePip.classList.add('used');
+  updateCombatResourceControls();
+  saveSheetState();
+  castToast(resource === 'adrenalineRush' ? 'Adrenaline Rush used.' : 'Relentless Endurance used.');
 }
 
 // ===== CONDITIONS ENGINE =====
@@ -3725,19 +3929,57 @@ function updateWeaponDisplay(weapon) {
 }
 
 // ===== REST =====
-function shortRest() {
-  // Recharge Adrenaline Rush
-  document.querySelectorAll('.resource-pip').forEach(p => {
-    // Only auto-reset the adrenaline rush; others are manual
+async function shortRest() {
+  const currentHP = document.getElementById('currentHP');
+  const hp = Number.parseInt(currentHP.value, 10) || 0;
+  if (hp < 1) {
+    castToast('You need at least 1 HP to start a Short Rest.', true);
+    return;
+  }
+
+  document.querySelectorAll('.resource-pip[data-resource="adrenalineRush"]').forEach(p => {
+    p.classList.remove('used');
+    p.classList.add('available');
   });
-  alert('Short Rest taken.\n\n• Adrenaline Rush: 2 charges restored\n• Hunter\'s Mark free casts: unchanged (Long Rest)\n\nHit Dice available to spend: 2d10\nRemember to manually spend Hit Dice and update Current HP.');
+  updateCombatResourceControls();
+  const rolls = [];
+  let healedHP = hp;
+  const selectedDice = healedHP < 25
+    ? await chooseRestHitDice([{ type: 'd10', size: 10, label: 'd10', available: sheetState.hitDice.d10 }])
+    : [];
+  for (const selectedDie of selectedDice) {
+    if (healedHP >= 25) break;
+    const manual = selectedDie.roll !== null;
+    const roll = manual ? selectedDie.roll : Math.floor(Math.random() * selectedDie.size) + 1;
+    const healing = Math.max(1, roll + 1);
+    const regained = Math.min(25 - healedHP, healing);
+    healedHP += regained;
+    sheetState.hitDice.d10 -= 1;
+    rolls.push(`d10 ${roll}${manual ? ' (manual)' : ' (auto)'} + CON 1 = ${healing} (${regained} HP regained)`);
+    currentHP.value = healedHP;
+    updateHPBar();
+    updateHitDiceUI();
+  }
+  refreshDerivedStats();
+  saveSheetState();
+  alert('Short Rest complete.\n\n• Adrenaline Rush restored\n• Spell slots, Favoured Enemy, and Relentless Endurance unchanged' + (rolls.length ? `\n• ${rolls.join('\n• ')}` : '\n• No Hit Dice spent'));
 }
 
 function longRest() {
-  document.getElementById('currentHP').value = 17;
+  const currentHP = document.getElementById('currentHP');
+  if ((Number.parseInt(currentHP.value, 10) || 0) < 1) {
+    castToast('You need at least 1 HP to start a Long Rest.', true);
+    return;
+  }
+  if (!window.confirm('Finish a Long Rest?\n\nThis restores HP, all Hit Dice, spell slots, and Long Rest resources. Temporary HP expires, and Exhaustion decreases by 1.')) return;
+
+  currentHP.value = 25;
+  document.getElementById('tempHP').value = 0;
+  sheetState.hitDice.d10 = 3;
+  updateHitDiceUI();
   updateHPBar();
   // Reset spell slots
-  ['slot-1a','slot-1b','s-slot-1a','s-slot-1b'].forEach(id => {
+  ['slot-1a','slot-1b','slot-1c','s-slot-1a','s-slot-1b','s-slot-1c'].forEach(id => {
     const el = document.getElementById(id);
     if (el) { el.classList.remove('used'); el.classList.add('available'); }
   });
@@ -3746,6 +3988,7 @@ function longRest() {
     p.classList.remove('used');
     p.classList.add('available');
   });
+  updateCombatResourceControls();
   // Reset death saves
   document.querySelectorAll('.death-pip').forEach(p => p.classList.remove('filled'));
   if (sheetState.longstrider) sheetState.longstrider = false;
@@ -3759,7 +4002,7 @@ function longRest() {
   if (exhReduced) exhaustionLevel -= 1;
   refreshDerivedStats();
   saveSheetState();
-  alert('Long Rest completed!\n\n• HP restored to 17/17\n• Spell slots restored (2×1st)\n• Hunter\'s Mark free casts restored (2)\n• Adrenaline Rush restored (2)\n• Relentless Endurance restored' + (exhReduced ? '\n• Exhaustion reduced by 1 (now ' + exhaustionLevel + ')' : '') + '\n• All conditions cleared (clear manually if needed)');
+  alert('Long Rest completed!\n\n• HP restored to 25/25\n• Temporary HP expired\n• Hit Dice restored (3d10)\n• Spell slots restored (3×1st)\n• Hunter\'s Mark free casts restored (2)\n• Adrenaline Rush restored (2)\n• Relentless Endurance restored' + (exhReduced ? '\n• Exhaustion reduced by 1 (now ' + exhaustionLevel + ')' : '') + '\n• Other conditions are unchanged');
 }
 
 loadSheetState();

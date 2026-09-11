@@ -3,12 +3,14 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Lygas Cantor — Fighter 1 / Warlock 1 | Malt &amp; Magic</title>
+<title>Lygas Cantor — Fighter 1 / Warlock 2 | Malt &amp; Magic</title>
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=IM+Fell+English:ital@0;1&family=Barlow:wght@300;400;500;600&family=Barlow+Condensed:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../assets/css/theme-fantasy.css">
-<link rel="stylesheet" href="../assets/css/page-polish.css">
+<link rel="stylesheet" href="../assets/css/page-polish.css?v=20260817-rest-dialog">
 <script defer src="../assets/js/a11y-sheet-helpers.js"></script>
 <script src="../assets/js/inventory-trackers.js"></script>
+<script defer src="../assets/js/rest-hit-dice.js?v=20260817-rest-dialog"></script>
+<script src="../assets/js/archibold-rules-help.js?v=2"></script>
 <style>
   :root {
     --briar-dark: #120a1e;
@@ -90,6 +92,12 @@
   .char-name {
     font-family: 'Cinzel', serif; font-size: 28px; font-weight: 700;
     color: var(--gold-light); letter-spacing: 1px; line-height: 1;
+  }
+  .char-sub {
+    display: flex; gap: 8px; padding: 6px 14px;
+    max-width: 100%; overflow-x: clip;
+    color: var(--text-secondary); letter-spacing: 2px; text-transform: uppercase;
+    margin-top: 4px;
   }
   .char-sub span { color: var(--rose); }
   .header-stats { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; }
@@ -277,6 +285,23 @@
   .feature-source.gloamthorn { color: var(--rose-dim); }
   .feature-source.locked-label { color: var(--text-dim); font-style: italic; }
   .feature-summary { font-size: 12px; color: var(--text-secondary); line-height: 1.5; }
+  .action-filter {
+    display: flex; align-items: center; gap: 4px; width: fit-content;
+    margin-bottom: 12px; padding: 4px; border: 1px solid var(--card-border);
+    border-radius: 6px; background: rgba(255,255,255,0.03);
+  }
+  .action-filter-btn {
+    min-height: 30px; padding: 5px 10px; border: 1px solid transparent;
+    border-radius: 4px; background: transparent; color: var(--text-dim);
+    font-family: 'Barlow Condensed', sans-serif; font-size: 10px; font-weight: 600;
+    letter-spacing: 1px; text-transform: uppercase; cursor: pointer;
+  }
+  .action-filter-btn:hover { color: var(--parchment); border-color: var(--card-border); }
+  .action-filter-btn.active {
+    color: var(--parchment); border-color: var(--gold-dim);
+    background: rgba(201,160,122,0.14);
+  }
+  #tab-features .feature-card[hidden] { display: none !important; }
 
   /* ===== RESOURCE TRACK ===== */
   .resource-track { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; margin-top: 6px; }
@@ -505,20 +530,61 @@
   }
 
   @media (max-width: 768px) {
-    .sheet-header { padding: 14px 12px 12px; }
-    .header-inner { gap: 12px; }
+    .sheet-header { padding: 12px 12px 10px; }
+    .header-inner { gap: 10px; }
     .header-name { flex-basis: 100%; min-width: 0; }
-    .sheet-body { padding: 10px 12px; }
     .char-name { font-size: 22px; }
-    .char-sub { display: flex; max-width: 100%; padding: 6px 0; gap: 5px; color: var(--text-secondary); font-size: 10px; letter-spacing: 1px; text-transform: uppercase; flex-wrap: wrap; }
-    .header-stats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px; width: 100%; }
-    .hstat { padding: 6px 4px; min-width: 0; }
-    .hp-display { grid-column: span 2; min-width: 0; }
+    .char-sub {
+      display: block;
+      margin-top: 5px;
+      padding: 0;
+      font-size: 11px;
+      line-height: 1.45;
+      letter-spacing: 1px;
+      overflow-x: visible;
+    }
+    .header-stats {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 6px;
+      width: 100%;
+    }
+    .hstat { min-width: 0; padding: 6px 4px; }
+    .hstat.hp-display { grid-column: span 2; min-width: 0; }
     .hstat-val { font-size: 15px; }
     .hp-inputs { justify-content: center; }
+    .hp-input { width: 44px; }
     .header-nav { width: 100%; justify-content: space-between; }
-    .tab-bar { justify-content: flex-start; flex-wrap: nowrap; overflow-x: auto; padding: 6px 8px; }
-    .tab-btn { flex: 0 0 auto; padding: 8px 10px; font-size: 10px; letter-spacing: 1px; }
+    .tab-bar {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 2px;
+      padding: 4px 6px;
+    }
+    .tab-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 0;
+      min-height: 44px;
+      padding: 6px 2px;
+      font-size: 10px;
+      line-height: 1.1;
+      letter-spacing: 0.6px;
+      text-align: center;
+      white-space: normal;
+    }
+    .sheet-body { padding: 10px; }
+    #tab-combat .sheet-body > div,
+    #tab-spells .sheet-body > div,
+    #tab-features .sheet-body > div:not(.action-filter),
+    #tab-notes .sheet-body > div {
+      grid-template-columns: minmax(0, 1fr) !important;
+      gap: 12px !important;
+    }
+    #tab-combat .sheet-body > div > div:nth-child(2) {
+      order: -1;
+    }
     .ability-grid { grid-template-columns: repeat(3, 1fr); }
     .panel, .panel-body { min-width: 0; }
     .weapon-row { grid-template-columns: minmax(0, 1fr) auto auto; }
@@ -561,6 +627,8 @@
   /* ===== UI VERSION ===== */
   #uiVersionBadge { font-family: 'Barlow Condensed', sans-serif; font-size: 9px; color: var(--text-dim); letter-spacing: 1px; }
 </style>
+<link rel="stylesheet" href="../assets/css/lygas-modern.css?v=1">
+<link rel="stylesheet" href="../assets/css/archibold-rules-help.css?v=2">
 </head>
 
 <body class="theme-fantasy page-dnd-character-sheet page-lygas-cantor-sheet">
@@ -570,7 +638,7 @@
   <div class="header-inner">
     <div class="header-name">
       <div class="char-name">Lygas Cantor</div>
-      <div class="char-sub">Fighter 1 / <span>Warlock 1</span> · Human · Charlatan · Milestone</div>
+      <div class="char-sub">Fighter 1 / <span>Warlock 2</span> · Human · Charlatan · Milestone</div>
     </div>
 
     <div class="header-stats">
@@ -580,9 +648,9 @@
       </div>
       <div class="hstat hp-display">
         <div class="hp-inputs">
-          <input type="number" class="hp-input" id="currentHP" value="19" min="0" max="99" oninput="updateHPBar()">
+          <input type="number" class="hp-input" id="currentHP" value="28" min="0" max="99" oninput="updateHPBar()">
           <span class="hp-sep">/</span>
-          <span class="hstat-val" style="font-size:14px; padding-top:4px;">19</span>
+          <span class="hstat-val" style="font-size:14px; padding-top:4px;">28</span>
         </div>
         <div class="hp-bar-wrap"><div class="hp-bar" id="hpBar" style="width:100%;"></div></div>
         <span class="hstat-lbl">HP</span>
@@ -702,9 +770,9 @@
             <div style="flex:1;">
               <div style="font-family:'Barlow Condensed',sans-serif;font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:var(--text-dim);margin-bottom:4px;">Current / Max</div>
               <div style="display:flex;gap:6px;align-items:center;">
-                <input type="number" class="hp-input" id="currentHP2" value="19" min="0" max="99" oninput="syncHP(this)" style="font-size:24px;width:60px;">
+                <input type="number" class="hp-input" id="currentHP2" value="28" min="0" max="99" oninput="syncHP(this)" style="font-size:24px;width:60px;">
                 <span style="color:var(--text-dim);font-size:18px;">/</span>
-                <span style="font-family:'Cinzel',serif;font-size:20px;font-weight:700;color:var(--gold);">19</span>
+                <span style="font-family:'Cinzel',serif;font-size:20px;font-weight:700;color:var(--gold);">28</span>
               </div>
               <div class="hp-bar-wrap" style="margin-top:6px;height:5px;"><div class="hp-bar" id="hpBar2" style="width:100%;"></div></div>
             </div>
@@ -714,7 +782,7 @@
             </div>
             <div>
               <div style="font-family:'Barlow Condensed',sans-serif;font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:var(--text-dim);margin-bottom:4px;">Hit Dice</div>
-              <div style="font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:600;color:var(--steel);">1d10 + 1d8</div>
+              <div id="hitDiceDisplay" style="font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:600;color:var(--steel);">1/1 d10 + 2/2 d8</div>
             </div>
           </div>
           <!-- Death saves -->
@@ -805,8 +873,8 @@
         <div class="panel-body">
           <div class="combat-effect-readout" id="combatEffectReadout">No temporary combat effects active.</div>
           <div style="display:flex;gap:8px;margin-top:10px;">
-            <button class="rest-btn short" onclick="shortRest()">Short Rest</button>
-            <button class="rest-btn long" onclick="longRest()">Long Rest</button>
+            <button type="button" class="rest-btn short" onclick="shortRest()" title="Spend Hit Dice and recover Pact Magic and Short Rest features">Short Rest</button>
+            <button type="button" class="rest-btn long" onclick="longRest()" title="Restore HP, Hit Dice, and Long Rest features">Long Rest</button>
           </div>
         </div>
       </div>
@@ -873,7 +941,8 @@
           <div class="spell-slot-track">
             <span class="spell-slot-label">L1</span>
             <div class="slot-pip available" id="s-slot-1a" onclick="toggleSlot('s-slot-1a')" title="Pact Slot 1"></div>
-            <span style="font-family:'Barlow Condensed',sans-serif;font-size:10px;color:var(--text-dim);">1 slot</span>
+            <div class="slot-pip available" id="s-slot-1b" onclick="toggleSlot('s-slot-1b')" title="Pact Slot 2"></div>
+            <span style="font-family:'Barlow Condensed',sans-serif;font-size:10px;color:var(--text-dim);">2 slots</span>
           </div>
           <div class="pact-note">Recovers on Short or Long Rest</div>
         </div>
@@ -929,7 +998,8 @@
             <div style="display:flex;align-items:center;gap:8px;">
               <span class="spell-slot-label">1st</span>
               <div class="slot-pip available" id="s-slot-1a-sp" onclick="toggleSlot('s-slot-1a')" title="Pact Slot 1"></div>
-              <span style="font-family:'Barlow Condensed',sans-serif;font-size:10px;color:var(--text-dim);">1 slot</span>
+              <div class="slot-pip available" id="s-slot-1b-sp" onclick="toggleSlot('s-slot-1b')" title="Pact Slot 2"></div>
+              <span style="font-family:'Barlow Condensed',sans-serif;font-size:10px;color:var(--text-dim);">2 slots</span>
             </div>
           </div>
           <div class="pact-note">Short or Long Rest recovery</div>
@@ -954,7 +1024,7 @@
     <!-- Spell list -->
     <div class="panel">
       <div class="panel-header">
-        <span class="panel-title">Spells — Warlock 1</span>
+        <span class="panel-title">Spells — Warlock 2</span>
       </div>
       <div class="panel-body">
 
@@ -988,7 +1058,7 @@
         </div>
 
         <!-- Level 1 -->
-        <div style="font-family:'Barlow Condensed',sans-serif;font-size:9px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--text-dim);margin:12px 0 8px;">1st Level — 1 Pact Slot</div>
+        <div style="font-family:'Barlow Condensed',sans-serif;font-size:9px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--text-dim);margin:12px 0 8px;">1st Level — 2 Pact Slots</div>
 
         <div class="spell-card prepared effect-active" id="spell-hex-card" data-tooltip="spell-hex">
           <div class="spell-header">
@@ -1027,6 +1097,23 @@
           </div>
         </div>
 
+        <div class="spell-card prepared" id="spell-rebuke-card" data-tooltip="spell-rebuke">
+          <div class="spell-header">
+            <div class="spell-name">Hellish Rebuke</div>
+            <span class="spell-level-badge">1st</span>
+          </div>
+          <div class="spell-meta">
+            <span>⏱ Reaction</span>
+            <span>📏 60 ft.</span>
+            <span>⌛ Instantaneous</span>
+            <span>🔮 V,S</span>
+          </div>
+          <div style="font-size:11px;color:var(--text-secondary);margin-bottom:6px;">When a creature you can see within 60 feet damages you: DEX save DC 14 · 2d10 Fire, half on success</div>
+          <div class="spell-actions">
+            <button class="cast-btn" onclick="castSpell('rebuke')">⚡ Cast</button>
+          </div>
+        </div>
+
       </div>
     </div>
 
@@ -1040,6 +1127,12 @@
 <!-- ======================================================= -->
 <div id="tab-features" class="tab-panel">
 <div class="sheet-body">
+  <div class="action-filter" role="group" aria-label="Filter features by action type">
+    <button type="button" class="action-filter-btn active" data-action-filter="all" aria-pressed="true" onclick="filterFeatures('all')">All</button>
+    <button type="button" class="action-filter-btn" data-action-filter="action" aria-pressed="false" onclick="filterFeatures('action')">Action</button>
+    <button type="button" class="action-filter-btn" data-action-filter="bonus-action" aria-pressed="false" onclick="filterFeatures('bonus-action')">Bonus Action</button>
+    <button type="button" class="action-filter-btn" data-action-filter="reaction" aria-pressed="false" onclick="filterFeatures('reaction')">Reaction</button>
+  </div>
   <div class="features-layout">
 
     <!-- FIGHTER FEATURES -->
@@ -1049,7 +1142,7 @@
 
         <div class="class-divider fighter">⚔ Fighter 1</div>
 
-        <div class="feature-card" id="feat-secondwind-card" data-tooltip="feat-secondwind">
+        <div class="feature-card" id="feat-secondwind-card" data-tooltip="feat-secondwind" data-action-type="bonus-action">
           <div class="feature-header">
             <span class="feature-name">Second Wind</span>
             <span class="feature-source">Fighter</span>
@@ -1106,9 +1199,9 @@
       <div class="panel-header"><span class="panel-title">Warlock Features</span></div>
       <div class="panel-body">
 
-        <div class="class-divider warlock">⬡ Warlock 1</div>
+        <div class="class-divider warlock">⬡ Warlock 2</div>
 
-        <div class="feature-card" data-tooltip="feat-pactblade">
+        <div class="feature-card" data-tooltip="feat-pactblade" data-action-type="bonus-action">
           <div class="feature-header">
             <span class="feature-name">Pact of the Blade</span>
             <span class="feature-source">Eldritch Invocation</span>
@@ -1125,7 +1218,34 @@
             <span class="feature-name">Eldritch Invocations</span>
             <span class="feature-source">Warlock</span>
           </div>
-          <div class="feature-summary">Forbidden magical techniques known through your patron. Pact of the Blade is one of your invocations.</div>
+          <div class="feature-summary">Three invocations known: Pact of the Blade, Mask of Many Faces, and Eldritch Mind.</div>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-header">
+            <span class="feature-name">Mask of Many Faces</span>
+            <span class="feature-source">Eldritch Invocation</span>
+          </div>
+          <div class="feature-summary">Cast <em>Disguise Self</em> without expending a spell slot.</div>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-header">
+            <span class="feature-name">Eldritch Mind</span>
+            <span class="feature-source">Eldritch Invocation</span>
+          </div>
+          <div class="feature-summary">You have Advantage on Constitution saving throws made to maintain Concentration.</div>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-header">
+            <span class="feature-name">Magical Cunning</span>
+            <span class="feature-source">Warlock 2</span>
+          </div>
+          <div class="feature-summary">Perform a 1-minute rite to regain one expended Pact Magic slot. Once per Long Rest.</div>
+          <div class="spell-actions" style="margin-top:8px;">
+            <button class="cast-btn" id="magicalCunningButton" onclick="useMagicalCunning()">Restore 1 Pact Slot</button>
+          </div>
         </div>
 
         <div class="feature-card" data-tooltip="feat-pactmagic">
@@ -1133,17 +1253,18 @@
             <span class="feature-name">Pact Magic</span>
             <span class="feature-source">Warlock</span>
           </div>
-          <div class="feature-summary">1 × Level 1 spell slot. Recovers on Short or Long Rest. Spellcasting ability: CHA (mod +4).</div>
+          <div class="feature-summary">2 × Level 1 spell slots. Recover both on a Short or Long Rest. Spellcasting ability: CHA (mod +4).</div>
           <div style="margin-top:8px;display:flex;align-items:center;gap:8px;">
             <div class="slot-pip available" id="feat-slot-1" onclick="toggleSlot('s-slot-1a')" title="Pact Slot 1"></div>
-            <span class="resource-label">1 Pact Slot · Short/Long Rest</span>
+            <div class="slot-pip available" id="feat-slot-2" onclick="toggleSlot('s-slot-1b')" title="Pact Slot 2"></div>
+            <span class="resource-label">2 Pact Slots · Short/Long Rest</span>
           </div>
         </div>
 
         <!-- Gloamthorn Court — locked preview -->
         <div class="class-divider gloamthorn">🌹 Gloamthorn Court (unlocks at Warlock 3)</div>
 
-        <div class="feature-card locked" data-tooltip="feat-briarstep">
+        <div class="feature-card locked" data-tooltip="feat-briarstep" data-action-type="bonus-action">
           <div class="feature-header">
             <span class="feature-name">Briarstep Blessing</span>
             <span class="feature-source locked-label">Warlock 3 required</span>
@@ -1249,6 +1370,30 @@
           <div class="feature-summary">Background ability increases applied as +2 Charisma and +1 Constitution.</div>
         </div>
 
+        <div class="feature-card" data-action-type="action">
+          <div class="feature-header">
+            <span class="feature-name">Attack</span>
+            <span class="feature-source">Action</span>
+          </div>
+          <div class="feature-summary">Make one attack with a weapon or an Unarmed Strike. With a Scimitar's Nick mastery, the extra Light-weapon attack is part of this Attack action.</div>
+        </div>
+
+        <div class="feature-card" data-action-type="action reaction">
+          <div class="feature-header">
+            <span class="feature-name">Ready</span>
+            <span class="feature-source">Action → Reaction</span>
+          </div>
+          <div class="feature-summary">Choose a perceivable trigger and an action or movement. When the trigger finishes, use your Reaction to act or ignore it. A readied spell uses its normal resources and requires Concentration.</div>
+        </div>
+
+        <div class="feature-card" data-action-type="reaction">
+          <div class="feature-header">
+            <span class="feature-name">Opportunity Attack</span>
+            <span class="feature-source">Reaction</span>
+          </div>
+          <div class="feature-summary">When a creature you can see leaves your reach using its movement, Action, Bonus Action, or Reaction, make one melee attack just before it leaves. Lygas can use either Scimitar or an Unarmed Strike.</div>
+        </div>
+
       </div>
     </div>
 
@@ -1269,18 +1414,18 @@
       <div class="hud-sub">Stolen finery, tools of deception, and well-worn weapons.</div>
     </div>
     <div style="font-family:'Barlow Condensed',sans-serif;font-size:11px;color:var(--text-dim);letter-spacing:1px;text-transform:uppercase;">
-      Gear: <span style="color:var(--gold);">8 items</span>
+      Gear: <span style="color:var(--gold);">11 items</span>
     </div>
   </div>
 
   <div class="currency-bar">
     <div class="currency-item"><div class="currency-coin pp">PP</div><div class="currency-controls"><button type="button" class="currency-adjust-btn" onclick="adjustCurrency('pp',-1)">-</button><input id="currency-pp" class="currency-input" type="number" min="0" step="1" inputmode="numeric" value="0" onchange="setCurrencyFromInput('pp', this.value)"><button type="button" class="currency-adjust-btn" onclick="adjustCurrency('pp',1)">+</button></div></div>
-    <div class="currency-item"><div class="currency-coin gp">GP</div><div class="currency-controls"><button type="button" class="currency-adjust-btn" onclick="adjustCurrency('gp',-1)">-</button><input id="currency-gp" class="currency-input" type="number" min="0" step="1" inputmode="numeric" value="0" onchange="setCurrencyFromInput('gp', this.value)"><button type="button" class="currency-adjust-btn" onclick="adjustCurrency('gp',1)">+</button></div></div>
+    <div class="currency-item"><div class="currency-coin gp">GP</div><div class="currency-controls"><button type="button" class="currency-adjust-btn" onclick="adjustCurrency('gp',-1)">-</button><input id="currency-gp" class="currency-input" type="number" min="0" step="1" inputmode="numeric" value="13" onchange="setCurrencyFromInput('gp', this.value)"><button type="button" class="currency-adjust-btn" onclick="adjustCurrency('gp',1)">+</button></div></div>
     <div class="currency-item"><div class="currency-coin ep">EP</div><div class="currency-controls"><button type="button" class="currency-adjust-btn" onclick="adjustCurrency('ep',-1)">-</button><input id="currency-ep" class="currency-input" type="number" min="0" step="1" inputmode="numeric" value="0" onchange="setCurrencyFromInput('ep', this.value)"><button type="button" class="currency-adjust-btn" onclick="adjustCurrency('ep',1)">+</button></div></div>
     <div class="currency-item"><div class="currency-coin sp">SP</div><div class="currency-controls"><button type="button" class="currency-adjust-btn" onclick="adjustCurrency('sp',-1)">-</button><input id="currency-sp" class="currency-input" type="number" min="0" step="1" inputmode="numeric" value="0" onchange="setCurrencyFromInput('sp', this.value)"><button type="button" class="currency-adjust-btn" onclick="adjustCurrency('sp',1)">+</button></div></div>
     <div class="currency-item"><div class="currency-coin cp">CP</div><div class="currency-controls"><button type="button" class="currency-adjust-btn" onclick="adjustCurrency('cp',-1)">-</button><input id="currency-cp" class="currency-input" type="number" min="0" step="1" inputmode="numeric" value="0" onchange="setCurrencyFromInput('cp', this.value)"><button type="button" class="currency-adjust-btn" onclick="adjustCurrency('cp',1)">+</button></div></div>
     <div style="margin-left:auto;font-family:'Barlow Condensed',sans-serif;font-size:11px;color:var(--text-dim);">
-      Weight: <span style="color:var(--text-secondary);">43 lb</span> /
+      Weight: <span style="color:var(--text-secondary);">53 lb</span> /
       Encumbered: <span style="color:var(--text-secondary);">165 lb</span> /
       Push: <span style="color:var(--text-secondary);">330 lb</span>
     </div>
@@ -1349,6 +1494,29 @@
       <div class="item-note">Inks, parchments, seal stamps, and reference papers for creating false credentials.</div>
     </div>
 
+    <div class="item-card">
+      <div class="card-topline"><span class="item-type">Keepsake</span><span class="item-weight">-</span></div>
+      <div class="item-main"><span class="item-icon">◇</span><div><div class="item-name">Silver Necklace</div><div class="item-qty">Qty: 1</div></div></div>
+      <div class="item-tags"><span class="item-tag">Crookback Farm</span></div>
+      <div class="item-note">A silver necklace recovered from Crookback Farm.</div>
+    </div>
+
+    <div class="item-card">
+      <div class="card-topline"><span class="item-type">Consumable</span><span class="item-weight">10 lb</span></div>
+      <div class="item-main"><span class="item-icon">🧺</span><div><div class="item-name">Rations</div><div class="item-qty">Qty: 4</div></div></div>
+      <div class="item-tags"><span class="item-tag">4 Days</span></div>
+      <div class="item-note">Travel-ready food for four days on the road.</div>
+      <div class="quantity-row"><span class="quantity-label">Remaining</span><div data-consumable-key="rations" data-consumable-default="4" data-consumable-label="ration"></div></div>
+    </div>
+
+    <div class="item-card magic">
+      <div class="card-topline"><span class="item-type">Homebrew Consumable</span><span class="item-weight">-</span></div>
+      <div class="item-main"><span class="item-icon">☕</span><div><div class="item-name">Viktor's Speed Bar</div><div class="item-qty">Qty: 1</div></div></div>
+      <div class="item-tags"><span class="item-tag">1 Hour</span><span class="item-tag">Advantage</span><span class="item-tag">DC 14 CON</span></div>
+      <div class="item-note">Consume the bar to gain Advantage on Perception and Investigation checks for 1 hour. Make a DC 14 Constitution save; on a failure, when the hour ends, Speed is reduced by 10 feet and all checks take a -2 penalty for the next hour.</div>
+      <div class="quantity-row"><span class="quantity-label">Bars remaining</span><div data-consumable-key="speedBars" data-consumable-default="1" data-consumable-label="Viktor's Speed Bar"></div></div>
+    </div>
+
   </div>
 
   <div class="inventory-builder">
@@ -1402,19 +1570,22 @@
 
 
 <script>
-const SHEET_UI_VERSION = '1.0';
+const SHEET_UI_VERSION = '1.1';
 const SHEET_STORAGE_KEY = 'maltandmagic:dnd:lygas-cantor-sheet:v1';
 
 // ===== STATE =====
 const sheetState = {
+  characterLevel: 3,
+  hitDice: { d10: 1, d8: 2 },
   hex: false,
   hexTarget: '',
   charm: false,
   secondWindUsed: 0,
+  magicalCunningUsed: false,
   defense: false,
   currency: {
     pp: 0,
-    gp: 0,
+    gp: 13,
     ep: 0,
     sp: 0,
     cp: 0,
@@ -1425,11 +1596,12 @@ const sheetState = {
     judgement: true,
     hiddenDagger: false,
   },
-  consumables: {},
+  consumables: { rations: 4, speedBars: 1 },
+  inventoryGrants: { august2026: true, lygasFundsAndSpeedBarAugust2026: true, lygasWarlock2ManualFixAugust2026: true },
   customItems: [],
 };
 
-const DEFAULT_CURRENCY = { pp: 0, gp: 0, ep: 0, sp: 0, cp: 0 };
+const DEFAULT_CURRENCY = { pp: 0, gp: 13, ep: 0, sp: 0, cp: 0 };
 
 function sanitizeCurrencyValue(value) {
   const parsed = parseInt(value, 10);
@@ -1444,6 +1616,21 @@ function ensureCurrencyState() {
   ['pp', 'gp', 'ep', 'sp', 'cp'].forEach(key => {
     sheetState.currency[key] = sanitizeCurrencyValue(sheetState.currency[key]);
   });
+}
+
+function ensureHitDiceState() {
+  if (!sheetState.hitDice || typeof sheetState.hitDice !== 'object') sheetState.hitDice = {};
+  ['d10', 'd8'].forEach(type => {
+    const remaining = Number.parseInt(sheetState.hitDice[type], 10);
+    const maximum = type === 'd8' ? 2 : 1;
+    sheetState.hitDice[type] = Number.isFinite(remaining) ? Math.max(0, Math.min(maximum, remaining)) : maximum;
+  });
+}
+
+function updateHitDiceUI() {
+  ensureHitDiceState();
+  const display = document.getElementById('hitDiceDisplay');
+  if (display) display.textContent = `${sheetState.hitDice.d10}/1 d10 + ${sheetState.hitDice.d8}/2 d8`;
 }
 
 function applyCurrencyUI() {
@@ -1488,10 +1675,26 @@ function switchTab(name) {
   saveSheetState();
 }
 
+function filterFeatures(actionType) {
+  document.querySelectorAll('#tab-features .feature-card').forEach(card => {
+    const actionTypes = (card.dataset.actionType || '').split(' ');
+    card.hidden = actionType !== 'all' && !actionTypes.includes(actionType);
+  });
+  document.querySelectorAll('#tab-features .panel').forEach(panel => {
+    const hasVisibleCard = [...panel.querySelectorAll('.feature-card')].some(card => !card.hidden);
+    panel.hidden = actionType !== 'all' && !hasVisibleCard;
+  });
+  document.querySelectorAll('#tab-features .action-filter-btn').forEach(button => {
+    const isActive = button.dataset.actionFilter === actionType;
+    button.classList.toggle('active', isActive);
+    button.setAttribute('aria-pressed', String(isActive));
+  });
+}
+
 // ===== HP =====
 function updateHPBar() {
   const curr = parseInt(document.getElementById('currentHP')?.value) || 0;
-  const max = 19;
+  const max = 28;
   const pct = Math.max(0, Math.min(100, (curr / max) * 100));
   ['hpBar', 'hpBar2'].forEach(id => {
     const bar = document.getElementById(id);
@@ -1514,6 +1717,7 @@ function syncHP(el) {
 // ===== SLOT MANAGEMENT =====
 const SLOT_SYNC_MAP = {
   's-slot-1a': ['s-slot-1a', 's-slot-1a-sp', 'feat-slot-1'],
+  's-slot-1b': ['s-slot-1b', 's-slot-1b-sp', 'feat-slot-2'],
 };
 
 function toggleSlot(id) {
@@ -1531,24 +1735,34 @@ function toggleSlot(id) {
 }
 
 function remainingSlots() {
-  const pip = document.getElementById('s-slot-1a');
-  return pip?.classList.contains('available') ? 1 : 0;
+  return ['s-slot-1a', 's-slot-1b'].filter(id => document.getElementById(id)?.classList.contains('available')).length;
 }
 
 function consumeSlot() {
   if (remainingSlots() === 0) return false;
-  toggleSlot('s-slot-1a');
+  const available = ['s-slot-1a', 's-slot-1b'].find(id => document.getElementById(id)?.classList.contains('available'));
+  toggleSlot(available);
   return true;
 }
 
 function restoreSlots() {
-  const peers = SLOT_SYNC_MAP['s-slot-1a'];
-  peers.forEach(pid => {
-    const el = document.getElementById(pid);
+  Object.values(SLOT_SYNC_MAP).flat().forEach(id => {
+    const el = document.getElementById(id);
     if (!el) return;
     el.classList.add('available');
     el.classList.remove('used');
   });
+}
+
+function useMagicalCunning() {
+  if (sheetState.magicalCunningUsed) return castToast('Magical Cunning is already spent.', true);
+  const spentSlot = ['s-slot-1a', 's-slot-1b'].find(id => document.getElementById(id)?.classList.contains('used'));
+  if (!spentSlot) return castToast('No expended Pact Magic slot to restore.', true);
+  toggleSlot(spentSlot);
+  sheetState.magicalCunningUsed = true;
+  refreshDerivedStats();
+  saveSheetState();
+  castToast('Magical Cunning restores one Pact Magic slot.');
 }
 
 // ===== RESOURCE PIPS =====
@@ -1796,6 +2010,12 @@ function refreshDerivedStats() {
     else concEl.textContent = '—';
   }
 
+  const magicalCunningButton = document.getElementById('magicalCunningButton');
+  if (magicalCunningButton) {
+    magicalCunningButton.disabled = sheetState.magicalCunningUsed;
+    magicalCunningButton.textContent = sheetState.magicalCunningUsed ? 'Used · Long Rest' : 'Restore 1 Pact Slot';
+  }
+
   applyConditionEffects();
 }
 
@@ -1859,6 +2079,7 @@ function toggleEquip(itemKey) {
 const SPELLS = {
   hex:   { name: 'Hex',          level: 1, effect: 'hex',   conc: true },
   charm: { name: 'Charm Person', level: 1, effect: 'charm',  conc: false },
+  rebuke: { name: 'Hellish Rebuke', level: 1, effect: null, conc: false },
 };
 
 let castToastTimer = null;
@@ -1909,7 +2130,15 @@ function endSpell(key) {
 }
 
 // ===== REST =====
-function shortRest() {
+async function shortRest() {
+  const currentHP = document.getElementById('currentHP');
+  const currentHP2 = document.getElementById('currentHP2');
+  let hp = Number.parseInt(currentHP.value, 10) || 0;
+  if (hp < 1) {
+    castToast('You need at least 1 HP to start a Short Rest.', true);
+    return;
+  }
+
   // Pact Magic: recover on Short Rest
   restoreSlots();
   // Second Wind: recover 1 use
@@ -1920,14 +2149,45 @@ function shortRest() {
     used[0].classList.remove('used');
     used[0].classList.add('available');
   }
+  const rolls = [];
+  const selectedDice = hp < 28
+    ? await chooseRestHitDice([
+        { type: 'd10', size: 10, label: 'Fighter d10', available: sheetState.hitDice.d10 },
+        { type: 'd8', size: 8, label: 'Warlock d8', available: sheetState.hitDice.d8 }
+      ])
+    : [];
+  for (const selectedDie of selectedDice) {
+    if (hp >= 28) break;
+    const manual = selectedDie.roll !== null;
+    const roll = manual ? selectedDie.roll : Math.floor(Math.random() * selectedDie.size) + 1;
+    const healing = Math.max(1, roll + 2);
+    const regained = Math.min(28 - hp, healing);
+    hp += regained;
+    sheetState.hitDice[selectedDie.type] -= 1;
+    rolls.push(`${selectedDie.type} ${roll}${manual ? ' (manual)' : ' (auto)'} + CON 2 = ${healing} (${regained} HP regained)`);
+    currentHP.value = hp;
+    currentHP2.value = hp;
+    updateHPBar();
+    updateHitDiceUI();
+  }
   refreshDerivedStats();
   saveSheetState();
-  alert('Short Rest taken.\n\n• Pact Magic slot: restored\n• Second Wind: 1 use restored\n\nHit Dice to spend: 1d10 (Fighter) + 1d8 (Warlock)\nUpdate Current HP manually after spending dice.');
+  alert('Short Rest complete.\n\n• Pact Magic slots restored\n• One Second Wind use restored' + (rolls.length ? `\n• ${rolls.join('\n• ')}` : '\n• No Hit Dice spent'));
 }
 
 function longRest() {
-  document.getElementById('currentHP').value = 19;
-  document.getElementById('currentHP2').value = 19;
+  const currentHP = document.getElementById('currentHP');
+  if ((Number.parseInt(currentHP.value, 10) || 0) < 1) {
+    castToast('You need at least 1 HP to start a Long Rest.', true);
+    return;
+  }
+  if (!window.confirm('Finish a Long Rest?\n\nThis restores HP, all Hit Dice, and Long Rest resources. Temporary HP expires, and Exhaustion decreases by 1.')) return;
+
+  currentHP.value = 28;
+  document.getElementById('currentHP2').value = 28;
+  document.getElementById('tempHP').value = 0;
+  sheetState.hitDice = { d10: 1, d8: 2 };
+  updateHitDiceUI();
   updateHPBar();
   // Restore pact slot
   restoreSlots();
@@ -1949,6 +2209,7 @@ function longRest() {
   // End concentration
   if (sheetState.hex) endSpell('hex');
   sheetState.charm = false;
+  sheetState.magicalCunningUsed = false;
   // Long Rest removes one level of Exhaustion
   const exhReduced = exhaustionLevel > 0;
   if (exhReduced) exhaustionLevel -= 1;
@@ -2067,10 +2328,10 @@ function saveSheetState() {
     const data = {
       sheetState,
       hp: {
-        current: document.getElementById('currentHP')?.value || '19',
+        current: document.getElementById('currentHP')?.value || '28',
         temp: document.getElementById('tempHP')?.value || '0',
       },
-      slots: [{ id: 's-slot-1a', used: document.getElementById('s-slot-1a')?.classList.contains('used') }],
+      slots: ['s-slot-1a', 's-slot-1b'].map(id => ({ id, used: document.getElementById(id)?.classList.contains('used') })),
       resources: Array.from(document.querySelectorAll('.resource-pip')).map(el => el.classList.contains('used')),
       deaths: Array.from(document.querySelectorAll('.death-pip')).map(el => el.classList.contains('filled')),
       conditions: Array.from(document.querySelectorAll('.condition-badge')).map(el => ({
@@ -2089,15 +2350,59 @@ function saveSheetState() {
 }
 
 function loadSheetState() {
+  let inventoryGrantApplied = false;
+  let levelGrantApplied = false;
   const vb = document.getElementById('uiVersionBadge');
   if (vb) vb.textContent = `UI v${SHEET_UI_VERSION}`;
 
   try {
     const raw = localStorage.getItem(SHEET_STORAGE_KEY);
-    if (!raw) { applyCurrencyUI(); refreshDerivedStats(); updateHPBar(); return; }
+    if (!raw) {
+      updateHitDiceUI();
+      applyCurrencyUI();
+      refreshDerivedStats();
+      updateHPBar();
+      renderCustomInventoryItems();
+      InventoryTrackers.initializeFixedTrackers(sheetState, saveSheetState);
+      return;
+    }
     const saved = JSON.parse(raw);
 
+    const previousCharacterLevel = Number.parseInt(saved.sheetState?.characterLevel, 10) || 2;
     if (saved.sheetState) Object.assign(sheetState, saved.sheetState);
+    if (previousCharacterLevel < 3) {
+      const previousD8 = Number.parseInt(saved.sheetState?.hitDice?.d8, 10);
+      sheetState.characterLevel = 3;
+      sheetState.hitDice = { ...(sheetState.hitDice || {}), d8: Math.min(2, (Number.isFinite(previousD8) ? Math.max(0, previousD8) : 1) + 1) };
+      sheetState.magicalCunningUsed = false;
+      const previousHp = Number.parseInt(saved.hp?.current, 10);
+      saved.hp = { ...(saved.hp || {}), current: String(Math.min(28, (Number.isFinite(previousHp) ? Math.max(0, previousHp) : 19) + 9)) };
+      levelGrantApplied = true;
+    }
+    ensureHitDiceState();
+    if (!saved.sheetState?.inventoryGrants?.august2026) {
+      if (!sheetState.consumables || typeof sheetState.consumables !== 'object') sheetState.consumables = {};
+      sheetState.consumables.rations = InventoryTrackers.sanitizeQuantity(sheetState.consumables.rations, 0) + 5;
+      sheetState.inventoryGrants = { ...(sheetState.inventoryGrants || {}), august2026: true };
+      inventoryGrantApplied = true;
+    }
+    if (!saved.sheetState?.inventoryGrants?.lygasFundsAndSpeedBarAugust2026) {
+      if (!sheetState.currency || typeof sheetState.currency !== 'object') sheetState.currency = { ...DEFAULT_CURRENCY };
+      if (!sheetState.consumables || typeof sheetState.consumables !== 'object') sheetState.consumables = {};
+      sheetState.currency.gp = 9;
+      sheetState.consumables.speedBars = 1;
+      sheetState.inventoryGrants = { ...(sheetState.inventoryGrants || {}), lygasFundsAndSpeedBarAugust2026: true };
+      inventoryGrantApplied = true;
+    }
+    if (!saved.sheetState?.inventoryGrants?.lygasWarlock2ManualFixAugust2026) {
+      if (!sheetState.currency || typeof sheetState.currency !== 'object') sheetState.currency = { ...DEFAULT_CURRENCY };
+      if (!sheetState.consumables || typeof sheetState.consumables !== 'object') sheetState.consumables = {};
+      sheetState.currency.gp = 13;
+      sheetState.consumables.rations = 4;
+      sheetState.consumables.speedBars = 1;
+      sheetState.inventoryGrants = { ...(sheetState.inventoryGrants || {}), lygasWarlock2ManualFixAugust2026: true };
+      inventoryGrantApplied = true;
+    }
     ensureCurrencyState();
     if (!sheetState.equipment || typeof sheetState.equipment !== 'object') {
       sheetState.equipment = { chainShirt: true, luck: true, judgement: true, hiddenDagger: false };
@@ -2112,8 +2417,8 @@ function loadSheetState() {
       const c = document.getElementById('currentHP');
       const c2 = document.getElementById('currentHP2');
       const t = document.getElementById('tempHP');
-      if (c) c.value = saved.hp.current ?? '19';
-      if (c2) c2.value = saved.hp.current ?? '19';
+      if (c) c.value = saved.hp.current ?? '28';
+      if (c2) c2.value = saved.hp.current ?? '28';
       if (t) t.value = saved.hp.temp ?? '0';
     }
 
@@ -2157,12 +2462,14 @@ function loadSheetState() {
 
     const savedTab = (saved.activeTab || 'tab-combat').replace('tab-', '');
     switchTab(savedTab);
+    updateHitDiceUI();
 
   } catch (e) {
     console.warn('Load failed:', e);
     applyCurrencyUI();
     refreshDerivedStats();
     updateHPBar();
+    updateHitDiceUI();
   }
 
   applyCurrencyUI();
@@ -2170,10 +2477,17 @@ function loadSheetState() {
   updateHPBar();
   renderCustomInventoryItems();
   InventoryTrackers.initializeFixedTrackers(sheetState, saveSheetState);
+  if (inventoryGrantApplied || levelGrantApplied) saveSheetState();
 }
 
 // ===== TOOLTIP SYSTEM =====
 const TOOLTIPS = {
+  'ability-str': { name: 'Strength', type: 'Ability', body: 'Physical power. Used for Athletics checks and Strength saving throws.' },
+  'ability-dex': { name: 'Dexterity', type: 'Ability', body: 'Agility and precision. Used for Acrobatics, Sleight of Hand, Stealth, and Dexterity saving throws.' },
+  'ability-con': { name: 'Constitution', type: 'Ability', body: 'Endurance and resilience. Constitution contributes to Hit Points and is used for saving throws to maintain Concentration.' },
+  'ability-int': { name: 'Intelligence', type: 'Ability', body: 'Reasoning and memory. Used for Arcana, History, Investigation, Nature, Religion, and Intelligence saving throws.' },
+  'ability-wis': { name: 'Wisdom', type: 'Ability', body: 'Awareness and intuition. Used for Animal Handling, Insight, Medicine, Perception, Survival, and Wisdom saving throws.' },
+  'ability-cha': { name: 'Charisma', type: 'Ability', body: 'Force of personality. Used for Deception, Intimidation, Performance, Persuasion, and Charisma saving throws. Charisma is Lygas\'s Warlock spellcasting ability.' },
   'cond-blinded': { name:'Blinded', type:'Condition — SRD 5.2.1', body:"You can't see and automatically fail any ability check that requires sight. Attack rolls against you have Advantage, and your attack rolls have Disadvantage.", stats:{ 'Your attacks':'Disadvantage', 'Attacks vs you':'Advantage' } },
   'cond-charmed': { name:'Charmed', type:'Condition — SRD 5.2.1', body:"You can't attack the charmer or target it with harmful abilities or magical effects. The charmer has Advantage on any ability check to interact with you socially.", stats:{ "Can't":'Harm the charmer', 'Charmer':'Social Advantage' } },
   'cond-deafened': { name:'Deafened', type:'Condition — SRD 5.2.1', body:"You can't hear and automatically fail any ability check that requires hearing.", stats:{ 'Effect':'Auto-fail hearing checks' } },
@@ -2200,6 +2514,12 @@ const TOOLTIPS = {
     type: '1st-Level Enchantment (Warlock) — SRD 5.2.1',
     body: 'One Humanoid you can see within range makes a Wisdom saving throw (DC 14). On a failed save, the target has the Charmed condition until the spell ends or until you or your allies deal damage to it. The Charmed creature is Friendly to you.',
     stats: { 'Cast Time': '1 Action', 'Range': '30 ft.', 'Duration': '1 hour', 'Components': 'V, S', 'Save': 'WIS DC 14' }
+  },
+  'spell-rebuke': {
+    name: 'Hellish Rebuke',
+    type: '1st-Level Evocation (Warlock) — SRD 5.2.1',
+    body: 'When a creature you can see within 60 feet damages you, you can take a Reaction to surround it with green flames. It makes a Dexterity saving throw, taking 2d10 Fire damage on a failed save or half as much on a successful one.',
+    stats: { 'Cast Time': 'Reaction on taking damage', 'Range': '60 ft.', 'Duration': 'Instantaneous', 'Components': 'V, S', 'Save': 'DEX DC 14' }
   },
   'spell-prestidigitation': {
     name: 'Prestidigitation',
@@ -2228,8 +2548,8 @@ const TOOLTIPS = {
   'feat-pactmagic': {
     name: 'Pact Magic',
     type: 'Warlock Feature — SRD 5.2.1',
-    body: 'Spell slots that are all the same level. Regain all expended slots on Short or Long Rest. At level 1: 1 slot of level 1.',
-    stats: { 'Slots': '1 × Level 1', 'Recovery': 'Short or Long Rest', 'Ability': 'CHA', 'DC': '14', 'Atk': '+6' }
+    body: 'Spell slots that are all the same level. Regain all expended slots on Short or Long Rest. At Warlock level 2: 2 slots of level 1.',
+    stats: { 'Slots': '2 × Level 1', 'Recovery': 'Short or Long Rest', 'Ability': 'CHA', 'DC': '14', 'Atk': '+6' }
   },
   'feat-twf': {
     name: 'Two-Weapon Fighting',
@@ -2257,43 +2577,8 @@ const TOOLTIPS = {
   },
 };
 
-function showTooltip(key, event) {
-  const data = TOOLTIPS[key];
-  if (!data) return;
-  const tt = document.getElementById('tooltip');
-  document.getElementById('ttName').textContent = data.name;
-  document.getElementById('ttType').textContent = data.type;
-  document.getElementById('ttBody').textContent = data.body;
-  const statsEl = document.getElementById('ttStats');
-  statsEl.innerHTML = '';
-  Object.entries(data.stats || {}).forEach(([k, v]) => {
-    const kEl = document.createElement('div'); kEl.className = 'tt-key'; kEl.textContent = k;
-    const vEl = document.createElement('div'); vEl.className = 'tt-val'; vEl.textContent = v;
-    statsEl.appendChild(kEl); statsEl.appendChild(vEl);
-  });
-  tt.classList.add('visible');
-  positionTooltip(event);
-}
-
-function positionTooltip(event) {
-  const tt = document.getElementById('tooltip');
-  const x = Math.min(event.clientX + 12, window.innerWidth - 300);
-  const y = Math.min(event.clientY + 12, window.innerHeight - 200);
-  tt.style.left = x + 'px';
-  tt.style.top = y + 'px';
-}
-
-function hideTooltip() {
-  document.getElementById('tooltip')?.classList.remove('visible');
-}
-
 document.addEventListener('DOMContentLoaded', () => {
-  // Bind tooltips
-  document.querySelectorAll('[data-tooltip]').forEach(el => {
-    el.addEventListener('mouseenter', e => showTooltip(el.getAttribute('data-tooltip'), e));
-    el.addEventListener('mousemove', positionTooltip);
-    el.addEventListener('mouseleave', hideTooltip);
-  });
+  window.initializeSheetRulesHelp(TOOLTIPS, { headingSelector: '.feature-name,.item-name,.ability-label,.spell-name', groupSelector: '.condition-badge' });
 
   // Hex target input live sync
   const hexInp = document.getElementById('hexTargetInput');

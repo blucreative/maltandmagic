@@ -1,0 +1,13 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "maltandmagic-level-up",
+  "main": "src/index.js",
+  "compatibility_date": "2026-08-16",
+  "vars": {
+    "ALLOWED_ORIGINS": "https://blucreative.github.io,http://127.0.0.1:4173,http://localhost:4173",
+    "GITHUB_OWNER": "blucreative",
+    "GITHUB_REPO": "maltandmagic",
+    "ISSUE_LABEL": "",
+    "TURNSTILE_HOSTNAME": "blucreative.github.io"
+  }
+}

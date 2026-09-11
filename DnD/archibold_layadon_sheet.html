@@ -3,13 +3,15 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Archibold Layadon — Fighter 2 | Malt & Magic</title>
+<title>Archibold Layadon — Fighter 3 | Malt & Magic</title>
 <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=IM+Fell+English:ital@0;1&family=Barlow:wght@300;400;500;600&family=Barlow+Condensed:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../assets/css/theme-fantasy.css">
-<link rel="stylesheet" href="../assets/css/page-polish.css">
+<link rel="stylesheet" href="../assets/css/page-polish.css?v=20260817-rest-dialog">
 <script defer src="../assets/js/a11y-sheet-helpers.js"></script>
 <script src="../assets/js/inventory-trackers.js"></script>
+<script defer src="../assets/js/rest-hit-dice.js?v=20260817-rest-dialog"></script>
+<script src="../assets/js/archibold-rules-help.js?v=1"></script>
 <style>
   :root {
     /* Arcane Archer / moonlit-indigo palette */
@@ -734,6 +736,23 @@
     transition: border-color 0.15s;
   }
   .feature-card:hover { border-color: var(--gold-dim); }
+  .action-filter {
+    display: flex; align-items: center; gap: 4px; width: fit-content;
+    margin-bottom: 12px; padding: 4px; border: 1px solid rgba(51,64,106,0.4);
+    border-radius: 6px; background: rgba(16,22,46,0.6);
+  }
+  .action-filter-btn {
+    min-height: 30px; padding: 5px 10px; border: 1px solid transparent;
+    border-radius: 4px; background: transparent; color: var(--text-dim);
+    font-family: 'Barlow Condensed', sans-serif; font-size: 10px; font-weight: 600;
+    letter-spacing: 1px; text-transform: uppercase; cursor: pointer;
+  }
+  .action-filter-btn:hover { color: var(--text-primary); border-color: rgba(51,64,106,0.55); }
+  .action-filter-btn.active {
+    color: var(--text-primary); border-color: var(--gold-dim);
+    background: rgba(201,162,76,0.14);
+  }
+  #tab-features .feature-card[hidden] { display: none !important; }
   .feature-card.arcane {
     border-color: rgba(154, 127, 224, 0.4);
     box-shadow: inset 0 0 0 1px rgba(154, 127, 224, 0.12);
@@ -1440,15 +1459,16 @@
       padding: 14px;
     }
     .nav-tabs {
-      overflow-x: auto;
-      padding: 0 8px;
-      gap: 0;
-      scrollbar-width: thin;
+      flex-wrap: wrap;
+      overflow-x: visible;
+      padding: 4px 8px;
+      gap: 2px;
     }
     .tab-btn {
-      white-space: nowrap;
-      padding: 8px 12px;
+      white-space: normal;
+      padding: 8px 4px;
       font-size: 11px;
+      line-height: 1.15;
     }
     .two-col,
     .three-col {
@@ -1469,6 +1489,12 @@
     }
     .aa-stat-strip {
       grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (max-width: 600px) {
+    .nav-tabs .tab-btn {
+      flex: 1 1 30%;
     }
   }
 
@@ -1498,6 +1524,8 @@
     }
   }
 </style>
+<link rel="stylesheet" href="../assets/css/archibold-modern.css?v=1">
+<link rel="stylesheet" href="../assets/css/archibold-rules-help.css?v=1">
 </head>
 <body class="theme-fantasy page-dnd-character-sheet page-archibold-layadon-sheet">
 
@@ -1523,7 +1551,7 @@
   <div class="char-meta">
     <div class="char-meta-item">
       <div class="label">Class & Level</div>
-      <div class="value">Fighter 2</div>
+      <div class="value">Fighter 3</div>
     </div>
     <div class="meta-divider"></div>
     <div class="char-meta-item">
@@ -1642,7 +1670,7 @@
           <div class="skill-item"><div class="skill-prof"></div><span class="skill-mod">+0</span><span class="skill-name">Intimidation</span><span class="skill-attr">CHA</span></div>
           <div class="skill-item"><div class="skill-prof"></div><span class="skill-mod">+3</span><span class="skill-name">Investigation</span><span class="skill-attr">INT</span></div>
           <div class="skill-item"><div class="skill-prof"></div><span class="skill-mod">+3</span><span class="skill-name">Medicine</span><span class="skill-attr">WIS</span></div>
-          <div class="skill-item"><div class="skill-prof"></div><span class="skill-mod">+3</span><span class="skill-name">Nature</span><span class="skill-attr">INT</span></div>
+          <div class="skill-item"><div class="skill-prof proficient"></div><span class="skill-mod">+5</span><span class="skill-name">Nature</span><span class="skill-attr">INT</span></div>
           <div class="skill-item"><div class="skill-prof proficient"></div><span class="skill-mod">+5</span><span class="skill-name">Perception</span><span class="skill-attr">WIS</span></div>
           <div class="skill-item"><div class="skill-prof"></div><span class="skill-mod">+0</span><span class="skill-name">Performance</span><span class="skill-attr">CHA</span></div>
           <div class="skill-item"><div class="skill-prof"></div><span class="skill-mod">+0</span><span class="skill-name">Persuasion</span><span class="skill-attr">CHA</span></div>
@@ -1657,7 +1685,7 @@
           <span style="color:var(--gold-light);">◉ Expertise</span>
         </div>
         <div style="margin-top:6px;" class="flag-note">
-          ⚑ Athletics is unproficient (+1) despite the Fighter list — confirm with player. Arcana &amp; Nature gain proficiency at Level 3 via Arcane Archer Lore.
+          ⚑ Athletics is unproficient (+1) despite the Fighter list — confirm with player. Nature proficiency is granted by Arcane Archer Lore.
         </div>
       </div>
     </div>
@@ -1671,8 +1699,8 @@
     <div class="panel">
       <div class="panel-header"><span class="panel-title">Combat</span>
         <div class="rest-btns">
-          <button class="rest-btn short" onclick="shortRest()">Short Rest</button>
-          <button class="rest-btn long" onclick="longRest()">Long Rest</button>
+          <button type="button" class="rest-btn short" onclick="shortRest()" title="Spend Hit Dice and recover Short Rest features">Short Rest</button>
+          <button type="button" class="rest-btn long" onclick="longRest()" title="Restore HP, Hit Dice, and Long Rest features">Long Rest</button>
         </div>
       </div>
       <div class="panel-body">
@@ -1681,7 +1709,7 @@
           <div class="combat-stat"><span class="cs-val" id="initiativeVal">+3</span><span class="cs-label">Initiative</span></div>
           <div class="combat-stat"><span class="cs-val" id="speedVal" data-base="30">30ft</span><span class="cs-label">Speed</span></div>
           <div class="combat-stat"><span class="cs-val">+2</span><span class="cs-label">Prof Bonus</span></div>
-          <div class="combat-stat"><span class="cs-val">2d10</span><span class="cs-label">Hit Dice</span></div>
+          <div class="combat-stat"><span class="cs-val" id="hitDiceDisplay">3 / 3 d10</span><span class="cs-label">Hit Dice</span></div>
         </div>
         <div id="combatEffectReadout" style="font-family:'Barlow Condensed',sans-serif;font-size:10px;letter-spacing:1px;color:var(--text-dim);margin:-4px 0 8px;">
           Second Wind 2/2 · Action Surge 1/1 · Luck 2/2 · Heroic Insp. 1/1
@@ -1699,11 +1727,11 @@
         <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:10px;">
           <div class="hp-box">
             <span class="hp-label">Max HP</span>
-            <div class="hp-value">20</div>
+            <div class="hp-value">28</div>
           </div>
           <div class="hp-box">
             <span class="hp-label">Current HP</span>
-            <input class="hp-input current" id="currentHP" type="number" value="20" min="0" max="20" onchange="updateHPBar()">
+            <input class="hp-input current" id="currentHP" type="number" value="28" min="0" max="28" onchange="updateHPBar()">
           </div>
           <div class="hp-box">
             <span class="hp-label">Temp HP</span>
@@ -1903,7 +1931,7 @@
             <span class="feature-name">Second Wind</span>
             <span class="feature-source">Fighter</span>
           </div>
-          <div class="feature-summary">Bonus Action: regain 1d10+2 HP. Tap a pip when you spend a use.</div>
+          <div class="feature-summary">Bonus Action: regain 1d10+3 HP. Tap a pip when you spend a use.</div>
           <div class="resource-track">
             <div class="resource-pip available" data-res="secondWind" onclick="toggleResource(this)" title="Second Wind use 1"></div>
             <div class="resource-pip available" data-res="secondWind" onclick="toggleResource(this)" title="Second Wind use 2"></div>
@@ -1948,6 +1976,37 @@
           </div>
         </div>
 
+        <div class="feature-card" data-tooltip="feat-tactical-mind">
+          <div class="feature-header">
+            <span class="feature-name">Tactical Mind</span>
+            <span class="feature-source">Fighter</span>
+          </div>
+          <div class="feature-summary">After a failed ability check, expend Second Wind to add 1d10. The use is not spent if the check still fails.</div>
+        </div>
+
+        <div class="feature-card arcane" data-tooltip="aa-banishing">
+          <div class="feature-header">
+            <span class="feature-name">Banishing Shot</span>
+            <span class="aa-shot-tag">1d6 Psychic · CHA DC 13</span>
+          </div>
+          <div class="feature-summary">On a failed save, the target is Incapacitated with Speed 0 until the end of its next turn.</div>
+        </div>
+
+        <div class="feature-card arcane" data-tooltip="aa-seeking">
+          <div class="feature-header">
+            <span class="feature-name">Seeking Shot</span>
+            <span class="aa-shot-tag">2d6 Force · DEX DC 13</span>
+          </div>
+          <div class="feature-summary">No attack roll. Seek a creature seen in the last minute, ignore most cover, reveal its location, and deal half damage on a save.</div>
+        </div>
+
+        <div class="resource-track" aria-label="Arcane Shot uses">
+          <div class="resource-pip available" data-res="arcaneShot" onclick="toggleResource(this)" title="Arcane Shot use 1"></div>
+          <div class="resource-pip available" data-res="arcaneShot" onclick="toggleResource(this)" title="Arcane Shot use 2"></div>
+          <div class="resource-pip available" data-res="arcaneShot" onclick="toggleResource(this)" title="Arcane Shot use 3"></div>
+          <span class="resource-label">3 / Short or Long Rest · once per turn</span>
+        </div>
+
       </div>
     </div>
 
@@ -1973,6 +2032,12 @@
 <!-- ======================================================= -->
 <div id="tab-features" class="tab-panel">
 <div class="sheet-body">
+<div class="action-filter" role="group" aria-label="Filter features by action type">
+  <button type="button" class="action-filter-btn active" data-action-filter="all" aria-pressed="true" onclick="filterFeatures('all')">All</button>
+  <button type="button" class="action-filter-btn" data-action-filter="action" aria-pressed="false" onclick="filterFeatures('action')">Action</button>
+  <button type="button" class="action-filter-btn" data-action-filter="bonus-action" aria-pressed="false" onclick="filterFeatures('bonus-action')">Bonus Action</button>
+  <button type="button" class="action-filter-btn" data-action-filter="reaction" aria-pressed="false" onclick="filterFeatures('reaction')">Reaction</button>
+</div>
 <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;align-items:start;">
 
   <!-- FIGHTER FEATURES -->
@@ -1996,12 +2061,12 @@
         <div class="feature-summary">+2 to attack rolls with ranged weapons (already included in the Longbow's +7). Replaceable on each Fighter level.</div>
       </div>
 
-      <div class="feature-card" data-tooltip="feat-second-wind">
+      <div class="feature-card" data-tooltip="feat-second-wind" data-action-type="bonus-action">
         <div class="feature-header">
           <span class="feature-name">Second Wind</span>
           <span class="feature-source">Fighter</span>
         </div>
-        <div class="feature-summary">Bonus Action: regain 1d10+2 HP. 2 uses per Long Rest; one returns on a Short Rest. Track on the Combat tab.</div>
+        <div class="feature-summary">Bonus Action: regain 1d10+3 HP. 2 uses per Long Rest; one returns on a Short Rest. Track on the Combat tab.</div>
       </div>
 
       <div class="feature-card" data-tooltip="feat-action-surge">
@@ -2124,6 +2189,30 @@
         <div class="feature-summary">On a damaging hit: reduce the target's Speed by 10 ft. until the start of your next turn (doesn't stack past 10 ft. per turn).</div>
       </div>
 
+      <div class="feature-card" data-action-type="action">
+        <div class="feature-header">
+          <span class="feature-name">Attack</span>
+          <span class="feature-source">Action</span>
+        </div>
+        <div class="feature-summary">Make one attack with a weapon or an Unarmed Strike. Archibold usually uses his Longbow (+7), Shortsword (+5), or Dagger (+5).</div>
+      </div>
+
+      <div class="feature-card" data-action-type="action reaction">
+        <div class="feature-header">
+          <span class="feature-name">Ready</span>
+          <span class="feature-source">Action → Reaction</span>
+        </div>
+        <div class="feature-summary">Choose a perceivable trigger and an action or movement. When the trigger finishes, use your Reaction to act or ignore it. Readying a spell requires Concentration.</div>
+      </div>
+
+      <div class="feature-card" data-action-type="reaction">
+        <div class="feature-header">
+          <span class="feature-name">Opportunity Attack</span>
+          <span class="feature-source">Reaction</span>
+        </div>
+        <div class="feature-summary">When a creature you can see leaves your reach using its movement, Action, Bonus Action, or Reaction, make one melee attack just before it leaves. Use the Shortsword, Dagger, or an Unarmed Strike, not the Longbow.</div>
+      </div>
+
     </div>
   </div>
 
@@ -2132,7 +2221,7 @@
 </div>
 
 <!-- ======================================================= -->
-<!-- TAB: ARCANE ARCHER (LEVEL 3 PREVIEW) -->
+<!-- TAB: ARCANE ARCHER -->
 <!-- ======================================================= -->
 <div id="tab-arcane" class="tab-panel">
 <div class="sheet-body">
@@ -2141,7 +2230,7 @@
     <span class="aa-glyph">➶</span>
     <div>
       <div class="aa-title">Arcane Archer — Fighter Subclass</div>
-      <div class="aa-sub">Unlocks at Level 3 · Playtest (Unearthed Arcana 2025) — not yet active at Fighter 2. Numbers may change before publication.</div>
+      <div class="aa-sub">Active at Fighter 3 · Playtest (Unearthed Arcana 2025). Numbers may change before publication.</div>
     </div>
   </div>
 
@@ -2168,7 +2257,15 @@
             <span class="feature-name">Arcane Archer Lore</span>
             <span class="feature-source arcane">Level 3</span>
           </div>
-          <div class="feature-summary">Learn Druidcraft or Prestidigitation (INT). Gain proficiency in Arcana and Nature.</div>
+          <div class="feature-summary">Prestidigitation is your chosen cantrip (INT). Nature is your gained skill proficiency.</div>
+        </div>
+
+        <div class="feature-card arcane" data-tooltip="spell-prestidigitation">
+          <div class="feature-header">
+            <span class="feature-name">Prestidigitation</span>
+            <span class="feature-source arcane">Cantrip · INT</span>
+          </div>
+          <div class="feature-summary">Action · 10 ft. · V, S · Up to 1 hour. Create a minor sensory, fire, cleaning, sensation, mark, or trinket effect.</div>
         </div>
 
         <div class="feature-card arcane" data-tooltip="aa-shot">
@@ -2210,7 +2307,7 @@
         <div class="feature-card arcane" data-tooltip="aa-banishing">
           <div class="feature-header">
             <span class="feature-name">Banishing Shot</span>
-            <span class="aa-shot-tag">Psychic ×1 · CHA</span>
+            <span class="aa-shot-tag">Known · Psychic ×1 · CHA</span>
           </div>
           <div class="feature-summary">Incapacitated with Speed 0; returns at the end of its next turn.</div>
         </div>
@@ -2218,7 +2315,7 @@
         <div class="feature-card arcane" data-tooltip="aa-beguiling">
           <div class="feature-header">
             <span class="feature-name">Beguiling Shot</span>
-            <span class="aa-shot-tag">Psychic ×2 · WIS</span>
+            <span class="aa-shot-tag">Reference · Psychic ×2 · WIS</span>
           </div>
           <div class="feature-summary">Charmed by you or a chosen ally within 30 ft. until your next turn; breaks on damage.</div>
         </div>
@@ -2226,7 +2323,7 @@
         <div class="feature-card arcane" data-tooltip="aa-bursting">
           <div class="feature-header">
             <span class="feature-name">Bursting Shot</span>
-            <span class="aa-shot-tag">Force ×2 · —</span>
+            <span class="aa-shot-tag">Reference · Force ×2 · —</span>
           </div>
           <div class="feature-summary">Hits the target plus everything in a 10-ft. Emanation from it.</div>
         </div>
@@ -2234,7 +2331,7 @@
         <div class="feature-card arcane" data-tooltip="aa-enfeebling">
           <div class="feature-header">
             <span class="feature-name">Enfeebling Shot</span>
-            <span class="aa-shot-tag">Necrotic ×2 · CON</span>
+            <span class="aa-shot-tag">Reference · Necrotic ×2 · CON</span>
           </div>
           <div class="feature-summary">Poisoned to end of its next turn; its hits lose damage equal to one die roll.</div>
         </div>
@@ -2242,7 +2339,7 @@
         <div class="feature-card arcane" data-tooltip="aa-grasping">
           <div class="feature-header">
             <span class="feature-name">Grasping Shot</span>
-            <span class="aa-shot-tag">Slashing ×1 · STR</span>
+            <span class="aa-shot-tag">Reference · Slashing ×1 · STR</span>
           </div>
           <div class="feature-summary">Restrained until your next turn; escapable with Athletics vs. your DC.</div>
         </div>
@@ -2250,7 +2347,7 @@
         <div class="feature-card arcane" data-tooltip="aa-piercing">
           <div class="feature-header">
             <span class="feature-name">Piercing Shot</span>
-            <span class="aa-shot-tag">Piercing ×2 · DEX</span>
+            <span class="aa-shot-tag">Reference · Piercing ×2 · DEX</span>
           </div>
           <div class="feature-summary">No attack roll. 30-ft. Line, 1 ft. wide, ignores cover; half on save.</div>
         </div>
@@ -2258,7 +2355,7 @@
         <div class="feature-card arcane" data-tooltip="aa-seeking">
           <div class="feature-header">
             <span class="feature-name">Seeking Shot</span>
-            <span class="aa-shot-tag">Force ×2 · DEX</span>
+            <span class="aa-shot-tag">Known · Force ×2 · DEX</span>
           </div>
           <div class="feature-summary">No attack roll. Curves to a creature seen in the last minute, ignores most cover; half on save.</div>
         </div>
@@ -2266,7 +2363,7 @@
         <div class="feature-card arcane" data-tooltip="aa-shadow">
           <div class="feature-header">
             <span class="feature-name">Shadow Shot</span>
-            <span class="aa-shot-tag">Psychic ×1 · WIS</span>
+            <span class="aa-shot-tag">Reference · Psychic ×1 · WIS</span>
           </div>
           <div class="feature-summary">Blinded to the end of its next turn.</div>
         </div>
@@ -2290,7 +2387,7 @@
       <div class="hud-sub">A scout-archer's field pack — a good bow, a light blade, and every tool for a long road.</div>
     </div>
     <div style="font-family:'Barlow Condensed',sans-serif;font-size:11px;color:var(--text-dim);letter-spacing:1px;text-transform:uppercase;">
-      Manifest Cards: <span style="color:var(--gold);">7</span>
+      Manifest Cards: <span style="color:var(--gold);">10</span>
     </div>
   </div>
 
@@ -2301,7 +2398,6 @@
     <div class="currency-item"><div class="currency-coin sp">SP</div><div class="currency-controls"><button type="button" class="currency-adjust-btn" onclick="adjustCurrency('sp',-1)">-</button><input id="currency-sp" class="currency-input" type="number" min="0" step="1" inputmode="numeric" value="0" onchange="setCurrencyFromInput('sp', this.value)"><button type="button" class="currency-adjust-btn" onclick="adjustCurrency('sp',1)">+</button></div></div>
     <div class="currency-item"><div class="currency-coin cp">CP</div><div class="currency-controls"><button type="button" class="currency-adjust-btn" onclick="adjustCurrency('cp',-1)">-</button><input id="currency-cp" class="currency-input" type="number" min="0" step="1" inputmode="numeric" value="0" onchange="setCurrencyFromInput('cp', this.value)"><button type="button" class="currency-adjust-btn" onclick="adjustCurrency('cp',1)">+</button></div></div>
     <div style="margin-left:auto;font-family:'Barlow Condensed',sans-serif;font-size:11px;color:var(--text-dim);">
-      Weight: <span style="color:var(--text-secondary);">90 lb</span> /
       Encumbered: <span style="color:var(--text-secondary);">195 lb</span> /
       Push: <span style="color:var(--text-secondary);">390 lb</span>
     </div>
@@ -2312,9 +2408,9 @@
 
     <div class="item-card signature" data-tooltip="item-longbow">
       <div class="card-topline"><span class="item-type">Weapon</span><span class="item-weight">2 lb</span></div>
-      <div class="item-main"><span class="item-icon">🏹</span><div><div class="item-name">Longbow</div><div class="item-qty">Qty: 1 · Drawn</div></div></div>
+      <div class="item-main"><span class="item-icon">🏹</span><div><div class="item-name">Kal's Longbow</div><div class="item-qty">Qty: 1 · Drawn</div></div></div>
       <div class="item-tags"><span class="item-tag">Ammunition</span><span class="item-tag">Heavy</span><span class="item-tag">Slow</span></div>
-      <div class="item-note">Archibold's primary weapon — +7 to hit with the Archery style, and the Ammunition weapon his future Arcane Shots need.</div>
+      <div class="item-note">Archibold's primary weapon — +7 to hit with the Archery style, and the Ammunition weapon used for his Arcane Shots.</div>
       <div style="margin-top:8px;"><button type="button" class="equip-btn" id="equip-btn-longbow" onclick="toggleEquip('longbow')">Equip</button></div>
     </div>
 
@@ -2336,9 +2432,9 @@
 
     <div class="item-card" data-tooltip="item-arrows">
       <div class="card-topline"><span class="item-type">Ammunition</span><span class="item-weight">2 lb</span></div>
-      <div class="item-main"><span class="item-icon">🎯</span><div><div class="item-name">Arrows &amp; Quiver</div><div class="item-qty">Qty: 20 · Quiver ×1</div></div></div>
+      <div class="item-main"><span class="item-icon">🎯</span><div><div class="item-name">Arrows &amp; Quiver</div><div class="item-qty">Arrows ×19 · Quiver ×1</div></div></div>
       <div class="item-note">Recover roughly half your spent arrows after a fight. Curving Shot (L7) fires without spending any.</div>
-      <div class="quantity-row"><span class="quantity-label">Arrows remaining</span><div data-consumable-key="arrows" data-consumable-default="20" data-consumable-label="arrow"></div></div>
+      <div class="quantity-row"><span class="quantity-label">Arrows remaining</span><div data-consumable-key="arrows" data-consumable-default="19" data-consumable-label="arrow"></div></div>
     </div>
 
     <div class="item-card" data-tooltip="item-studded">
@@ -2363,13 +2459,34 @@
       <div class="quantity-row"><span class="quantity-label">Remaining</span><div data-consumable-key="caltrops" data-consumable-default="20" data-consumable-label="caltrop"></div></div>
     </div>
 
+    <div class="item-card magic">
+      <div class="card-topline"><span class="item-type">Support</span><span class="item-weight">3 lb</span></div>
+      <div class="item-main"><span class="item-icon">🩹</span><div><div class="item-name">Healer's Kit</div><div class="item-qty">Qty: 1 · Uses: 8</div></div></div>
+      <div class="item-tags"><span class="item-tag">8 Uses</span><span class="item-tag">Stabilize</span></div>
+      <div class="item-note">As a Utilize action, expend one use to stabilize an Unconscious creature at 0 HP without a Wisdom (Medicine) check.</div>
+      <div class="quantity-row"><span class="quantity-label">Uses remaining</span><div data-consumable-key="healersKitUses" data-consumable-default="8" data-consumable-label="healer's kit use"></div></div>
+    </div>
+
+    <div class="item-card magic">
+      <div class="card-topline"><span class="item-type">Consumable</span><span class="item-weight">—</span></div>
+      <div class="item-main"><span class="item-icon">☕</span><div><div class="item-name">Viktor's Coffee Bars</div><div class="item-qty">Qty: 4</div></div></div>
+      <div class="quantity-row"><span class="quantity-label">Bars remaining</span><div data-consumable-key="coffeeBars" data-consumable-default="4" data-consumable-label="coffee bar"></div></div>
+    </div>
+
+    <div class="item-card magic">
+      <div class="card-topline"><span class="item-type">Special Ammunition</span><span class="item-weight">—</span></div>
+      <div class="item-main"><span class="item-icon">➶</span><div><div class="item-name">Poison Wyvrn Quill Arrow</div><div class="item-qty">Qty: 1</div></div></div>
+      <div class="item-note">A poison-treated quill arrow. Resolve its poison effect with the GM.</div>
+      <div class="quantity-row"><span class="quantity-label">Arrows remaining</span><div data-consumable-key="wyvrnQuillArrows" data-consumable-default="1" data-consumable-label="Wyvrn Quill Arrow"></div></div>
+    </div>
+
   </div>
 
   <div style="margin-top:16px;font-family:'Barlow Condensed',sans-serif;font-size:9px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--gold-dim);margin-bottom:8px;">Pack &amp; Sundries</div>
   <div style="font-family:'Barlow',sans-serif;font-size:12px;color:var(--text-secondary);line-height:1.9;padding:12px 14px;background:rgba(16,22,46,0.5);border:1px solid rgba(51,64,106,0.35);border-radius:8px;">
-    Backpack · Crowbar · Oil ×2 · Rations ×10 · Rope (hemp) · Tinderbox · Torch ×10 · Waterskin · Bedroll · Pouch ×2 · Traveler's Clothes · Dice
+    Backpack · Crowbar · Oil Flask ×2 · Rations ×13 · Rope 50 ft. · Tinderbox · Torches ×10 · Waterskin · Bedroll · Pouch ×2 · Traveler's Clothes · Dice Set
     <div class="quantity-row"><span class="quantity-label">Oil flasks</span><div data-consumable-key="oil" data-consumable-default="2" data-consumable-label="oil flask"></div></div>
-    <div class="quantity-row"><span class="quantity-label">Rations</span><div data-consumable-key="rations" data-consumable-default="10" data-consumable-label="ration"></div></div>
+    <div class="quantity-row"><span class="quantity-label">Rations</span><div data-consumable-key="rations" data-consumable-default="13" data-consumable-label="ration"></div></div>
     <div class="quantity-row"><span class="quantity-label">Torches</span><div data-consumable-key="torches" data-consumable-default="10" data-consumable-label="torch"></div></div>
   </div>
 
@@ -2470,7 +2587,7 @@
         </div>
         <div class="lore-section" style="margin-bottom:0;">
           <div class="lore-label">Subclass — Arcane Archer (Level 3)</div>
-          <div class="lore-text">Subclass chosen at Level 3: Arcane Archer (UA 2025 playtest). The high INT (17) fully powers the subclass — DC 13, three Arcane Shot uses, and the bonus cantrip. See the Arcane Archer tab. Confirm the table is happy running playtest content.</div>
+          <div class="lore-text">Arcane Archer (UA 2025 playtest) is active at Fighter 3. INT 17 provides DC 13, three Arcane Shot uses, and Prestidigitation. Known shots are Banishing Shot and Seeking Shot; both are tracked on the Combat tab.</div>
         </div>
       </div>
     </div>
@@ -2513,8 +2630,8 @@ const TOOLTIPS = {
   // ABILITY SCORES
   strength: { name: "Strength", type: "Ability Score", body: "Measures physical power. A proficient save for Fighters. Archibold's STR of 13 gives a +1 modifier.", stats: {"Score":"13","Modifier":"+1","Save":"+3 (Prof)"} },
   dexterity: { name: "Dexterity", type: "Ability Score", body: "Measures agility and reflexes. Archibold's key stat — drives his bow attacks, AC, Initiative, and Stealth. DEX of 17 gives a +3 modifier.", stats: {"Score":"17","Modifier":"+3","Save":"+3"} },
-  constitution: { name: "Constitution", type: "Ability Score", body: "Measures health and stamina. A proficient save for Fighters; feeds his 20 HP.", stats: {"Score":"15","Modifier":"+2","Save":"+4 (Prof)"} },
-  intelligence: { name: "Intelligence", type: "Ability Score", body: "Measures memory and reasoning. INT of 17 (+3) is the spellcasting ability for his coming Arcane Archer features — DC, Arcane Shot uses, and the bonus cantrip all key off it.", stats: {"Score":"17","Modifier":"+3","Save":"+3"} },
+  constitution: { name: "Constitution", type: "Ability Score", body: "Measures health and stamina. A proficient save for Fighters; feeds his 28 HP.", stats: {"Score":"15","Modifier":"+2","Save":"+4 (Prof)"} },
+  intelligence: { name: "Intelligence", type: "Ability Score", body: "Measures memory and reasoning. INT of 17 (+3) is the spellcasting ability for his Arcane Archer features — DC, Arcane Shot uses, and Prestidigitation all key off it.", stats: {"Score":"17","Modifier":"+3","Save":"+3"} },
   wisdom: { name: "Wisdom", type: "Ability Score", body: "Measures perception and insight. Feeds his strong passive Perception and Survival — the scout's edge.", stats: {"Score":"17","Modifier":"+3","Save":"+3"} },
   charisma: { name: "Charisma", type: "Ability Score", body: "Measures force of personality. Archibold's dump stat at 10 (+0).", stats: {"Score":"10","Modifier":"+0","Save":"+0"} },
 
@@ -2534,10 +2651,10 @@ const TOOLTIPS = {
   slow: { name: "Slow", type: "Weapon Mastery — Longbow", body: "If you hit a creature with the Longbow and deal damage, reduce its Speed by 10 feet until the start of your next turn. The reduction doesn't stack past 10 ft. within a single turn.", stats: {"Effect":"−10 ft. Speed","Duration":"Until start of your next turn","Trigger":"On hit + damage"} },
 
   // WEAPON / GEAR ITEMS
-  "item-longbow": { name: "Longbow", type: "Martial Ranged Weapon", body: "Ammunition, Heavy, Two-Handed. Mastery: Slow. Archibold attacks at +7 (DEX 3 + Prof 2 + Archery 2) for 1d8+3 piercing. Range 150/600 ft. This is the Ammunition weapon his Level-3 Arcane Shots will use.", stats: {"Damage":"1d8+3 Piercing","To Hit":"+7","Range":"150/600 ft.","Mastery":"Slow"} },
+  "item-longbow": { name: "Kal's Longbow", type: "Martial Ranged Weapon", body: "Ammunition, Heavy, Two-Handed. Mastery: Slow. Archibold attacks at +7 (DEX 3 + Prof 2 + Archery 2) for 1d8+3 piercing. Range 150/600 ft. This is the Ammunition weapon used for his Arcane Shots.", stats: {"Damage":"1d8+3 Piercing","To Hit":"+7","Range":"150/600 ft.","Mastery":"Slow"} },
   "item-shortsword": { name: "Shortsword", type: "Martial Melee Weapon", body: "Finesse, Light. Mastery: Vex. Archibold attacks at +5 (DEX 3 + Prof 2) for 1d6+3 piercing.", stats: {"Damage":"1d6+3 Piercing","To Hit":"+5","Mastery":"Vex","Weight":"2 lb"} },
   "item-dagger": { name: "Dagger (×2)", type: "Simple Melee Weapon", body: "Finesse, Light, Thrown (20/60). +5 to hit for 1d4+3 piercing, in melee or thrown. Two on hand.", stats: {"Damage":"1d4+3 Piercing","To Hit":"+5","Range":"20/60 ft.","Qty":"2"} },
-  "item-arrows": { name: "Arrows & Quiver", type: "Ammunition", body: "20 arrows in a quiver. Draw one as part of each Longbow attack; recover about half after a battle. Curving Shot (L7) attacks without spending ammunition." },
+  "item-arrows": { name: "Arrows & Quiver", type: "Ammunition", body: "19 arrows in a quiver. Draw one as part of each Longbow attack; recover about half after a battle. Curving Shot (L7) attacks without spending ammunition." },
   "item-studded": { name: "Studded Leather", type: "Light Armour", body: "AC = 12 + full Dexterity modifier. With DEX +3 that is AC 15 when equipped. The export currently shows AC 13 — likely the armour isn't flagged as worn.", stats: {"Base AC":"12","DEX":"Full","Worn AC":"15","Weight":"13 lb"} },
   "item-thieves-tools": { name: "Thieves' Tools", type: "Tools (Proficient)", body: "Used to pick locks and disarm traps. Archibold adds DEX + Proficiency (+5). Granted by the Wayfarer background." },
   "item-caltrops": { name: "Caltrops (×20)", type: "Adventuring Gear", body: "Spread a bag across a 5-ft. square. A creature entering makes a DC 15 Dexterity save or takes 1 piercing damage and its Speed is reduced until it regains at least 1 HP." },
@@ -2545,7 +2662,7 @@ const TOOLTIPS = {
   // FIGHTER FEATURES
   "feat-core-fighter": { name: "Core Fighter Traits", type: "Fighter Feature (PHB-2024 p.91)", body: "The Fighter's baseline package: proficiency with all armour and shields, all simple and martial weapons, and saving throws in Strength and Constitution.", stats: {"Hit Die":"d10","Saves":"STR, CON","Key Ability":"STR or DEX"} },
   "feat-archery": { name: "Fighting Style: Archery", type: "Fighter Feature (PHB-2024 p.209)", body: "You gain a +2 bonus to attack rolls you make with ranged weapons. This is already included in the Longbow's +7. You can replace your Fighting Style each time you gain a Fighter level.", stats: {"Bonus":"+2 to hit","Applies to":"Ranged weapons"} },
-  "feat-second-wind": { name: "Second Wind", type: "Fighter Feature (PHB-2024 p.91)", body: "As a Bonus Action, regain 1d10 + Fighter level HP (1d10+2 at level 2). You have two uses; regain one on a Short Rest and all on a Long Rest. It also fuels Tactical Mind.", stats: {"Heal":"1d10+2","Action":"Bonus Action","Uses":"2 (1 back on Short Rest)"} },
+  "feat-second-wind": { name: "Second Wind", type: "Fighter Feature (PHB-2024 p.91)", body: "As a Bonus Action, regain 1d10 + Fighter level HP (1d10+3 at level 3). You have two uses; regain one on a Short Rest and all on a Long Rest. It also fuels Tactical Mind.", stats: {"Heal":"1d10+3","Action":"Bonus Action","Uses":"2 (1 back on Short Rest)"} },
   "feat-action-surge": { name: "Action Surge", type: "Fighter Feature (PHB-2024 p.91)", body: "On your turn, take one additional action. Once you use it, you must finish a Short or Long Rest before using it again. It can't be used to take the Magic action.", stats: {"Extra":"1 action","Recharge":"Short or Long Rest","Limit":"Not the Magic action"} },
   "feat-tactical-mind": { name: "Tactical Mind", type: "Fighter Feature (PHB-2024 p.91)", body: "When you fail an ability check, you can expend a use of Second Wind to roll 1d10 and add it to the check, potentially turning the failure into a success. If the check still fails, the Second Wind use isn't expended." },
   "feat-weapon-mastery": { name: "Weapon Mastery", type: "Fighter Feature (PHB-2024 p.91)", body: "You can use the mastery properties of weapons you're proficient with. Archibold uses Vex (Shortsword) and Slow (Longbow); a third mastery (e.g. Nick on the Dagger) may be assigned. Change choices on a Long Rest." },
@@ -2561,7 +2678,8 @@ const TOOLTIPS = {
   "feat-wayfarer": { name: "Wayfarer Background", type: "Background (PHB-2024)", body: "Grants Ability Score Increases (+2 / +1 across two scores), proficiency with Thieves' Tools, skill proficiencies, and an Origin feat (Lucky). Flavour: a rootless, streetwise traveller." },
 
   // ===== ARCANE ARCHER (Level 3 — Playtest, UA 2025) =====
-  "aa-lore": { name: "Arcane Archer Lore", type: "Arcane Archer · Level 3 (Playtest)", body: "You learn the Druidcraft or Prestidigitation cantrip (Intelligence is your spellcasting ability). You also gain proficiency in Arcana and Nature; if you already have either, choose another skill instead.", stats: {"Cantrip":"Druidcraft / Prestidigitation","Ability":"INT","Skills":"Arcana & Nature"} },
+  "aa-lore": { name: "Arcane Archer Lore", type: "Arcane Archer · Level 3 (Playtest)", body: "Archibold chose Prestidigitation, using Intelligence as his spellcasting ability, and gained proficiency in Nature.", stats: {"Cantrip":"Prestidigitation","Ability":"INT","Skill":"Nature"} },
+  "spell-prestidigitation": { name: "Prestidigitation", type: "Transmutation Cantrip · SRD 5.2.1", body: "As an action, create a minor magical effect within 10 feet: a harmless sensory effect; light or snuff a small flame; clean or soil a 1-foot cube; chill, warm, or flavor material; leave a temporary mark; or create a brief handheld trinket or image. Up to three non-instantaneous effects can coexist.", stats: {"Casting Time":"Action","Range":"10 ft.","Components":"V, S","Duration":"Up to 1 hour","Ability":"INT"} },
   "aa-shot": { name: "Arcane Shot", type: "Arcane Archer · Level 3 (Playtest)", body: "Once per turn, apply one known Arcane Shot option to a ranged attack made with an Ammunition-property weapon. You choose the option after the hit lands and damage is dealt — except options that skip the attack roll entirely. Uses = INT modifier (3), recharged on a Short or Long Rest. Save DC = 8 + INT + Prof = 13. Die = 1d6 at this tier.", stats: {"Uses":"3 (INT mod)","Recharge":"Short/Long Rest","Save DC":"13","Die":"1d6"} },
   "aa-curving": { name: "Curving Shot", type: "Arcane Archer · Level 7 (Playtest)", body: "When you miss with an Ammunition weapon, you can use a Bonus Action to attack a different target you can see within long range that isn't behind Total Cover. This attack consumes no ammunition." },
   "aa-ever-ready": { name: "Ever Ready Shot", type: "Arcane Archer · Level 7 (Playtest)", body: "When you roll Initiative and have no Arcane Shot uses remaining, you regain one use — so you always enter combat with at least one charge." },
@@ -2579,7 +2697,7 @@ const TOOLTIPS = {
 </script>
 
 <script>
-const SHEET_UI_VERSION = '1.0.0';
+const SHEET_UI_VERSION = '1.1.0';
 
 // ===== TABS =====
 function switchTab(id) {
@@ -2591,114 +2709,26 @@ function switchTab(id) {
   saveSheetState();
 }
 
-// ===== TOOLTIP ENGINE =====
-const tooltip = document.getElementById('tooltip');
-const ttName = document.getElementById('tt-name');
-const ttType = document.getElementById('tt-type');
-const ttBody = document.getElementById('tt-body');
-const ttStats = document.getElementById('tt-stats');
-let activeTooltipEl = null;
-let lastMouseX = 0;
-let lastMouseY = 0;
-
-function showTooltip(data) {
-  ttName.textContent = data.name;
-  ttType.textContent = data.type || '';
-  ttBody.innerHTML = (data.body || '').replace(/\n/g, '<br>');
-  if (data.stats) {
-    ttStats.style.display = 'grid';
-    ttStats.innerHTML = Object.entries(data.stats).map(([k,v]) => `<div class="tooltip-stat">${k}: <span>${v}</span></div>`).join('');
-  } else {
-    ttStats.style.display = 'none';
-  }
-  tooltip.classList.add('visible');
+function filterFeatures(actionType) {
+  document.querySelectorAll('#tab-features .feature-card').forEach(card => {
+    const actionTypes = (card.dataset.actionType || '').split(' ');
+    card.hidden = actionType !== 'all' && !actionTypes.includes(actionType);
+  });
+  document.querySelectorAll('#tab-features .panel').forEach(panel => {
+    const hasVisibleCard = [...panel.querySelectorAll('.feature-card')].some(card => !card.hidden);
+    panel.hidden = actionType !== 'all' && !hasVisibleCard;
+  });
+  document.querySelectorAll('#tab-features .action-filter-btn').forEach(button => {
+    const isActive = button.dataset.actionFilter === actionType;
+    button.classList.toggle('active', isActive);
+    button.setAttribute('aria-pressed', String(isActive));
+  });
 }
 
-function positionTooltip(x, y) {
-  const pad = 12;
-  const rect = tooltip.getBoundingClientRect();
-  let left = x + 16;
-  let top = y + 14;
-  if (left + rect.width > window.innerWidth - pad) left = x - rect.width - 16;
-  if (top + rect.height > window.innerHeight - pad) top = y - rect.height - 16;
-  if (left < pad) left = pad;
-  if (top < pad) top = pad;
-
-  tooltip.style.left = Math.round(left) + 'px';
-  tooltip.style.top = Math.round(top) + 'px';
-}
-
-function hideTooltip() {
-  tooltip.classList.remove('visible');
-  activeTooltipEl = null;
-}
-
-function getTooltipData(el) {
-  if (!el) return null;
-  return TOOLTIPS[el.dataset.tooltip] || null;
-}
-
-function activateTooltip(el, x, y) {
-  const data = getTooltipData(el);
-  if (!data) return;
-  if (tooltip.parentElement !== document.body) {
-    document.body.appendChild(tooltip);
-  }
-  activeTooltipEl = el;
-  showTooltip(data);
-  positionTooltip(x, y);
-}
-
-document.addEventListener('mouseover', (e) => {
-  const el = e.target.closest('[data-tooltip]');
-  if (!el) return;
-  lastMouseX = e.clientX;
-  lastMouseY = e.clientY;
-  activateTooltip(el, lastMouseX, lastMouseY);
-});
-
-document.addEventListener('mousemove', (e) => {
-  if (!activeTooltipEl) return;
-  lastMouseX = e.clientX;
-  lastMouseY = e.clientY;
-  positionTooltip(lastMouseX, lastMouseY);
-});
-
-document.addEventListener('mouseout', (e) => {
-  if (!activeTooltipEl) return;
-  const nextEl = e.relatedTarget;
-  if (nextEl && activeTooltipEl.contains(nextEl)) {
-    return;
-  }
-  hideTooltip();
-});
-
-document.addEventListener('focusin', (e) => {
-  const el = e.target.closest('[data-tooltip]');
-  if (!el) return;
-  const rect = el.getBoundingClientRect();
-  activateTooltip(el, rect.left + rect.width / 2, rect.top + rect.height / 2);
-});
-
-document.addEventListener('focusout', () => {
-  hideTooltip();
-});
-
-window.addEventListener('scroll', () => {
-  if (activeTooltipEl) {
-    const rect = activeTooltipEl.getBoundingClientRect();
-    positionTooltip(rect.left + rect.width / 2, rect.top + rect.height / 2);
-  }
-}, { passive: true });
-
-window.addEventListener('resize', () => {
-  if (!activeTooltipEl) return;
-  const rect = activeTooltipEl.getBoundingClientRect();
-  positionTooltip(rect.left + rect.width / 2, rect.top + rect.height / 2);
-});
+window.initializeArchiboldRulesHelp(TOOLTIPS);
 
 // ===== CONSTANTS =====
-const MAX_HP = 20;
+const MAX_HP = 28;
 
 // ===== HP =====
 function updateHPBar() {
@@ -2724,6 +2754,7 @@ function applyHP(sign) {
 
 // ===== REACTIVE SHEET STATE =====
 const sheetState = {
+  hitDice: { d10: 3 },
   currency: {
     pp: 0,
     gp: 27,
@@ -2738,6 +2769,7 @@ const sheetState = {
     studded: true,
   },
   consumables: {},
+  inventoryGrants: { august2026: true, level3September2026: true },
 };
 
 const DEFAULT_CURRENCY = { pp: 0, gp: 27, ep: 0, sp: 0, cp: 0 };
@@ -2755,6 +2787,18 @@ function ensureCurrencyState() {
   ['pp', 'gp', 'ep', 'sp', 'cp'].forEach(key => {
     sheetState.currency[key] = sanitizeCurrencyValue(sheetState.currency[key]);
   });
+}
+
+function ensureHitDiceState() {
+  if (!sheetState.hitDice || typeof sheetState.hitDice !== 'object') sheetState.hitDice = {};
+  const remaining = Number.parseInt(sheetState.hitDice.d10, 10);
+  sheetState.hitDice.d10 = Number.isFinite(remaining) ? Math.max(0, Math.min(3, remaining)) : 3;
+}
+
+function updateHitDiceUI() {
+  ensureHitDiceState();
+  const display = document.getElementById('hitDiceDisplay');
+  if (display) display.textContent = `${sheetState.hitDice.d10} / 3 d10`;
 }
 
 function applyCurrencyUI() {
@@ -2911,6 +2955,7 @@ function saveSheetState() {
 }
 
 function loadSheetState() {
+  let levelUpMigrationApplied = false;
   const versionBadge = document.getElementById('uiVersionBadge');
   if (versionBadge) versionBadge.textContent = `UI v${SHEET_UI_VERSION}`;
   if (!document.title.includes(`UI v${SHEET_UI_VERSION}`)) {
@@ -2920,11 +2965,13 @@ function loadSheetState() {
   try {
     const raw = localStorage.getItem(SHEET_STORAGE_KEY);
     if (!raw) {
+      updateHitDiceUI();
       applyCurrencyUI();
       refreshDerivedStats();
       updateHPBar();
       applyConditionEffects();
       renderArchiboldCustomItems();
+      InventoryTrackers.initializeFixedTrackers(sheetState, saveSheetState);
       return;
     }
 
@@ -2937,6 +2984,25 @@ function loadSheetState() {
     if (saved.sheetState && typeof saved.sheetState === 'object') {
       Object.assign(sheetState, saved.sheetState);
     }
+    if (!saved.sheetState?.inventoryGrants?.august2026) {
+      if (!sheetState.consumables || typeof sheetState.consumables !== 'object') sheetState.consumables = {};
+      sheetState.consumables.rations = InventoryTrackers.sanitizeQuantity(sheetState.consumables.rations, 10) + 5;
+      sheetState.inventoryGrants = { ...(sheetState.inventoryGrants || {}), august2026: true };
+      levelUpMigrationApplied = true;
+    }
+    if (!saved.sheetState?.inventoryGrants?.level3September2026) {
+      if (!sheetState.consumables || typeof sheetState.consumables !== 'object') sheetState.consumables = {};
+      sheetState.consumables.arrows = 19;
+      sheetState.consumables.healersKitUses = 8;
+      sheetState.consumables.rations = 13;
+      sheetState.consumables.coffeeBars = 4;
+      sheetState.consumables.wyvrnQuillArrows = 1;
+      sheetState.hitDice = { ...(sheetState.hitDice || {}), d10: 3 };
+      sheetState.inventoryGrants = { ...(sheetState.inventoryGrants || {}), level3September2026: true };
+      saved.hp = { ...(saved.hp || {}), current: String(MAX_HP) };
+      levelUpMigrationApplied = true;
+    }
+    ensureHitDiceState();
     ensureCurrencyState();
     if (!sheetState.equipment || typeof sheetState.equipment !== 'object') {
       sheetState.equipment = { longbow: true, shortsword: true, dagger: true, studded: true };
@@ -2990,6 +3056,7 @@ function loadSheetState() {
     if (notesEl && typeof saved.notes === 'string') notesEl.value = saved.notes;
 
     applyCurrencyUI();
+    updateHitDiceUI();
     refreshDerivedStats();
     applyEquipmentUI();
     updateHPBar();
@@ -3004,6 +3071,7 @@ function loadSheetState() {
   } catch (err) {
     console.warn('Could not load sheet state:', err);
     applyCurrencyUI();
+    updateHitDiceUI();
     refreshDerivedStats();
     applyEquipmentUI();
     updateHPBar();
@@ -3013,6 +3081,7 @@ function loadSheetState() {
   applyCurrencyUI();
   renderArchiboldCustomItems();
   InventoryTrackers.initializeFixedTrackers(sheetState, saveSheetState);
+  if (levelUpMigrationApplied) saveSheetState();
 }
 
 // ===== DERIVED STATS =====
@@ -3038,7 +3107,7 @@ function refreshDerivedStats() {
     if (!sheetState.equipment?.studded) gearNotes.push(`AC ${UNARMORED_AC} (armour unequipped)`);
     if (equippedWeapons.length) gearNotes.push(`Weapons: ${equippedWeapons.join(', ')}`);
     const gearText = gearNotes.length ? ` · ${gearNotes.join(' | ')}` : '';
-    readout.textContent = `Second Wind ${tally('secondWind')} · Action Surge ${tally('actionSurge')} · Luck ${tally('lucky')} · Heroic Insp. ${tally('inspiration')}${gearText}`;
+    readout.textContent = `Second Wind ${tally('secondWind')} · Action Surge ${tally('actionSurge')} · Arcane Shot ${tally('arcaneShot')} · Luck ${tally('lucky')} · Heroic Insp. ${tally('inspiration')}${gearText}`;
   }
 }
 
@@ -3351,21 +3420,57 @@ function castToast(msg, isError = false) {
 }
 
 // ===== REST =====
-function shortRest() {
+async function shortRest() {
+  const currentHP = document.getElementById('currentHP');
+  const hp = Number.parseInt(currentHP.value, 10) || 0;
+  if (hp < 1) {
+    castToast('You need at least 1 HP to start a Short Rest.', true);
+    return;
+  }
+
   restoreResource('actionSurge');
+  restoreResource('arcaneShot');
   restoreOneResource('secondWind');
+  const rolls = [];
+  let healedHP = hp;
+  const selectedDice = healedHP < MAX_HP
+    ? await chooseRestHitDice([{ type: 'd10', size: 10, label: 'd10', available: sheetState.hitDice.d10 }])
+    : [];
+  for (const selectedDie of selectedDice) {
+    if (healedHP >= MAX_HP) break;
+    const manual = selectedDie.roll !== null;
+    const roll = manual ? selectedDie.roll : Math.floor(Math.random() * selectedDie.size) + 1;
+    const healing = Math.max(1, roll + 2);
+    const regained = Math.min(MAX_HP - healedHP, healing);
+    healedHP += regained;
+    sheetState.hitDice.d10 -= 1;
+    rolls.push(`d10 ${roll}${manual ? ' (manual)' : ' (auto)'} + CON 2 = ${healing} (${regained} HP regained)`);
+    currentHP.value = healedHP;
+    updateHPBar();
+    updateHitDiceUI();
+  }
   refreshDerivedStats();
   saveSheetState();
-  alert('Short Rest taken.\n\n• Action Surge use restored (recovers on Short or Long Rest)\n• One Second Wind use returns\n• Spend Hit Dice (2d10) manually to recover HP\n• Luck Points and Heroic Inspiration return on a Long Rest only');
+  alert('Short Rest complete.\n\n• Action Surge and Arcane Shot restored\n• One Second Wind use restored\n• Luck Points and Heroic Inspiration unchanged' + (rolls.length ? `\n• ${rolls.join('\n• ')}` : '\n• No Hit Dice spent'));
 }
 
 function longRest() {
-  document.getElementById('currentHP').value = MAX_HP;
+  const currentHP = document.getElementById('currentHP');
+  if ((Number.parseInt(currentHP.value, 10) || 0) < 1) {
+    castToast('You need at least 1 HP to start a Long Rest.', true);
+    return;
+  }
+  if (!window.confirm('Finish a Long Rest?\n\nThis restores HP, all Hit Dice, and Long Rest resources. Temporary HP expires, and Exhaustion decreases by 1.')) return;
+
+  currentHP.value = MAX_HP;
   document.getElementById('tempHP').value = 0;
+  sheetState.hitDice.d10 = 3;
+  updateHitDiceUI();
   updateHPBar();
   // Restore all class resources
   restoreResource('secondWind');
   restoreResource('actionSurge');
+  restoreResource('arcaneShot');
   restoreResource('lucky');
   restoreResource('inspiration');
   // Reset death saves
@@ -3376,7 +3481,7 @@ function longRest() {
   refreshDerivedStats();
   applyConditionEffects();
   saveSheetState();
-  alert('Long Rest completed!\n\n• HP restored to 20/20\n• Second Wind (2), Action Surge (1) & Luck Points (2) refreshed\n• Heroic Inspiration regained (Resourceful)\n• Death saves cleared' + (exhReduced ? '\n• Exhaustion reduced by 1 (now ' + exhaustionLevel + ')' : '') + '\n• Clear any lingering conditions manually as needed');
+  alert('Long Rest completed!\n\n• HP restored to 28/28\n• Second Wind (2), Action Surge (1), Arcane Shot (3) & Luck Points (2) refreshed\n• Heroic Inspiration regained (Resourceful)\n• Death saves cleared' + (exhReduced ? '\n• Exhaustion reduced by 1 (now ' + exhaustionLevel + ')' : '') + '\n• Clear any lingering conditions manually as needed');
 }
 
 loadSheetState();

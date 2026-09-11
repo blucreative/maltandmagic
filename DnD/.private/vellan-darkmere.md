@@ -39,7 +39,7 @@ Strength +1 · Constitution +0 · Wisdom +2 · Charisma +2
 | Animal Handling | WIS | +2 | — |
 | Arcana | INT | −1 | — |
 | Athletics | STR | +3 | Proficient |
-| Deception | CHA | +4 | Proficient |
+| Deception | CHA | +6 | Expertise |
 | History | INT | −1 | — |
 | Insight | WIS | +2 | — |
 | Intimidation | CHA | +2 | — |
@@ -55,8 +55,6 @@ Strength +1 · Constitution +0 · Wisdom +2 · Charisma +2
 | Survival | WIS | +2 | — |
 
 **Passive Perception:** 14 · **Passive Insight:** 12 · **Passive Investigation:** 9
-
-> Note: the sheet lists Persuasion at +6 (expertise). The second Expertise skill isn't clearly marked on the export — worth confirming with the player, since Rogue 1 grants two.
 
 ---
 
