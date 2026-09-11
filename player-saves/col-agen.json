@@ -1,22 +1,31 @@
 {
   "schemaVersion": 1,
   "characterId": "col-agen",
-  "revision": 19,
-  "updatedAt": "2026-09-11T12:58:41.899Z",
+  "revision": 20,
+  "updatedAt": "2026-09-11T12:58:43.032Z",
   "state": {
-    "schemaVersion": 1,
-    "characterLevel": 2,
-    "revision": 19,
+    "schemaVersion": 2,
+    "characterLevel": 3,
+    "revision": 20,
     "hp": {
-      "current": 21,
-      "max": 21,
-      "temp": 5
+      "current": 31,
+      "max": 31,
+      "temp": 0
     },
     "resources": {
       "innate": 2,
-      "sorcery": 2,
-      "slots1": 3,
-      "hitDice": 2
+      "sorcery": 3,
+      "slots1": 4,
+      "hitDice": 3,
+      "slots2": 2,
+      "slots3": 0,
+      "slots4": 0,
+      "slots5": 0,
+      "slots6": 0,
+      "slots7": 0,
+      "slots8": 0,
+      "slots9": 0,
+      "hd6": 3
     },
     "currency": {
       "cp": 2,
@@ -138,39 +147,102 @@
       "Backstory": "",
       "Additional Notes": ""
     },
-    "updatedAt": "2026-09-11T12:58:41.899Z",
-    "advancementDraft": {
-      "id": "70692950-0a40-4641-887f-de7bc94ec9ec",
-      "baseLevel": 2,
-      "classId": "sorcerer",
-      "choices": {
-        "spells": [
-          "Grease",
-          "False Life",
-          "Fog Cloud",
-          "Shield",
-          "Mage Armor",
-          "Blur"
+    "updatedAt": "2026-09-11T12:58:43.032Z",
+    "advancementDraft": null,
+    "progression": {
+      "schemaVersion": 1,
+      "rulesVersion": "2024-campaign-1",
+      "baseline": {
+        "classes": {
+          "sorcerer": 2
+        },
+        "hpMax": 21,
+        "abilities": {
+          "Strength": 15,
+          "Dexterity": 6,
+          "Constitution": 18,
+          "Intelligence": 12,
+          "Wisdom": 14,
+          "Charisma": 17
+        },
+        "tough": true,
+        "skills": [
+          "Animal Handling",
+          "Arcana",
+          "Deception",
+          "Nature"
         ],
-        "cantrips": [
-          "Light",
-          "Mage Hand",
-          "Mending",
-          "Prestidigitation"
-        ],
-        "metamagic": [
-          "Careful Spell",
-          "Quickened Spell"
-        ],
-        "subclass": "spellfire-sorcery",
-        "supplementReviewed": true
+        "choices": {
+          "sorcerer": {
+            "cantrips": [
+              "Light",
+              "Mage Hand",
+              "Mending",
+              "Prestidigitation"
+            ],
+            "spells": [
+              "Grease",
+              "False Life",
+              "Fog Cloud",
+              "Shield"
+            ],
+            "metamagic": [
+              "Careful Spell",
+              "Quickened Spell"
+            ]
+          }
+        }
       },
-      "hpRoll": 4,
-      "milestone": true,
-      "step": 3,
-      "rolls": [
-        1,
-        4
+      "history": [
+        {
+          "id": "70692950-0a40-4641-887f-de7bc94ec9ec",
+          "level": 3,
+          "classId": "sorcerer",
+          "classLevel": 3,
+          "hpRoll": 4,
+          "choices": {
+            "spells": [
+              "Grease",
+              "False Life",
+              "Fog Cloud",
+              "Shield",
+              "Mage Armor",
+              "Blur"
+            ],
+            "cantrips": [
+              "Light",
+              "Mage Hand",
+              "Mending",
+              "Prestidigitation"
+            ],
+            "metamagic": [
+              "Careful Spell",
+              "Quickened Spell"
+            ],
+            "subclass": "spellfire-sorcery",
+            "supplementReviewed": true
+          },
+          "longRest": true,
+          "rulesVersion": "2024-campaign-1",
+          "features": [
+            {
+              "level": 3,
+              "name": "Sorcerer Subclass",
+              "source": "SRD 5.2.1",
+              "text": "You gain a Sorcerer subclass of your choice. The Draconic Sorcery subclass is detailed after this class's description. A subclass is a specialization that grants you features at certain Sorcerer levels. For the rest of your career, you gain each of your subclass's features that are of your Sorcerer level or lower."
+            },
+            {
+              "level": 3,
+              "name": "Spellfire Burst",
+              "source": "Campaign supplement (non-SRD)"
+            },
+            {
+              "level": 3,
+              "name": "Spellfire Spells",
+              "source": "Campaign supplement (non-SRD)"
+            }
+          ]
+        }
       ]
     }
   }
