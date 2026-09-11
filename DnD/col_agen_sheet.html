@@ -101,7 +101,7 @@ const METAMAGIC=['Careful Spell','Distant Spell','Empowered Spell','Extended Spe
 const LEVEL_ONE_SPELLS=['Burning Hands','Charm Person','Chromatic Orb','Color Spray','Comprehend Languages','Detect Magic','Disguise Self','Expeditious Retreat','Feather Fall','Fog Cloud','Ice Knife','Jump','Mage Armor','Magic Missile','Ray of Sickness','Shield','Silent Image','Sleep','Thunderwave','Witch Bolt'];
 const DEFAULT_STATE={schemaVersion:1,characterLevel:2,revision:0,hp:{current:21,max:21,temp:0},resources:{innate:2,sorcery:2,slots1:3,hitDice:2},currency:{cp:0,sp:0,ep:0,gp:58,pp:0},inventory:INVENTORY.map(([name,qty,weight])=>({name,qty,weight})),conditions:[],notes:Object.fromEntries(NOTES.map(name=>[name,''])),updatedAt:null};
 let state=loadState();let saveTimer=null;let conflictSave=null;let levelToken='';let levelWidget=null;let turnstileLoader=null;
-let cloudTask=null;let cloudRetry=false;
+let cloudTask=null;let cloudRetry=false;let cloudPauseReason='';
 function clone(value){return JSON.parse(JSON.stringify(value))}
 function number(value,fallback,min=0,max=9999){const parsed=Number(value);return Number.isFinite(parsed)?Math.min(max,Math.max(min,parsed)):fallback}
 function normalizeState(saved){if(!saved)return clone(DEFAULT_STATE);if(saved.schemaVersion===2){if(saved.progression?.schemaVersion!==1||saved.progression?.rulesVersion!=='2024-campaign-1'||!Array.isArray(saved.progression?.history))throw new Error('This progression requires a compatible sheet.');return clone(saved)}if(saved.schemaVersion!==1)throw new Error('This save requires a newer sheet.');return {...clone(DEFAULT_STATE),...saved,hp:{...DEFAULT_STATE.hp,...saved.hp},resources:{...DEFAULT_STATE.resources,...saved.resources},currency:{...DEFAULT_STATE.currency,...saved.currency},notes:{...DEFAULT_STATE.notes,...saved.notes},inventory:Array.isArray(saved.inventory)?saved.inventory:clone(DEFAULT_STATE.inventory),conditions:Array.isArray(saved.conditions)?saved.conditions:[]}}
@@ -119,8 +119,8 @@ document.addEventListener('change',event=>{if(event.target.id.endsWith('Hp')){co
 document.getElementById('shortRest').addEventListener('click',async()=>{if(state.progression){await window.colAdvancement?.rest(false);return}const dice=await window.chooseRestHitDice?.([{type:'sorcerer',label:'Sorcerer d6',size:6,available:state.resources.hitDice}]);if(dice?.length){const healing=dice.reduce((total,die)=>total+Math.max(0,(die.roll||Math.ceil(Math.random()*die.size))+4),0);state.resources.hitDice-=dice.length;state.hp.current=Math.min(state.hp.max,state.hp.current+healing);persist();renderState()}});
 document.getElementById('longRest').addEventListener('click',()=>{if(state.progression){window.colAdvancement?.rest(true);return}if(!confirm('Finish a Long Rest and restore HP and resources?'))return;state.hp.current=state.hp.max;state.hp.temp=0;state.resources.innate=2;state.resources.sorcery=2;state.resources.slots1=3;state.resources.hitDice=2;persist();renderState()});
 document.getElementById('addItem').addEventListener('click',()=>{state.inventory.push({name:'New item',qty:1,weight:0});persist();renderState()});
-document.getElementById('cloudButton').addEventListener('click',()=>{if(getClaimKey())syncCloud();else document.getElementById('cloudDialog').showModal()});document.getElementById('levelButton').addEventListener('click',()=>{document.getElementById('levelDialog').showModal();prepareLevelVerification()});
-document.getElementById('claimButton').addEventListener('click',async()=>{const key=document.getElementById('claimKey').value.trim();if(!key){document.getElementById('cloudError').textContent='Enter Col’s claim key.';return}localStorage.setItem(CLAIM_STORAGE_KEY,key);await connectCloud()});
+document.getElementById('cloudButton').addEventListener('click',()=>{cloudPauseReason='';if(getClaimKey())syncCloud();else document.getElementById('cloudDialog').showModal()});document.getElementById('levelButton').addEventListener('click',()=>{document.getElementById('levelDialog').showModal();prepareLevelVerification()});
+document.getElementById('claimButton').addEventListener('click',async()=>{const key=document.getElementById('claimKey').value.trim();if(!key){document.getElementById('cloudError').textContent='Enter Col’s claim key.';return}localStorage.setItem(CLAIM_STORAGE_KEY,key);cloudPauseReason='';await connectCloud()});
 function cloudFingerprint(value){const {revision,updatedAt,...data}=value;return JSON.stringify(data)}
 function hasLocalCloudChanges(){const baseline=localStorage.getItem(CLOUD_BASELINE_KEY);return baseline===null?localStorage.getItem(STORAGE_KEY)!==null:cloudFingerprint(state)!==baseline}
 function acceptCloud(remote,message){clearTimeout(saveTimer);cloudRetry=false;state=normalizeState(remote.state);localStorage.setItem(CLOUD_BASELINE_KEY,cloudFingerprint(state));persist({cloud:false});renderState();conflictSave=null;document.getElementById('conflictActions').hidden=true;document.getElementById('cloudDialog').close();setSync(message,'good')}
@@ -128,6 +128,7 @@ function showConflict(remote){clearTimeout(saveTimer);cloudRetry=false;conflictS
 function connectCloud(){return syncCloud()}
 function syncCloud(){
   clearTimeout(saveTimer);
+  if(cloudPauseReason)return Promise.resolve();
   if(window.colSheet?.busy)return Promise.resolve();
   if(!getClaimKey()){setSync('Saved locally');return Promise.resolve()}
   if(conflictSave)return Promise.resolve();
@@ -148,7 +149,13 @@ function syncCloud(){
       const upload=await fetch(CLOUD_ENDPOINT,{method:'PUT',headers:{'Content-Type':'application/json',Authorization:`Bearer ${getClaimKey()}`},body:JSON.stringify({revision:snapshot.revision,state:snapshot})});
       const result=await upload.json();
       if(upload.status===409){showConflict(result);return}
-      if(!upload.ok)throw new Error(result.error||'Cloud save failed.');
+      if(!upload.ok){
+        if(upload.status===400&&result.error==='Unsupported sheet state.'&&(snapshot.advancementDraft!==undefined||snapshot.schemaVersion===2)){
+          cloudPauseReason='The cloud service rejected this save format. Level-up testing requires the updated sheet-save Worker. Your sheet and draft remain saved in this browser. Cancel to return to the sheet; retry Cloud Save after the service is updated.';
+          throw new Error(cloudPauseReason);
+        }
+        throw new Error(result.error||'Cloud save failed.');
+      }
       if(cloudFingerprint(state)===cloudFingerprint(snapshot)){acceptCloud(result,'Cloud saved');return}
       localStorage.setItem(CLOUD_BASELINE_KEY,cloudFingerprint(normalizeState(result.state)));
       state.revision=result.revision;
@@ -182,6 +189,7 @@ window.colSheet={
     const snapshot=clone(request);
     try{
       await syncCloud();
+      if(cloudPauseReason)throw new Error(cloudPauseReason);
       if(conflictSave||hasLocalCloudChanges())throw new Error('Resolve Cloud Save before finalizing. Your draft is unchanged.');
       if(state.progression?.history.some(entry=>entry.id===snapshot.id))return;
       if(state.characterLevel!==baseLevel)throw new Error('The character advanced on another device. Reopen Advancement to review the current level.');

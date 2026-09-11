@@ -209,6 +209,30 @@ test('unreadable or newer local saves never fall back to defaults', () => {
   }
 });
 
+test('an older save service preserves drafts and does not repeatedly reopen the dialog', async () => {
+  let requests = 0;
+  const client = browser(async (url, options) => {
+    requests += 1;
+    return options.method === 'PUT'
+      ? Response.json({ error: 'Unsupported sheet state.' }, { status: 400 })
+      : Response.json({ revision: 0, state: null });
+  });
+  client.run('window.colSheet.saveDraft({step:1,choices:{}})');
+  const saved = client.storage.get(storageKey);
+  await client.run('connectCloud()');
+  assert.match(client.node('cloudError').textContent, /updated sheet-save Worker/);
+  assert.equal(client.storage.get(storageKey), saved);
+  client.node('cloudDialog').close();
+  client.windowEvents.get('focus')();
+  await client.run('syncCloud()');
+  assert.equal(client.node('cloudDialog').open, false);
+  assert.equal(requests, 2);
+  await client.node('claimButton').events.get('click')();
+  client.node('claimKey').value = 'test-claim';
+  await client.node('claimButton').events.get('click')();
+  assert.equal(requests, 4);
+});
+
 test('finalization locks edits immediately and the next device loads choices', async () => {
   const server = cloud();
   const client = browser(server.fetch);
