@@ -1,12 +1,12 @@
 {
   "schemaVersion": 1,
   "characterId": "col-agen",
-  "revision": 12,
-  "updatedAt": "2026-09-11T12:57:16.436Z",
+  "revision": 13,
+  "updatedAt": "2026-09-11T12:57:51.876Z",
   "state": {
     "schemaVersion": 1,
     "characterLevel": 2,
-    "revision": 12,
+    "revision": 13,
     "hp": {
       "current": 21,
       "max": 21,
@@ -138,7 +138,7 @@
       "Backstory": "",
       "Additional Notes": ""
     },
-    "updatedAt": "2026-09-11T12:57:16.436Z",
+    "updatedAt": "2026-09-11T12:57:51.876Z",
     "advancementDraft": {
       "id": "70692950-0a40-4641-887f-de7bc94ec9ec",
       "baseLevel": 2,
@@ -148,7 +148,8 @@
           "Grease",
           "False Life",
           "Fog Cloud",
-          "Shield"
+          "Shield",
+          "Mage Armor"
         ],
         "cantrips": [
           "Light",
