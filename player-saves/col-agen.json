@@ -1,12 +1,12 @@
 {
   "schemaVersion": 1,
   "characterId": "col-agen",
-  "revision": 5,
-  "updatedAt": "2026-09-11T10:57:53.592Z",
+  "revision": 6,
+  "updatedAt": "2026-09-11T10:58:01.023Z",
   "state": {
     "schemaVersion": 1,
     "characterLevel": 2,
-    "revision": 5,
+    "revision": 6,
     "hp": {
       "current": 21,
       "max": 21,
@@ -22,7 +22,7 @@
       "cp": 0,
       "sp": 0,
       "ep": 0,
-      "gp": 60,
+      "gp": 62,
       "pp": 0
     },
     "inventory": [
@@ -133,6 +133,6 @@
       "Backstory": "",
       "Additional Notes": ""
     },
-    "updatedAt": "2026-09-11T10:57:53.592Z"
+    "updatedAt": "2026-09-11T10:58:01.023Z"
   }
 }
