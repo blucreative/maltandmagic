@@ -138,6 +138,19 @@ body.lore-modern .lore-nav-links a[aria-current='page'] { border-bottom: 2px sol
 body.lore-modern.page-campaign3-player-primer { --cream: #182822; --ink: #ede6d5; --ink-soft: #101c19; }
 body.lore-modern.page-campaign3-player-primer .page { box-shadow: 0 16px 60px #0003; border: 1px solid var(--border-mid); border-radius: 12px; overflow: hidden; }
 body.lore-modern.page-campaign3-player-primer .section { box-shadow: none; border-radius: 0; }
+body.lore-modern.page-player-location-guide .section {
+  background: transparent;
+  backdrop-filter: none;
+  border-radius: 0;
+  box-shadow: none;
+}
+body.lore-modern.page-player-location-guide .section-title {
+  min-width: 0;
+  margin: 0;
+  letter-spacing: 0;
+  overflow-wrap: anywhere;
+}
+body.lore-modern.page-player-location-guide .section-line { min-width: 2rem; }
 body.lore-modern.page-auroran-travel-times :is(.planner, .route-card, .panel, .table-wrap) { background: var(--surface); border-radius: 12px; }
 body.lore-modern.page-auroran-travel-times .hero { border-radius: 14px; }
 body.lore-modern.page-pantheon-players-1 {
