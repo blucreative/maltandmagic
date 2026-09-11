@@ -1,4 +1,5 @@
 import { catalog, CLASS_TRAITS, SKILL_ABILITIES, SCALAR_CHOICES, createProgression, deriveCharacter, classEligibility, choiceRequirements, advanceCharacter, modifier, rollHitDie } from './advancement-engine.mjs';
+import { mountUsage, recoverShortRest } from './col-agen-usage.mjs';
 
 const sheet = window.colSheet;
 const button = document.getElementById('advancementButton');
@@ -339,27 +340,37 @@ next.addEventListener('click', async () => {
 const resourceContainer = document.getElementById('innatePips').closest('.panel-body');
 const featureContainer = [...document.querySelectorAll('.panel h2')].find(node => node.textContent === 'Sorcerer Features').nextElementSibling;
 const resourceNames = { innate: 'Innate Sorcery', sorcery: 'Sorcery Points', pact: 'Pact Magic Slots', rage: 'Rage', secondWind: 'Second Wind', actionSurge: 'Action Surge', indomitable: 'Indomitable', focus: 'Focus Points', inspiration: 'Bardic Inspiration', clericChannel: 'Cleric Channel Divinity', paladinChannel: 'Paladin Channel Divinity', wildShape: 'Wild Shape', layOnHands: 'Lay On Hands', favoredEnemy: 'Favored Enemy', sorcerousRestoration: 'Sorcerous Restoration', arcaneShot: 'Arcane Shot (UA 2025)' };
+const usage = mountUsage(sheet, resourceContainer, featureContainer, resourceNames);
+let lastResourceSignature = '';
 
 function render() {
   const saved = sheet.getState();
-  if (!saved.progression) return;
+  if (!saved.progression) { usage.render(); return; }
   const character = deriveCharacter(saved.progression);
   document.getElementById('maxHp').readOnly = true;
-  resourceContainer.replaceChildren();
-  for (const [key, maximum] of Object.entries(character.resources)) {
-    if (!maximum || key === 'hitDice') continue;
-    const row = element('div', undefined, 'advancement-resource');
-    const name = resourceNames[key] || (key.startsWith('initiate-') ? 'Magic Initiate / Free Cast' : key.startsWith('hd') ? `Hit Dice / d${key.slice(2)}` : key.startsWith('slots') ? `Level ${key.slice(5)} Spell Slots` : `Mystic Arcanum ${key.slice(7)}`);
-    const label = element('label', name); label.htmlFor = `advanced-resource-${key}`;
-    const input = element('input'); input.id = label.htmlFor; input.type = 'number'; input.min = '0'; input.max = String(maximum); input.step = '1'; input.value = saved.resources[key];
-    input.addEventListener('change', () => sheet.updatePlay(state => {
-      state.resources[key] = Math.min(maximum, Math.max(0, Math.trunc(Number(input.value)) || 0));
-      state.resources.hitDice = Object.keys(character.hitDice).reduce((sum, die) => sum + state.resources[`hd${die}`], 0);
-    }));
-    row.append(label, input, element('small', `/ ${maximum}`)); resourceContainer.append(row);
+  const resourceSignature = JSON.stringify(character.resources);
+  if (resourceSignature !== lastResourceSignature) {
+    lastResourceSignature = resourceSignature;
+    resourceContainer.replaceChildren();
+    for (const [key, maximum] of Object.entries(character.resources)) {
+      if (!maximum || key === 'hitDice') continue;
+      const row = element('div', undefined, 'advancement-resource');
+      const name = resourceNames[key] || (key.startsWith('initiate-') ? 'Magic Initiate / Free Cast' : key.startsWith('hd') ? `Hit Dice / d${key.slice(2)}` : key.startsWith('slots') ? `Level ${key.slice(5)} Spell Slots` : `Mystic Arcanum ${key.slice(7)}`);
+      const label = element('label', name); label.htmlFor = `advanced-resource-${key}`;
+      const input = element('input'); input.id = label.htmlFor; input.type = 'number'; input.min = '0'; input.max = String(maximum); input.step = '1'; input.value = saved.resources[key];
+      input.addEventListener('change', () => sheet.updatePlay(state => {
+        state.resources[key] = Math.min(maximum, Math.max(0, Math.trunc(Number(input.value)) || 0));
+        state.resources.hitDice = Object.keys(character.hitDice).reduce((sum, die) => sum + state.resources[`hd${die}`], 0);
+      }));
+      row.append(label, input, element('small', `/ ${maximum}`)); resourceContainer.append(row);
+    }
+  }
+  for (const [key, value] of Object.entries(saved.resources)) {
+    const input = document.getElementById(`advanced-resource-${key}`);
+    if (input) input.value = value;
   }
   const signature = JSON.stringify(saved.progression);
-  if (signature === lastRenderedProgression) return;
+  if (signature === lastRenderedProgression) { usage.render(); return; }
   lastRenderedProgression = signature;
   const identity = Object.entries(character.classes).map(([classId, level]) => `${CLASS_TRAITS[classId].name} ${level}`).join(' / ');
   document.querySelector('.identity p').textContent = `Halfling Farmer / ${identity} / Neutral`;
@@ -436,7 +447,8 @@ function render() {
   const spellSummary = document.querySelector('.spell-summary'); spellSummary.replaceChildren();
   for (const casting of character.spellcasting) {
     spellSummary.append(element('span', `${casting.label || CLASS_TRAITS[casting.classId].name}: ${casting.ability} / DC ${casting.dc} / ${signed(casting.attack)}`));
-    for (const name of [...new Set([...casting.cantrips, ...casting.spells, ...casting.granted])]) {
+    const arcanum = casting.classId === 'warlock' ? [6, 7, 8, 9].map(level => character.choices.warlock?.[`arcanum${level}`]).filter(Boolean) : [];
+    for (const name of [...new Set([...casting.cantrips, ...casting.spells, ...casting.granted, ...arcanum])]) {
       const spell = Object.values(catalog.classes).flatMap(entry => entry.spells).find(entry => entry.name === name);
       const article = element('article', undefined, 'spell'); article.append(element('h3', name), element('small', `${CLASS_TRAITS[casting.classId].name} / ${spell ? spell.level ? `Level ${spell.level}` : 'Cantrip' : 'Supplemental'}${casting.granted.includes(name) ? ' / Always prepared' : ''}`, 'meta'));
       if (spell) {
@@ -446,6 +458,7 @@ function render() {
       spellGrid.append(article);
     }
   }
+  usage.render();
 }
 
 async function rest(long) {
@@ -458,6 +471,8 @@ async function rest(long) {
   }
   const dice = await window.chooseRestHitDice?.(Object.entries(character.hitDice).map(([die]) => ({ type: `hd${die}`, label: `d${die}`, size: Number(die), available: saved.resources[`hd${die}`] })));
   if (!dice) return;
+  const current = sheet.getState();
+  const restoreSorcery = current.resources.sorcerousRestoration > 0 && current.resources.sorcery < character.resources.sorcery && confirm(`Use Sorcerous Restoration to recover up to ${Math.floor(character.classes.sorcerer / 2)} Sorcery Points? This use returns on a Long Rest.`);
   sheet.updatePlay(state => {
     for (const die of dice) {
       state.resources[`hd${die.size}`] -= 1;
@@ -465,9 +480,7 @@ async function rest(long) {
       state.hp.current = Math.min(state.hp.max, state.hp.current + Math.max(0, rolled + modifier(character.abilities.Constitution)));
     }
     state.resources.hitDice = Object.keys(character.hitDice).reduce((sum, die) => sum + state.resources[`hd${die}`], 0);
-    for (const key of ['focus', 'actionSurge', 'pact', 'arcaneShot']) if (character.resources[key]) state.resources[key] = character.resources[key];
-    for (const key of ['rage', 'secondWind', 'clericChannel', 'paladinChannel', 'wildShape']) if (character.resources[key]) state.resources[key] = Math.min(character.resources[key], state.resources[key] + 1);
-    if (character.classes.bard >= 5) state.resources.inspiration = character.resources.inspiration;
+    recoverShortRest(state, character, restoreSorcery);
   });
 }
 

@@ -99,6 +99,23 @@ conditional attacks, and all rest/feature interactions are not fully modeled.
 The selectable feat list is currently SRD-based, with Col's Tough preserved as
 a recorded campaign feat. Do not treat a successful save as rules approval.
 
+Col's Cast/Use controls spend the existing `resources` counters through
+`colSheet.updatePlay`, preserving the same local-first cloud save contract in
+both legacy and advanced saves. Ordinary spells share slots, with upcast and
+Pact slot selection; cantrips and rituals spend no slot. Magic Initiate,
+Favored Enemy, and chosen Mystic Arcanum have separate free-cast pools where
+already represented in the progression. Metamagic spends shared Sorcery Points.
+Short Rest recovery includes optional Sorcerous Restoration at Sorcerer 5.
+Undo reverses only the most recent use while the gameplay state is unchanged;
+manual resource controls remain available for corrections.
+
+This tracks expenditure, not ongoing effects or concentration. It does not
+enforce action economy, apply spell effects, or automate every subclass/free-use
+exception. Font of Magic conversions and above-cap created slots are not
+implemented; the existing save schema still caps each resource at its derived
+maximum. Adding active effects or created-slot bookkeeping requires a coordinated
+schema migration and Worker deployment, not local-only fields.
+
 Catalog regeneration is an explicit development step:
 
 ```sh

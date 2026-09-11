@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import vm from 'node:vm';
 import { applyAdvancement } from '../../../assets/js/advancement-engine.mjs';
+import { spendResource, usageCharacter } from '../../../assets/js/col-agen-usage.mjs';
 
 const html = readFileSync(new URL('../../../DnD/col_agen_sheet.html', import.meta.url), 'utf8');
 const script = html.match(/<script>([\s\S]*?)<\/script>/)[1];
@@ -109,6 +110,28 @@ test('gold edited on one device appears on a second device and on return to the 
   await reloaded.run('connectCloud()');
   assert.equal(reloaded.run('state.currency.gp'), 99);
   assert.equal(server.requests.filter(method => method === 'PUT').length, uploads);
+});
+
+test('resource use through the play bridge syncs across devices and respects finalization', async () => {
+  const server = cloud();
+  const first = browser(server.fetch);
+  await first.run('connectCloud()');
+  const spendSlot = state => spendResource(state, usageCharacter(state).resources, 'slots1');
+  first.run('window.colSheet').updatePlay(spendSlot);
+  await first.run('syncCloud()');
+  const second = browser(server.fetch);
+  await second.run('connectCloud()');
+  assert.equal(second.run('state.resources.slots1'), 2);
+  const reloaded = browser(server.fetch, Object.fromEntries(second.storage));
+  assert.equal(reloaded.run('state.resources.slots1'), 2);
+  second.run('window.colSheet.finalizing=true');
+  second.run('window.colSheet').updatePlay(spendSlot);
+  assert.equal(second.run('state.resources.slots1'), 2);
+  second.run('window.colSheet.finalizing=false');
+  second.run('window.colSheet').updatePlay(spendSlot);
+  await second.run('syncCloud()');
+  await first.run('connectCloud()');
+  assert.equal(first.run('state.resources.slots1'), 1);
 });
 
 test('offline local edits conflict with newer cloud data and loading cloud cancels local changes', async () => {
