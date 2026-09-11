@@ -1,2 +1,6 @@
 # Private source repositories and licensed reference material
 **/.private/
+
+# Local Python test / asset-build caches
+__pycache__/
+*.py[cod]

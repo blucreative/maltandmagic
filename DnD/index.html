@@ -367,8 +367,9 @@ body::before {
 </style>
     <link rel='stylesheet' href='../assets/css/theme-fantasy.css'>
     <link rel='stylesheet' href='../assets/css/page-polish.css'>
+    <link rel="stylesheet" href="../assets/css/dnd-lore.css?v=20260911">
 </head>
-<body class='theme-fantasy page-index'>
+  <body class='theme-fantasy page-index lore-modern lore-hub'>
 <div id="root"></div>
 <script type="text/babel">
 
@@ -408,6 +409,12 @@ const SECTIONS = [
         title: 'Day Name Reference',
         desc: 'The names and divine associations of the days of the Ardahlian week.',
         href: 'ardahlian_day_names.html',
+      },
+      {
+        icon: '⌖',
+        title: 'Roads & Travel Times',
+        desc: 'Plan a journey across the Auroran Empire by road, river, and sea, with routes and travel times close at hand.',
+        href: 'auroran-travel-times.html',
       },
     ],
   },
@@ -516,9 +523,9 @@ function DocCard({ doc, theme }) {
   return (
     <a className={`doc-card card-${theme}`} href={doc.href}>
       <div className="card-top">
-        <span className="card-icon">{doc.icon}</span>
-        <span className="card-title">{doc.title}</span>
-        <span className="card-arrow">→</span>
+        <span className="card-icon" aria-hidden="true">{doc.icon}</span>
+        <h3 className="card-title">{doc.title}</h3>
+        <span className="card-arrow" aria-hidden="true">↗</span>
       </div>
       <p className="card-desc">{doc.desc}</p>
     </a>
@@ -527,9 +534,10 @@ function DocCard({ doc, theme }) {
 
 function Section({ section }) {
   return (
-    <div className={`section sec-${section.theme}`}>
+    <section id={section.id} className={`section sec-${section.theme}`} aria-labelledby={`${section.id}-title`}>
       <div className="sec-header">
-        <span className="sec-title">{section.label}</span>
+        <span className="sec-number" aria-hidden="true">{{world: 'I', c3: 'II', tools: 'III', c2: 'IV'}[section.id]}</span>
+        <h2 className="sec-title" id={`${section.id}-title`}>{section.label}</h2>
         {section.tag && <span className="sec-tag">{section.tag}</span>}
         <span className="sec-rule" />
       </div>
@@ -538,54 +546,103 @@ function Section({ section }) {
           <DocCard key={doc.href} doc={doc} theme={section.theme} />
         ))}
       </div>
-    </div>
+    </section>
   );
 }
 
-function Archive({ sections }) {
+function Archive({ sections, searching }) {
   const [isOpen, setIsOpen] = React.useState(false);
+  const expanded = searching || isOpen;
   
   return (
-    <div className="section">
-      <button 
-        className={`archive-toggle${isOpen ? ' open' : ''}`}
+    <div className="section" id="archive">
+      <button type="button"
+        className={`archive-toggle${expanded ? ' open' : ''}`}
+        aria-expanded={expanded}
+        aria-controls="archive-content"
+        disabled={searching}
         onClick={() => setIsOpen(!isOpen)}
       >
         <span className="archive-title">Archived Campaigns</span>
         <span className="archive-rule" />
-        <span className="archive-chevron">▶</span>
+        <span className="archive-chevron" aria-hidden="true">▶</span>
       </button>
-      {isOpen && (
-        <div className="archive-content">
+        <div className="archive-content" id="archive-content" hidden={!expanded}>
           {sections.map(section => (
             <Section key={section.id} section={section} />
           ))}
         </div>
-      )}
     </div>
   );
 }
 
 function App() {
+  const [query, setQuery] = React.useState('');
+  const normalized = query.trim().toLocaleLowerCase();
+  const filterSections = sections => sections.map(section => ({
+    ...section,
+    docs: section.docs.filter(doc => `${section.label} ${doc.title} ${doc.desc}`.toLocaleLowerCase().includes(normalized)),
+  })).filter(section => section.docs.length);
+  const visible = filterSections(SECTIONS);
+  const archived = filterSections(ARCHIVED_SECTIONS);
+  const resultCount = [...visible, ...archived].reduce((total, section) => total + section.docs.length, 0);
   return (
-    <div className="page">
-      <header className="hdr">
-        <a className="hub-back" href="../index.html">&larr; All Game Worlds</a>
-        <span className="hdr-orn">✦  ·  ✦  ·  ✦</span>
-        <div className="hdr-title">Ardahlia Lore Files</div>
-        <div className="hdr-sub">A living archive of the world of the campaign</div>
-        <p className="hdr-intro">
-          Select a document below to explore the history, faith, and lore of Ardahlia.
-          World lore is open to all; campaign-specific entries are for players currently in that arc.
-        </p>
+    <>
+      <a className="lore-skip" href="#library">Skip to the library</a>
+      <nav className="lore-nav" aria-label="Site navigation">
+        <a className="lore-brand" href="../index.html"><span aria-hidden="true">✦</span> Malt &amp; Magic</a>
+        <div className="lore-nav-links">
+          <a href="index.html" aria-current="page">D&amp;D Lore</a>
+          <a href="../index.html">All worlds ↗</a>
+        </div>
+      </nav>
+      <header className="atlas-hero">
+        <div>
+          <p className="atlas-eyebrow">The campaign library · Dungeons &amp; Dragons</p>
+          <h1>The world of <em>Ardahlia.</em></h1>
+          <p className="atlas-intro">Gods with a thousand names. Roads that cross an empire.
+            Stories still being written. Open the atlas and find your place in the world.</p>
+          <div className="atlas-actions">
+            <a className="atlas-primary" href="#library">Explore the library <span aria-hidden="true">↓</span></a>
+            <a href="Campaign3_PlayerPrimer.html">Start with the player primer <span aria-hidden="true">↗</span></a>
+          </div>
+        </div>
+        <aside className="atlas-plaque" aria-label="Explore the empire">
+          <p className="atlas-eyebrow">A traveller’s companion</p>
+          <strong>The Auroran Empire</strong>
+          <p>Five regions. Countless stories. Discover the settlements and roads beyond the horizon.</p>
+          <a href="player-location-guide.html">Unfold the location guide ↗</a>
+        </aside>
       </header>
-
-      {SECTIONS.map(s => <Section key={s.id} section={s} />)}
-      
-      <Archive sections={ARCHIVED_SECTIONS} />
-
-      <div className="orn">✦ · ✦ · ✦</div>
-    </div>
+      <main className="page" id="library" tabIndex="-1">
+        <div className="library-tools">
+          <div className="library-search">
+            <label htmlFor="lore-search">Find a folio</label>
+            <input id="lore-search" type="search" placeholder="Faith, places, characters…" value={query}
+              onChange={event => setQuery(event.target.value)} aria-describedby="library-count" />
+          </div>
+          <nav className="library-links" aria-label="Library collections">
+            {visible.map(section => <a key={section.id} href={`#${section.id}`}>{section.label}</a>)}
+            {archived.length > 0 && <a href="#archive">Archive</a>}
+          </nav>
+        </div>
+        <p id="library-count" className="library-count" role="status">
+          {normalized ? `${resultCount} matching ${resultCount === 1 ? 'folio' : 'folios'} · including the archive` : 'World lore is open to all. Campaign entries belong to their respective player groups.'}
+        </p>
+        {visible.map(section => <Section key={section.id} section={section} />)}
+        {archived.length > 0 && <Archive sections={archived} searching={Boolean(normalized)} />}
+        {resultCount === 0 && <div className="library-empty">
+          <h2>No folios found</h2>
+          <p>Try a deity, a place, a character name, or a broader subject.</p>
+          <button type="button" onClick={() => { setQuery(''); document.getElementById('lore-search').focus(); }}>Clear search</button>
+        </div>}
+        <footer className="library-footer">
+          <strong>Ardahlia Lore Files</strong>
+          <span>A living archive · Malt &amp; Magic</span>
+          <a href="../index.html">Return to all game worlds ↗</a>
+        </footer>
+      </main>
+    </>
   );
 }
 

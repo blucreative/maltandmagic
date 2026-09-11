@@ -1,0 +1,301 @@
+/* Opt-in lore styling. Character sheets and other game worlds are unaffected. */
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Manrope:wght@400;500;600;700;800&display=swap');
+
+body.lore-modern {
+  color-scheme: dark;
+  --lore-serif: 'Cormorant Garamond', Georgia, serif;
+  --lore-ui: 'Manrope', system-ui, sans-serif;
+  --bg: #101c19;
+  --deep: #101c19;
+  --surface: #182822;
+  --surface2: #20322b;
+  --surface3: #2c4136;
+  --raised: #20322b;
+  --bg-raised: #182822;
+  --bg-card: #1b2d26;
+  --bg-hover: #263a30;
+  --bg-active: #30473a;
+  --border: #b6a37b30;
+  --border-mid: #b6a37b50;
+  --border-hi: #c9af788f;
+  --border-light: #b6a37b70;
+  --gold: #c4a66a;
+  --gold-lt: #e4cca0;
+  --gold-light: #e4cca0;
+  --gold-bright: #e4cca0;
+  --txt: #ede6d5;
+  --txt2: #c3c3ae;
+  --txt3: #a7b19f;
+  --text: #ede6d5;
+  --text-mid: #c3c3ae;
+  --text-dim: #b2bca9;
+  --text-faint: #a7b19f;
+  --text-link: #e4cca0;
+  --muted: #b2bca9;
+  --fantasy-bg: var(--bg);
+  --fantasy-panel: var(--surface);
+  --fantasy-panel-border: var(--border-mid);
+  --fantasy-text: var(--text);
+  --fantasy-accent-strong: #e4cca0;
+  --fantasy-link: #e4cca0;
+  --fantasy-link-hover: #fff0ce;
+  --fantasy-shadow: 0 6px 24px #06110b26;
+  margin: 0;
+  background: radial-gradient(ellipse at 15% 0%, #345b3d38, transparent 55%), var(--bg);
+  color: var(--text);
+  font-size: 17px;
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+}
+body.lore-modern::before { background-image: none; opacity: 0; }
+body.lore-modern :is(h1, h2, h3, h4, .hdr-title, .header-title, .cal-title) { text-shadow: none; }
+body.lore-modern :is(.hdr-title, .header-title, .cal-title, .masthead h1) {
+  font-family: var(--lore-serif);
+  font-weight: 600;
+  font-style: normal;
+  font-size: clamp(2.6rem, 5.5vw, 4.5rem);
+  letter-spacing: -.025em;
+  line-height: 1.08;
+}
+body.lore-modern :is(.hdr, .cal-header, .masthead, .page-header) {
+  padding-block: clamp(2rem, 5vw, 4rem);
+  border-bottom: 1px solid var(--border-mid);
+}
+body.lore-modern :is(.hdr-sub, .cal-sub) { font-size: 1.1rem; letter-spacing: .015em; }
+body.lore-modern :is(.hdr-orn, .cal-eyebrow, .ctrl-label, .flbl, .count-line) { color: var(--txt3); opacity: 1; }
+body.lore-modern :is(.page, .page-wrap, .shell) { min-width: 0; }
+body.lore-modern :is(.card, .deity-card, .day-card, .month-card, .city-card, .route-card, .panel) {
+  border-radius: 12px;
+  box-shadow: 0 4px 20px #07130b24;
+}
+body.lore-modern :is(.detail, #tooltip, #modal) { position: fixed; }
+body.lore-modern :is(.detail, #modal-panel) { box-shadow: 0 -12px 60px #0006; }
+body.lore-modern :is(.detail, .ctrl-wrap, .filter-bar) { border-color: var(--border-mid); }
+body.lore-modern :is(button, input, select, textarea) { font-family: var(--lore-ui); }
+body.lore-modern :is(button, input, select) { min-height: 44px; }
+body.lore-modern button {
+  background: var(--surface2);
+  border: 1px solid var(--border-mid);
+  color: var(--text);
+  box-shadow: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+/* Keep selected states explicit: the legacy theme otherwise overrides them. */
+body.lore-modern button:is(.on, .active, [aria-pressed='true']) {
+  background: #3b513b;
+  border-color: #c4a66a;
+  color: #fff0ce;
+  box-shadow: inset 0 -2px #c4a66a;
+}
+body.lore-modern button:hover { filter: brightness(1.12); }
+body.lore-modern :is(input, select, textarea) {
+  background-color: var(--bg);
+  border-color: var(--border-mid);
+  color: var(--text);
+  border-radius: 6px;
+  font-size: 1rem;
+}
+body.lore-modern input::placeholder { color: var(--txt3); opacity: 1; }
+body.lore-modern :is(a, button, input, select, textarea, [tabindex]):focus-visible {
+  outline: 2px solid #ddbd7b;
+  outline-offset: 4px;
+  box-shadow: 0 0 0 4px #101c19;
+}
+body.lore-modern :is(.fp, .pill, .filter-btn, .s-btn, .vbtn) { font-size: .72rem; letter-spacing: .025em; }
+body.lore-modern :is(.tbl-wrap, .table-wrap) { border-radius: 10px; border: 1px solid var(--border-mid); }
+body.lore-modern table { font-variant-numeric: tabular-nums; }
+body.lore-modern :is(th, td) { border-color: var(--border); }
+body.lore-modern .lore-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem max(1.25rem, calc((100% - 1160px) / 2));
+  border-bottom: 1px solid #dcc59640;
+  background: #14271f;
+  color: #f5ecd9;
+  font-family: var(--lore-ui);
+}
+body.lore-modern .lore-nav a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  color: #ece3cc;
+  font: 600 .75rem/1.5 var(--lore-ui);
+  letter-spacing: .025em;
+  text-transform: none;
+  text-decoration: none;
+}
+body.lore-modern .lore-nav .lore-brand { gap: .65rem; font: 600 1.6rem/1 var(--lore-serif); }
+body.lore-modern .lore-brand span { color: #d0b478; }
+body.lore-modern .lore-nav a:hover { color: #f4d28a; }
+body.lore-modern .lore-nav-links { display: flex; gap: 1.5rem; }
+body.lore-modern .lore-nav-links a[aria-current='page'] { border-bottom: 2px solid #d0b478; }
+
+/* The primer uses --cream for its page background, unlike the travel guide. */
+body.lore-modern.page-campaign3-player-primer { --cream: #182822; --ink: #ede6d5; --ink-soft: #101c19; }
+body.lore-modern.page-campaign3-player-primer .page { box-shadow: 0 16px 60px #0003; border: 1px solid var(--border-mid); border-radius: 12px; overflow: hidden; }
+body.lore-modern.page-campaign3-player-primer .section { box-shadow: none; border-radius: 0; }
+body.lore-modern.page-auroran-travel-times :is(.planner, .route-card, .panel, .table-wrap) { background: var(--surface); border-radius: 12px; }
+body.lore-modern.page-auroran-travel-times .hero { border-radius: 14px; }
+body.lore-modern.page-pantheon-players-1 {
+  --blue-bright: #a9bdc7;
+  --know-text: #7ba4e8; --life-text: #60c88a; --light-text: #e8b460;
+  --trick-text: #b07ae8; --war-text: #e87a7a; --pest-text: #60c8b8;
+  --arch-text: #c080d8; --cel-text: #e8c060; --fnd-text: #e87070;
+  --goo-text: #60c890; --ves-text: #80b0f0;
+}
+body.lore-modern.page-ardahlian-day-names .card-grid { grid-template-columns: repeat(auto-fit, minmax(min(100%, 440px), 1fr)); }
+body.lore-modern.page-codex-lore { padding: 0 0 2rem; }
+body.lore-modern.page-codex-lore .page { width: calc(100% - 2.5rem); margin-block: 1.5rem; color: #3c3526; }
+body.lore-modern.page-codex-lore .title { color: #334d36; font: 600 clamp(2rem, 4vw, 3rem)/1.1 var(--lore-serif); }
+body.lore-modern.page-codex-lore .chapter-toggle { background: #f4eedd; border: 0; border-radius: 0; color: #463b25; }
+body.lore-modern.page-codex-lore .chapter-toggle:hover { background: #e9e3cf; filter: none; }
+body.lore-modern.page-codex-lore .chapter-title { color: #334d36; }
+body.lore-modern.page-codex-lore .chapter-toggle:focus-visible { outline-color: #6f5227; outline-offset: -4px; box-shadow: none; }
+body.lore-modern.page-campaign2-epilogue-guide { --navy: #101c19; --navy-mid: #182822; --navy-card: #20322b; --navy-border: #b6a37b50; --silver-dim: #a7b19f; }
+
+/* The library: parchment pages framed by a forest-green atlas cover. */
+body.lore-hub {
+  color-scheme: light;
+  --bg: #f3f0e7;
+  --surface: #fdfbf5;
+  --surface2: #eaeade;
+  --text: #22392e;
+  --txt: #22392e;
+  --txt2: #546251;
+  --txt3: #66725f;
+  --gold: #846332;
+  --gold-lt: #375b3f;
+  --border: #d8d7c5;
+  --border-mid: #bec5af;
+  --fantasy-panel: transparent;
+  --fantasy-accent-strong: #22392e;
+  --fantasy-link: #244b35;
+  --fantasy-link-hover: #6d4e22;
+  background: #f3f0e7;
+  font-family: var(--lore-ui);
+}
+body.lore-hub .lore-skip { position: absolute; top: -100px; left: 1rem; padding: .75rem; background: #fff7df; z-index: 100; }
+body.lore-hub .lore-skip:focus { top: 1rem; }
+body.lore-hub .atlas-hero {
+  position: relative;
+  isolation: isolate;
+  display: grid;
+  grid-template-columns: minmax(0, 1.25fr) minmax(220px, .75fr);
+  gap: 3rem;
+  align-items: center;
+  min-height: 440px;
+  padding: 4.5rem max(1.5rem, calc((100% - 1160px) / 2));
+  background: #173326;
+  color: #f5eedc;
+  border-bottom: 4px solid #b69b60;
+}
+body.lore-hub .atlas-hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(90deg, #10291ff5, #10291fba 55%, #10291f26), url('../images/auroran-lore-hero.webp') center 50% / cover;
+}
+body.lore-hub .atlas-eyebrow { font: 700 .68rem/1.5 var(--lore-ui); letter-spacing: .2em; text-transform: uppercase; color: #dfc58a; }
+body.lore-hub .atlas-hero h1 { margin: .9rem 0 1.1rem; font: 500 clamp(3.3rem, 6.5vw, 5.8rem)/.95 var(--lore-serif); letter-spacing: -.035em; color: #fff8e7; }
+body.lore-hub .atlas-hero h1 em { display: block; font-weight: 500; color: #e4c888; }
+body.lore-hub .atlas-intro { max-width: 51ch; color: #e0e7d8; font-size: .9rem; line-height: 1.9; }
+body.lore-hub .atlas-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 1.4rem; margin-top: 1.8rem; }
+body.lore-hub .atlas-actions a { display: inline-flex; align-items: center; min-height: 48px; gap: 2rem; color: #f7ecd5; font-size: .78rem; font-weight: 700; text-decoration: none; }
+body.lore-hub .atlas-actions .atlas-primary { padding: .75rem 1.2rem; border-radius: 4px; background: #dfc58a; color: #20382a; }
+body.lore-hub .atlas-actions a:hover { text-decoration: underline; text-underline-offset: 5px; }
+body.lore-hub .atlas-plaque { justify-self: end; align-self: end; max-width: 300px; padding: 1.5rem; border: 1px solid #ddc79870; background: #112b23e8; outline: 1px solid #ddc79840; outline-offset: -7px; }
+body.lore-hub .atlas-plaque strong { display: block; margin: .6rem 0; font: 500 1.9rem/1.15 var(--lore-serif); color: #f4e4c0; }
+body.lore-hub .atlas-plaque p { font-size: .76rem; color: #ccd4bd; }
+body.lore-hub .atlas-plaque a { display: inline-flex; align-items: center; min-height: 44px; color: #e4c888; font-size: .72rem; text-underline-offset: 5px; }
+body.lore-hub .page { max-width: 1240px; padding: 0 2.5rem 2rem; background: transparent; box-shadow: none; border-radius: 0; }
+body.lore-hub .library-tools { display: flex; align-items: center; justify-content: space-between; gap: 1.5rem; padding-block: 1.7rem; border-bottom: 1px solid var(--border); }
+body.lore-hub .library-search { display: flex; align-items: center; gap: .7rem; flex: 0 1 390px; }
+body.lore-hub .library-search label { color: #55634f; font-size: .75rem; font-weight: 700; }
+body.lore-hub .library-search input { width: 100%; min-width: 0; padding: .75rem 1rem; background: #fffdf7; border: 1px solid #b7bfaa; font-size: .82rem; }
+body.lore-hub .library-count { font-size: .72rem; color: var(--txt2); }
+body.lore-hub .library-links { display: flex; flex-wrap: wrap; gap: 1rem; }
+body.lore-hub .library-links a { min-height: 44px; display: inline-flex; align-items: center; font-size: .72rem; font-weight: 700; text-decoration: none; border-bottom: 1px solid transparent; }
+body.lore-hub .library-links a:hover { border-color: currentColor; }
+body.lore-hub .section { margin: 0; padding-block: 2.5rem; background: none; box-shadow: none; scroll-margin-top: 1rem; }
+body.lore-hub .sec-header { align-items: center; border: 0; padding: 0; margin-bottom: 1.2rem; gap: 1rem; }
+body.lore-hub .sec-title { margin: 0; font: 600 2rem/1.15 var(--lore-serif); text-transform: none; letter-spacing: -.02em; color: #22392e; }
+body.lore-hub .sec-number { font: 500 1.5rem/1 var(--lore-serif); color: #78866a; }
+body.lore-hub .sec-tag { font: 600 .6rem/1.5 var(--lore-ui); padding: .3rem .65rem; border-radius: 20px; background: #e5e9dd; color: #405b3e; border-color: #c5ceb8; letter-spacing: .02em; }
+body.lore-hub .sec-rule { background: var(--border); }
+body.lore-hub .card-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1rem; }
+body.lore-hub .doc-card { display: flex; flex-direction: column; min-width: 0; padding: 1.5rem; background: #fdfbf5; border: 1px solid #d8d7c5; border-radius: 8px; transition: transform .18s, box-shadow .18s, border-color .18s; }
+body.lore-hub .doc-card::before { background: #9a7943; }
+body.lore-hub .doc-card:hover { background: #fffef9; border-color: #8d9c7e; box-shadow: 0 8px 25px #30432a12; transform: translateY(-3px); }
+body.lore-hub .card-top { align-items: flex-start; flex-wrap: wrap; gap: 1rem; margin: 0 0 .7rem; }
+body.lore-hub .card-icon { display: grid; place-items: center; width: 38px; height: 38px; background: #eef0e5; border: 1px solid #d9dfce; border-radius: 50%; color: #65794e; opacity: 1; font-size: 1.1rem; }
+body.lore-hub .card-arrow { margin-left: auto; color: #748468; padding-top: .35rem; }
+body.lore-hub .card-title { order: 3; flex: 0 0 100%; font: 600 1.5rem/1.2 var(--lore-serif); color: #203f2d; letter-spacing: -.01em; }
+body.lore-hub .doc-card:hover .card-title { color: #5b6b35; }
+body.lore-hub .card-desc { margin: 0; padding: 0; font: 400 .78rem/1.85 var(--lore-ui); color: #586550; }
+body.lore-hub .sec-tools .card-grid { grid-template-columns: repeat(5, minmax(0, 1fr)); }
+body.lore-hub .sec-tools .doc-card { padding: 1.2rem; }
+body.lore-hub .sec-tools .card-title { font-size: 1.3rem; }
+body.lore-hub .sec-tools .card-desc { font-size: .72rem; }
+body.lore-hub .section .archive-toggle { border-radius: 8px; background: #e9ebdf; padding: 1rem 1.3rem; border-color: #cdd3bf; }
+body.lore-hub .archive-title { color: #43543c; font: 600 .75rem/1.5 var(--lore-ui); letter-spacing: .06em; }
+body.lore-hub .archive-content { max-height: none; overflow: visible; }
+body.lore-hub .archive-content[hidden] { display: none; }
+body.lore-hub .archive-content .section { padding-block: 1rem; }
+body.lore-hub .library-empty { padding: 3rem 1rem; text-align: center; border: 1px dashed #aab79d; border-radius: 8px; margin-top: 2rem; }
+body.lore-hub .library-empty h2 { font: 600 2rem var(--lore-serif); }
+body.lore-hub .library-empty p { color: var(--txt2); font-size: .85rem; }
+body.lore-hub .library-empty button { padding: .75rem 1rem; color: #243b2b; background: #e0e7d5; }
+body.lore-hub .library-footer { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; border-top: 1px solid #cdd3bf; padding-block: 1.5rem; font-size: .7rem; color: #5f6a55; }
+body.lore-hub .library-footer strong { font: 600 1.35rem var(--lore-serif); color: #314a34; }
+body.lore-hub .library-footer a { display: inline-flex; align-items: center; min-height: 44px; }
+body.lore-hub :is(a, button, input):focus-visible { outline-color: #6f5227; box-shadow: 0 0 0 4px #f3f0e7; }
+
+@media (max-width: 900px) {
+  body.lore-hub .atlas-hero { gap: 2rem; padding-block: 3rem; }
+  body.lore-hub .library-tools { flex-wrap: wrap; }
+  body.lore-hub .card-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  body.lore-hub .sec-tools .card-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+@media (max-width: 600px) {
+  body.lore-modern.page-auroran-pantheon .search-row { flex-wrap: wrap; }
+  body.lore-modern.page-auroran-pantheon .search-in { flex: 1 1 160px; min-width: 0; }
+  body.lore-modern.page-auroran-pantheon .grid { grid-template-columns: repeat(auto-fit, minmax(min(100%, 275px), 1fr)); }
+  body.lore-modern.page-ardahlian-day-names .week-strip,
+  body.lore-modern.page-ardahlia-calendar .week-banner { grid-template-columns: repeat(5, minmax(0, 1fr)); }
+  body.lore-modern.page-ardahlian-day-names .card-head { flex-wrap: wrap; }
+  body.lore-modern.page-ardahlian-day-names .card-num-name { flex-wrap: wrap; }
+  body.lore-modern .lore-nav { padding: .65rem 1rem; gap: .5rem; }
+  body.lore-modern .lore-nav .lore-brand { font-size: 1.3rem; }
+  body.lore-modern .lore-nav-links { gap: .8rem; }
+  body.lore-modern .lore-nav-links a { font-size: .65rem; }
+  body.lore-hub .atlas-hero { grid-template-columns: 1fr; gap: 1.5rem; padding: 2.5rem 1.25rem; }
+  body.lore-hub .atlas-hero::before { background-position: 60% center; }
+  body.lore-hub .atlas-plaque { justify-self: stretch; max-width: none; padding: 1.1rem; }
+  body.lore-hub .atlas-plaque strong { font-size: 1.5rem; }
+  body.lore-hub .atlas-intro { font-size: .82rem; }
+  body.lore-hub .page { padding-inline: 1.25rem; }
+  body.lore-hub .library-tools { gap: .7rem; padding-block: 1.2rem; }
+  body.lore-hub .library-search { flex-basis: 100%; }
+  body.lore-hub .library-links { gap: 1.1rem; }
+  body.lore-hub .card-grid, body.lore-hub .sec-tools .card-grid { grid-template-columns: 1fr; }
+  body.lore-hub .section { padding-block: 1.6rem; }
+  body.lore-hub .sec-header { flex-wrap: wrap; gap: .6rem; }
+  body.lore-hub .sec-title { font-size: 1.8rem; }
+  body.lore-hub .sec-rule { display: none; }
+  body.lore-hub .doc-card { padding: 1.25rem; }
+}
+@media (prefers-reduced-motion: reduce) {
+  body.lore-modern *, body.lore-modern *::before, body.lore-modern *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+}
+@media print {
+  body.lore-modern { background: white; color: black; }
+  body.lore-modern .lore-nav, body.lore-hub :is(.library-tools, .atlas-actions, .atlas-plaque, .lore-skip) { display: none; }
+  body.lore-hub .atlas-hero { min-height: 0; padding: 1rem; background: white; display: block; }
+  body.lore-hub .atlas-hero::before { display: none; }
+  body.lore-hub .atlas-hero :is(h1, em, p) { color: black; }
+  body.lore-hub .doc-card { break-inside: avoid; }
+}
