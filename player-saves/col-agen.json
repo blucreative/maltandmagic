@@ -1,12 +1,12 @@
 {
   "schemaVersion": 1,
   "characterId": "col-agen",
-  "revision": 15,
-  "updatedAt": "2026-09-11T12:58:21.898Z",
+  "revision": 16,
+  "updatedAt": "2026-09-11T12:58:31.456Z",
   "state": {
     "schemaVersion": 1,
     "characterLevel": 2,
-    "revision": 15,
+    "revision": 16,
     "hp": {
       "current": 21,
       "max": 21,
@@ -138,7 +138,7 @@
       "Backstory": "",
       "Additional Notes": ""
     },
-    "updatedAt": "2026-09-11T12:58:21.898Z",
+    "updatedAt": "2026-09-11T12:58:31.456Z",
     "advancementDraft": {
       "id": "70692950-0a40-4641-887f-de7bc94ec9ec",
       "baseLevel": 2,
@@ -167,7 +167,7 @@
       },
       "hpRoll": null,
       "milestone": false,
-      "step": 1
+      "step": 2
     }
   }
 }
