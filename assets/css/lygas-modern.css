@@ -1,0 +1,141 @@
+@import url('https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700&display=swap');
+
+body.page-lygas-cantor-sheet {
+  --briar-dark: #f7f5f7;
+  --briar-mid: #f1edf2;
+  --briar-panel: #ffffff;
+  --briar-border: #ddd5de;
+  --briar-accent: #704b80;
+  --gold: #8a405f;
+  --gold-light: #68354d;
+  --gold-dim: #947487;
+  --rose: #963f68;
+  --rose-dim: #80506a;
+  --parchment: #342d37;
+  --parchment-dark: #605460;
+  --text-primary: #342d37;
+  --text-secondary: #605460;
+  --text-dim: #746776;
+  --danger: #a02e39;
+  --danger-light: #a02e39;
+  --success: #24664a;
+  --success-light: #24664a;
+  --section-bg: #ffffff;
+  --card-bg: #ffffff;
+  --card-border: #ddd5de;
+  --tooltip-bg: #ffffff;
+  --steel: #46637a;
+  --steel-dim: #5e7182;
+  --ember: #975b35;
+  --locked-bg: #f1eff2;
+  --locked-border: #ddd5de;
+  --class-tint: #f5ecf0;
+  --forest-panel: var(--briar-panel);
+  --forest-border: var(--briar-border);
+  --fantasy-panel: #ffffff;
+  --fantasy-panel-border: #ddd5de;
+  --fantasy-shadow: none;
+  background: linear-gradient(180deg,#f2e9ef 0,#f8f7f9 320px,#f8f7f9 100%);
+  color: var(--text-primary);
+  font-family: 'Sora',sans-serif;
+  font-size: 13px;
+  line-height: 1.6;
+}
+body.page-lygas-cantor-sheet::before,body.page-lygas-cantor-sheet::after,.page-lygas-cantor-sheet .sheet-header::after { display: none; }
+body.page-lygas-cantor-sheet :is(h1,h2,h3,button,input,textarea,select,.char-name,.char-sub,.hstat-val,.hstat-lbl,.panel-title,.ability-label,.ability-score,.ability-mod,.save-val,.skill-val,.skill-attr,.cs-val,.cs-label,.weapon-hit,.weapon-dmg,.weapon-badge,.feature-source,.spell-level-badge,.spell-slot-label,.pact-slot-label,.pact-note,.resource-label,.class-divider,.status-pill,.passive-val,.currency-value,.quantity-label,.item-name,.item-note,.item-type,.item-tag,.item-qty,.item-weight,.hud-title,.hud-sub,.prof-section-title) { font-family: 'Sora',sans-serif; letter-spacing: 0; text-shadow: none; }
+.page-lygas-cantor-sheet .sheet-header { padding: 32px 24px 24px; background: transparent; border: 0; }
+.page-lygas-cantor-sheet :is(.header-inner,.sheet-body) { max-width: 1400px; }
+.page-lygas-cantor-sheet .header-inner { gap: 24px; align-items: center; }
+.page-lygas-cantor-sheet .char-name { color: var(--text-primary); font-size: 32px; line-height: 1.2; }
+.page-lygas-cantor-sheet .char-sub { display: block; padding: 0; font-size: 12px; text-transform: none; line-height: 1.7; margin-top: 8px; }
+.page-lygas-cantor-sheet .hstat { padding: 10px; background: #fff; border-color: var(--card-border); }
+.page-lygas-cantor-sheet .hstat-val { font-size: 20px; }
+.page-lygas-cantor-sheet .hstat-lbl { font-size: 10px; }
+.page-lygas-cantor-sheet .header-nav { flex-wrap: wrap; }
+.page-lygas-cantor-sheet .nav-link { min-height: 40px; padding: 8px 10px; display: inline-flex; align-items: center; color: var(--gold); letter-spacing: 0; }
+.page-lygas-cantor-sheet .tab-bar { position: sticky; top: 0; z-index: 100; background: #f8f7f9; border-block: 1px solid var(--card-border); padding: 0 16px; }
+body.page-lygas-cantor-sheet .tab-btn { background: transparent; color: var(--text-secondary); border: 0; border-bottom: 3px solid transparent; border-radius: 0; min-height: 48px; padding: 12px 18px; text-transform: none; font-size: 12px; box-shadow: none; }
+body.page-lygas-cantor-sheet .tab-btn.active { color: var(--gold); border-bottom-color: var(--gold); background: transparent; text-shadow: none; }
+body.page-lygas-cantor-sheet .tab-btn:hover { background: var(--class-tint); }
+.page-lygas-cantor-sheet .sheet-body { padding: 24px; }
+body.page-lygas-cantor-sheet .panel { background: transparent; border: 0; border-radius: 0; box-shadow: none; backdrop-filter: none; overflow: visible; }
+.page-lygas-cantor-sheet .panel-header { background: transparent; border-bottom: 1px solid var(--card-border); padding: 12px 0; }
+.page-lygas-cantor-sheet .panel-title { color: var(--text-secondary); font-size: 11px; font-weight: 600; }
+.page-lygas-cantor-sheet .panel-body { padding: 16px 0; }
+.page-lygas-cantor-sheet .ability-grid { gap: 10px; }
+.page-lygas-cantor-sheet :is(.ability-block,.combat-stat) { background: #fff; border: 1px solid var(--card-border); border-radius: 6px; padding: 14px 8px; }
+.page-lygas-cantor-sheet .ability-label { font-size: 10px; }
+.page-lygas-cantor-sheet .ability-score { font-size: 28px; line-height: 1.4; }
+.page-lygas-cantor-sheet .ability-mod { font-size: 14px; }
+.page-lygas-cantor-sheet :is(.save-row,.skill-row) { min-height: 32px; padding-block: 5px; }
+.page-lygas-cantor-sheet .skill-attr { font-size: 10px; }
+.page-lygas-cantor-sheet :is(.save-val,.skill-val) { font-size: 13px; }
+.page-lygas-cantor-sheet .weapon-row { padding: 14px 0; border-color: var(--card-border); grid-template-columns: minmax(0,1fr) auto auto auto; }
+.page-lygas-cantor-sheet .weapon-name { font-size: 14px; }
+.page-lygas-cantor-sheet .weapon-badge { background: var(--class-tint); font-size: 10px; }
+.page-lygas-cantor-sheet :is(.hex-indicator,.condition-effects,.action-filter) { background: #f1edf5; border-color: #d8c9df; }
+.page-lygas-cantor-sheet .hex-indicator { flex-wrap: wrap; }
+.page-lygas-cantor-sheet .hex-dot { box-shadow: none; }
+.page-lygas-cantor-sheet .condition-effects .ce-adv { color: var(--success); }
+body.page-lygas-cantor-sheet :is(input,textarea,select,.inventory-input) { background: #fff; color: var(--text-primary); border: 1px solid var(--card-border); border-radius: 4px; min-height: 44px; min-width: 0; max-width: 100%; }
+body.page-lygas-cantor-sheet button { box-shadow: none; }
+body.page-lygas-cantor-sheet :is(.cast-btn,.rest-btn,.equip-btn,.exh-btn,.currency-adjust-btn,.inventory-add-btn,.inventory-remove-btn,.action-filter-btn) { background: #fff; color: var(--gold); border: 1px solid var(--card-border); border-radius: 4px; min-height: 40px; text-transform: none; font-size: 11px; }
+body.page-lygas-cantor-sheet :is(.cast-btn:not(.end),.equip-btn.equipped,.inventory-add-btn,.action-filter-btn.active) { background: var(--gold); color: #fff; border-color: var(--gold); }
+body.page-lygas-cantor-sheet :is(.cast-btn.end,.inventory-remove-btn) { color: var(--danger); }
+body.page-lygas-cantor-sheet button:disabled { opacity: .5; cursor: not-allowed; }
+.page-lygas-cantor-sheet :is(.spell-card,.feature-card) { background: #fff; border: 1px solid var(--card-border); border-radius: 6px; padding: 16px; margin-bottom: 14px; box-shadow: none; }
+.page-lygas-cantor-sheet .spell-card.prepared { border-left: 3px solid var(--gold); }
+.page-lygas-cantor-sheet .spell-card.cantrip { border-left: 3px solid var(--steel); }
+.page-lygas-cantor-sheet :is(.spell-card.effect-active,.feature-card.effect-active) { border-left: 3px solid var(--briar-accent); background: #f5f1f8; box-shadow: none; }
+.page-lygas-cantor-sheet .feature-card.locked { opacity: 1; background: var(--locked-bg); border-style: dashed; }
+.page-lygas-cantor-sheet :is(.feature-name,.spell-name) { font-size: 14px; }
+.page-lygas-cantor-sheet .feature-summary { line-height: 1.65; }
+.page-lygas-cantor-sheet :is(.spell-header,.feature-header,.spell-actions,.action-filter) { flex-wrap: wrap; }
+.page-lygas-cantor-sheet :is(.spell-name,.feature-name) { min-width: 0; overflow-wrap: anywhere; }
+.page-lygas-cantor-sheet .spell-meta { font-size: 12px; gap: 8px; }
+.page-lygas-cantor-sheet :is(.spell-level-badge,.feature-source,.resource-label,.pact-note,.pact-slot-label) { font-size: 10px; }
+.page-lygas-cantor-sheet .status-pill { background: #e8f1eb; color: var(--success); border-color: #a3c1af; border-radius: 4px; }
+.page-lygas-cantor-sheet .status-pill.conc { background: #eee7f4; color: var(--briar-accent); border-color: #bda4ca; }
+.page-lygas-cantor-sheet .status-pill.off { background: #f1eff2; color: var(--text-secondary); border-color: var(--card-border); }
+.page-lygas-cantor-sheet :is(.resource-pip,.slot-pip) { width: 22px; height: 22px; flex: 0 0 22px; }
+.page-lygas-cantor-sheet :is(.resource-pip.available,.slot-pip.available) { background: var(--gold); border-color: var(--gold); }
+.page-lygas-cantor-sheet :is(.resource-pip.used,.slot-pip.used) { background: #f1eff2; border-color: var(--text-dim); }
+.page-lygas-cantor-sheet .condition-badge { min-height: 36px; display: inline-flex; align-items: center; text-transform: none; font-size: 11px; letter-spacing: 0; }
+.page-lygas-cantor-sheet .condition-badge.inactive { opacity: 1; background: #f1eff2; color: var(--text-secondary); }
+.page-lygas-cantor-sheet .condition-badge.active { background: #fae7e9; color: var(--danger); border-color: #c78890; }
+.page-lygas-cantor-sheet .rules-control-pair { display: inline-flex; align-items: center; max-width: 100%; background: #f1eff2; border: 1px solid var(--briar-border); border-radius: 4px; }
+.page-lygas-cantor-sheet .rules-control-pair:has(.condition-badge.active) { background: #fae7e9; border-color: #c78890; }
+body.page-lygas-cantor-sheet .rules-control-pair .condition-badge { background: transparent; border: 0; font-family: 'Sora',sans-serif; }
+body.page-lygas-cantor-sheet .rules-control-pair .archibold-rules-help { background: transparent; border: 0; margin-left: 0; box-shadow: none; }
+body.page-lygas-cantor-sheet :is(.inventory-hud,.currency-bar,.inventory-builder,.inventory-empty) { background: var(--class-tint); border-color: var(--card-border); border-radius: 0; box-shadow: none; }
+body.page-lygas-cantor-sheet .inventory-grid { grid-template-columns: repeat(auto-fit,minmax(min(280px,100%),1fr)); gap: 16px; }
+body.page-lygas-cantor-sheet .item-card { background: #fff; border: 1px solid var(--card-border); border-radius: 6px; box-shadow: none; }
+body.page-lygas-cantor-sheet .item-card.signature { border-color: #b491a2; box-shadow: none; }
+body.page-lygas-cantor-sheet .item-card.magic { border-color: #b09abc; box-shadow: none; }
+body.page-lygas-cantor-sheet .item-card:hover { transform: none; box-shadow: none; border-color: var(--gold); }
+body.page-lygas-cantor-sheet .item-tag { background: var(--class-tint); border-color: var(--card-border); }
+body.page-lygas-cantor-sheet .item-note { font-size: 12px; line-height: 1.65; border-color: var(--card-border); }
+body.page-lygas-cantor-sheet .item-name { font-size: 14px; line-height: 1.5; }
+body.page-lygas-cantor-sheet :is(.item-type,.quantity-label) { font-size: 10px; }
+body.page-lygas-cantor-sheet .hud-sub { font-style: normal; line-height: 1.65; }
+body.page-lygas-cantor-sheet .quantity-control { border-color: var(--card-border); background: var(--class-tint); grid-template-columns: 40px 48px 40px; }
+body.page-lygas-cantor-sheet .quantity-btn { background: var(--class-tint); color: var(--gold); border: 0; border-radius: 0; min-height: 44px; font-size: 18px; }
+.page-lygas-cantor-sheet #castToast { background: #fff; color: var(--text-primary); border-color: var(--card-border); max-width: calc(100% - 24px); box-shadow: 0 4px 16px #342d3726; letter-spacing: 0; }
+.page-lygas-cantor-sheet :is(button,a,input,textarea,select,[tabindex]):focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; }
+@media(max-width:1000px) {
+  .page-lygas-cantor-sheet #tab-combat .sheet-body > div { grid-template-columns: minmax(0,1fr) !important; }
+  .page-lygas-cantor-sheet .header-name { flex-basis: 100%; }
+}
+@media(max-width:768px) {
+  .page-lygas-cantor-sheet .sheet-header { padding: 24px 14px 18px; }
+  .page-lygas-cantor-sheet .char-name { font-size: 26px; }
+  .page-lygas-cantor-sheet .sheet-body { padding: 16px 14px; }
+  .page-lygas-cantor-sheet .tab-bar { display: flex; flex-wrap: wrap; gap: 0; padding: 0 6px; }
+  body.page-lygas-cantor-sheet .tab-btn { flex: 1 1 30%; padding: 8px 5px; font-size: 11px; }
+  .page-lygas-cantor-sheet .ability-grid { grid-template-columns: repeat(2,minmax(0,1fr)); }
+  .page-lygas-cantor-sheet .weapon-row { grid-template-columns: minmax(0,1fr) auto auto; gap: 6px; }
+  .page-lygas-cantor-sheet .header-stats { grid-template-columns: repeat(3,minmax(0,1fr)); }
+  .page-lygas-cantor-sheet .hstat.hp-display { grid-column: span 2; }
+  body.page-lygas-cantor-sheet :is(.cast-btn,.rest-btn,.equip-btn,.exh-btn,.currency-adjust-btn,.inventory-add-btn,.inventory-remove-btn) { min-height: 44px; }
+}
+@media(prefers-reduced-motion:reduce) { .page-lygas-cantor-sheet * { transition: none !important; animation: none !important; } }

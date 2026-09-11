@@ -1,5 +1,6 @@
-window.initializeArchiboldRulesHelp = function (rules) {
+window.initializeSheetRulesHelp = window.initializeArchiboldRulesHelp = function (rules, options) {
   'use strict';
+  const headingSelector = options?.headingSelector || '.feature-name,.item-name,.ability-name,.weapon-name';
   document.getElementById('tooltip').hidden = true;
   const panel = document.createElement('aside');
   panel.className = 'archibold-rules-panel';
@@ -98,8 +99,11 @@ window.initializeArchiboldRulesHelp = function (rules) {
     description.textContent = [rule.name, rule.type, ...Object.entries(rule.stats || {}).map(([key, value]) => `${key}: ${value}`), rule.body].filter(Boolean).join('. ');
     document.body.append(description); button.setAttribute('aria-describedby', description.id);
     const interactive = target.closest('button,a,[onclick],input,select,textarea');
-    if (interactive) interactive.after(button);
-    else (target.querySelector('.feature-name,.item-name,.ability-name,.weapon-name') || target).append(button);
+    if (interactive && options?.groupSelector && interactive.matches(options.groupSelector)) {
+      const group = document.createElement('span'); group.className = 'rules-control-pair';
+      interactive.before(group); group.append(interactive, button);
+    } else if (interactive) interactive.after(button);
+    else (target.querySelector(headingSelector) || target).append(button);
   }
   document.addEventListener('pointerdown', event => { pointerType = event.pointerType; }, true);
   document.addEventListener('pointerover', event => {

@@ -10,6 +10,7 @@
 <script defer src="../assets/js/a11y-sheet-helpers.js"></script>
 <script src="../assets/js/inventory-trackers.js"></script>
 <script defer src="../assets/js/rest-hit-dice.js?v=20260817-rest-dialog"></script>
+<script src="../assets/js/archibold-rules-help.js?v=2"></script>
 <style>
   :root {
     --briar-dark: #120a1e;
@@ -602,6 +603,8 @@
   /* ===== UI VERSION ===== */
   #uiVersionBadge { font-family: 'Barlow Condensed', sans-serif; font-size: 9px; color: var(--text-dim); letter-spacing: 1px; }
 </style>
+<link rel="stylesheet" href="../assets/css/lygas-modern.css?v=1">
+<link rel="stylesheet" href="../assets/css/archibold-rules-help.css?v=2">
 </head>
 
 <body class="theme-fantasy page-dnd-character-sheet page-lygas-cantor-sheet">
@@ -2455,6 +2458,12 @@ function loadSheetState() {
 
 // ===== TOOLTIP SYSTEM =====
 const TOOLTIPS = {
+  'ability-str': { name: 'Strength', type: 'Ability', body: 'Physical power. Used for Athletics checks and Strength saving throws.' },
+  'ability-dex': { name: 'Dexterity', type: 'Ability', body: 'Agility and precision. Used for Acrobatics, Sleight of Hand, Stealth, and Dexterity saving throws.' },
+  'ability-con': { name: 'Constitution', type: 'Ability', body: 'Endurance and resilience. Constitution contributes to Hit Points and is used for saving throws to maintain Concentration.' },
+  'ability-int': { name: 'Intelligence', type: 'Ability', body: 'Reasoning and memory. Used for Arcana, History, Investigation, Nature, Religion, and Intelligence saving throws.' },
+  'ability-wis': { name: 'Wisdom', type: 'Ability', body: 'Awareness and intuition. Used for Animal Handling, Insight, Medicine, Perception, Survival, and Wisdom saving throws.' },
+  'ability-cha': { name: 'Charisma', type: 'Ability', body: 'Force of personality. Used for Deception, Intimidation, Performance, Persuasion, and Charisma saving throws. Charisma is Lygas\'s Warlock spellcasting ability.' },
   'cond-blinded': { name:'Blinded', type:'Condition — SRD 5.2.1', body:"You can't see and automatically fail any ability check that requires sight. Attack rolls against you have Advantage, and your attack rolls have Disadvantage.", stats:{ 'Your attacks':'Disadvantage', 'Attacks vs you':'Advantage' } },
   'cond-charmed': { name:'Charmed', type:'Condition — SRD 5.2.1', body:"You can't attack the charmer or target it with harmful abilities or magical effects. The charmer has Advantage on any ability check to interact with you socially.", stats:{ "Can't":'Harm the charmer', 'Charmer':'Social Advantage' } },
   'cond-deafened': { name:'Deafened', type:'Condition — SRD 5.2.1', body:"You can't hear and automatically fail any ability check that requires hearing.", stats:{ 'Effect':'Auto-fail hearing checks' } },
@@ -2544,43 +2553,8 @@ const TOOLTIPS = {
   },
 };
 
-function showTooltip(key, event) {
-  const data = TOOLTIPS[key];
-  if (!data) return;
-  const tt = document.getElementById('tooltip');
-  document.getElementById('ttName').textContent = data.name;
-  document.getElementById('ttType').textContent = data.type;
-  document.getElementById('ttBody').textContent = data.body;
-  const statsEl = document.getElementById('ttStats');
-  statsEl.innerHTML = '';
-  Object.entries(data.stats || {}).forEach(([k, v]) => {
-    const kEl = document.createElement('div'); kEl.className = 'tt-key'; kEl.textContent = k;
-    const vEl = document.createElement('div'); vEl.className = 'tt-val'; vEl.textContent = v;
-    statsEl.appendChild(kEl); statsEl.appendChild(vEl);
-  });
-  tt.classList.add('visible');
-  positionTooltip(event);
-}
-
-function positionTooltip(event) {
-  const tt = document.getElementById('tooltip');
-  const x = Math.min(event.clientX + 12, window.innerWidth - 300);
-  const y = Math.min(event.clientY + 12, window.innerHeight - 200);
-  tt.style.left = x + 'px';
-  tt.style.top = y + 'px';
-}
-
-function hideTooltip() {
-  document.getElementById('tooltip')?.classList.remove('visible');
-}
-
 document.addEventListener('DOMContentLoaded', () => {
-  // Bind tooltips
-  document.querySelectorAll('[data-tooltip]').forEach(el => {
-    el.addEventListener('mouseenter', e => showTooltip(el.getAttribute('data-tooltip'), e));
-    el.addEventListener('mousemove', positionTooltip);
-    el.addEventListener('mouseleave', hideTooltip);
-  });
+  window.initializeSheetRulesHelp(TOOLTIPS, { headingSelector: '.feature-name,.item-name,.ability-label,.spell-name', groupSelector: '.condition-badge' });
 
   // Hex target input live sync
   const hexInp = document.getElementById('hexTargetInput');
