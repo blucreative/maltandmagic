@@ -7,16 +7,16 @@
   const views = {
     rules: ['Daggerheart', 'At the table', 'Hope, Fear, and the rules that keep a session moving. SRD 2.0 mechanics, with core and expansion choices clearly separated.'],
     classes: ['Classes', 'Character reference', 'Thirteen classes, their base values, domains, and subclass paths. Advancement and subclass choices carry each path through levels 1-10.'],
-    domains: ['Domains', 'Character reference', 'Ten domains define the cards available to your character. Your class grants two; your loadout decides which abilities are active.'],
-    frames: ['Campaign frames', 'Before the campaign', 'Ten starting worlds from the Core Rulebook and Hope & Fear. No campaign frame has been selected for this table yet.'],
-    options: ['Heritage & expansion', 'Character reference', 'Ancestry, community, and transformation choices from SRD 2.0, alongside the published Hope & Fear classes.'],
+    domains: ['Domains', 'Cards & loadouts / Levels 1-10', 'All ten domains and 210 cards, with effects, Recall Costs, and level requirements. Your class grants domain access; your loadout determines which cards are active.'],
+    frames: ['Campaign frames', 'Premises & ongoing play', 'Ten campaign settings from the Core Rulebook and Hope & Fear, with player-facing guidance for a growing party. No frame has been selected yet.'],
+    options: ['Heritage', 'Ancestry, community & transformation', 'The identities and features that stay with a character throughout levels 1-10, including changes earned through the story.'],
     creation: ['Characters', 'Creation & advancement / Levels 1-10', 'Character creation, tier achievements, domain growth, subclass upgrades, and multiclassing.'],
     equipment: ['Equipment', 'Tiers 1-4 / Levels 1-10', 'Weapons, armor, items, and consumables from the Core Rulebook and Hope & Fear. SRD 2.0 values take precedence; Core-only entries are labeled.']
   };
   const navigation = [
     ['rules', 'index.html', 'Rules'], ['creation', 'character-creation.html', 'Characters'],
     ['classes', 'classes.html', 'Classes'], ['domains', 'domains.html', 'Domains'],
-    ['options', 'void-options.html', 'Heritage & expansion'], ['equipment', 'equipment.html', 'Equipment'],
+    ['options', 'void-options.html', 'Heritage'], ['equipment', 'equipment.html', 'Equipment'],
     ['frames', 'campaign-frames.html', 'Campaigns']
   ];
   const [title, eyebrow, description] = views[view];
@@ -31,12 +31,14 @@
   const options = values => values.map(value => `<option>${escape(value)}</option>`).join('');
   const main = document.getElementById('main');
   const footer = document.getElementById('reference-footer');
-  footer.innerHTML = `<p>Unofficial Malt &amp; Magic campaign reference. Daggerheart is a game by Darrington Press. These are concise table summaries, not the complete rules or cards.</p><p>Mechanics: SRD 2.0 (2026). Context: Core Rulebook (August 2025, errata included) and Hope &amp; Fear (2026). PDF page labels follow the supplied conversions; printed numbering may differ.</p><p><a href="https://www.daggerheart.com/">Official Daggerheart</a> · <a href="https://darringtonpress.com/license/">Darrington Press licensing</a></p>`;
+  footer.innerHTML = `<p>Unofficial Malt &amp; Magic campaign reference. Daggerheart is a game by Darrington Press. Rules excerpts and table summaries are credited to their sources; this is not the complete rulebook.</p><p>Mechanics: SRD 2.0 (2026). Context: Core Rulebook (August 2025, errata included) and Hope &amp; Fear (2026). PDF page labels follow the supplied conversions; printed numbering may differ.</p><p><a href="https://www.daggerheart.com/">Official Daggerheart</a> · <a href="https://darringtonpress.com/license/">Darrington Press licensing</a></p>`;
 
-  function filters({ domain = false, categories = [], equipment = false } = {}) {
+  function filters({ domain = false, categories = [], equipment = false, types = [], cardLevels = false } = {}) {
     return `<div class="toolbar"><label>Search<input id="reference-search" type="search" placeholder="Name, topic, or keyword" autocomplete="off"></label>
       ${categories.length ? `<label>Topic<select id="category-filter"><option value="">All topics</option>${options(categories)}</select></label>` : `<label>Book<select id="book-filter"><option value="">All books</option><option>Core</option><option>Hope &amp; Fear</option></select></label>`}
       ${domain ? `<label>Domain<select id="domain-filter"><option value="">All domains</option>${options(catalog.domains.map(entry => entry.name))}</select></label>` : ''}
+      ${types.length ? `<label>Type<select id="type-filter"><option value="">All types</option>${options(types)}</select></label>` : ''}
+      ${cardLevels ? `<label>Card level<select id="level-filter"><option value="">All levels</option>${Array.from({ length: 10 }, (_, index) => `<option value="${index + 1}">Level ${index + 1}</option>`).join('')}</select></label>` : ''}
       ${equipment ? `<label>Type<select id="type-filter"><option value="">All equipment</option>${options(['Primary weapon', 'Secondary weapon', 'Combat wheelchair', 'Armor', 'Item', 'Consumable'])}</select></label><label>Tier<select id="tier-filter"><option value="">All tiers &amp; untiered</option><option value="1">Tier 1 / Level 1</option><option value="2">Tier 2 / Levels 2-4</option><option value="3">Tier 3 / Levels 5-7</option><option value="4">Tier 4 / Levels 8-10</option><option value="untiered">Untiered loot</option></select></label>` : ''}</div>
       <p id="result-count" class="result-count" role="status"></p><p id="no-results" class="empty" hidden>No matching entries. <button type="button" class="command" id="reset-filters">Clear filters</button></p>`;
   }
@@ -49,13 +51,14 @@
     const category = document.getElementById('category-filter');
     const type = document.getElementById('type-filter');
     const tier = document.getElementById('tier-filter');
-    const controls = [search, book, domain, category, type, tier].filter(Boolean);
+    const level = document.getElementById('level-filter');
+    const controls = [search, book, domain, category, type, tier, level].filter(Boolean);
     const pagination = document.getElementById('equipment-pagination');
     let currentPage = 1;
     const pageSize = pagination ? 24 : Infinity;
     const entries = [...main.querySelectorAll('[data-entry]')];
     const params = new URLSearchParams(location.search);
-    for (const [control, key] of [[search, 'q'], [book, 'book'], [domain, 'domain'], [category, 'topic'], [type, 'type'], [tier, 'tier']]) {
+    for (const [control, key] of [[search, 'q'], [book, 'book'], [domain, 'domain'], [category, 'topic'], [type, 'type'], [tier, 'tier'], [level, 'level']]) {
       if (control && params.has(key)) control.value = params.get(key);
     }
     function filterEntries() {
@@ -67,7 +70,8 @@
           && (!domain?.value || entry.dataset.domains?.split(',').includes(domain.value))
           && (!category?.value || entry.dataset.category === category.value)
           && (!type?.value || entry.dataset.category === type.value)
-          && (!tier?.value || entry.dataset.tier === tier.value);
+          && (!tier?.value || entry.dataset.tier === tier.value)
+          && (!level?.value || entry.dataset.level === level.value);
         if (matches) visible++;
         entry.hidden = !matches || (pagination && (visible <= (currentPage - 1) * pageSize || visible > currentPage * pageSize));
       }
@@ -101,10 +105,14 @@
   }
 
   function classEntry(entry) {
+    const progression = globalThis.DaggerheartProgression.classes.find(character => character.name === entry.name);
+    const sections = values => values.map(section => `<section class="feature-section"><h4>${escape(section.name)}</h4>${section.paragraphs.map(text => `<p>${escape(text)}</p>`).join('')}${source(section.page, section.name)}</section>`).join('');
     return `<article class="entry" id="${slug(entry.name)}" data-entry data-book="${escape(entry.source)}" data-domains="${entry.domains.join(',')}">
       ${bookLabel(entry)}<h2>${escape(entry.name)}</h2>${domainLinks(entry.domains)}<p>${escape(entry.summary)}</p>
       <dl class="stats"><div><dt>Base Evasion</dt><dd>${entry.evasion}</dd></div><div><dt>Base HP</dt><dd>${entry.hp}</dd></div></dl>
-      <h3>Subclasses</h3><ul class="subclasses">${entry.subclasses.map(name => `<li>${escape(name)}</li>`).join('')}</ul>
+      <details class="class-reference"><summary>Class &amp; Hope features</summary>${sections(progression.features)}</details>
+      <h3>Subclasses</h3>${progression.subclasses.map(subclass => `<details class="class-reference" id="${slug(subclass.name)}"><summary>${escape(subclass.name)}</summary>${sections(subclass.stages)}</details>`).join('')}
+      ${progression.supplements.length ? `<details class="class-reference"><summary>${entry.name === 'Brawler' ? 'Martial stances / Tiers 1-4' : entry.name === 'Druid' ? 'Beastforms / Tiers 1-4' : 'Companion & advancement'}</summary>${sections(progression.supplements)}</details>` : ''}
       <p><a href="character-creation.html#subclass-progression">Foundation, Specialization &amp; Mastery</a></p>${source(entry.page, entry.name)}</article>`;
   }
 
@@ -148,6 +156,7 @@
       <tr><th scope="row">4</th><td>8-10</td><td>At level 8: a new +2 Experience, +1 Proficiency, and clear marked traits.</td><td><a href="equipment.html?tier=4">Tier 4</a> or lower</td></tr>
       </tbody></table></div>${source(53, 'Leveling Up & Tier Achievements')}<h3>At every level-up</h3><ol class="steps"><li>Apply any tier achievement. The party levels together at GM-set narrative milestones.</li><li>Choose two available advancements from your tier or below, marking their slots. Use your class advancement chart for availability and limits; some choices cost both advancements.</li><li>Increase both damage thresholds by 1 for the new level. When recalculating from armor, add your new level once, not again on top of the accumulated increases.</li><li>Gain one domain card at your level or lower from a class domain. You may also exchange a previously acquired domain card for another of the same level or lower. Keep at most five active cards; the rest go in your vault.</li></ol>${source(54, 'Advancements, Damage Thresholds & Domain Cards')}</section>
       <section class="section" id="subclass-progression"><h2>Advancement choices &amp; subclasses</h2><p>Your class chart controls which slots you can choose. Options include increases to traits, HP, Stress, Experiences, Evasion, and Proficiency; an extra domain card; subclass upgrades; and multiclassing. Increasing Proficiency and multiclassing each cost both advancements.</p><p>A trait increase raises two unmarked traits by +1 and marks them until the next applicable tier reset. An Experience increase raises two Experiences by +1. Do not assume every option is available at every level.</p><p>Subclass cards progress from <strong>Foundation</strong> to <strong>Specialization</strong> to <strong>Mastery</strong>. An upgrade is an advancement choice, not an automatic reward at a fixed level. Taking an upgrade crosses out that tier's multiclass option. Consult the selected subclass card for its abilities and any scaling by level, tier, or Proficiency.</p>${source(54, 'Advancements')}<a href="classes.html">Class and subclass reference</a></section>
+      <section class="section" id="joining-at-higher-level"><h2>Joining at a higher level</h2><p>A replacement character joins at the party's current level. Build the character's foundation, then account for the achievements, advancement choices, and domain-card gains earned on the way to that level. Agree on equipment and starting circumstances with the GM.</p><p>Review creation-only bonuses once, tier resets at levels 5 and 8, current trait values, available advancement slots, and subclass choices. Equip only gear at your tier or below; calculate armor thresholds from base values plus your current level and modifiers, without double-counting earlier increases.</p>${source(53, 'Death; Leveling Up, pp. 53-54; Equipment, p. 55')}</section>
       <section class="section" id="multiclassing"><h2>Multiclassing from level 5</h2><p>Spend both advancements on an available multiclass option. Choose another class, gain its class feature, choose one of its domains, and take a Foundation card from one of its subclasses. Use that class's multiclass module. Cross out the subclass upgrade option in this tier and all remaining multiclass options.</p><p>Cards from your multiclass domain are limited to half your level, rounded up: level 3 cards at character levels 5-6, level 4 cards at levels 7-8, and level 5 cards at levels 9-10. If your Foundation cards offer different Spellcast traits, choose which to use for a Spellcast roll.</p>${source(54, 'Multiclassing')}<a href="domains.html#domain-growth">Domain growth and loadouts</a></section>`;
   }
 
@@ -166,15 +175,33 @@
       <section class="section"><h2>Starting supplies</h2><p>At level 1, choose a Tier 1 two-handed primary weapon or a one-handed primary and one-handed secondary, plus Tier 1 armor. Begin with a torch, 50 feet of rope, basic supplies, one handful of gold, and a Minor Health Potion or Minor Stamina Potion. Add your class-specific starting item and any required spellcasting item, plus any supplies agreed with the GM.</p>${source(5, 'Choose Your Starting Equipment')}</section>`;
   }
 
+  function heritagePage() {
+    const entries = globalThis.DaggerheartHeritage;
+    main.innerHTML = `<section class="section"><div class="section-heading"><h2>Heritage reference</h2><span class="edition-label">24 ancestries / 15 communities / 6 transformations</span></div>
+      <p>Ancestry describes lineage and grants two ordered features. Community describes the upbringing that shaped you and grants its own feature. Neither is a class or a tier progression track.</p>
+      ${filters({ types: ['Ancestry', 'Community', 'Transformation'] })}<div class="rules-list">${entries.map(entry => `<details class="rule heritage-entry" id="${slug(entry.name)}" data-entry data-name="${escape(entry.name)}" data-book="${escape(entry.source)}" data-category="${entry.category}"><summary>${escape(entry.name)}<span>${entry.category} / ${escape(entry.source)}</span></summary><div class="rule-body"><p>${escape(entry.summary)}</p><h3>${entry.category === 'Ancestry' ? 'Features in card order' : entry.category === 'Transformation' ? 'Benefits, costs & limits' : 'Community feature'}</h3>${entry.features.map((text, index) => `<p>${entry.category === 'Ancestry' ? `<strong>${index + 1}.</strong> ` : ''}${escape(text)}</p>`).join('')}${source(entry.page, `${entry.name}; features through PDF p. ${entry.endPage}`)}</div></details>`).join('')}</div></section>
+      <section class="section" id="heritage-in-play"><h2>Heritage throughout a campaign</h2><div class="equipment-guidance"><div><h3>Persistent features</h3><p>Heritage features do not expire at a new tier. Apply permanent creation bonuses once and retain them; do not add them again at each level-up. Keep observing each feature's resource cost, trigger, and per-rest or per-session limit.</p><p>Use current values wherever a feature says level, tier, Proficiency, or a trait. A fixed extra die stays fixed unless the feature says otherwise. Heritage and transformation cards do not consume the five domain loadout slots.</p>${source(32, 'Ancestry Features; Transformations, p. 42')}</div><div><h3>Examples of scaling</h3><p><a href="#drakona">Drakona</a> breath and <a href="#ribbet">Ribbet</a> tongue damage use current Proficiency. <a href="#galapa">Galapa</a> shell protection uses Proficiency. <a href="#seaborne">Seaborne</a> token capacity uses current level, reaching ten tokens at level 10; unspent tokens still clear after each session.</p><p><a href="#reborne">Reborne</a> can use an ally's current Experience bonus and explicitly allows a permanent community change when belonging is rediscovered or newly established.</p>${source(33, 'Drakona; Galapa, p. 36; Ribbet, p. 37; Reborne & Seaborne, pp. 40-41')}</div><div><h3>Transformations in play</h3><p>A character can have <strong>at most one transformation</strong>. The GM may offer one at creation or later as a story development. Agree on the change together; its drawbacks matter as much as its benefits.</p><p>Transformations do not replace community or ancestry unless their own text changes how ancestry works. Shapeshifter has specific ancestry-swapping limits; Ghost has an ending condition; Reanimated changes healing and failed death moves. These remain relevant at every tier.</p>${source(42, 'Transformations; features, pp. 43-45')}</div></div></section>
+      <section class="section" id="mixed-ancestry"><h2>Mixed ancestry</h2><p>Choose the <strong>first feature</strong> of one ancestry and the <strong>second feature</strong> of another with your GM. You cannot take two first features or two second features. Your lineage can include more ancestries in the fiction, but the mechanical choice still grants only these two features.</p><p>The numbering above preserves the order printed on the ancestry cards. Appearance and identity need not match a typical example; agree on any reflavoring with the GM.</p>${source(38, 'Mixed Ancestry')}<a href="character-creation.html#advancement">Character advancement</a></section>`;
+  }
+
+  function domainsPage() {
+    const cards = globalThis.DaggerheartProgression.cards;
+    main.innerHTML = `<section class="section"><div class="section-heading"><h2>Domain atlas</h2><a href="#domain-cards">210 cards / Levels 1-10</a></div><div class="entry-grid">${catalog.domains.map(entry => `<article class="entry" id="${slug(entry.name)}">${bookLabel(entry)}<h2>${entry.name}</h2><h3>${escape(entry.theme)}</h3><p>${escape(entry.summary)}</p><div class="domain-links">${catalog.classes.filter(character => character.domains.includes(entry.name)).map(character => `<a href="classes.html#${slug(character.name)}">${character.name}</a>`).join('')}</div><a href="domains.html?domain=${entry.name}#domain-cards">${entry.name} cards, levels 1-10</a>${source(7, entry.name)}</article>`).join('')}</div></section>
+      <section class="section" id="domain-cards"><div class="section-heading"><h2>Domain card reference</h2><span class="edition-label">SRD 2.0 / Levels 1-10</span></div><p>Card level is a requirement, not a tier. Your class domains allow cards at your character level or lower. A multiclass domain is capped at half your level, rounded up. Individual cards can impose additional conditions.</p>${filters({ domain: true, cardLevels: true, types: ['Ability', 'Spell', 'Grimoire'] })}<div class="rules-list" id="equipment-list">${cards.map(card => `<details class="rule domain-card" id="card-${slug(card.domain)}-${slug(card.name)}" data-entry data-name="${escape(card.name)}" data-book="${card.domain === 'Dread' ? 'Hope &amp; Fear' : 'Core'}" data-domains="${card.domain}" data-category="${card.type}" data-level="${card.level}"><summary>${escape(card.name)}<span>${card.domain} / Level ${card.level} / ${card.type}</span></summary><div class="rule-body"><p><strong>Recall Cost: ${card.recall} Stress</strong></p>${card.paragraphs.map(text => `<p>${escape(text)}</p>`).join('')}${source(card.page, card.name)}</div></details>`).join('')}</div><nav id="equipment-pagination" class="pagination" aria-label="Domain card results"><button class="command" id="equipment-previous" type="button">Previous</button><span id="equipment-page" role="status"></span><button class="command" id="equipment-next" type="button">Next</button></nav></section>
+      <section class="section" id="domain-growth"><h2>Domain cards from levels 1-10</h2><p>Begin with two level-1 cards from your class domains. At each level-up, gain a card at your level or lower from those domains. An advancement can grant another card. You may also exchange a previously acquired card at level-up for one of the same level or lower.</p><p>Only five domain cards can be active at once, even at higher tiers; the others remain in your vault. Swapping during downtime is free. Recalling a card during play costs that card's Recall Cost in Stress. Subclass, ancestry, community, and transformation cards do not use domain loadout slots.</p><p>At level 7, the domain-touched cards offer benefits for keeping at least four cards of that domain in your loadout. Check their exact conditions before splitting your loadout across domains. Level 8-10 cards remain subject to their own costs, limits, and targeting rules; they do not grant additional loadout slots.</p>${source(8, 'Domain Cards; Leveling Up & Multiclassing, p. 54')}<div class="actions"><a href="index.html#loadout">Card rules</a><a href="character-creation.html#advancement">Advancement</a><a href="character-creation.html#multiclassing">Multiclassing</a></div></section>`;
+  }
+
   if (view === 'rules') rulesPage();
   if (view === 'creation') creationPage();
   if (view === 'classes') main.innerHTML = `<section class="section"><h2>Class comparison</h2><p class="notice">These are base class values. Subclass, ancestry, equipment, and advancement features may change them.</p>${filters({ domain: true })}<div class="entry-grid">${catalog.classes.map(classEntry).join('')}</div></section>`;
-  if (view === 'domains') main.innerHTML = `<section class="section"><h2>Domain atlas</h2>${filters()}<div class="entry-grid">${catalog.domains.map(entry => `<article class="entry" id="${slug(entry.name)}" data-entry data-book="${escape(entry.source)}">${bookLabel(entry)}<h2>${entry.name}</h2><h3>${escape(entry.theme)}</h3><p>${escape(entry.summary)}</p><div class="domain-links">${catalog.classes.filter(character => character.domains.includes(entry.name)).map(character => `<a href="classes.html#${slug(character.name)}">${character.name}</a>`).join('')}</div>${source(7, entry.name)}</article>`).join('')}</div></section><section class="section" id="domain-growth"><h2>Domain cards from levels 1-10</h2><p>Begin with two level-1 cards from your class domains. At each level-up, gain a card at your level or lower from those domains. An advancement can grant another card. You may also exchange a previously acquired card at level-up for one of the same level or lower.</p><p>Only five domain cards can be active at once, even at higher tiers; the others remain in your vault. Swapping during downtime is free. Recalling a card during play costs that card's Recall Cost in Stress. Subclass, ancestry, and community cards do not use domain loadout slots.</p><p>Multiclass domain cards are capped at half your character level, rounded up. Individual card text governs level requirements, scaling, and any loadout exceptions.</p>${source(8, 'Domain Cards; Leveling Up & Multiclassing, p. 54')}<div class="actions"><a href="index.html#loadout">Card rules</a><a href="character-creation.html#advancement">Advancement</a><a href="character-creation.html#multiclassing">Multiclassing</a></div></section>`;
-  if (view === 'frames') main.innerHTML = `<section class="section"><h2>Choose a shared premise</h2><p class="notice">The questions below are original session-zero prompts, not additional campaign rules. Detailed secrets and GM-only material remain in the books.</p>${filters()}<div class="entry-grid">${catalog.frames.map(entry => `<article class="entry" id="${slug(entry.name)}" data-entry data-book="${escape(entry.source)}">${bookLabel(entry)}<h2>${escape(entry.name)}</h2><h3>${escape(entry.theme)}</h3><p>${escape(entry.summary)}</p><p><strong>At session zero:</strong> ${escape(entry.question)}</p>${source(entry.page, 'Campaign Frames overview', entry.source === 'Core' ? 'Core Rulebook' : 'Hope & Fear')}</article>`).join('')}</div></section>`;
-  if (view === 'options') main.innerHTML = `<section class="section"><h2>Hope &amp; Fear is published expansion material</h2><p>Assassin and Witch are no longer placeholder Void options in this reference. SRD 2.0 includes their published rules alongside Brawler, Warlock, and the Dread domain. Confirm which books your table is using before choosing an expansion option.</p><div class="entry-grid">${catalog.classes.filter(entry => entry.source !== 'Core').map(classEntry).join('')}</div></section>
-    <section class="section"><h2>Ancestry</h2><p>Ancestry grants two features. For mixed ancestry, use the first feature from one ancestry and the second feature from another, with a shared fictional identity.</p><ul class="name-list">${catalog.ancestry.map(name => `<li>${name}</li>`).join('')}</ul>${source(4, 'Character Creation, Step 2; Ancestries, pp. 32-37')}</section>
-    <section class="section"><h2>Community</h2><p>Community describes your upbringing or culture and grants a community feature. It is a separate choice from ancestry.</p><ul class="name-list">${catalog.communities.map(name => `<li>${name}</li>`).join('')}</ul>${source(4, 'Character Creation, Step 2; Communities, pp. 38-41')}</section>
-    <section class="section"><h2>Transformations</h2><p>Transformations are an additional character layer, not a replacement for ancestry or community. Discuss their story consequences, benefits, and costs with the GM before introducing one.</p><ul class="name-list">${catalog.transformations.map(name => `<li>${name}</li>`).join('')}</ul>${source(42, 'Transformations, pp. 42-45')}<p><a href="character-creation.html">Return to character creation</a></p></section>`;
+  if (view === 'domains') {
+    domainsPage();
+    main.querySelector('.section').id = 'domain-atlas';
+    main.prepend(document.getElementById('domain-cards'));
+    document.querySelector('#domain-cards .section-heading').insertAdjacentHTML('beforeend', '<a href="#domain-atlas">Domain atlas &amp; class pairings</a>');
+  }
+  if (view === 'frames') main.innerHTML = `<section class="section"><h2>Campaign premises &amp; continuing play</h2><p class="notice">Complexity describes how demanding a frame is to run, not its character tier. The session-zero questions and continuing-play suggestions below are original table guidance, not additional published mechanics. Plot secrets and GM-only material remain in the books.</p>${filters()}<div class="entry-grid">${catalog.frames.map(entry => `<article class="entry" id="${slug(entry.name)}" data-entry data-book="${escape(entry.source)}">${bookLabel(entry)}<h2>${escape(entry.name)}</h2><h3>${escape(entry.theme)}</h3><p>${escape(entry.summary)}</p><p><strong>Complexity:</strong> ${entry.complexity} of 4</p><p><strong>At session zero:</strong> ${escape(entry.question)}</p><p><strong>As the campaign develops:</strong> ${escape(entry.ongoing)}</p>${source(entry.page, 'Campaign frame & pitch', entry.source === 'Core' ? 'Core Rulebook' : 'Hope & Fear')}</article>`).join('')}</div></section><section class="section" id="campaign-tiers"><h2>Revisit the campaign at every tier</h2><p>These are discussion prompts, not mandated plots or level schedules. Use the chosen frame's specific advancement and equipment rules wherever they replace the general rules.</p><ol class="steps"><li><strong>Tier 1 / Level 1:</strong> Establish the party's shared purpose, local relationships, and immediate stakes.</li><li><strong>Tier 2 / Levels 2-4:</strong> Revisit promises and consequences as the party gains new equipment and more options. Decide which relationships travel with the characters.</li><li><strong>Tier 3 / Levels 5-7:</strong> Discuss how new mobility, magic, influence, and possible multiclassing change the problems the party can address.</li><li><strong>Tier 4 / Levels 8-10:</strong> Revisit long-standing commitments and what resolution means for each character. Greater power need not remove difficult social or moral choices.</li></ol><p><a href="character-creation.html#advancement">Advancement rules</a> · <a href="equipment.html">All-tier equipment</a></p></section>`;
+  if (view === 'options') heritagePage();
 
   if (view === 'equipment') equipmentPage();
 
@@ -185,13 +212,16 @@
     try { id = decodeURIComponent(location.hash.slice(1)); } catch (_) { return; }
     const target = document.getElementById(id);
     if (!target) return;
-    if (view === 'equipment' && target.hidden && target.dataset.entry !== undefined) {
+    if (target.hidden && target.dataset.name) {
       document.getElementById('reset-filters').click();
       const search = document.getElementById('reference-search');
       search.value = target.dataset.name;
       search.dispatchEvent(new Event('input'));
     }
     if (target.tagName === 'DETAILS') target.open = true;
+    for (let parent = target.parentElement; parent; parent = parent.parentElement) {
+      if (parent.tagName === 'DETAILS') parent.open = true;
+    }
     requestAnimationFrame(() => target.scrollIntoView({ block: 'start' }));
   }
   addEventListener('hashchange', revealHash);

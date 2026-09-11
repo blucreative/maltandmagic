@@ -43,16 +43,20 @@ class heading uses the correct name. Do not silently rewrite the private origina
 
 ## Current public surface
 
-- `index.html`: 18 searchable rules summaries and a secondary damage-to-HP
+- `index.html`: 23 searchable rules summaries and a secondary damage-to-HP
   calculator with direct damage and optional Massive Damage
 - `character-creation.html`: Characters tab, with creation and level 1-10 advancement,
   tier achievements, subclass progression, and multiclassing
-- `classes.html`: 13 classes, 26 subclass names, starting stats, and domain pairs
-- `domains.html`: all 10 domains with class cross-links, level 1-10 card acquisition,
-  multiclass limits, and loadout guidance
-- `campaign-frames.html`: 6 core and 4 Hope & Fear premises, without GM secrets
-- `void-options.html`: retained URL for published expansion classes, 24 ancestry
-  names, 15 community names, and 6 transformation names
+- `classes.html`: 13 classes and 26 subclasses with class/Hope features and
+  Foundation, Specialization, and Mastery rules; all-tier stances, Beastforms,
+  and companion advancement
+- `domains.html`: 210 cards across all 10 domains and levels 1-10, with effects,
+  Recall Costs, filters, class pairings, multiclass limits, and loadout guidance
+- `campaign-frames.html`: 6 core and 4 Hope & Fear premises, verified title-page
+  citations and complexity ratings, plus original continuing-play guidance
+- `void-options.html`: retained URL for the Heritage tab; 24 ancestries, 15
+  communities, and 6 transformations with descriptions and ordered feature text.
+  Expansion classes appear only in Classes, not here
 - `equipment.html`: 633 searchable equipment entries, all four tiers, Core and
   Hope & Fear; filter by book, equipment type, and tier, with expandable stats,
   rules text, citations, and paginated results
@@ -76,15 +80,26 @@ Rebuild from all three private sources with:
 
 ```sh
 node Daggerheart/scripts/build-equipment.mjs
+node Daggerheart/scripts/build-heritage.mjs
+node Daggerheart/scripts/build-progression.mjs
 ```
 
-The build uses structured Markdown tables and handles fragmented Core loot rows.
-It stops if expected coverage changes. The public data is a static asset; browsers
-never load private Markdown or run the build script.
+The builds use structured Markdown and handle fragmented Core loot rows and the
+split SRD heading for Summon Horror. Completeness checks reject missing features,
+subclass stages, or domain levels. Public assets are static; browsers never load
+private Markdown or run build scripts. Heritage summaries are curated separately
+from the source feature blocks, preserving ancestry feature order for mixed ancestry.
 
-Scope: this is a player reference, not a complete digital rulebook. Full domain
-card text, individual subclass ability text, ancestry/community feature text, adversary
-stat blocks, and campaign secrets are not reproduced. The site does not offer
+`../assets/js/daggerheart-heritage.js` holds the heritage records;
+`../assets/js/daggerheart-progression.js` holds class, subclass, and domain records.
+The per-tab coverage and remaining boundaries are recorded in `content-audit.md`.
+
+Scope: this is a player reference, not a complete digital rulebook. Selected SRD
+feature and card text is included as reference entries; long lore chapters,
+character-creation questions, card artwork, GM adversary stat blocks, and campaign
+secrets are not reproduced. Class advancement charts remain authoritative for
+available advancement slots; this site does not implement a character builder.
+The site does not offer
 character editing, a concept worksheet, a Duality evaluator, or a character sheet.
 Search and book/domain/topic filters remain for reference navigation. The damage
 calculator is session-only and does not save anything.
@@ -113,10 +128,12 @@ Browser tests require Chromium's Linux runtime libraries and an existing static
 server. The default URL is `http://127.0.0.1:8766/Daggerheart/`; override it with
 `DAGGERHEART_BASE_URL`. Tests use fresh browser contexts, never player storage.
 Screenshots go to ignored `test-output/`. The source tests compare class stats,
-domain pairs, option names, every equipment row, and Core/expansion completeness
+domain pairs, ordered heritage features, class/subclass rules, every domain card,
+campaign title pages and complexity, equipment rows, and Core/expansion completeness
 against the supplied Markdown. Source-dependent tests explicitly skip when their
 private source is absent. Browser coverage includes tier and book filtering,
-pagination, deep links, keyboard expansion, and progression links.
+pagination, filtered deep links, keyboard expansion, subclass Mastery, high-level
+domain cards, transformation limits, and progression links.
 
 The Pages workflow excludes `.private`, dependencies, build scripts, test code, screenshots, and
 the Daggerheart package manifests. Public pages load only public static assets.

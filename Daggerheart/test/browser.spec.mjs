@@ -49,7 +49,7 @@ test('all reference views render, link correctly, and fit desktop and mobile', a
       assert.equal(await page.locator('textarea,#worksheet,#roll-tool,a[href*="character-sheet"]').count(), 0, `${name}: retired controls`);
       assert.equal(await page.locator('input:not([type="search"]):not(#damage-tool input)').count(), 0, `${name}: unexpected data inputs`);
       for (const link of metrics.links) if (link.startsWith(new URL(base).origin)) destinations.add(link.split('#')[0]);
-      if (['index', 'classes', 'equipment'].includes(name) && width !== 320) {
+      if (['index', 'classes', 'equipment', 'void-options', 'domains', 'campaign-frames', 'character-creation'].includes(name) && width !== 320) {
         await page.screenshot({ path: new URL(`${name}-${width}.png`, output).pathname, fullPage: true });
       }
     }
@@ -170,4 +170,78 @@ test('equipment filters, pagination, details, and all-tier progression work', as
     assert.equal(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), true);
     await page.screenshot({ path: new URL(`equipment-detail-${width}.png`, output).pathname, fullPage: true });
   }
+});
+
+test('Heritage is dedicated, detailed, and useful after character creation', async contextTest => {
+  const { page } = await isolatedPage(contextTest);
+  await page.goto(`${base}void-options.html`);
+  assert.equal(await page.locator('h1').innerText(), 'Heritage');
+  assert.equal(await page.locator('.site-nav [aria-current="page"]').innerText(), 'Heritage');
+  assert.equal(await page.locator('.heritage-entry').count(), 45);
+  assert.equal(await page.locator('#assassin,#brawler,#warlock,#witch,.class-reference').count(), 0);
+  await page.getByRole('combobox', { name: 'Type', exact: true }).selectOption('Community');
+  await page.getByRole('combobox', { name: 'Book', exact: true }).selectOption('Hope & Fear');
+  assert.equal(await page.locator('[data-entry]:visible').count(), 6);
+  await page.getByRole('searchbox').fill('Found Family');
+  assert.equal(await page.locator('[data-entry]:visible').count(), 1);
+  await page.locator('#reborne summary').focus();
+  await page.keyboard.press('Enter');
+  assert.match(await page.locator('#reborne').innerText(), /permanently trade this card/);
+  await page.getByRole('searchbox').fill('nothing-matches');
+  await page.getByRole('button', { name: 'Clear filters' }).click();
+  assert.equal(await page.locator('[data-entry]:visible').count(), 45);
+  await page.goto(`${base}void-options.html?type=Transformation#seaborne`);
+  assert.equal(await page.locator('#seaborne').isVisible(), true);
+  assert.equal(await page.locator('#seaborne').getAttribute('open'), '');
+  assert.match(await page.locator('#seaborne').innerText(), /equal to your level/);
+  assert.match(await page.locator('#heritage-in-play').innerText(), /at most one transformation/);
+  for (const width of [1440, 390, 320]) {
+    await page.setViewportSize({ width, height: 1000 });
+    await page.goto(`${base}void-options.html?q=Shapeshifter#shapeshifter`);
+    assert.equal(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), true);
+    await page.screenshot({ path: new URL(`heritage-detail-${width}.png`, output).pathname, fullPage: true });
+  }
+});
+
+test('classes and domains expose late-game rules with working filters and deep links', async contextTest => {
+  const { page } = await isolatedPage(contextTest);
+  await page.goto(`${base}classes.html`);
+  assert.equal(await page.locator('.class-reference').count(), 42);
+  await page.goto(`${base}classes.html#school-of-war`);
+  assert.equal(await page.locator('#school-of-war').getAttribute('open'), '');
+  assert.match(await page.locator('#school-of-war').innerText(), /Mastery/);
+  for (const name of ['brawler', 'druid']) assert.match(await page.locator(`#${name}`).textContent(), /Tier 4/);
+  assert.match(await page.locator('#ranger').textContent(), /Leveling Up/);
+  await page.goto(`${base}domains.html?domain=Dread&level=10#domain-cards`);
+  assert.equal(await page.locator('.domain-card').count(), 210);
+  assert.equal(await page.locator('[data-entry]:visible').count(), 2);
+  await page.getByRole('combobox', { name: 'Type', exact: true }).selectOption('Ability');
+  assert.equal(await page.locator('[data-entry]:visible').count(), 1);
+  await page.locator('[data-entry]:visible summary').click();
+  assert.match(await page.locator('[data-entry]:visible').innerText(), /Recall Cost:/);
+  await page.goto(`${base}domains.html?level=1#card-arcana-adjust-reality`);
+  assert.equal(await page.locator('#card-arcana-adjust-reality').isVisible(), true);
+  assert.equal(await page.locator('#card-arcana-adjust-reality').getAttribute('open'), '');
+  assert.match(await page.locator('#card-arcana-adjust-reality').innerText(), /spend 5 Hope/);
+  await page.goto(`${base}domains.html?domain=Codex&level=1#domain-cards`);
+  await page.getByRole('combobox', { name: 'Type', exact: true }).selectOption('Grimoire');
+  assert.equal(await page.locator('[data-entry]:visible').count(), 3);
+  await page.goto(`${base}domains.html?q=Summon%20Horror#card-dread-summon-horror`);
+  assert.match(await page.locator('[data-entry]:visible').innerText(), /Spellcast trait/);
+  for (const width of [1440, 390, 320]) {
+    await page.setViewportSize({ width, height: 1000 });
+    for (const [file, query, target] of [['classes', 'School%20of%20War', 'school-of-war'], ['domains', 'Adjust%20Reality', 'card-arcana-adjust-reality']]) {
+      await page.goto(`${base}${file}.html?q=${query}#${target}`);
+      assert.equal(await page.locator(`#${target}`).isVisible(), true);
+      assert.equal(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), true);
+      await page.screenshot({ path: new URL(`${file}-detail-${width}.png`, output).pathname, fullPage: true });
+    }
+  }
+  await page.goto(`${base}index.html#damage-scaling`);
+  assert.match(await page.locator('#damage-scaling').innerText(), /does not scale automatically/);
+  await page.goto(`${base}campaign-frames.html`);
+  assert.equal(await page.locator('#campaign-tiers li').count(), 4);
+  assert.match(await page.locator('#main').innerText(), /not its character tier/);
+  await page.goto(`${base}character-creation.html#joining-at-higher-level`);
+  assert.match(await page.locator('#joining-at-higher-level').innerText(), /party's current level/);
 });
