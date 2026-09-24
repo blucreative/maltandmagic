@@ -1,0 +1,15 @@
+{
+  "format": "eve-of-ruin-media-coverage",
+  "version": 1,
+  "counts": {
+    "documents": 15,
+    "guides": 27,
+    "sourceImages": 217,
+    "publicAssets": 217,
+    "uniqueMediaFiles": 216,
+    "referencedAssets": 28,
+    "unreferencedAssets": 189,
+    "missingReferences": 0
+  },
+  "missingReferences": []
+}

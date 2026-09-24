@@ -1,153 +1,145 @@
-# Eve of Ruin: private GM campaign desk
+# Eve of Ruin GM campaign desk
 
-An isolated, local-first adventure portal. It does not use Malt & Magic campaign
-lore, character data, or cloud-save services. The public application contains no
-adventure text, encounter presets, NPC dialogue, or monster statistics.
+A standalone, preloaded GitHub Pages portal. Open it on any device to read the
+adventure, use its maps, prepare scenes, and track encounters. **No campaign
+notes, session notes, account, or file import is required.**
 
-## Prepare the private campaign
+This project is separate from Malt & Magic's campaign lore and character sheets.
 
-The supplied Markdown and source-grounded companion guides remain in `.private/`.
-That directory is ignored by Git and excluded from deployment.
+## Delivery and privacy
+
+The chapter Markdown and original images were supplied in `.private/`. Build
+tools transform them into the site's published adventure data and media. The
+original `.md` files, `.private/` directory, build tools, and tests are not
+included in the Pages artifact.
+
+**The rendered adventure content, GM spoilers, and published images are public.**
+Excluding Markdown filenames is not access control for the material displayed
+by a public site. Do not put session notes, credentials, or personal information
+in the published content.
+
+Optional notes, secrets-ledger entries, and encounter progress remain in the
+browser's IndexedDB. They are not uploaded or synchronized between devices.
+Every device gets the same adventure reference independently of those notes.
+Optional backup export/restore can move personal progress between devices.
+
+## Use the portal
+
+- **Campaign desk:** opens at Chapter 6 without assuming the party's history.
+- **Adventure chapters:** full supplied text, chapter/area navigation, preparation
+  checklists, scene-specific guidance where authored, and encounter setup.
+- **Sigil Sanctum:** source-grounded NPC portrayal and optional original dialogue,
+  with plot-stage and knowledge boundaries.
+- **Encounter tracker:** create separate individuals from available statblocks;
+  track initiative, HP, temporary HP, conditions, and resource notes.
+- **Handoff & secrets:** entirely optional records of what happened at your table.
+- **Library & coverage:** searchable text and statblocks, image library, and
+  explicit missing-reference information.
+
+Preparation checklists generated from source cues are labeled as such. They do
+not infer creature quantities or replace the chapter's exact mechanics. Curated
+guidance can override those checklists by chapter.
+
+Chapter 6 has bespoke source-linked GM cards covering its keyed areas, rescue
+thresholds, alarms and reinforcements, mirror puzzle, ritual disruption, and
+return route. Its encounter presets use the quantities explicitly given in the
+source and distinguish allies, conditional fights, and reinforcement timing.
+Other chapters retain the complete source and generated preparation checklists.
+
+For source-cue encounter suggestions, choose the quantity and verify hostility,
+presence, reinforcements, and variants against the displayed passage. Merely
+mentioning a creature does not establish a combat encounter.
+
+## Maintainer build
+
+The public generated outputs are committed so GitHub Pages does not need access
+to private source files during deployment.
 
 ```sh
-node EveOfRuin/scripts/build-pack.mjs --require-guides
-node EveOfRuin/scripts/audit-pack.mjs
+node EveOfRuin/scripts/build-public.mjs
 ```
 
-The output is `.private/campaign-pack.json`. Download that file from your
-development workspace and select it using **Private campaign pack or backup** in
-the portal. Do not move it into a public directory or commit it.
-The audit writes `.private/readiness-report.json`, checks all 15 documents against
-the original files byte-for-byte as UTF-8 text, and lists scene/preset coverage
-and unresolved statblock names with their source locations.
+Inputs:
 
-Bundle the supplied images separately:
+- `.private/00-introduction.md`, chapters 1–11, and appendices A–C.
+- `.private/images/` for the supplied maps and artwork.
+- `.private/guide-*.json` for authored scene/encounter and Sanctum guidance.
+- `scripts/chapter-six-guidance.mjs` for the bespoke Chapter 6 companion cards.
 
-```sh
-node EveOfRuin/scripts/build-images.mjs
-```
+Outputs:
 
-This preserves original image quality and creates numbered private image packs
-in `.private/image-packs/`. Import those numbered JSON files together using
-**Private image packs** in **Library & coverage**. The manifest is an audit
-report, not an import file. Exact/normalized filename matches attach images to
-their original source URLs; GM and player versions are kept distinct. Ambiguous
-or absent matches remain explicitly reported. Artwork without a source-text link
-is still available in the private image library.
+- `data/campaign.json`: validated adventure reference and image index.
+- `data/media-coverage.json`: image/reference matching audit.
+- `media/`: deduplicated images at original quality.
 
-The private guide files are:
+Images are matched to source URLs by deterministic filename/map identifiers.
+Player and GM map variants are never interchanged. Ambiguous or unmatched
+references remain visible instead of being guessed. Artwork without a source
+link is still accessible in the image library.
 
-- `.private/guide-early.json`: introduction, chapters 1–5, and early Sanctum visits.
-- `.private/guide-late.json`: chapters 6–11 and later Sanctum continuity.
-
-They are local preparation artifacts, not downloadable parts of the public app.
-Keep a private backup of them with your source files. A fresh repository checkout
-does **not** contain licensed material or these guides. If they are unavailable,
-the app can import the 15 individual source Markdown documents directly, but that
-source-only import does not contain curated coaching or encounter presets.
-
-## At the table
-
-1. **Library & coverage:** check the source inventory, warnings, statblocks, and
-   missing references. Supply any necessary external material you own.
-2. **Handoff & secrets:** record the actual party, location, decisions, rod
-   inventory, and previous events. The initial Chapter 6 bookmark does not mark
-   earlier chapters as played or assume a particular Chapter 6 scene.
-3. **Adventure chapters:** choose a chapter and a section/keyed area. “Complete
-   chapter” always displays all imported source text. Source text and optional
-   GM coaching are visibly separated. Marking a passage prepared is a reading
-   checklist, not campaign progression.
-4. **Sigil Sanctum:** select the visit appropriate to the current plot stage.
-   Suggested dialogue is original, optional portrayal advice, not a module
-   quotation or a newly established event. All future-story information is
-   GM-only.
-5. **Encounter tracker:** launch a scene preset or create an encounter. Confirm
-   counts, select the exact statblocks, and apply variants explicitly. Every
-   individual has independent HP, temporary HP, AC, initiative, conditions,
-   limited-use notes, and source-statblock access. PCs can be entered manually.
-6. Export a full private backup after each session.
-
-For a safe local preview:
+For a local preview:
 
 ```sh
 node EveOfRuin/scripts/preview.mjs
 ```
 
-Open `http://127.0.0.1:8769/EveOfRuin/`. This server binds to loopback and serves
-only the public app allowlist. Set `PORT` if that port is already in use.
+Open `http://127.0.0.1:8769/EveOfRuin/`. The loopback preview serves only the
+published app/data/media allowlist, not the repository or `.private/` tree.
+Set `PORT` if necessary.
+
+The older private-pack build and audit scripts remain available for maintenance:
+
+```sh
+node EveOfRuin/scripts/build-pack.mjs
+node EveOfRuin/scripts/audit-pack.mjs
+```
+
+They are not visitor prerequisites and are not the Pages deployment path.
 
 ## Completeness boundaries
 
-The source Markdown is preserved in full, rather than replaced by summaries.
-The module can still depend on material absent from those files: core-book
-statblocks, spell descriptions, item rules, and externally linked map images.
-The portal never silently fetches, invents, or substitutes that material.
+All supplied chapter text is retained rather than replaced by summaries. The
+source still references some core-book statblocks, spells, and item descriptions
+that are not contained in the supplied files. Those gaps are flagged; nothing
+is silently invented or taken from another campaign or a different rules edition.
 
-Use **Library & coverage** to add complete statblocks from your own references.
-Its live encounter-reference check lists every preset creature without an exact
-local statblock match, with links to the source scenes. Add missing spell/item
-text using **Supplemental rules & references**; these additions remain private,
-are searchable, and are included in backups.
-For a map, import your local PNG/JPEG/WebP file and attach the exact reference URL
-listed in the library; the reader then opens the local image instead of an
-unavailable external reference. Imported images are included in backups.
+Source statblocks are presented in full. Named variants' altered statistics
+must be applied explicitly to each tracked individual. The tracker does not
+automatically adjudicate resistances, concentration, recharge, death saves,
+conditions, or encounter outcomes.
 
-Monster variants are not automatically applied to a base statblock. Their source
-notes are copied to each combatant; edit AC, maximum HP, and other notes before
-play. Damage does not auto-apply resistances, immunities, concentration checks,
-death saves, or conditions. The GM adjudicates these using the displayed source.
-The generic HP arithmetic was checked against SRD 5.2.1, *Playing the Game*,
-[Healing and Temporary Hit Points](https://github.com/downfallx/dnd-5e-srd-markdown/blob/master/playing-the-game.md).
-This does not convert the adventure, its statblocks, or its spells to the 2024
-rules. No other rules automation or replacement material is imported.
+Generic damage bookkeeping consumes temporary HP before current HP; healing
+stops at maximum HP. This arithmetic was checked against SRD 5.2.1, *Playing the
+Game*. It does not convert the adventure or its statblocks to the 2024 rules.
 
-## Privacy, persistence, and offline use
+## Offline operation and optional progress
 
-- The public deployment uses an explicit app-file allowlist. No Markdown,
-  campaign JSON, private source tree, tests, or build tools are published under
-  `EveOfRuin/`.
-- Imports are parsed locally; there is no source upload, analytics, third-party
-  font, external image load, or adventure fetch.
-- Text is rendered with a locally vendored MIT-licensed Marked parser. Raw HTML
-  is escaped, and source links do not navigate or execute URLs.
-- IndexedDB stores the private pack, notes, images, and encounter state.
-- Images and source data are stored separately from frequently edited state;
-  changing a combatant or note does not rewrite the entire image collection.
-  Full private backups support up to 512 MB.
-- A portal-scoped service worker caches only the application shell. Wait for
-  offline readiness before disconnecting; then revisit the same address.
-- Browser profiles and site origins do not share data. Localhost imports do not
-  appear automatically on GitHub Pages, another device, or another profile.
-- Concurrent portal tabs use revision checks: a stale tab cannot overwrite a
-  newer save. If warned, export that tab's unsaved work and reload before editing.
-- Browser storage can be cleared or evicted. Request persistent storage where
-  supported, but still export backups.
-- Backups are not encrypted. Anyone with the file or access to the browser
-  profile can read campaign spoilers and the imported source.
-- Importing an updated pack replaces the source library and guidance while
-  preserving session notes, encounters, custom references, and images. Existing
-  encounters retain their recorded statistics, and any removed source block they
-  still use is preserved as a private custom reference.
-  Importing a backup replaces the entire campaign with its saved state.
-  Both operations request confirmation when a campaign is already loaded.
-- A local development server serving the entire repository may expose ignored
-  files. Preview only an allowlisted staging directory, never the source root.
+- After successful loading, the service worker caches the app and adventure data.
+- Images become available offline after viewing; the entire image library is not
+  downloaded eagerly to every device.
+- Local progress is specific to a device, browser profile, and site address.
+- Browser storage can be cleared or evicted. Export optional progress if needed.
+- Backups are not encrypted and can contain private notes.
+- Published image references in backups still depend on the site's media or its
+  browser cache; a backup is not a download of all the published image files.
+- Stale tabs cannot silently overwrite another tab's newer save.
+- Source data and images are stored separately from frequently edited progress.
+- Updating the published reference preserves local notes and encounter state.
 
 ## Validation
 
-The project uses Node's built-in test runner and the repository's existing
-Playwright installation.
+Uses Node's built-in test runner and the repository's existing Playwright:
 
 ```sh
-node --test EveOfRuin/test/*.test.mjs
-node --test EveOfRuin/test/browser.spec.mjs
+node --test EveOfRuin/test/*.test.mjs EveOfRuin/test/browser.spec.mjs
 ```
 
-Browser tests create their own loopback-only allowlisted server and synthetic
-campaign fixtures. They do not publish or embed the supplied module.
+Tests use original synthetic fixtures, not copied adventure text. Deployment
+tests verify that raw Markdown and private inputs do not enter the Pages artifact.
+Browser tests cover opening the preloaded adventure without importing files.
 
 ## Vendor
 
 `vendor/marked.esm.js` is Marked 18.0.12, copied from the repository's existing
-installed dependency. Its MIT license is retained as `vendor/LICENSE`. No CDN
-or package installation is required to run the portal.
+installed dependency. Its MIT license is retained as `vendor/LICENSE`. The app
+uses no CDN, external fonts, or analytics.

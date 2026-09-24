@@ -65,7 +65,7 @@ export async function writeCampaign(db, value) {
   const snapshot = { state: structuredClone(value.state), pack: value.pack, assets: [...value.assets] };
   const operation = writeQueue.then(() => new Promise((resolve, reject) => {
     const packSize = snapshot.pack === knownPack ? knownPackSize : new Blob([JSON.stringify(snapshot.pack)]).size;
-    const assetsSize = snapshot.assets.reduce((sum, asset) => sum + asset.data.length + new Blob([JSON.stringify({ ...asset, data: '' })]).size, 0);
+    const assetsSize = snapshot.assets.reduce((sum, asset) => sum + (asset.data?.length ?? 0) + new Blob([JSON.stringify({ ...asset, data: '' })]).size, 0);
     const stateSize = new Blob([JSON.stringify(snapshot.state)]).size;
     if (packSize + assetsSize + stateSize > MAX_BACKUP_BYTES - 16384) {
       reject(new Error('Campaign storage exceeds the 512 MB backup limit. Remove an unused local image or reduce supplemental material before saving.'));
@@ -170,10 +170,10 @@ export function validateAssets(assets) {
     if (!record(asset) || typeof asset.id !== 'string' || ids.has(asset.id) ||
         typeof asset.name !== 'string' || asset.name.length > 500 ||
         typeof asset.reference !== 'string' || asset.reference.length > 4000 ||
-        typeof asset.data !== 'string' || asset.data.length > 16000000 ||
         (asset.references !== undefined && (!Array.isArray(asset.references) || asset.references.length > 100 || !asset.references.every(reference => typeof reference === 'string' && reference.length <= 4000))) ||
-        !/^data:image\/(?:png|jpeg|webp);base64,[A-Za-z0-9+/=\r\n]+$/.test(asset.data)) {
-      throw new Error('Invalid local image. Only PNG, JPEG, and WebP image data is accepted.');
+        !((typeof asset.data === 'string' && asset.data.length <= 16000000 && /^data:image\/(?:png|jpeg|webp);base64,[A-Za-z0-9+/=\r\n]+$/.test(asset.data)) ||
+          (asset.data === undefined && typeof asset.src === 'string' && /^\.\/media\/[a-zA-Z0-9_-]+\.(?:png|jpg|jpeg|webp)$/.test(asset.src)))) {
+      throw new Error('Invalid local image. Only bundled media paths or PNG, JPEG, and WebP image data are accepted.');
     }
     ids.add(asset.id);
   }
@@ -184,12 +184,16 @@ export function assetMatches(asset, reference) {
   return Boolean(reference) && (asset.reference === reference || (asset.references ?? []).includes(reference));
 }
 
+export function assetSource(asset) {
+  return asset.data ?? asset.src;
+}
+
 export function mergeAssets(current, incoming) {
   validateAssets(incoming);
   const merged = new Map(current.map(asset => [asset.id, asset]));
   for (const asset of incoming) {
     const previous = merged.get(asset.id);
-    if (previous && previous.data !== asset.data) throw new Error(`Image identifier conflict: ${asset.name}. Existing images were not replaced.`);
+    if (previous && assetSource(previous) !== assetSource(asset)) throw new Error(`Image identifier conflict: ${asset.name}. Existing images were not replaced.`);
     merged.set(asset.id, previous ? {
       ...previous,
       references: [...new Set([previous.reference, asset.reference, ...(previous.references ?? []), ...(asset.references ?? [])].filter(Boolean))]
@@ -199,7 +203,7 @@ export function mergeAssets(current, incoming) {
   for (const asset of merged.values()) {
     for (const reference of [asset.reference, ...(asset.references ?? [])].filter(Boolean)) {
       const previous = references.get(reference);
-      if (previous && previous.data !== asset.data) throw new Error(`Two different images claim the same source reference: ${reference}. Remove or correct the existing attachment first.`);
+      if (previous && assetSource(previous) !== assetSource(asset)) throw new Error(`Two different images claim the same source reference: ${reference}. Remove or correct the existing attachment first.`);
       references.set(reference, asset);
     }
   }

@@ -79,3 +79,11 @@ test('image packs merge repeat imports and exact URL aliases without confusing p
   assert.throws(() => mergeAssets([asset], [{ ...asset, id: 'b', data: 'data:image/png;base64,YWJj' }]), /same source reference/);
   assert.throws(() => validateAssets([{ ...asset, references: [{ invalid: true }] }]), /Invalid local image/);
 });
+
+test('published images permit only bundled media paths, not arbitrary URLs or traversal', () => {
+  const asset = { id: 'map', name: 'Published map', reference: '', src: './media/map-test.png' };
+  assert.equal(validateAssets([asset])[0], asset);
+  for (const src of ['https://example.invalid/map.png', '../.private/map.png', './media/../secrets.png', './media/map.svg', 'javascript:alert(1)']) {
+    assert.throws(() => validateAssets([{ ...asset, src }]), /Invalid local image/);
+  }
+});

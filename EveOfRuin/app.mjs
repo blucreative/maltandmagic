@@ -1,5 +1,5 @@
 import { buildPack, validatePack, createCombatant, applyDamage, applyHealing, sortCombatants } from './model.mjs';
-import { openStore, readCampaign, writeCampaign, initialState, validateState, validateAssets, MAX_BACKUP_BYTES, assetMatches, mergeAssets } from './storage.mjs';
+import { openStore, readCampaign, writeCampaign, initialState, validateState, validateAssets, MAX_BACKUP_BYTES, assetMatches, assetSource, mergeAssets } from './storage.mjs';
 import { escapeHTML as e, renderMarkdown } from './markdown.mjs';
 
 const main = document.querySelector('#main');
@@ -14,6 +14,7 @@ let unsaved = false;
 let importBusy = false;
 let saving = 0;
 let revision = 0;
+let startupFailure = '';
 
 const uid = () => crypto.randomUUID();
 const list = items => items?.length ? `<ul>${items.map(item => `<li>${e(item)}</li>`).join('')}</ul>` : '';
@@ -77,28 +78,18 @@ function heading(kicker, title, description = '') {
 }
 
 function importPanel() {
-  return `<div class="card"><h2>Bring your campaign to the desk</h2>
-    <p>Choose your private campaign pack or a full portal backup. Nothing is uploaded. The pack includes the supplied chapters, statblocks, and source-linked GM guidance.</p>
-    <label>Private campaign pack or backup (.json)
+  return `<details><summary>Optional backup restore / advanced import</summary>
+    <p>The adventure is already loaded. You do not need session notes or an import to use this portal. Restore a backup only if you want to move your optional notes and encounter progress between devices.</p>
+    <label>Campaign backup (.json)
       <input id="pack-import" type="file" accept=".json,application/json">
     </label>
-    <p class="help">Prepared locally with <code>node EveOfRuin/scripts/build-pack.mjs --require-guides</code>. The resulting file is in <code>EveOfRuin/.private/campaign-pack.json</code>, not on this website. Download that file from your workspace, then select it here.</p>
-    <details><summary>Import source Markdown instead</summary>
-      <p>Choose the introduction, all 11 chapters, and appendices A–C together. This preserves the full text and extracts supplied statblocks, but does not include the separately prepared GM coaching. The combined omnibus is unnecessary.</p>
-      <label>Adventure Markdown files<input id="markdown-import" type="file" accept=".md,text/markdown" multiple></label>
-    </details>
-    <p class="help">Browser data is specific to this device, browser profile, and site address. It is not a backup or access-controlled account. Anyone with access to this browser profile can read it. Export regularly and keep backups private.</p>
-  </div>`;
+    <p class="help">Optional notes and combat progress are local to this device, not synchronized between devices. Backups can contain your private notes; keep them safe.</p>
+  </details>`;
 }
 
 function welcome() {
-  return `${heading('A PRIVATE TABLE · A SEPARATE STORY', 'Your campaign, within reach.', 'A quiet place to prepare, run, and hand off Eve of Ruin. Built for the GM behind the screen.')}
-    <div class="hero-card"><p class="eyebrow">STARTING AT CHAPTER SIX</p><h2>Less page hunting.<br>More time at the table.</h2><p>Keep the full source beside scene guidance. Return to the Sanctum with a clear purpose. Track each adversary independently, and leave the next session a useful handoff.</p><span class="tag">NO ADVENTURE CONTENT HOSTED</span></div>
-    <div class="grid">${importPanel()}<div>
-      <div class="card"><h2>What stays private</h2><p>Your adventure text, maps, notes, and combat state live only in this browser's local database. This app has no upload endpoint, analytics, external fonts, or remote source requests.</p></div>
-      <div class="card"><h2>Nothing quietly invented</h2><p>The portal distinguishes supplied adventure text, optional GM coaching, and your table's actual history. Missing maps, statblocks, and external rule references remain visible gaps until you supply them.</p></div>
-      <div class="card"><h2>Ready without a connection</h2><p>After the app confirms offline readiness, the imported campaign works offline at this same address. Export a backup before clearing browser data or changing devices.</p><p id="welcome-offline" class="help">Check offline readiness in Library &amp; coverage after import.</p></div>
-    </div></div>`;
+  return `${heading('EVE OF RUIN', 'Opening the adventure.', 'The campaign is preloaded. No session notes, account, or file import is required.')}
+    ${startupFailure ? `<div class="warning">${e(startupFailure)}</div><button type="button" data-retry>Retry loading the adventure</button>` : '<p role="status">Loading chapters, encounters, and the image library…</p>'}`;
 }
 
 function renderNavigation() {
@@ -127,14 +118,14 @@ function dashboard() {
   const section = selectedSection();
   const encounter = activeEncounter();
   const noGuides = !campaign.pack.guides.chapters.length;
-  return `${heading('THE CAMPAIGN DESK', 'Pick up the thread.', 'Your table’s actual history belongs here. Chapter 6 is the starting bookmark—not a claim about what your party has done.')}
+  return `${heading('THE CAMPAIGN DESK', 'Ready for the next session.', 'The adventure and images are preloaded. Start at Chapter 6 or choose any chapter; no campaign or session notes are required.')}
     <div class="hero-card"><p class="eyebrow">YOUR READING POSITION</p><h2>${e(doc.title)}</h2><p>${e(section?.heading ?? guide?.summary ?? 'Open the supplied chapter and choose the exact scene where your next session begins.')}</p>
-      <div class="actions"><a class="button" href="#reader">Continue preparing</a><a class="button quiet" href="#journal">Update campaign handoff</a></div></div>
-    ${noGuides ? '<div class="warning">This source-only import has no prepared GM coaching or encounter presets. Import the locally built campaign pack to add them.</div>' : ''}
+      <div class="actions"><a class="button" href="#reader">Open the adventure</a><a class="button quiet" href="#sanctum">Prepare the Sanctum NPCs</a></div></div>
+    ${noGuides ? '<div class="warning">Prepared GM coaching is not included in this build yet. The full chapter text and supplied statblocks are available below.</div>' : ''}
     ${campaign.pack.coverage.missing.length ? `<div class="warning">Source set incomplete: ${e(campaign.pack.coverage.missing.join(', '))}. See Library &amp; coverage.</div>` : ''}
     <div class="grid">
       <div class="card"><p class="eyebrow">BEFORE YOU RUN</p><h2>A clear starting point</h2>${list(guide?.startHere)}<p class="help">Source-based preparation, not confirmed events. Read the full scene before resolving a branch.</p><div class="actions"><a class="button quiet" href="#reader">Open chapter &amp; scenes</a></div></div>
-      <div class="card"><p class="eyebrow">YOUR TABLE'S LAST SESSION</p><h2>The handoff</h2><p>${e(state().handoff.recap || 'No recap recorded yet. Record the party’s location, what they actually learned, and the decision currently in front of them.')}</p><p><strong>Next session:</strong> ${e(state().handoff.nextSession || 'Not recorded.')}</p><a href="#journal">Write the handoff</a></div>
+      <div class="card"><p class="eyebrow">OPTIONAL TABLE PROGRESS</p><h2>Your own handoff</h2><p>${e(state().handoff.recap || 'Use the adventure without entering anything here. If helpful, keep an optional recap of your party’s choices and current position on this device.')}</p><p><strong>Next session:</strong> ${e(state().handoff.nextSession || 'No personal note added.')}</p><a href="#journal">Open optional notes</a></div>
     </div>
     <div class="grid three">
       <div class="card"><p class="eyebrow">THE PEOPLE BETWEEN ADVENTURES</p><h2>Sigil Sanctum</h2><p>Purpose, knowledge boundaries, and optional original dialogue for the NPCs. Availability is tied to the story, not assumed.</p><a href="#sanctum">Prepare a return</a></div>
@@ -319,13 +310,13 @@ function library() {
   const coverage = campaign.pack.coverage;
   const refs = externalReferences();
   const missingStats = missingEncounterReferences();
-  return `${heading('LIBRARY & COVERAGE', 'Know what is on the desk.', 'Complete source preservation is not the same as complete external dependencies. The original Markdown is retained in your private pack; every imported heading is navigable.')}
+  return `${heading('LIBRARY & COVERAGE', 'Know what is on the desk.', 'The adventure and supplied images are preloaded on every device. Every source heading is navigable; original Markdown files are excluded from the website.')}
     <div class="grid three">
       <div class="card"><div class="coverage-number">${campaign.pack.documents.length} / ${coverage.expected}</div><p>Expected source documents</p></div>
       <div class="card"><div class="coverage-number">${campaign.pack.statblocks.length}</div><p>Statblocks extracted from supplied text</p></div>
-      <div class="card"><div class="coverage-number">${campaign.assets.length}</div><p>Private local images · no remote fetching</p></div>
+      <div class="card"><div class="coverage-number">${campaign.assets.length}</div><p>Maps &amp; artwork in the image library</p></div>
     </div>
-    <div class="warning"><strong>Readiness boundary:</strong> the supplied module references other books and externally hosted maps. Having all chapter files does not supply those rules or images. Missing material is never filled in from another campaign, a different rules edition, or an invented statblock.</div>
+    <div class="warning"><strong>Readiness boundary:</strong> the supplied module references rules and statblocks in other books. Those references remain explicit gaps where the supplied files do not contain the full mechanics. Nothing is substituted from another campaign or rules edition.</div>
     ${coverage.missing.length ? `<div class="warning"><strong>Missing documents:</strong> ${e(coverage.missing.join(', '))}</div>` : ''}
     ${coverage.warnings?.length ? `<details><summary>Import and source warnings (${coverage.warnings.length})</summary>${list(coverage.warnings)}</details>` : ''}
     <div class="card"><h2>Search all supplied text</h2><label>Search chapters, NPC names, area codes, or rules references<input type="search" id="source-search" placeholder="Search all chapters and appendices" maxlength="150"></label><div id="search-results" class="search-results" aria-live="polite"></div></div>
@@ -336,7 +327,7 @@ function library() {
     <details><summary>Encounter names without an exact local statblock (${missingStats.length})</summary><p>This is a live check of every creature in the imported encounter presets. Named variants may need an explicitly selected base block plus the source’s changes; do not assume a near-name match is sufficient.</p>
       ${missingStats.length ? missingStats.map(([name, locations]) => `<div class="card"><h3>${e(name)}</h3>${locations.map(location => `<p>${e(location.note || 'Supply the correct full statblock or verify the source-designated base block.')}</p>${sourceButton(location.file, location.heading)}`).join('')}</div>`).join('') : '<p>All preset creature names match a local statblock. This does not verify variants, spells, items, or other external dependencies.</p>'}
     </details>
-    <details><summary>External links &amp; missing map assets (${refs.length})</summary><p>These references are preserved but are not fetched. Import your own image file and use its reference URL below to attach it in the source reader.</p>
+    <details><summary>Source link &amp; map coverage (${refs.length})</summary><p>Original external URLs are not fetched. Matched images are served with this portal; unresolved references are flagged below.</p>
       ${refs.map(ref => `<div class="card"><strong>${e(ref.label || 'Reference')}</strong><p class="file-name">${e(ref.url)}</p><p class="help">${e([...ref.files].join(', '))}</p><span class="tag">${campaign.assets.some(asset => assetMatches(asset, ref.url)) ? 'LOCAL ASSET ATTACHED' : 'NOT BUNDLED'}</span></div>`).join('')}
     </details>
     <div class="grid">
@@ -349,20 +340,18 @@ function library() {
       <details><summary>Add a private reference</summary><form id="reference-form" class="fields"><label>Reference title<input name="title" required maxlength="200"></label><label>Complete text, rules edition &amp; source<textarea name="markdown" required rows="7" maxlength="200000"></textarea></label><button type="submit">Save private reference</button></form></details>
       ${state().references.map(reference => `<div class="actions"><span>${e(reference.title)}</span>${button('Read reference', 'reference', `data-id="${e(reference.id)}"`)}${button('Remove reference', 'remove-reference', `data-id="${e(reference.id)}"`)}</div>`).join('')}
     </div>
-    <div class="card"><h2>Private maps &amp; images</h2>
-      <p>Import the locally prepared image-pack files together. They attach exact map references automatically while retaining unlinked artwork in the private library. GM and player maps are never substituted for one another.</p>
-      <label>Private image packs (.json, multiple files)<input id="image-packs-import" type="file" accept=".json,application/json" multiple></label>
-      <p class="help">Build locally with <code>node EveOfRuin/scripts/build-images.mjs</code>, then select the numbered JSON files from <code>EveOfRuin/.private/image-packs/</code>. Do not select the manifest. Importing images merges with your library and preserves notes and encounters.</p>
+    <div class="card"><h2>Maps &amp; images</h2>
+      <p>The supplied artwork and maps are already available. GM and player versions remain separate; check the labels before showing an image to players.</p>
       <details><summary>Add one image manually</summary><form id="asset-form" class="fields"><div class="fields two"><label>Image label<input name="name" required maxlength="200"></label><label>Exact source reference URL (optional)<input name="reference" type="url" maxlength="4000" placeholder="Paste the preserved reference URL"></label></div><label>Local image (PNG / JPEG / WebP, up to 10 MB)<input type="file" name="image" accept="image/png,image/jpeg,image/webp" required></label><button type="submit">Store image on this device</button></form></details>
-      <label>Filter private images<input type="search" id="image-search" placeholder="Map number, name, player, or NPC" maxlength="150"></label>
+      <label>Filter images<input type="search" id="image-search" placeholder="Map number, name, player, or NPC" maxlength="150"></label>
       <div id="image-list">${imageButtons('')}</div>
     </div>
-    <div class="grid">${importPanel()}<div class="card"><h2>Offline &amp; backup</h2><p id="library-offline">${e(document.querySelector('#offline-status').textContent)}</p><p>Offline readiness covers only the app shell. Import the private pack and any needed images before disconnecting. Never clear browser storage without a backup.</p><div class="actions">${button('Export full private backup', 'export', '', false)}${button('Request persistent storage', 'persistent-storage')}</div><p class="help">Backups contain the adventure and your notes. They are not encrypted. Keep them outside the public repository.</p></div></div>`;
+    <div class="grid">${importPanel()}<div class="card"><h2>Offline &amp; optional backup</h2><p id="library-offline">${e(document.querySelector('#offline-status').textContent)}</p><p>Load the adventure and view the maps you need before disconnecting. Notes and combat progress are optional and stay on this device; export only if you want to keep or transfer them.</p><div class="actions">${button('Export optional progress backup', 'export', '', false)}${button('Request persistent storage', 'persistent-storage')}</div><p class="help">Backups can contain private notes and are not encrypted. Published images remain website references, not embedded copies of the full image collection.</p></div></div>`;
 }
 
 function imageButtons(query) {
   return campaign.assets.filter(asset => asset.name.toLowerCase().includes(query.toLowerCase())).map(asset =>
-    `<div class="image-row"><span>${e(asset.name)}</span><span class="tag">${/player/i.test(asset.name) ? 'PLAYER VERSION' : 'GM LIBRARY · VERIFY BEFORE SHARING'}</span><div class="actions">${button('View image', 'asset', `data-id="${e(asset.id)}"`)}${button('Remove image', 'remove-asset', `data-id="${e(asset.id)}"`)}</div></div>`
+    `<div class="image-row"><span>${e(asset.name)}</span><span class="tag">${/player/i.test(asset.name) ? 'PLAYER VERSION' : 'GM LIBRARY · VERIFY BEFORE SHARING'}</span><div class="actions">${button('View image', 'asset', `data-id="${e(asset.id)}"`)}${asset.data ? button('Remove image', 'remove-asset', `data-id="${e(asset.id)}"`) : ''}</div></div>`
   ).join('') || '<p class="help">No matching images.</p>';
 }
 
@@ -376,12 +365,12 @@ async function navigateToSource(file, sectionHeading = '') {
   if (!doc) throw new Error(`Source document not imported: ${file}`);
   const section = sectionHeading ? doc.sections.find(item => item.heading === sectionHeading) : null;
   state().selected = { documentId: doc.id, sectionId: section?.id ?? '' };
-  await persist();
   view = 'reader';
   location.hash = 'reader';
   render();
   if (sectionHeading && !section) announce(`The exact heading "${sectionHeading}" was not found; the complete source document is shown instead.`);
   main.focus();
+  await persist();
 }
 
 function showModal(title, html) {
@@ -405,7 +394,7 @@ function setupPreset(index) {
       const stat = resolveStat(creature.name);
       return `<div class="encounter-setup-row"><h3>${e(creature.name)}</h3><p>${e(creature.note || 'No variant note in the companion card. Verify against the source.')}</p><div class="fields two">
         <label>Count for ${e(creature.name)}<input name="count-${i}" type="number" min="0" max="100" step="1" value="${creature.count ?? ''}" required placeholder="Choose from the source"></label>
-        <label>Statblock for ${e(creature.name)}<select name="stat-${i}">${statOptions(stat?.id)}</select></label></div>
+        <label>Statblock for ${e(creature.name)}<select name="stat-${i}" aria-label="Statblock for ${e(creature.name)}">${statOptions(stat?.id)}</select></label></div>
         ${!stat ? '<p class="error">No exact statblock match. Supply/select the correct block in Library &amp; coverage. This group cannot be created without one unless its count is zero.</p>' : ''}</div>`;
     }).join('')}<button type="submit">Create encounter with separate individuals</button></form>`);
 }
@@ -548,9 +537,9 @@ async function action(target) {
   if (name === 'asset') {
     const asset = campaign.assets.find(item => item.id === id);
     if (!asset) throw new Error('This image is no longer in the local library.');
-    return showModal(asset.name, `<p class="help">Private GM library. Check labels and spoilers before sharing this image with players.</p>
-      <div class="actions">${button('Show original resolution', 'zoom-image', 'aria-pressed="false"')}<a class="button quiet" href="${e(asset.data)}" download="${e(asset.name)}">Save original image</a></div>
-      <div class="image-stage" tabindex="0" aria-label="Image viewport; scroll to explore at original resolution"><img class="local-map" src="${e(asset.data)}" alt="${e(asset.name)}"></div>`);
+    return showModal(asset.name, `<p class="help">GM image library. Check labels and spoilers before sharing this image with players.</p>
+      <div class="actions">${button('Show original resolution', 'zoom-image', 'aria-pressed="false"')}<a class="button quiet" href="${e(assetSource(asset))}" download="${e(asset.name)}">Save original image</a></div>
+      <div class="image-stage" tabindex="0" aria-label="Image viewport; scroll to explore at original resolution"><img class="local-map" src="${e(assetSource(asset))}" alt="${e(asset.name)}"></div>`);
   }
   if (name === 'zoom-image') {
     const zoomed = document.querySelector('.image-stage').classList.toggle('zoomed');
@@ -568,11 +557,11 @@ async function action(target) {
     const index = campaign.pack.documents.indexOf(selectedDocument());
     const next = campaign.pack.documents[index + (name === 'next-document' ? 1 : -1)];
     if (!next) throw new Error('There is no adjacent document.');
-    state().selected = { documentId: next.id, sectionId: '' };
+    return navigateToSource(next.filename);
   } else if (name === 'previous-section' || name === 'next-section') {
     const doc = selectedDocument();
     const index = doc.sections.findIndex(section => section.id === state().selected.sectionId);
-    state().selected.sectionId = doc.sections[index + (name === 'next-section' ? 1 : -1)]?.id ?? '';
+    return navigateToSource(doc.filename, doc.sections[index + (name === 'next-section' ? 1 : -1)]?.heading ?? '');
   } else if (name === 'complete') {
     const key = noteKey();
     state().completed = state().completed.includes(key) ? state().completed.filter(item => item !== key) : [...state().completed, key];
@@ -703,9 +692,11 @@ async function change(target) {
   if (target.id === 'image-packs-import') return importImages([...target.files]);
   if (!campaign) return;
   if (target.id === 'document-select') {
-    state().selected = { documentId: target.value, sectionId: '' };
+    const doc = campaign.pack.documents.find(item => item.id === target.value);
+    return navigateToSource(doc.filename);
   } else if (target.id === 'section-select') {
-    state().selected.sectionId = target.value;
+    const doc = selectedDocument();
+    return navigateToSource(doc.filename, doc.sections.find(item => item.id === target.value)?.heading ?? '');
   } else if (target.id === 'encounter-select') {
     state().activeEncounterId = target.value || null;
   } else if (target.dataset.secret) {
@@ -779,6 +770,10 @@ function input(target) {
 }
 
 document.addEventListener('click', event => {
+  if (event.target.closest('[data-retry]')) {
+    location.reload();
+    return;
+  }
   const target = event.target.closest('[data-action], [data-doc], [data-asset]');
   if (!target || !campaign) return;
   guarded(async () => {
@@ -825,7 +820,7 @@ async function offlineSetup() {
   try {
     await navigator.serviceWorker.register('./sw.js', { scope: './' });
     await navigator.serviceWorker.ready;
-    status.textContent = 'App ready offline at this address. Campaign data stays in local storage.';
+    status.textContent = 'Adventure cached for offline use. Images become available offline after viewing. Optional notes stay on this device.';
   } catch (failure) {
     status.textContent = `Offline setup failed: ${failure.message}. Stay online until this is resolved.`;
   }
@@ -833,12 +828,41 @@ async function offlineSetup() {
   if (libraryStatus) libraryStatus.textContent = status.textContent;
 }
 
+view = views.has(location.hash.slice(1)) ? location.hash.slice(1) : 'dashboard';
+render();
+let saved = null;
 await guarded(async () => {
   db = await openStore();
-  const saved = await readCampaign(db);
-  if (saved) campaign = { pack: validatePack(saved.pack), state: validateState(saved.state), assets: validateAssets(saved.assets) };
-  document.querySelector('#save-status').textContent = saved ? 'Campaign restored from this device' : 'Local storage ready';
+  saved = await readCampaign(db);
 });
-view = views.has(location.hash.slice(1)) ? location.hash.slice(1) : 'dashboard';
+try {
+  const response = await fetch('./data/campaign.json');
+  if (!response.ok) throw new Error(`Published adventure could not be loaded (HTTP ${response.status}).`);
+  const published = await response.json();
+  if (published.format !== 'eve-of-ruin-site' || published.version !== 1) throw new Error('The published adventure has an unsupported format.');
+  const pack = validatePack(published.pack);
+  const assets = validateAssets(published.assets);
+  campaign = {
+    pack,
+    state: saved ? validateState(saved.state) : initialState(),
+    assets: mergeAssets(assets, saved?.assets?.filter(asset => asset.data) ?? [])
+  };
+  if (!pack.documents.some(document => document.id === campaign.state.selected.documentId)) {
+    campaign.state.selected = { documentId: pack.documents[0].id, sectionId: '' };
+  }
+  // Keep source blocks referenced by existing combatants when a published update removes them.
+  const referenced = new Set(campaign.state.encounters.flatMap(encounter => encounter.combatants.map(actor => actor.statblockId)));
+  const present = new Set([...pack.statblocks, ...campaign.state.customStatblocks].map(stat => stat.id));
+  for (const stat of saved?.pack?.statblocks ?? []) {
+    if (referenced.has(stat.id) && !present.has(stat.id)) campaign.state.customStatblocks.push(stat);
+  }
+  if (db) await guarded(persist);
+  document.querySelector('#save-status').textContent = db
+    ? (unsaved ? 'Adventure ready · optional progress not saved' : 'Adventure ready · optional progress saved locally')
+    : 'Adventure ready · local saving unavailable';
+} catch (failure) {
+  startupFailure = failure.message;
+  error(failure);
+}
 render();
 offlineSetup();

@@ -276,12 +276,9 @@ function validateGuides(guides, documents) {
   });
   guides.gaps.forEach((gap, i) => {
     const path = `guides.gaps[${i}]`;
-    if (typeof gap === 'string') text(gap, path, 100_000);
-    else {
-      requireTextFields(gap, ['kind', 'name', 'detail'], path);
-      for (const key of ['file', 'chapterFile', 'heading']) if (own(gap, key)) text(gap[key], `${path}.${key}`, 100_000);
-      if (gap.file || gap.chapterFile) resolve(gap.file || gap.chapterFile, gap.heading, path);
-    }
+    requireTextFields(gap, ['file', 'heading', 'detail'], path);
+    for (const key of ['kind', 'name']) if (own(gap, key)) text(gap[key], `${path}.${key}`, 100_000);
+    resolve(gap.file, gap.heading, path);
   });
 }
 

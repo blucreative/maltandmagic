@@ -25,15 +25,13 @@ jobs:
         run: |
           rm -rf site
           mkdir -p site
-          rsync -a --exclude='.git' --exclude='.github' --exclude='.private' --exclude='node_modules' --exclude='/workers' --exclude='/site' --exclude='/EveOfRuin' --exclude='/Daggerheart/scripts' --exclude='/Daggerheart/test' --exclude='/Daggerheart/test-output' --exclude='/Daggerheart/package*.json' ./ site/
-          mkdir -p site/EveOfRuin/vendor
-          # Explicit public allowlist: never publish imported adventure data or Markdown.
+          rsync -a --exclude='.git' --exclude='.github' --exclude='.private' --exclude='.test-output' --exclude='*.md' --exclude='*.markdown' --exclude='node_modules' --exclude='/workers' --exclude='/site' --exclude='/EveOfRuin' --exclude='/Daggerheart/scripts' --exclude='/Daggerheart/test' --exclude='/Daggerheart/test-output' --exclude='/Daggerheart/package*.json' ./ site/
+          mkdir -p site/EveOfRuin/vendor site/EveOfRuin/data site/EveOfRuin/media
+          # Publish generated reference data, never private inputs or raw Markdown.
           rsync -a EveOfRuin/index.html EveOfRuin/portal.css EveOfRuin/app.mjs EveOfRuin/model.mjs EveOfRuin/storage.mjs EveOfRuin/markdown.mjs EveOfRuin/sw.js site/EveOfRuin/
           rsync -a EveOfRuin/vendor/marked.esm.js EveOfRuin/vendor/LICENSE site/EveOfRuin/vendor/
-          if find site/EveOfRuin -type f \( -name '*.md' -o -name '*.json' \) | grep -q .; then
-            echo "Private adventure material found in the public portal artifact" >&2
-            exit 1
-          fi
+          rsync -a EveOfRuin/data/ site/EveOfRuin/data/
+          rsync -a EveOfRuin/media/ site/EveOfRuin/media/
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
