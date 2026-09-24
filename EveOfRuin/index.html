@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#10191e">
+  <meta name="robots" content="noindex, nofollow">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data: blob:; connect-src 'self'; font-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'; frame-src 'none'">
+  <title>Eve of Ruin · GM campaign desk</title>
+  <link rel="stylesheet" href="./portal.css">
+  <script type="module" src="./app.mjs"></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to campaign desk</a>
+  <header class="masthead">
+    <a class="brand" href="#dashboard" aria-label="Eve of Ruin campaign desk">
+      <span class="brand-sigil" aria-hidden="true">VI</span>
+      <span><strong>Eve of Ruin</strong><small>THE GAME MASTER'S DESK</small></span>
+    </a>
+    <div class="header-status"><span class="privacy-dot" aria-hidden="true"></span><span>Private on this device</span><span id="save-status" role="status">Opening local storage…</span></div>
+    <button type="button" id="export-button" class="quiet" disabled>Export backup</button>
+  </header>
+  <div id="error-banner" role="alert" hidden></div>
+  <div id="notice" role="status" aria-live="polite"></div>
+  <div class="workspace">
+    <aside class="sidebar" aria-label="Campaign navigation">
+      <p class="eyebrow">YOUR CAMPAIGN</p>
+      <nav id="workspace-nav" aria-label="Workspace">
+        <a href="#dashboard" data-view="dashboard">Campaign desk</a>
+        <a href="#reader" data-view="reader">Adventure chapters</a>
+        <a href="#sanctum" data-view="sanctum">Sigil Sanctum</a>
+        <a href="#combat" data-view="combat">Encounter tracker</a>
+        <a href="#journal" data-view="journal">Handoff &amp; secrets</a>
+        <a href="#library" data-view="library">Library &amp; coverage</a>
+      </nav>
+      <div class="sidebar-library" id="chapter-nav"></div>
+      <div class="sidebar-footer"><span class="tag">GM ONLY · SPOILERS</span><p>Not connected to Malt &amp; Magic.<br>No adventure text is shipped with this app.</p><p id="offline-status">Offline app not yet cached.</p></div>
+    </aside>
+    <main id="main" tabindex="-1"><p>Opening your local campaign…</p></main>
+  </div>
+  <dialog id="modal" aria-labelledby="modal-title">
+    <div class="dialog-top"><h2 id="modal-title">Details</h2><button type="button" id="close-modal" class="quiet">Close</button></div>
+    <div id="modal-body"></div>
+  </dialog>
+  <noscript>This private campaign desk requires JavaScript for local file import and storage. No adventure material is hosted on this page.</noscript>
+</body>
+</html>
