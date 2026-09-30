@@ -291,7 +291,7 @@ function validateChoices(progression, classId, choices) {
 export function applyAdvancement(sheet, request) {
   const progression = advanceCharacter(sheet.progression || createProgression(sheet), request);
   const character = deriveCharacter(progression);
-  return { ...copy(sheet), schemaVersion: 2, progression, advancementDraft: null, characterLevel: character.totalLevel, hp: { current: character.hpMax, max: character.hpMax, temp: 0 }, resources: character.resources };
+  return { ...copy(sheet), schemaVersion: 2, progression, advancementDraft: null, characterLevel: character.totalLevel, hp: { current: character.hpMax, max: character.hpMax, temp: 0 }, resources: character.resources, exhaustion: Math.max(0, (sheet.exhaustion ?? 0) - 1) };
 }
 
 export function rollHitDie(size, roll = die => Math.floor(Math.random() * die) + 1) {

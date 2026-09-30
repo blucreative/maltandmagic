@@ -1,0 +1,127 @@
+/* Match Col Agen's checkbox-style condition rows without replacing sheet mechanics. */
+body.page-dnd-character-sheet .conditions-row {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 7px;
+}
+
+body.page-dnd-character-sheet .conditions-row .rules-control-pair {
+  display: flex;
+  align-items: center;
+  min-width: 0;
+  max-width: 100%;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+}
+
+body.page-dnd-character-sheet .conditions-row .condition-badge {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  gap: 6px;
+  min-width: 0;
+  min-height: 36px;
+  padding: 6px 2px;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  color: var(--text-secondary);
+  font-family: inherit;
+  font-size: 10px;
+  font-weight: 400;
+  line-height: 1.2;
+  letter-spacing: 0;
+  text-transform: none;
+  text-align: left;
+  box-shadow: none;
+  text-shadow: none;
+  opacity: 1;
+  cursor: pointer;
+  transform: none;
+  filter: none;
+}
+
+body.page-dnd-character-sheet .conditions-row .condition-badge::before {
+  content: '';
+  flex: 0 0 12px;
+  height: 12px;
+  box-sizing: border-box;
+  border: 1px solid var(--text-dim);
+  border-radius: 3px;
+  background: var(--forest-panel);
+}
+
+body.page-dnd-character-sheet .conditions-row .condition-badge.active {
+  color: var(--danger);
+  font-weight: 700;
+}
+
+body.page-dnd-character-sheet .conditions-row .condition-badge.active::before {
+  background: var(--danger);
+  border-color: var(--danger);
+  box-shadow: inset 0 0 0 2px var(--forest-panel);
+}
+
+body.page-dnd-character-sheet .conditions-row .condition-badge:hover {
+  color: var(--text-primary);
+}
+
+body.page-dnd-character-sheet .conditions-row .archibold-rules-help {
+  width: 28px;
+  height: 28px;
+  min-width: 28px;
+  min-height: 28px;
+  flex: 0 0 28px;
+  padding: 5px;
+  margin: 0;
+  border: 0;
+  border-radius: 4px;
+  background: transparent;
+  color: var(--gold);
+  box-shadow: none;
+  transform: none;
+}
+
+body.page-dnd-character-sheet .conditions-row .archibold-rules-help:hover,
+body.page-dnd-character-sheet .conditions-row .archibold-rules-help[aria-expanded='true'] {
+  background: var(--class-tint);
+}
+
+body.page-dnd-character-sheet .conditions-row .archibold-rules-help img {
+  width: 16px;
+  height: 16px;
+  opacity: .65;
+}
+
+body.page-dnd-character-sheet .conditions-row :is(button):focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 3px;
+}
+
+/* The colour-mode selectors have higher specificity than the individual sheet styles. */
+html[data-color-mode='dark'] body.page-dnd-character-sheet .conditions-row :is(.rules-control-pair, .condition-badge) {
+  background: transparent;
+  border: 0;
+}
+
+@media (pointer: coarse), (max-width: 700px) {
+  body.page-dnd-character-sheet .conditions-row .archibold-rules-help {
+    width: 44px;
+    height: 44px;
+    min-width: 44px;
+    min-height: 44px;
+    flex-basis: 44px;
+  }
+
+  body.page-dnd-character-sheet .conditions-row .condition-badge {
+    min-height: 44px;
+    font-size: 11px;
+  }
+}
+
+@media (max-width: 360px) {
+  body.page-dnd-character-sheet .conditions-row {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

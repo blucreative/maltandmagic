@@ -461,8 +461,8 @@ async function rest(long) {
   const saved = sheet.getState();
   const character = deriveCharacter(saved.progression);
   if (long) {
-    if (!confirm('Complete a Long Rest and restore HP and class resources?')) return;
-    sheet.updatePlay(state => { state.hp = { current: character.hpMax, max: character.hpMax, temp: 0 }; state.resources = { ...character.resources }; });
+    if (!confirm('Complete a Long Rest, restore HP and class resources, and remove one Exhaustion level?')) return;
+    sheet.updatePlay(state => { state.hp = { current: character.hpMax, max: character.hpMax, temp: 0 }; state.resources = { ...character.resources }; state.exhaustion = Math.max(0, (state.exhaustion ?? 0) - 1); });
     return;
   }
   const dice = await window.chooseRestHitDice?.(Object.entries(character.hitDice).map(([die]) => ({ type: `hd${die}`, label: `d${die}`, size: Number(die), available: saved.resources[`hd${die}`] })));

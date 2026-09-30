@@ -16,6 +16,16 @@ test('validates the strict Col sheet schema', () => {
   assert.equal(validateSaveRequest({ revision: 0, state: { ...state, notes: { ...state.notes, Backstory: 'x'.repeat(10001) } } }).ok, false);
 });
 
+test('accepts legacy saves and only integer exhaustion levels from zero to six', () => {
+  assert.equal(validateSaveRequest({ revision: 0, state }).ok, true);
+  for (let exhaustion = 0; exhaustion <= 6; exhaustion += 1) {
+    assert.equal(validateSaveRequest({ revision: 0, state: { ...state, exhaustion } }).ok, true);
+  }
+  for (const exhaustion of [-1, 7, 1.5, '2', null, true]) {
+    assert.equal(validateSaveRequest({ revision: 0, state: { ...state, exhaustion } }).error, 'Invalid exhaustion level.');
+  }
+});
+
 test('rejects invalid claim keys before GitHub', async () => {
   let called = false;
   const response = await handleRequest(request('GET', null, 'wrong'), env, async () => { called = true; });
@@ -55,7 +65,7 @@ test('rejects disallowed origins', async () => {
 });
 
 test('advancement is atomic, idempotent, and protected from older clients', async () => {
-  let stored = { schemaVersion: 1, characterId: 'col-agen', revision: 4, state: { ...structuredClone(state), revision: 4, currency: { ...state.currency, gp: 123 } } };
+  let stored = { schemaVersion: 1, characterId: 'col-agen', revision: 4, state: { ...structuredClone(state), exhaustion: 3, revision: 4, currency: { ...state.currency, gp: 123 } } };
   let writes = 0;
   const fetcher = async (_url, options = {}) => {
     if (!options.method) return Response.json({ sha: 'abc', content: btoa(JSON.stringify(stored)) });
@@ -76,9 +86,11 @@ test('advancement is atomic, idempotent, and protected from older clients', asyn
   assert.equal(stored.state.currency.gp, 123);
   assert.deepEqual(stored.state.inventory, state.inventory);
   assert.equal(stored.state.resources.slots2, 2);
+  assert.equal(stored.state.exhaustion, 2);
   assert.equal(validateSaveRequest({ revision: 5, state: stored.state }).ok, true);
   assert.equal((await handleRequest(advance(4), env, fetcher)).status, 200);
   assert.equal(writes, 1);
+  assert.equal(stored.state.exhaustion, 2);
   assert.equal((await handleRequest(request('PUT', { revision: 5, state: { ...state, revision: 5 } }), env, fetcher)).status, 409);
   const edited = structuredClone(stored.state);
   edited.currency.gp = 150;

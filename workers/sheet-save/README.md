@@ -22,6 +22,20 @@ The raw claim key is given to Col's player. Only its digest is configured in the
 
 Cloud saves update the JSON on the `player-saves` branch, not the HTML or the Pages deployment branch. The sheet reads that JSON through the authenticated Worker; no Pages rebuild is required for a gold change. Client-code fixes still require publishing the updated HTML through the normal Pages deployment.
 
+### Exhaustion
+
+Both gameplay schemas accept an optional integer `exhaustion` from 0 through 6.
+Older saves without it load at level 0. The conditions panel persists the level
+locally and through cloud sync and shows the SRD 5.2.1 penalties: -2 per level
+to D20 tests, -5 ft. Speed per level, and death at level 6. Displayed stat
+modifiers remain base values; the panel explicitly instructs players to apply
+the penalties. Short Rests leave exhaustion unchanged. Long Rests remove one
+level, including the Long Rest granted by confirmed advancement.
+
+Deploy this Worker update before publishing the exhaustion-enabled sheet:
+the older Worker's strict schema rejects the new field. No live deployment
+is performed by the tests.
+
 ## Verification
 
 `npm test` runs Worker validation tests and client sync regressions using the actual inline script from Col's sheet. Client tests simulate two devices, gold edits, reloads, offline retries, explicit conflicts, and changes made during an upload without accessing the live save.

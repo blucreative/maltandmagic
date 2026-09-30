@@ -85,7 +85,7 @@ export async function handleRequest(request, env, fetcher = fetch) {
 export function validateSaveRequest(input) {
   if (!plainObject(input) || !Number.isInteger(input.revision) || input.revision < 0 || !plainObject(input.state)) return { ok: false, error: 'Invalid save request.' };
   const state = input.state;
-  const allowed = new Set(['schemaVersion', 'characterLevel', 'revision', 'hp', 'resources', 'currency', 'inventory', 'conditions', 'notes', 'updatedAt', 'progression', 'advancementDraft']);
+  const allowed = new Set(['schemaVersion', 'characterLevel', 'revision', 'hp', 'resources', 'currency', 'inventory', 'conditions', 'exhaustion', 'notes', 'updatedAt', 'progression', 'advancementDraft']);
   if (![1, 2].includes(state.schemaVersion) || state.revision !== input.revision || Object.keys(state).some(key => !allowed.has(key))) return { ok: false, error: 'Unsupported sheet state.' };
   if (state.advancementDraft !== undefined && state.advancementDraft !== null && (!plainObject(state.advancementDraft) || JSON.stringify(state.advancementDraft).length > 16000)) return { ok: false, error: 'Invalid advancement draft.' };
   let caps = { innate: 2, sorcery: 2, slots1: 3, hitDice: 2 };
@@ -103,6 +103,7 @@ export function validateSaveRequest(input) {
   if (!numericObject(state.currency, { cp: [0, 999999], sp: [0, 999999], ep: [0, 999999], gp: [0, 999999], pp: [0, 999999] })) return { ok: false, error: 'Invalid currency state.' };
   if (!Array.isArray(state.inventory) || state.inventory.length > 100 || state.inventory.some(item => !plainObject(item) || Object.keys(item).length !== 3 || typeof item.name !== 'string' || item.name.length > 100 || !boundedNumber(item.qty, 0, 9999) || !boundedNumber(item.weight, 0, 1000))) return { ok: false, error: 'Invalid inventory state.' };
   if (!Array.isArray(state.conditions) || new Set(state.conditions).size !== state.conditions.length || state.conditions.some(value => !CONDITIONS.has(value))) return { ok: false, error: 'Invalid condition state.' };
+  if (state.exhaustion !== undefined && (!Number.isInteger(state.exhaustion) || state.exhaustion < 0 || state.exhaustion > 6)) return { ok: false, error: 'Invalid exhaustion level.' };
   if (!plainObject(state.notes) || Object.keys(state.notes).length !== NOTE_KEYS.size || Object.keys(state.notes).some(key => !NOTE_KEYS.has(key)) || [...NOTE_KEYS].some(key => typeof state.notes[key] !== 'string' || state.notes[key].length > 10000)) return { ok: false, error: 'Invalid notes state.' };
   if (state.updatedAt !== null && (typeof state.updatedAt !== 'string' || state.updatedAt.length > 64)) return { ok: false, error: 'Invalid update timestamp.' };
   return { ok: true, value: { revision: input.revision, state } };

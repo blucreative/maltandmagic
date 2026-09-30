@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import vm from 'node:vm';
-import { applyAdvancement } from '../../../assets/js/advancement-engine.mjs';
+import { applyAdvancement, createProgression, deriveCharacter } from '../../../assets/js/advancement-engine.mjs';
 import { spendResource, usageCharacter } from '../../../assets/js/col-agen-usage.mjs';
 
 const html = readFileSync(new URL('../../../DnD/col_agen_sheet.html', import.meta.url), 'utf8');
@@ -43,7 +43,7 @@ function browser(fetcher, saved = {}) {
     localStorage: { getItem: key => storage.get(key) ?? null, setItem: (key, value) => storage.set(key, String(value)) },
     document: { getElementById: node, querySelectorAll: () => [], addEventListener: listen, createElement: () => ({ set textContent(value) { this.innerHTML = value; } }) },
     window: { addEventListener: (type, handler) => windowEvents.set(type, handler) },
-    fetch: fetcher, setTimeout: () => 1, clearTimeout() {}, console
+    fetch: fetcher, setTimeout: () => 1, clearTimeout() {}, confirm: () => true, console
   });
   vm.runInContext(script.replace('renderStatic();renderState();if(getClaimKey())connectCloud();', ''), context);
   return { run: expression => vm.runInContext(expression, context), storage, node, documentEvents, windowEvents };
@@ -110,6 +110,65 @@ test('gold edited on one device appears on a second device and on return to the 
   await reloaded.run('connectCloud()');
   assert.equal(reloaded.run('state.currency.gp'), 99);
   assert.equal(server.requests.filter(method => method === 'PUT').length, uploads);
+});
+
+test('exhaustion is bounded, persists across devices and reloads, and recovers one level on a Long Rest', async () => {
+  const server = cloud();
+  const first = browser(server.fetch);
+  assert.equal(first.run('state.exhaustion'), 0);
+  first.run('adjustExhaustion(-1)');
+  assert.equal(first.run('state.exhaustion'), 0);
+  for (let index = 0; index < 8; index += 1) first.run('adjustExhaustion(1)');
+  assert.equal(first.run('state.exhaustion'), 6);
+  assert.equal(first.node('exhaustionIncrease').disabled, true);
+  assert.match(first.node('exhaustionEffects').textContent, /dies/);
+  await first.run('syncCloud()');
+  const second = browser(server.fetch);
+  await second.run('connectCloud()');
+  assert.equal(second.run('state.exhaustion'), 6);
+  const reloaded = browser(server.fetch, Object.fromEntries(second.storage));
+  assert.equal(reloaded.run('state.exhaustion'), 6);
+  await reloaded.node('shortRest').events.get('click')();
+  assert.equal(reloaded.run('state.exhaustion'), 6);
+  reloaded.node('longRest').events.get('click')();
+  assert.equal(reloaded.run('state.exhaustion'), 5);
+  assert.match(reloaded.node('exhaustionEffects').textContent, /−10.*25 ft/);
+  await reloaded.run('syncCloud()');
+  await first.run('connectCloud()');
+  assert.equal(first.run('state.exhaustion'), 5);
+  first.run('window.colSheet.finalizing=true;adjustExhaustion(1)');
+  assert.equal(first.run('state.exhaustion'), 5);
+  first.run('window.colSheet.finalizing=false;state.exhaustion=0');
+  first.node('longRest').events.get('click')();
+  assert.equal(first.run('state.exhaustion'), 0);
+});
+
+test('legacy saves default exhaustion to zero, but corrupt levels are reported', () => {
+  const client = browser(async () => Response.json({ revision: 0, state: null }));
+  assert.equal(client.run('const legacy=clone(DEFAULT_STATE);delete legacy.exhaustion;normalizeState(legacy).exhaustion'), 0);
+  for (const value of [-1, 7, 0.5, '3', null]) {
+    assert.throws(() => client.run(`normalizeState({...DEFAULT_STATE,exhaustion:${JSON.stringify(value)}})`), /Invalid saved exhaustion/);
+  }
+});
+
+test('progressed characters remove one exhaustion level on a Long Rest only', async () => {
+  const source = readFileSync(new URL('../../../assets/js/col-agen-advancement.mjs', import.meta.url), 'utf8');
+  const restCode = source.slice(source.indexOf('async function rest(long)'), source.indexOf('window.colAdvancement ='));
+  const saved = { progression: createProgression(), exhaustion: 3 };
+  saved.resources = deriveCharacter(saved.progression).resources;
+  const context = vm.createContext({
+    sheet: { getState: () => saved, updatePlay: change => change(saved) },
+    deriveCharacter, confirm: () => true,
+    window: { chooseRestHitDice: async () => null }
+  });
+  vm.runInContext(restCode, context);
+  await vm.runInContext('rest(false)', context);
+  assert.equal(saved.exhaustion, 3);
+  await vm.runInContext('rest(true)', context);
+  assert.equal(saved.exhaustion, 2);
+  saved.exhaustion = 0;
+  await vm.runInContext('rest(true)', context);
+  assert.equal(saved.exhaustion, 0);
 });
 
 test('resource use through the play bridge syncs across devices and respects finalization', async () => {

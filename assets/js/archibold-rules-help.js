@@ -1,7 +1,9 @@
 window.initializeSheetRulesHelp = window.initializeArchiboldRulesHelp = function (rules, options) {
   'use strict';
   const headingSelector = options?.headingSelector || '.feature-name,.item-name,.ability-name,.weapon-name';
-  document.getElementById('tooltip').hidden = true;
+  const targetSelector = options?.targetSelector || '[data-tooltip]';
+  const groupSelector = options?.groupSelector || '.condition-badge';
+  if (!options?.targetSelector) document.getElementById('tooltip').hidden = true;
   const panel = document.createElement('aside');
   panel.className = 'archibold-rules-panel';
   panel.id = 'archiboldRulesPanel';
@@ -83,7 +85,7 @@ window.initializeSheetRulesHelp = window.initializeArchiboldRulesHelp = function
     }, 180);
   }
   let descriptionIndex = 0;
-  for (const target of document.querySelectorAll('[data-tooltip]')) {
+  for (const target of document.querySelectorAll(targetSelector)) {
     const rule = rules[target.dataset.tooltip];
     if (!rule) continue;
     const button = document.createElement('button'); button.type = 'button'; button.className = 'archibold-rules-help';
@@ -99,11 +101,12 @@ window.initializeSheetRulesHelp = window.initializeArchiboldRulesHelp = function
     description.textContent = [rule.name, rule.type, ...Object.entries(rule.stats || {}).map(([key, value]) => `${key}: ${value}`), rule.body].filter(Boolean).join('. ');
     document.body.append(description); button.setAttribute('aria-describedby', description.id);
     const interactive = target.closest('button,a,[onclick],input,select,textarea');
-    if (interactive && options?.groupSelector && interactive.matches(options.groupSelector)) {
+    if (interactive && interactive.matches(groupSelector)) {
       const group = document.createElement('span'); group.className = 'rules-control-pair';
       interactive.before(group); group.append(interactive, button);
     } else if (interactive) interactive.after(button);
     else (target.querySelector(headingSelector) || target).append(button);
+    if (target.matches('.condition-badge')) target.removeAttribute('data-tooltip');
   }
   document.addEventListener('pointerdown', event => { pointerType = event.pointerType; }, true);
   document.addEventListener('pointerover', event => {

@@ -11,7 +11,7 @@
 <script defer src="../assets/js/a11y-sheet-helpers.js"></script>
 <script src="../assets/js/inventory-trackers.js"></script>
 <script defer src="../assets/js/rest-hit-dice.js?v=20260817-rest-dialog"></script>
-<script src="../assets/js/archibold-rules-help.js?v=1"></script>
+<script src="../assets/js/archibold-rules-help.js?v=4"></script>
 <style>
   :root {
     /* Arcane Archer / moonlit-indigo palette */
@@ -1525,8 +1525,9 @@
   }
 </style>
 <link rel="stylesheet" href="../assets/css/archibold-modern.css?v=1">
-<link rel="stylesheet" href="../assets/css/archibold-rules-help.css?v=1">
+<link rel="stylesheet" href="../assets/css/archibold-rules-help.css?v=4">
 <link rel="stylesheet" href="../assets/css/character-sheet-theme.css?v=1">
+<link rel="stylesheet" href="../assets/css/sheet-conditions.css?v=1">
 <script src="../assets/js/character-sheet-theme.js?v=1"></script>
 </head>
 <body class="theme-fantasy page-dnd-character-sheet page-archibold-layadon-sheet">
@@ -1883,20 +1884,20 @@
       <div class="panel-header"><span class="panel-title">Conditions</span></div>
       <div class="panel-body">
         <div class="conditions-row">
-          <div class="condition-badge inactive" data-condition="Blinded" data-tooltip="cond-blinded" onclick="toggleCondition(this)">Blinded</div>
-          <div class="condition-badge inactive" data-condition="Charmed" data-tooltip="cond-charmed" onclick="toggleCondition(this)">Charmed</div>
-          <div class="condition-badge inactive" data-condition="Deafened" data-tooltip="cond-deafened" onclick="toggleCondition(this)">Deafened</div>
-          <div class="condition-badge inactive" data-condition="Frightened" data-tooltip="cond-frightened" onclick="toggleCondition(this)">Frightened</div>
-          <div class="condition-badge inactive" data-condition="Grappled" data-tooltip="cond-grappled" onclick="toggleCondition(this)">Grappled</div>
-          <div class="condition-badge inactive" data-condition="Incapacitated" data-tooltip="cond-incapacitated" onclick="toggleCondition(this)">Incapacitated</div>
-          <div class="condition-badge inactive" data-condition="Invisible" data-tooltip="cond-invisible" onclick="toggleCondition(this)">Invisible</div>
-          <div class="condition-badge inactive" data-condition="Paralyzed" data-tooltip="cond-paralyzed" onclick="toggleCondition(this)">Paralyzed</div>
-          <div class="condition-badge inactive" data-condition="Petrified" data-tooltip="cond-petrified" onclick="toggleCondition(this)">Petrified</div>
-          <div class="condition-badge inactive" data-condition="Poisoned" data-tooltip="cond-poisoned" onclick="toggleCondition(this)">Poisoned</div>
-          <div class="condition-badge inactive" data-condition="Prone" data-tooltip="cond-prone" onclick="toggleCondition(this)">Prone</div>
-          <div class="condition-badge inactive" data-condition="Restrained" data-tooltip="cond-restrained" onclick="toggleCondition(this)">Restrained</div>
-          <div class="condition-badge inactive" data-condition="Stunned" data-tooltip="cond-stunned" onclick="toggleCondition(this)">Stunned</div>
-          <div class="condition-badge inactive" data-condition="Unconscious" data-tooltip="cond-unconscious" onclick="toggleCondition(this)">Unconscious</div>
+          <button type="button" aria-pressed="false" class="condition-badge inactive" data-condition="Blinded" data-tooltip="cond-blinded" onclick="toggleCondition(this)">Blinded</button>
+          <button type="button" aria-pressed="false" class="condition-badge inactive" data-condition="Charmed" data-tooltip="cond-charmed" onclick="toggleCondition(this)">Charmed</button>
+          <button type="button" aria-pressed="false" class="condition-badge inactive" data-condition="Deafened" data-tooltip="cond-deafened" onclick="toggleCondition(this)">Deafened</button>
+          <button type="button" aria-pressed="false" class="condition-badge inactive" data-condition="Frightened" data-tooltip="cond-frightened" onclick="toggleCondition(this)">Frightened</button>
+          <button type="button" aria-pressed="false" class="condition-badge inactive" data-condition="Grappled" data-tooltip="cond-grappled" onclick="toggleCondition(this)">Grappled</button>
+          <button type="button" aria-pressed="false" class="condition-badge inactive" data-condition="Incapacitated" data-tooltip="cond-incapacitated" onclick="toggleCondition(this)">Incapacitated</button>
+          <button type="button" aria-pressed="false" class="condition-badge inactive" data-condition="Invisible" data-tooltip="cond-invisible" onclick="toggleCondition(this)">Invisible</button>
+          <button type="button" aria-pressed="false" class="condition-badge inactive" data-condition="Paralyzed" data-tooltip="cond-paralyzed" onclick="toggleCondition(this)">Paralyzed</button>
+          <button type="button" aria-pressed="false" class="condition-badge inactive" data-condition="Petrified" data-tooltip="cond-petrified" onclick="toggleCondition(this)">Petrified</button>
+          <button type="button" aria-pressed="false" class="condition-badge inactive" data-condition="Poisoned" data-tooltip="cond-poisoned" onclick="toggleCondition(this)">Poisoned</button>
+          <button type="button" aria-pressed="false" class="condition-badge inactive" data-condition="Prone" data-tooltip="cond-prone" onclick="toggleCondition(this)">Prone</button>
+          <button type="button" aria-pressed="false" class="condition-badge inactive" data-condition="Restrained" data-tooltip="cond-restrained" onclick="toggleCondition(this)">Restrained</button>
+          <button type="button" aria-pressed="false" class="condition-badge inactive" data-condition="Stunned" data-tooltip="cond-stunned" onclick="toggleCondition(this)">Stunned</button>
+          <button type="button" aria-pressed="false" class="condition-badge inactive" data-condition="Unconscious" data-tooltip="cond-unconscious" onclick="toggleCondition(this)">Unconscious</button>
         </div>
         <div class="exhaustion-control">
           <span class="exh-title" data-tooltip="cond-exhaustion">Exhaustion</span>
@@ -3240,6 +3241,9 @@ function setExhaustion(delta) {
 }
 
 function applyConditionEffects() {
+  document.querySelectorAll('.condition-badge').forEach(el => {
+    el.setAttribute('aria-pressed', String(el.classList.contains('active')));
+  });
   const active = activeConditions();
   const has = name => active.includes(name);
   const exhPenalty = exhaustionLevel * 2;

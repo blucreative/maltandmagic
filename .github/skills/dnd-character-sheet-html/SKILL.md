@@ -319,6 +319,17 @@ Tooltip renders in a fixed `#tooltip` div, positioned near cursor on `mouseenter
 - Weapon table: stack on mobile
 - Spell cards: full-width on mobile
 
+## Condition Controls
+
+Use Col Agen's checkbox-style rows for conditions: a native toggle button with
+`aria-pressed` and a separate rules-help button. The other sheets share
+`assets/css/sheet-conditions.css`, loaded after their theme styles, and use
+`initializeSheetRulesHelp` to group each `.condition-badge` with its help control.
+Keep condition names as plain button text for compatibility with saved state.
+Synchronize `aria-pressed` in `applyConditionEffects()` so restored conditions
+match their visual state. Preserve existing exhaustion counters and derived
+effects; opening rules help must never toggle a condition.
+
 ---
 
 ## Character Sheet Checklist
