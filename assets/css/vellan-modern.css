@@ -1,0 +1,133 @@
+body.page-vellan-darkmere-sheet {
+  --forest-dark: #f4f8f8;
+  --forest-mid: #e9f1f1;
+  --forest-panel: #fff;
+  --forest-border: #cfdddd;
+  --forest-accent: #247276;
+  --gold: #8b681b;
+  --gold-light: #6e5214;
+  --gold-dim: #aa9869;
+  --parchment: #27383a;
+  --parchment-dark: #536668;
+  --text-primary: #27383a;
+  --text-secondary: #526568;
+  --text-dim: #697b7d;
+  --class-tint: #e9f2f2;
+  --danger: #a33348;
+  --danger-light: #a33348;
+  --success: #1d6d5b;
+  --success-light: #1d6d5b;
+  --section-bg: #fff;
+  --card-bg: #fff;
+  --card-border: #cfdddd;
+  --tooltip-bg: #fff;
+  --steel: #426c72;
+  --steel-dim: #647c80;
+  --crimson: #a33348;
+  --fantasy-panel: #fff;
+  --fantasy-panel-border: #cfdddd;
+  --fantasy-shadow: none;
+  background: linear-gradient(180deg, #e6f0f0 0, #f7f9f9 320px, #f7f9f9 100%);
+  color: var(--text-primary);
+  font-family: 'Sora', sans-serif;
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+body.page-vellan-darkmere-sheet::before,
+body.page-vellan-darkmere-sheet::after,
+.page-vellan-darkmere-sheet .sheet-header::after {
+  display: none;
+}
+
+.page-vellan-darkmere-sheet :is(
+  h1, h2, h3, button, input, textarea, select, .panel-title, .char-name,
+  .char-meta-item .value, .char-meta-item .label, .ability-name, .ability-num,
+  .ability-mod, .save-name, .save-val, .skill-name, .skill-mod, .skill-attr,
+  .hp-label, .hp-value, .cs-val, .cs-label, .feature-name, .feature-source,
+  .feature-summary, .weapon-name, .weapon-hit, .weapon-damage, .resource-label,
+  .passive-name, .passive-val, .lore-label, .lore-text, .detail-label,
+  .detail-value, .currency-value, .spell-name, .spell-meta, .spell-level-badge,
+  .condition-badge, .wprop, .weapon-mastery-tag
+) {
+  font-family: 'Sora', sans-serif;
+  letter-spacing: 0;
+  text-shadow: none;
+}
+
+.page-vellan-darkmere-sheet .sheet-header {
+  position: relative;
+  padding: 38px 28px 28px;
+  background: transparent;
+  border: 0;
+  box-shadow: none;
+  align-items: flex-end;
+  gap: 28px;
+}
+
+.page-vellan-darkmere-sheet .char-name { font-size: 32px; line-height: 1.2; color: var(--text-primary); }
+.page-vellan-darkmere-sheet .char-meta { flex-wrap: wrap; gap: 16px; }
+.page-vellan-darkmere-sheet .char-meta-item { text-align: left; }
+.page-vellan-darkmere-sheet .char-meta-item .label { font-size: 10px; margin-bottom: 4px; }
+.page-vellan-darkmere-sheet .char-meta-item .value { font-size: 13px; }
+.page-vellan-darkmere-sheet .ui-version-badge { top: 8px; right: 28px; background: transparent; border: 0; color: var(--text-dim); }
+.page-vellan-darkmere-sheet .back-link { color: var(--gold); border-color: var(--forest-border); border-radius: 4px; padding: 10px; letter-spacing: 0; }
+.page-vellan-darkmere-sheet .nav-tabs { position: sticky; top: 0; z-index: 100; background: #f7f9f9; backdrop-filter: none; border-block: 1px solid var(--forest-border); padding: 0 24px; gap: 4px; }
+body.page-vellan-darkmere-sheet .tab-btn { min-height: 48px; padding: 12px 16px; border: 0; border-bottom: 3px solid transparent; border-radius: 0; background: transparent; color: var(--text-secondary); text-transform: none; font-size: 12px; box-shadow: none; }
+body.page-vellan-darkmere-sheet .tab-btn.active { border-bottom-color: var(--gold); background: transparent; color: var(--gold); }
+body.page-vellan-darkmere-sheet .tab-btn:hover { background: var(--class-tint); color: var(--gold); }
+.page-vellan-darkmere-sheet .sheet-body { padding: 24px 28px 40px; }
+.page-vellan-darkmere-sheet .dashboard-grid { grid-template-columns: minmax(220px, .8fr) minmax(340px, 1.4fr) minmax(270px, 1fr); gap: 24px; }
+body.page-vellan-darkmere-sheet .panel { background: transparent; border: 0; border-radius: 0; box-shadow: none; backdrop-filter: none; }
+.page-vellan-darkmere-sheet .panel-header { padding: 12px 0; border-bottom: 1px solid var(--forest-border); background: transparent; }
+.page-vellan-darkmere-sheet .panel-title { color: var(--text-secondary); font-size: 11px; }
+.page-vellan-darkmere-sheet .panel-body { padding: 16px 0; }
+.page-vellan-darkmere-sheet :is(.ability-score, .hp-box, .combat-stat) { padding: 14px 8px; border: 1px solid var(--forest-border); border-radius: 6px; background: #fff; box-shadow: none; }
+.page-vellan-darkmere-sheet .ability-grid { gap: 10px; }
+.page-vellan-darkmere-sheet .ability-name { font-size: 10px; }
+.page-vellan-darkmere-sheet .ability-num { font-size: 28px; }
+.page-vellan-darkmere-sheet .ability-mod { border: 0; background: var(--class-tint); color: var(--gold); font-size: 13px; }
+.page-vellan-darkmere-sheet :is(.save-row, .skill-item) { min-height: 32px; padding-block: 5px; }
+.page-vellan-darkmere-sheet .hp-bar-wrap { height: 8px; border: 0; background: #dce9e8; }
+.page-vellan-darkmere-sheet .hp-bar-fill { background: #2e847d; }
+body.page-vellan-darkmere-sheet :is(input, textarea, select, .inventory-input, .currency-input) { min-height: 44px; min-width: 0; max-width: 100%; border: 1px solid var(--forest-border); border-radius: 4px; background: #fff; color: var(--text-primary); }
+body.page-vellan-darkmere-sheet button { box-shadow: none; }
+body.page-vellan-darkmere-sheet :is(.hp-btn, .rest-btn, .adv-btn, .equip-btn, .inventory-add-btn, .inventory-remove-btn, .currency-adjust-btn, .exh-btn, .action-filter-btn, .cast-btn, .level-up-action) { min-height: 40px; border: 1px solid var(--forest-border); border-radius: 4px; background: #fff; color: var(--gold); text-transform: none; letter-spacing: 0; font-size: 11px; }
+body.page-vellan-darkmere-sheet :is(.hp-btn.damage, .inventory-remove-btn, .cast-btn.end) { color: var(--danger); }
+body.page-vellan-darkmere-sheet :is(.inventory-add-btn, .equip-btn.equipped, .action-filter-btn.active, .cast-btn:not(.end), .level-up-action.primary) { border-color: var(--gold); background: var(--gold); color: #fff; }
+.page-vellan-darkmere-sheet :is(.weapon-card, .feature-card, .spell-card, .level-up-gain) { padding: 16px; border: 1px solid var(--forest-border); border-radius: 6px; background: #fff; box-shadow: none; }
+.page-vellan-darkmere-sheet :is(.feature-source, .wprop, .weapon-mastery-tag, .status-pill, .spell-level-badge) { border-color: var(--forest-border); border-radius: 4px; background: var(--class-tint); color: var(--gold); letter-spacing: 0; }
+.page-vellan-darkmere-sheet .status-pill.off { background: #eff3f2; color: var(--text-dim); }
+.page-vellan-darkmere-sheet :is(.condition-effects, .char-detail-item, .lore-section, .inventory-hud, .currency-bar, .inventory-builder, .inventory-empty, .passive-row, .action-filter) { border-color: var(--forest-border); border-radius: 0; background: var(--class-tint); box-shadow: none; }
+.page-vellan-darkmere-sheet .condition-badge.inactive { background: #edf2f1; color: var(--text-secondary); opacity: 1; }
+.page-vellan-darkmere-sheet .condition-badge.active { border-color: #d9a2ae; background: #fae8ed; color: var(--danger); }
+body.page-vellan-darkmere-sheet .item-card { border: 1px solid var(--forest-border); border-radius: 6px; background: #fff; color: var(--text-primary); box-shadow: none; }
+body.page-vellan-darkmere-sheet .item-tag { border-color: var(--forest-border); background: var(--class-tint); }
+.page-vellan-darkmere-sheet .level-up-dialog { border-color: var(--forest-border); background: #fff; color: var(--text-primary); }
+.page-vellan-darkmere-sheet .level-up-header,
+.page-vellan-darkmere-sheet .level-up-review,
+.page-vellan-darkmere-sheet .level-up-subclass-options { border-color: var(--forest-border); background: var(--class-tint); }
+.page-vellan-darkmere-sheet .level-up-choice { border-color: var(--forest-border); }
+.page-vellan-darkmere-sheet .level-up-title,
+.page-vellan-darkmere-sheet .level-up-review strong { color: var(--text-primary); }
+.page-vellan-darkmere-sheet .level-up-dialog::backdrop { background: rgba(22, 35, 36, 0.62); }
+.page-vellan-darkmere-sheet .cast-toast { border-color: var(--forest-border); background: #fff; color: var(--text-primary); box-shadow: 0 4px 16px rgba(25, 59, 48, 0.12); }
+.page-vellan-darkmere-sheet :is(button, a, input, textarea, select, [tabindex]):focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; }
+
+@media (max-width: 1180px) {
+  .page-vellan-darkmere-sheet .dashboard-grid { grid-template-columns: minmax(0, 1fr); }
+}
+
+@media (max-width: 760px) {
+  .page-vellan-darkmere-sheet .sheet-header { padding: 32px 16px 20px; gap: 20px; }
+  .page-vellan-darkmere-sheet .char-name { font-size: 26px; }
+  .page-vellan-darkmere-sheet .char-meta { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); width: 100%; gap: 12px; }
+  .page-vellan-darkmere-sheet .meta-divider { display: none; }
+  .page-vellan-darkmere-sheet .sheet-body { padding: 16px 14px 28px; }
+  .page-vellan-darkmere-sheet .nav-tabs { padding: 0 8px; gap: 0; }
+  body.page-vellan-darkmere-sheet .tab-btn { flex: 1 1 30%; padding: 9px 6px; font-size: 11px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .page-vellan-darkmere-sheet * { transition: none !important; animation: none !important; }
+}

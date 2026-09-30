@@ -1,0 +1,281 @@
+body:is(.page-dnd-character-sheet, .sheet-col-agen) button.sheet-theme-toggle {
+  position: fixed;
+  left: max(16px, env(safe-area-inset-left));
+  bottom: max(16px, env(safe-area-inset-bottom));
+  z-index: 1000;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-width: 44px;
+  min-height: 44px;
+  padding: 9px 13px;
+  border: 1px solid color-mix(in srgb, currentColor 35%, transparent);
+  border-radius: 999px;
+  background: color-mix(in srgb, Canvas 94%, transparent);
+  color: CanvasText;
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.24);
+  font: 600 12px/1.2 system-ui, sans-serif;
+  letter-spacing: 0;
+  cursor: pointer;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+body:is(.page-dnd-character-sheet, .sheet-col-agen) button.sheet-theme-toggle:hover {
+  filter: none;
+  transform: translateY(-1px);
+}
+
+body:is(.page-dnd-character-sheet, .sheet-col-agen) button.sheet-theme-toggle:focus-visible {
+  outline: 3px solid color-mix(in srgb, Highlight 70%, transparent);
+  outline-offset: 3px;
+}
+
+.sheet-theme-toggle__icon {
+  font-size: 18px;
+  line-height: 1;
+}
+
+/* Keep the modern stylesheets loaded: theme overrides change colours, never layout. */
+html[data-color-mode='dark'] body:is(.page-dnd-character-sheet, .sheet-col-agen) {
+  --sheet-bg: #111a17;
+  --sheet-surface: #1b2722;
+  --sheet-tint: #263a30;
+  --sheet-border: #41594c;
+  --sheet-accent: #a0d4b5;
+  --sheet-on-accent: #11251c;
+  --sheet-danger-bg: #42252e;
+  --sheet-success-bg: #203b30;
+  --forest-dark: var(--sheet-bg);
+  --forest-mid: var(--sheet-tint);
+  --forest-panel: var(--sheet-surface);
+  --forest-border: var(--sheet-border);
+  --forest-accent: var(--sheet-accent);
+  --briar-dark: var(--sheet-bg);
+  --briar-mid: var(--sheet-tint);
+  --briar-panel: var(--sheet-surface);
+  --briar-border: var(--sheet-border);
+  --briar-accent: #d2afe7;
+  --gold: var(--sheet-accent);
+  --gold-light: var(--sheet-accent);
+  --gold-dim: #a5b1a9;
+  --parchment: #e7ede9;
+  --parchment-dark: #bdc9c2;
+  --text-primary: #e7ede9;
+  --text-secondary: #bdc9c2;
+  --text-dim: #a5b1a9;
+  --class-tint: var(--sheet-tint);
+  --danger: #f39cad;
+  --danger-light: var(--danger);
+  --success: #91d8b7;
+  --success-light: var(--success);
+  --steel: #a3c7e2;
+  --steel-dim: #a5b8c6;
+  --arcane: #cfb0ef;
+  --arcane-glow: #ddc7f4;
+  --rose: #edabcb;
+  --rose-dim: #d4a2bd;
+  --ember: #e8b18a;
+  --crimson: var(--danger);
+  --section-bg: var(--sheet-surface);
+  --card-bg: var(--sheet-surface);
+  --card-border: var(--sheet-border);
+  --tooltip-bg: var(--sheet-surface);
+  --locked-bg: var(--sheet-tint);
+  --locked-border: var(--sheet-border);
+  --fantasy-panel: var(--sheet-surface);
+  --fantasy-panel-border: var(--sheet-border);
+  --fantasy-text: var(--text-primary);
+  --fantasy-muted: var(--text-secondary);
+  --fantasy-accent: var(--sheet-accent);
+  --fantasy-accent-strong: var(--sheet-accent);
+  --fantasy-link: var(--sheet-accent);
+  --fantasy-link-hover: #e7ede9;
+  --ink: var(--text-primary);
+  --muted: var(--text-secondary);
+  --paper: var(--sheet-bg);
+  --paper-2: var(--sheet-tint);
+  --field: var(--sheet-tint);
+  --green: var(--sheet-accent);
+  --green-2: var(--sheet-accent);
+  --amber: var(--ember);
+  --red: var(--danger);
+  --line: var(--sheet-border);
+  --white: var(--sheet-surface);
+  --accent-soft: var(--sheet-tint);
+  color: var(--text-primary);
+  background: linear-gradient(180deg, var(--sheet-tint), var(--sheet-bg) 420px);
+}
+
+html[data-color-mode='dark'] body.page-archibold-layadon-sheet {
+  --sheet-bg: #141b25;
+  --sheet-surface: #1d2936;
+  --sheet-tint: #28374a;
+  --sheet-border: #485e76;
+  --sheet-accent: #a7ccef;
+  --sheet-on-accent: #15283b;
+}
+
+html[data-color-mode='dark'] body.page-lygas-cantor-sheet {
+  --sheet-bg: #201922;
+  --sheet-surface: #2b232e;
+  --sheet-tint: #3a2c3e;
+  --sheet-border: #634c68;
+  --sheet-accent: #edb4ce;
+  --sheet-on-accent: #352031;
+}
+
+html[data-color-mode='dark'] body.page-vellan-darkmere-sheet {
+  --sheet-bg: #111e22;
+  --sheet-surface: #1c2c30;
+  --sheet-tint: #273c40;
+  --sheet-border: #466268;
+  --sheet-accent: #e2c383;
+  --sheet-on-accent: #30250e;
+}
+
+html[data-color-mode='dark'] body:is(.page-dnd-character-sheet, .sheet-col-agen) :is(.nav-tabs, .tab-bar, .toolbar) {
+  background: var(--sheet-bg);
+  border-color: var(--sheet-border);
+}
+
+html[data-color-mode='dark'] body:is(.page-dnd-character-sheet, .sheet-col-agen) :is(
+  .ability-block, .ability, .hstat, .combat-stat, .aa-stat,
+  .weapon-card, .feature-card, .spell-card, .spell, .item-card,
+  .tooltip, .cast-toast, #castToast, .rules-popover,
+  .dialog, .dialog-head, .rest-dice-dialog, .level-up-dialog, .level-up-gain, .choice,
+  input, textarea, select
+) {
+  background: var(--sheet-surface);
+  color: var(--text-primary);
+  border-color: var(--sheet-border);
+}
+
+html[data-color-mode='dark'] body:is(.page-vellan-darkmere-sheet, .page-viktor-rhee-sheet, .page-archibold-layadon-sheet) :is(.ability-score, .hp-box) {
+  background: var(--sheet-surface);
+  border-color: var(--sheet-border);
+}
+
+html[data-color-mode='dark'] body:is(.page-dnd-character-sheet, .sheet-col-agen) :is(
+  .hp-btn, .rest-btn, .adv-btn, .equip-btn, .inventory-add-btn,
+  .inventory-remove-btn, .currency-adjust-btn, .exh-btn, .action-filter-btn,
+  .cast-btn, .combat-resource-btn, .range-btn, .command, .level-up-action
+) {
+  background: var(--sheet-surface);
+  color: var(--sheet-accent);
+  border-color: var(--sheet-border);
+}
+
+html[data-color-mode='dark'] body:is(.page-dnd-character-sheet, .sheet-col-agen) :is(
+  .inventory-add-btn, .equip-btn.equipped, .action-filter-btn.active,
+  .cast-btn:not(.end), .combat-resource-btn, .range-btn.active,
+  .command.primary, .level-up-action.primary
+) {
+  background: var(--sheet-accent);
+  color: var(--sheet-on-accent);
+  border-color: var(--sheet-accent);
+}
+
+html[data-color-mode='dark'] body:is(.page-dnd-character-sheet, .sheet-col-agen) :is(
+  .hp-btn.damage, .inventory-remove-btn, .cast-btn.end,
+  .advancement-error, .usage-controls.is-exhausted .usage-count, .level-up-error
+) {
+  color: var(--danger);
+}
+
+html[data-color-mode='dark'] body:is(.page-dnd-character-sheet, .sheet-col-agen) :is(
+  .darkvision-readout, .hex-indicator, .condition-effects, .action-filter,
+  .feature-card.locked, .feature-card.effect-active, .spell-card.effect-active,
+  .status-pill, .feature-source.arcane, .aa-shot-tag,
+  .rules-control-pair, .condition-badge.inactive, .identity-mark,
+  .level-up-header, .level-up-review, .level-up-subclass-options,
+  .advancement-class:has(:checked), .advancement-class:has(:disabled)
+) {
+  background: var(--sheet-tint);
+  border-color: var(--sheet-border);
+}
+
+html[data-color-mode='dark'] body:is(.page-dnd-character-sheet, .sheet-col-agen) :is(
+  .resource-pip.used, .slot-pip.used, .pip.spent, .status-pill.off
+) {
+  background: var(--sheet-bg);
+  color: var(--text-dim);
+  border-color: var(--text-dim);
+}
+
+html[data-color-mode='dark'] body:is(.page-dnd-character-sheet, .sheet-col-agen) :is(.pip:not(.spent), .pip:not(.spent):hover) {
+  background: var(--sheet-tint);
+  color: var(--sheet-accent);
+  border-color: var(--sheet-accent);
+}
+
+html[data-color-mode='dark'] body:is(.page-dnd-character-sheet, .sheet-col-agen) :is(
+  .condition-badge.active, .rules-control-pair:has(.condition-badge.active),
+  .adv-btn.dis.active, .adv-indicator.disadvantage, .range-btn.disadvantage-active
+) {
+  background: var(--sheet-danger-bg);
+  color: var(--danger);
+  border-color: var(--danger);
+}
+
+html[data-color-mode='dark'] body:is(.page-dnd-character-sheet, .sheet-col-agen) :is(.adv-btn.adv.active, .adv-indicator.advantage) {
+  background: var(--sheet-success-bg);
+  color: var(--success);
+  border-color: var(--success);
+}
+
+html[data-color-mode='dark'] body:is(.page-dnd-character-sheet, .sheet-col-agen) :is(.hp-bar-wrap, .hp-bar) {
+  background: var(--sheet-tint);
+}
+
+html[data-color-mode='dark'] body:is(.page-dnd-character-sheet, .sheet-col-agen) :is(.row, .stat-chip) {
+  border-color: var(--sheet-border);
+}
+
+html[data-color-mode='dark'] body:is(.page-dnd-character-sheet, .sheet-col-agen) .spell-trigger {
+  color: var(--ember);
+}
+
+html[data-color-mode='dark'] body.sheet-col-agen .condition::before {
+  background: var(--sheet-surface);
+  border-color: var(--text-dim);
+}
+
+html[data-color-mode='dark'] body.sheet-col-agen .condition.active::before {
+  background: var(--danger);
+  border-color: var(--danger);
+  box-shadow: inset 0 0 0 2px var(--sheet-surface);
+}
+
+html[data-color-mode='dark'] body:is(.page-dnd-character-sheet, .sheet-col-agen) :is(
+  .ui-icon, .identity-mark img, .rules-help img, .rules-close img,
+  .archibold-rules-help img, .archibold-rules-close img,
+  .advancement-close img, .usage-command img
+) {
+  filter: invert(1);
+}
+
+@media (max-width: 560px) {
+  body:is(.page-dnd-character-sheet, .sheet-col-agen) button.sheet-theme-toggle {
+    padding: 9px;
+  }
+
+  .sheet-theme-toggle__label {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body:is(.page-dnd-character-sheet, .sheet-col-agen) button.sheet-theme-toggle {
+    transition: none;
+  }
+}

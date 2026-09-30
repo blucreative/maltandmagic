@@ -75,6 +75,20 @@ Each sheet gets its own character theme via CSS custom properties. Define them i
 | Viktor Rhee (Ranger) | Forest green `#243020` | Gold `#c9a84c` | Dark green `#0e1a0c` |
 | Lygas Cantor (Warlock) | Briar purple `#1a1028` | Rose-gold `#c9a07a` | Purple-black `#120a1e` |
 
+### Light / Dark Mode
+
+Keep each character's `*-modern.css` stylesheet enabled in both modes. Load
+`assets/css/character-sheet-theme.css` after the character styles and
+`assets/js/character-sheet-theme.js` at the end of the head. The shared toggle
+sets `data-color-mode` on the HTML element and stores the preference under
+`maltandmagic:dnd:color-mode`, falling back to the system preference.
+
+Dark-mode rules must change colours only, including cards, inputs, dialogs,
+status indicators, and icons. Never disable a stylesheet or change layout,
+typography, spacing, or control sizes when switching modes. Verify matching
+element geometry and fonts at desktop and mobile sizes, with character state
+unchanged by the toggle.
+
 ---
 
 ## Tab Structure
